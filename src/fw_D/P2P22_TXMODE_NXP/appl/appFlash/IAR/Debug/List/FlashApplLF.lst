@@ -1,0 +1,709 @@
+###############################################################################
+#
+# IAR C/C++ Compiler V7.10.1.1197 for Atmel AVR           13/May/2020  17:03:18
+# Copyright 1996-2017 IAR Systems AB.
+# Network license: dvriar01.mchp-main.com (STD)
+#
+#    Source file  =  
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\src\FlashApplLF.c
+#    Command line =  
+#        -f C:\Users\C41045\AppData\Local\Temp\EWB02.tmp
+#        (C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\src\FlashApplLF.c
+#        -v3 --enhanced_core -ms -o
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\Obj
+#        -lCN
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\List
+#        -lA
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\List
+#        --no_cse --no_inline --no_code_motion --no_cross_call --no_clustering
+#        --no_tbaa --debug --64k_flash -DENABLE_BIT_DEFINITIONS -e
+#        --eeprom_size 2304 --clib -Ohz)
+#    Locale       =  English_USA.1252
+#    List file    =  
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\List\FlashApplLF.lst
+#    Object file  =  
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\Obj\FlashApplLF.r90
+#
+###############################################################################
+
+C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\src\FlashApplLF.c
+      1          /******************************************************************************
+      2            Use of this software is subject to Microchip's Software License Agreement.
+      3          --------------------------------------------------------------------------------
+      4            $URL: http://svnservulm.corp.atmel.com/svn/CDB/Apps/SW_Lib/Car_Access/CARS_GEN2/ATAB5702A/Branches/P2P22_TXMODE_NXP/appl/appFlash/src/FlashApplLF.c $
+      5            $LastChangedRevision: 463332 $
+      6            $LastChangedDate: 2017-06-15 09:38:17 -0600 (Thu, 15 Jun 2017) $
+      7            $LastChangedBy: krishna.balan $
+      8          -------------------------------------------------------------------------------
+      9            Project:      ATA5700
+     10            Target MCU:   ATA5700
+     11            Compiler:     IAR C/C++ Compiler for AVR 5.51.0
+     12          -------------------------------------------------------------------------------
+     13          
+     14          ******************************************************************************
+     15          * Copyright 2017, Microchip Technology Incorporated and its subsidiaries.     *
+     16          *                                                                             *
+     17          * This software is owned by the Microchip Technology Incorporated.            *
+     18          * Microchip hereby grants to licensee a personal                              *
+     19          * non-exclusive, non-transferable license to copy, use, modify, create        *
+     20          * derivative works of, and compile the Microchip Source Code and derivative   *
+     21          * works for the sole and exclusive purpose of creating custom software in     *
+     22          * support of licensee product to be used only in conjunction with a Microchip *
+     23          * integrated circuit as specified in the applicable agreement. Any            *        
+     24          * reproduction, modification, translation, compilation, or representation of  *
+     25          * this software except as specified above is prohibited without the express   *
+     26          * written permission of Microchip.                                            *
+     27          *                                                                             *
+     28          * Disclaimer: MICROCHIP MAKES NO WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,    *
+     29          * WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED    *
+     30          * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.         *
+     31          * Microchip reserves the right to make changes without further notice to the  *
+     32          * materials described herein. Microchip does not assume any liability arising *
+     33          * out of the application or use of any product or circuit described herein.   *
+     34          * Microchip does not authorize its products for use as critical components in *
+     35          * life-support systems where a malfunction or failure may reasonably be       *
+     36          * expected to result in significant injury to the user. The inclusion of      *
+     37          * Microchip products in a life-support systems application implies that the   *
+     38          * manufacturer assumes all risk of such use and in doing so indemnifies       *
+     39          * Microchip against all charges.                                              *
+     40          *                                                                             *
+     41          * Use may be limited by and subject to the applicable Microchip software      *
+     42          * license agreement.                                                          *
+     43          ******************************************************************************/
+     44          
+     45          /** \file FlashApplLF.c
+     46              this file contains an ATA5700 Flash application software
+     47          */
+     48          
+     49          /*===========================================================================*/
+     50          /*  INCLUDES                                                                 */
+     51          /*===========================================================================*/
+     52          #include "../../../firmware/init/src/init.h"
+
+   \                                 In  segment ABSOLUTE, at 0x1b0
+   \   union <unnamed> volatile __ext_io _A_RSCR
+   \                     _A_RSCR:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x1b1
+   \   union <unnamed> volatile __ext_io _A_RSSR
+   \                     _A_RSSR:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x1b2
+   \   union <unnamed> volatile __ext_io _A_RSMS1R
+   \                     _A_RSMS1R:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x1b4
+   \   union <unnamed> volatile __ext_io _A_RSFR
+   \                     _A_RSFR:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x1b8
+   \   union <unnamed> volatile __ext_io _A_RSRES1L
+   \                     _A_RSRES1L:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x1b9
+   \   union <unnamed> volatile __ext_io _A_RSRES1H
+   \                     _A_RSRES1H:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x1ba
+   \   union <unnamed> volatile __ext_io _A_RSRES2L
+   \                     _A_RSRES2L:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x1bb
+   \   union <unnamed> volatile __ext_io _A_RSRES2H
+   \                     _A_RSRES2H:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x1bc
+   \   union <unnamed> volatile __ext_io _A_RSRES3L
+   \                     _A_RSRES3L:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x1bd
+   \   union <unnamed> volatile __ext_io _A_RSRES3H
+   \                     _A_RSRES3H:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x1be
+   \   union <unnamed> volatile __ext_io _A_RSRES4L
+   \                     _A_RSRES4L:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x1bf
+   \   union <unnamed> volatile __ext_io _A_RSRES4H
+   \                     _A_RSRES4H:
+   \   00000000                      DS8 1
+     53          #include "../../../firmware/rftx/src/rftx.h"
+     54          #include "../../../firmware/lfrx/src/lfrx.h"
+     55          #include "../../../firmware/spi/src/ata5700_command_set_flash.h"
+     56          
+     57          #include "../../../firmware/init/src/init_flash.h"
+     58          #include "../../../firmware/system/src/system_flash.h"
+     59          
+     60          #include "../../../firmware/timer1/src/timer1.h"
+     61          #include "../../../firmware/globals/src/globals.h"
+     62          
+     63          #include "../../../firmware/lfrx/src/lfrx_flash.h"
+     64          #include "../../../firmware/tp/src/tp_flash.h"
+     65          
+     66          #include "../../../firmware/extif/src/extif_flash.h"
+     67          
+     68          #include "../../../firmware/lfrssi/src/lfrssi.h"
+     69          #include "../../../firmware/lfrssi/src/lfrssi_flash.h"
+     70          
+     71          #include "../../../firmware/calib/src/calib.h"
+     72          #include "../../../firmware/aes/src/aes.h"
+     73          
+     74          #include "../src/FlashApplLF.h"
+     75          #include "../src/FlashApplVars.h"
+     76          
+     77          
+     78          /*===========================================================================*/
+     79          /*  DEFINES                                                                  */
+     80          /*===========================================================================*/
+     81          #define DEFAULT_RSSI_REF_VALUE          (0x0A00)
+     82          #define DEFAULT_RSSI_NORM_VALUE         (0x0A00)
+     83          /*===========================================================================*/
+     84          /*  Modul Globals                                                             */
+     85          /*===========================================================================*/
+     86          extern uint16_t gExtLfRssi[3];
+     87          extern uint16_t gIntLfRssi[3];
+     88          extern uint16_t gLfRssiRes[3]; 
+     89          extern uint16_t wLfRssiref[3];
+     90          extern uint16_t wLfRssiNorm[3];
+     91          extern uint16_t wBref;
+     92          extern uint8_t gRSSI_ResBuffer[6];
+     93          extern uint8_t g3dVector[2];
+     94          extern uint8_t g3dVectorLin[2];
+     95          extern uint8_t g3dVectorFlag;
+     96          extern sEepFlashApp_RKEPEPS g_sEepFlashApp_RKEPEPS;
+     97          
+     98          
+     99          /*===========================================================================*/
+    100          /*  IMPLEMENTATION                                                           */
+    101          /*===========================================================================*/
+    102          
+    103          /*----------------------------------------------------------------------------- */
+    104          /**\brief  TODO - code here
+    105          
+    106           */
+    107          /*----------------------------------------------------------------------------- */
+    108             
+    109          //-----------------------------------------------------------------------------
+    110          /** \brief <b>ATA_StartRssi_flash_C</b>
+    111              Contains the complete flow for performing an LF RSSI measurement
+    112              
+    113          
+    114              \param[in]  none
+    115          
+    116          
+    117              \return none
+    118          
+    119          
+    120              \Traceability None
+    121          
+    122              \image none
+    123              \n
+    124          */
+    125          /*---------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    126          VOIDFUNC ATA_StartRssi_flash_C(uint8_t bmode)
+   \                     ATA_StartRssi_flash_C:
+    127          {
+    128            uint8_t srcVal =0;
+    129            ATA_lfRssiSetEepromConfig_C( srcVal );        
+   \   00000000   E000               LDI     R16, 0
+   \   00000002   ........           CALL    ATA_lfRssiSetEepromConfig_C
+    130            ATA_lfRssiOpen_C();       // Check!!! 
+   \   00000006   ........           CALL    ATA_lfRssiOpen_C
+    131            ATA_lfRssiMeasEnableLfReceiver_flash_C();
+   \   0000000A   ........           CALL    ATA_lfRssiMeasEnableLfReceiver_flash_C
+    132           // g_sLfRssiRegConfig_flash.bRscr = 0x08;
+    133            g_sLfRssiRegConfig_flash.bRscr = (BM_RSOFM | RSSDEN);
+   \   0000000E   E008               LDI     R16, 8
+   \   00000010   9300....           STS     g_sLfRssiRegConfig_flash, R16
+    134           
+    135            //g_sLfRssiRegConfig_flash.bRsdlyr = 24; //select the RSSI Tracking time 0x18 8uS sampling rate/484 uS duration
+    136            g_sLfRssiRegConfig_flash.bRsdlyr = 26; //select the RSSI Tracking time 0x18 8uS sampling rate/525 uS duration
+   \   00000014   E10A               LDI     R16, 26
+   \   00000016   9300....           STS     (g_sLfRssiRegConfig_flash + 3), R16
+    137          
+    138            g_sLfRssiRegConfig_flash.bRsms1r = 0x07;// select all channels
+   \   0000001A   E007               LDI     R16, 7
+   \   0000001C   9300....           STS     (g_sLfRssiRegConfig_flash + 1), R16
+    139            
+    140            //g_sLfRssiRegConfig_flash.bRsms2r = 0x70; // select number of samples for averaging 128 samples * 8 uS sample rate = 625 uS
+    141            g_sLfRssiRegConfig_flash.bRsms2r = 0x60; // select number of samples for averaging 64 samples * 8 uS sample rate = 512 uS
+   \   00000020   E600               LDI     R16, 96
+   \   00000022   9300....           STS     (g_sLfRssiRegConfig_flash + 2), R16
+    142          
+    143            g_sLfRssiRegConfig_flash.bRssrcr = 0x00; // no SRC calibration
+   \   00000026   E000               LDI     R16, 0
+   \   00000028   9300....           STS     (g_sLfRssiRegConfig_flash + 4), R16
+    144          
+    145            do 
+    146            { 
+    147              __no_operation();
+   \                     ??ATA_StartRssi_flash_C_0:
+   \   0000002C   0000               NOP
+    148            } while ((RSSR & 0x01) ==0);
+   \   0000002E   9100....           LDS     R16, _A_RSSR
+   \   00000032   FF00               SBRS    R16, 0
+   \   00000034   CFFB               RJMP    ??ATA_StartRssi_flash_C_0
+    149           
+    150          }
+   \   00000036   9508               RET
+   \   00000038                      REQUIRE _A_RSSR
+    151          
+    152          //-----------------------------------------------------------------------------
+    153          /** \brief <b>ATA_lfRssiCalcCorr_C</b>
+    154              Contains the complete flow for performing an LF RSSI measurement
+    155              
+    156          
+    157              \param[in]  none
+    158          
+    159          
+    160              \return none
+    161          
+    162          
+    163              \Traceability None
+    164          
+    165              \image none
+    166              \n
+    167          */
+    168          /*---------------------------------------------------------------------------*/
+    169          
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    170          VOIDFUNC ATA_lfRssiCalcCorr_C(void)
+   \                     ATA_lfRssiCalcCorr_C:
+    171          {
+    172            uint8_t index; 
+    173            RSMS1R &= ~BM_RSSCAL;
+   \   00000000   910001B2           LDS     R16, 434
+   \   00000004   770F               ANDI    R16, 0x7F
+   \   00000006   930001B2           STS     434, R16
+    174            RSCR   &= ~(BM_RSMODE1 | BM_RSOFM | BM_RSEOR);
+   \   0000000A   9100....           LDS     R16, _A_RSCR
+   \   0000000E   7D03               ANDI    R16, 0xD3
+   \   00000010   9300....           STS     _A_RSCR, R16
+    175            RSCR   |= BM_RSMODE0;
+   \   00000014   910001B0           LDS     R16, 432
+   \   00000018   6100               ORI     R16, 0x10
+   \   0000001A   930001B0           STS     432, R16
+    176            
+    177            for( index = 0; index < 3; index++ )
+   \   0000001E   E030               LDI     R19, 0
+   \   00000020   E023               LDI     R18, 3
+    178            {
+    179              RSFR = BM_RSOFF;
+   \                     ??ATA_lfRssiCalcCorr_C_0:
+   \   00000022   E008               LDI     R16, 8
+   \   00000024   9300....           STS     _A_RSFR, R16
+    180              
+    181              RSRES1L = gExtLfRssi[index] & 0x00FF;
+   \   00000028   E002               LDI     R16, 2
+   \   0000002A   9F30               MUL     R19, R16
+   \   0000002C   01F0               MOVW    R31:R30, R1:R0
+   \   0000002E   ....               SUBI    R30, LOW((-(gExtLfRssi) & 0xFFFF))
+   \   00000030   ....               SBCI    R31, (-(gExtLfRssi) & 0xFFFF) >> 8
+   \   00000032   8100               LD      R16, Z
+   \   00000034   9300....           STS     _A_RSRES1L, R16
+    182              RSRES1H = (gExtLfRssi[index]>>8);
+   \   00000038   01F0               MOVW    R31:R30, R1:R0
+   \   0000003A   ....               SUBI    R30, LOW((-(gExtLfRssi) & 0xFFFF))
+   \   0000003C   ....               SBCI    R31, (-(gExtLfRssi) & 0xFFFF) >> 8
+   \   0000003E   8101               LDD     R16, Z+1
+   \   00000040   9300....           STS     _A_RSRES1H, R16
+    183              RSRES2L = gIntLfRssi[index] & 0x00FF;
+   \   00000044   01F0               MOVW    R31:R30, R1:R0
+   \   00000046   ....               SUBI    R30, LOW((-(gIntLfRssi) & 0xFFFF))
+   \   00000048   ....               SBCI    R31, (-(gIntLfRssi) & 0xFFFF) >> 8
+   \   0000004A   8100               LD      R16, Z
+   \   0000004C   9300....           STS     _A_RSRES2L, R16
+    184              RSRES2H = (gIntLfRssi[index]>>8);
+   \   00000050   01F0               MOVW    R31:R30, R1:R0
+   \   00000052   ....               SUBI    R30, LOW((-(gIntLfRssi) & 0xFFFF))
+   \   00000054   ....               SBCI    R31, (-(gIntLfRssi) & 0xFFFF) >> 8
+   \   00000056   8101               LDD     R16, Z+1
+   \   00000058   9300....           STS     _A_RSRES2H, R16
+    185              RSRES3L = g_sLfRssi.bChanCalibVal[index + index];
+   \   0000005C   01F0               MOVW    R31:R30, R1:R0
+   \   0000005E   ....               SUBI    R30, LOW((-(g_sLfRssi) & 0xFFFF))
+   \   00000060   ....               SBCI    R31, (-(g_sLfRssi) & 0xFFFF) >> 8
+   \   00000062   8106               LDD     R16, Z+6
+   \   00000064   9300....           STS     _A_RSRES3L, R16
+    186              RSRES3H = g_sLfRssi.bChanCalibVal[index + index + 1];
+   \   00000068   01F0               MOVW    R31:R30, R1:R0
+   \   0000006A   ....               SUBI    R30, LOW((-(g_sLfRssi) & 0xFFFF))
+   \   0000006C   ....               SBCI    R31, (-(g_sLfRssi) & 0xFFFF) >> 8
+   \   0000006E   8107               LDD     R16, Z+7
+   \   00000070   9300....           STS     _A_RSRES3H, R16
+    187              
+    188              _CLI;
+   \   00000074   94F8               cli
+    189              RSCR |= BM_RSOS;    // start correction calculation
+   \   00000076   910001B0           LDS     R16, 432
+   \   0000007A   6002               ORI     R16, 0x02
+   \   0000007C   930001B0           STS     432, R16
+    190              
+    191              while( !(RSFR & BM_RSOFF) ){}
+   \                     ??ATA_lfRssiCalcCorr_C_1:
+   \   00000080   9100....           LDS     R16, _A_RSFR
+   \   00000084   FF03               SBRS    R16, 3
+   \   00000086   CFFC               RJMP    ??ATA_lfRssiCalcCorr_C_1
+    192              
+    193              gLfRssiRes[index]  = RSRES4L;
+   \   00000088   9100....           LDS     R16, _A_RSRES4L
+    194              gLfRssiRes[index] |= (RSRES4H<<8);
+   \   0000008C   9110....           LDS     R17, _A_RSRES4H
+   \   00000090   01F0               MOVW    R31:R30, R1:R0
+   \   00000092   ....               SUBI    R30, LOW((-(gLfRssiRes) & 0xFFFF))
+   \   00000094   ....               SBCI    R31, (-(gLfRssiRes) & 0xFFFF) >> 8
+   \   00000096   8300               ST      Z, R16
+   \   00000098   8311               STD     Z+1, R17
+    195            }
+   \   0000009A   9533               INC     R19
+   \   0000009C   952A               DEC     R18
+   \   0000009E   F609               BRNE    ??ATA_lfRssiCalcCorr_C_0
+    196          
+    197            RSFR = BM_RSOFF;
+   \   000000A0   E008               LDI     R16, 8
+   \   000000A2   9300....           STS     _A_RSFR, R16
+    198            
+    199            
+    200          }
+   \   000000A6   9508               RET
+   \   000000A8                      REQUIRE _A_RSMS1R
+   \   000000A8                      REQUIRE _A_RSCR
+   \   000000A8                      REQUIRE _A_RSFR
+   \   000000A8                      REQUIRE _A_RSRES1L
+   \   000000A8                      REQUIRE _A_RSRES1H
+   \   000000A8                      REQUIRE _A_RSRES2L
+   \   000000A8                      REQUIRE _A_RSRES2H
+   \   000000A8                      REQUIRE _A_RSRES3L
+   \   000000A8                      REQUIRE _A_RSRES3H
+   \   000000A8                      REQUIRE _A_RSRES4L
+   \   000000A8                      REQUIRE _A_RSRES4H
+    201          
+    202          
+    203          
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    204          VOIDFUNC CalcLinVector(void)
+   \                     CalcLinVector:
+    205          {
+   \   00000000   93BA               ST      -Y, R27
+   \   00000002   93AA               ST      -Y, R26
+   \   00000004   9721               SBIW    R29:R28, 1
+    206            uint8_t bMargin; 
+    207            
+    208            ATA_eepReadBytes_C(&bMargin, MARGIN_EEADR, 0x01);
+   \   00000006   E041               LDI     R20, 1
+   \   00000008   E72F               LDI     R18, 127
+   \   0000000A   E030               LDI     R19, 0
+   \   0000000C   018E               MOVW    R17:R16, R29:R28
+   \   0000000E   ........           CALL    ATA_eepReadBytes_C
+    209            ATA_eepReadBytes_C((uint8_t*)&wLfRssiref[0], (uint16_t)&g_sEepFlashApp_RKEPEPS.aub_rssi_intref, 0x06);
+   \   00000012   E046               LDI     R20, 6
+   \   00000014   ....               LDI     R18, LOW((g_sEepFlashApp_RKEPEPS + 36))
+   \   00000016   ....               LDI     R19, HIGH((g_sEepFlashApp_RKEPEPS + 36))
+   \   00000018   ....               LDI     R16, LOW(wLfRssiref)
+   \   0000001A   ....               LDI     R17, (wLfRssiref) >> 8
+   \   0000001C   ........           CALL    ATA_eepReadBytes_C
+    210            ATA_eepReadBytes_C((uint8_t*)&wLfRssiNorm[0], (uint16_t)&g_sEepFlashApp_RKEPEPS.aub_rssi_norm, 0x06);
+   \   00000020   E046               LDI     R20, 6
+   \   00000022   ....               LDI     R18, LOW((g_sEepFlashApp_RKEPEPS + 27))
+   \   00000024   ....               LDI     R19, HIGH((g_sEepFlashApp_RKEPEPS + 27))
+   \   00000026   ....               LDI     R16, LOW(wLfRssiNorm)
+   \   00000028   ....               LDI     R17, (wLfRssiNorm) >> 8
+   \   0000002A   ........           CALL    ATA_eepReadBytes_C
+    211            
+    212            /*--- EEPROM not yet intitialized, load dummy values in SRAM variables ---*/
+    213            if (wLfRssiref[0] == 0xFFFF) { wLfRssiref[0] = DEFAULT_RSSI_REF_VALUE; }
+   \   0000002E   ....               LDI     R26, LOW(wLfRssiref)
+   \   00000030   ....               LDI     R27, (wLfRssiref) >> 8
+   \   00000032   91ED               LD      R30, X+
+   \   00000034   91FC               LD      R31, X
+   \   00000036   3FEF               CPI     R30, 255
+   \   00000038   4FFF               SBCI    R31, 255
+   \   0000003A   F431               BRNE    ??CalcLinVector_0
+   \   0000003C   ....               LDI     R30, LOW(wLfRssiref)
+   \   0000003E   ....               LDI     R31, (wLfRssiref) >> 8
+   \   00000040   E000               LDI     R16, 0
+   \   00000042   E01A               LDI     R17, 10
+   \   00000044   8300               ST      Z, R16
+   \   00000046   8311               STD     Z+1, R17
+    214            if (wLfRssiref[1] == 0xFFFF) { wLfRssiref[1] = DEFAULT_RSSI_REF_VALUE; }
+   \                     ??CalcLinVector_0:
+   \   00000048   ....               LDI     R26, LOW((wLfRssiref + 2))
+   \   0000004A   ....               LDI     R27, HIGH((wLfRssiref + 2))
+   \   0000004C   91ED               LD      R30, X+
+   \   0000004E   91FC               LD      R31, X
+   \   00000050   3FEF               CPI     R30, 255
+   \   00000052   4FFF               SBCI    R31, 255
+   \   00000054   F431               BRNE    ??CalcLinVector_1
+   \   00000056   ....               LDI     R30, LOW(wLfRssiref)
+   \   00000058   ....               LDI     R31, (wLfRssiref) >> 8
+   \   0000005A   E000               LDI     R16, 0
+   \   0000005C   E01A               LDI     R17, 10
+   \   0000005E   8302               STD     Z+2, R16
+   \   00000060   8313               STD     Z+3, R17
+    215            if (wLfRssiref[2] == 0xFFFF) { wLfRssiref[2] = DEFAULT_RSSI_REF_VALUE; }
+   \                     ??CalcLinVector_1:
+   \   00000062   ....               LDI     R26, LOW((wLfRssiref + 4))
+   \   00000064   ....               LDI     R27, HIGH((wLfRssiref + 4))
+   \   00000066   91ED               LD      R30, X+
+   \   00000068   91FC               LD      R31, X
+   \   0000006A   3FEF               CPI     R30, 255
+   \   0000006C   4FFF               SBCI    R31, 255
+   \   0000006E   F431               BRNE    ??CalcLinVector_2
+   \   00000070   ....               LDI     R30, LOW(wLfRssiref)
+   \   00000072   ....               LDI     R31, (wLfRssiref) >> 8
+   \   00000074   E000               LDI     R16, 0
+   \   00000076   E01A               LDI     R17, 10
+   \   00000078   8304               STD     Z+4, R16
+   \   0000007A   8315               STD     Z+5, R17
+    216            
+    217            if (wLfRssiNorm[0] == 0xFFFF) { wLfRssiNorm[0] = DEFAULT_RSSI_NORM_VALUE; }
+   \                     ??CalcLinVector_2:
+   \   0000007C   ....               LDI     R26, LOW(wLfRssiNorm)
+   \   0000007E   ....               LDI     R27, (wLfRssiNorm) >> 8
+   \   00000080   91ED               LD      R30, X+
+   \   00000082   91FC               LD      R31, X
+   \   00000084   3FEF               CPI     R30, 255
+   \   00000086   4FFF               SBCI    R31, 255
+   \   00000088   F431               BRNE    ??CalcLinVector_3
+   \   0000008A   ....               LDI     R30, LOW(wLfRssiNorm)
+   \   0000008C   ....               LDI     R31, (wLfRssiNorm) >> 8
+   \   0000008E   E000               LDI     R16, 0
+   \   00000090   E01A               LDI     R17, 10
+   \   00000092   8300               ST      Z, R16
+   \   00000094   8311               STD     Z+1, R17
+    218            if (wLfRssiNorm[1] == 0xFFFF) { wLfRssiNorm[1] = DEFAULT_RSSI_NORM_VALUE; }
+   \                     ??CalcLinVector_3:
+   \   00000096   ....               LDI     R26, LOW((wLfRssiNorm + 2))
+   \   00000098   ....               LDI     R27, HIGH((wLfRssiNorm + 2))
+   \   0000009A   91ED               LD      R30, X+
+   \   0000009C   91FC               LD      R31, X
+   \   0000009E   3FEF               CPI     R30, 255
+   \   000000A0   4FFF               SBCI    R31, 255
+   \   000000A2   F431               BRNE    ??CalcLinVector_4
+   \   000000A4   ....               LDI     R30, LOW(wLfRssiNorm)
+   \   000000A6   ....               LDI     R31, (wLfRssiNorm) >> 8
+   \   000000A8   E000               LDI     R16, 0
+   \   000000AA   E01A               LDI     R17, 10
+   \   000000AC   8302               STD     Z+2, R16
+   \   000000AE   8313               STD     Z+3, R17
+    219            if (wLfRssiNorm[2] == 0xFFFF) { wLfRssiNorm[2] = DEFAULT_RSSI_NORM_VALUE; }
+   \                     ??CalcLinVector_4:
+   \   000000B0   ....               LDI     R26, LOW((wLfRssiNorm + 4))
+   \   000000B2   ....               LDI     R27, HIGH((wLfRssiNorm + 4))
+   \   000000B4   91ED               LD      R30, X+
+   \   000000B6   91FC               LD      R31, X
+   \   000000B8   3FEF               CPI     R30, 255
+   \   000000BA   4FFF               SBCI    R31, 255
+   \   000000BC   F431               BRNE    ??CalcLinVector_5
+   \   000000BE   ....               LDI     R30, LOW(wLfRssiNorm)
+   \   000000C0   ....               LDI     R31, (wLfRssiNorm) >> 8
+   \   000000C2   E000               LDI     R16, 0
+   \   000000C4   E01A               LDI     R17, 10
+   \   000000C6   8304               STD     Z+4, R16
+   \   000000C8   8315               STD     Z+5, R17
+    220            
+    221           /*---- Coil connections ATAB5702A-V2.3 PCB -----
+    222            
+    223            Z coil is variable index 0 connected to A1x
+    224            Y coil is variable index 1 connected to A2x
+    225            X coil is variable index 2 connected to A3x
+    226            
+    227            ----------------------------------------------*/
+    228             
+    229            bMargin=0; //Margin variable is no lnger usued so set to 0 
+   \                     ??CalcLinVector_5:
+   \   000000CA   E000               LDI     R16, 0
+   \   000000CC   8308               ST      Y, R16
+    230            
+    231            ATA_lfRssiCalcChanCalibVal_C(bMargin, &wLfRssiref[0],&wLfRssiNorm[0]);
+   \   000000CE   ....               LDI     R20, LOW(wLfRssiNorm)
+   \   000000D0   ....               LDI     R21, (wLfRssiNorm) >> 8
+   \   000000D2   ....               LDI     R18, LOW(wLfRssiref)
+   \   000000D4   ....               LDI     R19, (wLfRssiref) >> 8
+   \   000000D6   ........           CALL    ATA_lfRssiCalcChanCalibVal_C
+    232            ATA_lfRssiCalcCorr_C();
+   \   000000DA   ....               RCALL   ATA_lfRssiCalcCorr_C
+    233            for (uint8_t index=0;index < 3;index++)
+   \   000000DC   E010               LDI     R17, 0
+   \   000000DE   E003               LDI     R16, 3
+    234            {
+    235              gRSSI_ResBuffer[index+index]=(gLfRssiRes[index] & 0xFF);
+   \                     ??CalcLinVector_6:
+   \   000000E0   E022               LDI     R18, 2
+   \   000000E2   9F12               MUL     R17, R18
+   \   000000E4   01F0               MOVW    R31:R30, R1:R0
+   \   000000E6   ....               SUBI    R30, LOW((-(gLfRssiRes) & 0xFFFF))
+   \   000000E8   ....               SBCI    R31, (-(gLfRssiRes) & 0xFFFF) >> 8
+   \   000000EA   8120               LD      R18, Z
+   \   000000EC   01F0               MOVW    R31:R30, R1:R0
+   \   000000EE   ....               SUBI    R30, LOW((-(gRSSI_ResBuffer) & 0xFFFF))
+   \   000000F0   ....               SBCI    R31, (-(gRSSI_ResBuffer) & 0xFFFF) >> 8
+   \   000000F2   8320               ST      Z, R18
+    236              gRSSI_ResBuffer[index+index+1]=(gLfRssiRes[index] >>8);
+   \   000000F4   01F0               MOVW    R31:R30, R1:R0
+   \   000000F6   ....               SUBI    R30, LOW((-(gLfRssiRes) & 0xFFFF))
+   \   000000F8   ....               SBCI    R31, (-(gLfRssiRes) & 0xFFFF) >> 8
+   \   000000FA   8121               LDD     R18, Z+1
+   \   000000FC   01F0               MOVW    R31:R30, R1:R0
+   \   000000FE   ....               SUBI    R30, LOW((-(gRSSI_ResBuffer) & 0xFFFF))
+   \   00000100   ....               SBCI    R31, (-(gRSSI_ResBuffer) & 0xFFFF) >> 8
+   \   00000102   8321               STD     Z+1, R18
+    237            }
+   \   00000104   9513               INC     R17
+   \   00000106   950A               DEC     R16
+   \   00000108   F759               BRNE    ??CalcLinVector_6
+    238            ATA_lfRssiCalc3dVec_C(&gRSSI_ResBuffer[0],&g3dVector[0]);
+   \   0000010A   ....               LDI     R18, LOW(g3dVector)
+   \   0000010C   ....               LDI     R19, (g3dVector) >> 8
+   \   0000010E   ....               LDI     R16, LOW(gRSSI_ResBuffer)
+   \   00000110   ....               LDI     R17, (gRSSI_ResBuffer) >> 8
+   \   00000112   ........           CALL    ATA_lfRssiCalc3dVec_C
+    239            while (g_sLfRssi.bStatus & LFRSSI_STATUS_BM_3DVEC_DATA_AVAILABLE_FLAG ==0);//Wait for it
+    240            g3dVectorFlag = g_sLfRssi.bFlags;
+   \   00000116   9100....           LDS     R16, g_sLfRssi
+   \   0000011A   9300....           STS     g3dVectorFlag, R16
+    241            if ((g_sLfRssi.bFlags & LFRSSI_FLAGS_BM_ERROR_FLAG) != 0) {
+   \   0000011E   FD07               SBRC    R16, 7
+   \   00000120   C006               RJMP    ??CalcLinVector_7
+    242              // Error in getting 3dVec value
+    243              //g3dVector[0] = g3dVector[1] = 0;
+    244              //g3dVectorLin[0] = g3dVectorLin[1] = 0;
+    245            } 
+    246            else {
+    247              
+    248              ATA_lfRssiCalcLog2Lin_C(&g3dVector[0],&g3dVectorLin[0]);
+   \   00000122   ....               LDI     R18, LOW(g3dVectorLin)
+   \   00000124   ....               LDI     R19, (g3dVectorLin) >> 8
+   \   00000126   ....               LDI     R16, LOW(g3dVector)
+   \   00000128   ....               LDI     R17, (g3dVector) >> 8
+   \   0000012A   ........           CALL    ATA_lfRssiCalcLog2Lin_C
+    249              while (g_sLfRssi.bStatus & LFRSSI_STATUS_BM_LINEAR_DATA_AVAILABLE_FLAG ==0);//Wait for it
+    250              if ((g_sLfRssi.bFlags & LFRSSI_FLAGS_BM_ERROR_FLAG) != 0) {
+    251                  // Error in getting 3D vector liner value
+    252                  //g3dVectorLin[0] = g3dVectorLin[1] = 0;
+    253              }
+    254            }
+    255          }
+   \                     ??CalcLinVector_7:
+   \   0000012E   9621               ADIW    R29:R28, 1
+   \   00000130   91A9               LD      R26, Y+
+   \   00000132   91B9               LD      R27, Y+
+   \   00000134   9508               RET
+    256          
+    257          /**
+    258           * \brief Load compensation / normalization factors from EEprom
+    259           *
+    260           * \return void
+    261           */
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    262          void app_rssi_load_factors(void)
+   \                     app_rssi_load_factors:
+    263          {
+    264          #ifdef RSSI_COMPENSATION
+    265            // get RSSI internal ref
+    266            ATA_eepReadBytes_C(wLfRssiref[LF_AXIS_X], LF_RSSI_INTREF_X,2);
+    267            ATA_eepReadBytes_C(wLfRssiref[LF_AXIS_Y], LF_RSSI_INTREF_Y,2);
+    268            ATA_eepReadBytes_C(wLfRssiref[LF_AXIS_Z], LF_RSSI_INTREF_Z,2);
+    269          #else
+    270            wLfRssiref[LF_AXIS_X] = 0x00;
+   \   00000000   ....               LDI     R30, LOW(wLfRssiref)
+   \   00000002   ....               LDI     R31, (wLfRssiref) >> 8
+   \   00000004   E000               LDI     R16, 0
+   \   00000006   8304               STD     Z+4, R16
+   \   00000008   8305               STD     Z+5, R16
+    271            wLfRssiref[LF_AXIS_Y] = 0x00;
+   \   0000000A   8302               STD     Z+2, R16
+   \   0000000C   8303               STD     Z+3, R16
+    272            wLfRssiref[LF_AXIS_Z] = 0x00;
+   \   0000000E   8300               ST      Z, R16
+   \   00000010   8301               STD     Z+1, R16
+    273          #endif
+    274          #ifdef RSSI_NORMALISATION
+    275            // get RSSI compensation factor
+    276            ATA_eepReadBytes_C(wLfRssiNorm[LF_AXIS_X], LF_RSSI_INTREF_X,2);
+    277            ATA_eepReadBytes_C(wLfRssiNorm[LF_AXIS_Y], LF_RSSI_INTREF_Y,2);
+    278            ATA_eepReadBytes_C(wLfRssiNorm[LF_AXIS_Z], LF_RSSI_INTREF_Z,2);
+    279          #else
+    280            wLfRssiNorm[LF_AXIS_X] = 0x0100;                        //MiHa value unclear
+   \   00000012   ....               LDI     R30, LOW(wLfRssiNorm)
+   \   00000014   ....               LDI     R31, (wLfRssiNorm) >> 8
+   \   00000016   E011               LDI     R17, 1
+   \   00000018   8304               STD     Z+4, R16
+   \   0000001A   8315               STD     Z+5, R17
+    281            wLfRssiNorm[LF_AXIS_Y] = 0x0100;
+   \   0000001C   8302               STD     Z+2, R16
+   \   0000001E   8313               STD     Z+3, R17
+    282            wLfRssiNorm[LF_AXIS_Z] = 0x0100;
+   \   00000020   8300               ST      Z, R16
+   \   00000022   8311               STD     Z+1, R17
+    283          
+    284                       
+    285          #endif
+    286          }
+   \   00000024   9508               RET
+
+   Maximum stack usage in bytes:
+
+   CSTACK RSTACK Function
+   ------ ------ --------
+      0      2   ATA_StartRssi_flash_C
+        0      2   -> ATA_lfRssiMeasEnableLfReceiver_flash_C
+        0      2   -> ATA_lfRssiOpen_C
+        0      2   -> ATA_lfRssiSetEepromConfig_C
+      0      2   ATA_lfRssiCalcCorr_C
+      3      2   CalcLinVector
+        3      2   -> ATA_eepReadBytes_C
+        3      2   -> ATA_lfRssiCalc3dVec_C
+        3      2   -> ATA_lfRssiCalcChanCalibVal_C
+        3      2   -> ATA_lfRssiCalcCorr_C
+        3      2   -> ATA_lfRssiCalcLog2Lin_C
+      0      2   app_rssi_load_factors
+
+
+   Segment part sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+      56  ATA_StartRssi_flash_C
+     168  ATA_lfRssiCalcCorr_C
+     310  CalcLinVector
+       1  _A_RSCR
+       1  _A_RSFR
+       1  _A_RSMS1R
+       1  _A_RSRES1H
+       1  _A_RSRES1L
+       1  _A_RSRES2H
+       1  _A_RSRES2L
+       1  _A_RSRES3H
+       1  _A_RSRES3L
+       1  _A_RSRES4H
+       1  _A_RSRES4L
+       1  _A_RSSR
+      38  app_rssi_load_factors
+
+ 
+  12 bytes in segment ABSOLUTE
+ 572 bytes in segment CODE
+ 
+ 572 bytes of CODE memory
+   0 bytes of DATA memory (+ 12 bytes shared)
+
+Errors: none
+Warnings: none

@@ -1,0 +1,323 @@
+;----------------------------------------------------------------------------
+;
+;  Library routines for the ATMEL AT90S processors
+;  Short arithmetics
+; 
+;  Copyright 1996-2008 IAR Systems AB. All rights reserved.
+; 
+;  $Revision: 328482 $
+; 
+;----------------------------------------------------------------------------
+;
+; REMARKS ON THE SHIFT OPERATIONS:
+;---------------------------------
+; For shift counts > 15 on 16-bit operands, the ANSI standard defines the
+; corresponding result as 'undefined'.
+; In the present code these situations are treated as follows:
+; The shift count 'n' (input parameter) is always contained in a single
+; byte (Q0) which limits its range to 0..255.
+; If 15 < n < 129, $00_00 (or for arithmetic shift right possibly $FF_FF)
+; is returned in PW, but n loop iterations are always done.
+; For n > 129 the original value in PW is returned unaffected
+; and 'immediately'.
+;
+; REMARKS ON MULTIPLICATION:
+;---------------------------
+; For multiplication the ANSI standard requires that if the two operands
+; are unsigned 16-bit integers the result shall be congruent mod 2**16 to the
+; true mathematical result. The current implementation fulfills this
+; requirement. For other types of operands the result is considered as
+; 'undefined' in case of overflow.
+;
+; REMARKS ON DIVISION:
+;---------------------
+; Division of two positive integers shall always be truncating (e.g.
+; 14/5 is 2 not 3). This is fulfilled here, (and the remainder in such
+; cases is always a positive integer). If either operand is negative,
+; the choice is 'left to the discretion of the implementator.'
+;
+; During the division the carry bit resulting from a previously compare
+; or subtract is succesively shifted into the quotient. Since the carry
+; setting is the inverse of that expected by the algorithm, the quotinent
+; is complemented before return. This is a 'cheaper' operation than
+; explicitely setting the carry every time before it is shifted in.
+;
+    
+#include "macros.m90"
+
+;--------------------------------------------------------------
+; S_MUL_L02
+; 'short' (i.e. 16 bit) multiplication, both signed and unsigned
+; On call: PW = multiplier, QW = multiplicand
+; Returns 16-bit result in PW.
+; IMPORTANT: If possible, put smallest (in absolute sense) number in PW.
+;
+; Destroys: P0 P1 Q0 Q1 T0 T1
+;
+; SIZE: 32 bytes
+;
+
+    MODULE  ?S_MUL_L02
+    PUBLIC  ?S_MUL_L02
+    RSEG    CODE:CODE:NOROOT(1)
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?S_MUL_L02:
+    CLR     T0  ; Clear accumulator
+    CLR     T1  ;   - " -
+A21:    
+    CPI     P0,0    ; Will always clear carry. Sets Z only if P0=0.
+    CPC     P0,P1   ; If equal, old setting of Z is retained
+    BREQ    X21 ; Branch if multiplier exhausted (both P0 and P1 are 0)
+    LSR     P1  ; Shift multiplier right
+    ROR     P0
+    BRCC    B21 ; Branch if bit shifted out from multiplier was 0
+    ADD     T0,Q0   ; Add multiplicand
+    ADC     T1,Q1
+B21:    
+    LSL     Q0  ; Shift multiplicand left
+    ROL     Q1
+    RJMP    A21
+X21:    
+    MOV     P0,T0
+    MOV     P1,T1
+    RET
+
+    ENDMOD
+
+;--------------------------------------------------------------
+; S_EC_MUL_L02
+; 'short' (i.e. 16 bit) multiplication, both signed and unsigned, uses
+; enhanced core instructions.
+; On call: PW = multiplier, QW = multiplicand
+; Returns 16-bit result in PW.
+;
+; Destroys: P0 P1 T0 T1
+;
+; SIZE: 16 bytes
+;
+#if defined(__HAS_ENHANCED_CORE__) && defined(__HAS_MUL__)
+
+    MODULE  ?S_EC_MUL_L02
+    PUBLIC  ?S_EC_MUL_L02
+    RSEG    CODE:CODE:NOROOT(1)
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?S_EC_MUL_L02:      ; PW*QW = (P1*Q1 << 16 + P1*Q0 << 8 + P0 * Q1 << 8 + P0*Q0)
+    MUL     P1,Q0   ; P1*Q0 -> T1:T0
+    MOV     P1,T0   ; P1 = (P1*Q0) & 0xFF
+    MUL     P0,Q1   ; P0*Q1 -> T1:T0
+    ADD     P1,T0   ; P1 = (P1*Q0 + P0*Q1) & 0xFF
+    MUL     P0,Q0   ; P0*Q1 -> T1:T0
+    MOV     P0,T0   ; P0 = (P0*Q0) & 0xFF
+    ADD     P1,T1   ; P1 = (P1*Q0 + P0*Q1) & 0xFF + (P0*Q0) >> 8
+    RET
+
+    ENDMOD
+#endif
+
+;----------------------------------------------------------
+; S_SHL_L02
+; 'short' << n (n in 0..15)
+; Q0 contains n and is destroyed
+; PW contains value to be shifted and returns shifted value
+; No other register is destroyed
+;
+; See also comment about shift operations in the header.
+;
+; Destroys: P0 P1 Q0
+;
+; SIZE: 12 bytes
+
+    MODULE  ?S_SHL_L02
+    PUBLIC  ?S_SHL_L02
+    RSEG    CODE:CODE:NOROOT(1)
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?S_SHL_L02:
+    DEC     Q0
+    BRMI    X22     ; Done
+    LSL     P0
+    ROL     P1
+    RJMP    ?S_SHL_L02
+X22:    
+    RET
+
+    ENDMOD
+
+;----------------------------------------------------------
+; US_SHR_L02
+; 'short' >> n (n in 0..15), Unsigned
+; Q0 contains n and is destroyed
+; PW contains value to be shifted and returns shifted value
+; No other register is destroyed
+;
+; See also comments about shift operations in the header.
+;
+; Destroys: P0 P1 Q0
+;
+; SIZE: 12 bytes
+
+    MODULE  ?US_SHR_L02
+    PUBLIC  ?US_SHR_L02
+    RSEG    CODE:CODE:NOROOT(1)
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?US_SHR_L02:
+    DEC     Q0
+    BRMI    X23     ; Done
+    LSR     P1
+    ROR     P0
+    RJMP    ?US_SHR_L02
+X23:    
+    RET
+
+    ENDMOD
+
+;----------------------------------------------------------
+; SS_SHR_L02
+; 'short' >> n (n in 0..15), signed
+; Q0 contains n and is destroyed
+; PW contains value to be shifted and returns shifted value
+; No other register is destroyed
+;
+; See also comments about the shift operations in the header.
+;
+; Destroys: P0 P1 Q0
+;
+; SIZE: 12 bytes
+
+    MODULE  ?SS_SHR_L02
+    PUBLIC  ?SS_SHR_L02
+    RSEG    CODE:CODE:NOROOT(1)
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?SS_SHR_L02:
+    DEC     Q0
+    BRMI    X24     ; Done
+    ASR     P1
+    ROR     P0
+    RJMP    ?SS_SHR_L02
+X24:    
+    RET
+
+    ENDMOD
+
+;-------------------------------------------------------------
+; US_DIVMOD_L02
+; 'short' (i.e. 16 bit) unsigned division and modulo
+; On call: PW = dividend (i.e. number to be divided by divisor)
+;      QW = divisor
+; On return: PW = quotient, QW = remainder
+;
+; NOTE: This subroutine is also called from SS_DIVMOD_L02
+;
+; Destroys: P0 P1 Q0 Q1 T0 T1 Z0
+;
+; SIZE: 42 bytes
+;
+; TBD: The optimization for speed when Q1 .NE. 0, described in the
+;      algorithm has not been implemented here, it will add some
+;      8 instructions to the code.
+
+    MODULE  ?US_DIVMOD_L02
+    PUBLIC  ?US_DIVMOD_L02
+    RSEG    CODE:CODE:NOROOT(1)
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?US_DIVMOD_L02:
+    CLR     T0      ; Clear remainder
+    CLR     T1      ;     - "" -
+    LDI     Z0,15       ; Loop counter
+A25:    
+    ROL     P0      ; Shift quotient/dividend
+    ROL     P1      ;
+    ROL     T0      ; --> into remainder
+    ROL     T1      ;
+    CP      T0,Q0       ; Is remainder < divisor ?
+    CPC     T1,Q1
+    BRLO    A25_1       ; Yes, but carry 0 expected by algorithm,
+                ; is actually 1 here.
+;
+; Here if time to subtract, i.e. value in remainder is equal to
+; or larger than divisor.
+;
+    SUB     T0,Q0
+    SBC     T1,Q1       ; Carry 1 expected, is actually 0 !
+A25_1:  
+    DEC     Z0      ; Does not affect carry
+    BRPL    A25     ; All done
+B25:    
+    ROL     P0      ; Only quotient shifted
+    ROL     P1      ; in last step.
+#ifdef __HAS_ENHANCED_CORE__
+    MOVW    Q1:Q0,T1:T0     ; Remainder
+#else
+    MOV     Q0,T0       ; Remainder
+    MOV     Q1,T1
+#endif
+    COM     P0      ; Correct for inverse carry setting
+    COM     P1
+    RET
+
+    ENDMOD
+
+;-------------------------------------------------------------
+; SS_DIVMOD_L02
+; 'short' (i.e. 16 bit) signed division and modulo
+; On call: PW = dividend (i.e. number to be divided by divisor)
+;      QW = divisor
+; On return: PW = quotient, QW = remainder
+;
+; NOTE: This subroutine calls US_DIVMOD_L02
+;
+; Flag NEG_QUOTE uses bit 0 of Z1
+; Flag NEG_REM uses bit 1 of Z1
+;
+; Destroys: P0 P1 Q0 Q1 T0 T1 Z0 (via US_DIVMOD_L02) Z1
+;
+; SIZE: 46 bytes
+
+    MODULE  ?SS_DIVMOD_L02
+    PUBLIC  ?SS_DIVMOD_L02
+    IMPORT  ?US_DIVMOD_L02
+    RSEG    CODE:CODE:NOROOT(1)
+
+?NEG_Q:
+    NEG     Q1
+    NEG     Q0
+    SBCI    Q1,0
+    RET
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?SS_DIVMOD_L02:
+    CLR     Z1      ; Used for flags NEG_QUOTE and NEG_REM
+    TST     Q1      ; Is divisor negative ?
+    BRPL    A26     ; No
+    ORI     Z1,1        ; Set NEG_QUOTE
+    RCALL   ?NEG_Q      ; Negate divisor
+A26:    
+    TST     P1      ; Is dividend negative ?
+    BRPL    B26     ; No
+    COM     Z1      ; Invert NEG_QUOTE and set NEG_REM
+    RCALL   ?NEG_P      ; Negate divisor
+B26:    
+    XCALL   ?US_DIVMOD_L02
+    SBRC    Z1,0        ; Skip if not NEG_QUOTE
+    RCALL   ?NEG_P      ; Negate quotient
+C26:    
+    SBRC    Z1,1        ; Skip if not NEG_REM
+    RJMP    ?NEG_Q      ; Negate remainder
+X26:    
+    RET
+
+?NEG_P:
+    NEG P1
+    NEG P0
+    SBCI    P1,0
+    RET
+
+    END
+
+;----------------------------------------------------------------------------
+;  

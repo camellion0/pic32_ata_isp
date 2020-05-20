@@ -1,0 +1,108 @@
+;----------------------------------------------------------------------------
+;
+;   This module contains the AVR C and EC++ _exit and __exit routines.
+;
+;   File version:   $Revision: 328482 $
+;
+;----------------------------------------------------------------------------
+#include    "macros.m90"
+
+#ifdef _ECLIB
+;----------------------------------------------------------------------------
+; Function/module: _exit(int code)
+;----------------------------------------------------------------------------
+    MODULE  ?_exit
+
+    RSEG    CODE:CODE:NOROOT(1)
+    EXTERN  __exit
+    PUBLIC  _exit
+
+_exit:  REQUIRE ?jump_to___exit
+
+;----------------------------------------------------------------------------
+;   ?SAVE is required by the two code snippets below to save the
+;   exit code during global object destruction and stdio clean up.
+;----------------------------------------------------------------------------
+    RSEG    CODE:CODE:NOROOT(1)
+
+?SAVE:  MOV R24,R16 ; This is a dead end so it's OK to trash the registers
+    MOV R25,R17
+
+    REQUIRE ?RESTORE
+
+;----------------------------------------------------------------------------
+;   This code is required if __record_needed_destruction has been called.
+;----------------------------------------------------------------------------
+    RSEG    CODE:CODE:NOROOT(1)
+    PUBLIC  __cstart_call_dtors
+    EXTERN  __call_dtors
+
+    REQUIRE ?SAVE
+
+__cstart_call_dtors:
+    XCALL   __call_dtors
+;----------------------------------------------------------------------------
+;   This code is required when stdio has been used.
+;----------------------------------------------------------------------------
+    RSEG    CODE:CODE:NOROOT(1)
+    PUBLIC  __cstart_closeall
+    EXTERN  _Close_all
+
+    REQUIRE ?SAVE
+
+__cstart_closeall:
+    XCALL   _Close_all
+
+;----------------------------------------------------------------------------
+;   If the registers was saved by the ?SAVE code above then this
+;   code is required to restore the registers.
+;----------------------------------------------------------------------------
+    RSEG    CODE:CODE:NOROOT(1)
+
+?RESTORE:
+    MOV R16,R24
+    MOV R17,R25
+
+    RSEG    CODE:CODE:NOROOT(1)
+
+?jump_to___exit:
+    XJMP    __exit
+
+    ENDMOD
+#endif /* _ECLIB */
+
+;----------------------------------------------------------------------------
+;   This is the final dead end. Loop over a SLEEP instruction.
+;----------------------------------------------------------------------------
+    MODULE  ?__exit
+    RSEG    CODE:CODE:NOROOT(1)
+    PUBLIC  __exit
+    PUBLIC  ?C_EXIT
+    PUBLIC  ?C_FUNCALL
+    PUBLIC  ?DBG_0
+    PUBLIC  ?DBG_1
+?DBG_0  EQU 0
+?DBG_1  EQU 0
+
+#ifndef _ECLIB
+    PUBLIC  _exit
+    PUBLIC  exit
+exit:
+_exit:
+#endif /* !_ECLIB */
+
+?C_FUNCALL
+    NOP         ; For C-SPY command line func-calls
+__exit:
+?C_EXIT:
+
+;----------------------------------------------------------------------------
+; The next two lines could be replaced by user defined code.    
+;----------------------------------------------------------------------------
+    SLEEP
+    RJMP    __exit
+
+    END
+
+;----------------------------------------------------------------------------
+;  

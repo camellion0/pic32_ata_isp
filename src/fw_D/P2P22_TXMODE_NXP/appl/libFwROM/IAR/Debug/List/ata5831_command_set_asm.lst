@@ -1,0 +1,1371 @@
+###############################################################################
+#                                                                             #
+#     IAR Assembler V6.70.1.929/W32 for Atmel AVR 05/Apr/2016  13:30:37       #
+#     Copyright 2015 IAR Systems AB.                                          #
+#                                                                             #
+#           Target option =  Relative jumps do not wrap                       #
+#           Source file   =  C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\firmware\spi\src\ata5831_command_set_asm.s90#
+#           List file     =  C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\List\ata5831_command_set_asm.lst#
+#           Object file   =  C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\Obj\ata5831_command_set_asm.r90#
+#           Command line  =  C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\firmware\spi\src\ata5831_command_set_asm.s90 #
+#                            -v3                                              #
+#                            -OC:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\Obj #
+#                            -s+ -w+ -r -DHAVE_BITREVERSAL -M<>               #
+#                            -LC:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\List #
+#                            -t8 -u_enhancedCore -D__HAS_ENHANCED_CORE__=1    #
+#                            -D__HAS_MUL__=1                                  #
+#                            -IC:\Program Files (x86)\IAR Systems\Embedded Workbench 7.3\avr\INC\ #
+#                            -IC:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\..\..\..\firmware\stdc\src\ #
+#                            -IC:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\..\..\..\firmware\globals\src\ #
+#                            -IC:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\..\..\..\firmware\eep\src\ #
+#                            -IC:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\..\..\..\firmware\rf\src\ #
+#                            -IC:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\..\..\..\firmware\calib\src\ #
+#                            -D__MEMORY_MODEL__=2                             #
+#                                                                             #
+###############################################################################
+
+      1    00000000              //lint -e9059
+      2    00000000              /* *ASM***************************************
+                                 *********************************
+      3    00000000                Use of this software is subject to Atmel's
+                                  Software License Agreement.
+      4    00000000              ----------------------------------------------
+                                 ---------------------------------
+      5    00000000                $URL: http://svnservulm.corp.atmel.com/svn/C
+                                 DB/Apps/SW_Lib/Car_Access/CARS_GEN2/ATAB5702A/
+                                 Branches/P2_Gen2_Merge/firmware/spi/src/ata583
+                                 1_command_set_asm.s90 $
+      6    00000000                $LastChangedRevision: 328482 $
+      7    00000000                $LastChangedDate: 2015-07-22 13:17:23 -0600
+                                  (Wed, 22 Jul 2015) $
+      8    00000000                $LastChangedBy: grueter $
+      9    00000000              ----------------------------------------------
+                                 ---------------------------------
+     10    00000000                Project:      ATA5700
+     11    00000000                Target MCU:   ATA5700
+     12    00000000                Compiler:     IAR Assembler for AVR
+                                  6.30.1
+     13    00000000              ----------------------------------------------
+                                 ---------------------------------
+     14    00000000              
+     15    00000000              **********************************************
+                                 ********************************
+     16    00000000              * Copyright 2011, Atmel Automotive GmbH       
+                                                                 *
+     17    00000000              *                                             
+                                                                 *
+     18    00000000              * This software is owned by the Atmel
+                                  Automotive GmbH                        
+                                  *
+     19    00000000              * and is protected by and subject to worldwide
+                                  patent protection.             *
+     20    00000000              * Atmel hereby grants to licensee a personal, 
+                                                                 *
+     21    00000000              * non-exclusive, non-transferable license to
+                                  copy, use, modify, create        *
+     22    00000000              * derivative works of, and compile the Atmel
+                                  Source Code and derivative       *
+     23    00000000              * works for the sole purpose of creating
+                                  custom software in support of       
+                                  *
+     24    00000000              * licensee product to be used only in
+                                  conjunction with a Atmel integrated    
+                                  *
+     25    00000000              * circuit as specified in the applicable
+                                  agreement. Any reproduction,        
+                                  *
+     26    00000000              * modification, translation, compilation, or
+                                  representation of this           *
+     27    00000000              * software except as specified above is
+                                  prohibited without the express       
+                                  *
+     28    00000000              * written permission of Atmel.                
+                                                                 *
+     29    00000000              *                                             
+                                                                 *
+     30    00000000              * Disclaimer: ATMEL MAKES NO WARRANTY OF ANY
+                                  KIND,EXPRESS OR IMPLIED,         *
+     31    00000000              * WITH REGARD TO THIS MATERIAL, INCLUDING, BUT
+                                  NOT LIMITED TO, THE IMPLIED    *
+     32    00000000              * WARRANTIES OF MERCHANTABILITY AND FITNESS
+                                  FOR A PARTICULAR PURPOSE.         *
+     33    00000000              * Atmel reserves the right to make changes
+                                  without further notice to the      *
+     34    00000000              * materials described herein. Atmel does not
+                                  assume any liability arising     *
+     35    00000000              * out of the application or use of any product
+                                  or circuit described herein.   *
+     36    00000000              * Atmel does not authorize its products for
+                                  use as critical components in     *
+     37    00000000              * life-support systems where a malfunction or
+                                  failure may reasonably be       *
+     38    00000000              * expected to result in significant injury to
+                                  the user. The inclusion of      *
+     39    00000000              * Atmel products in a life-support systems
+                                  application implies that the       *
+     40    00000000              * manufacturer assumes all risk of such use
+                                  and in doing so indemnifies       *
+     41    00000000              * Atmel against all charges.                  
+                                                                 *
+     42    00000000              *                                             
+                                                                 *
+     43    00000000              * Use may be limited by and subject to the
+                                  applicable Atmel software          *
+     44    00000000              * license agreement.                          
+                                                                 *
+     45    00000000              **********************************************
+                                 *********************************/
+     46    00000000              /* \file ata5831_command_set_asm.s90
+     47    00000000              */
+     48    00000000              //lint -restore
+     49    00000000              
+     50    00000000                  NAME ata5831_command_set_asm
+     51    00000000              
+     52    00000000                  PUBLIC ATA_5831StartSckNssTimer_ASM
+     53    00000000                  PUBLIC ATA_5831CommandReady_ASM
+     54    00000000                  PUBLIC ATA_5831CommandTimer1Isr_ASM
+     55    00000000                  PUBLIC ATA_5831ReadCommandFillTxFifo_ASM
+     56    00000000                  PUBLIC ATA_5831WriteCommandFillTxFifo_ASM
+     57    00000000                  PUBLIC ATA_5831CommandSpiFifoIsr_ASM
+     58    00000000                  PUBLIC ATA_5831ReadCommandReadRxFifo_ASM
+     59    00000000                  PUBLIC ATA_5831ReadCommandReadDummyRxFifo_
+ ASM
+     60    00000000                  PUBLIC ATA_5831WriteCommandReadRxFifo_ASM
+     61    00000000              
+     62    00000000                  EXTERN g_sTimer1
+     63    00000000              
+     64    00000000                  EXTERN ATA_spiRxBufferDisableInt_ASM
+     65    00000000                  EXTERN ATA_spiRxBufferEnd_ASM
+     66    00000000              
+     67    00000000                  EXTERN ATA_spiTxBufferDisableInt_ASM
+     68    00000000                  EXTERN ATA_spiTxBufferEnd_ASM
+     69    00000000              
+     70    00000000                  EXTERN g_sSpiConfig
+     71    00000000              /* ===========================================
+                                 ================================*/
+     72    00000000              /*   INCLUDES                                 
+                                                                 */
+     73    00000000              /* ===========================================
+                                 ================================*/
+     74    00000000              #include "regs.inc"
+     75    00000000              #include "ata5831_command_set.h"
+     76    00000000              #include "spi.h"
+     77    00000000              #include "globals.h"
+     78    00000000              #include "../../timer1/src/timer1.h"
+     79    00000000              
+     80    00000000              /* ===========================================
+                                 ================================*/
+     81    00000000              /*   Modul Globals                            
+                                                                 */
+     82    00000000              /* ===========================================
+                                 ================================*/
+     83    00000000              /* ===========================================
+                                 ================================*/
+     84    00000000              /*   Macros                                   
+                                                                 */
+     85    00000000              /* ===========================================
+                                 ================================*/
+     86    00000000              /* ===========================================
+                                 ================================*/
+     87    00000000              /*   Implementation                           
+                                                                 */
+     88    00000000              /* ===========================================
+                                 ================================*/
+     89    00000000              
+     90    00000000              /* -------------------------------------------
+                                 --------------------------------*/
+     91    00000000              /** \brief <b>ATA_spi_master_start_sck_nss_tim
+                                 er_ASM</b>
+     92    00000000                  shall start timer1 according to configurat
+                                 ion in ::g_sAta5831 .sck_nss
+     93    00000000              
+     94    00000000                  Used Variables
+     95    00000000                  \li [out] ::g_sTimer1 is global Timer1
+                                  component data
+     96    00000000                  \li [in] ::g_sAta5831 is global ATA5831
+                                  component data
+     97    00000000              
+     98    00000000                  \image html ATA_5831StartSckNssTimer_ASM.p
+                                 ng
+     99    00000000              
+    100    00000000                  \internal
+    101    00000000                  \li 010: Initialize T1COR register of
+                                  timer1 with content of variable 
+    102    00000000                           ::g_sAta5831 .bSckNssHighDelay
+    103    00000000                  \li 020: Reset and restart timer 1 by
+                                  setting T1CR.T1RES and T1CR.T1ENA
+    104    00000000                  \li 030: Select function ::ATA_5831Command
+                                 Ready_ASM for Timer 1 interrupt 
+    105    00000000                           service routine
+    106    00000000                  \li 040: Disable SPI RX/TX FIFO interrupts
+                                  
+    107    00000000                  \li 050: Restore used registers and return
+                                  from interrupt
+    108    00000000              
+    109    00000000                  \Derived{Yes}
+    110    00000000              
+    111    00000000                  \Rationale{This function is required in
+                                  order to implement the SPI
+    112    00000000                             interface handling}
+    113    00000000              
+    114    00000000                  \Traceability   N/A
+    115    00000000                  \endinternal
+    116    00000000              \n
+    117    00000000              */
+    118    00000000              /* -------------------------------------------
+                                 --------------------------------*/
+    119    00000000              RSEG CODE:CODE:ROOT(1)
+    120    00000000              ATA_5831StartSckNssTimer_ASM:
+    121    00000000              
+    122    00000000                  ATA_SET_FUNCTION_TRACE_POINT_ISR_ASM   
+                                  ATA_5831StartSckNssTimer_ASM , 0x00
+    122.1  00000000              #ifdef FUNCTION_TRACE_ASM
+    122.2  00000000 93EF             PUSH    R30
+    122.3  00000002              
+    122.4  00000002                  ; TRCDR = data;
+    122.5  00000002 E0E0             LDI     R30 , 0x00
+    122.6  00000004 93E000FF         STS     TRCDR , R30
+    122.7  00000008              
+    122.8  00000008                  ; TRCIDL = (uint8_t) ((uint16_t)id >>
+                                  0);
+    122.9  00000008 ....             LDI     R30 , low(ATA_5831StartSckNssTimer
+ _ASM/2)
+    122.10 0000000A 93E000FC         STS     TRCIDL , R30
+    122.11 0000000E              
+    122.12 0000000E                  ; TRCIDH = (uint8_t) ((uint16_t)id >>
+                                  8);
+    122.13 0000000E ....             LDI     R30 , high(ATA_5831StartSckNssTime
+ r_ASM/2)
+    122.14 00000010 93E000FD         STS     TRCIDH , R30
+    122.15 00000014              
+    122.16 00000014 91EF             POP     R30
+    122.17 00000016              #endif
+    122.18 00000016                  ENDM
+    123    00000016              
+    124    00000016                  /* LLR-Ref: 010 */
+    125    00000016 91E0....         LDS     R30 , g_sAta5831 + SATA5831_SCK_NS
+                                                 S_HIGH_DELAY
+    126    0000001A 93E00070         STS     T1COR , R30
+    127    0000001E              
+    128    0000001E                  /* LLR-Ref: 020 */
+    129    0000001E 9A8D             SBI     T1CR , T1RES
+    130    00000020 9A8F             SBI     T1CR , T1ENA
+    131    00000022              
+    132    00000022                  /* LLR-Ref: 030 */
+    133    00000022 ....             LDI     R30 , low(ATA_5831CommandReady_ASM
+                                                 /2)
+    134    00000024 93E0....         STS     g_sTimer1 + 1 , R30
+    135    00000028              
+    136    00000028 ....             LDI     R30 , high(ATA_5831CommandReady_AS
+                                                 M/2)
+    137    0000002A 93E0....         STS     g_sTimer1 + 2 , R30
+    138    0000002E              
+    139    0000002E                  /* LLR-Ref: 040 */
+    140    0000002E 27EE             CLR     R30
+    141    00000030 93E00158         STS     SFIR , R30
+    142    00000034                  /* LLR-Ref: 050 */
+    143    00000034 91FF             POP     R31
+    144    00000036 BFFF             OUT     SREG , R31
+    145    00000038              
+    146    00000038 91FF             POP     R31
+    147    0000003A 91EF             POP     R30
+    148    0000003C 9518             RETI
+    149    0000003E              
+    150    0000003E              /* -------------------------------------------
+                                 --------------------------------*/
+    151    0000003E              /** \brief <b>ATA_5831CommandReady_ASM</b>
+    152    0000003E                  shall set the NSS pin to high
+    153    0000003E              
+    154    0000003E                  Variable Usage:
+    155    0000003E                  \li [out] ::g_sTimer1 is global Timer1
+                                  component data
+    156    0000003E              
+    157    0000003E                  \image html ATA_5831CommandReady_ASM.png
+    158    0000003E              
+    159    0000003E                  \internal
+    160    0000003E                  \li 010: Reset timer 1 by setting
+                                  T1CR.T1RES
+    161    0000003E                  \li 020: Unlock timer 1 by clearing
+                                  ::g_sTimer1 .bStatus
+    162    0000003E                  \li 030: Remove power from timer 1 by
+                                  setting PRR1.PRT1
+    163    0000003E                  \li 040: Set NSS pin to high
+    164    0000003E              
+    165    0000003E                  \Derived{Yes}
+    166    0000003E              
+    167    0000003E                  \Rationale{This function is required in
+                                  order to implement the SPI
+    168    0000003E                             interface handling}
+    169    0000003E              
+    170    0000003E                  \Traceability   N/A
+    171    0000003E                  \endinternal
+    172    0000003E              \n
+    173    0000003E              */
+    174    0000003E              /* -------------------------------------------
+                                 --------------------------------*/
+    175    00000000              RSEG CODE:CODE:ROOT(1)
+    176    00000000              ATA_5831CommandReady_ASM:
+    177    00000000              
+    178    00000000                  ATA_SET_FUNCTION_TRACE_POINT_ISR_ASM   
+                                  ATA_5831CommandReady_ASM , 0x00
+    178.1  00000000              #ifdef FUNCTION_TRACE_ASM
+    178.2  00000000 93EF             PUSH    R30
+    178.3  00000002              
+    178.4  00000002                  ; TRCDR = data;
+    178.5  00000002 E0E0             LDI     R30 , 0x00
+    178.6  00000004 93E000FF         STS     TRCDR , R30
+    178.7  00000008              
+    178.8  00000008                  ; TRCIDL = (uint8_t) ((uint16_t)id >>
+                                  0);
+    178.9  00000008 ....             LDI     R30 , low(ATA_5831CommandReady_ASM
+ /2)
+    178.10 0000000A 93E000FC         STS     TRCIDL , R30
+    178.11 0000000E              
+    178.12 0000000E                  ; TRCIDH = (uint8_t) ((uint16_t)id >>
+                                  8);
+    178.13 0000000E ....             LDI     R30 , high(ATA_5831CommandReady_AS
+ M/2)
+    178.14 00000010 93E000FD         STS     TRCIDH , R30
+    178.15 00000014              
+    178.16 00000014 91EF             POP     R30
+    178.17 00000016              #endif
+    178.18 00000016                  ENDM
+    179    00000016              
+    180    00000016                  /* LLR-Ref: 010 */
+    181    00000016 E2E0             LDI     R30 , BM_T1RES
+    182    00000018 BBE1             OUT     T1CR, R30
+    183    0000001A              
+    184    0000001A                  /* LLR-Ref: 020 */
+    185    0000001A 27EE             CLR     R30
+    186    0000001C 93E0....         STS     g_sTimer1 + 0 , R30
+    187    00000020              
+    188    00000020                  /* LLR-Ref: 030 */
+    189    00000020 9A08             SBI     PRR1 , PRT1
+    190    00000022              
+    191    00000022                  /* LLR-Ref: 040 */
+    192    00000022 9A59             SBI     PORTD , SPI_NSS_PIN
+    193    00000024              
+    194    00000024 9508             RET
+    195    00000026              
+    196    00000026              
+    197    00000026              /* -------------------------------------------
+                                 --------------------------------*/
+    198    00000026              /** \brief <b>ATA_5831CommandTimer1Isr_ASM</b>
+    199    00000026                  shall write the command bytes to the SPI
+                                  FIFO according to the settings
+    200    00000026                  in g_sAta5831.bConfig
+    201    00000026              
+    202    00000026                  Variable Usage:
+    203    00000026                  \li [in,out]  ::g_sAta5831 is global
+                                  ATA5831 component data
+    204    00000026              
+    205    00000026                  \image html ATA_5831CommandTimer1Isr_ASM.p
+                                 ng
+    206    00000026              
+    207    00000026                  \internal
+    208    00000026                  \li 010: Disable Timer 1 by clearing bit
+                                  T1CR.T1ENA
+    209    00000026                  \li 020: Write command id to SPDR register
+                                  via ::g_sAta5831 .bId
+    210    00000026                  \li 030: Decrement byte counter via
+                                  ::g_sAta5831 .bTelegramLength)
+    211    00000026                  \li 040: Check if length indicator is
+                                  present in command via flag ::g_sAta5831
+    212    00000026                           .bConfig[6]
+    213    00000026                           IF no length indicator is
+                                  needed
+    214    00000026                              goto 070
+    215    00000026                           ELSE
+    216    00000026                              continue with writing length
+                                  parameter
+    217    00000026                  \li 050: Write command length to SPDR
+                                  register via ::g_sAta5831 .bLength
+    218    00000026                  \li 060: Decrement byte counter via
+                                  ::g_sAta5831 .bTelegramLength
+    219    00000026                  \li 070: Check if address indicator is
+                                  present in command via flag ::g_sAta5831
+    220    00000026                           .bConfig[5]
+    221    00000026                           IF no address indicator is
+                                  needed
+    222    00000026                              goto 120
+    223    00000026                           ELSE
+    224    00000026                              continue with writing address
+                                  parameter
+    225    00000026                  \li 080: Write high byte of command
+                                  address to SPDR register via ::g_sAta5831
+    226    00000026                           .wAddress
+    227    00000026                  \li 090: Decrement byte counter via
+                                  ::g_sAta5831 .bTelegramLength
+    228    00000026                  \li 100: Write low byte of command address
+                                  to SPDR register via variable 
+    229    00000026                           ::g_sAta5831 .wAddress
+    230    00000026                  \li 110: Decrement byte counter via
+                                  ::g_sAta5831 .bTelegramLength
+    231    00000026                  \li 120: Check command type of current
+                                  command via flag ::g_sAta5831 .bConfig[7]
+    232    00000026                           IF command type is WRITE_COMMAND
+    233    00000026                              goto 180
+    234    00000026                  \li 130: Fill SPI txfifo with 0x00, since
+                                  command type is READ_COMMAND
+    235    00000026                  \li 140: Update byte counter via
+                                  ::g_sAta5831 .bTelegramLength
+    236    00000026                  \li 150: Enable SPI rxfifo interrupt with
+                                  max fifo fill level
+    237    00000026                  \li 160: IF less than max fifo fill
+                                  level
+    238    00000026                              correct fifo length with
+                                  content of variable ::g_sAta5831 .bRxLength
+    239    00000026                  \li 170: goto 210
+    240    00000026                  \li 180: IF command type is WRITE_COMMAND,
+                                  call function 
+    241    00000026                           ::ATA_5831WriteCommandFillTxFifo_
+                                 ASM to fill SPI Tx FIFO
+    242    00000026                  \li 190: Update byte counter via
+                                  ::g_sAta5831 .bTelegramLength
+    243    00000026                  \li 200: Enable SPI Tx FIFO interrupt with
+                                  fill level 0
+    244    00000026                  \li 210: Restore used registers and
+                                  return
+    245    00000026              
+    246    00000026                  \Derived{Yes}
+    247    00000026              
+    248    00000026                  \Rationale{This function is required in
+                                  order to implement the SPI
+    249    00000026                             interface handling}
+    250    00000026              
+    251    00000026                  \Traceability   N/A
+    252    00000026                  \endinternal
+    253    00000026              \n
+    254    00000026              */
+    255    00000026              /* -------------------------------------------
+                                 --------------------------------*/
+    256    00000000              RSEG CODE:CODE:ROOT(1)
+    257    00000000              ATA_5831CommandTimer1Isr_ASM:
+    258    00000000              
+    259    00000000                  ATA_SET_FUNCTION_TRACE_POINT_ISR_ASM   
+                                  ATA_5831CommandTimer1Isr_ASM , 0x00
+    259.1  00000000              #ifdef FUNCTION_TRACE_ASM
+    259.2  00000000 93EF             PUSH    R30
+    259.3  00000002              
+    259.4  00000002                  ; TRCDR = data;
+    259.5  00000002 E0E0             LDI     R30 , 0x00
+    259.6  00000004 93E000FF         STS     TRCDR , R30
+    259.7  00000008              
+    259.8  00000008                  ; TRCIDL = (uint8_t) ((uint16_t)id >>
+                                  0);
+    259.9  00000008 ....             LDI     R30 , low(ATA_5831CommandTimer1Isr
+ _ASM/2)
+    259.10 0000000A 93E000FC         STS     TRCIDL , R30
+    259.11 0000000E              
+    259.12 0000000E                  ; TRCIDH = (uint8_t) ((uint16_t)id >>
+                                  8);
+    259.13 0000000E ....             LDI     R30 , high(ATA_5831CommandTimer1Is
+ r_ASM/2)
+    259.14 00000010 93E000FD         STS     TRCIDH , R30
+    259.15 00000014              
+    259.16 00000014 91EF             POP     R30
+    259.17 00000016              #endif
+    259.18 00000016                  ENDM
+    260    00000016              
+    261    00000016 930F             PUSH    R16
+    262    00000018 931F             PUSH    R17
+    263    0000001A              
+    264    0000001A 9110....         LDS     R17 , g_sAta5831 + SATA5831_TELEGR
+                                                 AM_LENGTH
+    265    0000001E                  /* LLR-Ref: 010 */
+    266    0000001E 988F             CBI     T1CR , T1ENA
+    267    00000020              
+    268    00000020                  /* LLR-Ref: 020 */
+    269    00000020 91E0....         LDS     R30 , g_sAta5831 + SATA5831_ID
+    270    00000024 BDEE             OUT     SPDR , R30
+    271    00000026                  /* LLR-Ref: 030 */
+    272    00000026 951A             DEC     R17
+    273    00000028              
+    274    00000028 91F0....         LDS     R31 , g_sAta5831 + SATA5831_CONFIG
+    275    0000002C                  /* LLR-Ref: 040 */
+    276    0000002C FFF6             SBRS    R31 , SATA5831_CONFIG_LENGTH_INDIC
+                                                 ATOR
+    277    0000002E C004             RJMP    _SKIP_LENGTH_INDICATOR
+    278    00000030                  /* LLR-Ref: 050 */
+    279    00000030 91E0....         LDS     R30 , g_sAta5831 + SATA5831_LENGTH
+    280    00000034 BDEE             OUT     SPDR , R30
+    281    00000036                  /* LLR-Ref: 060 */
+    282    00000036 951A             DEC     R17
+    283    00000038              _SKIP_LENGTH_INDICATOR:
+    284    00000038                  /* LLR-Ref: 070 */
+    285    00000038 FFF5             SBRS    R31 , SATA5831_CONFIG_ADDRESS_INDI
+                                                 CATOR
+    286    0000003A C008             RJMP    _SKIP_ADDRESS_INDICATOR
+    287    0000003C                  /* LLR-Ref: 080 */
+    288    0000003C 91E0....         LDS     R30 , g_sAta5831 + SATA5831_ADDRES
+                                                 S + 1
+    289    00000040 BDEE             OUT     SPDR , R30
+    290    00000042                  /* LLR-Ref: 090 */
+    291    00000042 951A             DEC     R17
+    292    00000044              
+    293    00000044                  /* LLR-Ref: 100 */
+    294    00000044 91E0....         LDS     R30 , g_sAta5831 + SATA5831_ADDRES
+                                                 S + 0
+    295    00000048 BDEE             OUT     SPDR , R30
+    296    0000004A                  /* LLR-Ref: 110 */
+    297    0000004A 951A             DEC     R17
+    298    0000004C              _SKIP_ADDRESS_INDICATOR:
+    299    0000004C                  /* LLR-Ref: 120 */
+    300    0000004C FDF7             SBRC    R31 , SATA5831_CONFIG_READ_WRITE_I
+                                                 NDICATOR
+    301    0000004E C017             RJMP    _WRITE_COMMAND
+    302    00000050              
+    303    00000050              _READ_COMMAND:
+    304    00000050                  /* LLR-Ref: 130 */
+    305    00000050 ........         CALL    ATA_5831ReadCommandFillTxFifo_ASM
+    306    00000054                  /* LLR-Ref: 140 */
+    307    00000054 9310....         STS     g_sAta5831 + SATA5831_TELEGRAM_LEN
+                                                        GTH , R17
+    308    00000058                  /* LLR-Ref: 150 */
+    309    00000058                  ENABLE_SPIRXBUFFER  ATA_5831CommandSpiFifo
+                                 Isr_ASM , RX_BUFFER_FIFO_SIZE
+    309.1  00000058                  ; SFIR = BM_SRIE | num_bytes -> generate
+                                  interrupt if num_bytes bytes in rx fifo
+    309.2  00000058 E0EC             LDI  R30 , (BM_SRIE | RX_BUFFER_FIFO_SIZE)
+    309.3  0000005A 93E00158         STS  SFIR , R30
+    309.4  0000005E              
+    309.5  0000005E ....             LDI  R30 , low(ATA_5831CommandSpiFifoIsr_A
+ SM/2)
+    309.6  00000060 93E0....         STS  g_sSpiConfig + SPICONFIG_PTMP ,
+  R30
+    309.7  00000064              
+    309.8  00000064 ....             LDI  R30 , high(ATA_5831CommandSpiFifoIsr_
+ ASM/2)
+    309.9  00000066 93E0....         STS  g_sSpiConfig + SPICONFIG_PTMP + 1 ,
+  R30
+    309.10 0000006A                  ENDM
+    310    0000006A                  /* LLR-Ref: 160 */
+    311    0000006A 9100....         LDS     R16 , g_sAta5831 + SATA5831_RX_LEN
+                                                 GTH
+    312    0000006E 3004             CPI     R16 , RX_BUFFER_FIFO_SIZE
+    313    00000070 F49C             BRGE    _END_COMMAND_FILL_TXFIFO
+    314    00000072 9100....         LDS     R16 , g_sAta5831 + SATA5831_RX_LEN
+                                                 GTH
+    315    00000076 6008             ORI     R16 , BM_SRIE
+    316    00000078 93000158         STS     SFIR , R16
+    317    0000007C                  /* LLR-Ref: 170*/
+    318    0000007C C00D             RJMP    _END_COMMAND_FILL_TXFIFO
+    319    0000007E              
+    320    0000007E              _WRITE_COMMAND:
+    321    0000007E                  /* LLR-Ref: 180 */
+    322    0000007E ........         CALL    ATA_5831WriteCommandFillTxFifo_ASM
+    323    00000082                  /* LLR-Ref: 190 */
+    324    00000082 9310....         STS     g_sAta5831 + SATA5831_TELEGRAM_LEN
+                                                        GTH , R17
+    325    00000086                  /* LLR-Ref: 200 */
+    326    00000086                  ENABLE_SPITXBUFFER  ATA_5831CommandSpiFifo
+                                 Isr_ASM , 0
+    326.1  00000086                  ; SFIR = BM_STIE | num_bytes -> generate
+                                  interrupt if num_bytes bytes in tx fifo
+    326.2  00000086 E8E0             LDI  R30 , (BM_STIE | 0 << 4)
+    326.3  00000088 93E00158         STS  SFIR , R30
+    326.4  0000008C              
+    326.5  0000008C ....             LDI  R30 , low(ATA_5831CommandSpiFifoIsr_A
+ SM/2)
+    326.6  0000008E 93E0....         STS  g_sSpiConfig + SPICONFIG_PTMP ,
+  R30
+    326.7  00000092              
+    326.8  00000092 ....             LDI  R30 , high(ATA_5831CommandSpiFifoIsr_
+ ASM/2)
+    326.9  00000094 93E0....         STS  g_sSpiConfig + SPICONFIG_PTMP + 1 ,
+  R30
+    326.10 00000098                  ENDM
+    327    00000098              
+    328    00000098              _END_COMMAND_FILL_TXFIFO:
+    329    00000098                  /* LLR-Ref: 210 */
+    330    00000098 911F             POP     R17
+    331    0000009A 910F             POP     R16
+    332    0000009C 9508             RET
+    333    0000009E              
+    334    0000009E              /* -------------------------------------------
+                                 --------------------------------*/
+    335    0000009E              /** \brief <b>ATA_5831ReadCommandFillTxFifo_AS
+                                 M</b>
+    336    0000009E                  shall fill the SPI Tx FIFO with 0x00 until
+                                  maximum fill level or telegram
+    337    0000009E                  length is reached. This routine is used
+                                  for read commands.
+    338    0000009E              
+    339    0000009E                  \image html ATA_5831ReadCommandFillTxFifo_
+                                 ASM.png
+    340    0000009E              
+    341    0000009E                  \internal
+    342    0000009E                  \li 010: Check SPI Tx FIFO fill level via
+                                  register SFFR.RFL[2..]
+    343    0000009E                           IF FIFO is full
+    344    0000009E                              return
+    345    0000009E                           ELSE
+    346    0000009E                              goto 040
+    347    0000009E                  \li 020: Check byte counter via ::g_sAta58
+                                 31 .bTelegramLength (register R17)
+    348    0000009E                           IF byte counter is 0
+    349    0000009E                              return
+    350    0000009E                           ELSE
+    351    0000009E                              continue
+    352    0000009E                  \li 030: Write 0x00 to register SPDR
+    353    0000009E                  \li 040: Decrement byte counter ::g_sAta58
+                                 31 .bTelegramLength (register R17)
+    354    0000009E              
+    355    0000009E                  \Derived{Yes}
+    356    0000009E              
+    357    0000009E                  \Rationale{This function is required in
+                                  order to implement the ATA5831
+    358    0000009E                             message handling}
+    359    0000009E              
+    360    0000009E                  \Traceability   N/A
+    361    0000009E                  \endinternal
+    362    0000009E              \n
+    363    0000009E              */
+    364    0000009E              /* -------------------------------------------
+                                 --------------------------------*/
+    365    00000000              RSEG CODE:CODE:ROOT(1)
+    366    00000000              ATA_5831ReadCommandFillTxFifo_ASM:
+    367    00000000              
+    368    00000000                  ATA_SET_FUNCTION_TRACE_POINT_ISR_ASM   
+                                  ATA_5831ReadCommandFillTxFifo_ASM ,
+                                  0x00
+    368.1  00000000              #ifdef FUNCTION_TRACE_ASM
+    368.2  00000000 93EF             PUSH    R30
+    368.3  00000002              
+    368.4  00000002                  ; TRCDR = data;
+    368.5  00000002 E0E0             LDI     R30 , 0x00
+    368.6  00000004 93E000FF         STS     TRCDR , R30
+    368.7  00000008              
+    368.8  00000008                  ; TRCIDL = (uint8_t) ((uint16_t)id >>
+                                  0);
+    368.9  00000008 ....             LDI     R30 , low(ATA_5831ReadCommandFillT
+ xFifo_ASM/2)
+    368.10 0000000A 93E000FC         STS     TRCIDL , R30
+    368.11 0000000E              
+    368.12 0000000E                  ; TRCIDH = (uint8_t) ((uint16_t)id >>
+                                  8);
+    368.13 0000000E ....             LDI     R30 , high(ATA_5831ReadCommandFill
+ TxFifo_ASM/2)
+    368.14 00000010 93E000FD         STS     TRCIDH , R30
+    368.15 00000014              
+    368.16 00000014 91EF             POP     R30
+    368.17 00000016              #endif
+    368.18 00000016                  ENDM
+    369    00000016              
+    370    00000016 27EE             CLR     R30
+    371    00000018              _READ_COMMAND_FILL_TX_FIFO:
+    372    00000018                  /* LLR-Ref: 010 */
+    373    00000018 91F00157         LDS     R31 , SFFR
+    374    0000001C FDF6             SBRC    R31 , TFL2
+    375    0000001E C005             RJMP    _READ_COMMAND_FILL_TXFIFO_END
+    376    00000020                  /* LLR-Ref: 020 */
+    377    00000020 2311             TST     R17
+    378    00000022 F019             BREQ    _READ_COMMAND_FILL_TXFIFO_END
+    379    00000024                  /* LLR-Ref: 030 */
+    380    00000024 BDEE             OUT     SPDR , R30
+    381    00000026                  /* LLR-Ref: 040 */
+    382    00000026 951A             DEC     R17
+    383    00000028              
+    384    00000028 CFF7             RJMP    _READ_COMMAND_FILL_TX_FIFO
+    385    0000002A              _READ_COMMAND_FILL_TXFIFO_END:
+    386    0000002A 9508             RET
+    387    0000002C              
+    388    0000002C              /* -------------------------------------------
+                                 --------------------------------*/
+    389    0000002C              /** \brief <b>ATA_5831WriteCommandFillTxFifo_A
+                                 SM</b>
+    390    0000002C                  shall fill the spi tx fifo with data
+                                  starting from  address g_sSpiConfig.pAddress
+    391    0000002C                  until maximum fill level or telegram
+                                  length is reached.
+    392    0000002C                  This routine is used for write commands.
+    393    0000002C              
+    394    0000002C                  Variable Usage:
+    395    0000002C                  \li [in,out] ::g_sSpiConfig is global SPI
+                                  component data
+    396    0000002C                  \li [in] ::g_sAta5831 is global ATA5831
+                                  component data
+    397    0000002C              
+    398    0000002C                  \image html ATA_5831WriteCommandFillTxFifo
+                                 _ASM.png
+    399    0000002C              
+    400    0000002C                  \internal
+    401    0000002C                  \li 010: Load address pointer ::g_sSpiConf
+                                 ig .pAddress to Z register
+    402    0000002C                  \li 020: Check SPI TXFIFO fill level via
+                                  register SFFR.RFL[2..]
+    403    0000002C                           IF FIFO is full
+    404    0000002C                              goto 080
+    405    0000002C                  \li 030: Check byte counter via ::g_sAta58
+                                 31 .bTelegramLength (register R17)
+    406    0000002C                           IF byte counter is 0
+    407    0000002C                              goto 080
+    408    0000002C                  \li 040: Read from address Pointer (Z
+                                  register) and increment Z register
+    409    0000002C                  \li 050: Write content of R25 to SPDR
+                                  register
+    410    0000002C                  \li 060: Decrement byte counter via
+                                  ::g_sAta5831 .bTelegramLength (register
+                                  R17)
+    411    0000002C                  \li 070: goto 020
+    412    0000002C                  \li 080: Update address pointer ::g_sSpiCo
+                                 nfig .pAddress with Z register 
+    413    0000002C                           content and return
+    414    0000002C              
+    415    0000002C                  \Derived{Yes}
+    416    0000002C              
+    417    0000002C                  \Rationale{This function is required in
+                                  order to implement the ATA5831
+    418    0000002C                             message handling}
+    419    0000002C              
+    420    0000002C                  \Traceability   N/A
+    421    0000002C                  \endinternal
+    422    0000002C              \n
+    423    0000002C              */
+    424    0000002C              /* -------------------------------------------
+                                 --------------------------------*/
+    425    00000000              RSEG CODE:CODE:ROOT(1)
+    426    00000000              ATA_5831WriteCommandFillTxFifo_ASM:
+    427    00000000              
+    428    00000000                  ATA_SET_FUNCTION_TRACE_POINT_ISR_ASM   
+                                  ATA_5831WriteCommandFillTxFifo_ASM ,
+                                  0x00
+    428.1  00000000              #ifdef FUNCTION_TRACE_ASM
+    428.2  00000000 93EF             PUSH    R30
+    428.3  00000002              
+    428.4  00000002                  ; TRCDR = data;
+    428.5  00000002 E0E0             LDI     R30 , 0x00
+    428.6  00000004 93E000FF         STS     TRCDR , R30
+    428.7  00000008              
+    428.8  00000008                  ; TRCIDL = (uint8_t) ((uint16_t)id >>
+                                  0);
+    428.9  00000008 ....             LDI     R30 , low(ATA_5831WriteCommandFill
+ TxFifo_ASM/2)
+    428.10 0000000A 93E000FC         STS     TRCIDL , R30
+    428.11 0000000E              
+    428.12 0000000E                  ; TRCIDH = (uint8_t) ((uint16_t)id >>
+                                  8);
+    428.13 0000000E ....             LDI     R30 , high(ATA_5831WriteCommandFil
+ lTxFifo_ASM/2)
+    428.14 00000010 93E000FD         STS     TRCIDH , R30
+    428.15 00000014              
+    428.16 00000014 91EF             POP     R30
+    428.17 00000016              #endif
+    428.18 00000016                  ENDM
+    429    00000016              
+    430    00000016 939F             PUSH    R25
+    431    00000018                  /* LLR-Ref: 010 */
+    432    00000018 91E0....         LDS     R30 , g_sSpiConfig + SPICONFIG_PAD
+                                                 DRESS
+    433    0000001C 91F0....         LDS     R31 , g_sSpiConfig + SPICONFIG_PAD
+                                                 DRESS + 1
+    434    00000020              
+    435    00000020              _WRITE_COMMAND_FILL_TX_FIFO:
+    436    00000020                  /* LLR-Ref: 020 */
+    437    00000020 91900157         LDS     R25 , SFFR
+    438    00000024 FD96             SBRC    R25 , TFL2
+    439    00000026 C006             RJMP    _WRITE_COMMAND_FILL_TXFIFO_END
+    440    00000028                  /* LLR-Ref: 030 */
+    441    00000028 2311             TST     R17
+    442    0000002A F021             BREQ    _WRITE_COMMAND_FILL_TXFIFO_END
+    443    0000002C                  /* LLR-Ref: 040 */
+    444    0000002C 9191             LD      R25 , Z+
+    445    0000002E                  /* LLR-Ref: 050 */
+    446    0000002E BD9E             OUT     SPDR , R25
+    447    00000030              
+    448    00000030                  /* LLR-Ref: 060 */
+    449    00000030 951A             DEC     R17
+    450    00000032                  /* LLR-Ref: 070 */
+    451    00000032 CFF6             RJMP    _WRITE_COMMAND_FILL_TX_FIFO
+    452    00000034              _WRITE_COMMAND_FILL_TXFIFO_END:
+    453    00000034              
+    454    00000034                  /* LLR-Ref: 080 */
+    455    00000034 93E0....         STS     g_sSpiConfig + SPICONFIG_PADDRESS 
+                                                              , R30
+    456    00000038 93F0....         STS     g_sSpiConfig + SPICONFIG_PADDRESS
+                                                           + 1 , R31
+    457    0000003C              
+    458    0000003C 919F             POP     R25
+    459    0000003E 9508             RET
+    460    00000040              
+    461    00000040              
+    462    00000040              /* -------------------------------------------
+                                 --------------------------------*/
+    463    00000040              /** \brief <b>ATA_5831CommandSpiFifoIsr_ASM</b
+                                 >
+    464    00000040                  shall
+    465    00000040                      - read/write the data from/to the
+                                  SPIFIFOS.
+    466    00000040                      - store the event bytes in variable
+                                  g_sAta5831
+    467    00000040                  This routine is used for read and write
+                                  commands.
+    468    00000040              
+    469    00000040                  Variable Usage:
+    470    00000040                  \li [in,out]      ::g_sAta5831 is global
+                                  ATA5831 component data
+    471    00000040              
+    472    00000040                  \image html ATA_5831CommandSpiFifoIsr_ASM.
+                                 png
+    473    00000040              
+    474    00000040                  \internal
+    475    00000040                  \li 010: IF event bytes are read via flag
+                                  ::g_sAta5831 .bConfig[3]
+    476    00000040                             skip reading of event flags and
+                                  goto 090
+    477    00000040                  \li 020: Read from SPDR register
+    478    00000040                  \li 030: Decrement byte counter ::g_sAta58
+                                 31 .bRxLength (register R17)
+    479    00000040                  \li 040: Store data to ::g_sAta5831
+                                  .bEventsSystem
+    480    00000040                  \li 050: Read from SPDR register
+    481    00000040                  \li 060: Store data to ::g_sAta5831
+                                  .bEventsSystem
+    482    00000040                  \li 070: Decrement byte counter ::g_sAta58
+                                 31 .bRxLength (register R17)
+    483    00000040                  \li 080: Set bit ::g_sAta5831 .bConfig[3]
+                                  to indicate EVENT_BYTES_READ
+    484    00000040                  \li 090: IF byte counter is 0
+    485    00000040                              skip reading from RXFIFO and
+                                  goto 150
+    486    00000040                           ELSE
+    487    00000040                              start reading from RXFIFO
+    488    00000040                  \li 100: Check command type of current
+                                  command via flag ::g_sAta5831 .bConfig[7]
+    489    00000040                           IF command type is WRITE_COMMAND
+    490    00000040                              skip reading from SPI RX FIFO
+                                  and goto 140
+    491    00000040                           ELSE
+    492    00000040                              start reading from SPI RX
+                                  FIFO
+    493    00000040                  \li 110: Check if dummy bytes shall be
+                                  inserted via flag ::g_sAta5831 .bConfig[4]
+    494    00000040                           IF dummy bytes shall be
+                                  inserted
+    495    00000040                              call function ::ATA_5831ReadCo
+                                 mmandReadDummyRxFifo_ASM
+    496    00000040                  \li 120: Check if all dummy bytes are read
+                                  via flag ::g_sAta5831 .bConfig[4]
+    497    00000040                           IF all dummy bytes are read
+    498    00000040                              call function ::ATA_5831ReadCo
+                                 mmandReadRxFifo_ASM
+    499    00000040                  \li 130: Goto refilling of SPI TX
+                                  FIFO
+    500    00000040                  \li 140: Read SPI RX FIFO
+    501    00000040                               call function ::ATA_5831Write
+                                 CommandReadRxFifo_ASM
+    502    00000040                  \li 150: Update byte counter ::g_sAta5831
+                                  .bRxLength (register R17)
+    503    00000040                  \li 160: Check if all bytes are copied to
+                                  the SPI TX FIFO via variable 
+    504    00000040                           ::g_sAta5831 .bTelegramLength
+    505    00000040                           IF all bytes copied
+    506    00000040                              goto 230
+    507    00000040                           ELSE
+    508    00000040                              continue with copying data to
+                                  SPI TX FIFO
+    509    00000040                  \li 170: Check command type of current
+                                  command via flag ::g_sAta5831 .bConfig[7]
+    510    00000040                           IF command type is WRITE_COMMAND
+    511    00000040                              goto 210
+    512    00000040                  \li 180: Fill data to SPI TX FIFO
+    513    00000040                              call function ::ATA_5831ReadCo
+                                 mmandFillTxFifo_ASM
+    514    00000040                  \li 190: Update ::g_sAta5831 .bTelegramLen
+                                 gth (register R17)
+    515    00000040                  \li 200: goto 230
+    516    00000040                  \li 210: Fill data to SPI TX FIFO
+    517    00000040                              call function ::ATA_5831WriteC
+                                 ommandFillTxFifo_ASM
+    518    00000040                  \li 220: update ::g_sAta5831 .bTelegramLen
+                                 gth (register R17)
+    519    00000040                  \li 230: Check if all bytes are received
+                                  via ::g_sAta5831 .bRxLength
+    520    00000040                           IF reception is complete
+    521    00000040                              goto 270
+    522    00000040                           ELSE
+    523    00000040                              reenable SPI RX FIFO
+                                  interrupt
+    524    00000040                  \li 240: Reenable SPI RX FIFO interrupt
+                                  with a fill level of RX_BUFFER_FIFO_SIZE
+    525    00000040                  \li 250: Check if remaining bytes to
+                                  receive is greater or equal than 
+    526    00000040                           RX_BUFFER_FIFO_SIZE
+    527    00000040                           IF yes
+    528    00000040                              skip SPI RX FIFO fill level
+                                  correction and goto 260
+    529    00000040                           ELSE
+    530    00000040                              correct SPI RX FIFO fill level
+                                  with remaining bytes 
+    531    00000040                              ::g_sAta5831 .bRxLength
+    532    00000040                  \li 260: End of SPI FIFO interrupt service
+                                  routine
+    533    00000040                           restore used registers and return
+                                  from interrupt
+    534    00000040                  \li 270: Start Timer 1 for setting NSS to
+                                  high
+    535    00000040                           restore used registers and call
+                                  function ::ATA_5831StartSckNssTimer_ASM
+    536    00000040              
+    537    00000040                  \Derived{Yes}
+    538    00000040              
+    539    00000040                  \Rationale{This function is required in
+                                  order to implement the ATA5831
+    540    00000040                             message handling}
+    541    00000040              
+    542    00000040                  \Traceability   N/A
+    543    00000040                  \endinternal
+    544    00000040              \n
+    545    00000040              */
+    546    00000040              /* -------------------------------------------
+                                 --------------------------------*/
+    547    00000000              RSEG CODE:CODE:ROOT(1)
+    548    00000000              ATA_5831CommandSpiFifoIsr_ASM:
+    549    00000000              
+    550    00000000                  ATA_SET_FUNCTION_TRACE_POINT_ISR_ASM   
+                                  ATA_5831CommandSpiFifoIsr_ASM , 0x00
+    550.1  00000000              #ifdef FUNCTION_TRACE_ASM
+    550.2  00000000 93EF             PUSH    R30
+    550.3  00000002              
+    550.4  00000002                  ; TRCDR = data;
+    550.5  00000002 E0E0             LDI     R30 , 0x00
+    550.6  00000004 93E000FF         STS     TRCDR , R30
+    550.7  00000008              
+    550.8  00000008                  ; TRCIDL = (uint8_t) ((uint16_t)id >>
+                                  0);
+    550.9  00000008 ....             LDI     R30 , low(ATA_5831CommandSpiFifoIs
+ r_ASM/2)
+    550.10 0000000A 93E000FC         STS     TRCIDL , R30
+    550.11 0000000E              
+    550.12 0000000E                  ; TRCIDH = (uint8_t) ((uint16_t)id >>
+                                  8);
+    550.13 0000000E ....             LDI     R30 , high(ATA_5831CommandSpiFifoI
+ sr_ASM/2)
+    550.14 00000010 93E000FD         STS     TRCIDH , R30
+    550.15 00000014              
+    550.16 00000014 91EF             POP     R30
+    550.17 00000016              #endif
+    550.18 00000016                  ENDM
+    551    00000016              
+    552    00000016 930F             PUSH    R16
+    553    00000018 931F             PUSH    R17
+    554    0000001A              
+    555    0000001A 9110....         LDS     R17 , g_sAta5831 + SATA5831_RX_LEN
+                                                 GTH
+    556    0000001E              
+    557    0000001E                  /* LLR-Ref: 010 */
+    558    0000001E 91F0....         LDS     R31 , g_sAta5831 + SATA5831_CONFIG
+    559    00000022 FDF3             SBRC    R31 , SATA5831_CONFIG_EVENT_BYTES_
+                                                 READ_FLAG
+    560    00000024 C00B             RJMP    _SKIP_EVENTFLAG
+    561    00000026                  /* LLR-Ref: 020 */
+    562    00000026 B5EE             IN      R30 , SPDR
+    563    00000028                  /* LLR-Ref: 030 */
+    564    00000028 951A             DEC     R17
+    565    0000002A                  /* LLR-Ref: 040 */
+    566    0000002A 93E0....         STS     g_sAta5831 + SATA5831_EVENTS_SYSTE
+                                                        M , R30
+    567    0000002E                  /* LLR-Ref: 050 */
+    568    0000002E B5EE             IN      R30 , SPDR
+    569    00000030                  /* LLR-Ref: 060 */
+    570    00000030 93E0....         STS     g_sAta5831 + SATA5831_EVENTS_EVENT
+                                                         , R30
+    571    00000034                  /* LLR-Ref: 070 */
+    572    00000034 951A             DEC     R17
+    573    00000036                  /* LLR-Ref: 080 */
+    574    00000036 60F8             SBR     R31 , BM_SATA5831_CONFIG_EVENT_BYT
+                                                 ES_READ_FLAG
+    575    00000038 93F0....         STS     g_sAta5831 + SATA5831_CONFIG ,
+                                                         R31
+    576    0000003C              _SKIP_EVENTFLAG:
+    577    0000003C                  /* LLR-Ref: 090 */
+    578    0000003C 2311             TST     R17
+    579    0000003E F079             BREQ    _END_READ_RXFIFO
+    580    00000040              
+    581    00000040                  /* LLR-Ref: 100 */
+    582    00000040 91F0....         LDS     R31 , g_sAta5831 + SATA5831_CONFIG
+    583    00000044 FDF7             SBRC    R31 , SATA5831_CONFIG_READ_WRITE_I
+                                                 NDICATOR
+    584    00000046 C009             RJMP    _READ_RXFIFO_WRITE_COMMAND
+    585    00000048                  /* LLR-Ref: 110 */
+    586    00000048 FDF4             SBRC    R31 , SATA5831_CONFIG_DUMMY_INDICA
+                                                 TOR
+    587    0000004A ........         CALL    ATA_5831ReadCommandReadDummyRxFifo
+ _ASM
+    588    0000004E              
+    589    0000004E                  /* LLR-Ref: 120 */
+    590    0000004E 91F0....         LDS     R31 , g_sAta5831 + SATA5831_CONFIG
+    591    00000052 FFF4             SBRS    R31 , SATA5831_CONFIG_DUMMY_INDICA
+                                                 TOR
+    592    00000054 ........         CALL    ATA_5831ReadCommandReadRxFifo_ASM
+    593    00000058                  /* LLR-Ref: 130 */
+    594    00000058 C002             RJMP    _END_READ_RXFIFO
+    595    0000005A              _READ_RXFIFO_WRITE_COMMAND:
+    596    0000005A                  /* LLR-Ref: 140 */
+    597    0000005A ........         CALL    ATA_5831WriteCommandReadRxFifo_ASM
+    598    0000005E              _END_READ_RXFIFO:
+    599    0000005E                  /* LLR-Ref: 150 */
+    600    0000005E 9310....         STS     g_sAta5831 + SATA5831_RX_LENGTH ,
+                                                         R17
+    601    00000062              
+    602    00000062                  /* LLR-Ref: 160 */
+    603    00000062 9110....         LDS     R17 , g_sAta5831 + SATA5831_TELEGR
+                                                 AM_LENGTH
+    604    00000066 2311             TST     R17
+    605    00000068 F069             BREQ    _TRANSMISSION_COMMAND_COMPLETE
+    606    0000006A                  /* LLR-Ref: 170 */
+    607    0000006A 91F0....         LDS     R31 , g_sAta5831 + SATA5831_CONFIG
+    608    0000006E FDF7             SBRC    R31 , SATA5831_CONFIG_READ_WRITE_I
+                                                 NDICATOR
+    609    00000070 C005             RJMP    _WRITE_TXFIFO_WRITE_COMMAND
+    610    00000072              _WRITE_TXFIFO_READ_COMMAND:
+    611    00000072                  /* LLR-Ref: 180 */
+    612    00000072 ........         CALL    ATA_5831ReadCommandFillTxFifo_ASM
+    613    00000076                  /* LLR-Ref: 190 */
+    614    00000076 9310....         STS     g_sAta5831 + SATA5831_TELEGRAM_LEN
+                                                        GTH , R17
+    615    0000007A                  /* LLR-Ref: 200 */
+    616    0000007A C004             RJMP    _TRANSMISSION_COMMAND_COMPLETE
+    617    0000007C              _WRITE_TXFIFO_WRITE_COMMAND:
+    618    0000007C                  /* LLR-Ref: 210*/
+    619    0000007C ........         CALL    ATA_5831WriteCommandFillTxFifo_ASM
+    620    00000080                  /* LLR-Ref: 220 */
+    621    00000080 9310....         STS     g_sAta5831 + SATA5831_TELEGRAM_LEN
+                                                        GTH , R17
+    622    00000084              
+    623    00000084              _TRANSMISSION_COMMAND_COMPLETE:
+    624    00000084                  /* LLR-Ref: 230 */
+    625    00000084 9100....         LDS     R16 , g_sAta5831 + SATA5831_RX_LEN
+                                                 GTH
+    626    00000088 2300             TST     R16
+    627    0000008A F0A9             BREQ    _RECEPTION_COMMAND_COMPLETE
+    628    0000008C              
+    629    0000008C                  /* LLR-Ref: 240 */
+    630    0000008C                  ENABLE_SPIRXBUFFER  ATA_5831CommandSpiFifo
+                                 Isr_ASM , RX_BUFFER_FIFO_SIZE
+    630.1  0000008C                  ; SFIR = BM_SRIE | num_bytes -> generate
+                                  interrupt if num_bytes bytes in rx fifo
+    630.2  0000008C E0EC             LDI  R30 , (BM_SRIE | RX_BUFFER_FIFO_SIZE)
+    630.3  0000008E 93E00158         STS  SFIR , R30
+    630.4  00000092              
+    630.5  00000092 ....             LDI  R30 , low(ATA_5831CommandSpiFifoIsr_A
+ SM/2)
+    630.6  00000094 93E0....         STS  g_sSpiConfig + SPICONFIG_PTMP ,
+  R30
+    630.7  00000098              
+    630.8  00000098 ....             LDI  R30 , high(ATA_5831CommandSpiFifoIsr_
+ ASM/2)
+    630.9  0000009A 93E0....         STS  g_sSpiConfig + SPICONFIG_PTMP + 1 ,
+  R30
+    630.10 0000009E                  ENDM
+    631    0000009E                  /* LLR-Ref: 250 */
+    632    0000009E 3004             CPI     R16 , RX_BUFFER_FIFO_SIZE
+    633    000000A0 F41C             BRGE    _SKIP_SFIR_CORRECTION
+    634    000000A2 6008             ORI     R16 , BM_SRIE
+    635    000000A4 93000158         STS     SFIR , R16
+    636    000000A8              _SKIP_SFIR_CORRECTION:
+    637    000000A8                  /* LLR-Ref: 260 */
+    638    000000A8 911F             POP     R17
+    639    000000AA 910F             POP     R16
+    640    000000AC              
+    641    000000AC 91FF             POP     R31
+    642    000000AE BFFF             OUT     SREG , R31
+    643    000000B0              
+    644    000000B0 91FF             POP     R31
+    645    000000B2 91EF             POP     R30
+    646    000000B4              
+    647    000000B4 9518             RETI
+    648    000000B6              
+    649    000000B6              _RECEPTION_COMMAND_COMPLETE:
+    650    000000B6                  /* LLR-Ref: 270 */
+    651    000000B6 911F             POP     R17
+    652    000000B8 910F             POP     R16
+    653    000000BA ........         JMP     ATA_5831StartSckNssTimer_ASM
+    654    000000BE              
+    655    000000BE              /* -------------------------------------------
+                                 --------------------------------*/
+    656    000000BE              /** \brief <b>ATA_5831ReadCommandReadRxFifo_AS
+                                 M</b>
+    657    000000BE                  shall read all data from the spi rx fifo
+                                  until the fifo fill level is cleared
+    658    000000BE                  The content of the data are stored
+                                  starting at address g_sSpiConfig.pAddress
+    659    000000BE                  This routine is used for read commands.
+    660    000000BE              
+    661    000000BE                  Variable Usage:
+    662    000000BE                  \li [in,out] ::g_sSpiConfig is global SPI
+                                  component data
+    663    000000BE                  
+    664    000000BE                  \image html ATA_5831ReadCommandReadRxFifo_
+                                 ASM.png
+    665    000000BE              
+    666    000000BE                  \internal
+    667    000000BE                  \li 010: Load address pointer ::g_sSpiConf
+                                 ig .pAddress to Z register
+    668    000000BE                  \li 020: Read from SPDR register
+    669    000000BE                  \li 030: Store the value to ::g_sSpiConfig
+                                  .pAddress and increment Z register
+    670    000000BE                  \li 040: Decrement byte counter ::g_sAta58
+                                 31 .bRxLength (register R17)
+    671    000000BE                  \li 050: Check if SPI RXFIFO fill level
+                                  via register SFFR.RFL[2..]
+    672    000000BE                           IF FIFO is empty
+    673    000000BE                               goto 060
+    674    000000BE                           ELSE
+    675    000000BE                               goto 020
+    676    000000BE                  \li 060: Update address pointer ::g_sSpiCo
+                                 nfig .pAddress with Z register content
+    677    000000BE              
+    678    000000BE                  \Derived{Yes}
+    679    000000BE              
+    680    000000BE                  \Rationale{This function is required in
+                                  order to implement the ATA5831
+    681    000000BE                             message handling}
+    682    000000BE              
+    683    000000BE                  \Traceability   N/A
+    684    000000BE                  \endinternal
+    685    000000BE              \n
+    686    000000BE              */
+    687    000000BE              /* -------------------------------------------
+                                 --------------------------------*/
+    688    00000000              RSEG CODE:CODE:ROOT(1)
+    689    00000000              ATA_5831ReadCommandReadRxFifo_ASM:
+    690    00000000                  ATA_SET_FUNCTION_TRACE_POINT_ISR_ASM   
+                                  ATA_5831ReadCommandReadRxFifo_ASM ,
+                                  0x00
+    690.1  00000000              #ifdef FUNCTION_TRACE_ASM
+    690.2  00000000 93EF             PUSH    R30
+    690.3  00000002              
+    690.4  00000002                  ; TRCDR = data;
+    690.5  00000002 E0E0             LDI     R30 , 0x00
+    690.6  00000004 93E000FF         STS     TRCDR , R30
+    690.7  00000008              
+    690.8  00000008                  ; TRCIDL = (uint8_t) ((uint16_t)id >>
+                                  0);
+    690.9  00000008 ....             LDI     R30 , low(ATA_5831ReadCommandReadR
+ xFifo_ASM/2)
+    690.10 0000000A 93E000FC         STS     TRCIDL , R30
+    690.11 0000000E              
+    690.12 0000000E                  ; TRCIDH = (uint8_t) ((uint16_t)id >>
+                                  8);
+    690.13 0000000E ....             LDI     R30 , high(ATA_5831ReadCommandRead
+ RxFifo_ASM/2)
+    690.14 00000010 93E000FD         STS     TRCIDH , R30
+    690.15 00000014              
+    690.16 00000014 91EF             POP     R30
+    690.17 00000016              #endif
+    690.18 00000016                  ENDM
+    691    00000016              
+    692    00000016 939F             PUSH    R25
+    693    00000018                  /* LLR-Ref: 010 */
+    694    00000018 91E0....         LDS     R30 , g_sSpiConfig + SPICONFIG_PAD
+                                                 DRESS
+    695    0000001C 91F0....         LDS     R31 , g_sSpiConfig + SPICONFIG_PAD
+                                                 DRESS + 1
+    696    00000020              _READ_COMMAND_READ_RXFIFO:
+    697    00000020                  /* LLR-Ref: 020 */
+    698    00000020 B59E             IN      R25 , SPDR
+    699    00000022                  /* LLR-Ref: 030 */
+    700    00000022 9391             ST      Z+ , R25
+    701    00000024                  /* LLR-Ref: 040 */
+    702    00000024 951A             DEC     R17
+    703    00000026                  /* LLR-Ref: 050 */
+    704    00000026 91900157         LDS     R25 , SFFR
+    705    0000002A 7097             ANDI    R25 , (BM_RFL2|BM_RFL1|BM_RFL0)
+    706    0000002C F7C9             BRNE    _READ_COMMAND_READ_RXFIFO
+    707    0000002E              
+    708    0000002E                  /* LLR-Ref: 060 */
+    709    0000002E 93E0....         STS     g_sSpiConfig + SPICONFIG_PADDRESS,
+                                                           R30
+    710    00000032 93F0....         STS     g_sSpiConfig + SPICONFIG_PADDRESS
+                                                           + 1, R31
+    711    00000036 919F             POP     R25
+    712    00000038 9508             RET
+    713    0000003A              
+    714    0000003A              /* -------------------------------------------
+                                 --------------------------------*/
+    715    0000003A              /** \brief <b>ATA_5831ReadCommandReadDummyRxFi
+                                 fo_ASM</b>
+    716    0000003A                  shall read the dummy byte data from the
+                                  spi rx fifo
+    717    0000003A                  This routine is used for read commands.
+    718    0000003A              
+    719    0000003A                  Variable Usage:
+    720    0000003A                  \li [in,out] ::g_sAta5831  is global
+                                  ATA5831 component data
+    721    0000003A              
+    722    0000003A                  \image html ATA_5831ReadCommandReadDummyRx
+                                 Fifo_ASM.png
+    723    0000003A              
+    724    0000003A                  \internal
+    725    0000003A                  \li 010: IF byte counter is equal to rx
+                                  length
+    726    0000003A                              goto 050
+    727    0000003A                  \li 020: Read from SPDR register
+    728    0000003A                  \li 030: Decrement byte counter ::g_sAta58
+                                 31 .bRxLength (register R17)
+    729    0000003A                  \li 040: Check if SPI RXFIFO fill level
+                                  via register SFFR.RFL[2..]
+    730    0000003A                           IF FIFO is empty
+    731    0000003A                              return
+    732    0000003A                           ELSE
+    733    0000003A                              goto 020
+    734    0000003A                  \li 050: Signal dummy insertion ready in
+                                  ::g_sAta5831 .bConfig[4]
+    735    0000003A                           and return
+    736    0000003A              
+    737    0000003A                  \Derived{Yes}
+    738    0000003A              
+    739    0000003A                  \Rationale{This function is required in
+                                  order to implement the ATA5831
+    740    0000003A                             message handling}
+    741    0000003A              
+    742    0000003A                  \Traceability   N/A
+    743    0000003A                  \endinternal
+    744    0000003A              \n
+    745    0000003A              */
+    746    0000003A              /* -------------------------------------------
+                                 --------------------------------*/
+    747    00000000              RSEG CODE:CODE:ROOT(1)
+    748    00000000              ATA_5831ReadCommandReadDummyRxFifo_ASM:
+    749    00000000                  ATA_SET_FUNCTION_TRACE_POINT_ISR_ASM   
+                                  ATA_5831ReadCommandReadDummyRxFifo_ASM ,
+                                  0x00
+    749.1  00000000              #ifdef FUNCTION_TRACE_ASM
+    749.2  00000000 93EF             PUSH    R30
+    749.3  00000002              
+    749.4  00000002                  ; TRCDR = data;
+    749.5  00000002 E0E0             LDI     R30 , 0x00
+    749.6  00000004 93E000FF         STS     TRCDR , R30
+    749.7  00000008              
+    749.8  00000008                  ; TRCIDL = (uint8_t) ((uint16_t)id >>
+                                  0);
+    749.9  00000008 ....             LDI     R30 , low(ATA_5831ReadCommandReadD
+ ummyRxFifo_ASM/2)
+    749.10 0000000A 93E000FC         STS     TRCIDL , R30
+    749.11 0000000E              
+    749.12 0000000E                  ; TRCIDH = (uint8_t) ((uint16_t)id >>
+                                  8);
+    749.13 0000000E ....             LDI     R30 , high(ATA_5831ReadCommandRead
+ DummyRxFifo_ASM/2)
+    749.14 00000010 93E000FD         STS     TRCIDH , R30
+    749.15 00000014              
+    749.16 00000014 91EF             POP     R30
+    749.17 00000016              #endif
+    749.18 00000016                  ENDM
+    750    00000016              
+    751    00000016 91F0....         LDS     R31 , g_sAta5831 + SATA5831_LENGTH
+    752    0000001A              _READ_COMMAND_READ_DUMMY_RXFIFO:
+    753    0000001A                  /* LLR-Ref: 010 */
+    754    0000001A 171F             CP      R17 , R31
+    755    0000001C F039             BREQ    _READ_COMMAND_DUMMY_BYTES_READ
+    756    0000001E                  /* LLR-Ref: 020 */
+    757    0000001E B5EE             IN      R30 , SPDR
+    758    00000020                  /* LLR-Ref: 030 */
+    759    00000020 951A             DEC     R17
+    760    00000022                  /* LLR-Ref: 040 */
+    761    00000022 91E00157         LDS     R30 , SFFR
+    762    00000026 70E7             ANDI    R30 , (BM_RFL2|BM_RFL1|BM_RFL0)
+    763    00000028 F7C1             BRNE    _READ_COMMAND_READ_DUMMY_RXFIFO
+    764    0000002A              
+    765    0000002A 9508             RET
+    766    0000002C              _READ_COMMAND_DUMMY_BYTES_READ:
+    767    0000002C                  /* LLR-Ref: 050 */
+    768    0000002C 91F0....         LDS     R31 , g_sAta5831 + SATA5831_CONFIG
+    769    00000030 7EFF             ANDI    R31 , ~BM_SATA5831_CONFIG_DUMMY_IN
+                                                 DICATOR
+    770    00000032 93F0....         STS     g_sAta5831 + SATA5831_CONFIG ,
+                                                         R31
+    771    00000036 9508             RET
+    772    00000038              
+    773    00000038              /* -------------------------------------------
+                                 --------------------------------*/
+    774    00000038              /** \brief <b>ATA_5831WriteCommandReadRxFifo_A
+                                 SM</b>
+    775    00000038                  shall read all data from the spi rx fifo
+                                  until the fifo fill level is cleared
+    776    00000038                  The content of the data is neglected (not
+                                  stored)
+    777    00000038                  This routine is used for write commands.
+    778    00000038              
+    779    00000038                  Variable Usage:
+    780    00000038                  \li [in,out] ::g_sAta5831 is global
+                                  ATA5831 component data
+    781    00000038              
+    782    00000038                  \image html ATA_5831WriteCommandReadRxFifo
+                                 _ASM.png
+    783    00000038              
+    784    00000038                  \internal
+    785    00000038                  \li 010: Read from SPDR register
+    786    00000038                  \li 020: Decrement byte counter ::g_sAta58
+                                 31 .bRxLength (register R17)
+    787    00000038                  \li 030: Check if SPI RXFIFO fill level
+                                  via register SFFR.RFL[2..]
+    788    00000038                           IF FIFO is empty
+    789    00000038                              return
+    790    00000038                           ELSE
+    791    00000038                              goto 010
+    792    00000038              
+    793    00000038                  \Derived{Yes}
+    794    00000038              
+    795    00000038                  \Rationale{This function is required in
+                                  order to implement the ATA5831
+    796    00000038                             message handling}
+    797    00000038              
+    798    00000038                  \Traceability   N/A
+    799    00000038                  \endinternal
+    800    00000038              \n
+    801    00000038              */
+    802    00000038              /* -------------------------------------------
+                                 --------------------------------*/
+    803    00000000              RSEG CODE:CODE:ROOT(1)
+    804    00000000              ATA_5831WriteCommandReadRxFifo_ASM:
+    805    00000000                  ATA_SET_FUNCTION_TRACE_POINT_ISR_ASM   
+                                  ATA_5831WriteCommandReadRxFifo_ASM ,
+                                  0x00
+    805.1  00000000              #ifdef FUNCTION_TRACE_ASM
+    805.2  00000000 93EF             PUSH    R30
+    805.3  00000002              
+    805.4  00000002                  ; TRCDR = data;
+    805.5  00000002 E0E0             LDI     R30 , 0x00
+    805.6  00000004 93E000FF         STS     TRCDR , R30
+    805.7  00000008              
+    805.8  00000008                  ; TRCIDL = (uint8_t) ((uint16_t)id >>
+                                  0);
+    805.9  00000008 ....             LDI     R30 , low(ATA_5831WriteCommandRead
+ RxFifo_ASM/2)
+    805.10 0000000A 93E000FC         STS     TRCIDL , R30
+    805.11 0000000E              
+    805.12 0000000E                  ; TRCIDH = (uint8_t) ((uint16_t)id >>
+                                  8);
+    805.13 0000000E ....             LDI     R30 , high(ATA_5831WriteCommandRea
+ dRxFifo_ASM/2)
+    805.14 00000010 93E000FD         STS     TRCIDH , R30
+    805.15 00000014              
+    805.16 00000014 91EF             POP     R30
+    805.17 00000016              #endif
+    805.18 00000016                  ENDM
+    806    00000016              _WRITE_COMMAND_READ_RXFIFO:
+    807    00000016                  /* LLR-Ref: 010 */
+    808    00000016 B5EE             IN      R30 , SPDR
+    809    00000018                  /* LLR-Ref: 020 */
+    810    00000018 951A             DEC     R17
+    811    0000001A                  /* LLR-Ref: 030 */
+    812    0000001A 91E00157         LDS     R30 , SFFR
+    813    0000001E 70E7             ANDI    R30 , (BM_RFL2|BM_RFL1|BM_RFL0)
+    814    00000020 F7D1             BRNE    _WRITE_COMMAND_READ_RXFIFO
+    815    00000022              
+    816    00000022 9508             RET
+    817    00000024              
+    818    00000024              
+    819    00000024                  END
+##############################
+#          CRC:AAEA          #
+#        Errors:   0         #
+#        Warnings: 0         #
+#         Bytes: 706         #
+##############################
+
+
+
+

@@ -1,0 +1,19 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Atmel Studio Solution File, Format Version 11.00
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{606CD3BC-00DD-421A-8EC3-D232DBEB2464}") = "P2P_NXP", "P2P_NXP\P2P_NXP.objproj", "{1E76E92F-43DE-4DFC-9670-20CDCAF2D924}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|AVR = Debug|AVR
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1E76E92F-43DE-4DFC-9670-20CDCAF2D924}.Debug|AVR.ActiveCfg = Debug|AVR
+		{1E76E92F-43DE-4DFC-9670-20CDCAF2D924}.Debug|AVR.Build.0 = Debug|AVR
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

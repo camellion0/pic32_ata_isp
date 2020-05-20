@@ -1,0 +1,439 @@
+###############################################################################
+#                                                                             #
+# IAR C/C++ Compiler V6.21.1.50603 for Atmel AVR        11/Jun/2015  15:15:00 #
+# Copyright 1996-2013 IAR Systems AB.                                         #
+#                                                                             #
+#    Source file  =  C:\Daten\P2P_Demo01V2_0\firmware\spi\src\ata5700_command #
+#                    _set.c                                                   #
+#    Command line =  C:\Daten\P2P_Demo01V2_0\firmware\spi\src\ata5700_command #
+#                    _set.c -v3 --enhanced_core -mt -o                        #
+#                    C:\Daten\P2P_Demo01V2_0\appl\appFlash\IAR\Debug\Obj\     #
+#                    -lCN C:\Daten\P2P_Demo01V2_0\appl\appFlash\IAR\Debug\Lis #
+#                    t\ -lA C:\Daten\P2P_Demo01V2_0\appl\appFlash\IAR\Debug\L #
+#                    ist\ --no_cse --no_inline --no_code_motion               #
+#                    --no_cross_call --no_clustering --no_tbaa --debug        #
+#                    --64k_flash -DENABLE_BIT_DEFINITIONS -e --eeprom_size    #
+#                    2304 --clib -Ohz                                         #
+#    List file    =  C:\Daten\P2P_Demo01V2_0\appl\appFlash\IAR\Debug\List\ata #
+#                    5700_command_set.lst                                     #
+#    Object file  =  C:\Daten\P2P_Demo01V2_0\appl\appFlash\IAR\Debug\Obj\ata5 #
+#                    700_command_set.r90                                      #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+C:\Daten\P2P_Demo01V2_0\firmware\spi\src\ata5700_command_set.c
+      1          /* *C**************************************************************************
+      2            Use of this software is subject to Atmel's Software License Agreement.
+      3          -------------------------------------------------------------------------------
+      4            $URL: http://svnservulm.corp.atmel.com/svn/CDB/Apps/SW_Lib/Car_Access/CARS_GEN2/ATAB5702A/Branches/P2P22_TXMODE_NXP/appl/appFlash/IAR/Debug/List/ata5700_command_set.lst $
+      5            $LastChangedRevision: 328482 $
+      6            $LastChangedDate: 2015-07-22 13:17:23 -0600 (Wed, 22 Jul 2015) $
+      7            $LastChangedBy: grueter $
+      8          -------------------------------------------------------------------------------
+      9            Project:      ATA5700
+     10            Target MCU:   ATA5700
+     11            Compiler:     IAR C/C++ Compiler for AVR 6.12.1
+     12          -------------------------------------------------------------------------------
+     13          
+     14          ******************************************************************************
+     15          * Copyright 2011, Atmel Automotive GmbH                                       *
+     16          *                                                                             *
+     17          * This software is owned by the Atmel Automotive GmbH                         *
+     18          * and is protected by and subject to worldwide patent protection.             *
+     19          * Atmel hereby grants to licensee a personal,                                 *
+     20          * non-exclusive, non-transferable license to copy, use, modify, create        *
+     21          * derivative works of, and compile the Atmel Source Code and derivative       *
+     22          * works for the sole purpose of creating custom software in support of        *
+     23          * licensee product to be used only in conjunction with a Atmel integrated     *
+     24          * circuit as specified in the applicable agreement. Any reproduction,         *
+     25          * modification, translation, compilation, or representation of this           *
+     26          * software except as specified above is prohibited without the express        *
+     27          * written permission of Atmel.                                                *
+     28          *                                                                             *
+     29          * Disclaimer: ATMEL MAKES NO WARRANTY OF ANY KIND,EXPRESS OR IMPLIED,         *
+     30          * WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED    *
+     31          * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.         *
+     32          * Atmel reserves the right to make changes without further notice to the      *
+     33          * materials described herein. Atmel does not assume any liability arising     *
+     34          * out of the application or use of any product or circuit described herein.   *
+     35          * Atmel does not authorize its products for use as critical components in     *
+     36          * life-support systems where a malfunction or failure may reasonably be       *
+     37          * expected to result in significant injury to the user. The inclusion of      *
+     38          * Atmel products in a life-support systems application implies that the       *
+     39          * manufacturer assumes all risk of such use and in doing so indemnifies       *
+     40          * Atmel against all charges.                                                  *
+     41          *                                                                             *
+     42          * Use may be limited by and subject to the applicable Atmel software          *
+     43          * license agreement.                                                          *
+     44          ******************************************************************************/
+     45          /** \file ata5700_command_set.c
+     46          */
+     47          /*---------------------------------------------------------------------------*/
+     48          /*  INCLUDES                                                                 */
+     49          /*---------------------------------------------------------------------------*/
+     50          #include "ata5700_command_set.h"
+     51          #include "../../calib/src/calib.h"
+     52          #include "../../rftx/src/rftx.h"
+     53          #include "../../rftx/src/rftx_ant.h"
+     54          #include "../../rftx/src/rftx_vco.h"
+     55          #include "../../globals/src/globals.h"
+     56          #include "../../lfrx/src/lfrx_immo.h"
+     57          #include "../../tp/src/tp_flash.h"
+     58          
+     59          /*---------------------------------------------------------------------------*/
+     60          /*  DEFINES                                                                  */
+     61          /*---------------------------------------------------------------------------*/
+     62          
+     63          /*---------------------------------------------------------------------------*/
+     64          /*  Modul Globals                                                            */
+     65          /*---------------------------------------------------------------------------*/
+     66          
+     67          /* Must be located at SRAM address 0x100 (global 0x300) */
+     68          #pragma location = ".sram_FlashApp_Ata5700CommandSet"
+     69          __no_init sAta5700 g_sAta5700_flash;
+     70          
+     71          
+     72          /** \brief <b>patchSpi</b>
+     73              contains a function pointer for a patched SPI command.
+     74          */
+     75          #pragma location = ".sram_FlashApp_Ata5700CommandSet"
+     76          __no_init patchSpiFuncPtr patchSpi;
+     77          
+     78          /** \brief <b>extReq</b>
+     79              contains information for controlling external commands/requests.
+     80          */
+     81          #pragma location = ".sram_FlashApp_Ata5700CommandSet"
+     82          __no_init sExtReq extReq;
+     83          
+     84          /** \brief <b>trxConf</b>
+     85              contains the transceiver configuration information/setting.
+     86          */
+     87          #pragma location = ".sram_FlashApp_Ata5700CommandSet"
+     88          __no_init sTrxConfig trxConf;
+     89          
+     90          /** \brief <b>g_sRfRemoteKeylessEntryConf</b>
+     91              contains the Remote Keyless Entry configuration
+     92          */
+     93          #pragma location = ".sram_FlashApp_Ata5700CommandSet"
+     94          __no_init sRfRemoteKeylessEntryConf g_sRfRemoteKeylessEntryConf;
+     95          
+     96          
+     97          static VOIDFUNC  ATA_5700systemModeSwitching_flash_C(void);
+     98          static VOIDFUNC  ATA_5700rfTxCalibrationRequest_flash_C(void);
+     99          static UINT8FUNC ATA_5700convertTrxConf2rfTxConfig_flash_C(void);
+    100          static uint8_t* ATA_5700convertTrxConf2rfTxService_flash_C(void);
+    101          
+    102          /**/
+    103          static VOIDFUNC ATA_triggerFrcCalibration_flash_C(void);
+    104          
+    105          /*---------------------------------------------------------------------------*/
+    106          /*  IMPLEMENTATION                                                           */
+    107          /*---------------------------------------------------------------------------*/
+    108          
+    109          /*---------------------------------------------------------------------------*/
+    110          /** \brief <b>ATA_5700InitCommandSet_C</b>
+    111              does the initialization for ATA5700 SPI
+    112          
+    113              \Derived no
+    114          
+    115              \Rationale none
+    116          
+    117              \Traceability Primus2P-xxx
+    118          
+    119              \StackUsage SU_XXX bytes
+    120          
+    121              \image html ATA_5700InitCommandSet_C.png
+    122              \image rtf ATA_5700InitCommandSet_C.png
+    123              \n
+    124          */
+    125          /*---------------------------------------------------------------------------*/
+    126          VOIDFUNC ATA_5700InitCommandSet_flash_C()
+    127          {
+    128              patchSpi = (patchSpiFuncPtr)0x0000;
+    129          
+    130              g_sAta5700_flash.events_system           = 0x00U;
+    131              g_sAta5700_flash.events_wakeup           = 0x00U;
+    132              g_sAta5700_flash.events_rf_flags_0       = 0x00U;
+    133              g_sAta5700_flash.events_rf_flags_1       = 0x00U;
+    134              g_sAta5700_flash.events_ph_flags_0       = 0x00U;
+    135              g_sAta5700_flash.events_ph_flags_1       = 0x00U;
+    136              g_sAta5700_flash.events_lf_flags         = 0x00U;
+    137              g_sAta5700_flash.events_tp_flags         = 0x00U;
+    138              g_sAta5700_flash.events_components       = 0x00U;
+    139              g_sAta5700_flash.events_config           = 0x00U;
+    140              g_sAta5700_flash.events_reset            = 0x00U;
+    141              g_sAta5700_flash.events_pinChangePortB   = 0x00U;
+    142              g_sAta5700_flash.events_pinChangePortD   = 0x00U;
+    143              g_sAta5700_flash.status                  = 0x00U;
+    144          
+    145              extReq.tuneCheckConfig              = 0U;
+    146              extReq.systemModeConfig             = 0U;
+    147              extReq.serviceChannelConfig         = 0U;
+    148              extReq.serviceInitConfig            = 0U;
+    149              extReq.miscTrigger                  = 0U;
+    150              extReq.lfrxRftxConfig               = 0U;
+    151              extReq.tpEmModeConfig               = 0U;
+    152              extReq.rfRemoteKeylessEntryConfig   = 0U;
+    153          
+    154              trxConf.systemModeConfig        = 0x00U;
+    155              trxConf.serviceChannelConfig    = 0x00U;
+    156          
+    157              g_sRfRemoteKeylessEntryConf.bSecretKeyIdx   = 0x00U;
+    158              g_sRfRemoteKeylessEntryConf.bCmdId          = 0x00U;
+    159          }
+    160          
+    161          /*----------------------------------------------------------------------------- */
+    162          /**\brief  <b>ATA_5700CommandRequest_C</b>
+    163           */
+    164          /*----------------------------------------------------------------------------- */
+    165          VOIDFUNC ATA_5700CommandRequest_flash_C(void)
+    166          {
+    167              uint8_t bTempTpEmTransponderStateIndex_flash;
+    168          
+    169              // check for command request (internal or external)
+    170              if(g_sAta5700_flash.status & BM_ATA5700_STATUS_UPDATE_FLAG)
+    171              {
+    172                  ATA_5700systemModeSwitching_flash_C();
+    173              }
+    174          
+    175              if (extReq.tuneCheckConfig)
+    176              {
+    177                  ATA_5700rfTxCalibrationRequest_flash_C();
+    178              }
+    179          
+    180              if (extReq.lfrxRftxConfig & BIT_MASK_0)
+    181              {
+    182                  ATA_lfRxRfTxProcessImmo_flash_C();
+    183              }
+    184          
+    185              if (extReq.tpEmModeConfig)
+    186              {
+    187                  /* Protection, since used in interrupt */
+    188                  _CLI;
+    189                  bTempTpEmTransponderStateIndex_flash = g_bTpEmTransponderStateIndex_flash;
+    190                  _SEI;
+    191          
+    192                  switch ( bTempTpEmTransponderStateIndex_flash )
+    193                  {
+    194                  case EM_MODE_STATE_INIT:
+    195                    ATA_tpEmModeInit_flash_C();
+    196                    _CLI;
+    197                    g_bTpEmTransponderStateIndex_flash = EM_MODE_WAIT_FOR_DATA;
+    198                    _SEI;
+    199                    break;
+    200          
+    201                  case EM_MODE_STATE_RECONFIG:
+    202                    ATA_tpEmModeCommandReconfiguration_flash_C();
+    203                    _CLI;
+    204                    g_bTpEmTransponderStateIndex_flash = EM_MODE_WAIT_FOR_DATA;
+    205                    _SEI;
+    206                    break;
+    207          
+    208                  case EM_MODE_STATE_PROCESSING:
+    209                    ATA_tpEmModeSingleTelProc_flash_C();
+    210                    _CLI;
+    211                    g_bTpEmTransponderStateIndex_flash = EM_MODE_WAIT_FOR_DATA;
+    212                    _SEI;
+    213                    break;
+    214          
+    215                  default:
+    216                    break;
+    217                  }
+    218              }
+    219          
+    220              /* Execute exactly one Remote Keyless Entry sequence */
+    221              if( extReq.rfRemoteKeylessEntryConfig )
+    222              {
+    223          //        ATA_rfrccGenRollCntMsg_C( g_sRfRemoteKeylessEntryConf.bSecretKeyIdx, g_sRfRemoteKeylessEntryConf.bCmdId );
+    224          
+    225          //        if( !(g_sRfrccComponentData.bFlags & RFRCC_FLAGS_BM_ERROR_FLAG) )
+    226          //        {
+    227          //            // transmit generated message
+    228          //            ATA_rfTxStartTx_C( 0x48U, (uint8_t *) &g_sEepRfTxServiceConfig1 );
+    229          //            ATA_rfTxFillDFifo_C( RFRCC_MSG_LENGTH, &g_sRfrccComponentData.bRollCodeMsgBuffer[0] );
+    230          //        }
+    231          //        extReq.rfRemoteKeylessEntryConfig = 0x00U;
+    232              }
+    233          }
+    234          
+    235          
+    236          /*----------------------------------------------------------------------------- */
+    237          /**\brief  <b>ATA_5700systemModeSwitching_flash_C</b>
+    238           */
+    239          /*----------------------------------------------------------------------------- */
+    240          VOIDFUNC ATA_5700systemModeSwitching_flash_C(void)
+    241          {
+    242              /* Request is being processed, clear status flag */
+    243              g_sAta5700_flash.status &= (uint8_t)~BM_ATA5700_STATUS_UPDATE_FLAG;
+    244          
+    245              __disable_interrupt();
+    246              trxConf.systemModeConfig     = extReq.systemModeConfig;
+    247              extReq.systemModeConfig      = 0U;
+    248              trxConf.serviceChannelConfig = (extReq.serviceChannelConfig & 0x3FU);
+    249              extReq.serviceChannelConfig  = 0U;
+    250              __enable_interrupt();
+    251          
+    252              uint8_t opm = trxConf.systemModeConfig & BM_SYS_MODE_CONFIG_OPM;
+    253          
+    254              if (opm == OPM_IDLE)
+    255              {
+    256                  /* set module RFTX to IDLEMode */
+    257                  if (g_sRfTx.bStatus & BM_RFTXCONFIG_BSTATUS_ACTIVE) {
+    258                      ATA_rfTxStop_C();
+    259                  }
+    260          
+    261                  /* Check IdleModeSelector */
+    262                  if ( (trxConf.systemModeConfig & BM_SYS_MODE_CONFIG_IDLE_MODE_SELECTOR) >> 3 )
+    263                  {
+    264                      /* Select XTO/4 as system clock */
+    265                      ATA_globalsClockSwitchXtoWithMvccEnable_C(0x07U);
+    266                  }
+    267                  else
+    268                  {
+    269                      /* Clock switch to FRC */
+    270                      ATA_globalsClkSwitchFrcWithMvccEnable_C();
+    271                      /* disable XTO */
+    272                      ATA_globalsDeActivateXTO_C();
+    273          
+    274                  }
+    275              }
+    276              else {
+    277          
+    278                  /**/
+    279                  uint8_t config    = ATA_5700convertTrxConf2rfTxConfig_flash_C();
+    280                  uint8_t *pService = ATA_5700convertTrxConf2rfTxService_flash_C();
+    281          
+    282                  /* set module RFTX to TXMode(buffered/transparent) */
+    283                  ATA_rfTxStartTx_C(config, pService);
+    284              }
+    285          }
+    286          
+    287          /*----------------------------------------------------------------------------- */
+    288          /**\brief  <b>ATA_5700rfTxCalibrationRequest_flash_C</b>
+    289           */
+    290          /*----------------------------------------------------------------------------- */
+    291          VOIDFUNC ATA_5700rfTxCalibrationRequest_flash_C(void)
+    292          {
+    293              __disable_interrupt();
+    294              trxConf.tuneCheckConfig = extReq.tuneCheckConfig;
+    295              extReq.tuneCheckConfig  = 0U;
+    296              trxConf.serviceChannelConfig = (extReq.serviceChannelConfig & 0x3FU);
+    297              extReq.serviceChannelConfig  = 0U;
+    298              __enable_interrupt();
+    299          
+    300              trxConf.systemModeConfig = 0U;
+    301              uint8_t config    = ATA_5700convertTrxConf2rfTxConfig_flash_C();
+    302              uint8_t *pService = ATA_5700convertTrxConf2rfTxService_flash_C();
+    303          
+    304              if( trxConf.tuneCheckConfig & BM_TUNE_CHECK_CONFIG_ANTENNA_TUNING )
+    305              {
+    306                  // Antenna tuning
+    307                  ATA_rfTxStartAnt_C(config, pService);
+    308              }
+    309              else if (trxConf.tuneCheckConfig & BM_TUNE_CHECK_CONFIG_SRC_CALIB)
+    310              {
+    311                  // SRC calibration
+    312          
+    313              }
+    314              else if (trxConf.tuneCheckConfig & BM_TUNE_CHECK_CONFIG_FRC_CALIB)
+    315              {
+    316                  // FRC calibration
+    317                  ATA_triggerFrcCalibration_flash_C();
+    318              }
+    319              else if (trxConf.tuneCheckConfig & BM_TUNE_CHECK_CONFIG_VCO_CALIB)
+    320              {
+    321                  // VCO tuning
+    322                  ATA_rfTxStartVco_C(config, pService);
+    323              }
+    324              else {}
+    325          }
+    326          
+    327          /*----------------------------------------------------------------------------- */
+    328          /**\brief  <b>ATA_5700rfTxCalibrationRequest_C</b>
+    329              used for conversion from sigmax syntax to primus2p syntax
+    330           */
+    331          /*----------------------------------------------------------------------------- */
+    332          UINT8FUNC ATA_5700convertTrxConf2rfTxConfig_flash_C(void)
+    333          {
+    334              uint8_t config = 0x00;
+    335          
+    336              // convert configuration from SIX to P2P
+    337              if (trxConf.systemModeConfig & BM_SYS_MODE_CONFIG_ANTENNA_TUNING) {
+    338                  config |=  BM_RFTXCONFIG_BCONFIG_ANT_TUNING;
+    339              }
+    340          
+    341              if (trxConf.systemModeConfig & BM_SYS_MODE_CONFIG_VCO_TUNING) {
+    342                  config |= BM_RFTXCONFIG_BCONFIG_VCO_TUNING;
+    343              }
+    344          
+    345              if (trxConf.systemModeConfig & BM_SYS_MODE_CONFIG_TRANSPARENT_MODE) {
+    346                  config |=  BM_RFTXCONFIG_BCONFIG_TRANSPARENT_MODE;
+    347              }
+    348          
+    349              if (trxConf.systemModeConfig & BM_SYS_MODE_CONFIG_IDLE_MODE_SELECTOR) {
+    350                  config |= BM_RFTXCONFIG_BCONFIG_SHUTDOWN_MODE;
+    351              }
+    352          
+    353              config |= ((trxConf.serviceChannelConfig & BM_SVC_CH_CONFIG_CH ) >> 4U);
+    354          
+    355              config |= BM_RFTXCONFIG_BCONFIG_SVC_LOCATION;
+    356          
+    357              return config;
+    358          
+    359          }
+    360          
+    361          /*----------------------------------------------------------------------------- */
+    362          /**\brief  <b>ATA_5700convertTrxConf2rfTxService_C</b>
+    363              used for conversion from sigmax syntax to primus2p syntax
+    364           */
+    365          /*----------------------------------------------------------------------------- */
+    366          uint8_t* ATA_5700convertTrxConf2rfTxService_flash_C(void)
+    367          {
+    368              uint8_t service = trxConf.serviceChannelConfig & BM_SVC_CH_CONFIG_SER;
+    369              uint8_t *pService = (uint8_t *)&g_sEepRfTxServiceConfig1;
+    370              if (service == 1) {
+    371                  pService = (uint8_t *)&g_sEepRfTxServiceConfig2;
+    372              }
+    373              else {
+    374                  pService = (uint8_t *)&g_sEepRfTxServiceConfig1;
+    375              }
+    376              return pService;
+    377          }
+    378          
+    379          
+    380          /*----------------------------------------------------------------------------- */
+    381          /** \brief <b>ATA_triggerFrcCalibration_C</b>
+    382              triggers FRC calibration feature.
+    383          
+    384              \return none
+    385          
+    386              \image html ATA_triggerFrcCalibration_C.png
+    387              \image rtf ATA_triggerFrcCalibration_C.png
+    388              \n
+    389          */
+    390          /*----------------------------------------------------------------------------- */
+    391          static VOIDFUNC ATA_triggerFrcCalibration_flash_C(void)
+    392          {
+    393              /* indicates a calibration process is ongoing */
+    394              g_sAta5700_flash.status |= BM_ATA5700_STATUS_FRC_CALIB_IN_PROGRESS_FLAG;
+    395          
+    396              /* Do FRC calibration */
+    397              ATA_calibInit_C();
+    398          
+    399              if ((g_sCalibConfig.bFlags & BM_CALIB_CONFIG_FLAGS_ERROR) == 0x00U)
+    400              {
+    401                  ATA_calibStartCalibration_C(BM_CALIB_CONFIG_SRC_FRC_CALIBRATION_ENABLE_FRC);
+    402          
+    403                  /* Shutdown XTO and AVCC and switch to FRC as default clock. */
+    404                  // ATA_shutDownFe_C();
+    405          
+    406                  trxConf.tuneCheckConfig &= (uint8_t)~BM_TUNE_CHECK_CONFIG_FRC_CALIB;
+    407                  g_sAta5700_flash.status &= (uint8_t)~BM_ATA5700_STATUS_FRC_CALIB_IN_PROGRESS_FLAG;
+    408          
+    409                  g_sAta5700_flash.events_rf_flags_1 |= BM_ATA5700_EVENTS_RFFLAGS_FRC_CALIB_RDY;
+    410              }
+    411          }
+
+Errors: 2
+Warnings: 2

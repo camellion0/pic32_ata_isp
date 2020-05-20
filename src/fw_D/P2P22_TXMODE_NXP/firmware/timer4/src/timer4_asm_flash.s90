@@ -1,0 +1,168 @@
+/* *ASM************************************************************************
+  Use of this software is subject to Atmel's Software License Agreement.
+-------------------------------------------------------------------------------
+  $URL: http://svnservulm.corp.atmel.com/svn/CDB/Apps/SW_Lib/Car_Access/CARS_GEN2/ATAB5702A/Branches/P2P22_TXMODE_NXP/firmware/timer4/src/timer4_asm_flash.s90 $
+  $LastChangedRevision: 328482 $
+  $LastChangedDate: 2015-07-22 13:17:23 -0600 (Wed, 22 Jul 2015) $
+  $LastChangedBy: grueter $
+-------------------------------------------------------------------------------
+  Project:      ATA5700
+  Target MCU:   ATA5700
+  Compiler:     IAR Assembler for AVR 6.3.18.0
+-------------------------------------------------------------------------------
+
+******************************************************************************
+* Copyright 2011, Atmel Automotive GmbH                                       *
+*                                                                             *
+* This software is owned by the Atmel Automotive GmbH                         *
+* and is protected by and subject to worldwide patent protection.             *
+* Atmel hereby grants to licensee a personal,                                 *
+* non-exclusive, non-transferable license to copy, use, modify, create        *
+* derivative works of, and compile the Atmel Source Code and derivative       *
+* works for the sole purpose of creating custom software in support of        *
+* licensee product to be used only in conjunction with a Atmel integrated     *
+* circuit as specified in the applicable agreement. Any reproduction,         *
+* modification, translation, compilation, or representation of this           *
+* software except as specified above is prohibited without the express        *
+* written permission of Atmel.                                                *
+*                                                                             *
+* Disclaimer: ATMEL MAKES NO WARRANTY OF ANY KIND,EXPRESS OR IMPLIED,         *
+* WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED    *
+* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.         *
+* Atmel reserves the right to make changes without further notice to the      *
+* materials described herein. Atmel does not assume any liability arising     *
+* out of the application or use of any product or circuit described herein.   *
+* Atmel does not authorize its products for use as critical components in     *
+* life-support systems where a malfunction or failure may reasonably be       *
+* expected to result in significant injury to the user. The inclusion of      *
+* Atmel products in a life-support systems application implies that the       *
+* manufacturer assumes all risk of such use and in doing so indemnifies       *
+* Atmel against all charges.                                                  *
+*                                                                             *
+* Use may be limited by and subject to the applicable Atmel software          *
+* license agreement.                                                          *
+*******************************************************************************/
+
+/*  \file timer4_asm_flash.s90
+*/
+
+    NAME timer4_asm_flash
+
+    PUBLIC  ATA_timer4CapIntHandler_ISR_flash_ASM
+    PUBLIC  ATA_timer4ComIntHandler_ISR_flash_ASM
+    PUBLIC  ATA_timer4OvfIntHandler_ISR_flash_ASM
+
+    EXTERN  g_sTimer4
+
+/* ---------------------------------------------------------------------------*/
+/*   INCLUDES                                                                 */
+/* ---------------------------------------------------------------------------*/
+#include "regs.inc"
+#include "globals.h"
+#include "timer4_flash.h"
+
+/* ---------------------------------------------------------------------------*/
+/*   DEFINES                                                                  */
+/* ---------------------------------------------------------------------------*/
+/* ---------------------------------------------------------------------------*/
+/*   Modul Globals                                                            */
+/* ---------------------------------------------------------------------------*/
+
+/* ---------------------------------------------------------------------------*/
+/** \brief <b>ATA_timer4ComIntHandler_ISR_flash_ASM</b>
+    is the interrupt service routine for the compare interrupt of timer4.
+    The function stored in g_sTimer4.fpCompIsr is called in this ISR.
+
+    \return none
+
+    \image html ATA_timer4ComIntHandler_ISR_flash_ASM.png
+    \image rtf ATA_timer4ComIntHandler_ISR_flash_ASM.png
+    \n
+*/
+/* ---------------------------------------------------------------------------*/
+#pragma vector=T4COMINT_vect
+RSEG CODE:CODE:ROOT(1)
+ATA_timer4ComIntHandler_ISR_flash_ASM:
+    PUSH     R30
+    PUSH     R31
+    IN       R30 , SREG
+    PUSH     R30
+
+    LDS      R30 , g_sTimer4 + 1    ; set up pointer to func
+    LDS      R31 , g_sTimer4 + 2    ; set up pointer to func
+    ICALL                        ; function call
+
+
+    POP      R30
+    OUT      SREG , R30
+
+    POP      R31
+    POP      R30
+    RETI
+
+
+/* ---------------------------------------------------------------------------*/
+/** \brief <b>ATA_timer4OvfIntHandler_ISR_flash_ASM</b>
+    is the interrupt service routine for the overflow interrupt of timer4.
+    The function stored in g_sTimer4.fpOvfIsr is called in this ISR.
+
+    \return none
+
+    \image html ATA_timer4OvfIntHandler_ISR_flash_ASM.png
+    \image rtf ATA_timer4OvfIntHandler_ISR_flash_ASM.png
+    \n
+*/
+/* ---------------------------------------------------------------------------*/
+#pragma vector=T4OVFINT_vect
+RSEG CODE:CODE:ROOT(1)
+ATA_timer4OvfIntHandler_ISR_flash_ASM:
+    PUSH    R30
+    PUSH    R31
+    IN      R30 , SREG
+    PUSH    R30
+
+    LDS     R30 , g_sTimer4 + 3        ; set up pointer to func
+    LDS     R31 , g_sTimer4 + 4        ; set up pointer to func
+    ICALL                           ; function call
+
+
+    POP     R30
+    OUT     SREG , R30
+
+    POP     R31
+    POP     R30
+    RETI
+
+/* ---------------------------------------------------------------------------*/
+/** \brief <b>ATA_timer4CapIntHandler_ISR_flash_ASM</b>
+    is the interrupt service routine for the capture interrupt of timer 4
+    The function stored in g_sTimer4.fpCapIsr is called in this ISR.
+
+    \return none
+
+    \image html ATA_timer4CapIntHandler_ISR_flash_ASM.png
+    \image rtf ATA_timer4CapIntHandler_ISR_flash_ASM.png
+    \n
+*/
+/* ---------------------------------------------------------------------------*/
+#pragma vector=T4CAPINT_vect
+RSEG CODE:CODE:ROOT(1)
+ATA_timer4CapIntHandler_ISR_flash_ASM:
+    PUSH     R30
+    PUSH     R31
+    IN       R30 , SREG
+    PUSH     R30
+
+    LDS      R30 , g_sTimer4 + 5        ; set up pointer to func
+    LDS      R31 , g_sTimer4 + 6        ; set up pointer to func
+    ICALL                            ; function call
+
+
+    POP      R30
+    OUT      SREG , R30
+
+    POP      R31
+    POP      R30
+    RETI
+
+    END

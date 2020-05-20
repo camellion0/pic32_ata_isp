@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<workspace>
+  <project>
+    <path>$WS_DIR$\appl\appFlash\IAR\appFLASH.ewp</path>
+    <scc>
+      <provider>Subversion</provider>
+      <projname>notused</projname>
+      <auxprojpath>notused</auxprojpath>
+    </scc>
+  </project>
+  <project>
+    <path>$WS_DIR$\lib\projects\clib\cl3s-ec_mul-sf.ewp</path>
+  </project>
+  <project>
+    <path>$WS_DIR$\appl\libFwROM\IAR\libFwROM.ewp</path>
+  </project>
+  <batchBuild/>
+</workspace>
+
+

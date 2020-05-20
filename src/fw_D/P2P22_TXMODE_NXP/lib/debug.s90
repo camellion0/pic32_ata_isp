@@ -1,0 +1,185 @@
+;----------------------------------------------------------------------------
+;
+;  Library routines for the ATMEL AT90S processors
+;  Debug versions of getchar, putchar, etc.
+;  C-SPY puts breakpoints on ?C_GETCHAR etc, and simulates I/O.
+; 
+;  Copyright 1996-2008 IAR Systems AB. All rights reserved.
+; 
+;  $Revision: 328482 $
+; 
+;----------------------------------------------------------------------------
+    
+#include "macros.m90"
+
+#ifdef _ECLIB
+#define CLIB(stmt)
+#else /* !_ECLIB */
+#define CLIB(stmt) stmt
+#endif /* !_ECLIB */
+
+;------------------------------------------------------------------------------
+;
+;   Function:   getchar  DEBUG 0 VERSION
+;
+;   Created:    28/May/95 IANP
+;
+;   Description:    Gets a character from C-SPY and returns
+;
+;------------------------------------------------------------------------------
+    MODULE  ?__getchar
+
+    RSEG    CODE:CODE:NOROOT(1)
+
+    PUBLIC  __getchar
+    CLIB(PUBLIC  getchar)
+    PUBLIC  ?C_GETCHAR
+    PUBLIC  ?DBG_0T
+?DBG_0T EQU 0
+
+__getchar
+CLIB(getchar)
+?C_GETCHAR
+    RET
+    ENDMOD
+
+;------------------------------------------------------------------------------
+;
+;   Function:   putchar   DEBUG 0 VERSION
+;
+;   Created:    28/May/95 IANP
+;
+;   Description:    C-SPY has a breakpoint set at ?C_PUTCHAR
+;
+;------------------------------------------------------------------------------
+    MODULE  ?__putchar
+
+    RSEG    CODE:CODE:NOROOT(1)
+
+    PUBLIC  __putchar
+    CLIB(PUBLIC  putchar)
+    PUBLIC  ?C_PUTCHAR
+    PUBLIC  ?DBG_0T
+?DBG_0T EQU 0
+
+__putchar
+CLIB(putchar)
+?C_PUTCHAR
+    RET
+    ENDMOD
+
+;------------------------------------------------------------------------------
+;
+;   Function:   getchar  DEBUG 1 VERSION
+;
+;   Created:    28/May/95 IANP
+;
+;   Description:    Gets a character from C-SPY and returns
+;
+;------------------------------------------------------------------------------
+    MODULE  ?__getchar
+
+    RSEG    CODE:CODE:NOROOT(1)
+
+    PUBLIC  __getchar
+    CLIB(PUBLIC  getchar)
+    PUBLIC  ?C_GETCHAR
+    PUBLIC  ?DBG_1T
+?DBG_1T EQU 0
+
+__getchar
+CLIB(getchar)
+    LDI P0,255
+    LDI P1,255      ; Return -1 (EOF)
+?C_GETCHAR
+    NOP         ; For breakpoints
+    RET
+    ENDMOD
+
+
+;------------------------------------------------------------------------------
+;
+;   Function:   putchar   DEBUG 1 VERSION
+;
+;   Created:    28/May/95 IANP
+;
+;   Description:    C-SPY has a breakpoint set at ?C_PUTCHAR
+;           Register P0 contains the output character
+;
+;------------------------------------------------------------------------------
+    MODULE  ?__putchar
+
+    RSEG    CODE:CODE:NOROOT(1)
+
+    PUBLIC  __putchar
+    CLIB(PUBLIC  putchar)
+    PUBLIC  ?C_PUTCHAR
+    PUBLIC  ?DBG_1T
+?DBG_1T EQU 0
+
+__putchar
+CLIB(putchar)
+?C_PUTCHAR
+    NOP         ; For breakpoints
+    RET
+    ENDMOD
+
+
+;------------------------------------------------------------------------------
+;
+;   Function:   getchar  DEBUG 2 VERSION
+;
+;   Created:    28/May/95 IANP
+;
+;   Description:    Gets a character from C-SPY and returns
+;
+;------------------------------------------------------------------------------
+    MODULE  ?__getchar
+
+    RSEG    CODE:CODE:NOROOT(1)
+
+    PUBLIC  __getchar
+    CLIB(PUBLIC  getchar)
+    PUBLIC  ?C_GETCHAR
+    PUBLIC  ?DBG_2T
+?DBG_2T EQU 0
+
+__getchar
+CLIB(getchar)
+    LDI P0,255
+    LDI P1,255      ; Return -1 (EOF)
+?C_GETCHAR
+    NOP         ; For breakpoints
+    RET
+    ENDMOD
+
+
+;------------------------------------------------------------------------------
+;
+;   Function:   putchar   DEBUG 0 VERSION
+;
+;   Created:    28/May/95 IANP
+;
+;   Description:    C-SPY has a breakpoint set at ?C_PUTCHAR
+;
+;------------------------------------------------------------------------------
+    MODULE  ?__putchar
+
+    RSEG    CODE:CODE:NOROOT(1)
+
+    PUBLIC  __putchar
+    CLIB(PUBLIC  putchar)
+    PUBLIC  ?C_PUTCHAR
+    PUBLIC  ?DBG_2T
+?DBG_2T EQU 0
+
+__putchar
+CLIB(putchar)
+?C_PUTCHAR
+    NOP         ; For breakpoints
+    RET
+
+    END
+
+;----------------------------------------------------------------------------
+;  

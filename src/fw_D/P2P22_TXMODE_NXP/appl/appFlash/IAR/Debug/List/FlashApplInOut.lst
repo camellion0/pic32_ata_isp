@@ -1,0 +1,371 @@
+###############################################################################
+#
+# IAR C/C++ Compiler V7.10.1.1197 for Atmel AVR           13/May/2020  17:03:18
+# Copyright 1996-2017 IAR Systems AB.
+# Network license: dvriar01.mchp-main.com (STD)
+#
+#    Source file  =  
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\src\FlashApplInOut.c
+#    Command line =  
+#        -f C:\Users\C41045\AppData\Local\Temp\EWA16.tmp
+#        (C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\src\FlashApplInOut.c
+#        -v3 --enhanced_core -ms -o
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\Obj
+#        -lCN
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\List
+#        -lA
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\List
+#        --no_cse --no_inline --no_code_motion --no_cross_call --no_clustering
+#        --no_tbaa --debug --64k_flash -DENABLE_BIT_DEFINITIONS -e
+#        --eeprom_size 2304 --clib -Ohz)
+#    Locale       =  English_USA.1252
+#    List file    =  
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\List\FlashApplInOut.lst
+#    Object file  =  
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\Obj\FlashApplInOut.r90
+#
+###############################################################################
+
+C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\src\FlashApplInOut.c
+      1          /******************************************************************************
+      2            Use of this software is subject to Microchip's Software License Agreement.
+      3          --------------------------------------------------------------------------------
+      4            $URL: http://svnservulm.corp.atmel.com/svn/CDB/Apps/SW_Lib/Car_Access/CARS_GEN2/ATAB5702A/Branches/P2P22_TXMODE_NXP/appl/appFlash/src/FlashApplInOut.c $
+      5            $LastChangedRevision: 458065 $
+      6            $LastChangedDate: 2017-05-02 04:55:50 -0600 (Tue, 02 May 2017) $
+      7            $LastChangedBy: krishna.balan $
+      8          -------------------------------------------------------------------------------
+      9            Project:      ATA5700
+     10            Target MCU:   ATA5700
+     11            Compiler:     IAR C/C++ Compiler for AVR 5.51.0
+     12          -------------------------------------------------------------------------------
+     13          
+     14          ******************************************************************************
+     15          * Copyright 2017, Microchip Technology Incorporated and its subsidiaries.     *
+     16          *                                                                             *
+     17          * This software is owned by the Microchip Technology Incorporated.            *
+     18          * Microchip hereby grants to licensee a personal                              *
+     19          * non-exclusive, non-transferable license to copy, use, modify, create        *
+     20          * derivative works of, and compile the Microchip Source Code and derivative   *
+     21          * works for the sole and exclusive purpose of creating custom software in     *
+     22          * support of licensee product to be used only in conjunction with a Microchip *
+     23          * integrated circuit as specified in the applicable agreement. Any            *        
+     24          * reproduction, modification, translation, compilation, or representation of  *
+     25          * this software except as specified above is prohibited without the express   *
+     26          * written permission of Microchip.                                            *
+     27          *                                                                             *
+     28          * Disclaimer: MICROCHIP MAKES NO WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,    *
+     29          * WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED    *
+     30          * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.         *
+     31          * Microchip reserves the right to make changes without further notice to the  *
+     32          * materials described herein. Microchip does not assume any liability arising *
+     33          * out of the application or use of any product or circuit described herein.   *
+     34          * Microchip does not authorize its products for use as critical components in *
+     35          * life-support systems where a malfunction or failure may reasonably be       *
+     36          * expected to result in significant injury to the user. The inclusion of      *
+     37          * Microchip products in a life-support systems application implies that the   *
+     38          * manufacturer assumes all risk of such use and in doing so indemnifies       *
+     39          * Microchip against all charges.                                              *
+     40          *                                                                             *
+     41          * Use may be limited by and subject to the applicable Microchip software      *
+     42          * license agreement.                                                          *
+     43          ******************************************************************************/
+     44          
+     45          /** \file FlashApplInOut.c
+     46              this file contains an ATA5700 Flash application software
+     47          */
+     48          
+     49          /*===========================================================================*/
+     50          /*  INCLUDES                                                                 */
+     51          /*===========================================================================*/
+     52          #include "../../../firmware/init/src/init.h"
+     53          #include "../../../firmware/rftx/src/rftx.h"
+     54          #include "../../../firmware/lfrx/src/lfrx.h"
+     55          #include "../../../firmware/spi/src/ata5700_command_set.h"
+     56          #include "../../../firmware/stdc/src/ioATA5700.h"
+     57          #include "../../../firmware/init/src/init_flash.h"
+     58          #include "../../../firmware/system/src/system_flash.h"
+     59          
+     60          #include "../../../firmware/timer1/src/timer1.h"
+     61          #include "../../../firmware/timer5/src/timer5_flash.h"
+     62          #include "../../../firmware/globals/src/globals.h"
+     63          
+     64          #include "../../../firmware/lfrx/src/lfrx_flash.h"
+     65          #include "../../../firmware/tp/src/tp_flash.h"
+     66          
+     67          #include "../../../firmware/extif/src/extif_flash.h"
+     68          
+     69          #include "../../../firmware/lfrssi/src/lfrssi.h"
+     70          #include "../../../firmware/lfrssi/src/lfrssi_flash.h"
+     71          
+     72          #include "../../../firmware/calib/src/calib.h"
+     73          #include "../../../firmware/aes/src/aes.h"
+     74          #include "FlashApplVars.h"
+     75          
+     76          
+     77          /*===========================================================================*/
+     78          /*  DEFINES                                                                  */
+     79          /*===========================================================================*/
+     80          
+     81          
+     82          
+     83          
+     84          /*===========================================================================*/
+     85          /*  Modul Globals                                                            */
+     86          /*===========================================================================*/
+     87          extern sFlashApplState gFlashApplState;
+     88          extern sFlashApplVars gFlashApplVars;
+     89          extern tTimer5Status gTimer5Status;
+
+   \                                 In  segment NEAR_Z, align 1, keep-with-next
+   \   00000000                      REQUIRE `?<Segment init: NEAR_Z>`
+     90          static uint8_t FilterCount=0;//was 3
+   \                     FilterCount:
+   \   00000000                      DS8 1
+
+   \                                 In  segment NEAR_Z, align 1, keep-with-next
+   \   00000000                      REQUIRE `?<Segment init: NEAR_Z>`
+     91          static uint8_t NoPressCount=0;
+   \                     NoPressCount:
+   \   00000000                      DS8 1
+     92          extern uint8_t ButtonTimerCnt;
+     93          
+     94          /*===========================================================================*/
+     95          /*  Modul Prototypes                                                         */
+     96          /*===========================================================================*/
+     97          void SendLongCommand(void);
+     98          void SendShortCommand(void);
+     99          //void ATA_Flash_IOinit(void);
+    100          /*===========================================================================*/
+    101          /*  IMPLEMENTATION                                                           */
+    102          /*===========================================================================*/
+    103          //-----------------------------------------------------------------------------
+    104          /** \brief <b>ATA_Flash_RKEbuttonfilter(uint8_t buttinstate, uint8_t count)</b>
+    105              Shall configure the 3D LF receiver into LF listen mode and activate
+    106                the ID0 wake-up interrupt
+    107          
+    108              \param[in]  bLfBdrate       selects the LF baud rate
+    109                          bSense          selects the LF RX sensitivity
+    110                          pLf_Id          pointer to the LF wake-up ID
+    111                          bLf_IdLength    number of LF ID bits
+    112          
+    113              \return none
+    114          
+    115          
+    116              \Traceability None
+    117          
+    118              \image none
+    119              \n
+    120          */
+    121          /*---------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next
+    122          uint8_t ATA_Flash_RKEbuttonfilter(uint8_t ButtonState, uint8_t Cnt)
+   \                     ATA_Flash_RKEbuttonfilter:
+    123          {
+    124            if (ButtonTimerCnt==1)NoPressCount=1;
+   \   00000000   9110....           LDS     R17, ButtonTimerCnt
+   \   00000004   3011               CPI     R17, 1
+   \   00000006   F411               BRNE    ??ATA_Flash_RKEbuttonfilter_0
+   \   00000008   E011               LDI     R17, 1
+   \   0000000A   C003               RJMP    ??ATA_Flash_RKEbuttonfilter_1
+    125            else  NoPressCount++;
+   \                     ??ATA_Flash_RKEbuttonfilter_0:
+   \   0000000C   9110....           LDS     R17, NoPressCount
+   \   00000010   9513               INC     R17
+   \                     ??ATA_Flash_RKEbuttonfilter_1:
+   \   00000012   9310....           STS     NoPressCount, R17
+    126            
+    127            if (ButtonState != 0)//Button Pressed?
+   \   00000016   9110....           LDS     R17, FilterCount
+   \   0000001A   2300               TST     R16
+   \   0000001C   F121               BREQ    ??ATA_Flash_RKEbuttonfilter_2
+    128            {    
+    129              if (gFlashApplVars.RKEcommand==ButtonState)//if last = current
+   \   0000001E   9120....           LDS     R18, (gFlashApplVars + 1)
+   \   00000022   1720               CP      R18, R16
+   \   00000024   F481               BRNE    ??ATA_Flash_RKEbuttonfilter_3
+    130              {
+    131                  if (FilterCount<3) FilterCount++;
+   \   00000026   3013               CPI     R17, 3
+   \   00000028   F408               BRCC    ??ATA_Flash_RKEbuttonfilter_4
+   \   0000002A   9513               INC     R17
+    132          	if (FilterCount>=3)gFlashApplState.Buttons |= BM_BUTTONFILTERON; //If filter count >=3, Filter on
+   \                     ??ATA_Flash_RKEbuttonfilter_4:
+   \   0000002C   3013               CPI     R17, 3
+   \   0000002E   F028               BRCS    ??ATA_Flash_RKEbuttonfilter_5
+   \   00000030   ....               LDI     R30, LOW(gFlashApplState)
+   \   00000032   ....               LDI     R31, (gFlashApplState) >> 8
+   \   00000034   8103               LDD     R16, Z+3
+   \   00000036   6400               ORI     R16, 0x40
+   \   00000038   8303               STD     Z+3, R16
+    133                  if (ButtonTimerCnt>61)
+   \                     ??ATA_Flash_RKEbuttonfilter_5:
+   \   0000003A   9100....           LDS     R16, ButtonTimerCnt
+   \   0000003E   330E               CPI     R16, 62
+   \   00000040   F0F8               BRCS    ??ATA_Flash_RKEbuttonfilter_6
+    134                  {
+    135                    SendLongCommand();            
+   \   00000042   ....               RCALL   SendLongCommand
+   \   00000044   C01D               RJMP    ??ATA_Flash_RKEbuttonfilter_6
+    136          	}		
+    137              }
+    138              else //Last != current
+    139              {
+    140                if (FilterCount>0) FilterCount--;//Decrement filter count
+   \                     ??ATA_Flash_RKEbuttonfilter_3:
+   \   00000046   2311               TST     R17
+   \   00000048   F011               BREQ    ??ATA_Flash_RKEbuttonfilter_7
+    141                if (FilterCount==0) gFlashApplState.Buttons &=  ~(BM_BUTTONFILTERON); //If filter count = 0, Filter off
+   \   0000004A   951A               DEC     R17
+   \   0000004C   F429               BRNE    ??ATA_Flash_RKEbuttonfilter_8
+   \                     ??ATA_Flash_RKEbuttonfilter_7:
+   \   0000004E   ....               LDI     R30, LOW(gFlashApplState)
+   \   00000050   ....               LDI     R31, (gFlashApplState) >> 8
+   \   00000052   8123               LDD     R18, Z+3
+   \   00000054   7B2F               ANDI    R18, 0xBF
+   \   00000056   8323               STD     Z+3, R18
+    142                if ((gFlashApplState.Buttons&BM_BUTTONFILTERON)!= BM_BUTTONFILTERON)//Filter off? 
+   \                     ??ATA_Flash_RKEbuttonfilter_8:
+   \   00000058   9120....           LDS     R18, (gFlashApplState + 3)
+   \   0000005C   FD26               SBRC    R18, 6
+   \   0000005E   C010               RJMP    ??ATA_Flash_RKEbuttonfilter_6
+    143                {
+    144                  gFlashApplVars.RKEcommand=ButtonState;//Update with new command
+   \   00000060   9300....           STS     (gFlashApplVars + 1), R16
+   \   00000064   C00D               RJMP    ??ATA_Flash_RKEbuttonfilter_6
+    145                }
+    146              }
+    147            }
+    148            else //No button press
+    149            {
+    150               if (FilterCount>0) FilterCount--;//Decrement filter count	 
+   \                     ??ATA_Flash_RKEbuttonfilter_2:
+   \   00000066   2311               TST     R17
+   \   00000068   F011               BREQ    ??ATA_Flash_RKEbuttonfilter_9
+    151               if (FilterCount==0 && (gFlashApplState.Buttons & BM_BUTTONFILTERON))//FIlter on and filter count 0?
+   \   0000006A   951A               DEC     R17
+   \   0000006C   F449               BRNE    ??ATA_Flash_RKEbuttonfilter_6
+   \                     ??ATA_Flash_RKEbuttonfilter_9:
+   \   0000006E   ....               LDI     R30, LOW(gFlashApplState)
+   \   00000070   ....               LDI     R31, (gFlashApplState) >> 8
+   \   00000072   8103               LDD     R16, Z+3
+   \   00000074   FF06               SBRS    R16, 6
+   \   00000076   C002               RJMP    ??ATA_Flash_RKEbuttonfilter_10
+    152               {
+    153                  SendShortCommand();                 
+   \   00000078   ....               RCALL   SendShortCommand
+   \   0000007A   C002               RJMP    ??ATA_Flash_RKEbuttonfilter_6
+    154               }
+    155               else if (FilterCount==0 && ~(gFlashApplState.Buttons & BM_BUTTONFILTERON))
+    156               {
+    157                 gFlashApplState.Buttons |= BM_BUTTONDATAVALID;//set Done//Glitch exit no message
+   \                     ??ATA_Flash_RKEbuttonfilter_10:
+   \   0000007C   6100               ORI     R16, 0x10
+   \   0000007E   8303               STD     Z+3, R16
+   \                     ??ATA_Flash_RKEbuttonfilter_6:
+   \   00000080   9310....           STS     FilterCount, R17
+    158               }
+    159            }
+    160            return(NoPressCount);
+   \   00000084   9100....           LDS     R16, NoPressCount
+   \   00000088   9508               RET
+    161          }
+
+   \                                 In  segment CODE, align 2, keep-with-next
+   \                     ?Subroutine0:
+   \   00000000   9300....           STS     NoPressCount, R16
+   \   00000004   9508               RET
+
+   \                                 In  segment CODE, align 2, keep-with-next
+    162          void SendLongCommand(void)
+   \                     SendLongCommand:
+    163          {
+    164            if (gFlashApplVars.RKEcommand==1)  gFlashApplVars.RKEcommand=0x81;
+   \   00000000   9100....           LDS     R16, (gFlashApplVars + 1)
+   \   00000004   3001               CPI     R16, 1
+   \   00000006   F411               BRNE    ??SendLongCommand_0
+   \   00000008   E801               LDI     R16, 129
+   \   0000000A   C009               RJMP    ??SendLongCommand_1
+    165            else if (gFlashApplVars.RKEcommand==2)  gFlashApplVars.RKEcommand=0x82;
+   \                     ??SendLongCommand_0:
+   \   0000000C   3002               CPI     R16, 2
+   \   0000000E   F411               BRNE    ??SendLongCommand_2
+   \   00000010   E802               LDI     R16, 130
+   \   00000012   C005               RJMP    ??SendLongCommand_1
+    166            // Two button pressed together (SW1, SW2)
+    167            else if (gFlashApplVars.RKEcommand==3)  gFlashApplVars.RKEcommand=0xC3;
+   \                     ??SendLongCommand_2:
+   \   00000014   3003               CPI     R16, 3
+   \   00000016   F411               BRNE    ??SendLongCommand_3
+   \   00000018   EC03               LDI     R16, 195
+   \   0000001A   C001               RJMP    ??SendLongCommand_1
+    168            else gFlashApplVars.RKEcommand=0x84;
+   \                     ??SendLongCommand_3:
+   \   0000001C   E804               LDI     R16, 132
+   \                     ??SendLongCommand_1:
+   \   0000001E   9300....           STS     (gFlashApplVars + 1), R16
+    169            
+    170            gFlashApplState.Buttons |= BM_NEWCMNDVALID;
+    171            gFlashApplState.Buttons |= BM_BUTTONDATAVALID;//set Done  
+   \   00000022   9100....           LDS     R16, (gFlashApplState + 3)
+   \   00000026   6900               ORI     R16, 0x90
+   \   00000028   9300....           STS     (gFlashApplState + 3), R16
+    172            NoPressCount=0xa5;
+   \   0000002C   EA05               LDI     R16, 165
+   \   0000002E   ....               RJMP    ?Subroutine0
+    173             
+    174          }
+
+   \                                 In  segment CODE, align 2, keep-with-next
+    175          void SendShortCommand(void)
+   \                     SendShortCommand:
+    176          {
+    177            //if (gFlashApplVars.RKEcommand==4)gFlashApplVars.RKEcommand=3;
+    178            gFlashApplState.Buttons |= BM_NEWCMNDVALID;
+    179            gFlashApplState.Buttons |= BM_BUTTONDATAVALID;//set Done
+   \   00000000   9100....           LDS     R16, (gFlashApplState + 3)
+   \   00000004   6900               ORI     R16, 0x90
+   \   00000006   9300....           STS     (gFlashApplState + 3), R16
+    180            NoPressCount=0xa6;
+   \   0000000A   EA06               LDI     R16, 166
+   \   0000000C                      REQUIRE ?Subroutine0
+   \   0000000C                      ;               // Fall through to label ?Subroutine0
+    181             
+    182          }
+    183          
+    184          /*----------------------------------------------------------------------------- */
+
+   Maximum stack usage in bytes:
+
+   RSTACK Function
+   ------ --------
+      2   ATA_Flash_RKEbuttonfilter
+        2   -> SendLongCommand
+        2   -> SendShortCommand
+      2   SendLongCommand
+      2   SendShortCommand
+
+
+   Segment part sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       6  ?Subroutine0
+     138  ATA_Flash_RKEbuttonfilter
+       1  FilterCount
+       1  NoPressCount
+      48  SendLongCommand
+      12  SendShortCommand
+       6  -- Other
+
+ 
+ 204 bytes in segment CODE
+   6 bytes in segment INITTAB
+   2 bytes in segment NEAR_Z
+ 
+ 204 bytes of CODE memory (+ 6 bytes shared)
+   2 bytes of DATA memory
+
+Errors: none
+Warnings: none

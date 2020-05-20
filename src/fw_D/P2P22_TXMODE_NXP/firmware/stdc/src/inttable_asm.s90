@@ -1,0 +1,309 @@
+/* *ASM************************************************************************
+  Use of this software is subject to Atmel's Software License Agreement.
+-------------------------------------------------------------------------------
+  $URL: http://svnservulm.corp.atmel.com/svn/CDB/Apps/SW_Lib/Car_Access/CARS_GEN2/ATAB5702A/Branches/P2P22_TXMODE_NXP/firmware/stdc/src/inttable_asm.s90 $
+  $LastChangedRevision: 328482 $
+  $LastChangedDate: 2015-07-22 13:17:23 -0600 (Wed, 22 Jul 2015) $
+  $LastChangedBy: grueter $
+-------------------------------------------------------------------------------
+  Project:      ATA5700
+  Target MCU:   ATA5700
+  Compiler:     IAR Assembler for AVR 6.12.1
+-------------------------------------------------------------------------------
+
+******************************************************************************
+* Copyright 2011, Atmel Automotive GmbH                                       *
+*                                                                             *
+* This software is owned by the Atmel Automotive GmbH                         *
+* and is protected by and subject to worldwide patent protection.             *
+* Atmel hereby grants to licensee a personal,                                 *
+* non-exclusive, non-transferable license to copy, use, modify, create        *
+* derivative works of, and compile the Atmel Source Code and derivative       *
+* works for the sole purpose of creating custom software in support of        *
+* licensee product to be used only in conjunction with a Atmel integrated     *
+* circuit as specified in the applicable agreement. Any reproduction,         *
+* modification, translation, compilation, or representation of this           *
+* software except as specified above is prohibited without the express        *
+* written permission of Atmel.                                                *
+*                                                                             *
+* Disclaimer: ATMEL MAKES NO WARRANTY OF ANY KIND,EXPRESS OR IMPLIED,         *
+* WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED    *
+* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.         *
+* Atmel reserves the right to make changes without further notice to the      *
+* materials described herein. Atmel does not assume any liability arising     *
+* out of the application or use of any product or circuit described herein.   *
+* Atmel does not authorize its products for use as critical components in     *
+* life-support systems where a malfunction or failure may reasonably be       *
+* expected to result in significant injury to the user. The inclusion of      *
+* Atmel products in a life-support systems application implies that the       *
+* manufacturer assumes all risk of such use and in doing so indemnifies       *
+* Atmel against all charges.                                                  *
+*                                                                             *
+* Use may be limited by and subject to the applicable Atmel software          *
+* license agreement.                                                          *
+*******************************************************************************/
+/*  \file inttable_asm.s90
+*/
+    NAME inttable_asm
+
+/* ---------------------------------------------------------------------------*/
+/*   INCLUDES                                                                 */
+/* ---------------------------------------------------------------------------*/
+/* ---------------------------------------------------------------------------*/
+/*   Modul Globals                                                            */
+/* ---------------------------------------------------------------------------*/
+    EXTERN  ATA_interrupt0Handler_ASM
+    EXTERN  ATA_interrupt1Handler_ASM
+    EXTERN  ATA_pinChangeInterrupt0Handler_ASM
+    EXTERN  ATA_pinChangeInterrupt1Handler_ASM
+
+    EXTERN  ATA_timer1ComIntHandler_ASM
+    EXTERN  ATA_timer1OvfIntHandler_ASM
+    
+    EXTERN  ATA_timer2ComIntHandler_ASM
+    EXTERN  ATA_timer2OvfIntHandler_ASM
+    
+    EXTERN  ATA_timer3CapIntHandler_ASM
+    EXTERN  ATA_timer3ComIntHandler_ASM
+    EXTERN  ATA_timer3OvfIntHandler_ASM
+    
+    EXTERN  ATA_timer4CapIntHandler_ASM
+    EXTERN  ATA_timer4ComIntHandler_ASM
+    EXTERN  ATA_timer4OvfIntHandler_ASM
+    
+    EXTERN  ATA_timer5ComIntHandler_ASM
+    EXTERN  ATA_timer5OvfIntHandler_ASM
+
+    EXTERN  ATA_spiSerialTransferCompleteHandler_ASM
+    EXTERN  ATA_spiTxBufferHandler_ASM
+    
+    EXTERN  ATA_TxModulatorTelegramFinish_ASM
+   
+    EXTERN  ATA_dataFifoFillLevelReached_ASM
+    EXTERN  ATA_rssiPreambleFifoFillLevelReached_ASM
+    
+    EXTERN  ATA_dataFifoOverUnderFlowHandler_ASM
+    EXTERN  ATA_rssiPreambleFifoOverUnderFlowHandler_ASM
+    
+/* ---------------------------------------------------------------------------*/
+/*   Macros                                                                   */
+/* ---------------------------------------------------------------------------*/
+/* ---------------------------------------------------------------------------*/
+/*   IMPLEMENTATION                                                           */
+/* ---------------------------------------------------------------------------*/
+    ; -- external interrupt request 0 --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 4
+    JMP     ATA_interrupt0Handler_ASM   ; --> extif_asm.s90
+
+    ; -- external interrupt request 1 --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 8
+    JMP     ATA_interrupt1Handler_ASM   ; --> extif_asm.s90
+
+    ; -- pin change interrupt request 0 --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 12
+    JMP     ATA_pinChangeInterrupt0Handler_ASM  ; -->extif_asm.s90
+
+    ; -- pin change interrupt request 1 --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 16
+    JMP     ATA_pinChangeInterrupt1Handler_ASM  ; --> extif_asm.s90
+
+    ; -- voltage monitoring interrupt --
+    ; defined in system.c __interrupt void ATA_systemLowBatt_ISR_flash_C();
+    ; COMMON INTVEC:CODE:ROOT(1)
+    ; ORG 20
+    ; RETI
+    
+    ; -- avcc reset interrupt --
+    ; defined in system.c __interrupt void ATA_systemAvccReset_ISR_flash_C();
+    ; COMMON INTVEC:CODE:ROOT(1)
+    ; ORG 24
+    ; RETI    ; --> not used in firmware
+    
+    ; -- avcc low interrupt --
+    ; defined in system.c __interrupt void ATA_systemAvccLow_ISR_flash_C();
+    ; COMMON INTVEC:CODE:ROOT(1)
+    ; ORG 28
+    ; RETI
+    
+    ; -- timer 0 interval interrupt --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 32
+    RETI    ; --> not used in firmware
+
+    ; -- timer/counter 1 compare match interrupt --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 36
+    JMP     ATA_timer1ComIntHandler_ASM     ; --> timer1_asm.s90
+    
+    ; -- timer/counter 1 overflow interrupt --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 40
+    JMP     ATA_timer1OvfIntHandler_ASM     ; --> timer1_asm.s90
+    
+    ; -- timer/counter 2 compare match interrupt --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 44
+    JMP     ATA_timer2ComIntHandler_ASM     ; --> timer2_asm.s90
+
+    ; -- timer/counter 2 overflow interrupt --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 48
+    JMP     ATA_timer2OvfIntHandler_ASM     ; --> timer2_asm.s90
+    
+    ; -- timer/counter 3 capture event interrupt --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 52
+    JMP     ATA_timer3CapIntHandler_ASM     ; --> timer3_asm.s90
+    
+    ; -- timer/counter 3 compare match interrupt --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 56
+    JMP     ATA_timer3ComIntHandler_ASM     ; --> timer3_asm.s90
+    
+    ; -- timer/counter 3 overflow interrupt --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 60
+    JMP     ATA_timer3OvfIntHandler_ASM     ; --> timer3_asm.s90
+
+    ; -- timer/counter 4 capture event interrupt --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 64
+    JMP     ATA_timer4CapIntHandler_ASM     ; --> timer4_asm.s90
+
+    ; -- timer/counter 4 compare match interrupt --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 68
+    JMP     ATA_timer4ComIntHandler_ASM     ; --> timer4_asm.s90
+
+    ; -- timer/counter 4 overflow interrupt --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 72
+    JMP     ATA_timer4OvfIntHandler_ASM     ; --> timer4_asm.s90
+    
+    ; -- timer/counter 5 compare match interrupt --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 76
+    JMP     ATA_timer5ComIntHandler_ASM     ; --> timer5_asm.s90
+
+    ; -- timer/counter 5 overflow interrupt --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 80
+    JMP     ATA_timer5OvfIntHandler_ASM     ; --> timer5_asm.s90
+
+    ; -- spi serial transfer complete interrupt --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 84
+    JMP     ATA_spiSerialTransferCompleteHandler_ASM    ; --> extif_asm.s90
+    
+    ; -- SPI Rx Buffer Interrupt --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 88
+    JMP     ATA_spiRxBufferHandler_ASM  ; --> extif_asm.s90
+
+    ; -- SPI Tx Buffer Interrupt --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 92
+    JMP     ATA_spiTxBufferHandler_ASM  ; --> extif_asm.s90
+
+    ; -- Sequencer State Machine Interrupt --
+    ; defined in rf.c __interrupt void ATA_ssmInterrupt_C(void);
+    ; COMMON INTVEC:CODE:ROOT(1)
+    ; ORG 96
+    ; RETI
+
+    ; -- DATA FIFO fill level reached interrupt --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 100
+    JMP ATA_dataFifoFillLevelReached_ASM  ; --> rfrx_asm.s90
+
+    ; -- DATA FIFO overflow or underflow error interrupt --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 104
+    JMP ATA_dataFifoOverUnderFlowHandler_ASM ; --> rf_asm.s90
+
+    ; -- RSSI/Preamble FIFO fill level reached interrupt --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 108
+    JMP ATA_rssiPreambleFifoFillLevelReached_ASM  ; --> rfrx_asm.s90
+    
+    ; -- RSSI/Preamble FIFO overflow or underflow error interrupt --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 112
+    JMP ATA_rssiPreambleFifoOverUnderFlowHandler_ASM  ; --> rf_asm.s90
+
+    ; -- Tx Modulator Telegram Finish interrupt --
+    ; defined in rftx.c __interrupt void ATA_rfTxModulatorTelegramFinish_C(void)
+    ; COMMON INTVEC:CODE:ROOT(1)
+    ; ORG 116
+    ; JMP ATA_TxModulatorTelegramFinish_ASM  ; --> rftx_asm.s90
+
+    ; -- UHF receiver wake check ok on rx path B --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 120
+    JMP ATA_wakeCheckOkPathB_ASM  ; --> rfrx_asm.s90
+
+    ; -- UHF receiver wake check ok on rx path A --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 124
+    JMP ATA_wakeCheckOkPathA_ASM  ; --> rfrx_asm.s90
+
+    ; -- UHF receiver start of telegram ok on rx path B --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 128
+    JMP ATA_startOfTelegramPathB_ASM  ; --> rfrx_asm.s90
+    
+    ; -- UHF receiver start of telegram ok on rx path A --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 132
+    JMP ATA_startOfTelegramPathA_ASM  ; --> rfrx_asm.s90
+    
+    ; -- UHF receiver end of telegram on rx path B --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 136
+    JMP ATA_endOfTelegramPathB_ASM  ; --> rfrx_asm.s90
+    
+    ; -- UHF receiver end of telegram on rx path A --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 140
+    JMP ATA_endOfTelegramPathA_ASM  ; --> rfrx_asm.s90
+    
+    ; -- I2C Transmit Interrupt --
+    ; defined in i2c.c __interrupt void ATA_i2cTransmitByte_C(void)
+    ;COMMON INTVEC:CODE:ROOT(1)
+    ;ORG 144
+    ;RETI    ; --> not used in firmware
+    
+    ; -- UHF receiver new bit on rx path A --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 148
+    RETI    ; --> not used in firmware
+    
+    ; -- External input Clock Monitor Interrupt --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 152
+    RETI    ; --> not used in firmware
+
+    ; -- EEPROM Ready Interrupt --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 156
+    RETI    ; --> not used in firmware
+    
+    ; -- Store Program Memory Ready Interrupt --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 160
+    RETI    ; --> not used in firmware
+    
+    ; -- IDscan buffer full level reached interrupt --
+    ; defined in rf.c __interrupt void ATA_IDscanBufferFullInterrupt_C(void)
+    ;COMMON INTVEC:CODE:ROOT(1)
+    ;ORG 164
+    ;RETI
+
+    END
+
+    
+    

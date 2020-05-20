@@ -1,0 +1,631 @@
+;----------------------------------------------------------------------------
+;
+;  $Revision: 328482 $
+;
+;----------------------------------------------------------------------------
+#include "macros.m90"
+
+#define CPUCR           __?CCP /*Mostly 0x34*/
+
+#define NVM_CONTROLLER  __?NVMADR0
+#define NVMADR0_OFFSET    0x00
+#define NVMADR1_OFFSET    0x01
+#define NVMADR2_OFFSET    0x02
+
+#define NVMDR0_OFFSET    0x04
+#define NVMDR1_OFFSET    0x05
+#define NVMDR2_OFFSET    0x06
+
+#define NVMCMD_OFFSET    0x0A
+#define NVMACR_OFFSET    0x0B
+#define NVMBCR_OFFSET    0x0C
+#define NVMICR_OFFSET    0x0D
+#define NVMISR_OFFSET    0x0E
+#define NVMSR_OFFSET     0x0F
+#define NVMLBR_OFFSET    0x10
+
+#define EEPROM_READ             0x06
+#define EEPROM_ERASE            0x30
+#define EEPROM_PAGE_ERASE       0x32
+#define EEPROM_PAGE_LOAD        0x33
+#define EEPROM_PAGE_WRITE       0x34
+#define EEPROM_PAGE_ERASE_WRITE 0x35
+#define EEPROM_BUFFER_ERASE     0x36
+
+#define EEPROM_PAGESIZE __?EEPROM_PAGESIZE
+
+#define NVM_ACTION      0x01
+#define NVM_NOP         0x00
+
+        MODULE  ?EEPROM_X_UNMAPPED
+        RTMODEL "EEPROM_SIZE", "X2_UNMAPPED"
+        EXTERN  NVM_CONTROLLER
+        EXTERN  EEPROM_PAGESIZE
+        EXTERN  CPUCR
+
+;----------------------------------------------------------------------------
+;       Uses:           P3:P2:P1:P0(Source), Q1:Q0(Destination)
+;       Defines         P3:P2:P1:P0,Q3:Q2:Q1:Q0
+;       Stack:          4 + (3)2 byte CSTACK,
+;                       1 + 1 level of RSTACK
+;
+        RSEG    CODE:CODE:NOROOT
+        PUBLIC  __x_eeput32
+__x_eeput32:
+        LDI     Q2,4
+        RCALL   ?eeput32_push
+        RJMP    ?eeput32_pop
+
+;----------------------------------------------------------------------------
+;       Uses:           P2:P1:P0(Source), Q1:Q0(Destination)
+;       Defines         P3:P2:P1:P0,Q3:Q2:Q1:Q0
+;       Stack:          3 + (3)2 byte CSTACK,
+;                       1 + 1 level of RSTACK
+;
+        RSEG    CODE:CODE:NOROOT
+        PUBLIC  __x_eeput24
+__x_eeput24:
+        LDI     Q2,3
+        RCALL   ?eeput24_push
+        RJMP    ?eeput24_pop
+
+;----------------------------------------------------------------------------
+;       Uses:           P1:P0(Source), Q1:Q0(Destination)
+;       Defines         P3:P2:P1:P0,Q3:Q2:Q1:Q0
+;       Stack:          2 + (3)2 byte CSTACK,
+;                       1 + 1 level of RSTACK
+;
+        RSEG    CODE:CODE:NOROOT
+        PUBLIC  __x_eeput16
+__x_eeput16:
+        LDI     Q2,2
+        RCALL   ?eeput16_push
+        RJMP    ?eeput16_pop
+
+;----------------------------------------------------------------------------
+;       Uses:           P0(Source), Q1:Q0(Destination)
+;       Defines         P3:P2:P1:P0,Q3:Q2
+;       Stack:          1 + (3)2 byte CSTACK,
+;                       1 + 1 level of RSTACK
+;
+        RSEG    CODE:CODE:NOROOT
+        PUBLIC  __x_eeput8
+__x_eeput8:
+        LDI     Q2,1
+        RCALL   ?eeput8_push
+        RJMP    ?eeput8_pop
+
+
+;----------------------------------------------------------------------------
+;
+        RSEG    CODE:CODE:NOROOT
+?eeput64_push:
+        ST     -Y,Q3
+        ST     -Y,Q2
+        ST     -Y,Q1
+        ST     -Y,Q0
+        MOVW    Q1:Q0,R25:R24
+        LDI     Q2,8
+        REQUIRE ?eeput32_push
+        RSEG    CODE:CODE:NOROOT
+?eeput32_push:
+        ST     -Y,P3
+        REQUIRE ?eeput24_push
+        RSEG    CODE:CODE:NOROOT
+?eeput24_push:
+        ST     -Y,P2
+        REQUIRE ?eeput16_push
+        RSEG    CODE:CODE:NOROOT
+?eeput16_push:
+        ST     -Y,P1
+        REQUIRE ?eeput8_push
+        RSEG    CODE:CODE:NOROOT
+?eeput8_push:
+        ST     -Y,P0
+        MOVW    P1:P0,Y1:Y0
+#ifdef A90_EXTENDED_DATA
+        IN      P2,RAMPY
+#endif
+        LDI     Q3,0
+        RJMP    __x_ML_SRAM_EEPROM_24_16
+
+;----------------------------------------------------------------------------
+;       Uses:           P3:P2:P1:P0,Q3:Q2:Q1:Q0(Source), R25:R24(Destination)
+;       Defines         P3:P2:P1:P0,Q3:Q2:Q1:Q0
+;       Stack:          8 + (3)2 byte CSTACK,
+;                       1 + 1 level of RSTACK
+;
+        RSEG    CODE:CODE:NOROOT
+        PUBLIC  __x_eeput64
+__x_eeput64:
+        RCALL   ?eeput64_push
+        REQUIRE ?eeput64_pop
+        /*Fall through to ?eeput64_pop*/
+
+;----------------------------------------------------------------------------
+;
+        RSEG    CODE:CODE:NOROOT
+?eeput64_pop:
+        ADIW Y0,4
+        REQUIRE ?eeput32_pop
+        RSEG    CODE:CODE:NOROOT
+?eeput32_pop:
+        ADIW Y0,1
+        REQUIRE ?eeput24_pop
+        RSEG    CODE:CODE:NOROOT
+?eeput24_pop:
+        ADIW Y0,1
+        REQUIRE ?eeput16_pop
+        RSEG    CODE:CODE:NOROOT
+?eeput16_pop:
+        ADIW Y0,1
+        REQUIRE ?eeput8_pop
+        RSEG    CODE:CODE:NOROOT
+?eeput8_pop:
+        ADIW Y0,1
+        RET
+
+;----------------------------------------------------------------------------
+;       Uses:           Q1:Q0(Destination),P2:P1:P0(Source),Q3:Q2(Size)
+;       Defines:        Q3:Q2:Q1:Q0, P3:P2:P1:P0,
+;                       If size==1, Q1:Q0 unchanged.
+;       Stack:          5 bytes of CSTACK,
+;                       1 level of RSTACK
+;
+        PUBLIC  __x_ML_SRAM_EEPROM_24_16
+        PUBLIC  __x_ML_SRAM_EEPROM_16_16
+        PUBLIC  __x_ML_SRAM_EEPROM_8_16
+
+        RSEG    CODE:CODE:NOROOT
+__x_ML_SRAM_EEPROM_8_16:
+        LDI     P1,0
+        REQUIRE __x_ML_SRAM_EEPROM_16_16
+
+        RSEG    CODE:CODE:NOROOT
+__x_ML_SRAM_EEPROM_16_16:
+#ifdef A90_EXTENDED_DATA
+        LDI     P2,0
+#endif
+        REQUIRE __x_ML_SRAM_EEPROM_24_16
+
+        RSEG    CODE:CODE:NOROOT
+__x_ML_SRAM_EEPROM_24_16:
+        ST      -Y,T0
+        ST      -Y,X0            /* Save X */
+        ST      -Y,X1
+#ifdef A90_EXTENDED_DATA
+        IN      X1,RAMPX
+        ST      -Y,X1
+        OUT     RAMPX,P2
+#endif
+        MOVW    X1:X0,P1:P0
+        IN      T0,SREG
+
+?FillBufferLoop_1:
+        RCALL   ?PartOne
+
+?FillBuffer_1:
+        STS     NVM_CONTROLLER+NVMADR0_OFFSET,Q0
+        STS     NVM_CONTROLLER+NVMADR1_OFFSET,Q1
+
+        LD      P3,X+
+        STS     NVM_CONTROLLER+NVMDR0_OFFSET,P3
+
+        DEC     P2 /*SizeLowCopy, The size of the buffer*/
+        BREQ    ?DoneFillingBuffer_1
+        SUBI    Q0,-1
+        SBCI    Q1,-1
+        RJMP    ?FillBuffer_1 /* More to do */
+
+?DoneFillingBuffer_1:
+        RCALL   ?PartTwo
+        BRNE    ?FillBufferLoop_1
+
+#ifdef A90_EXTENDED_DATA               /* Restore X */
+        LD      X1,Y+
+        OUT     RAMPX,X1
+#endif
+        LD      X1,Y+
+        LD      X0,Y+
+        LD      T0,Y+
+        RET
+
+
+;----------------------------------------------------------------------------
+;       Uses:           Q1:Q0(Destination),Z2(P3):Z1:Z0(Source),Q3:Q2(Size)
+;       Defines:        Q3:Q2:Q1:Q0, RAMPZ:Z1:Z0, P3:P2:P1:P0,
+;                       If size==1, Q1:Q0 unchanged.
+;       Stack:          2 bytes of CSTACK,
+;                       1 level of RSTACK
+;
+        RSEG    CODE:CODE:NOROOT
+        PUBLIC  __x_ML_FLASH_EEPROM_8_16
+        PUBLIC  __x_ML_FLASH_EEPROM_16_16
+        PUBLIC  __x_ML_FLASH_EEPROM_24_16
+
+        RSEG    CODE:CODE:NOROOT
+__x_ML_FLASH_EEPROM_8_16:
+        LDI     Z1,0
+        REQUIRE __x_ML_FLASH_EEPROM_16_16
+
+        RSEG    CODE:CODE:NOROOT
+__x_ML_FLASH_EEPROM_16_16:
+#ifdef __HAS_ELPM__
+        LDI     P3,0    /*Z2*/
+#endif
+        REQUIRE __x_ML_FLASH_EEPROM_24_16
+
+        RSEG    CODE:CODE:NOROOT
+__x_ML_FLASH_EEPROM_24_16:
+#ifdef __HAS_ELPM__
+        OUT     RAMPZ,P3 /*Z2*/
+#endif
+        ST      -Y,T0
+        IN      T0,SREG
+
+?FillBufferLoop_2:
+        RCALL   ?PartOne
+
+?FillBuffer_2:
+        STS     NVM_CONTROLLER+NVMADR0_OFFSET,Q0
+        STS     NVM_CONTROLLER+NVMADR1_OFFSET,Q1
+
+#ifdef __HAS_ELPM__
+        ELPM    P3,Z+
+#else
+        LPM    P3,Z+
+#endif
+        STS     NVM_CONTROLLER+NVMDR0_OFFSET,P3
+
+        DEC     P2
+        BREQ    ?DoneFillingBuffer_2
+        SUBI    Q0,-1
+        SBCI    Q1,-1
+        RJMP    ?FillBuffer_2
+
+?DoneFillingBuffer_2:
+        RCALL   ?PartTwo
+        BRNE    ?FillBufferLoop_2
+
+        LD      T0,Y+
+        RET
+
+;----------------------------------------------------------------------------
+;       Start of common parts
+;
+        RSEG    CODE:CODE:NOROOT
+?PartOne:
+?busy:
+        LDS     P1,NVM_CONTROLLER+NVMSR_OFFSET
+        SBRC    P1,7
+        RJMP    ?busy
+        CLI
+        /* Possibly clear the buffer */
+        SBRS    P1,1
+        RJMP    ?SkipClearingBuffer
+
+        LDI     P1,EEPROM_BUFFER_ERASE
+        STS     NVM_CONTROLLER+NVMCMD_OFFSET,P1
+
+        LDI     P1,0xD8
+        OUT     CPUCR,P1
+        /* After this we have 4 instructions before any interrupt might happen.
+           This is true iff no store, lpm, spm, and sleep are made. */
+        LDI     P1,NVM_ACTION
+        STS     NVM_CONTROLLER+NVMACR_OFFSET,P1
+?SkipClearingBuffer:
+/*
+ *      MOV     SizeLowCopy,SizeLow
+ *      MOV     AddressLowCopy,AddressLow
+ *      LDI     MaxSize,EEPROM_PAGESIZE
+ *      ANDI    AddressLowCopy, (EEPROM_PAGESIZE-1)
+ *      SUB     MaxSize,AddressLowCopy
+ *      CP      MaxSize,SizeLowCopy
+ *      BRCC    $+1
+ *      MOV     SizeLowCopy,MaxSize
+ *
+ *      SUB     SizeLow,SizeLowCopy
+ *      SBCI    SizeHigh,0
+ * loop:
+ *      *eeprom++ = *data++
+ *      DEC      SizeLowCopy
+ *      BRNE     loop
+ */
+        MOV     P2,Q2
+        MOV     P3,Q0
+        LDI     P1, EEPROM_PAGESIZE
+        ANDI    P3,(EEPROM_PAGESIZE-1)
+        SUB     P1,P3
+        CP      P1,P2
+        BRCC    ?SizeLessThanMaxSize
+        MOV     P2,P1
+?SizeLessThanMaxSize:
+        SUB     Q2,P2
+        SBCI    Q3,0
+
+        LDI     P1,EEPROM_PAGE_LOAD
+        STS     NVM_CONTROLLER+NVMCMD_OFFSET,P1
+        RET
+
+;----------------------------------------------------------------------------
+;
+        RSEG    CODE:CODE:NOROOT
+?PartTwo:
+        LDI     P0,EEPROM_PAGE_ERASE_WRITE
+        STS     NVM_CONTROLLER+NVMCMD_OFFSET,P0
+        LDI     P1,0xD8
+        OUT     CPUCR,P1
+        /*
+          After this we have 4 instructions before any interrupt might happen.
+          This is true iff no store, lpm, spm, and sleep are made.
+        */
+        LDI     P1,NVM_ACTION
+        STS     NVM_CONTROLLER+NVMACR_OFFSET,P1
+        OUT     SREG,T0
+
+        SUBI    Q2,0 /* Test if there is something left (TST Q3:Q2)*/
+        SBCI    Q3,0
+
+        BREQ    ?PartTwoRet /* Nothing left */
+        SUBI    Q0,-1
+        SBCI    Q1,-1
+        CLZ        
+?PartTwoRet:
+        RET
+;
+;       End of Common parts
+;----------------------------------------------------------------------------
+
+
+;----------------------------------------------------------------------------
+;       Uses:           Q3:Q2(Source),P3:P2(Destination),R31:R30(Size)
+;       Defines:        Q3:Q2:Q1:Q0,T1:T0,P3:P2:P1:P0,R31:R30
+;       Stack:          1 level of RSTACK
+;
+        PUBLIC  __x_ML_EEPROM_EEPROM_16_16
+        RSEG    CODE:CODE:NOROOT
+__x_ML_EEPROM_EEPROM_16_16:
+        MOVW    Q1:Q0,Q3:Q2
+        RCALL   __x_eeget8      /*P0 Defined*/
+        SUBI    Q2,-1
+        SBCI    Q3,-1
+
+        MOVW    T1:T0,Q3:Q2
+
+        MOVW    Q1:Q0,P3:P2
+        RCALL   __x_eeput8      /*Q3:Q2, P3:P2:P1:P0 are destryed*/
+
+        MOVW    Q3:Q2,T1:T0
+        MOVW    P3:P2,Q1:Q0
+
+        SUBI    P2,-1
+        SBCI    P3,-1
+        SBIW    R31:R30,1
+        BRNE    __x_ML_EEPROM_EEPROM_16_16
+        RET
+
+;----------------------------------------------------------------------------
+;       Uses:           Q1:Q0(Source),Z2(P3):Z1:Z0(Destination),P2:P1(Size)
+;       Defines:        P2:P1:P0, Q1:Q0, RAMPZ:Z1:Z0
+;       Stack:          1 level of RSTACK
+;
+        PUBLIC  __x_ML_EEPROM_GENERIC_16_24
+        RSEG    CODE:CODE:NOROOT
+__x_ML_EEPROM_GENERIC_16_24:
+        SBRC    P3,7 /*Z2*/
+        RET
+        RJMP    __x_ML_EEPROM_SRAM_16_24
+
+;----------------------------------------------------------------------------
+;       Uses:           Z2(P3):Z1:Z0(Source), Q1:Q0(Destination), Q3:Q2(Size)
+;       Defines:        P3:P2:P1:P0, Q3:Q2:Q1:Q0, RAMPZ:Z1:Z0
+;
+        PUBLIC  __x_ML_GENERIC_EEPROM_24_16
+        RSEG    CODE:CODE:NOROOT
+__x_ML_GENERIC_EEPROM_24_16:
+        SBRC    P3,7    /*Z2*/
+        RJMP    __x_ML_FLASH_EEPROM_24_16
+        MOVW    P1:P0,Z1:Z0
+#ifdef A90_EXTENDED_DATA
+        MOV     P2,P3   /*Z2*/
+#endif
+        RJMP    __x_ML_SRAM_EEPROM_24_16
+
+;----------------------------------------------------------------------------
+;       Uses:           Q1:Q0(Source), R31:R30(Size)
+;       Defines:        P0, Q1:Q0, R31:R30, T1:T0
+;       Stack:          Size bytes of CSTACK,
+;                       1 level of RSTACK
+;
+        PUBLIC  __x_EEPROM_FARG_16
+        RSEG    CODE:CODE:NOROOT(1)
+__x_EEPROM_FARG_16:
+        ADD     Q0,Z0
+        ADC     Q1,Z1
+LOOP_EEPROM_FARG_16:
+        SUBI    Q0,1
+        SBCI    Q1,0
+        RCALL   ?getOneEepromByte
+        SBIW    Z1:Z0,1
+        BRNE    LOOP_EEPROM_FARG_16
+        RET
+
+;----------------------------------------------------------------------------
+;       Uses:           Q1:Q0(Source),Z2(P3):Z1:Z0(Destination),P2:P1(Size)
+;       Defines:        P2:P1:P0, Q1:Q0, RAMPZ:Z1:Z0 T1:T0
+;       Stack:          1 level of RSTACK
+;
+        PUBLIC  __x_ML_EEPROM_SRAM_16_8
+        PUBLIC  __x_ML_EEPROM_SRAM_16_16
+        PUBLIC  __x_ML_EEPROM_SRAM_16_24
+
+        RSEG    CODE:CODE:NOROOT
+__x_ML_EEPROM_SRAM_16_8:
+        LDI     Z1,0
+        REQUIRE __x_ML_EEPROM_SRAM_16_16
+
+        RSEG    CODE:CODE:NOROOT
+__x_ML_EEPROM_SRAM_16_16:
+#ifdef A90_EXTENDED_DATA
+        LDI     P3,0    /*Z2*/
+#endif
+        REQUIRE __x_ML_EEPROM_SRAM_16_24
+
+        RSEG    CODE:CODE:NOROOT(1)
+__x_ML_EEPROM_SRAM_16_24:
+#ifdef A90_EXTENDED_DATA
+        OUT     RAMPZ,P3        /*Z2*/
+#endif
+?LOOP_ML_EEPROM_SRAM_16_24:
+        RCALL   __x_eeget8
+        SUBI    Q0,-1
+        SBCI    Q1,-1
+        ST      Z+,P0
+        SUBI    P1,1
+        SBCI    P2,0
+        BRNE    ?LOOP_ML_EEPROM_SRAM_16_24
+        RET
+
+;----------------------------------------------------------------------------
+;       Uses:           R25:R24(Address)
+;       Defines:        Q3:Q2:Q1:Q0:P3:P2:P1:P0, T1:T0
+;       Stack:          8 byte CSTACK,
+;                       1 level of RSTACK
+;
+        PUBLIC  __x_eeget64
+        RSEG    CODE:CODE:NOROOT(1)
+__x_eeget64:
+        MOVW    Q1:Q0,R25:R24
+        RCALL   ?getOneEepromByte
+        RCALL   ?getOneEepromByte_preinc
+        RCALL   ?getOneEepromByte_preinc
+        RCALL   ?getOneEepromByte_preinc
+        RCALL   ?getOneEepromByte_preinc
+        RCALL   ?getOneEepromByte_preinc
+        RCALL   ?getOneEepromByte_preinc
+        RCALL   ?getOneEepromByte_preinc
+        RJMP    ?eeget64_pop
+
+;----------------------------------------------------------------------------
+;       Uses:           Q1:Q0(Address)
+;       Defines:        Q1:Q0,P3:P2:P1:P0, T1:T0
+;       Stack:          3 byte CSTACK,
+;                       1 level of RSTACK
+        PUBLIC  __x_eeget32
+        RSEG    CODE:CODE:NOROOT(1)
+__x_eeget32:
+        RCALL   ?getOneEepromByte
+        RCALL   ?getOneEepromByte_preinc
+        RCALL   ?getOneEepromByte_preinc
+        RCALL   ?getOneEepromByte_preinc
+        RJMP    ?eeget32_pop
+
+;----------------------------------------------------------------------------
+;       Uses:           Q1:Q0(Address)
+;       Defines:        Q1:Q0,P2:P1:P0, T1:T0
+;       Stack:          3 byte CSTACK,
+;                       1 level of RSTACK
+        PUBLIC  __x_eeget24
+        RSEG    CODE:CODE:NOROOT(1)
+__x_eeget24:
+        RCALL   ?getOneEepromByte
+        RCALL   ?getOneEepromByte_preinc
+        RCALL   ?getOneEepromByte_preinc
+        RJMP    ?eeget24_pop
+
+;----------------------------------------------------------------------------
+;       Uses:           Q1:Q0(Address)
+;       Defines:        Q1:Q0,P1:P0, T1:T0
+;       Stack:          2 byte CSTACK,
+;                       1 level of RSTACK
+        PUBLIC  __x_eeget16
+        RSEG    CODE:CODE:NOROOT(1)
+__x_eeget16:
+        RCALL   ?getOneEepromByte
+        RCALL   ?getOneEepromByte_preinc
+        RJMP    ?eeget16_pop
+
+;----------------------------------------------------------------------------
+;       Uses:           Q1:Q0(Address)
+;       Defines:        P0, T1:T0
+;       Stack:          1 byte CSTACK,
+;                       1 level of RSTACK
+        PUBLIC  __x_eeget8
+        RSEG    CODE:CODE:NOROOT(1)
+__x_eeget8:
+        RCALL   ?getOneEepromByte
+        REQUIRE ?eeget8_pop
+        RSEG    CODE:CODE:NOROOT(1)
+?eeget8_pop:
+        LD      P0,Y+
+        RET
+
+
+;----------------------------------------------------------------------------
+;
+        RSEG    CODE:CODE:NOROOT(1)
+?eeget64_pop:
+        LD      Q3,Y+
+        LD      Q2,Y+
+        LD      Q1,Y+
+        LD      Q0,Y+
+        REQUIRE ?eeget32_pop
+        RSEG    CODE:CODE:NOROOT(1)
+?eeget32_pop:
+        LD      P3,Y+
+        REQUIRE ?eeget24_pop
+        RSEG    CODE:CODE:NOROOT(1)
+?eeget24_pop:
+        LD      P2,Y+
+        REQUIRE ?eeget16_pop
+        RSEG    CODE:CODE:NOROOT(1)
+?eeget16_pop:
+        LD      P1,Y+
+        RJMP    ?eeget8_pop
+
+;----------------------------------------------------------------------------
+;       Defines:        P0,Q1,Q0, T1:T0
+;       Stack:          1 byte CSTACK
+        RSEG    CODE:CODE:NOROOT(1)
+?getOneEepromByte_preinc:
+        SUBI    Q0,-1
+        SBCI    Q1,-1
+        REQUIRE ?getOneEepromByte
+        RSEG    CODE:CODE:NOROOT(1)
+;----------------------------------------------------------------------------
+;       Defines:        P0,T1:T0
+;       Stack:          1 byte CSTACK
+?getOneEepromByte:
+        LDS     P0,NVM_CONTROLLER+NVMSR_OFFSET
+        SBRC    P0,7
+        RJMP    ?getOneEepromByte
+
+        LDI     P0,NVM_ACTION
+        MOV     T1,P0
+
+        IN      T0,SREG
+        CLI
+
+        STS     NVM_CONTROLLER+NVMADR0_OFFSET,Q0
+        STS     NVM_CONTROLLER+NVMADR1_OFFSET,Q1
+
+        LDI     P0,EEPROM_READ
+        STS     NVM_CONTROLLER+NVMCMD_OFFSET,P0 /*EEPROM_READ*/
+
+        LDI     P0,0xD8
+        OUT     CPUCR,P0
+        /*
+          After this we have 4 instructions before any interrupt might happen.
+          This is true iff no store, lpm, spm, and sleep are made.
+        */
+        STS     NVM_CONTROLLER+NVMACR_OFFSET,T1 /*NVM_ACTION*/
+        LDS     P0,NVM_CONTROLLER+NVMDR0_OFFSET
+        OUT     SREG,T0
+        ST      -Y,P0
+        RET
+
+        END
+
+
+;----------------------------------------------------------------------------
+;  

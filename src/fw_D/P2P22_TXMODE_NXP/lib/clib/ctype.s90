@@ -1,0 +1,54 @@
+/*			- CTYPE.S90 -
+
+    Support data structure for "ctype.h".
+
+    $Revision: 328482 $
+
+    Copyright 1999 IAR Systems. All rights reserved.
+*/
+        
+#include "ctype.h"
+
+	MODULE	?_Large_Ctype
+
+	PUBLIC	_Small_Ctype
+	PUBLIC	_Large_Ctype
+	PUBLIC	?Ctype_end
+
+	RSEG	NEAR_F:CODE:NOROOT(0)
+_Large_Ctype:
+	REQUIRE	_Small_Ctype
+	REQUIRE	?Ctype_end
+
+	RSEG	NEAR_F:CODE:NOROOT(0)
+_Small_Ctype:
+	DB	0	/* EOF */
+	DB	_C,	_C,	_C,	_C,	_C,	_C,	_C,	_C
+	DB	_C,	_S|_C,	_S|_C,	_S|_C,	_S|_C,	_S|_C,	_C,	_C
+	DB	_C,	_C,	_C,	_C,	_C,	_C,	_C,	_C
+	DB	_C,	_C,	_C,	_C,	_C,	_C,	_C,	_C
+	DB	_S|_B,	_P,	_P,	_P,	_P,	_P,	_P,	_P
+	DB	_P,	_P,	_P,	_P,	_P,	_P,	_P,	_P
+	DB	_N,	_N,	_N,	_N,	_N,	_N,	_N,	_N
+	DB	_N,	_N,	_P,	_P,	_P,	_P,	_P,	_P
+	DB	_P,	_U|_X,	_U|_X,	_U|_X,	_U|_X,	_U|_X,	_U|_X,	_U
+	DB	_U,	_U,	_U,	_U,	_U,	_U,	_U,	_U
+	DB	_U,	_U,	_U,	_U,	_U,	_U,	_U,	_U
+	DB	_U,	_U,	_U,	_P,	_P,	_P,	_P,	_P
+	DB	_P,	_L|_X,	_L|_X,	_L|_X,	_L|_X,	_L|_X,	_L|_X,	_L
+	DB	_L,	_L,	_L,	_L,	_L,	_L,	_L,	_L
+	DB	_L,	_L,	_L,	_L,	_L,	_L,	_L,	_L
+	DB	_L,	_L,	_L,	_P,	_P,	_P,	_P,	_C
+
+	RSEG	NEAR_F:CODE:NOROOT(0)
+?Ctype_end:
+	DB	0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0
+	DB	0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0
+	DB	0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0
+	DB	0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0
+	DB	0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0
+	DB	0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0
+	DB	0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0
+	DB	0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0
+
+	END

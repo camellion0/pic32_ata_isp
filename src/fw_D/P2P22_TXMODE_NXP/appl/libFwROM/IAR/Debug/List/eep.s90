@@ -1,0 +1,1335 @@
+///////////////////////////////////////////////////////////////////////////////
+//
+// IAR C/C++ Compiler V6.70.1.929 for Atmel AVR           05/Apr/2016  13:30:40
+// Copyright 1996-2015 IAR Systems AB.
+// Network license: DVRIAR01.corpp.atmel.com (STD)
+//
+//    Source file  =  
+//        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\firmware\eep\src\eep.c
+//    Command line =  
+//        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\firmware\eep\src\eep.c
+//        -v3 --enhanced_core -ms -o
+//        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\Obj
+//        -lC
+//        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\List
+//        -lA
+//        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\List
+//        --initializers_in_flash --no_cse --no_inline --no_code_motion
+//        --no_cross_call --no_clustering --no_tbaa --debug --64k_flash
+//        -DENABLE_BIT_DEFINITIONS -e -I "C:\Program Files (x86)\IAR
+//        Systems\Embedded Workbench 6.0\avr\inc\" --eeprom_size 1152 --clib
+//        -Ohz
+//    List file    =  
+//        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\List\eep.s90
+//
+///////////////////////////////////////////////////////////////////////////////
+
+        NAME eep
+
+        RTMODEL "__64bit_doubles", "disabled"
+        RTMODEL "__SystemLibrary", "CLib"
+        RTMODEL "__cpu", "3"
+        RTMODEL "__enhanced_core", "enabled"
+        RTMODEL "__has_elpm", "false"
+        RTMODEL "__memory_model", "2"
+        RTMODEL "__rt_version", "3"
+
+        RSEG CSTACK:DATA:NOROOT(0)
+        RSEG RSTACK:DATA:NOROOT(0)
+
+        EXTERN ?C_SHL_L01
+        EXTERN ?S_SHL_L02
+
+        PUBLIC ATA_eepEEPaccessRightsChange_C
+        PUBLIC ATA_eepFuseRead_C
+        PUBLIC ATA_eepFuseWrite_C
+        PUBLIC ATA_eepFusesFix_C
+        PUBLIC ATA_eepReadBytes_C
+        PUBLIC ATA_eepWriteBytes_C
+        PUBWEAK _A_EEARH
+        PUBWEAK _A_EEARL
+        PUBWEAK _A_EECR
+        PUBWEAK _A_EECR2
+        PUBWEAK _A_EEDR
+        PUBWEAK _A_EEPR0
+        PUBWEAK _A_EEPR1
+        PUBWEAK _A_EEPR2
+        PUBWEAK _A_EEPR3
+        PUBWEAK _A_SPMCSR
+        PUBWEAK _A_SREG
+        PUBWEAK _A_TRCDR
+        PUBWEAK _A_TRCIDH
+        PUBWEAK _A_TRCIDL
+        PUBWEAK __?EEARH
+        PUBWEAK __?EEARL
+        PUBWEAK __?EECR
+        PUBWEAK __?EEDR
+        PUBLIC g_sAtmelEEPromSection
+        PUBLIC g_sCustomerEEPromSection
+        
+          CFI Names cfiNames0
+          CFI StackFrame CFA_Y Y DATA
+          CFI StackFrame CFA_SP SP DATA
+          CFI VirtualResource ?RetPad:1, ?RetHigh:8, ?RetLow:8, ?Ret:17
+          CFI Resource R0:8, R1:8, R2:8, R3:8, R4:8, R5:8, R6:8, R7:8, R8:8, R9:8
+          CFI Resource R10:8, R11:8, R12:8, R13:8, R14:8, R15:8, R16:8, R17:8
+          CFI Resource R18:8, R19:8, R20:8, R21:8, R22:8, R23:8, R24:8, R25:8
+          CFI Resource R26:8, R27:8, R28:8, R29:8, R30:8, R31:8
+          CFI Resource ?RetHighByteMask:8, SP:16, SPH:8, SPL:8, Y:16
+          CFI ResourceParts ?Ret ?RetHigh, ?RetLow, ?RetPad
+          CFI ResourceParts SP SPH, SPL
+          CFI ResourceParts Y R29, R28
+          CFI EndNames cfiNames0
+        
+          CFI Common cfiCommon0 Using cfiNames0
+          CFI CodeAlign 1
+          CFI DataAlign 1
+          CFI ReturnAddress ?Ret CODE
+          CFI CFA_Y Y+0
+          CFI CFA_SP SP+2
+          CFI ?RetPad 0
+          CFI ?RetHigh and(load(1, DATA, sub(CFA_SP, 1)), ?RetHighByteMask)
+          CFI ?RetLow Frame(CFA_SP, 0)
+          CFI ?Ret Concat
+          CFI R0 Undefined
+          CFI R1 Undefined
+          CFI R2 Undefined
+          CFI R3 Undefined
+          CFI R4 SameValue
+          CFI R5 SameValue
+          CFI R6 SameValue
+          CFI R7 SameValue
+          CFI R8 SameValue
+          CFI R9 SameValue
+          CFI R10 SameValue
+          CFI R11 SameValue
+          CFI R12 SameValue
+          CFI R13 SameValue
+          CFI R14 SameValue
+          CFI R15 SameValue
+          CFI R16 Undefined
+          CFI R17 Undefined
+          CFI R18 Undefined
+          CFI R19 Undefined
+          CFI R20 Undefined
+          CFI R21 Undefined
+          CFI R22 Undefined
+          CFI R23 Undefined
+          CFI R24 SameValue
+          CFI R25 SameValue
+          CFI R26 SameValue
+          CFI R27 SameValue
+          CFI R28 Undefined
+          CFI R29 Undefined
+          CFI R30 Undefined
+          CFI R31 Undefined
+          CFI ?RetHighByteMask SameValue
+          CFI SPH Undefined
+          CFI SPL Undefined
+          CFI EndCommon cfiCommon0
+        
+// C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\firmware\eep\src\eep.c
+//    1 //lint -e9059
+//    2 /* *C**************************************************************************
+//    3   Use of this software is subject to Atmel's Software License Agreement.
+//    4 -------------------------------------------------------------------------------
+//    5   $URL: http://svnservulm.corp.atmel.com/svn/CDB/Apps/SW_Lib/Car_Access/CARS_GEN2/ATAB5702A/Branches/P2_Gen2_Merge/firmware/eep/src/eep.c $
+//    6   $LastChangedRevision: 334472 $
+//    7   $LastChangedDate: 2015-08-25 12:50:16 -0600 (Tue, 25 Aug 2015) $
+//    8   $LastChangedBy: grueter $
+//    9 -------------------------------------------------------------------------------
+//   10   Project:      ATA5700
+//   11   Target MCU:   ATA5700
+//   12   Compiler:     IAR C/C++ Compiler for AVR 6.30.1
+//   13 -------------------------------------------------------------------------------
+//   14 
+//   15 ******************************************************************************
+//   16 * Copyright 2011, Atmel Automotive GmbH                                       *
+//   17 *                                                                             *
+//   18 * This software is owned by the Atmel Automotive GmbH                         *
+//   19 * and is protected by and subject to worldwide patent protection.             *
+//   20 * Atmel hereby grants to licensee a personal,                                 *
+//   21 * non-exclusive, non-transferable license to copy, use, modify, create        *
+//   22 * derivative works of, and compile the Atmel Source Code and derivative       *
+//   23 * works for the sole purpose of creating custom software in support of        *
+//   24 * licensee product to be used only in conjunction with a Atmel integrated     *
+//   25 * circuit as specified in the applicable agreement. Any reproduction,         *
+//   26 * modification, translation, compilation, or representation of this           *
+//   27 * software except as specified above is prohibited without the express        *
+//   28 * written permission of Atmel.                                                *
+//   29 *                                                                             *
+//   30 * Disclaimer: ATMEL MAKES NO WARRANTY OF ANY KIND,EXPRESS OR IMPLIED,         *
+//   31 * WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED    *
+//   32 * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.         *
+//   33 * Atmel reserves the right to make changes without further notice to the      *
+//   34 * materials described herein. Atmel does not assume any liability arising     *
+//   35 * out of the application or use of any product or circuit described herein.   *
+//   36 * Atmel does not authorize its products for use as critical components in     *
+//   37 * life-support systems where a malfunction or failure may reasonably be       *
+//   38 * expected to result in significant injury to the user. The inclusion of      *
+//   39 * Atmel products in a life-support systems application implies that the       *
+//   40 * manufacturer assumes all risk of such use and in doing so indemnifies       *
+//   41 * Atmel against all charges.                                                  *
+//   42 *                                                                             *
+//   43 * Use may be limited by and subject to the applicable Atmel software          *
+//   44 * license agreement.                                                          *
+//   45 ******************************************************************************/
+//   46 /** \file firmware/eep/src/eep.c
+//   47 */
+//   48 //lint -restore
+//   49 
+//   50 /*---------------------------------------------------------------------------*/
+//   51 /** \brief <b>Module EEP</b>
+//   52     This modules provides basic EEProm access functions as well as access to 
+//   53     the FLASH based fuse bytes (Low, High and Fix). Since the fuse write access
+//   54     is FLASH based, the FLASH write times do apply and not the EEProm write 
+//   55     times. However, the error handling regarding the fuse functions is 
+//   56     implemented with EEProm error codes.
+//   57     The definition of the EEPromlayout for the Atmel EEProm section, and the 
+//   58     Customer EEProm section is also contained within this module.
+//   59 
+//   60 \internal
+//   61 \Traceability{Primus2P-3143, Primus2P-3144, Primus2P-3146, Primus2P-3147,\ 
+//   62               Primus2P-3150, Primus2P-3151, Primus2P-3153, Primus2P-3154,\ 
+//   63               Primus2P-3159, Primus2P-3162, Primus2P-3165, Primus2P-3184,\ 
+//   64               Primus2P-3185, Primus2P-3187}
+//   65 \endinternal
+//   66 \n
+//   67 */
+//   68 /*---------------------------------------------------------------------------*/
+//   69 
+//   70 /*===========================================================================*/
+//   71 /*  INCLUDES                                                                 */
+//   72 /*===========================================================================*/
+//   73 #include "eep.h"
+
+        ASEGN ABSOLUTE:DATA:NOROOT,036H
+// union <unnamed> volatile __io _A_EECR2
+_A_EECR2:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,03fH
+// union <unnamed> volatile __io _A_EECR
+_A_EECR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,040H
+// union <unnamed> volatile __io _A_EEDR
+_A_EEDR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,041H
+// union <unnamed> volatile __io _A_EEARL
+_A_EEARL:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,042H
+// union <unnamed> volatile __io _A_EEARH
+_A_EEARH:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,043H
+// union <unnamed> volatile __io _A_EEPR0
+_A_EEPR0:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,057H
+// union <unnamed> volatile __io _A_SPMCSR
+_A_SPMCSR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,05fH
+// union <unnamed> volatile __io _A_SREG
+_A_SREG:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,0fcH
+// union <unnamed> volatile __io _A_TRCIDL
+_A_TRCIDL:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,0fdH
+// union <unnamed> volatile __io _A_TRCIDH
+_A_TRCIDH:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,0ffH
+// union <unnamed> volatile __io _A_TRCDR
+_A_TRCDR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,013bH
+// union <unnamed> volatile __ext_io _A_EEPR1
+_A_EEPR1:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,013cH
+// union <unnamed> volatile __ext_io _A_EEPR2
+_A_EEPR2:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,013dH
+// union <unnamed> volatile __ext_io _A_EEPR3
+_A_EEPR3:
+        DS8 1
+//   74 
+//   75 /*===========================================================================*/
+//   76 /*  DEFINES                                                                  */
+//   77 /*===========================================================================*/
+//   78 
+//   79 /** \brief <b>ADDR_OF_R16</b>
+//   80     defines the memory address of register R16 (used as first parameter 
+//   81     within a function call by the IAR compiler)
+//   82 */
+//   83 #define MEM_ADDR_R16        0x10U
+//   84 
+//   85 /*===========================================================================*/
+//   86 /*  Modul Globals                                                            */
+//   87 /*===========================================================================*/
+//   88 //lint -esym(9003, g_sAtmelEEPromSection) FlSc (26.05.2014)
+//   89 /* disable lint note 9003 - could define variable 'g_sAtmelEEPromSection' at block scope
+//   90  * variable shall be accessed from outside via flash software or other library
+//   91  * modules
+//   92  */
+//   93 /** \brief <b>sAtmelEEPromSection</b>
+//   94     contains the Atmel specific EEProm section.
+//   95 */
+//   96 #pragma location = ".eep_sAtmelEEPromSection"
+
+        RSEG `.eep_sAtmelEEPromSection`:DATA:ROOT(0)
+//   97 __root __no_init sAtmelEEPromSection g_sAtmelEEPromSection;
+g_sAtmelEEPromSection:
+        DS8 256
+//   98 
+//   99 //lint -esym(9003, g_sCustomerEEPromSection) FlSc (26.05.2014)
+//  100 /* disable lint note 9003 - could define variable 'g_sCustomerEEPromSection' at block scope
+//  101  * variable shall be accessed from outside via flash software or other library
+//  102  * modules
+//  103  */
+//  104 /** \brief <b>sCustomerEEPromSection</b>
+//  105     contains the Customer specific EEProm section.
+//  106 */
+//  107 #pragma location = ".eep_sCustomerEEPromSection"
+
+        RSEG `.eep_sCustomerEEPromSection`:DATA:ROOT(0)
+//  108 __root __no_init sCustomerEEPromSection g_sCustomerEEPromSection;
+g_sCustomerEEPromSection:
+        DS8 128
+//  109 
+//  110 //#pragma location = ".eep_sCustomerEEPromSectionAESkey"
+//  111 //__root __no_init sEepFlashApp_AESKey g_sEepFlashApp_AESKey;
+//  112 
+//  113 /*===========================================================================*/
+//  114 /*  IMPLEMENTATION                                                           */
+//  115 /*===========================================================================*/
+//  116 /*---------------------------------------------------------------------------*/
+//  117 /** \brief <b>ATA_eepFuseRead_C</b>
+//  118     This function is used to read out one of the three fuse bytes handling
+//  119     the access rights control to the generic EEProm sections.
+//  120 
+//  121     \param[in]  bCtrl Value to control, which of the three available fuse bytes will be read
+//  122     \return     Value of the read fuse byte (::uint8_t)
+//  123     
+//  124     Technical background:
+//  125     16 Bit are used to control all the available 8 generic EEProm section
+//  126     This results in two bytes. The third byte is used to monitor the Fuse
+//  127     Fix setting. Which byte is read depends on the input parameter.
+//  128 
+//  129     \internal
+//  130     \li 001: Store SREG state to be able to restore it at the end of the function 
+//  131               call
+//  132     \li 005: Update HW Trace Unit with specific function information
+//  133     \li 008: Wait for the EEProm to be able to respond to the Fuse read request.
+//  134     \li 010: Disable interrupts via global interrupt flag in SREG
+//  135     \li 020: Check which fuse byte is desired and setup SPMCSR according to this.
+//  136              The SPMCSR bits to ctrl the LPM instruction are reset with the following LPM.
+//  137     \li 030: Trigger the LPM instruction.
+//  138     \li 040: Restore SREG to state before function call
+//  139     \li 050: Return the read fuse byte value
+//  140 
+//  141     \Derived{No}
+//  142 
+//  143     \Rationale{N/A}
+//  144 
+//  145     \Traceability{Primus2P-3150}
+//  146     \endinternal
+//  147 \n
+//  148 */
+//  149 /*---------------------------------------------------------------------------*/
+
+        RSEG CODE:CODE:ROOT(1)
+//  150 __root uint8_t ATA_eepFuseRead_C(uint8_t bCtrl)
+ATA_eepFuseRead_C:
+          CFI Block cfiBlock0 Using cfiCommon0
+          CFI Function ATA_eepFuseRead_C
+          CFI NoCalls
+//  151 /*---------------------------------------------------------------------------*/
+//  152 {
+//  153     /* LLR-Ref: 001 */
+//  154     uint8_t bSreg = SREG;  
+        IN      R17, 0x3F
+//  155   
+//  156     uint8_t bFuseVal;
+//  157     uint8_t *regPtr;
+//  158 
+//  159     /* LLR-Ref: 005 */
+//  160     ATA_SET_FUNCTION_TRACE_POINT_C(ATA_eepFuseRead_C, bCtrl);
+        IN      R20, 0x3F
+        CLI
+        STS     _A_TRCDR, R16
+        LDI     R18, LOW(ATA_eepFuseRead_C/2)
+        STS     _A_TRCIDL, R18
+        LDI     R18, (ATA_eepFuseRead_C/2) >> 8
+        STS     _A_TRCIDH, R18
+        OUT     0x3F, R20
+//  161 
+//  162     /* LLR-Ref: 008 */
+//  163     while(EECR&(BITMASK(NVMBSY)));
+??ATA_eepFuseRead_C_0:
+        SBIC    0x1F, 0x07
+        RJMP    ??ATA_eepFuseRead_C_0
+//  164     
+//  165     /* LLR-Ref: 010 */
+//  166     __disable_interrupt();
+        CLI
+//  167 
+//  168     /* Dummy write, as the inline ASM will overwrite this! 
+//  169        Just needed to supress a warning */
+//  170     regPtr = (unsigned char *)MEM_ADDR_R16;
+//  171     
+//  172     /* LLR-Ref: 020 */                
+//  173     if(bCtrl==FUSE_EP_L){
+        TST     R16
+        BRNE    ??ATA_eepFuseRead_C_1
+//  174         SPMCSR = BM_GET_FUSE_EP_L;
+        LDI     R16, 41
+        RJMP    ??ATA_eepFuseRead_C_2
+//  175     }
+//  176     else if(bCtrl==FUSE_EP_H){
+??ATA_eepFuseRead_C_1:
+        CPI     R16, 1
+        BRNE    ??ATA_eepFuseRead_C_3
+//  177         SPMCSR = BM_GET_FUSE_EP_H;
+        LDI     R16, 57
+        RJMP    ??ATA_eepFuseRead_C_2
+//  178     }
+//  179     else{
+//  180         SPMCSR = BM_GET_FUSE_SECF;
+??ATA_eepFuseRead_C_3:
+        LDI     R16, 25
+??ATA_eepFuseRead_C_2:
+        OUT     0x37, R16
+//  181     }
+//  182     
+//  183     /* LLR-Ref: 030 */
+//  184     __asm ("LPM");
+        LPM
+//  185     __asm ("MOV R16 , R0");
+        MOV R16 , R0
+//  186     //bFuseVal = __load_program_memory((const unsigned char __flash *)0x0000U);
+//  187     
+//  188     /* LLR-Ref: 040 */
+//  189     SREG = bSreg;
+        OUT     0x3F, R17
+//  190     
+//  191     /* LLR-Ref: 050 */
+//  192     bFuseVal = *regPtr;//needed to supress a compiler warning
+//  193 
+//  194     return bFuseVal;
+        LDS     R16, 16
+        RET
+          CFI EndBlock cfiBlock0
+        REQUIRE _A_SREG
+        REQUIRE _A_TRCDR
+        REQUIRE _A_TRCIDL
+        REQUIRE _A_TRCIDH
+        REQUIRE _A_EECR
+        REQUIRE _A_SPMCSR
+//  195 }
+//  196 /*---------------------------------------------------------------------------*/
+//  197 /** \brief <b>ATA_eepFuseWrite_C</b>
+//  198     This function is used to write one of the two fuse bytes handling
+//  199     the access rights control to the generic EEProm sections.
+//  200 
+//  201     \param[in]  bCtrl             Value to control, which of the three available fuse bytes will be read
+//  202     \param[in]  bVal              Value to be written to the selected fuse byte
+//  203     \return     Status of the performed EEPROM operation (::eEepErrorCode)
+//  204 
+//  205     \internal
+//  206     \li 001: Store SREG state to be able to restore it at the end of the function 
+//  207              call
+//  208     \li 010: Wait for the EEProm to be able responding to the Fuse write request.
+//  209     \li 020: Disable interrupts via global interrupt flag in SREG
+//  210     \li 025: Reset watchdog
+//  211     \li 030: Prepare data to be written via SPM, R17 contains the second passed
+//  212              parameter (IAR calling convention), this value is written to R0, the
+//  213              register used by the SPM instruction
+//  214     \li 040: Update HW Trace Unit with specific function information         
+//  215              Not to be placed at the start cause of the inline assembly!
+//  216     \li 050: Setup SPMCSR according to the fuse byte intended to be written
+//  217     \li 060: Enable the Fuse byte write by setting the enable bit and execute the
+//  218              write via the SPM instruction
+//  219     \li 070: Restore SREG to state before function call.
+//  220     \li 080: Check written fuse with the desired value and return the status of the
+//  221              comparison
+//  222 
+//  223     \Derived{No}
+//  224 
+//  225     \Rationale{N/A}
+//  226 
+//  227     \Traceability{Primus2P-3150}
+//  228     \endinternal
+//  229 \n
+//  230 */
+//  231 /*---------------------------------------------------------------------------*/
+
+        RSEG CODE:CODE:ROOT(1)
+//  232 __root eEepErrorCode ATA_eepFuseWrite_C(uint8_t bCtrl, uint8_t bVal)
+ATA_eepFuseWrite_C:
+          CFI Block cfiBlock1 Using cfiCommon0
+          CFI Function ATA_eepFuseWrite_C
+//  233 /*---------------------------------------------------------------------------*/
+//  234 {
+        MOV     R21, R17
+//  235     /* LLR-Ref: 001 */
+//  236     uint8_t bSreg = SREG;
+        IN      R20, 0x3F
+//  237     
+//  238     uint8_t bFuseVal;
+//  239     eEepErrorCode tmp;
+//  240 
+//  241     /* LLR-Ref: 010 */
+//  242     while(EECR&(BITMASK(NVMBSY)));
+??ATA_eepFuseWrite_C_0:
+        SBIC    0x1F, 0x07
+        RJMP    ??ATA_eepFuseWrite_C_0
+//  243 
+//  244     /* LLR-Ref: 020 */
+//  245     __disable_interrupt();
+        CLI
+//  246     
+//  247     /* LLR-Ref: 025 */
+//  248     __watchdog_reset();
+        WDR
+//  249         
+//  250     /* LLR-Ref: 030 */
+//  251     __asm ("MOV R0 , R17");
+        MOV R0 , R17
+//  252     
+//  253     /* LLR-Ref: 040 */
+//  254     ATA_SET_FUNCTION_TRACE_POINT_C(ATA_eepFuseWrite_C, bCtrl); //DO not move this line to any other location
+        IN      R17, 0x3F
+        CLI
+        STS     _A_TRCDR, R16
+        LDI     R18, LOW(ATA_eepFuseWrite_C/2)
+        STS     _A_TRCIDL, R18
+        LDI     R18, (ATA_eepFuseWrite_C/2) >> 8
+        STS     _A_TRCIDH, R18
+        OUT     0x3F, R17
+//  255     
+//  256     /* LLR-Ref: 050 */
+//  257     if(bCtrl==FUSE_EP_L){
+        TST     R16
+        BRNE    ??ATA_eepFuseWrite_C_1
+//  258         SPMCSR = BM_GET_FUSE_EP_L;
+        LDI     R17, 41
+        RJMP    ??ATA_eepFuseWrite_C_2
+//  259     }
+//  260     else if(bCtrl==FUSE_EP_H){
+??ATA_eepFuseWrite_C_1:
+        CPI     R16, 1
+        BRNE    ??ATA_eepFuseWrite_C_3
+//  261         SPMCSR = BM_GET_FUSE_EP_H;
+        LDI     R17, 57
+        RJMP    ??ATA_eepFuseWrite_C_2
+//  262     }
+//  263     else{
+//  264         SPMCSR = BM_GET_FUSE_SECF;
+??ATA_eepFuseWrite_C_3:
+        LDI     R17, 25
+??ATA_eepFuseWrite_C_2:
+        OUT     0x37, R17
+//  265     }
+//  266     /* LLR-Ref: 060 */
+//  267     __asm ("SPM");
+        SPM
+//  268     
+//  269     /* LLR-Ref: 070 */
+//  270     SREG = bSreg;
+        OUT     0x3F, R20
+//  271     
+//  272     /* LLR-Ref: 080 */
+//  273     bFuseVal = ATA_eepFuseRead_C(bCtrl);
+//  274     if(bVal != bFuseVal){
+          CFI FunCall ATA_eepFuseRead_C
+        RCALL   ATA_eepFuseRead_C
+        CP      R21, R16
+        BREQ    ??ATA_eepFuseWrite_C_4
+//  275         tmp = EEC_ACCESS_FUSE_WR_FAIL;
+        LDI     R16, 5
+        RET
+//  276     }
+//  277     else {
+//  278         tmp = EEC_NO_ERROR;
+??ATA_eepFuseWrite_C_4:
+          CFI EndBlock cfiBlock1
+        REQUIRE ?Subroutine0
+        REQUIRE _A_SREG
+        REQUIRE _A_EECR
+        REQUIRE _A_TRCDR
+        REQUIRE _A_TRCIDL
+        REQUIRE _A_TRCIDH
+        REQUIRE _A_SPMCSR
+        ;               // Fall through to label ?Subroutine0
+//  279     }
+//  280 	return tmp;
+//  281 }
+
+        RSEG CODE:CODE:NOROOT(1)
+?Subroutine0:
+          CFI Block cfiBlock2 Using cfiCommon0
+          CFI NoFunction
+        LDI     R16, 0
+        RET
+          CFI EndBlock cfiBlock2
+//  282 /*---------------------------------------------------------------------------*/
+//  283 /** \brief <b>ATA_eepEEPaccessRightsChange_C</b>
+//  284     This function is used to adjust the access rights settings of the EEProm.
+//  285     The fuses as well as the mask register will be manipulated according to the
+//  286     given values.
+//  287 
+//  288     \param[in]  bSectionID          EEPROM section ID for which the access rights 
+//  289                                     shall be changed
+//  290     \param[in]  bVal                Bit1..0: New access right value for the given 
+//  291                                     EEProm section (Bit 0 for WRITE, Bit 1 for READ)
+//  292                                      - Bit value "1" for an access right means 
+//  293                                        "unlock"
+//  294                                      - Bit value "0" for an access right means 
+//  295                                        "lock"
+//  296                                     Bit7: Indication for fuse or register
+//  297 
+//  298     \return     Status of the performed EEPROM operation (::eEepErrorCode)
+//  299 
+//  300     \internal
+//  301     \li 005: Update HW Trace Unit with specific function information
+//  302     \li 010: Check for Fuse settings to be adjusted
+//  303     \li 020: Fuse high byte adjustment
+//  304     \li 030: Fuse low byte adjustment
+//  305     \li 040: Return Error in case Section is not valid to be protected via the Fuses
+//  306     \li 050: Adjust access rights via register
+//  307     \li 060: Calculate mask and pattern to adjuste the needed EEPR<X> Register
+//  308 
+//  309     \Derived{No}
+//  310 
+//  311     \Rationale{N/A}
+//  312 
+//  313     \Traceability{Primus2P-3150, Primus2P-3153, Primus2P-3187}
+//  314     \endinternal
+//  315 \n
+//  316 */
+//  317 /*---------------------------------------------------------------------------*/
+
+        RSEG CODE:CODE:ROOT(1)
+//  318 __root eEepErrorCode ATA_eepEEPaccessRightsChange_C(uint8_t bSectionID, uint8_t bVal)
+ATA_eepEEPaccessRightsChange_C:
+          CFI Block cfiBlock3 Using cfiCommon0
+          CFI Function ATA_eepEEPaccessRightsChange_C
+//  319 /*---------------------------------------------------------------------------*/
+//  320 {
+        MOV     R22, R16
+//  321     uint8_t tmp;
+//  322     uint8_t mask;
+//  323 
+//  324     /* LLR-Ref: 005 */
+//  325     ATA_SET_FUNCTION_TRACE_POINT_C(ATA_eepEEPaccessRightsChange_C, bSectionID);
+        IN      R18, 0x3F
+        CLI
+        STS     _A_TRCDR, R16
+        LDI     R16, LOW(ATA_eepEEPaccessRightsChange_C/2)
+        STS     _A_TRCIDL, R16
+        LDI     R16, (ATA_eepEEPaccessRightsChange_C/2) >> 8
+        STS     _A_TRCIDH, R16
+        OUT     0x3F, R18
+//  326 
+//  327     /* LLR-Ref: 010 */
+//  328     if(bVal&EEP_ACC_FUSE)
+        BST     R17, 7
+        BRTC    ??ATA_eepEEPaccessRightsChange_C_0
+//  329     {   
+//  330         /* Change access rights via fuses */
+//  331     	bVal &= ~EEP_ACC_FUSE;
+        ANDI    R17, 0x7F
+        MOV     R19, R17
+//  332         tmp = bSectionID - EEP_FIRST_SECTION_FUSE_ID;
+        MOV     R18, R22
+        SUBI    R18, 5
+//  333     	bSectionID = bSectionID - EEP_FIRST_SECTION_FUSE_ID;
+        SUBI    R22, 5
+//  334         
+//  335         /* In order to handle both FUSE_EP_L and FUSE_EP_H, the mask and value
+//  336            byte need to be adjusted for FUSE_EP_H in order to take effect. */
+//  337     	if ((bSectionID&EEP_SECTION_ID_MASK) > (EEP_NUM_SECTION_PER_FUSE_REG_BYTE - 1))
+        MOV     R30, R22
+        LDI     R31, 0
+        ANDI    R30, 0x0F
+        SBIW    R31:R30, 4
+        BRCS    ??ATA_eepEEPaccessRightsChange_C_1
+//  338         {
+//  339             tmp = tmp - EEP_NUM_SECTION_PER_FUSE_REG_BYTE;
+        SUBI    R18, 4
+//  340         }
+//  341         
+//  342         /* Mask out the two bits intended to be changed */
+//  343         mask = (EEP_ACCESS_RIGHT_MASK <<(tmp<<1U));
+??ATA_eepEEPaccessRightsChange_C_1:
+        MOV     R20, R18
+        LSL     R20
+        LDI     R16, 3
+        LDI     R17, 0
+          CFI FunCall ?S_SHL_L02
+        CALL    ?S_SHL_L02
+        MOV     R21, R16
+//  344         bVal = (bVal <<(tmp<<1U));
+        MOV     R16, R19
+        LDI     R17, 0
+        LSL     R18
+        MOV     R20, R18
+          CFI FunCall ?S_SHL_L02
+        CALL    ?S_SHL_L02
+        MOV     R19, R16
+//  345             
+//  346     	/* LLR-Ref: 020 */
+//  347     	if((bSectionID&EEP_SECTION_ID_MASK)<EEP_NUM_SECTION_PER_FUSE_REG_BYTE)
+        MOV     R30, R22
+        LDI     R31, 0
+        ANDI    R30, 0x0F
+        SBIW    R31:R30, 4
+        BRCC    ??ATA_eepEEPaccessRightsChange_C_2
+//  348         {
+//  349             tmp = ATA_eepFuseRead_C(FUSE_EP_L);
+        LDI     R16, 0
+          CFI FunCall ATA_eepFuseRead_C
+        RCALL   ATA_eepFuseRead_C
+//  350             tmp &= ~mask;
+//  351             tmp |= bVal;
+//  352             return ATA_eepFuseWrite_C(FUSE_EP_L,tmp);
+        COM     R21
+        AND     R16, R21
+        OR      R16, R19
+        MOV     R17, R16
+        LDI     R16, 0
+        RJMP    ??ATA_eepEEPaccessRightsChange_C_3
+//  353         }
+//  354         /* LLR-Ref: 030 */
+//  355         else if((bSectionID&EEP_SECTION_ID_MASK)<(2U*EEP_NUM_SECTION_PER_FUSE_REG_BYTE))
+??ATA_eepEEPaccessRightsChange_C_2:
+        LDI     R31, 0
+        ANDI    R22, 0x0F
+        MOV     R30, R22
+        SBIW    R31:R30, 8
+        BRCS    $+2+2
+        RJMP    ??ATA_eepEEPaccessRightsChange_C_4
+//  356         {
+//  357             tmp = ATA_eepFuseRead_C(FUSE_EP_H);
+        LDI     R16, 1
+          CFI FunCall ATA_eepFuseRead_C
+        RCALL   ATA_eepFuseRead_C
+//  358             tmp &= ~mask;
+//  359             tmp |= bVal;
+//  360             return ATA_eepFuseWrite_C(FUSE_EP_H,tmp);
+        COM     R21
+        AND     R16, R21
+        OR      R16, R19
+        MOV     R17, R16
+        LDI     R16, 1
+//  361         }
+//  362         /* LLR-Ref: 040 */
+//  363         else
+//  364         {
+//  365             return EEC_SECTION_INVALID;
+//  366         }
+//  367     }
+??ATA_eepEEPaccessRightsChange_C_3:
+        RJMP    ?Subroutine2
+//  368     /* LLR-Ref: 050 */
+//  369     else
+//  370     {
+//  371         /* LLR-Ref: 060 */
+//  372         tmp = (bSectionID>>2U);
+??ATA_eepEEPaccessRightsChange_C_0:
+        MOV     R18, R22
+        LSR     R18
+        LSR     R18
+//  373         bSectionID &= EEP_ACCESS_RIGHT_MASK;
+        ANDI    R22, 0x03
+//  374         
+//  375         /* Mask out the two bits intended to be changed */
+//  376         mask = (EEP_ACCESS_RIGHT_MASK <<(bSectionID<<1U));
+        MOV     R20, R22
+        LSL     R20
+        LDI     R16, 3
+          CFI FunCall ?C_SHL_L01
+        CALL    ?C_SHL_L01
+        MOV     R21, R16
+//  377         
+//  378         /* Invert the section access rights settings */
+//  379         bVal = (bVal^EEP_ACCESS_RIGHT_INVERT_MASK)&EEP_ACCESS_RIGHT_MASK;
+//  380         bVal = (bVal <<(bSectionID<<1U));
+        COM     R17
+        ANDI    R17, 0x03
+        MOV     R16, R17
+        LSL     R22
+        MOV     R20, R22
+          CFI FunCall ?C_SHL_L01
+        CALL    ?C_SHL_L01
+        MOV     R19, R16
+//  381         
+//  382         /* Check which EEPRx register is to be updated with the given access
+//  383            rights */
+//  384         if(tmp == EEP_SECTION_ID_IN_EEPR0){
+        TST     R18
+        BRNE    ??ATA_eepEEPaccessRightsChange_C_5
+//  385             tmp = EEPR0;
+//  386             tmp &= ~mask;
+//  387             tmp |= bVal;
+//  388             EEPR0 = tmp;
+        IN      R16, 0x23
+        COM     R21
+        AND     R16, R21
+        OR      R16, R19
+        OUT     0x23, R16
+//  389         }
+//  390         else if(tmp == EEP_SECTION_ID_IN_EEPR1){
+//  391             tmp = EEPR1;
+//  392             tmp &= ~mask;
+//  393             tmp |= bVal;
+//  394             EEPR1 = tmp;
+//  395         }
+//  396         else if(tmp == EEP_SECTION_ID_IN_EEPR2){
+//  397             tmp = EEPR2;
+//  398             tmp &= ~mask;
+//  399             tmp |= bVal;
+//  400             EEPR2 = tmp;
+//  401         }
+//  402         else if(tmp == EEP_SECTION_ID_IN_EEPR3){
+//  403             tmp = EEPR3;
+//  404             tmp &= ~mask;
+//  405             tmp |= bVal;
+//  406             EEPR3 = tmp;
+//  407         }
+//  408         else{
+//  409             return EEC_SECTION_INVALID;
+//  410         }
+//  411         return EEC_NO_ERROR;
+??ATA_eepEEPaccessRightsChange_C_6:
+        RJMP    ?Subroutine0
+??ATA_eepEEPaccessRightsChange_C_5:
+        CPI     R18, 1
+        BRNE    ??ATA_eepEEPaccessRightsChange_C_7
+        LDS     R16, _A_EEPR1
+        COM     R21
+        AND     R16, R21
+        OR      R16, R19
+        STS     _A_EEPR1, R16
+        RJMP    ??ATA_eepEEPaccessRightsChange_C_6
+??ATA_eepEEPaccessRightsChange_C_7:
+        CPI     R18, 2
+        BRNE    ??ATA_eepEEPaccessRightsChange_C_8
+        LDS     R16, _A_EEPR2
+        COM     R21
+        AND     R16, R21
+        OR      R16, R19
+        STS     _A_EEPR2, R16
+        RJMP    ??ATA_eepEEPaccessRightsChange_C_6
+??ATA_eepEEPaccessRightsChange_C_8:
+        CPI     R18, 3
+        BRNE    ??ATA_eepEEPaccessRightsChange_C_4
+        LDS     R16, _A_EEPR3
+        COM     R21
+        AND     R16, R21
+        OR      R16, R19
+        STS     _A_EEPR3, R16
+        RJMP    ??ATA_eepEEPaccessRightsChange_C_6
+??ATA_eepEEPaccessRightsChange_C_4:
+        LDI     R16, 6
+        RET
+          CFI EndBlock cfiBlock3
+        REQUIRE _A_SREG
+        REQUIRE _A_TRCDR
+        REQUIRE _A_TRCIDL
+        REQUIRE _A_TRCIDH
+        REQUIRE _A_EEPR0
+        REQUIRE _A_EEPR1
+        REQUIRE _A_EEPR2
+        REQUIRE _A_EEPR3
+//  412 	}
+//  413 }
+//  414 /*---------------------------------------------------------------------------*/
+//  415 /** \brief <b>ATA_eepFusesFix_C</b>
+//  416     This function is used to fix the EEProm access rights fuses. if fuse is
+//  417     programmed the fuses are not eraseable anymore.
+//  418 
+//  419     \param[in]  bVal                Value to be written to the fix fuse byte
+//  420     \return     Status of the performed EEPROM operation (::eEepErrorCode)
+//  421 
+//  422     \internal
+//  423     \li 005: Update HW Trace Unit with specific function information
+//  424     \li 010: Adjust Fuse settings by calling function ::ATA_eepFuseWrite_C with the
+//  425               new fuse fix value and fuse fix as target fuse
+//  426 
+//  427     \Derived{No}
+//  428 
+//  429     \Rationale{N/A}
+//  430 
+//  431     \Traceability{Primus2P-3150, Primus2P-3153}
+//  432     \endinternal
+//  433 \n
+//  434 */
+//  435 /*---------------------------------------------------------------------------*/
+
+        RSEG CODE:CODE:ROOT(1)
+//  436 __root eEepErrorCode ATA_eepFusesFix_C(uint8_t bVal)
+ATA_eepFusesFix_C:
+          CFI Block cfiBlock4 Using cfiCommon0
+          CFI Function ATA_eepFusesFix_C
+          CFI NoCalls
+//  437 /*---------------------------------------------------------------------------*/
+//  438 {
+//  439     /* LLR-Ref: 005 */
+//  440     ATA_SET_FUNCTION_TRACE_POINT_C(ATA_eepFusesFix_C, bVal);
+        IN      R17, 0x3F
+        CLI
+        STS     _A_TRCDR, R16
+        LDI     R18, LOW(ATA_eepFusesFix_C/2)
+        STS     _A_TRCIDL, R18
+        LDI     R18, (ATA_eepFusesFix_C/2) >> 8
+        STS     _A_TRCIDH, R18
+        OUT     0x3F, R17
+//  441 
+//  442     /* LLR-Ref: 010 */
+//  443     return ATA_eepFuseWrite_C(FUSE_EP_F,bVal);
+        MOV     R17, R16
+        LDI     R16, 2
+          CFI EndBlock cfiBlock4
+        REQUIRE ?Subroutine2
+        REQUIRE _A_SREG
+        REQUIRE _A_TRCDR
+        REQUIRE _A_TRCIDL
+        REQUIRE _A_TRCIDH
+        ;               // Fall through to label ?Subroutine2
+//  444 }
+
+        RSEG CODE:CODE:NOROOT(1)
+?Subroutine2:
+          CFI Block cfiBlock5 Using cfiCommon0
+          CFI NoFunction
+          CFI FunCall ATA_eepEEPaccessRightsChange_C ATA_eepFuseWrite_C
+          CFI FunCall ATA_eepFusesFix_C ATA_eepFuseWrite_C
+        RJMP    ATA_eepFuseWrite_C
+          CFI EndBlock cfiBlock5
+//  445 /*---------------------------------------------------------------------------*/
+//  446 /** \brief <b>ATA_eepReadBytes_C</b>
+//  447     The purpose of this function is to read multiple bytes from the EEPROM in
+//  448     accordance with the applicable EEPROM Access Right Map.
+//  449     To copy the bytes, the EEPROM burst read mode is used.
+//  450 
+//  451     \param[out] pDes  Pointer pointing to the destination to store the read data to
+//  452     \param[in]  wSrc  Specifying the EEProm address to start reading from
+//  453     \param[in]  bCount amount of data to be read from the given EEProm address
+//  454     \return     Status of the performed EEPROM operation (::eEepErrorCode)
+//  455     
+//  456     \internal
+//  457     \li 001: Store SREG state to be able to restore it at the end of the function 
+//  458               call
+//  459     \li 005: Update HW Trace Unit with specific function information
+//  460     \li 010: Check for the addresses being within range without overflow protection
+//  461 
+//  462              Note 1:
+//  463              The HW/SW access right management will prevent any locked/protected 
+//  464              data to be read. Address overflow will also be detected.
+//  465 
+//  466              Note 2:
+//  467              The computation of max. address and the following check is correct,
+//  468              since the last valid address to read one byte from is 
+//  469              EEP_ADDR_START_OUT_OF_RANGE_SEC - 1. This check approach does not 
+//  470              require to subract -1 from max. address, which would be the most
+//  471              natural way to compute the real max. address.
+//  472 
+//  473     \li 020: Check EEP write feature for being busy. Wait in case until it is able
+//  474              to deal with the request.
+//  475     \li 030: Disable interrupts via global interrupt flag in SREG
+//  476     \li 040: Setup EEProm address for start the reading request.
+//  477     \li 050: Enable the EEPROM burst read feature by setting bit "EEBRE" in
+//  478              register EECR2 to 1
+//  479     \li 060: read desired data from EEProm and store it to the destination address
+//  480     \li 070: If EEP FEC (EEP error correction flag) flag is, set the return status 
+//  481               to EEProm error correction occured and clear the flag afterwards
+//  482     \li 080: If EEP AVF (Access violation Flag) flag is, set the return status to
+//  483               EEProm address locked for reading and clear the flag afterwards
+//  484     \li 090: Disable the EEPROM burst read mode by setting bit "EEBRE" in register
+//  485              EECR2 to 0.
+//  486     \li 100: Restore SREG to state before function call.
+//  487 
+//  488     \Derived{No}
+//  489 
+//  490     \Rationale{N/A}
+//  491 
+//  492     \Traceability{Primus2P-3143, Primus2P-3146, Primus2P-3150, Primus2P-3153,\ 
+//  493                   Primus2P-3184}
+//  494     \endinternal
+//  495 \n
+//  496 */
+//  497 /*---------------------------------------------------------------------------*/
+
+        RSEG CODE:CODE:ROOT(1)
+//  498 __root eEepErrorCode ATA_eepReadBytes_C(uint8_t* pDes, uint16_t wSrc, uint8_t bCount)
+ATA_eepReadBytes_C:
+          CFI Block cfiBlock6 Using cfiCommon0
+          CFI Function ATA_eepReadBytes_C
+          CFI NoCalls
+//  499 {
+        MOVW    R31:R30, R17:R16
+        MOV     R22, R20
+//  500     /* LLR-Ref: 001 */
+//  501     uint8_t bSreg = SREG;
+        IN      R0, 0x3F
+//  502 
+//  503     uint16_t maxAddr;
+//  504     eEepErrorCode ret = EEC_NO_ERROR;
+        LDI     R16, 0
+//  505     
+//  506     /* LLR-Ref: 005 */
+//  507     ATA_SET_FUNCTION_TRACE_POINT_C(ATA_eepReadBytes_C, bCount);
+        IN      R17, 0x3F
+        CLI
+        STS     _A_TRCDR, R20
+        LDI     R20, LOW(ATA_eepReadBytes_C/2)
+        STS     _A_TRCIDL, R20
+        LDI     R20, (ATA_eepReadBytes_C/2) >> 8
+        STS     _A_TRCIDH, R20
+        OUT     0x3F, R17
+//  508     
+//  509     /* LLR-Ref: 010 */
+//  510     maxAddr = wSrc + bCount;
+//  511     if((wSrc > EEP_ADDR_END_ATMEL_SEC) ||
+//  512        (maxAddr > EEP_ADDR_START_OUT_OF_RANGE_SEC))
+        CPI     R18, 128
+        LDI     R17, 9
+        CPC     R19, R17
+        BRCC    ??ATA_eepReadBytes_C_0
+        MOVW    R21:R20, R19:R18
+        ADD     R20, R22
+        ADC     R21, R16
+        CPI     R20, 129
+        SBCI    R21, 9
+        BRCS    ??ATA_eepReadBytes_C_1
+//  513     {
+//  514         return EEC_ADDR_OUT_OF_RANGE;
+??ATA_eepReadBytes_C_0:
+        RJMP    ?Subroutine1
+//  515     }
+//  516 
+//  517     /* LLR-Ref: 020 */
+//  518     while(EECR&(BITMASK(NVMBSY)));
+??ATA_eepReadBytes_C_1:
+        SBIC    0x1F, 0x07
+        RJMP    ??ATA_eepReadBytes_C_1
+//  519     
+//  520     /* LLR-Ref: 030 */
+//  521     __disable_interrupt();
+        CLI
+//  522     
+//  523     /* LLR-Ref: 040 */
+//  524     EEARH = (uint8_t)(wSrc >> SHIFT_HIGH_TO_LOW_BYTE);
+        OUT     0x22, R19
+//  525     EEARL = (uint8_t)(wSrc & MASK_HIGH_BYTE);
+        OUT     0x21, R18
+//  526     
+//  527     /* LLR-Ref: 050 */
+//  528     EECR2 = BM_EEBRE;
+        LDI     R17, 1
+        OUT     0x16, R17
+//  529     
+//  530     /* LLR-Ref: 060 */
+//  531     for(uint8_t i=0;i<bCount;i++){
+        LDI     R17, 0
+        RJMP    ??ATA_eepReadBytes_C_2
+//  532         *pDes++ = EEDR;
+??ATA_eepReadBytes_C_3:
+        IN      R18, 0x20
+        ST      Z+, R18
+//  533     }
+        INC     R17
+??ATA_eepReadBytes_C_2:
+        CP      R17, R22
+        BRCS    ??ATA_eepReadBytes_C_3
+//  534     /* LLR-Ref: 070 */
+//  535     if(EECR2 & BM_E2FF) {
+        SBIS    0x16, 0x06
+        RJMP    ??ATA_eepReadBytes_C_4
+//  536         ret = EEC_ERROR_CORRECTION_OCCURED;
+        LDI     R16, 4
+//  537         EECR2 |= BM_E2FF;
+        SBI     0x16, 0x06
+//  538     }
+//  539     
+//  540     /* LLR-Ref: 080 */
+//  541     if(EECR2 & BM_E2AVF)
+??ATA_eepReadBytes_C_4:
+        SBIS    0x16, 0x05
+        RJMP    ??ATA_eepReadBytes_C_5
+//  542     {
+//  543         ret = EEC_ADDR_LOCKED_FOR_READING;
+        LDI     R16, 1
+//  544         EECR2 |= BM_E2AVF;
+        SBI     0x16, 0x05
+//  545     }
+//  546     
+//  547     /* LLR-Ref: 090 */
+//  548     EECR2 &= ~BM_EEBRE;
+??ATA_eepReadBytes_C_5:
+        CBI     0x16, 0x00
+//  549 
+//  550     /* LLR-Ref: 100 */
+//  551     SREG = bSreg;
+        OUT     0x3F, R0
+//  552 
+//  553     return ret;
+        RET
+          CFI EndBlock cfiBlock6
+        REQUIRE _A_SREG
+        REQUIRE _A_TRCDR
+        REQUIRE _A_TRCIDL
+        REQUIRE _A_TRCIDH
+        REQUIRE _A_EECR
+        REQUIRE _A_EEARH
+        REQUIRE _A_EEARL
+        REQUIRE _A_EECR2
+        REQUIRE _A_EEDR
+//  554 }
+
+        RSEG CODE:CODE:NOROOT(1)
+?Subroutine1:
+          CFI Block cfiBlock7 Using cfiCommon0
+          CFI NoFunction
+        LDI     R16, 3
+        RET
+          CFI EndBlock cfiBlock7
+//  555 
+//  556 
+//  557 /*---------------------------------------------------------------------------*/
+//  558 /** \brief <b>ATA_eepWriteBytes_C</b>
+//  559     shall write data to the device internal EEProm.
+//  560 
+//  561     \param[in] pSrc   Pointer pointing to the source of the written data
+//  562     \param[in] wDes   Specifying the EEP address to start writing to
+//  563     \param[in] bCount Specifying the amount of data to write to the given EEP address
+//  564     \return     Status of the performed EEPROM write access (:.eEepErrorCode)
+//  565 
+//  566     \internal
+//  567     \li 001: Store SREG state to be able to restore it at the end of the function 
+//  568               call
+//  569     \li 010: Update HW Trace Unit with specific function information
+//  570     \li 020: Check for the addresses being within range with overflow protection
+//  571 
+//  572              Note 1:
+//  573              The HW/SW access right management will prevent any locked/protected 
+//  574              data to be read. Address overflow will also be detected.
+//  575 
+//  576              Note 2:
+//  577              The computation of max. address and the following check is correct,
+//  578              since the last valid address to read one byte from is 
+//  579              EEP_ADDR_START_OUT_OF_RANGE_SEC - 1. This check approach does not 
+//  580              require to subract -1 from max. address, which would be the most
+//  581              natural way to compute the real max. address.
+//  582 
+//  583     \li 030: Loop writing the desired data to EEProm by using the page write feature.
+//  584     \li 040: Check EEP write feature for being busy. Wait in case untill it is able
+//  585               to deal with the request.
+//  586     \li 050: Disable interrupts via global interrupt flag in SREG
+//  587     \li 060: Reset WDT counter
+//  588     \li 070: Setup EEP address and enalbe the page writing feature.
+//  589     \li 080: Loop to write the data to the EEP page buffer.
+//  590     \li 090: Break in case page border is reached or all bytes have been transfered.
+//  591     \li 100: Enable the atomic EEPROM write operation by resetting bits "EEPM1" and
+//  592               "EEPM0" in register EECR. Enable the master write mode by setting bit
+//  593               "EEMWE" in register EECR. Then Start the EEPROM write by setting bit
+//  594               "EEWE" in register EECR.
+//  595     \li 110: Restore SREG to state before function call.
+//  596     \li 130: Check error flag caused by a wrong access.
+//  597 
+//  598     \Derived{No}
+//  599 
+//  600     \Rationale{N/A}
+//  601 
+//  602     \Traceability{Primus2P-3143, Primus2P-3146, Primus2P-3150, Primus2P-3153\ 
+//  603                   Primus2P-3185}
+//  604     \endinternal
+//  605 \n
+//  606 */
+//  607 /*---------------------------------------------------------------------------*/
+
+        RSEG CODE:CODE:ROOT(1)
+//  608 __root eEepErrorCode ATA_eepWriteBytes_C(uint8_t *pSrc, uint16_t wDes, uint8_t bCount)
+ATA_eepWriteBytes_C:
+          CFI Block cfiBlock8 Using cfiCommon0
+          CFI Function ATA_eepWriteBytes_C
+          CFI NoCalls
+//  609 {
+        MOVW    R31:R30, R17:R16
+        MOV     R22, R20
+//  610     /* LLR-Ref: 001 */
+//  611     uint8_t bSreg = SREG;
+        IN      R0, 0x3F
+//  612   
+//  613     uint16_t maxAddr;
+//  614     eEepErrorCode ret = EEC_NO_ERROR;
+        LDI     R16, 0
+//  615     
+//  616     /* LLR-Ref: 010 */
+//  617     ATA_SET_FUNCTION_TRACE_POINT_C(ATA_eepWriteBytes_C, bCount);
+        IN      R17, 0x3F
+        CLI
+        STS     _A_TRCDR, R20
+        LDI     R20, LOW(ATA_eepWriteBytes_C/2)
+        STS     _A_TRCIDL, R20
+        LDI     R20, (ATA_eepWriteBytes_C/2) >> 8
+        STS     _A_TRCIDH, R20
+        OUT     0x3F, R17
+//  618         
+//  619     /* LLR-Ref: 020 */
+//  620     maxAddr = wDes + bCount;
+//  621     if((wDes > EEP_ADDR_END_CUSTO_SEC) || (maxAddr > EEP_ADDR_START_ATMEL_SEC))
+        CPI     R18, 128
+        LDI     R17, 8
+        CPC     R19, R17
+        BRCC    ??ATA_eepWriteBytes_C_0
+        MOVW    R21:R20, R19:R18
+        ADD     R20, R22
+        ADC     R21, R16
+        CPI     R20, 129
+        SBCI    R21, 8
+        BRCS    ??ATA_eepWriteBytes_C_1
+//  622     {
+//  623         return EEC_ADDR_OUT_OF_RANGE;
+??ATA_eepWriteBytes_C_0:
+        RJMP    ?Subroutine1
+//  624     }
+//  625     
+//  626     /* LLR-Ref: 030 */
+//  627     while(bCount>0)
+//  628     {
+//  629         /* LLR-Ref: 040 */
+//  630         while(EECR&(BITMASK(NVMBSY)));
+??ATA_eepWriteBytes_C_2:
+        SBIC    0x1F, 0x07
+        RJMP    ??ATA_eepWriteBytes_C_2
+//  631         
+//  632         /* LLR-Ref: 050 */
+//  633         __disable_interrupt();
+        CLI
+//  634         
+//  635         /* LLR-Ref: 060 */
+//  636         __watchdog_reset();
+        WDR
+//  637         
+//  638         /* LLR-Ref: 070 */
+//  639         EECR |= BM_EEPAGE;
+        SBI     0x1F, 0x06
+//  640         EEARH = (uint8_t)(wDes >> SHIFT_HIGH_TO_LOW_BYTE);
+        OUT     0x22, R19
+//  641         
+//  642         /* LLR-Ref: 080 */
+//  643         do{
+//  644             EEARL = (uint8_t)(wDes & MASK_HIGH_BYTE);
+??ATA_eepWriteBytes_C_3:
+        OUT     0x21, R18
+//  645             EEDR = *pSrc++;
+        LD      R17, Z+
+        OUT     0x20, R17
+//  646             wDes++;
+        SUBI    R18, 255
+        SBCI    R19, 255
+//  647             bCount--;
+        DEC     R22
+//  648 
+//  649         /* LLR-Ref: 090 */
+//  650         }while((bCount>0)&&((EEARL&MASK_HIGH_NIBBLE)!=MASK_HIGH_NIBBLE));
+        BREQ    ??ATA_eepWriteBytes_C_4
+        IN      R17, 0x21
+        ANDI    R17, 0x0F
+        CPI     R17, 15
+        BRNE    ??ATA_eepWriteBytes_C_3
+//  651         
+//  652         /* LLR-Ref: 100 */
+//  653         EECR &= ~(BM_EEPM1 | BM_EEPM0);
+??ATA_eepWriteBytes_C_4:
+        IN      R17, 0x1F
+        ANDI    R17, 0xCF
+        OUT     0x1F, R17
+//  654         EECR |= BM_EEMWE;
+        SBI     0x1F, 0x02
+//  655         EECR |= BM_EEWE;
+        SBI     0x1F, 0x01
+//  656         
+//  657         /* LLR-Ref: 110 */
+//  658         SREG = bSreg;
+        OUT     0x3F, R0
+//  659     }
+??ATA_eepWriteBytes_C_1:
+        TST     R22
+        BRNE    ??ATA_eepWriteBytes_C_2
+//  660     
+//  661     /* LLR-Ref: 130 */
+//  662     if(EECR2&BM_E2AVF)
+        SBIS    0x16, 0x05
+        RJMP    ??ATA_eepWriteBytes_C_5
+//  663     {
+//  664         ret = EEC_ADDR_LOCKED_FOR_WRITING;
+        LDI     R16, 2
+//  665         EECR2 |= BM_E2AVF;
+        SBI     0x16, 0x05
+//  666     }
+//  667     while(EECR&(BITMASK(NVMBSY)));
+??ATA_eepWriteBytes_C_5:
+        SBIC    0x1F, 0x07
+        RJMP    ??ATA_eepWriteBytes_C_5
+//  668     
+//  669     return ret;
+        RET
+          CFI EndBlock cfiBlock8
+        REQUIRE _A_SREG
+        REQUIRE _A_TRCDR
+        REQUIRE _A_TRCIDL
+        REQUIRE _A_TRCIDH
+        REQUIRE _A_EECR
+        REQUIRE _A_EEARH
+        REQUIRE _A_EEARL
+        REQUIRE _A_EEDR
+        REQUIRE _A_EECR2
+//  670 }
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01cH
+__?EECR:
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01dH
+__?EEDR:
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01eH
+__?EEARL:
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01fH
+__?EEARH:
+
+        END
+// 
+// 256 bytes in segment .eep_sAtmelEEPromSection
+// 128 bytes in segment .eep_sCustomerEEPromSection
+//  14 bytes in segment ABSOLUTE
+// 634 bytes in segment CODE
+// 
+// 634 bytes of CODE memory
+// 384 bytes of DATA memory (+ 14 bytes shared)
+//
+//Errors: none
+//Warnings: none

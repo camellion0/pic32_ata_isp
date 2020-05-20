@@ -1,0 +1,367 @@
+///////////////////////////////////////////////////////////////////////////////
+//
+// IAR C/C++ Compiler V7.10.1.1197 for Atmel AVR          13/May/2020  17:03:17
+// Copyright 1996-2017 IAR Systems AB.
+// Network license: dvriar01.mchp-main.com (STD)
+//
+//    Source file  =  
+//        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\firmware\eep\src\eep_flash.c
+//    Command line =  
+//        -f C:\Users\C41045\AppData\Local\Temp\EW407.tmp
+//        (C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\firmware\eep\src\eep_flash.c
+//        -v3 --enhanced_core -ms -o
+//        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\Obj
+//        -lCN
+//        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\List
+//        -lA
+//        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\List
+//        --no_cse --no_inline --no_code_motion --no_cross_call --no_clustering
+//        --no_tbaa --debug --64k_flash -DENABLE_BIT_DEFINITIONS -e
+//        --eeprom_size 2304 --clib -Ohz)
+//    Locale       =  English_USA.1252
+//    List file    =  
+//        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\List\eep_flash.s90
+//
+///////////////////////////////////////////////////////////////////////////////
+
+        NAME eep_flash
+
+        RTMODEL "__64bit_doubles", "disabled"
+        RTMODEL "__SystemLibrary", "CLib"
+        RTMODEL "__cpu", "3"
+        RTMODEL "__enhanced_core", "enabled"
+        RTMODEL "__has_elpm", "false"
+        RTMODEL "__memory_model", "2"
+        RTMODEL "__rt_version", "3"
+        RTMODEL "__vtable_memory", "__nearflash"
+
+        RSEG CSTACK:DATA:NOROOT(0)
+        RSEG RSTACK:DATA:NOROOT(0)
+
+        PUBWEAK __?EEARH
+        PUBWEAK __?EEARL
+        PUBWEAK __?EECR
+        PUBWEAK __?EEDR
+        PUBLIC g_EepFlashApp_PARAMdata
+        PUBLIC g_EepFlashApp_USRID
+        PUBLIC g_bEepFlashAppLfRssiSrcCalibrationSetting_flash
+        PUBLIC g_sEepFlashAppClk_flash
+        PUBLIC g_sEepFlashAppCpu_flash
+        PUBLIC g_sEepFlashAppDebounce_flash
+        PUBLIC g_sEepFlashAppDebug_flash
+        PUBLIC g_sEepFlashAppEventHandling_flash
+        PUBLIC g_sEepFlashAppInt_flash
+        PUBLIC g_sEepFlashAppLfRssiEndOfLineCalibrationSettings_flash
+        PUBLIC g_sEepFlashAppPortB_flash
+        PUBLIC g_sEepFlashAppPortC_flash
+        PUBLIC g_sEepFlashAppPortD_flash
+        PUBLIC g_sEepFlashAppSpi_flash
+        PUBLIC g_sEepFlashAppSup_flash
+        PUBLIC g_sEepFlashAppTimer0Wdt_flash
+        PUBLIC g_sEepFlashApp_RKEPEPS
+        PUBLIC wEepRfrccAddress
+// C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\firmware\eep\src\eep_flash.c
+//    1 //lint -e9059
+//    2 /******************************************************************************
+//    3   Use of this software is subject to Microchip's Software License Agreement.
+//    4 --------------------------------------------------------------------------------
+//    5   $URL: http://svnservulm.corp.atmel.com/svn/CDB/Apps/SW_Lib/Car_Access/CARS_GEN2/ATAB5702A/Branches/P2P22_TXMODE_NXP/firmware/eep/src/eep_flash.c $
+//    6   $LastChangedRevision: 460605 $
+//    7   $LastChangedDate: 2017-05-19 04:36:10 -0600 (Fri, 19 May 2017) $
+//    8   $LastChangedBy: krishna.balan $
+//    9 -------------------------------------------------------------------------------
+//   10   Project:      ATA5700
+//   11   Target MCU:   ATA5700
+//   12   Compiler:     IAR C/C++ Compiler for AVR 6.30.1
+//   13 -------------------------------------------------------------------------------
+//   14 
+//   15 ******************************************************************************
+//   16 * Copyright 2017, Microchip Technology Incorporated and its subsidiaries.     *
+//   17 *                                                                             *
+//   18 * This software is owned by the Microchip Technology Incorporated.            *
+//   19 * Microchip hereby grants to licensee a personal                              *
+//   20 * non-exclusive, non-transferable license to copy, use, modify, create        *
+//   21 * derivative works of, and compile the Microchip Source Code and derivative   *
+//   22 * works for the sole and exclusive purpose of creating custom software in     *
+//   23 * support of licensee product to be used only in conjunction with a Microchip *
+//   24 * integrated circuit as specified in the applicable agreement. Any            *        
+//   25 * reproduction, modification, translation, compilation, or representation of  *
+//   26 * this software except as specified above is prohibited without the express   *
+//   27 * written permission of Microchip.                                            *
+//   28 *                                                                             *
+//   29 * Disclaimer: MICROCHIP MAKES NO WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,    *
+//   30 * WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED    *
+//   31 * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.         *
+//   32 * Microchip reserves the right to make changes without further notice to the  *
+//   33 * materials described herein. Microchip does not assume any liability arising *
+//   34 * out of the application or use of any product or circuit described herein.   *
+//   35 * Microchip does not authorize its products for use as critical components in *
+//   36 * life-support systems where a malfunction or failure may reasonably be       *
+//   37 * expected to result in significant injury to the user. The inclusion of      *
+//   38 * Microchip products in a life-support systems application implies that the   *
+//   39 * manufacturer assumes all risk of such use and in doing so indemnifies       *
+//   40 * Microchip against all charges.                                              *
+//   41 *                                                                             *
+//   42 * Use may be limited by and subject to the applicable Microchip software      *
+//   43 * license agreement.                                                          *
+//   44 ******************************************************************************/
+//   45 /** \file eep_flash.c
+//   46 */
+//   47 
+//   48 //lint -restore
+//   49 
+//   50 /*===========================================================================*/
+//   51 /*  INCLUDES                                                                 */
+//   52 /*===========================================================================*/
+//   53 #include "eep_flash.h"
+//   54 #include "eep.h"
+//   55 
+//   56 /*===========================================================================*/
+//   57 /*  DEFINES                                                                  */
+//   58 /*===========================================================================*/
+//   59 #define AESaddresslocate              0x04e0U
+//   60 /*===========================================================================*/
+//   61 /*  Modul Globals                                                            */
+//   62 /*===========================================================================*/
+//   63 #pragma location = ".eep_FlashApp_EventHandling"
+
+        RSEG `.eep_FlashApp_EventHandling`:DATA:ROOT(0)
+//   64 __root __no_init sEepFlashAppEventHandling g_sEepFlashAppEventHandling_flash;
+g_sEepFlashAppEventHandling_flash:
+        DS8 13
+//   65 
+//   66 //#pragma location = ".eep_FlashApp_Aes"
+//   67 
+//   68 // #pragma location = ".eep_FlashApp_Chflt"
+//   69 
+//   70 #pragma location = ".eep_FlashApp_Clk"
+
+        RSEG `.eep_FlashApp_Clk`:DATA:ROOT(0)
+//   71 __root __no_init sEepFlashAppClk g_sEepFlashAppClk_flash;
+g_sEepFlashAppClk_flash:
+        DS8 6
+//   72 
+//   73 #pragma location = ".eep_FlashApp_Cpu"
+
+        RSEG `.eep_FlashApp_Cpu`:DATA:ROOT(0)
+//   74 __root __no_init sEepFlashAppCpu g_sEepFlashAppCpu_flash;
+g_sEepFlashAppCpu_flash:
+        DS8 2
+//   75 
+//   76 // #pragma location = ".eep_FlashApp_Crc"
+//   77 
+//   78 #pragma location = ".eep_FlashApp_Debounce"
+
+        RSEG `.eep_FlashApp_Debounce`:DATA:ROOT(0)
+//   79 __root __no_init sEepFlashAppDebounce g_sEepFlashAppDebounce_flash;
+g_sEepFlashAppDebounce_flash:
+        DS8 5
+//   80 
+//   81 #pragma location = ".eep_FlashApp_Debug"
+
+        RSEG `.eep_FlashApp_Debug`:DATA:ROOT(0)
+//   82 __root __no_init sEepFlashAppDebug g_sEepFlashAppDebug_flash;
+g_sEepFlashAppDebug_flash:
+        DS8 2
+//   83 
+//   84 // #pragma location = ".eep_FlashApp_Demod"
+//   85 
+//   86 // #pragma location = ".eep_FlashApp_Dfifo"
+//   87 
+//   88 // #pragma location = ".eep_FlashApp_Eeprom"
+//   89 
+//   90 // #pragma location = ".eep_FlashApp_Fe"
+//   91 
+//   92 // #pragma location = ".eep_FlashApp_Frsync"
+//   93 
+//   94 // #pragma location = ".eep_FlashApp_Gpioregs"
+//   95 
+//   96 // #pragma location = ".eep_FlashApp_I2c"
+//   97 
+//   98 #pragma location = ".eep_FlashApp_Int"
+
+        RSEG `.eep_FlashApp_Int`:DATA:ROOT(0)
+//   99 __root __no_init sEepFlashAppInt g_sEepFlashAppInt_flash;
+g_sEepFlashAppInt_flash:
+        DS8 5
+//  100 
+//  101 // #pragma location = ".eep_FlashApp_Led"
+//  102 
+//  103 // #pragma location = ".eep_FlashApp_Lf3d"
+//  104 
+//  105 // #pragma location = ".eep_FlashApp_LfProtocolHandler"
+//  106 
+//  107 // #pragma location = ".eep_FlashApp_LfRssi"
+//  108 #pragma location = ".eep_FlashApp_LfRssiEndOfLineCalibrationSettings"
+
+        RSEG `.eep_FlashApp_LfRssiEndOfLineCalibrationSettings`:DATA:ROOT(0)
+//  109 __root __no_init sEepFlashAppLfRssiEndOfLineCalibrationSettings g_sEepFlashAppLfRssiEndOfLineCalibrationSettings_flash;
+g_sEepFlashAppLfRssiEndOfLineCalibrationSettings_flash:
+        DS8 15
+//  110 
+//  111 #pragma location = ".eep_wEepRfrccAddress"
+
+        RSEG `.eep_wEepRfrccAddress`:DATA:ROOT(0)
+//  112 __root __no_init uint16_t wEepRfrccAddress;
+wEepRfrccAddress:
+        DS8 2
+//  113 
+//  114 //#pragma location = ".eepSecKeyAddrA"
+//  115 //__root __no_init uint16_t weepSecKeyAddrA[32];
+//  116 
+//  117 //#pragma location = ".eepSecKeyAddrB"
+//  118 //__root __no_init uint16_t weepSecKeyAddrB[32];
+//  119 
+//  120 #pragma location = ".eep_FlashApp_LfRssiSrcCalibrationSetting"
+
+        RSEG `.eep_FlashApp_LfRssiSrcCalibrationSetting`:DATA:ROOT(0)
+//  121 __root __no_init uint8_t g_bEepFlashAppLfRssiSrcCalibrationSetting_flash;
+g_bEepFlashAppLfRssiSrcCalibrationSetting_flash:
+        DS8 1
+//  122 
+//  123 // #pragma location = ".eep_FlashApp_Mem"
+//  124 
+//  125 #pragma location = ".eep_FlashApp_PortB"
+
+        RSEG `.eep_FlashApp_PortB`:DATA:ROOT(0)
+//  126 __root __no_init sEepFlashAppPort g_sEepFlashAppPortB_flash;
+g_sEepFlashAppPortB_flash:
+        DS8 2
+//  127 
+//  128 #pragma location = ".eep_FlashApp_PortC"
+
+        RSEG `.eep_FlashApp_PortC`:DATA:ROOT(0)
+//  129 __root __no_init sEepFlashAppPort g_sEepFlashAppPortC_flash;
+g_sEepFlashAppPortC_flash:
+        DS8 2
+//  130 
+//  131 #pragma location = ".eep_FlashApp_PortD"
+
+        RSEG `.eep_FlashApp_PortD`:DATA:ROOT(0)
+//  132 __root __no_init sEepFlashAppPort g_sEepFlashAppPortD_flash;
+g_sEepFlashAppPortD_flash:
+        DS8 2
+//  133 
+//  134 // #pragma location = ".eep_FlashApp_RxBuf"
+//  135 
+//  136 // #pragma location = ".eep_FlashApp_RxDsp"
+//  137 
+//  138 // #pragma location = ".eep_FlashApp_Sfifo"
+//  139 
+//  140 #pragma location = ".eep_FlashApp_Spi"
+
+        RSEG `.eep_FlashApp_Spi`:DATA:ROOT(0)
+//  141 __root __no_init sEepFlashAppSpi g_sEepFlashAppSpi_flash;
+g_sEepFlashAppSpi_flash:
+        DS8 2
+//  142 
+//  143 // #pragma location = ".eep_FlashApp_Ssm"
+//  144 
+//  145 #pragma location = ".eep_FlashApp_Sup"
+
+        RSEG `.eep_FlashApp_Sup`:DATA:ROOT(0)
+//  146 __root __no_init sEepFlashAppSup g_sEepFlashAppSup_flash;
+g_sEepFlashAppSup_flash:
+        DS8 2
+//  147 
+//  148 // #pragma location = ".eep_FlashApp_Symch"
+//  149 
+//  150 // #pragma location = ".eep_FlashApp_Temper"
+//  151 
+//  152 #pragma location = ".eep_FlashApp_Timer0Wdt"
+
+        RSEG `.eep_FlashApp_Timer0Wdt`:DATA:ROOT(0)
+//  153 __root __no_init sEepFlashAppTimer0Wdt g_sEepFlashAppTimer0Wdt_flash;
+g_sEepFlashAppTimer0Wdt_flash:
+        DS8 1
+//  154 
+//  155 // #pragma location = ".eep_FlashApp_Timer1"
+//  156 
+//  157 // #pragma location = ".eep_FlashApp_Timer2"
+//  158 
+//  159 // #pragma location = ".eep_FlashApp_Timer3"
+//  160 
+//  161 // #pragma location = ".eep_FlashApp_Timer4"
+//  162 
+//  163 // #pragma location = ".eep_FlashApp_Timer5"
+//  164 
+//  165 // #pragma location = ".eep_FlashApp_Tmo"
+//  166 
+//  167 // #pragma location = ".eep_FlashApp_TplfCal"
+//  168 
+//  169 // #pragma location = ".eep_FlashApp_Transponder"
+//  170 
+//  171 // #pragma location = ".eep_FlashApp_TxDsp"
+//  172 
+//  173 // #pragma location = ".eep_FlashApp_Txm"
+//  174 //#pragma location = AESaddresslocate
+//  175 //__root __no_init sEepFlashApp_AESKey g_sEepFlashApp_AESKey;
+//  176 
+//  177 //#pragma location = ".eep_sCustomerEEPromSectionAESkey"
+//  178 //__root __no_init sEepFlashApp_AESKey g_sEepFlashApp_AESKey;
+//  179 
+//  180 #pragma location = ".eep_sCustomerEEPromSectionRKEPEPS"
+
+        RSEG `.eep_sCustomerEEPromSectionRKEPEPS`:DATA:ROOT(0)
+//  181 __root __no_init sEepFlashApp_RKEPEPS g_sEepFlashApp_RKEPEPS;
+g_sEepFlashApp_RKEPEPS:
+        DS8 45
+//  182 
+//  183 #pragma location = ".eep_sCustomerEEPromSectionUSRID"
+
+        RSEG `.eep_sCustomerEEPromSectionUSRID`:DATA:ROOT(0)
+//  184 __root __no_init uint8_t g_EepFlashApp_USRID[4];
+g_EepFlashApp_USRID:
+        DS8 4
+//  185 
+//  186 //#pragma location = ".eep_sCustomerEEPromSectionFOBindx"
+//  187 //__root __no_init uint8_t g_EepFlashApp_FOBindx;
+//  188 
+//  189 #pragma location = ".eep_sCustomerEEPromSectionParameterData"
+
+        RSEG `.eep_sCustomerEEPromSectionParameterData`:DATA:ROOT(0)
+//  190 __root __no_init uint8_t g_EepFlashApp_PARAMdata[32][16];//GR was 3
+g_EepFlashApp_PARAMdata:
+        DS8 512
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01cH
+__?EECR:
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01dH
+__?EEDR:
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01eH
+__?EEARL:
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01fH
+__?EEARH:
+
+        END
+//  191 
+//  192 /*===========================================================================*/
+//  193 /*  IMPLEMENTATION                                                           */
+//  194 /*===========================================================================*/
+// 
+//   6 bytes in segment .eep_FlashApp_Clk
+//   2 bytes in segment .eep_FlashApp_Cpu
+//   5 bytes in segment .eep_FlashApp_Debounce
+//   2 bytes in segment .eep_FlashApp_Debug
+//  13 bytes in segment .eep_FlashApp_EventHandling
+//   5 bytes in segment .eep_FlashApp_Int
+//  15 bytes in segment .eep_FlashApp_LfRssiEndOfLineCalibrationSettings
+//   1 byte  in segment .eep_FlashApp_LfRssiSrcCalibrationSetting
+//   2 bytes in segment .eep_FlashApp_PortB
+//   2 bytes in segment .eep_FlashApp_PortC
+//   2 bytes in segment .eep_FlashApp_PortD
+//   2 bytes in segment .eep_FlashApp_Spi
+//   2 bytes in segment .eep_FlashApp_Sup
+//   1 byte  in segment .eep_FlashApp_Timer0Wdt
+// 512 bytes in segment .eep_sCustomerEEPromSectionParameterData
+//  45 bytes in segment .eep_sCustomerEEPromSectionRKEPEPS
+//   4 bytes in segment .eep_sCustomerEEPromSectionUSRID
+//   2 bytes in segment .eep_wEepRfrccAddress
+// 
+// 623 bytes of DATA memory
+//
+//Errors: none
+//Warnings: none

@@ -1,0 +1,370 @@
+###############################################################################
+#
+# IAR C/C++ Compiler V7.10.1.1197 for Atmel AVR           13/May/2020  17:03:24
+# Copyright 1996-2017 IAR Systems AB.
+# Network license: dvriar01.mchp-main.com (STD)
+#
+#    Source file  =  
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\firmware\spi\src\spi_flash.c
+#    Command line =  
+#        -f C:\Users\C41045\AppData\Local\Temp\EW1FB0.tmp
+#        (C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\firmware\spi\src\spi_flash.c
+#        -v3 --enhanced_core -ms -o
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\Obj
+#        -lCN
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\List
+#        -lA
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\List
+#        --no_cse --no_inline --no_code_motion --no_cross_call --no_clustering
+#        --no_tbaa --debug --64k_flash -DENABLE_BIT_DEFINITIONS -e
+#        --eeprom_size 2304 --clib -Ohz)
+#    Locale       =  English_USA.1252
+#    List file    =  
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\List\spi_flash.lst
+#    Object file  =  
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\Obj\spi_flash.r90
+#
+###############################################################################
+
+C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\firmware\spi\src\spi_flash.c
+      1          //lint -e9059
+      2          /******************************************************************************
+      3            Use of this software is subject to Microchip's Software License Agreement.
+      4          --------------------------------------------------------------------------------
+      5            $URL: http://svnservulm.corp.atmel.com/svn/CDB/02_AutoRF/Primus2pSW/Branches/RB_PRIMUS2P_ROM_1.3/firmware/spi/src/spi_flash.c $
+      6            $LastChangedRevision: 244572 $
+      7            $LastChangedDate: 2014-02-12 14:37:22 +0100 (Mi, 12 Feb 2014) $
+      8            $LastChangedBy: florian.schweidler $
+      9          -------------------------------------------------------------------------------
+     10            Project:      ATA5700
+     11            Target MCU:   ATA5700
+     12            Compiler:     IAR C/C++ Compiler for AVR 6.30.1
+     13          -------------------------------------------------------------------------------
+     14          
+     15          ******************************************************************************
+     16          * Copyright 2017, Microchip Technology Incorporated and its subsidiaries.     *
+     17          *                                                                             *
+     18          * This software is owned by the Microchip Technology Incorporated.            *
+     19          * Microchip hereby grants to licensee a personal                              *
+     20          * non-exclusive, non-transferable license to copy, use, modify, create        *
+     21          * derivative works of, and compile the Microchip Source Code and derivative   *
+     22          * works for the sole and exclusive purpose of creating custom software in     *
+     23          * support of licensee product to be used only in conjunction with a Microchip *
+     24          * integrated circuit as specified in the applicable agreement. Any            *        
+     25          * reproduction, modification, translation, compilation, or representation of  *
+     26          * this software except as specified above is prohibited without the express   *
+     27          * written permission of Microchip.                                            *
+     28          *                                                                             *
+     29          * Disclaimer: MICROCHIP MAKES NO WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,    *
+     30          * WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED    *
+     31          * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.         *
+     32          * Microchip reserves the right to make changes without further notice to the  *
+     33          * materials described herein. Microchip does not assume any liability arising *
+     34          * out of the application or use of any product or circuit described herein.   *
+     35          * Microchip does not authorize its products for use as critical components in *
+     36          * life-support systems where a malfunction or failure may reasonably be       *
+     37          * expected to result in significant injury to the user. The inclusion of      *
+     38          * Microchip products in a life-support systems application implies that the   *
+     39          * manufacturer assumes all risk of such use and in doing so indemnifies       *
+     40          * Microchip against all charges.                                              *
+     41          *                                                                             *
+     42          * Use may be limited by and subject to the applicable Microchip software      *
+     43          * license agreement.                                                          *
+     44          ******************************************************************************/
+     45          /** \file spi_flash.c
+     46          */
+     47          
+     48          //lint -restore
+     49          
+     50          /*---------------------------------------------------------------------------*/
+     51          /*  INCLUDES                                                                 */
+     52          /*---------------------------------------------------------------------------*/
+     53          #include "spi_flash.h"
+
+   \                                 In  segment ABSOLUTE, at 0x21
+   \   union <unnamed> volatile __io _A_PRR1
+   \                     _A_PRR1:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x24
+   \   union <unnamed> volatile __io _A_DDRB
+   \                     _A_DDRB:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x2a
+   \   union <unnamed> volatile __io _A_DDRD
+   \                     _A_DDRD:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x3a
+   \   union <unnamed> volatile __io _A_PRR0
+   \                     _A_PRR0:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x47
+   \   union <unnamed> volatile __io _A_EIMSK
+   \                     _A_EIMSK:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x4c
+   \   union <unnamed> volatile __io _A_SPCR
+   \                     _A_SPCR:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x4d
+   \   union <unnamed> volatile __io _A_SPSR
+   \                     _A_SPSR:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x6b
+   \   union <unnamed> volatile __io _A_EICRA
+   \                     _A_EICRA:
+   \   00000000                      DS8 1
+     54          #include "spi.h"
+     55          
+     56          /*---------------------------------------------------------------------------*/
+     57          /*  DEFINES                                                                  */
+     58          /*---------------------------------------------------------------------------*/
+     59          
+     60          /*---------------------------------------------------------------------------*/
+     61          /*  Modul Globals                                                            */
+     62          /*---------------------------------------------------------------------------*/
+     63          
+     64          /*---------------------------------------------------------------------------*/
+     65          /*  IMPLEMENTATION                                                           */
+     66          /*---------------------------------------------------------------------------*/
+     67          
+     68          /*---------------------------------------------------------------------------*/
+     69          /** \brief <b>ATA_spiSlaveOpen_flash_C</b>
+     70              shall setup SPI interface either for master or slave mode.
+     71          
+     72          \param[out] ::g_sSpiConfig  Global SPI component data
+     73          \param[out] ::g_sDebug      Global Debug component data
+     74          \param[in]  bSpcr           SPCR register setting
+     75          \param[in]  bSpsr           SPSR register setting
+     76          
+     77          \return     FAIL if SPI is already opened, otherwise OK
+     78          
+     79          \StackUsageInBytes{XXX}
+     80          
+     81          \image html ATA_spiOpen_C.png
+     82          
+     83          \internal
+     84          \li 005: Activate SPI clock domain to access corresponding registers
+     85                   IF the SPI interface is already in use as indicated by bit SPE in
+     86                   register SPCR being set to 1, THEN
+     87          \li 008: Set ::g_sDebug .bErrorCode to DEBUG_ERROR_CODE_SPI_NOT_INITIALIZED\n
+     88                   ELSE
+     89          \li 010:   Power up SPI interface via PRR0.PRSPI=0
+     90          \li 020:   Configure the ports as follows
+     91                      - PD1/NSS  - SPI Not Slave Select    (input)
+     92                      - PB5/MISO - SPI Master In Slave Out (output)
+     93                      - PB6/MOSI - SPI Master Out Slave In (input)
+     94                      - PB7/SCK  - SPI Clock               (input)
+     95          
+     96          \li 040:   Configure SPCR register setting according to function parameters
+     97                      - SPSR = spsr
+     98                      - SPCR = spcr
+     99          
+    100          \li 050:   Set SPI status to "INITIALIZED" in ::g_sSpiConfig .bStatus\n
+    101                   ENDIF
+    102          
+    103          \Derived{No}
+    104          
+    105          \Rationale{N/A}
+    106          
+    107          \Traceability{Primus2P-788}
+    108          \endinternal
+    109          \n
+    110          */
+    111          /*---------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    112          UINT8FUNC ATA_spiSlaveOpen_flash_C(uint8_t bSpcr, uint8_t bSpsr)
+   \                     ATA_spiSlaveOpen_flash_C:
+    113          {
+    114              uint8_t fRetVal = FAIL;
+   \   00000000   E021               LDI     R18, 1
+    115              uint8_t bPrr1 = PRR1;
+   \   00000002   B131               IN      R19, 0x01
+    116              
+    117              /* LLR-Ref: 005 */
+    118              ATA_POWERON_C(PRR0, PRSPI)
+   \   00000004   98D0               CBI     0x1A, 0x00
+    119              
+    120              if (SPCR & BM_SPE)
+   \   00000006   B54C               IN      R20, 0x2C
+   \   00000008   FF46               SBRS    R20, 6
+   \   0000000A   C005               RJMP    ??ATA_spiSlaveOpen_flash_C_0
+    121              {
+    122                  /* LLR-Ref: 008 */
+    123                  PRR1 = bPrr1;
+   \   0000000C   B931               OUT     0x01, R19
+    124                  g_sDebug.bErrorCode = DEBUG_ERROR_CODE_SPI_ALREADY_OPENED;
+   \   0000000E   E10D               LDI     R16, 29
+   \   00000010   9300....           STS     g_sDebug, R16
+   \   00000014   C018               RJMP    ??ATA_spiSlaveOpen_flash_C_1
+    125              }
+    126              else
+    127              {
+    128                  /* LLR-Ref: 020 */
+    129                  DDRB &= ~(BM_SPI_MOSI_PIN | BM_SPI_SCK_PIN);
+   \                     ??ATA_spiSlaveOpen_flash_C_0:
+   \   00000016   B124               IN      R18, 0x04
+   \   00000018   732F               ANDI    R18, 0x3F
+   \   0000001A   B924               OUT     0x04, R18
+    130                  DDRB |=  BM_SPI_MISO_PIN;
+   \   0000001C   9A25               SBI     0x04, 0x05
+    131                  DDRD &= ~(BM_SPI_NSS_PIN);
+   \   0000001E   9851               CBI     0x0A, 0x01
+    132                  
+    133                  /* INT0 for NSS interrupt. Generate an interrupt on any INT0
+    134                   * change and leave INT1 unchanged
+    135                   */
+    136                  EICRA |= BM_ISC00;
+   \   00000020   9120006B           LDS     R18, 107
+   \   00000024   6021               ORI     R18, 0x01
+   \   00000026   9320006B           STS     107, R18
+    137                  EICRA &= (uint8_t)~(BM_ISC01);
+   \   0000002A   9120006B           LDS     R18, 107
+   \   0000002E   7F2D               ANDI    R18, 0xFD
+   \   00000030   9320006B           STS     107, R18
+    138                  EIMSK |= BM_INT0;
+   \   00000034   B527               IN      R18, 0x27
+   \   00000036   6021               ORI     R18, 0x01
+   \   00000038   BD27               OUT     0x27, R18
+    139          
+    140                  /* LLR-Ref: 040 */
+    141                  SPSR  = bSpsr;
+   \   0000003A   BD1D               OUT     0x2D, R17
+    142                  SPCR  = bSpcr;
+   \   0000003C   BD0C               OUT     0x2C, R16
+    143          
+    144                  /* LLR-Ref: 050 */
+    145                  g_sSpiConfig.bStatus = BM_SPICONFIG_STATUS_INITIALIZATION_STATUS;
+   \   0000003E   E800               LDI     R16, 128
+   \   00000040   9300....           STS     g_sSpiConfig, R16
+    146                  fRetVal = OK;
+   \   00000044   E020               LDI     R18, 0
+    147              }
+    148              return fRetVal;
+   \                     ??ATA_spiSlaveOpen_flash_C_1:
+   \   00000046   2F02               MOV     R16, R18
+   \   00000048   9508               RET
+   \   0000004A                      REQUIRE _A_PRR1
+   \   0000004A                      REQUIRE _A_PRR0
+   \   0000004A                      REQUIRE _A_SPCR
+   \   0000004A                      REQUIRE _A_DDRB
+   \   0000004A                      REQUIRE _A_DDRD
+   \   0000004A                      REQUIRE _A_EICRA
+   \   0000004A                      REQUIRE _A_EIMSK
+   \   0000004A                      REQUIRE _A_SPSR
+    149          }
+    150          
+    151          /*---------------------------------------------------------------------------*/
+    152          /** \brief <b>ATA_spiSlaveClose_flash_C</b>
+    153              shall disable the SPI interface.
+    154          
+    155          \param[out] ::g_sSpiConfig  Global SPI component data
+    156          
+    157          \return     N/A
+    158          
+    159          \StackUsageInBytes{XXX}
+    160          
+    161          \image html ATA_spiClose_C.png
+    162          
+    163          \internal
+    164          \li 005: Disable INT0, since SPI slave interface is to be closed
+    165          
+    166          \li 010: Reset SPCR register setting
+    167          
+    168          \li 020: Power down SPI interface via PRR0.PRSPI=1
+    169          
+    170          \li 030: Set output back pins to input
+    171          
+    172          \li 040: Set SPI status to "NOT INITIALIZED" in ::g_sSpiConfig .bStatus
+    173          
+    174          \Derived{No}
+    175          
+    176          \Rationale{N/A}
+    177          
+    178          \Traceability{Primus2P-958}
+    179          \endinternal
+    180          \n
+    181          */
+    182          /*---------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    183          VOIDFUNC ATA_spiSlaveClose_flash_C(void)
+   \                     ATA_spiSlaveClose_flash_C:
+    184          {
+    185              /* LLR-Ref: 005 */
+    186              EIMSK &= ~BM_INT0;
+   \   00000000   B507               IN      R16, 0x27
+   \   00000002   7F0E               ANDI    R16, 0xFE
+   \   00000004   BD07               OUT     0x27, R16
+    187            
+    188              /* LLR-Ref: 010 */
+    189              SPCR = 0U;
+   \   00000006   E000               LDI     R16, 0
+   \   00000008   BD0C               OUT     0x2C, R16
+    190          
+    191              /* LLR-Ref: 020 */
+    192              ATA_POWEROFF_C(PRR0, PRSPI)
+   \   0000000A   9AD0               SBI     0x1A, 0x00
+    193          
+    194              /* LLR-Ref: 030 */
+    195              DDRB &= (uint8_t)~(BM_SPI_MOSI_PIN | BM_SPI_MISO_PIN | BM_SPI_SCK_PIN);
+   \   0000000C   B104               IN      R16, 0x04
+   \   0000000E   710F               ANDI    R16, 0x1F
+   \   00000010   B904               OUT     0x04, R16
+    196              DDRD &= (uint8_t)~(BM_SPI_NSS_PIN);
+   \   00000012   9851               CBI     0x0A, 0x01
+    197              
+    198              /* LLR-Ref: 040 */
+    199              g_sSpiConfig.bStatus &= (uint8_t)~BM_SPICONFIG_STATUS_INITIALIZATION_STATUS;
+   \   00000014   ....               LDI     R30, LOW(g_sSpiConfig)
+   \   00000016   ....               LDI     R31, (g_sSpiConfig) >> 8
+   \   00000018   8100               LD      R16, Z
+   \   0000001A   770F               ANDI    R16, 0x7F
+   \   0000001C   8300               ST      Z, R16
+    200          }
+   \   0000001E   9508               RET
+   \   00000020                      REQUIRE _A_EIMSK
+   \   00000020                      REQUIRE _A_SPCR
+   \   00000020                      REQUIRE _A_PRR0
+   \   00000020                      REQUIRE _A_DDRB
+   \   00000020                      REQUIRE _A_DDRD
+
+   Maximum stack usage in bytes:
+
+   RSTACK Function
+   ------ --------
+      2   ATA_spiSlaveClose_flash_C
+      2   ATA_spiSlaveOpen_flash_C
+
+
+   Segment part sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+      32  ATA_spiSlaveClose_flash_C
+      74  ATA_spiSlaveOpen_flash_C
+       1  _A_DDRB
+       1  _A_DDRD
+       1  _A_EICRA
+       1  _A_EIMSK
+       1  _A_PRR0
+       1  _A_PRR1
+       1  _A_SPCR
+       1  _A_SPSR
+
+ 
+   8 bytes in segment ABSOLUTE
+ 106 bytes in segment CODE
+ 
+ 106 bytes of CODE memory
+   0 bytes of DATA memory (+ 8 bytes shared)
+
+Errors: none
+Warnings: none

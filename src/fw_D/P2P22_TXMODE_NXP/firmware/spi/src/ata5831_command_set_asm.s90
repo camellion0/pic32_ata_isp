@@ -1,0 +1,820 @@
+//lint -e9059
+/* *ASM************************************************************************
+  Use of this software is subject to Atmel's Software License Agreement.
+-------------------------------------------------------------------------------
+  $URL: http://svnservulm.corp.atmel.com/svn/CDB/Apps/SW_Lib/Car_Access/CARS_GEN2/ATAB5702A/Branches/P2P22_TXMODE_NXP/firmware/spi/src/ata5831_command_set_asm.s90 $
+  $LastChangedRevision: 328482 $
+  $LastChangedDate: 2015-07-22 13:17:23 -0600 (Wed, 22 Jul 2015) $
+  $LastChangedBy: grueter $
+-------------------------------------------------------------------------------
+  Project:      ATA5700
+  Target MCU:   ATA5700
+  Compiler:     IAR Assembler for AVR 6.30.1
+-------------------------------------------------------------------------------
+
+******************************************************************************
+* Copyright 2011, Atmel Automotive GmbH                                       *
+*                                                                             *
+* This software is owned by the Atmel Automotive GmbH                         *
+* and is protected by and subject to worldwide patent protection.             *
+* Atmel hereby grants to licensee a personal,                                 *
+* non-exclusive, non-transferable license to copy, use, modify, create        *
+* derivative works of, and compile the Atmel Source Code and derivative       *
+* works for the sole purpose of creating custom software in support of        *
+* licensee product to be used only in conjunction with a Atmel integrated     *
+* circuit as specified in the applicable agreement. Any reproduction,         *
+* modification, translation, compilation, or representation of this           *
+* software except as specified above is prohibited without the express        *
+* written permission of Atmel.                                                *
+*                                                                             *
+* Disclaimer: ATMEL MAKES NO WARRANTY OF ANY KIND,EXPRESS OR IMPLIED,         *
+* WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED    *
+* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.         *
+* Atmel reserves the right to make changes without further notice to the      *
+* materials described herein. Atmel does not assume any liability arising     *
+* out of the application or use of any product or circuit described herein.   *
+* Atmel does not authorize its products for use as critical components in     *
+* life-support systems where a malfunction or failure may reasonably be       *
+* expected to result in significant injury to the user. The inclusion of      *
+* Atmel products in a life-support systems application implies that the       *
+* manufacturer assumes all risk of such use and in doing so indemnifies       *
+* Atmel against all charges.                                                  *
+*                                                                             *
+* Use may be limited by and subject to the applicable Atmel software          *
+* license agreement.                                                          *
+*******************************************************************************/
+/* \file ata5831_command_set_asm.s90
+*/
+//lint -restore
+
+    NAME ata5831_command_set_asm
+
+    PUBLIC ATA_5831StartSckNssTimer_ASM
+    PUBLIC ATA_5831CommandReady_ASM
+    PUBLIC ATA_5831CommandTimer1Isr_ASM
+    PUBLIC ATA_5831ReadCommandFillTxFifo_ASM
+    PUBLIC ATA_5831WriteCommandFillTxFifo_ASM
+    PUBLIC ATA_5831CommandSpiFifoIsr_ASM
+    PUBLIC ATA_5831ReadCommandReadRxFifo_ASM
+    PUBLIC ATA_5831ReadCommandReadDummyRxFifo_ASM
+    PUBLIC ATA_5831WriteCommandReadRxFifo_ASM
+
+    EXTERN g_sTimer1
+
+    EXTERN ATA_spiRxBufferDisableInt_ASM
+    EXTERN ATA_spiRxBufferEnd_ASM
+
+    EXTERN ATA_spiTxBufferDisableInt_ASM
+    EXTERN ATA_spiTxBufferEnd_ASM
+
+    EXTERN g_sSpiConfig
+/* ===========================================================================*/
+/*   INCLUDES                                                                 */
+/* ===========================================================================*/
+#include "regs.inc"
+#include "ata5831_command_set.h"
+#include "spi.h"
+#include "globals.h"
+#include "../../timer1/src/timer1.h"
+
+/* ===========================================================================*/
+/*   Modul Globals                                                            */
+/* ===========================================================================*/
+/* ===========================================================================*/
+/*   Macros                                                                   */
+/* ===========================================================================*/
+/* ===========================================================================*/
+/*   Implementation                                                           */
+/* ===========================================================================*/
+
+/* ---------------------------------------------------------------------------*/
+/** \brief <b>ATA_spi_master_start_sck_nss_timer_ASM</b>
+    shall start timer1 according to configuration in ::g_sAta5831 .sck_nss
+
+    Used Variables
+    \li [out] ::g_sTimer1 is global Timer1 component data
+    \li [in] ::g_sAta5831 is global ATA5831 component data
+
+    \image html ATA_5831StartSckNssTimer_ASM.png
+
+    \internal
+    \li 010: Initialize T1COR register of timer1 with content of variable 
+             ::g_sAta5831 .bSckNssHighDelay
+    \li 020: Reset and restart timer 1 by setting T1CR.T1RES and T1CR.T1ENA
+    \li 030: Select function ::ATA_5831CommandReady_ASM for Timer 1 interrupt 
+             service routine
+    \li 040: Disable SPI RX/TX FIFO interrupts 
+    \li 050: Restore used registers and return from interrupt
+
+    \Derived{Yes}
+
+    \Rationale{This function is required in order to implement the SPI
+               interface handling}
+
+    \Traceability   N/A
+    \endinternal
+\n
+*/
+/* ---------------------------------------------------------------------------*/
+RSEG CODE:CODE:ROOT(1)
+ATA_5831StartSckNssTimer_ASM:
+
+    ATA_SET_FUNCTION_TRACE_POINT_ISR_ASM    ATA_5831StartSckNssTimer_ASM , 0x00
+
+    /* LLR-Ref: 010 */
+    LDS     R30 , g_sAta5831 + SATA5831_SCK_NSS_HIGH_DELAY
+    STS     T1COR , R30
+
+    /* LLR-Ref: 020 */
+    SBI     T1CR , T1RES
+    SBI     T1CR , T1ENA
+
+    /* LLR-Ref: 030 */
+    LDI     R30 , low(ATA_5831CommandReady_ASM/2)
+    STS     g_sTimer1 + 1 , R30
+
+    LDI     R30 , high(ATA_5831CommandReady_ASM/2)
+    STS     g_sTimer1 + 2 , R30
+
+    /* LLR-Ref: 040 */
+    CLR     R30
+    STS     SFIR , R30
+    /* LLR-Ref: 050 */
+    POP     R31
+    OUT     SREG , R31
+
+    POP     R31
+    POP     R30
+    RETI
+
+/* ---------------------------------------------------------------------------*/
+/** \brief <b>ATA_5831CommandReady_ASM</b>
+    shall set the NSS pin to high
+
+    Variable Usage:
+    \li [out] ::g_sTimer1 is global Timer1 component data
+
+    \image html ATA_5831CommandReady_ASM.png
+
+    \internal
+    \li 010: Reset timer 1 by setting T1CR.T1RES
+    \li 020: Unlock timer 1 by clearing ::g_sTimer1 .bStatus
+    \li 030: Remove power from timer 1 by setting PRR1.PRT1
+    \li 040: Set NSS pin to high
+
+    \Derived{Yes}
+
+    \Rationale{This function is required in order to implement the SPI
+               interface handling}
+
+    \Traceability   N/A
+    \endinternal
+\n
+*/
+/* ---------------------------------------------------------------------------*/
+RSEG CODE:CODE:ROOT(1)
+ATA_5831CommandReady_ASM:
+
+    ATA_SET_FUNCTION_TRACE_POINT_ISR_ASM    ATA_5831CommandReady_ASM , 0x00
+
+    /* LLR-Ref: 010 */
+    LDI     R30 , BM_T1RES
+    OUT     T1CR, R30
+
+    /* LLR-Ref: 020 */
+    CLR     R30
+    STS     g_sTimer1 + 0 , R30
+
+    /* LLR-Ref: 030 */
+    SBI     PRR1 , PRT1
+
+    /* LLR-Ref: 040 */
+    SBI     PORTD , SPI_NSS_PIN
+
+    RET
+
+
+/* ---------------------------------------------------------------------------*/
+/** \brief <b>ATA_5831CommandTimer1Isr_ASM</b>
+    shall write the command bytes to the SPI FIFO according to the settings
+    in g_sAta5831.bConfig
+
+    Variable Usage:
+    \li [in,out]  ::g_sAta5831 is global ATA5831 component data
+
+    \image html ATA_5831CommandTimer1Isr_ASM.png
+
+    \internal
+    \li 010: Disable Timer 1 by clearing bit T1CR.T1ENA
+    \li 020: Write command id to SPDR register via ::g_sAta5831 .bId
+    \li 030: Decrement byte counter via ::g_sAta5831 .bTelegramLength)
+    \li 040: Check if length indicator is present in command via flag ::g_sAta5831
+             .bConfig[6]
+             IF no length indicator is needed
+                goto 070
+             ELSE
+                continue with writing length parameter
+    \li 050: Write command length to SPDR register via ::g_sAta5831 .bLength
+    \li 060: Decrement byte counter via ::g_sAta5831 .bTelegramLength
+    \li 070: Check if address indicator is present in command via flag ::g_sAta5831
+             .bConfig[5]
+             IF no address indicator is needed
+                goto 120
+             ELSE
+                continue with writing address parameter
+    \li 080: Write high byte of command address to SPDR register via ::g_sAta5831
+             .wAddress
+    \li 090: Decrement byte counter via ::g_sAta5831 .bTelegramLength
+    \li 100: Write low byte of command address to SPDR register via variable 
+             ::g_sAta5831 .wAddress
+    \li 110: Decrement byte counter via ::g_sAta5831 .bTelegramLength
+    \li 120: Check command type of current command via flag ::g_sAta5831 .bConfig[7]
+             IF command type is WRITE_COMMAND
+                goto 180
+    \li 130: Fill SPI txfifo with 0x00, since command type is READ_COMMAND
+    \li 140: Update byte counter via ::g_sAta5831 .bTelegramLength
+    \li 150: Enable SPI rxfifo interrupt with max fifo fill level
+    \li 160: IF less than max fifo fill level
+                correct fifo length with content of variable ::g_sAta5831 .bRxLength
+    \li 170: goto 210
+    \li 180: IF command type is WRITE_COMMAND, call function 
+             ::ATA_5831WriteCommandFillTxFifo_ASM to fill SPI Tx FIFO
+    \li 190: Update byte counter via ::g_sAta5831 .bTelegramLength
+    \li 200: Enable SPI Tx FIFO interrupt with fill level 0
+    \li 210: Restore used registers and return
+
+    \Derived{Yes}
+
+    \Rationale{This function is required in order to implement the SPI
+               interface handling}
+
+    \Traceability   N/A
+    \endinternal
+\n
+*/
+/* ---------------------------------------------------------------------------*/
+RSEG CODE:CODE:ROOT(1)
+ATA_5831CommandTimer1Isr_ASM:
+
+    ATA_SET_FUNCTION_TRACE_POINT_ISR_ASM    ATA_5831CommandTimer1Isr_ASM , 0x00
+
+    PUSH    R16
+    PUSH    R17
+
+    LDS     R17 , g_sAta5831 + SATA5831_TELEGRAM_LENGTH
+    /* LLR-Ref: 010 */
+    CBI     T1CR , T1ENA
+
+    /* LLR-Ref: 020 */
+    LDS     R30 , g_sAta5831 + SATA5831_ID
+    OUT     SPDR , R30
+    /* LLR-Ref: 030 */
+    DEC     R17
+
+    LDS     R31 , g_sAta5831 + SATA5831_CONFIG
+    /* LLR-Ref: 040 */
+    SBRS    R31 , SATA5831_CONFIG_LENGTH_INDICATOR
+    RJMP    _SKIP_LENGTH_INDICATOR
+    /* LLR-Ref: 050 */
+    LDS     R30 , g_sAta5831 + SATA5831_LENGTH
+    OUT     SPDR , R30
+    /* LLR-Ref: 060 */
+    DEC     R17
+_SKIP_LENGTH_INDICATOR:
+    /* LLR-Ref: 070 */
+    SBRS    R31 , SATA5831_CONFIG_ADDRESS_INDICATOR
+    RJMP    _SKIP_ADDRESS_INDICATOR
+    /* LLR-Ref: 080 */
+    LDS     R30 , g_sAta5831 + SATA5831_ADDRESS + 1
+    OUT     SPDR , R30
+    /* LLR-Ref: 090 */
+    DEC     R17
+
+    /* LLR-Ref: 100 */
+    LDS     R30 , g_sAta5831 + SATA5831_ADDRESS + 0
+    OUT     SPDR , R30
+    /* LLR-Ref: 110 */
+    DEC     R17
+_SKIP_ADDRESS_INDICATOR:
+    /* LLR-Ref: 120 */
+    SBRC    R31 , SATA5831_CONFIG_READ_WRITE_INDICATOR
+    RJMP    _WRITE_COMMAND
+
+_READ_COMMAND:
+    /* LLR-Ref: 130 */
+    CALL    ATA_5831ReadCommandFillTxFifo_ASM
+    /* LLR-Ref: 140 */
+    STS     g_sAta5831 + SATA5831_TELEGRAM_LENGTH , R17
+    /* LLR-Ref: 150 */
+    ENABLE_SPIRXBUFFER  ATA_5831CommandSpiFifoIsr_ASM , RX_BUFFER_FIFO_SIZE
+    /* LLR-Ref: 160 */
+    LDS     R16 , g_sAta5831 + SATA5831_RX_LENGTH
+    CPI     R16 , RX_BUFFER_FIFO_SIZE
+    BRGE    _END_COMMAND_FILL_TXFIFO
+    LDS     R16 , g_sAta5831 + SATA5831_RX_LENGTH
+    ORI     R16 , BM_SRIE
+    STS     SFIR , R16
+    /* LLR-Ref: 170*/
+    RJMP    _END_COMMAND_FILL_TXFIFO
+
+_WRITE_COMMAND:
+    /* LLR-Ref: 180 */
+    CALL    ATA_5831WriteCommandFillTxFifo_ASM
+    /* LLR-Ref: 190 */
+    STS     g_sAta5831 + SATA5831_TELEGRAM_LENGTH , R17
+    /* LLR-Ref: 200 */
+    ENABLE_SPITXBUFFER  ATA_5831CommandSpiFifoIsr_ASM , 0
+
+_END_COMMAND_FILL_TXFIFO:
+    /* LLR-Ref: 210 */
+    POP     R17
+    POP     R16
+    RET
+
+/* ---------------------------------------------------------------------------*/
+/** \brief <b>ATA_5831ReadCommandFillTxFifo_ASM</b>
+    shall fill the SPI Tx FIFO with 0x00 until maximum fill level or telegram
+    length is reached. This routine is used for read commands.
+
+    \image html ATA_5831ReadCommandFillTxFifo_ASM.png
+
+    \internal
+    \li 010: Check SPI Tx FIFO fill level via register SFFR.RFL[2..]
+             IF FIFO is full
+                return
+             ELSE
+                goto 040
+    \li 020: Check byte counter via ::g_sAta5831 .bTelegramLength (register R17)
+             IF byte counter is 0
+                return
+             ELSE
+                continue
+    \li 030: Write 0x00 to register SPDR
+    \li 040: Decrement byte counter ::g_sAta5831 .bTelegramLength (register R17)
+
+    \Derived{Yes}
+
+    \Rationale{This function is required in order to implement the ATA5831
+               message handling}
+
+    \Traceability   N/A
+    \endinternal
+\n
+*/
+/* ---------------------------------------------------------------------------*/
+RSEG CODE:CODE:ROOT(1)
+ATA_5831ReadCommandFillTxFifo_ASM:
+
+    ATA_SET_FUNCTION_TRACE_POINT_ISR_ASM    ATA_5831ReadCommandFillTxFifo_ASM , 0x00
+
+    CLR     R30
+_READ_COMMAND_FILL_TX_FIFO:
+    /* LLR-Ref: 010 */
+    LDS     R31 , SFFR
+    SBRC    R31 , TFL2
+    RJMP    _READ_COMMAND_FILL_TXFIFO_END
+    /* LLR-Ref: 020 */
+    TST     R17
+    BREQ    _READ_COMMAND_FILL_TXFIFO_END
+    /* LLR-Ref: 030 */
+    OUT     SPDR , R30
+    /* LLR-Ref: 040 */
+    DEC     R17
+
+    RJMP    _READ_COMMAND_FILL_TX_FIFO
+_READ_COMMAND_FILL_TXFIFO_END:
+    RET
+
+/* ---------------------------------------------------------------------------*/
+/** \brief <b>ATA_5831WriteCommandFillTxFifo_ASM</b>
+    shall fill the spi tx fifo with data starting from  address g_sSpiConfig.pAddress
+    until maximum fill level or telegram length is reached.
+    This routine is used for write commands.
+
+    Variable Usage:
+    \li [in,out] ::g_sSpiConfig is global SPI component data
+    \li [in] ::g_sAta5831 is global ATA5831 component data
+
+    \image html ATA_5831WriteCommandFillTxFifo_ASM.png
+
+    \internal
+    \li 010: Load address pointer ::g_sSpiConfig .pAddress to Z register
+    \li 020: Check SPI TXFIFO fill level via register SFFR.RFL[2..]
+             IF FIFO is full
+                goto 080
+    \li 030: Check byte counter via ::g_sAta5831 .bTelegramLength (register R17)
+             IF byte counter is 0
+                goto 080
+    \li 040: Read from address Pointer (Z register) and increment Z register
+    \li 050: Write content of R25 to SPDR register
+    \li 060: Decrement byte counter via ::g_sAta5831 .bTelegramLength (register R17)
+    \li 070: goto 020
+    \li 080: Update address pointer ::g_sSpiConfig .pAddress with Z register 
+             content and return
+
+    \Derived{Yes}
+
+    \Rationale{This function is required in order to implement the ATA5831
+               message handling}
+
+    \Traceability   N/A
+    \endinternal
+\n
+*/
+/* ---------------------------------------------------------------------------*/
+RSEG CODE:CODE:ROOT(1)
+ATA_5831WriteCommandFillTxFifo_ASM:
+
+    ATA_SET_FUNCTION_TRACE_POINT_ISR_ASM    ATA_5831WriteCommandFillTxFifo_ASM , 0x00
+
+    PUSH    R25
+    /* LLR-Ref: 010 */
+    LDS     R30 , g_sSpiConfig + SPICONFIG_PADDRESS
+    LDS     R31 , g_sSpiConfig + SPICONFIG_PADDRESS + 1
+
+_WRITE_COMMAND_FILL_TX_FIFO:
+    /* LLR-Ref: 020 */
+    LDS     R25 , SFFR
+    SBRC    R25 , TFL2
+    RJMP    _WRITE_COMMAND_FILL_TXFIFO_END
+    /* LLR-Ref: 030 */
+    TST     R17
+    BREQ    _WRITE_COMMAND_FILL_TXFIFO_END
+    /* LLR-Ref: 040 */
+    LD      R25 , Z+
+    /* LLR-Ref: 050 */
+    OUT     SPDR , R25
+
+    /* LLR-Ref: 060 */
+    DEC     R17
+    /* LLR-Ref: 070 */
+    RJMP    _WRITE_COMMAND_FILL_TX_FIFO
+_WRITE_COMMAND_FILL_TXFIFO_END:
+
+    /* LLR-Ref: 080 */
+    STS     g_sSpiConfig + SPICONFIG_PADDRESS     , R30
+    STS     g_sSpiConfig + SPICONFIG_PADDRESS + 1 , R31
+
+    POP     R25
+    RET
+
+
+/* ---------------------------------------------------------------------------*/
+/** \brief <b>ATA_5831CommandSpiFifoIsr_ASM</b>
+    shall
+        - read/write the data from/to the SPIFIFOS.
+        - store the event bytes in variable g_sAta5831
+    This routine is used for read and write commands.
+
+    Variable Usage:
+    \li [in,out]      ::g_sAta5831 is global ATA5831 component data
+
+    \image html ATA_5831CommandSpiFifoIsr_ASM.png
+
+    \internal
+    \li 010: IF event bytes are read via flag ::g_sAta5831 .bConfig[3]
+               skip reading of event flags and goto 090
+    \li 020: Read from SPDR register
+    \li 030: Decrement byte counter ::g_sAta5831 .bRxLength (register R17)
+    \li 040: Store data to ::g_sAta5831 .bEventsSystem
+    \li 050: Read from SPDR register
+    \li 060: Store data to ::g_sAta5831 .bEventsSystem
+    \li 070: Decrement byte counter ::g_sAta5831 .bRxLength (register R17)
+    \li 080: Set bit ::g_sAta5831 .bConfig[3] to indicate EVENT_BYTES_READ
+    \li 090: IF byte counter is 0
+                skip reading from RXFIFO and goto 150
+             ELSE
+                start reading from RXFIFO
+    \li 100: Check command type of current command via flag ::g_sAta5831 .bConfig[7]
+             IF command type is WRITE_COMMAND
+                skip reading from SPI RX FIFO and goto 140
+             ELSE
+                start reading from SPI RX FIFO
+    \li 110: Check if dummy bytes shall be inserted via flag ::g_sAta5831 .bConfig[4]
+             IF dummy bytes shall be inserted
+                call function ::ATA_5831ReadCommandReadDummyRxFifo_ASM
+    \li 120: Check if all dummy bytes are read via flag ::g_sAta5831 .bConfig[4]
+             IF all dummy bytes are read
+                call function ::ATA_5831ReadCommandReadRxFifo_ASM
+    \li 130: Goto refilling of SPI TX FIFO
+    \li 140: Read SPI RX FIFO
+                 call function ::ATA_5831WriteCommandReadRxFifo_ASM
+    \li 150: Update byte counter ::g_sAta5831 .bRxLength (register R17)
+    \li 160: Check if all bytes are copied to the SPI TX FIFO via variable 
+             ::g_sAta5831 .bTelegramLength
+             IF all bytes copied
+                goto 230
+             ELSE
+                continue with copying data to SPI TX FIFO
+    \li 170: Check command type of current command via flag ::g_sAta5831 .bConfig[7]
+             IF command type is WRITE_COMMAND
+                goto 210
+    \li 180: Fill data to SPI TX FIFO
+                call function ::ATA_5831ReadCommandFillTxFifo_ASM
+    \li 190: Update ::g_sAta5831 .bTelegramLength (register R17)
+    \li 200: goto 230
+    \li 210: Fill data to SPI TX FIFO
+                call function ::ATA_5831WriteCommandFillTxFifo_ASM
+    \li 220: update ::g_sAta5831 .bTelegramLength (register R17)
+    \li 230: Check if all bytes are received via ::g_sAta5831 .bRxLength
+             IF reception is complete
+                goto 270
+             ELSE
+                reenable SPI RX FIFO interrupt
+    \li 240: Reenable SPI RX FIFO interrupt with a fill level of RX_BUFFER_FIFO_SIZE
+    \li 250: Check if remaining bytes to receive is greater or equal than 
+             RX_BUFFER_FIFO_SIZE
+             IF yes
+                skip SPI RX FIFO fill level correction and goto 260
+             ELSE
+                correct SPI RX FIFO fill level with remaining bytes 
+                ::g_sAta5831 .bRxLength
+    \li 260: End of SPI FIFO interrupt service routine
+             restore used registers and return from interrupt
+    \li 270: Start Timer 1 for setting NSS to high
+             restore used registers and call function ::ATA_5831StartSckNssTimer_ASM
+
+    \Derived{Yes}
+
+    \Rationale{This function is required in order to implement the ATA5831
+               message handling}
+
+    \Traceability   N/A
+    \endinternal
+\n
+*/
+/* ---------------------------------------------------------------------------*/
+RSEG CODE:CODE:ROOT(1)
+ATA_5831CommandSpiFifoIsr_ASM:
+
+    ATA_SET_FUNCTION_TRACE_POINT_ISR_ASM    ATA_5831CommandSpiFifoIsr_ASM , 0x00
+
+    PUSH    R16
+    PUSH    R17
+
+    LDS     R17 , g_sAta5831 + SATA5831_RX_LENGTH
+
+    /* LLR-Ref: 010 */
+    LDS     R31 , g_sAta5831 + SATA5831_CONFIG
+    SBRC    R31 , SATA5831_CONFIG_EVENT_BYTES_READ_FLAG
+    RJMP    _SKIP_EVENTFLAG
+    /* LLR-Ref: 020 */
+    IN      R30 , SPDR
+    /* LLR-Ref: 030 */
+    DEC     R17
+    /* LLR-Ref: 040 */
+    STS     g_sAta5831 + SATA5831_EVENTS_SYSTEM , R30
+    /* LLR-Ref: 050 */
+    IN      R30 , SPDR
+    /* LLR-Ref: 060 */
+    STS     g_sAta5831 + SATA5831_EVENTS_EVENT , R30
+    /* LLR-Ref: 070 */
+    DEC     R17
+    /* LLR-Ref: 080 */
+    SBR     R31 , BM_SATA5831_CONFIG_EVENT_BYTES_READ_FLAG
+    STS     g_sAta5831 + SATA5831_CONFIG , R31
+_SKIP_EVENTFLAG:
+    /* LLR-Ref: 090 */
+    TST     R17
+    BREQ    _END_READ_RXFIFO
+
+    /* LLR-Ref: 100 */
+    LDS     R31 , g_sAta5831 + SATA5831_CONFIG
+    SBRC    R31 , SATA5831_CONFIG_READ_WRITE_INDICATOR
+    RJMP    _READ_RXFIFO_WRITE_COMMAND
+    /* LLR-Ref: 110 */
+    SBRC    R31 , SATA5831_CONFIG_DUMMY_INDICATOR
+    CALL    ATA_5831ReadCommandReadDummyRxFifo_ASM
+
+    /* LLR-Ref: 120 */
+    LDS     R31 , g_sAta5831 + SATA5831_CONFIG
+    SBRS    R31 , SATA5831_CONFIG_DUMMY_INDICATOR
+    CALL    ATA_5831ReadCommandReadRxFifo_ASM
+    /* LLR-Ref: 130 */
+    RJMP    _END_READ_RXFIFO
+_READ_RXFIFO_WRITE_COMMAND:
+    /* LLR-Ref: 140 */
+    CALL    ATA_5831WriteCommandReadRxFifo_ASM
+_END_READ_RXFIFO:
+    /* LLR-Ref: 150 */
+    STS     g_sAta5831 + SATA5831_RX_LENGTH , R17
+
+    /* LLR-Ref: 160 */
+    LDS     R17 , g_sAta5831 + SATA5831_TELEGRAM_LENGTH
+    TST     R17
+    BREQ    _TRANSMISSION_COMMAND_COMPLETE
+    /* LLR-Ref: 170 */
+    LDS     R31 , g_sAta5831 + SATA5831_CONFIG
+    SBRC    R31 , SATA5831_CONFIG_READ_WRITE_INDICATOR
+    RJMP    _WRITE_TXFIFO_WRITE_COMMAND
+_WRITE_TXFIFO_READ_COMMAND:
+    /* LLR-Ref: 180 */
+    CALL    ATA_5831ReadCommandFillTxFifo_ASM
+    /* LLR-Ref: 190 */
+    STS     g_sAta5831 + SATA5831_TELEGRAM_LENGTH , R17
+    /* LLR-Ref: 200 */
+    RJMP    _TRANSMISSION_COMMAND_COMPLETE
+_WRITE_TXFIFO_WRITE_COMMAND:
+    /* LLR-Ref: 210*/
+    CALL    ATA_5831WriteCommandFillTxFifo_ASM
+    /* LLR-Ref: 220 */
+    STS     g_sAta5831 + SATA5831_TELEGRAM_LENGTH , R17
+
+_TRANSMISSION_COMMAND_COMPLETE:
+    /* LLR-Ref: 230 */
+    LDS     R16 , g_sAta5831 + SATA5831_RX_LENGTH
+    TST     R16
+    BREQ    _RECEPTION_COMMAND_COMPLETE
+
+    /* LLR-Ref: 240 */
+    ENABLE_SPIRXBUFFER  ATA_5831CommandSpiFifoIsr_ASM , RX_BUFFER_FIFO_SIZE
+    /* LLR-Ref: 250 */
+    CPI     R16 , RX_BUFFER_FIFO_SIZE
+    BRGE    _SKIP_SFIR_CORRECTION
+    ORI     R16 , BM_SRIE
+    STS     SFIR , R16
+_SKIP_SFIR_CORRECTION:
+    /* LLR-Ref: 260 */
+    POP     R17
+    POP     R16
+
+    POP     R31
+    OUT     SREG , R31
+
+    POP     R31
+    POP     R30
+
+    RETI
+
+_RECEPTION_COMMAND_COMPLETE:
+    /* LLR-Ref: 270 */
+    POP     R17
+    POP     R16
+    JMP     ATA_5831StartSckNssTimer_ASM
+
+/* ---------------------------------------------------------------------------*/
+/** \brief <b>ATA_5831ReadCommandReadRxFifo_ASM</b>
+    shall read all data from the spi rx fifo until the fifo fill level is cleared
+    The content of the data are stored starting at address g_sSpiConfig.pAddress
+    This routine is used for read commands.
+
+    Variable Usage:
+    \li [in,out] ::g_sSpiConfig is global SPI component data
+    
+    \image html ATA_5831ReadCommandReadRxFifo_ASM.png
+
+    \internal
+    \li 010: Load address pointer ::g_sSpiConfig .pAddress to Z register
+    \li 020: Read from SPDR register
+    \li 030: Store the value to ::g_sSpiConfig .pAddress and increment Z register
+    \li 040: Decrement byte counter ::g_sAta5831 .bRxLength (register R17)
+    \li 050: Check if SPI RXFIFO fill level via register SFFR.RFL[2..]
+             IF FIFO is empty
+                 goto 060
+             ELSE
+                 goto 020
+    \li 060: Update address pointer ::g_sSpiConfig .pAddress with Z register content
+
+    \Derived{Yes}
+
+    \Rationale{This function is required in order to implement the ATA5831
+               message handling}
+
+    \Traceability   N/A
+    \endinternal
+\n
+*/
+/* ---------------------------------------------------------------------------*/
+RSEG CODE:CODE:ROOT(1)
+ATA_5831ReadCommandReadRxFifo_ASM:
+    ATA_SET_FUNCTION_TRACE_POINT_ISR_ASM    ATA_5831ReadCommandReadRxFifo_ASM , 0x00
+
+    PUSH    R25
+    /* LLR-Ref: 010 */
+    LDS     R30 , g_sSpiConfig + SPICONFIG_PADDRESS
+    LDS     R31 , g_sSpiConfig + SPICONFIG_PADDRESS + 1
+_READ_COMMAND_READ_RXFIFO:
+    /* LLR-Ref: 020 */
+    IN      R25 , SPDR
+    /* LLR-Ref: 030 */
+    ST      Z+ , R25
+    /* LLR-Ref: 040 */
+    DEC     R17
+    /* LLR-Ref: 050 */
+    LDS     R25 , SFFR
+    ANDI    R25 , (BM_RFL2|BM_RFL1|BM_RFL0)
+    BRNE    _READ_COMMAND_READ_RXFIFO
+
+    /* LLR-Ref: 060 */
+    STS     g_sSpiConfig + SPICONFIG_PADDRESS, R30
+    STS     g_sSpiConfig + SPICONFIG_PADDRESS + 1, R31
+    POP     R25
+    RET
+
+/* ---------------------------------------------------------------------------*/
+/** \brief <b>ATA_5831ReadCommandReadDummyRxFifo_ASM</b>
+    shall read the dummy byte data from the spi rx fifo
+    This routine is used for read commands.
+
+    Variable Usage:
+    \li [in,out] ::g_sAta5831  is global ATA5831 component data
+
+    \image html ATA_5831ReadCommandReadDummyRxFifo_ASM.png
+
+    \internal
+    \li 010: IF byte counter is equal to rx length
+                goto 050
+    \li 020: Read from SPDR register
+    \li 030: Decrement byte counter ::g_sAta5831 .bRxLength (register R17)
+    \li 040: Check if SPI RXFIFO fill level via register SFFR.RFL[2..]
+             IF FIFO is empty
+                return
+             ELSE
+                goto 020
+    \li 050: Signal dummy insertion ready in ::g_sAta5831 .bConfig[4]
+             and return
+
+    \Derived{Yes}
+
+    \Rationale{This function is required in order to implement the ATA5831
+               message handling}
+
+    \Traceability   N/A
+    \endinternal
+\n
+*/
+/* ---------------------------------------------------------------------------*/
+RSEG CODE:CODE:ROOT(1)
+ATA_5831ReadCommandReadDummyRxFifo_ASM:
+    ATA_SET_FUNCTION_TRACE_POINT_ISR_ASM    ATA_5831ReadCommandReadDummyRxFifo_ASM , 0x00
+
+    LDS     R31 , g_sAta5831 + SATA5831_LENGTH
+_READ_COMMAND_READ_DUMMY_RXFIFO:
+    /* LLR-Ref: 010 */
+    CP      R17 , R31
+    BREQ    _READ_COMMAND_DUMMY_BYTES_READ
+    /* LLR-Ref: 020 */
+    IN      R30 , SPDR
+    /* LLR-Ref: 030 */
+    DEC     R17
+    /* LLR-Ref: 040 */
+    LDS     R30 , SFFR
+    ANDI    R30 , (BM_RFL2|BM_RFL1|BM_RFL0)
+    BRNE    _READ_COMMAND_READ_DUMMY_RXFIFO
+
+    RET
+_READ_COMMAND_DUMMY_BYTES_READ:
+    /* LLR-Ref: 050 */
+    LDS     R31 , g_sAta5831 + SATA5831_CONFIG
+    ANDI    R31 , ~BM_SATA5831_CONFIG_DUMMY_INDICATOR
+    STS     g_sAta5831 + SATA5831_CONFIG , R31
+    RET
+
+/* ---------------------------------------------------------------------------*/
+/** \brief <b>ATA_5831WriteCommandReadRxFifo_ASM</b>
+    shall read all data from the spi rx fifo until the fifo fill level is cleared
+    The content of the data is neglected (not stored)
+    This routine is used for write commands.
+
+    Variable Usage:
+    \li [in,out] ::g_sAta5831 is global ATA5831 component data
+
+    \image html ATA_5831WriteCommandReadRxFifo_ASM.png
+
+    \internal
+    \li 010: Read from SPDR register
+    \li 020: Decrement byte counter ::g_sAta5831 .bRxLength (register R17)
+    \li 030: Check if SPI RXFIFO fill level via register SFFR.RFL[2..]
+             IF FIFO is empty
+                return
+             ELSE
+                goto 010
+
+    \Derived{Yes}
+
+    \Rationale{This function is required in order to implement the ATA5831
+               message handling}
+
+    \Traceability   N/A
+    \endinternal
+\n
+*/
+/* ---------------------------------------------------------------------------*/
+RSEG CODE:CODE:ROOT(1)
+ATA_5831WriteCommandReadRxFifo_ASM:
+    ATA_SET_FUNCTION_TRACE_POINT_ISR_ASM    ATA_5831WriteCommandReadRxFifo_ASM , 0x00
+_WRITE_COMMAND_READ_RXFIFO:
+    /* LLR-Ref: 010 */
+    IN      R30 , SPDR
+    /* LLR-Ref: 020 */
+    DEC     R17
+    /* LLR-Ref: 030 */
+    LDS     R30 , SFFR
+    ANDI    R30 , (BM_RFL2|BM_RFL1|BM_RFL0)
+    BRNE    _WRITE_COMMAND_READ_RXFIFO
+
+    RET
+
+
+    END
+

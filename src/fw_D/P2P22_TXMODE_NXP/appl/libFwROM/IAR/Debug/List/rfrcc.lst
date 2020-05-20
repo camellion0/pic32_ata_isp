@@ -1,0 +1,523 @@
+###############################################################################
+#
+# IAR C/C++ Compiler V6.70.1.929 for Atmel AVR            05/Apr/2016  13:30:42
+# Copyright 1996-2015 IAR Systems AB.
+# Network license: DVRIAR01.corpp.atmel.com (STD)
+#
+#    Source file  =  
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\firmware\rfrcc\src\rfrcc.c
+#    Command line =  
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\firmware\rfrcc\src\rfrcc.c
+#        -v3 --enhanced_core -ms -o
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\Obj
+#        -lC
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\List
+#        -lA
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\List
+#        --initializers_in_flash --no_cse --no_inline --no_code_motion
+#        --no_cross_call --no_clustering --no_tbaa --debug --64k_flash
+#        -DENABLE_BIT_DEFINITIONS -e -I "C:\Program Files (x86)\IAR
+#        Systems\Embedded Workbench 6.0\avr\inc\" --eeprom_size 1152 --clib
+#        -Ohz
+#    List file    =  
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\List\rfrcc.lst
+#    Object file  =  
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\Obj\rfrcc.r90
+#
+###############################################################################
+
+C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\firmware\rfrcc\src\rfrcc.c
+      1          /* *C**************************************************************************
+      2            Use of this software is subject to Atmel's Software License Agreement.
+      3          -------------------------------------------------------------------------------
+      4            $URL: http://svnservulm.corp.atmel.com/svn/CDB/Apps/SW_Lib/Car_Access/CARS_GEN2/ATAB5702A/Branches/P2_Gen2_Merge/firmware/rfrcc/src/rfrcc.c $
+      5            $LastChangedRevision: 339228 $
+      6            $LastChangedDate: 2015-09-23 13:34:57 -0600 (Wed, 23 Sep 2015) $
+      7            $LastChangedBy: grueter $
+      8          -------------------------------------------------------------------------------
+      9            Project:      ATA5700
+     10            Target MCU:   ATA5700
+     11            Compiler:     IAR C/C++ Compiler for AVR 6.3.18.2236
+     12          -------------------------------------------------------------------------------
+     13          
+     14          ******************************************************************************
+     15          * Copyright 2011, Atmel Automotive GmbH                                       *
+     16          *                                                                             *
+     17          * This software is owned by the Atmel Automotive GmbH                         *
+     18          * and is protected by and subject to worldwide patent protection.             *
+     19          * Atmel hereby grants to licensee a personal,                                 *
+     20          * non-exclusive, non-transferable license to copy, use, modify, create        *
+     21          * derivative works of, and compile the Atmel Source Code and derivative       *
+     22          * works for the sole purpose of creating custom software in support of        *
+     23          * licensee product to be used only in conjunction with a Atmel integrated     *
+     24          * circuit as specified in the applicable agreement. Any reproduction,         *
+     25          * modification, translation, compilation, or representation of this           *
+     26          * software except as specified above is prohibited without the express        *
+     27          * written permission of Atmel.                                                *
+     28          *                                                                             *
+     29          * Disclaimer: ATMEL MAKES NO WARRANTY OF ANY KIND,EXPRESS OR IMPLIED,         *
+     30          * WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED    *
+     31          * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.         *
+     32          * Atmel reserves the right to make changes without further notice to the      *
+     33          * materials described herein. Atmel does not assume any liability arising     *
+     34          * out of the application or use of any product or circuit described herein.   *
+     35          * Atmel does not authorize its products for use as critical components in     *
+     36          * life-support systems where a malfunction or failure may reasonably be       *
+     37          * expected to result in significant injury to the user. The inclusion of      *
+     38          * Atmel products in a life-support systems application implies that the       *
+     39          * manufacturer assumes all risk of such use and in doing so indemnifies       *
+     40          * Atmel against all charges.                                                  *
+     41          *                                                                             *
+     42          * Use may be limited by and subject to the applicable Atmel software          *
+     43          * license agreement.                                                          *
+     44          ******************************************************************************/
+     45          
+     46          /** \file rfrcc.c
+     47          */
+     48          
+     49          /*===========================================================================*/
+     50          /*  INCLUDES                                                                 */
+     51          /*===========================================================================*/
+     52          #include "rfrcc.h"
+     53          #include "../../globals/src/globals.h"
+     54          
+     55          /*===========================================================================*/
+     56          /*  DEFINES                                                                  */
+     57          /*===========================================================================*/
+     58          #define ATA_DEFAULT_CONFIG_VAL       0x20
+     59          
+     60          /*===========================================================================*/
+     61          /*  Modul Globals                                                            */
+     62          /*===========================================================================*/
+     63          /** \brief <b>g_sRfrccComponentData</b>
+     64              contains the module related flags and message buffer.
+     65          */
+     66          #pragma location = ".rfrccpara"
+     67          __no_init sRfrccComponentData g_sRfrccComponentData;
+     68          
+     69          /*===========================================================================*/
+     70          /*  LOCAL PROTOTYPES (Functions)                                             */
+     71          /*===========================================================================*/
+     72          static VOIDFUNC ATA_rfrccGenSubKey_C(void);
+     73          
+     74          /*===========================================================================*/
+     75          /*  IMPLEMENTATION                                                           */
+     76          /*===========================================================================*/
+     77          
+     78          /*---------------------------------------------------------------------------*/
+     79          /** \brief <b>ATA_rfrccGenRollCntMsg_C</b>
+     80              This function transmits the rolling code counter message consisting of the
+     81              transmitter's unique ID, sequential counter, command byte and the Message
+     82              Authentication Code (MAC).
+     83          
+     84          \param[in,out]  ::g_sRfrccComponentData     Global RFRCC component data
+     85          \param[in,out]  ::g_sAesComponentData       Global AES component data
+     86          \param[out]     ::g_sDebug                  Global Debug component data
+     87          \param[in]      bSecretKeyIndex             Index of the secret key with which
+     88                                                      to encrypt the data. Values are 
+     89                                                      defined in eAesSecretKeySelection 
+     90                                                      in aes.h
+     91          \param[in]      bUserCmd                    Command byte in the Rolling Code 
+     92                                                      Counter message
+     93          
+     94          \return     N/A
+     95          
+     96          \StackUsageInBytes{XXX}
+     97          
+     98          \image html ATA_rfrccGenRollCntMsg_C.png
+     99          
+    100          \internal
+    101          \li 010: Initialize component variables.
+    102                   Note: The RFRCC component error flag is set on module entry and
+    103                         cleared only, if the incremented rolling code counter value
+    104                         has been successfully written to EEPROM.
+    105          
+    106          \li 020: Read the 4-byte transmitter unique serial ID from EEPROM and store
+    107                   it to message buffer in low byte first order.
+    108          
+    109          \li 030: Read the 4-byte rolling code sequence counter value from EEPROM and
+    110                   store it to message buffer in low byte first order.
+    111          
+    112          \li 040: IF the EEPROM read operations are successful,
+    113                   THEN
+    114          
+    115          \li 050:   Pass AES configuration settings and the selected secret key to
+    116                     the AES module.
+    117          
+    118          \li 060:   Generate the subkey.
+    119          
+    120          \li 070:   IF the subkey has been successfully generated,
+    121                     THEN
+    122          \li 080:     Store the 1-byte command ID to message buffer.
+    123          
+    124          \li 090:     Copy 9 bytes of message buffer, consisting of the serial ID,
+    125                       rolling code counter and user command, to AES data buffer.
+    126          
+    127          \li 100:     Add padding info byte (0x80) to AES data buffer and pad bytes
+    128                       11-15 with 0's.
+    129          
+    130          \li 110:     During subkey generation new data were written to AES state memory
+    131                       used to generate the Message Authentication Code (MAC). Due to this,
+    132                       adapt AES configuration settings in order to prevent reset of
+    133                       crypto module and enable the AES hardware XOR functionality.
+    134          
+    135          \li 120:     Generate the Message Authentication Code (MAC).
+    136          
+    137          \li 130:     IF the MAC has been successfully generated,
+    138                       THEN
+    139          
+    140          \li 140:       Copy upper 4 bytes of MAC to message buffer in low byte first order.
+    141                         Note: AES data buffer is MSB aligned, i.e. highest byte on lowest address.
+    142          
+    143          \li 150:       Signalize readiness of rolling code counter message generation.
+    144          
+    145          \li 160:       Increment the rolling code counter by 1 and write it into EEPROM.
+    146          
+    147          \li 170:       IF EEPROM write access errors occurred,
+    148                         THEN
+    149          
+    150          \li 180:         Set ::g_sDebug .bErrorCode to error code for EEPROM
+    151                           write access error.
+    152                         ELSE
+    153          
+    154          \li 190:         Wait till the write process is completed.
+    155                           Signalize successful update of RCC value in EEPROM and clear
+    156                           the RFRCC component error flag.
+    157                         ENDIF
+    158                       ELSE
+    159          
+    160          \li 200:       Set ::g_sDebug .bErrorCode to error code for MAC generation error.
+    161                       ENDIF
+    162                     ELSE
+    163          
+    164          \li 210:     Set ::g_sDebug .bErrorCode to error code for subkey generation
+    165                        error.
+    166                     ENDIF
+    167                   ELSE
+    168          
+    169          \li 220:   Set ::g_sDebug .bErrorCode to error code for EEPROM read error.
+    170                   ENDIF
+    171          
+    172          \Derived{No}
+    173          
+    174          \Rationale{N/A}
+    175          
+    176          \Traceability{Primus2P-1096,Primus2P-1097,Primus2P-1099,Primus2P-1933}
+    177          \endinternal
+    178          \n
+    179          */
+    180          /*---------------------------------------------------------------------------*/
+    181          VOIDFUNC ATA_rfrccGenRollCntMsg_C(uint8_t bSecretKeyIndex, uint8_t bUserCmd)
+    182          {
+    183              eEepErrorCode sEepErrCode;  // status of EEPROM reads
+    184          
+    185              ATA_SET_FUNCTION_TRACE_POINT_C( ATA_rfrccGenRollCntMsg_C, bSecretKeyIndex );
+    186          
+    187              /* LLR-Ref: 010 */
+    188              g_sRfrccComponentData.bFlags  = RFRCC_FLAGS_BM_ERROR_FLAG;
+    189              g_sRfrccComponentData.bStatus = RFRCC_STATUS_RESET;
+    190          
+    191              /* LLR-Ref: 020 */
+    192              sEepErrCode  = ATA_eepReadMultipleBytes_C( (uint16_t)&eepXrowUniqueId, EEP_XROW_UID_SIZE, \
+                                    ^
+Warning[Pe223]: function "ATA_eepReadMultipleBytes_C" declared implicitly
+
+      sEepErrCode  = ATA_eepReadMultipleBytes_C( (uint16_t)&eepXrowUniqueId, EEP_XROW_UID_SIZE, \
+                                                            ^
+"C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\firmware\rfrcc\src\rfrcc.c",192  Error[Pe020]: 
+          identifier "eepXrowUniqueId" is undefined
+
+      sEepErrCode  = ATA_eepReadMultipleBytes_C( (uint16_t)&eepXrowUniqueId, EEP_XROW_UID_SIZE, \
+                   ^
+"C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\firmware\rfrcc\src\rfrcc.c",192  Warning[Pe188]: 
+          enumerated type mixed with another type
+    193                                  (uint8_t *)&g_sRfrccComponentData.bRollCodeMsgBuffer[RFRCC_MSG_SERIAL_ID_OFFSET]);
+    194          
+    195              /* LLR-Ref: 030 */
+    196              sEepErrCode |= ATA_eepReadMultipleBytes_C( (uint16_t)&eepRfTxRcc,  EEP_RFRCC_SIZE, \
+                                                                           ^
+Error[Pe020]: identifier "eepRfTxRcc" is undefined
+
+      sEepErrCode |= ATA_eepReadMultipleBytes_C( (uint16_t)&eepRfTxRcc,  EEP_RFRCC_SIZE, \
+                                                                         ^
+"C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\firmware\rfrcc\src\rfrcc.c",196  Error[Pe020]: 
+          identifier "EEP_RFRCC_SIZE" is undefined
+    197                                  (uint8_t *)&g_sRfrccComponentData.bRollCodeMsgBuffer[RFRCC_MSG_ROLL_COUNT_OFFSET]);
+    198          
+    199              /* LLR-Ref: 040 */
+    200              if( sEepErrCode == EEC_NO_ERROR )
+    201              {
+    202                  uint32_t wRccVal;
+    203          
+    204                  /* LLR-Ref: 050 */
+    205                  ATA_aesSetConfig_C( bSecretKeyIndex, ATA_DEFAULT_CONFIG_VAL );
+                                                                                     ^
+Error[Pe165]: too few arguments in function call
+    206          
+    207                  /* LLR-Ref: 060 */
+    208                  ATA_rfrccGenSubKey_C();
+    209          
+    210                  /* LLR-Ref: 070 */
+    211                  if( g_sRfrccComponentData.bStatus & RFRCC_STATUS_BM_SUBKEY_READY_FLAG )
+    212                  {
+    213                      /* LLR-Ref: 080 */
+    214                      g_sRfrccComponentData.bRollCodeMsgBuffer[RFRCC_MSG_COMMAND_ID_OFFSET] = bUserCmd;
+    215          
+    216                      /* LLR-Ref: 090 */
+    217                      for( uint8_t i = 0; i < RFRCC_MSG_LENGTH_EXCL_MAC; i++ )
+    218                      {
+    219                          g_sAesComponentData.bDataBuffer[i] = g_sRfrccComponentData.bRollCodeMsgBuffer[i];
+    220                      }
+    221          
+    222                      /* LLR-Ref: 100 */
+    223                      g_sAesComponentData.bDataBuffer[RFRCC_DATABLOCK_4_AES_PAD_INFO_OFFSET] = RFRCC_DATABLOCK_4_AES_PAD_INFO;
+    224                      ATA_globalsInitSramSpace_C( &g_sAesComponentData.bDataBuffer[RFRCC_DATABLOCK_4_AES_PAD_ZERO_OFFSET], \
+    225                                                  RFRCC_DATABLOCK_4_AES_PAD_ZERO_LENGTH );
+    226          
+    227                      /* LLR-Ref: 110 */
+    228                      g_sAesComponentData.bConfig &= ~AES_CONFIG_BM_CRYPTO_MODULE_RESET;
+    229                      g_sAesComponentData.bConfig |= AES_CONFIG_BM_XOR_STATE_MEMORY;
+    230          
+    231                      /* LLR-Ref: 120 */
+    232                      ATA_aesEncryptData_C();
+    233          
+    234                      /* LLR-Ref: 130 */
+    235                      if( !(g_sAesComponentData.bFlags & AES_FLAGS_BM_ERROR_FLAG) )
+    236                      {
+    237                          /* LLR-Ref: 140 */
+    238                        //  g_sRfrccComponentData.bRollCodeMsgBuffer[RFRCC_MSG_MAC_OFFSET+0] = g_sAesComponentData.bDataBuffer[3];
+    239                       //   g_sRfrccComponentData.bRollCodeMsgBuffer[RFRCC_MSG_MAC_OFFSET+1] = g_sAesComponentData.bDataBuffer[2];
+    240                       //   g_sRfrccComponentData.bRollCodeMsgBuffer[RFRCC_MSG_MAC_OFFSET+2] = g_sAesComponentData.bDataBuffer[1];
+    241                       //   g_sRfrccComponentData.bRollCodeMsgBuffer[RFRCC_MSG_MAC_OFFSET+3] = g_sAesComponentData.bDataBuffer[0];
+    242                         
+    243                       /* Reverse order for MAC byte ins Atmel P2P demo */
+    244                          g_sRfrccComponentData.bRollCodeMsgBuffer[RFRCC_MSG_MAC_OFFSET+0] = g_sAesComponentData.bDataBuffer[0];
+    245                          g_sRfrccComponentData.bRollCodeMsgBuffer[RFRCC_MSG_MAC_OFFSET+1] = g_sAesComponentData.bDataBuffer[1];
+    246                          g_sRfrccComponentData.bRollCodeMsgBuffer[RFRCC_MSG_MAC_OFFSET+2] = g_sAesComponentData.bDataBuffer[2];
+    247                          g_sRfrccComponentData.bRollCodeMsgBuffer[RFRCC_MSG_MAC_OFFSET+3] = g_sAesComponentData.bDataBuffer[3];
+    248          
+    249                          /* LLR-Ref: 150 */
+    250                          g_sRfrccComponentData.bStatus |= RFRCC_STATUS_BM_MSG_READY_FLAG;
+    251          
+    252                          /* LLR-Ref: 160 */
+    253                          wRccVal  = (uint32_t)g_sRfrccComponentData.bRollCodeMsgBuffer[RFRCC_MSG_ROLL_COUNT_OFFSET+3]<<24;
+    254                          wRccVal |= (uint32_t)g_sRfrccComponentData.bRollCodeMsgBuffer[RFRCC_MSG_ROLL_COUNT_OFFSET+2]<<16;
+    255                          wRccVal |= (uint32_t)g_sRfrccComponentData.bRollCodeMsgBuffer[RFRCC_MSG_ROLL_COUNT_OFFSET+1]<<8;
+    256                          wRccVal |= (uint32_t)g_sRfrccComponentData.bRollCodeMsgBuffer[RFRCC_MSG_ROLL_COUNT_OFFSET+0];
+    257                          wRccVal++;
+    258          
+    259                          sEepErrCode = ATA_eepWriteMultipleBytes_C( (uint16_t)&eepRfTxRcc, EEP_RFRCC_SIZE, (uint8_t *)&wRccVal );
+                                               ^
+Warning[Pe223]: function "ATA_eepWriteMultipleBytes_C" declared implicitly
+
+                  sEepErrCode = ATA_eepWriteMultipleBytes_C( (uint16_t)&eepRfTxRcc, EEP_RFRCC_SIZE, (uint8_t *)&wRccVal );
+                              ^
+"C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\firmware\rfrcc\src\rfrcc.c",259  Warning[Pe188]: 
+          enumerated type mixed with another type
+    260          
+    261                          /* LLR-Ref: 170 */
+    262                          if( sEepErrCode )
+    263                          {
+    264                              /* LLR-Ref: 180 */
+    265                              g_sDebug.bErrorCode = DEBUG_ERROR_CODE_RFRCC_EEP_WRITE_ACCESS_ERROR;
+    266                          }
+    267                          else
+    268                          {
+    269                              /* LLR-Ref: 190 */
+    270                              while(EECR & BM_NVMBSY)
+    271                              {}
+    272          
+    273                              g_sRfrccComponentData.bStatus |= RFRCC_STATUS_BM_UPDATE_EEPROM_READY_FLAG;
+    274                              g_sRfrccComponentData.bFlags  &= ~RFRCC_FLAGS_BM_ERROR_FLAG;
+    275                          }
+    276                      }
+    277                      else
+    278                      {
+    279                          /* LLR-Ref: 200 */
+    280                          g_sDebug.bErrorCode = DEBUG_ERROR_CODE_RFRCC_MAC_ERROR;
+    281                      }
+    282                  }
+    283                  else
+    284                  {
+    285                      /* LLR-Ref: 210 */
+    286                      g_sDebug.bErrorCode = DEBUG_ERROR_CODE_RFRCC_SUBKEY_ERROR;
+    287                  }
+    288              }
+    289              else
+    290              {
+    291                  /* LLR-Ref: 220 */
+    292                  g_sDebug.bErrorCode = DEBUG_ERROR_CODE_RFRCC_EEP_READ_ERROR;
+    293              }
+    294          }
+    295          
+    296          
+    297          /*---------------------------------------------------------------------------*/
+    298          /** \brief <b>ATA_rfrccGenSubKey_C</b>
+    299              This function computes the subkey using AES-CMAC algorithm (OMAC).
+    300              Note: Different from original CMAC algorithm the function computes only
+    301                    one final subkey. The result of subkey K1 computation will not be
+    302                    stored explicitely it is overwritten during second subkey
+    303                    computation. Finally K1 equals K2 subkey.
+    304          
+    305                 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    306                 +            Original AES-CMAC subkey Algorithm                     +
+    307                 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    308                 +                                                                   +
+    309                 +   Input    : K  (128-bit key)                                     +
+    310                 +   Output   : K1 (128-bit first subkey)                            +
+    311                 +              K2 (128-bit second subkey)                           +
+    312                 +-------------------------------------------------------------------+
+    313                 +                                                                   +
+    314                 +   Constants: const_Zero is 0x00000000000000000000000000000000     +
+    315                 +              const_Rb   is 0x00000000000000000000000000000087     +
+    316                 +   Variables: L          for output of AES-128 applied to 0^128    +
+    317                 +                                                                   +
+    318                 +   Step 1.  L          := AES-128(K, const_Zero);                  +
+    319                 +   Step 2.  if MSB(L) is equal to 0                                +
+    320                 +            then    K1 := L << 1;                                  +
+    321                 +            else    K1 := (L << 1) XOR const_Rb;                   +
+    322                 +   Step 3.  if MSB(K1) is equal to 0                               +
+    323                 +            then    K2 := K1 << 1;                                 +
+    324                 +            else    K2 := (K1 << 1) XOR const_Rb;                  +
+    325                 +   Step 4.  return K1, K2;                                         +
+    326                 +                                                                   +
+    327                 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    328          
+    329                 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    330                 +               ATMEL AES-CMAC subkey Algorithm                     +
+    331                 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    332                 +                                                                   +
+    333                 +   Input    : K  (128-bit secret key)                              +
+    334                 +   Output   : K1 (128-bit subkey)                                  +
+    335                 +-------------------------------------------------------------------+
+    336                 +                                                                   +
+    337                 +   Constants: const_Zero is 0x00000000000000000000000000000000     +
+    338                 +              const_Rb   is 0x00000000000000000000000000000087     +
+    339                 +   Variables: L          for output of AES-128 applied to 0^128    +
+    340                 +                                                                   +
+    341                 +   Step 1.  L          := AES-128(K, const_Zero);                  +
+    342                 +   Step 2.  if MSB(L) is equal to 0                                +
+    343                 +            then    K1 := L << 1;                                  +
+    344                 +            else    K1 := (L << 1) XOR const_Rb;                   +
+    345                 +   Step 3.  if MSB(K1) is equal to 0                               +
+    346                 +            then    K1 := K1 << 1;                                 +
+    347                 +            else    K1 := (K1 << 1) XOR const_Rb;                  +
+    348                 +   Step 4.  return K1;                                             +
+    349                 +                                                                   +
+    350                 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    351          
+    352          
+    353          \param[in,out]  ::g_sAesComponentData       Global AES component data
+    354          
+    355          \return     N/A
+    356          
+    357          \StackUsageInBytes{XXX}
+    358          
+    359          \image html ATA_rfrccGenSubKey_C.png
+    360          
+    361          \internal
+    362          \li 010:  Setting up a 16 bytes 'const_Zero' data input block and associated
+    363                    data length to 128 (16 bytes = 128 bits).\n\n
+    364                    Note: Array ::g_sAesComponentData .bDataBuffer is loaded into the 
+    365                    AESDR during encryption.
+    366          
+    367          \li 020:  Generate the initial subkey L with the 'const_Zero' input block and
+    368                    one of the two secret keys from EEPROM by calling the AES encryption
+    369                    function ::ATA_aesEncryptData_C.
+    370                    The encrypted data L is stored in ::g_sAesComponentData .bDataBuffer.
+    371          
+    372          \li 030:  IF the subkey has been successfully generated,
+    373                    THEN
+    374          
+    375          \li 040:    Generating the intermediate subkey K1.
+    376                      Store MSB information of L for later analysis and perform a
+    377                      multiplication by 2 on the encrypted data L. Analyze MSB of encrypted
+    378                      data L. If set, XOR K1 with 'const_Rb'.
+    379                      Note: AES data buffer is MSB aligned, i.e. highest byte on lowest address.
+    380          
+    381          \li 050:    Generating the final subkey.
+    382                      Store MSB information of K1 for later analysis and perform a
+    383                      multiplication by 2 on intermediate subkey K1. Analyze MSB of encrypted
+    384                      data K1. If set, XOR K1 with 'const_Rb'.
+    385          
+    386          \li 070:    Load generated subkey directly to AES state memory since hardware
+    387                      XOR functionality is used to generate message authentication code (MAC).
+    388          
+    389          \li 080:    Signalize readiness of subkey generation.
+    390                    ENDIF
+    391          
+    392          \Derived{No}
+    393          
+    394          \Rationale{N/A}
+    395          
+    396          \Traceability{Primus2P-1096}
+    397          \endinternal
+    398          \n
+    399          */
+    400          /*---------------------------------------------------------------------------*/
+    401          static VOIDFUNC ATA_rfrccGenSubKey_C(void)
+    402          {
+    403              uint8_t *pDataPtr;
+    404              uint8_t bBlockLen = RFRCC_DATABLOCK_4_AES_MAX_LEN_BYTES-1;
+    405              uint8_t bOverflow;
+    406          
+    407              ATA_SET_FUNCTION_TRACE_POINT_C( ATA_rfrccGenSubKey_C, 0x00U );
+    408          
+    409              /* LLR-Ref: 010 */
+    410              ATA_globalsInitSramSpace_C(g_sAesComponentData.bDataBuffer, EEP_SECRET_KEY_LENGTH);
+    411              g_sAesComponentData.bDataLength = RFRCC_DATABLOCK_4_AES_MAX_LEN_BITS;
+    412          
+    413              /* LLR-Ref: 020 */
+    414              ATA_aesEncryptData_C();
+    415          
+    416              /* LLR-Ref: 030 */
+    417              if( !(g_sAesComponentData.bFlags & AES_FLAGS_BM_ERROR_FLAG) )
+    418              {
+    419                  /* LLR-Ref: 040 */
+    420                  pDataPtr  = g_sAesComponentData.bDataBuffer;
+    421                  bOverflow = pDataPtr[0] & BIT_MASK_7;
+    422          
+    423                  do{
+    424                      /* multiply first byte by 2 and OR MSB of succeeding byte */
+    425                      pDataPtr[0] = (pDataPtr[0] << 1) | (pDataPtr[1] >> 7);
+    426                      pDataPtr++;
+    427                      bBlockLen--;
+    428                  }while( bBlockLen != 0 );
+    429          
+    430                  pDataPtr[0] <<= 1;  // multiply last byte by 2
+    431                  if( bOverflow )
+    432                  {
+    433                      pDataPtr[0] ^= 0x87;
+    434                  }
+    435          
+    436                  /* LLR-Ref: 050 */
+    437                  pDataPtr  = g_sAesComponentData.bDataBuffer;
+    438                  bOverflow = pDataPtr[0] & BIT_MASK_7;
+    439                  bBlockLen = RFRCC_DATABLOCK_4_AES_MAX_LEN_BYTES-1;
+    440          
+    441                  do{
+    442                      /* multiply first byte by 2 and OR MSB of succeeding byte */
+    443                      pDataPtr[0] = (pDataPtr[0] << 1) | (pDataPtr[1] >> 7);
+    444                      pDataPtr++;
+    445                      bBlockLen--;
+    446                  }while( bBlockLen != 0 );
+    447          
+    448                  pDataPtr[0] <<= 1;  // multiply last byte by 2
+    449                  if( bOverflow )
+    450                  {
+    451                      pDataPtr[0] ^= 0x87;
+    452                  }
+    453          
+    454                  /* LLR-Ref: 060 */
+    455                  PRR0 &= ~BM_PRCU;
+    456                  ATA_aesLoadData_C( &AESDR, &g_sAesComponentData.bDataBuffer[0] );
+    457                  PRR0 |= BM_PRCU;
+    458          
+    459                  /* LLR-Ref: 070 */
+    460                  g_sRfrccComponentData.bStatus |= RFRCC_STATUS_BM_SUBKEY_READY_FLAG;
+    461              }
+    462          }
+    463          
+
+Errors: 4
+Warnings: 4

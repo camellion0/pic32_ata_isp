@@ -1,0 +1,190 @@
+###############################################################################
+#
+# IAR C/C++ Compiler V6.70.1.929 for Atmel AVR            05/Apr/2016  13:30:41
+# Copyright 1996-2015 IAR Systems AB.
+# Network license: DVRIAR01.corpp.atmel.com (STD)
+#
+#    Source file  =  
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\firmware\init\src\init.c
+#    Command line =  
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\firmware\init\src\init.c
+#        -v3 --enhanced_core -ms -o
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\Obj
+#        -lC
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\List
+#        -lA
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\List
+#        --initializers_in_flash --no_cse --no_inline --no_code_motion
+#        --no_cross_call --no_clustering --no_tbaa --debug --64k_flash
+#        -DENABLE_BIT_DEFINITIONS -e -I "C:\Program Files (x86)\IAR
+#        Systems\Embedded Workbench 6.0\avr\inc\" --eeprom_size 1152 --clib
+#        -Ohz
+#    List file    =  
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\List\init.lst
+#    Object file  =  
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\Obj\init.r90
+#
+###############################################################################
+
+C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\firmware\init\src\init.c
+      1          //lint -e9059
+      2          /* *C**************************************************************************
+      3            Use of this software is subject to Atmel's Software License Agreement.
+      4          -------------------------------------------------------------------------------
+      5            $URL: http://svnservulm.corp.atmel.com/svn/CDB/Apps/SW_Lib/Car_Access/CARS_GEN2/ATAB5702A/Branches/P2_Gen2_Merge/firmware/init/src/init.c $
+      6            $LastChangedRevision: 328482 $
+      7            $LastChangedDate: 2015-07-22 13:17:23 -0600 (Wed, 22 Jul 2015) $
+      8            $LastChangedBy: grueter $
+      9          -------------------------------------------------------------------------------
+     10            Project:      ATA5700
+     11            Target MCU:   ATA5700
+     12            Compiler:     IAR C/C++ Compiler for AVR 6.30.1
+     13          -------------------------------------------------------------------------------
+     14          
+     15          ******************************************************************************
+     16          * Copyright 2011, Atmel Automotive GmbH                                       *
+     17          *                                                                             *
+     18          * This software is owned by the Atmel Automotive GmbH                         *
+     19          * and is protected by and subject to worldwide patent protection.             *
+     20          * Atmel hereby grants to licensee a personal,                                 *
+     21          * non-exclusive, non-transferable license to copy, use, modify, create        *
+     22          * derivative works of, and compile the Atmel Source Code and derivative       *
+     23          * works for the sole purpose of creating custom software in support of        *
+     24          * licensee product to be used only in conjunction with a Atmel integrated     *
+     25          * circuit as specified in the applicable agreement. Any reproduction,         *
+     26          * modification, translation, compilation, or representation of this           *
+     27          * software except as specified above is prohibited without the express        *
+     28          * written permission of Atmel.                                                *
+     29          *                                                                             *
+     30          * Disclaimer: ATMEL MAKES NO WARRANTY OF ANY KIND,EXPRESS OR IMPLIED,         *
+     31          * WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED    *
+     32          * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.         *
+     33          * Atmel reserves the right to make changes without further notice to the      *
+     34          * materials described herein. Atmel does not assume any liability arising     *
+     35          * out of the application or use of any product or circuit described herein.   *
+     36          * Atmel does not authorize its products for use as critical components in     *
+     37          * life-support systems where a malfunction or failure may reasonably be       *
+     38          * expected to result in significant injury to the user. The inclusion of      *
+     39          * Atmel products in a life-support systems application implies that the       *
+     40          * manufacturer assumes all risk of such use and in doing so indemnifies       *
+     41          * Atmel against all charges.                                                  *
+     42          *                                                                             *
+     43          * Use may be limited by and subject to the applicable Atmel software          *
+     44          * license agreement.                                                          *
+     45          ******************************************************************************/
+     46          /** \file init.c
+     47              this package does the wakeup detection and the system initialization
+     48              according to the EEPROM settings.
+     49          */
+     50          //lint -restore
+     51          
+     52          /*===========================================================================*/
+     53          /*  INCLUDES                                                                 */
+     54          /*===========================================================================*/
+     55          #include "init.h"
+
+   \                                 In  segment ABSOLUTE, at 0x26
+   \   union <unnamed> volatile __io _A_PINC
+   \                     _A_PINC:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x29
+   \   union <unnamed> volatile __io _A_PIND
+   \                     _A_PIND:
+   \   00000000                      DS8 1
+     56          #include "../../globals/src/globals_defs.h"
+     57          
+     58          /*===========================================================================*/
+     59          /*  DEFINES                                                                  */
+     60          /*===========================================================================*/
+     61          
+     62          /*===========================================================================*/
+     63          /*  Modul Globals                                                            */
+     64          /*===========================================================================*/
+     65          
+     66          /*===========================================================================*/
+     67          /*  IMPLEMENTATION                                                           */
+     68          /*===========================================================================*/
+     69          
+     70          /*----------------------------------------------------------------------------- */
+     71          /** \brief <b>ATA_initCheckWakeupSource_C</b>
+     72              checks the status of the NPWRON/PWRON pins in order to determine whether a 
+     73              valid system wake-up condition has been detected:
+     74              The wakeupSource is returned as follows:
+     75          
+     76              \li Bit7:   NPWRON6 (PD7)
+     77              \li Bit6:   NPWRON5 (PD6)
+     78              \li Bit5:   NPWRON4 (PD5)
+     79              \li Bit4:   NPWRON3 (PD4)
+     80              \li Bit3:   NPWRON2 (PD3)
+     81              \li Bit2:   NPWRON1 (PD2)
+     82              \li Bit1:   NPWRON0 (PD1)
+     83              \li Bit0:    PWRON  (PC2)
+     84          
+     85              \return     Pin status of POWER ON, respectively NPOWER ON, whereas 1 means 
+     86                          active and 0 means inactive
+     87          
+     88              \internal
+     89              \li 010: Read the NPWRON pin and the PWRON pin from PINC and PIND in 
+     90                       order to determine the system wake-up condition and build return value
+     91          
+     92              \Derived{No}
+     93          
+     94              \Rationale{A means to determine which pin was responsible for the 
+     95                         system wakeup is required}
+     96          
+     97              \Traceability   N/A
+     98              \endinternal
+     99          \n
+    100          */
+    101          /*----------------------------------------------------------------------------- */
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    102          UINT8FUNC ATA_initCheckWakeupSource_C(void)
+   \                     ATA_initCheckWakeupSource_C:
+    103          {
+    104              uint8_t bWakeupSource;
+    105          
+    106              /* LLR-Ref: 010 */
+    107              bWakeupSource  = (uint8_t)PIND & (uint8_t)0xFE; /* PD7..1 */
+   \   00000000   B119               IN      R17, 0x09
+   \   00000002   7F1E               ANDI    R17, 0xFE
+    108              bWakeupSource |= (uint8_t)(((PINC & BM_PINC2) ? BIT_MASK_0 : 0x00U)); /* PC2 */
+   \   00000004   9932               SBIC    0x06, 0x02
+   \   00000006   6011               ORI     R17, 0x01
+   \                     ??ATA_initCheckWakeupSource_C_0:
+   \   00000008   2F01               MOV     R16, R17
+    109              bWakeupSource ^= (uint8_t)0xFE; /* Invert all NPWRON except PWRON */
+    110          
+    111              return bWakeupSource;
+   \   0000000A   EF1E               LDI     R17, 254
+   \   0000000C   2701               EOR     R16, R17
+   \   0000000E   9508               RET
+   \   00000010                      REQUIRE _A_PIND
+   \   00000010                      REQUIRE _A_PINC
+    112          }
+
+   Maximum stack usage in bytes:
+
+   RSTACK Function
+   ------ --------
+      2   ATA_initCheckWakeupSource_C
+
+
+   Segment part sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+      16  ATA_initCheckWakeupSource_C
+       1  _A_PINC
+       1  _A_PIND
+
+ 
+  2 bytes in segment ABSOLUTE
+ 16 bytes in segment CODE
+ 
+ 16 bytes of CODE memory
+  0 bytes of DATA memory (+ 2 bytes shared)
+
+Errors: none
+Warnings: none

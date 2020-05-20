@@ -1,0 +1,836 @@
+///////////////////////////////////////////////////////////////////////////////
+//
+// IAR C/C++ Compiler V7.10.1.1197 for Atmel AVR          13/May/2020  17:03:17
+// Copyright 1996-2017 IAR Systems AB.
+// Network license: dvriar01.mchp-main.com (STD)
+//
+//    Source file  =  
+//        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\src\FlashAppl.c
+//    Command line =  
+//        -f C:\Users\C41045\AppData\Local\Temp\EW707.tmp
+//        (C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\src\FlashAppl.c
+//        -v3 --enhanced_core -ms -o
+//        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\Obj
+//        -lCN
+//        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\List
+//        -lA
+//        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\List
+//        --no_cse --no_inline --no_code_motion --no_cross_call --no_clustering
+//        --no_tbaa --debug --64k_flash -DENABLE_BIT_DEFINITIONS -e
+//        --eeprom_size 2304 --clib -Ohz)
+//    Locale       =  English_USA.1252
+//    List file    =  
+//        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\List\FlashAppl.s90
+//
+///////////////////////////////////////////////////////////////////////////////
+
+        NAME FlashAppl
+
+        RTMODEL "__64bit_doubles", "disabled"
+        RTMODEL "__SystemLibrary", "CLib"
+        RTMODEL "__cpu", "3"
+        RTMODEL "__enhanced_core", "enabled"
+        RTMODEL "__has_elpm", "false"
+        RTMODEL "__memory_model", "2"
+        RTMODEL "__rt_version", "3"
+        RTMODEL "__vtable_memory", "__nearflash"
+
+        RSEG CSTACK:DATA:NOROOT(0)
+        RSEG RSTACK:DATA:NOROOT(0)
+
+        EXTERN ?need_segment_init
+
+        PUBWEAK `?<Segment init: NEAR_Z>`
+        PUBLIC ID0_Wake
+        PUBLIC ID1_Wake
+        PUBLIC LF_DecErrFlag
+        PUBWEAK _A_GPIOR0
+        PUBWEAK _A_LFCPR
+        PUBWEAK _A_MCUCR
+        PUBWEAK _A_MCUSR
+        PUBWEAK _A_PCICR
+        PUBWEAK _A_PIND
+        PUBWEAK _A_PORTC
+        PUBWEAK _A_PRR1
+        PUBWEAK _A_T0CR
+        PUBWEAK _A_T0IFR
+        PUBWEAK __?EEARH
+        PUBWEAK __?EEARL
+        PUBWEAK __?EECR
+        PUBWEAK __?EEDR
+        PUBLIC gFlashApplState
+        PUBLIC gFlashApplVars
+        PUBLIC main
+        
+          CFI Names cfiNames0
+          CFI StackFrame CFA_Y Y DATA
+          CFI StackFrame CFA_SP SP DATA
+          CFI VirtualResource ?RetPad:1, ?RetHigh:8, ?RetLow:8, ?Ret:17
+          CFI Resource R0:8, R1:8, R2:8, R3:8, R4:8, R5:8, R6:8, R7:8, R8:8, R9:8
+          CFI Resource R10:8, R11:8, R12:8, R13:8, R14:8, R15:8, R16:8, R17:8
+          CFI Resource R18:8, R19:8, R20:8, R21:8, R22:8, R23:8, R24:8, R25:8
+          CFI Resource R26:8, R27:8, R28:8, R29:8, R30:8, R31:8
+          CFI Resource ?RetHighByteMask:8, SP:16, SPH:8, SPL:8, Y:16
+          CFI ResourceParts ?Ret ?RetHigh, ?RetLow, ?RetPad
+          CFI ResourceParts SP SPH, SPL
+          CFI ResourceParts Y R29, R28
+          CFI EndNames cfiNames0
+        
+          CFI Common cfiCommon0 Using cfiNames0
+          CFI CodeAlign 1
+          CFI DataAlign 1
+          CFI ReturnAddress ?Ret CODE
+          CFI CFA_Y Y+0
+          CFI CFA_SP SP+2
+          CFI ?RetPad 0
+          CFI ?RetHigh and(load(1, DATA, sub(CFA_SP, 1)), ?RetHighByteMask)
+          CFI ?RetLow Frame(CFA_SP, 0)
+          CFI ?Ret Concat
+          CFI R0 Undefined
+          CFI R1 Undefined
+          CFI R2 Undefined
+          CFI R3 Undefined
+          CFI R4 SameValue
+          CFI R5 SameValue
+          CFI R6 SameValue
+          CFI R7 SameValue
+          CFI R8 SameValue
+          CFI R9 SameValue
+          CFI R10 SameValue
+          CFI R11 SameValue
+          CFI R12 SameValue
+          CFI R13 SameValue
+          CFI R14 SameValue
+          CFI R15 SameValue
+          CFI R16 Undefined
+          CFI R17 Undefined
+          CFI R18 Undefined
+          CFI R19 Undefined
+          CFI R20 Undefined
+          CFI R21 Undefined
+          CFI R22 Undefined
+          CFI R23 Undefined
+          CFI R24 SameValue
+          CFI R25 SameValue
+          CFI R26 SameValue
+          CFI R27 SameValue
+          CFI R28 Undefined
+          CFI R29 Undefined
+          CFI R30 Undefined
+          CFI R31 Undefined
+          CFI ?RetHighByteMask SameValue
+          CFI SPH Undefined
+          CFI SPL Undefined
+          CFI EndCommon cfiCommon0
+        
+        EXTERN ATA_5700InitCommandSet_flash_C
+        EXTERN ATA_CheckLfData_flash_C
+        EXTERN ATA_FlashApplTimer4Process_C
+        EXTERN ATA_Flash_RKEbuttonProcessOut
+        EXTERN ATA_RKEtimer4Start
+        EXTERN ATA_TuneLfAllChannels
+        EXTERN ATA_aesInit_C
+        EXTERN ATA_calibInit_C
+        EXTERN ATA_eepReadBytes_C
+        EXTERN ATA_globalsClkSwitchFrc_C
+        EXTERN ATA_globalsInitDebug_C
+        EXTERN ATA_globalsWdtDisable_C
+        EXTERN ATA_initAta5700_flash_C
+        EXTERN ATA_initAvrRegister_flash_C
+        EXTERN ATA_lfRssiInit_C
+        EXTERN ATA_lfRxEnableWakeup_flash_C
+        EXTERN ATA_lfRxInit_C
+        EXTERN ATA_lfRxInit_flash_C
+        EXTERN ATA_rfTxInit_C
+        EXTERN ATA_spiCloseSlaveFlash_C
+        EXTERN ATA_spiOpenSlaveFlash_C
+        EXTERN ATA_systemErrorLoop_flash_C
+        EXTERN ATA_tpRxTxInit_flash_C
+        EXTERN CRCdisable
+        EXTERN Init_LfRssi_flash_C
+        EXTERN Stopbyteenable
+        EXTERN app_peps_handler
+        EXTERN gPCINTStatus
+        EXTERN gTimer4Status
+        EXTERN g_bSleepModeConfig_flash
+        EXTERN g_sAta5700_flash
+        EXTERN g_sCustomerEEPromSection
+        EXTERN g_sRfTxServicePathConfig0
+        EXTERN gpio_init
+
+// C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\src\FlashAppl.c
+//    1 /******************************************************************************
+//    2   Use of this software is subject to Microchip's Software License Agreement.
+//    3 --------------------------------------------------------------------------------
+//    4   $URL: http://svnservulm.corp.atmel.com/svn/CDB/Apps/SW_Lib/Car_Access/CARS_GEN2/ATAB5702A/Branches/P2P22_TXMODE_NXP/appl/appFlash/src/FlashAppl.c $
+//    5   $LastChangedRevision: 591974 $
+//    6   $LastChangedDate: 2020-03-16 09:23:12 -0600 (Mon, 16 Mar 2020) $
+//    7   $LastChangedBy: grueter $
+//    8 -------------------------------------------------------------------------------
+//    9   Project:      ATA5700
+//   10   Target MCU:   ATA5700
+//   11   Compiler:     IAR C/C++ Compiler for AVR 5.51.0
+//   12 -------------------------------------------------------------------------------
+//   13 
+//   14 ******************************************************************************
+//   15 * Copyright 2017, Microchip Technology Incorporated and its subsidiaries.     *
+//   16 *                                                                             *
+//   17 * This software is owned by the Microchip Technology Incorporated.            *
+//   18 * Microchip hereby grants to licensee a personal                              *
+//   19 * non-exclusive, non-transferable license to copy, use, modify, create        *
+//   20 * derivative works of, and compile the Microchip Source Code and derivative   *
+//   21 * works for the sole and exclusive purpose of creating custom software in     *
+//   22 * support of licensee product to be used only in conjunction with a Microchip *
+//   23 * integrated circuit as specified in the applicable agreement. Any            *        
+//   24 * reproduction, modification, translation, compilation, or representation of  *
+//   25 * this software except as specified above is prohibited without the express   *
+//   26 * written permission of Microchip.                                            *
+//   27 *                                                                             *
+//   28 * Disclaimer: MICROCHIP MAKES NO WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,    *
+//   29 * WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED    *
+//   30 * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.         *
+//   31 * Microchip reserves the right to make changes without further notice to the  *
+//   32 * materials described herein. Microchip does not assume any liability arising *
+//   33 * out of the application or use of any product or circuit described herein.   *
+//   34 * Microchip does not authorize its products for use as critical components in *
+//   35 * life-support systems where a malfunction or failure may reasonably be       *
+//   36 * expected to result in significant injury to the user. The inclusion of      *
+//   37 * Microchip products in a life-support systems application implies that the   *
+//   38 * manufacturer assumes all risk of such use and in doing so indemnifies       *
+//   39 * Microchip against all charges.                                              *
+//   40 *                                                                             *
+//   41 * Use may be limited by and subject to the applicable Microchip software      *
+//   42 * license agreement.                                                          *
+//   43 ******************************************************************************/
+//   44 
+//   45 /** \file FlashAppl.c
+//   46     this file contains an ATA5700 Flash application software
+//   47 */
+//   48 
+//   49 /*===========================================================================*/
+//   50 /*  INCLUDES                                                                 */
+//   51 /*===========================================================================*/
+//   52 #include "../../../firmware/init/src/init.h"
+
+        ASEGN ABSOLUTE:DATA:NOROOT,020H
+// union <unnamed> volatile __io _A_GPIOR0
+_A_GPIOR0:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,021H
+// union <unnamed> volatile __io _A_PRR1
+_A_PRR1:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,028H
+// union <unnamed> volatile __io _A_PORTC
+_A_PORTC:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,029H
+// union <unnamed> volatile __io _A_PIND
+_A_PIND:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,02eH
+// union <unnamed> volatile __io _A_MCUCR
+_A_MCUCR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,046H
+// union <unnamed> volatile __io _A_PCICR
+_A_PCICR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,04bH
+// union <unnamed> volatile __io _A_MCUSR
+_A_MCUSR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,052H
+// union <unnamed> volatile __io _A_T0IFR
+_A_T0IFR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,0162H
+// union <unnamed> volatile __ext_io _A_T0CR
+_A_T0CR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,018eH
+// union <unnamed> volatile __ext_io _A_LFCPR
+_A_LFCPR:
+        DS8 1
+//   53 #include "../../../firmware/rftx/src/rftx.h"
+//   54 #include "../../../firmware/lfrx/src/lfrx.h"
+//   55 #include "../../../firmware/spi/src/ata5700_command_set_flash.h"
+//   56 
+//   57 #include "../../../firmware/init/src/init_flash.h"
+//   58 #include "../../../firmware/system/src/system_flash.h"
+//   59 
+//   60 #include "../../../firmware/timer1/src/timer1.h"
+//   61 #include "../../../firmware/timer5/src/timer5_flash.h"
+//   62 #include "../../../firmware/timer4/src/timer4_flash.h"
+//   63 #include "../../../firmware/globals/src/globals.h"
+//   64 
+//   65 #include "../../../firmware/lfrx/src/lfrx_flash.h"
+//   66 #include "../../../firmware/tp/src/tp_flash.h"
+//   67 
+//   68 #include "../../../firmware/extif/src/extif_flash.h"
+//   69 
+//   70 #include "../../../firmware/lfrssi/src/lfrssi.h"
+//   71 #include "../../../firmware/lfrssi/src/lfrssi_flash.h"
+//   72 
+//   73 #include "../../../firmware/calib/src/calib.h"
+//   74 #include "../../../firmware/aes/src/aes.h"
+//   75 
+//   76 #include "../src/micro.h"
+//   77 #include "rfrcc_flash.h"
+//   78 #include "FlashApplVars.h"
+//   79 
+//   80 #include "../src/FlashApplPEPS.h"
+//   81 #include "FlashApplMSG.h"
+//   82 
+//   83 
+//   84 
+//   85 #include "../src/FlashApplLF.h" 
+//   86 
+//   87 /*===========================================================================*/
+//   88 /*  DEFINES                                                                  */
+//   89 /*===========================================================================*/
+//   90 #define FLASH_MAJOR_VERSION     0x02U
+//   91 #define FLASH_MINOR_VERSION     0x05U
+//   92 #define FLASH_CUSTOMER_VERSION  0x00U
+//   93 
+//   94 
+//   95 #define TX_PREAMBLEDATALENGTH   5
+//   96 #define TX_PAYLOADDATALENGTH    32
+//   97 
+//   98 
+//   99 /*===========================================================================*/
+//  100 /*  Modul Globals                                                             */
+//  101 /*===========================================================================*/
+//  102 #pragma location = ".versions"
+
+        RSEG `.versions`:CODE:ROOT(0)
+        DC16 1282
+//  103 __root __flash static uint16_t flashVersion = (uint16_t)(((uint16_t)FLASH_MINOR_VERSION<<8U) | FLASH_MAJOR_VERSION);
+//  104 
+//  105 #pragma location = ".versions"
+
+        RSEG `.versions`:CODE:ROOT(0)
+        DC8 0
+//  106 __root __flash static uint8_t  customerVersion = FLASH_CUSTOMER_VERSION;
+//  107 
+//  108 /*===========================================================================*/
+//  109 /*  IMPLEMENTATION                                                           */
+//  110 /*===========================================================================*/
+//  111 
+//  112 
+//  113 extern VOIDFUNC ATA_lfRxEnableWakeup_flash_C(uint8_t bLfBdrate,uint8_t bSense);
+//  114 extern VOIDFUNC ATA_CheckLfData_flash_C(void);
+//  115 extern VOIDFUNC Init_LfRssi_flash_C(void); 
+//  116 extern VOIDFUNC gpio_init(void);
+//  117 extern VOIDFUNC app_peps_handler(uint8_t lub_channel);
+//  118 extern void ATA_TuneLfAllChannels(void);
+//  119 extern sRfTxServicePathConfig g_sRfTxServicePathConfig0;
+//  120 
+
+        RSEG NEAR_Z:DATA:NOROOT(0)
+        REQUIRE `?<Segment init: NEAR_Z>`
+//  121 extern char ID0_Wake=0x00;
+ID0_Wake:
+        DS8 1
+
+        RSEG NEAR_Z:DATA:NOROOT(0)
+        REQUIRE `?<Segment init: NEAR_Z>`
+//  122 extern char ID1_Wake=0x00;
+ID1_Wake:
+        DS8 1
+
+        RSEG NEAR_Z:DATA:NOROOT(0)
+        REQUIRE `?<Segment init: NEAR_Z>`
+//  123 extern char LF_DecErrFlag=0x00; 
+LF_DecErrFlag:
+        DS8 1
+//  124 extern uint8_t gLfMessageReceived;
+//  125 
+//  126 extern tTimer5Status gTimer5Status;
+//  127 extern tTimer4Status gTimer4Status;
+//  128 extern tPCINTStatus gPCINTStatus;
+//  129 
+//  130 extern sCustomerEEPromSection g_sCustomerEEPromSection;
+//  131 extern sEepFlashApp_AESKey g_sEepFlashApp_AESKey;
+//  132 //extern uint8_t g_EepFlashApp_FOBindx;
+//  133 extern uint8_t g_EepFlashApp_USRID[4];
+//  134 
+
+        RSEG NEAR_Z:DATA:NOROOT(0)
+        REQUIRE `?<Segment init: NEAR_Z>`
+//  135 sFlashApplState gFlashApplState;
+gFlashApplState:
+        DS8 4
+
+        RSEG NEAR_Z:DATA:NOROOT(0)
+        REQUIRE `?<Segment init: NEAR_Z>`
+//  136 sFlashApplVars gFlashApplVars;
+gFlashApplVars:
+        DS8 3
+//  137 
+//  138 
+//  139 /*----------------------------------------------------------------------------- */
+//  140 /**\brief  <b>main routine</b>
+//  141             for ATA5700 Flash application software to support the Primus2P
+//  142             test mode for the Tx library.
+//  143 
+//  144     The main function checks for a valid system wake up, initializes the system
+//  145     and enters the main loop which is responsible for command decoding, system
+//  146     control and sleep mode control.
+//  147 
+//  148  */
+//  149 /*----------------------------------------------------------------------------- */
+
+        RSEG CODE:CODE:NOROOT(1)
+//  150 int16_t main(void)
+main:
+          CFI Block cfiBlock0 Using cfiCommon0
+          CFI Function main
+//  151 {
+        SBIW    R29:R28, 2
+          CFI CFA_Y Y+2
+//  152     /* Use INTVEC at Flash start address 0x4000 */
+//  153     MCUCR = BM_IVSEL | BM_IVL0;
+        LDI     R16, 129
+        OUT     0x0E, R16
+//  154     MCUCR |= (1<<ENPS);   // Enable Port Settings
+        SBI     0x0E, 0x03
+//  155  
+//  156     ATA_initAvrRegister_flash_C();
+          CFI FunCall ATA_initAvrRegister_flash_C
+        CALL    ATA_initAvrRegister_flash_C
+//  157 
+//  158     /* Init global system events before performing */
+//  159     ATA_5700InitCommandSet_flash_C();
+          CFI FunCall ATA_5700InitCommandSet_flash_C
+        CALL    ATA_5700InitCommandSet_flash_C
+//  160 
+//  161     /* Store reset events and clear register. */
+//  162     g_sAta5700_flash.events_reset = MCUSR;
+        IN      R16, 0x2B
+        STS     (g_sAta5700_flash + 10), R16
+//  163     MCUSR = 0x00U;
+        LDI     R16, 0
+        OUT     0x2B, R16
+//  164 
+//  165     /* Disable Watchdog during initialization. */
+//  166     ATA_globalsWdtDisable_C();
+          CFI FunCall ATA_globalsWdtDisable_C
+        CALL    ATA_globalsWdtDisable_C
+//  167     ATA_globalsInitDebug_C();
+          CFI FunCall ATA_globalsInitDebug_C
+        CALL    ATA_globalsInitDebug_C
+//  168 
+//  169     /* Perform Application initialization */
+//  170     if (ATA_initAta5700_flash_C() == FAIL){
+          CFI FunCall ATA_initAta5700_flash_C
+        CALL    ATA_initAta5700_flash_C
+        CPI     R16, 1
+        BRNE    ??main_0
+//  171         ATA_systemErrorLoop_flash_C();
+          CFI FunCall ATA_systemErrorLoop_flash_C
+        CALL    ATA_systemErrorLoop_flash_C
+//  172     }
+//  173 
+//  174 
+//  175  /* Initialization of LF calibration data, only if LFVCC was off before. */
+//  176     if (1) //( (LFCPR & BM_LFCALRY) == 0x00U )
+//  177     {
+//  178     /* Initialization of LF calibration data */
+//  179         ATA_lfRxInit_C();
+??main_0:
+          CFI FunCall ATA_lfRxInit_C
+        CALL    ATA_lfRxInit_C
+//  180 
+//  181         /* System Verification Requirement, referenced as BUG "Primus2P-2165" */
+//  182         LFCPR = BM_LFCPCE;
+        LDI     R16, 128
+        STS     _A_LFCPR, R16
+//  183         LFCPR = BM_LFCALRY;
+        LDI     R16, 2
+        STS     _A_LFCPR, R16
+//  184 
+//  185         /* Primus2P-1827 and Primus2P-1670:
+//  186            This is a Flash Validation requirement to set T0 to the given value. */
+//  187         T0CR  = 0x12U;
+        LDI     R16, 18
+        STS     _A_T0CR, R16
+//  188         T0IFR = 0x01U;
+        LDI     R16, 1
+        OUT     0x32, R16
+//  189         
+//  190         // Initialize LFREC, Power Mode
+//  191        ATA_lfRxEnableWakeup_flash_C(LFRX_BDR_3_90,LFRX_H_SENSE);
+        LDI     R17, 4
+        LDI     R16, 8
+          CFI FunCall ATA_lfRxEnableWakeup_flash_C
+        CALL    ATA_lfRxEnableWakeup_flash_C
+//  192     }
+//  193     else
+//  194     {
+//  195         /* Enable clock for LF Receiver to be able to update its registers. */
+//  196         ATA_POWERON_C(PRR1, PRLFR);
+//  197 
+//  198         /* Set LF Calibration available indication */
+//  199         g_sAta5700_flash.events_reset |= BM_ATA5700_EVENTS_RESET_LF_CALRY;
+//  200     }
+//  201  
+//  202     /* Initialization of LF and TP module */
+//  203     ATA_lfRxInit_flash_C();
+          CFI FunCall ATA_lfRxInit_flash_C
+        CALL    ATA_lfRxInit_flash_C
+//  204 
+//  205     ATA_tpRxTxInit_flash_C();
+          CFI FunCall ATA_tpRxTxInit_flash_C
+        CALL    ATA_tpRxTxInit_flash_C
+//  206      
+//  207     /* Initialization of RFTX module */
+//  208     ATA_rfTxInit_C();
+          CFI FunCall ATA_rfTxInit_C
+        CALL    ATA_rfTxInit_C
+//  209     
+//  210     Init_LfRssi_flash_C();
+          CFI FunCall Init_LfRssi_flash_C
+        CALL    Init_LfRssi_flash_C
+//  211 
+//  212     ATA_lfRssiInit_C();
+          CFI FunCall ATA_lfRssiInit_C
+        CALL    ATA_lfRssiInit_C
+//  213     
+//  214     /* Initialize calibration component */
+//  215     ATA_calibInit_C();
+          CFI FunCall ATA_calibInit_C
+        CALL    ATA_calibInit_C
+//  216 
+//  217     /* initialization of AES module */
+//  218     ATA_aesInit_C();
+          CFI FunCall ATA_aesInit_C
+        CALL    ATA_aesInit_C
+//  219     /* Application Board IO init */
+//  220     gpio_init();   
+          CFI FunCall gpio_init
+        CALL    gpio_init
+//  221    
+//  222     char volatile count;
+//  223    
+//  224    /* Enable global interrupts */
+//  225     _SEI;
+        sei
+//  226     
+//  227     ATA_TuneLfAllChannels();
+          CFI FunCall ATA_TuneLfAllChannels
+        CALL    ATA_TuneLfAllChannels
+//  228     
+//  229     //ATA_eepReadBytes_C(gFlashApplVars.RfTxbuffer, 0xE8, 0x08);
+//  230     
+//  231     uint16_t serv0Addr = 0;
+        LDI     R16, 0
+        ST      Y, R16
+        STD     Y+1, R16
+//  232     // Get the Service 0 address from the EEPROM
+//  233     ATA_eepReadBytes_C((uint8_t*)&serv0Addr, (uint16_t)&g_sCustomerEEPromSection.eepRfTxSer0Ptr_l, 0x02);
+        LDI     R20, 2
+        LDI     R18, LOW((g_sCustomerEEPromSection + 108))
+        LDI     R19, HIGH((g_sCustomerEEPromSection + 108))
+        MOVW    R17:R16, R29:R28
+          CFI FunCall ATA_eepReadBytes_C
+        CALL    ATA_eepReadBytes_C
+//  234     // Load the Service 0 RF Path configuration
+//  235     ATA_eepReadBytes_C((uint8_t*)&g_sRfTxServicePathConfig0, (uint16_t)&((sRfTxServiceConfig *)serv0Addr)->sPathConfig, sizeof(sRfTxServicePathConfig));
+        LDI     R20, 20
+        LD      R18, Y
+        LDD     R19, Y+1
+        SUBI    R18, 248
+        SBCI    R19, 255
+        LDI     R16, LOW(g_sRfTxServicePathConfig0)
+        LDI     R17, (g_sRfTxServicePathConfig0) >> 8
+          CFI FunCall ATA_eepReadBytes_C
+        CALL    ATA_eepReadBytes_C
+//  236     
+//  237     if ((g_sRfTxServicePathConfig0.bTMCR2 & 0x01) == 1) CRCdisable();//Turn off CRC-
+        LDS     R16, (g_sRfTxServicePathConfig0 + 11)
+        SBRS    R16, 0
+        RJMP    ??main_1
+          CFI FunCall CRCdisable
+        CALL    CRCdisable
+//  238     if (((g_sRfTxServicePathConfig0.bTMCR2 & 0x20) == 0)) Stopbyteenable();//Set stop byte on 
+??main_1:
+        LDS     R16, (g_sRfTxServicePathConfig0 + 11)
+        SBRC    R16, 5
+        RJMP    ??main_2
+          CFI FunCall Stopbyteenable
+        CALL    Stopbyteenable
+//  239 
+//  240     ATA_spiOpenSlaveFlash_C((1<<SPE),0x00);
+??main_2:
+        LDI     R17, 0
+        LDI     R16, 64
+          CFI FunCall ATA_spiOpenSlaveFlash_C
+        CALL    ATA_spiOpenSlaveFlash_C
+        RJMP    ??main_3
+//  241    // ATA_spiOpenSlaveFlash_C(uint8_t bSpcr, uint8_t bSpsr)
+//  242    
+//  243     for(;;)
+//  244     {
+//  245       ATA_globalsClkSwitchFrc_C();
+//  246       /* toggle GPIOR0.2 to indicate main loop frequency */
+//  247       GPIOR0 ^= BIT_MASK_2;   
+//  248       
+//  249       // uint8_t Conf_WDTCR = ((1<<WDPS0) | (1<<WDPS1) | (1<<WDE));//Enable Watch Dog Timer with 2.1 S interval
+//  250       // ATA_globalsWdtEnable_C(Conf_WDTCR);//Caution - Won't debug with WDT enabled
+//  251      
+//  252       if ((gTimer4Status & BM_TIMER4COMPARETRUE)) ATA_FlashApplTimer4Process_C();  
+//  253       
+//  254       if ((gFlashApplState.State&BM_SPI_received_flag)==BM_SPI_received_flag){
+//  255          ATA_spiCloseSlaveFlash_C();
+//  256          ATA_Flash_RKEbuttonProcessOut();//Amazon SPI command to TX
+//  257          ATA_spiOpenSlaveFlash_C((1<<SPE),0x00);
+//  258 
+//  259       }
+//  260       
+//  261       
+//  262       if ((gTimer4Status & BM_TIMER4COMPARETRUE)) ATA_FlashApplTimer4Process_C();      
+//  263      // if (gPCINTStatus & BM_PCINT1TRUE) ATA_RKEtimer4Start();//Process Pin Change RKE intrs
+//  264       if (gPCINTStatus & BM_PCINT1TRUE){
+//  265         if ((PIND & 0x04)== 0x04){         //Amazon RF on signal true
+//  266            gFlashApplVars.RKEcommand = 0x01;      
+//  267            ATA_Flash_RKEbuttonProcessOut();//CHanged for Amazon from EXTINT0 to PCMSK10
+//  268            gPCINTStatus &= ~(BM_PCINT1TRUE);//Clear the flag
+//  269            PCICR |= (1<<PCIE1); //re-enable piin change interrupts 
+//  270            }        
+//  271         else{      //Bush button interrupt
+//  272             ATA_RKEtimer4Start();//Process Pin Change RKE intrs
+//  273             }
+//  274         }
+//  275         if ( (gFlashApplState.Buttons&BM_INT0TRUE)==BM_INT0TRUE){//Amazon SPI NSS asserted low
+//  276              gFlashApplState.Buttons &= ~(BM_INT0TRUE);
+//  277              }
+//  278         
+//  279       if (LF_DecErrFlag ==0x01)
+//  280       {
+//  281           
+//  282         // LF wake-up and data was received 
+//  283         ATA_CheckLfData_flash_C();
+//  284         
+//  285         // Check which LF wake-up ID was received
+//  286         if (ID0_Wake == 0x01)
+//  287         {
+//  288           // vehicle ID received
+//  289           app_peps_handler(RX_CHAN_LF0);
+//  290         }
+//  291         else 
+//  292         {
+//  293           // broadcast ID received
+//  294           app_peps_handler(RX_CHAN_LF1);
+??main_4:
+        LDI     R16, 16
+??main_5:
+          CFI FunCall app_peps_handler
+        CALL    app_peps_handler
+//  295         }
+//  296         
+//  297         T0CR = 0;      
+        LDI     R16, 0
+        STS     _A_T0CR, R16
+//  298    
+//  299         
+//  300         ATA_lfRxEnableWakeup_flash_C(LFRX_BDR_3_90,LFRX_H_SENSE);
+        LDI     R17, 4
+        LDI     R16, 8
+          CFI FunCall ATA_lfRxEnableWakeup_flash_C
+        CALL    ATA_lfRxEnableWakeup_flash_C
+//  301 
+//  302       }
+//  303       
+//  304       if (((gFlashApplState.Buttons & BM_BUTTONPROCCESSINGACTIVE)==0) && ((gFlashApplState.Buttons & BM_NEWCMNDVALID)))  //New Button press command available
+??main_6:
+        LDS     R16, (gFlashApplState + 3)
+        ANDI    R16, 0xA0
+        CPI     R16, 128
+        BRNE    ??main_7
+//  305       {
+//  306         ATA_Flash_RKEbuttonProcessOut(); 
+          CFI FunCall ATA_Flash_RKEbuttonProcessOut
+        CALL    ATA_Flash_RKEbuttonProcessOut
+//  307       }
+//  308       if ((gFlashApplState.State & BM_RFTXCRCACTIVE) &&  ((gFlashApplState.State & BM_PEPSRFTIMERACTIVE)==0 ) )
+??main_7:
+        LDS     R16, (gFlashApplState + 1)
+        ANDI    R16, 0x30
+        CPI     R16, 16
+        BRNE    ??main_8
+//  309       {
+//  310            CRCdisable();//!!!!! 18 mS execution time -
+          CFI FunCall CRCdisable
+        CALL    CRCdisable
+//  311       }
+//  312     //  g_bSleepModeConfig_flash = IDLE; 
+//  313         g_bSleepModeConfig_flash = POWER_DOWN;    // Set Sleep ModeEXT_POWER_DOWN
+??main_8:
+        LDI     R16, 5
+        STS     g_bSleepModeConfig_flash, R16
+//  314    // g_bSleepModeConfig_flash = EXT_POWER_DOWN;    // Set Sleep ModeEXT_POWER_DOWN
+//  315      gFlashApplState.State |= BM_PEPSRFTIMERACTIVE;// For SPI debug
+        LDI     R30, LOW(gFlashApplState)
+        LDI     R31, (gFlashApplState) >> 8
+        LDD     R16, Z+1
+        ORI     R16, 0x20
+        STD     Z+1, R16
+//  316       /* Check whether sleep mode can be entered. */
+//  317      if (
+//  318                 (        (g_sRfTx.bStatus & BM_RFTXCONFIG_BSTATUS_ACTIVE) == 0x00U)              &&
+//  319                 (  (g_sAta5700_flash.status & BM_ATA5700_STATUS_SPI_CMD_IN_PROGRESS_FLAG) == 0x00U) &&
+//  320                 (  (gFlashApplState.Buttons & BM_BUTTONPROCCESSINGACTIVE) != BM_BUTTONPROCCESSINGACTIVE) &&
+//  321                 (   (gFlashApplState.State & BM_PEPSRFTIMERACTIVE) ==0x00)
+//  322              
+//  323           )
+??main_3:
+          CFI FunCall ATA_globalsClkSwitchFrc_C
+        CALL    ATA_globalsClkSwitchFrc_C
+        IN      R17, 0x00
+        LDI     R16, 4
+        EOR     R17, R16
+        OUT     0x00, R17
+        LDS     R16, gTimer4Status
+        SBRS    R16, 7
+        RJMP    ??main_9
+          CFI FunCall ATA_FlashApplTimer4Process_C
+        CALL    ATA_FlashApplTimer4Process_C
+??main_9:
+        LDS     R16, (gFlashApplState + 1)
+        SBRS    R16, 0
+        RJMP    ??main_10
+          CFI FunCall ATA_spiCloseSlaveFlash_C
+        CALL    ATA_spiCloseSlaveFlash_C
+          CFI FunCall ATA_Flash_RKEbuttonProcessOut
+        CALL    ATA_Flash_RKEbuttonProcessOut
+        LDI     R17, 0
+        LDI     R16, 64
+          CFI FunCall ATA_spiOpenSlaveFlash_C
+        CALL    ATA_spiOpenSlaveFlash_C
+??main_10:
+        LDS     R16, gTimer4Status
+        SBRS    R16, 7
+        RJMP    ??main_11
+          CFI FunCall ATA_FlashApplTimer4Process_C
+        CALL    ATA_FlashApplTimer4Process_C
+??main_11:
+        LDS     R16, gPCINTStatus
+        SBRS    R16, 6
+        RJMP    ??main_12
+        SBIS    0x09, 0x02
+        RJMP    ??main_13
+        LDI     R16, 1
+        STS     (gFlashApplVars + 1), R16
+          CFI FunCall ATA_Flash_RKEbuttonProcessOut
+        CALL    ATA_Flash_RKEbuttonProcessOut
+        LDI     R30, LOW(gPCINTStatus)
+        LDI     R31, (gPCINTStatus) >> 8
+        LD      R16, Z
+        ANDI    R16, 0xBF
+        ST      Z, R16
+        IN      R16, 0x26
+        ORI     R16, 0x02
+        OUT     0x26, R16
+        RJMP    ??main_12
+??main_13:
+          CFI FunCall ATA_RKEtimer4Start
+        CALL    ATA_RKEtimer4Start
+??main_12:
+        LDI     R30, LOW(gFlashApplState)
+        LDI     R31, (gFlashApplState) >> 8
+        LDD     R16, Z+3
+        SBRS    R16, 3
+        RJMP    ??main_14
+        ANDI    R16, 0xF7
+        STD     Z+3, R16
+??main_14:
+        LDS     R16, LF_DecErrFlag
+        CPI     R16, 1
+        BREQ    $+2+2
+        RJMP    ??main_6
+          CFI FunCall ATA_CheckLfData_flash_C
+        CALL    ATA_CheckLfData_flash_C
+        LDS     R16, ID0_Wake
+        CPI     R16, 1
+        BREQ    $+2+2
+        RJMP    ??main_4
+        LDI     R16, 8
+        RJMP    ??main_5
+          CFI EndBlock cfiBlock0
+        REQUIRE _A_MCUCR
+        REQUIRE _A_MCUSR
+        REQUIRE _A_LFCPR
+        REQUIRE _A_T0CR
+        REQUIRE _A_T0IFR
+        REQUIRE _A_PRR1
+        REQUIRE _A_GPIOR0
+        REQUIRE _A_PIND
+        REQUIRE _A_PCICR
+        REQUIRE _A_PORTC
+//  324       {
+//  325         
+//  326         if ( (g_bSleepModeConfig_flash & BIT_MASK_0) != 0x00U )
+//  327         {
+//  328           bit_clear(LED2);
+//  329           ATA_globalsWdtDisable_C();
+//  330           ATA_globalsClkSwitchSrc_C();//attempt to reduce sleep current
+//  331           /*Enter Sleep using g_bSleepModeConfig_flash variable*/
+//  332           ATA_globalsSleep_C(g_bSleepModeConfig_flash);
+//  333           /* Disable Sleep */
+//  334           g_bSleepModeConfig_flash &= ~BIT_MASK_0;
+//  335         }
+//  336       }
+//  337     }
+//  338 }
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01cH
+__?EECR:
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01dH
+__?EEDR:
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01eH
+__?EEARL:
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01fH
+__?EEARH:
+
+        RSEG INITTAB:CODE:NOROOT(0)
+`?<Segment init: NEAR_Z>`:
+        DC16    SFE(NEAR_Z) - SFB(NEAR_Z)
+        DC16    SFB(NEAR_Z)
+        DC16    0
+        REQUIRE ?need_segment_init
+
+        END
+//  339 
+//  340 
+//  341 
+//  342 
+//  343 
+//  344 
+//  345 
+//  346 
+//  347 
+// 
+//   3 bytes in segment .versions
+//  10 bytes in segment ABSOLUTE
+// 398 bytes in segment CODE
+//   6 bytes in segment INITTAB
+//  10 bytes in segment NEAR_Z
+// 
+// 401 bytes of CODE memory (+  6 bytes shared)
+//  10 bytes of DATA memory (+ 10 bytes shared)
+//
+//Errors: none
+//Warnings: none

@@ -1,0 +1,2135 @@
+///////////////////////////////////////////////////////////////////////////////
+//                                                                            /
+// IAR C/C++ Compiler V6.21.1.50603 for Atmel AVR       29/Jan/2014  11:07:38 /
+// Copyright 1996-2013 IAR Systems AB.                                        /
+//                                                                            /
+//    Source file  =  C:\Users\grueter\Documents\CDB\Apps\SW_Lib\Car_Access\A /
+//                    TAK51003-V3_P2P_Demo\branch_LFrssi_new\P2P_Demo01\firmw /
+//                    are\eep\src\eep.c                                       /
+//    Command line =  C:\Users\grueter\Documents\CDB\Apps\SW_Lib\Car_Access\A /
+//                    TAK51003-V3_P2P_Demo\branch_LFrssi_new\P2P_Demo01\firmw /
+//                    are\eep\src\eep.c -v3 --enhanced_core -ms -o            /
+//                    C:\Users\grueter\Documents\CDB\Apps\SW_Lib\Car_Access\A /
+//                    TAK51003-V3_P2P_Demo\branch_LFrssi_new\P2P_Demo01\appl\ /
+//                    appFlash\IAR\Debug\Obj\ -lCN                            /
+//                    C:\Users\grueter\Documents\CDB\Apps\SW_Lib\Car_Access\A /
+//                    TAK51003-V3_P2P_Demo\branch_LFrssi_new\P2P_Demo01\appl\ /
+//                    appFlash\IAR\Debug\List\ -lA                            /
+//                    C:\Users\grueter\Documents\CDB\Apps\SW_Lib\Car_Access\A /
+//                    TAK51003-V3_P2P_Demo\branch_LFrssi_new\P2P_Demo01\appl\ /
+//                    appFlash\IAR\Debug\List\ --no_cse --no_inline           /
+//                    --no_code_motion --no_cross_call --no_clustering        /
+//                    --no_tbaa --debug --64k_flash -DENABLE_BIT_DEFINITIONS  /
+//                    -e --eeprom_size 1152 --clib -Ohz                       /
+//    List file    =  C:\Users\grueter\Documents\CDB\Apps\SW_Lib\Car_Access\A /
+//                    TAK51003-V3_P2P_Demo\branch_LFrssi_new\P2P_Demo01\appl\ /
+//                    appFlash\IAR\Debug\List\eep.s90                         /
+//                                                                            /
+//                                                                            /
+///////////////////////////////////////////////////////////////////////////////
+
+        NAME eep
+
+        RTMODEL "__64bit_doubles", "disabled"
+        RTMODEL "__SystemLibrary", "CLib"
+        RTMODEL "__cpu", "3"
+        RTMODEL "__enhanced_core", "enabled"
+        RTMODEL "__has_elpm", "false"
+        RTMODEL "__memory_model", "2"
+        RTMODEL "__rt_version", "3"
+
+        RSEG CSTACK:DATA:NOROOT(0)
+        RSEG RSTACK:DATA:NOROOT(0)
+
+        EXTERN ?EPILOGUE_B4_L09
+        EXTERN ?PROLOGUE4_L09
+        EXTERN ?UC_SHR_L01
+        EXTERN ?US_SHR_L02
+
+        PUBLIC ATA_eepChangeAccessRights_C
+        FUNCTION ATA_eepChangeAccessRights_C,0603H
+        ARGFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 4, STACK
+        PUBLIC ATA_eepReadByte_C
+        FUNCTION ATA_eepReadByte_C,0603H
+        ARGFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 4, STACK
+        PUBLIC ATA_eepReadMultipleBytes_C
+        FUNCTION ATA_eepReadMultipleBytes_C,0603H
+        ARGFRAME CSTACK, 0, STACK
+        LOCFRAME CSTACK, 4, STACK
+        LOCFRAME RSTACK, 4, STACK
+        PUBLIC ATA_eepWriteByte_C
+        FUNCTION ATA_eepWriteByte_C,0603H
+        ARGFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 4, STACK
+        PUBLIC ATA_eepWriteMultipleBytes_C
+        FUNCTION ATA_eepWriteMultipleBytes_C,0603H
+        ARGFRAME CSTACK, 0, STACK
+        LOCFRAME CSTACK, 4, STACK
+        LOCFRAME RSTACK, 4, STACK
+        PUBWEAK _A_EEARH
+        PUBWEAK _A_EEARL
+        PUBWEAK _A_EECR
+        PUBWEAK _A_EECR2
+        PUBWEAK _A_EEDR
+        PUBWEAK _A_SREG
+        PUBWEAK _A_TRCDR
+        PUBWEAK _A_TRCIDH
+        PUBWEAK _A_TRCIDL
+        PUBWEAK __?EEARH
+        PUBWEAK __?EEARL
+        PUBWEAK __?EECR
+        PUBWEAK __?EEDR
+        PUBLIC eepLfDecoderSettings
+        PUBLIC eepLfReceiverCalibration
+        PUBLIC eepLfRssiSettings
+        PUBLIC eepMvccSettlingTime
+        PUBLIC eepRfTxRcc
+        PUBLIC eepSecretKeyOne
+        PUBLIC eepSecretKeyTwo
+        PUBLIC eepSrcCalibration
+        PUBLIC eepSrcTemperatureCompensation
+        PUBLIC eepTransponderCalibValues
+        PUBLIC eepXrowUniqueId
+        PUBLIC g_sEepFacLockRfFrontend
+        
+          CFI Names cfiNames0
+          CFI StackFrame CFA_Y Y DATA
+          CFI StackFrame CFA_SP SP DATA
+          CFI VirtualResource ?RetPad:1, ?RetHigh:8, ?RetLow:8, ?Ret:17
+          CFI Resource R0:8, R1:8, R2:8, R3:8, R4:8, R5:8, R6:8, R7:8, R8:8, R9:8
+          CFI Resource R10:8, R11:8, R12:8, R13:8, R14:8, R15:8, R16:8, R17:8
+          CFI Resource R18:8, R19:8, R20:8, R21:8, R22:8, R23:8, R24:8, R25:8
+          CFI Resource R26:8, R27:8, R28:8, R29:8, R30:8, R31:8
+          CFI Resource ?RetHighByteMask:8, SP:16, SPH:8, SPL:8, Y:16
+          CFI ResourceParts ?Ret ?RetHigh, ?RetLow, ?RetPad
+          CFI ResourceParts SP SPH, SPL
+          CFI ResourceParts Y R29, R28
+          CFI EndNames cfiNames0
+        
+          CFI Common cfiCommon0 Using cfiNames0
+          CFI CodeAlign 1
+          CFI DataAlign 1
+          CFI ReturnAddress ?Ret CODE
+          CFI CFA_Y Y+0
+          CFI CFA_SP SP+2
+          CFI ?RetPad 0
+          CFI ?RetHigh and(load(1, DATA, sub(CFA_SP, 1)), ?RetHighByteMask)
+          CFI ?RetLow Frame(CFA_SP, 0)
+          CFI ?Ret Concat
+          CFI R0 Undefined
+          CFI R1 Undefined
+          CFI R2 Undefined
+          CFI R3 Undefined
+          CFI R4 SameValue
+          CFI R5 SameValue
+          CFI R6 SameValue
+          CFI R7 SameValue
+          CFI R8 SameValue
+          CFI R9 SameValue
+          CFI R10 SameValue
+          CFI R11 SameValue
+          CFI R12 SameValue
+          CFI R13 SameValue
+          CFI R14 SameValue
+          CFI R15 SameValue
+          CFI R16 Undefined
+          CFI R17 Undefined
+          CFI R18 Undefined
+          CFI R19 Undefined
+          CFI R20 Undefined
+          CFI R21 Undefined
+          CFI R22 Undefined
+          CFI R23 Undefined
+          CFI R24 SameValue
+          CFI R25 SameValue
+          CFI R26 SameValue
+          CFI R27 SameValue
+          CFI R28 Undefined
+          CFI R29 Undefined
+          CFI R30 Undefined
+          CFI R31 Undefined
+          CFI ?RetHighByteMask SameValue
+          CFI SPH Undefined
+          CFI SPL Undefined
+          CFI EndCommon cfiCommon0
+        
+// C:\Users\grueter\Documents\CDB\Apps\SW_Lib\Car_Access\ATAK51003-V3_P2P_Demo\branch_LFrssi_new\P2P_Demo01\firmware\eep\src\eep.c
+//    1 /* *C**************************************************************************
+//    2   Use of this software is subject to Atmel's Software License Agreement.
+//    3 -------------------------------------------------------------------------------
+//    4   $URL: http://svnservulm.corp.atmel.com/svn/CDB/Apps/SW_Lib/Car_Access/CARS_GEN2/ATAB5702A/Branches/P2P22_TXMODE_NXP/appl/appFlash/IAR/Debug/List/eep.s90 $
+//    5   $LastChangedRevision: 328482 $
+//    6   $LastChangedDate: 2015-07-22 13:17:23 -0600 (Wed, 22 Jul 2015) $
+//    7   $LastChangedBy: grueter $
+//    8 -------------------------------------------------------------------------------
+//    9   Project:      ATA5700
+//   10   Target MCU:   ATA5700
+//   11   Compiler:     IAR C/C++ Compiler for AVR 6.3.18.2236
+//   12 -------------------------------------------------------------------------------
+//   13 
+//   14 ******************************************************************************
+//   15 * Copyright 2011, Atmel Automotive GmbH                                       *
+//   16 *                                                                             *
+//   17 * This software is owned by the Atmel Automotive GmbH                         *
+//   18 * and is protected by and subject to worldwide patent protection.             *
+//   19 * Atmel hereby grants to licensee a personal,                                 *
+//   20 * non-exclusive, non-transferable license to copy, use, modify, create        *
+//   21 * derivative works of, and compile the Atmel Source Code and derivative       *
+//   22 * works for the sole purpose of creating custom software in support of        *
+//   23 * licensee product to be used only in conjunction with a Atmel integrated     *
+//   24 * circuit as specified in the applicable agreement. Any reproduction,         *
+//   25 * modification, translation, compilation, or representation of this           *
+//   26 * software except as specified above is prohibited without the express        *
+//   27 * written permission of Atmel.                                                *
+//   28 *                                                                             *
+//   29 * Disclaimer: ATMEL MAKES NO WARRANTY OF ANY KIND,EXPRESS OR IMPLIED,         *
+//   30 * WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED    *
+//   31 * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.         *
+//   32 * Atmel reserves the right to make changes without further notice to the      *
+//   33 * materials described herein. Atmel does not assume any liability arising     *
+//   34 * out of the application or use of any product or circuit described herein.   *
+//   35 * Atmel does not authorize its products for use as critical components in     *
+//   36 * life-support systems where a malfunction or failure may reasonably be       *
+//   37 * expected to result in significant injury to the user. The inclusion of      *
+//   38 * Atmel products in a life-support systems application implies that the       *
+//   39 * manufacturer assumes all risk of such use and in doing so indemnifies       *
+//   40 * Atmel against all charges.                                                  *
+//   41 *                                                                             *
+//   42 * Use may be limited by and subject to the applicable Atmel software          *
+//   43 * license agreement.                                                          *
+//   44 ******************************************************************************/
+//   45 /** \file eep.c
+//   46 */
+//   47 
+//   48 /*===========================================================================*/
+//   49 /*  INCLUDES                                                                 */
+//   50 /*===========================================================================*/
+//   51 #include "eep.h"
+
+        ASEGN ABSOLUTE:DATA:NOROOT,03fH
+// union <unnamed> volatile __io _A_EECR
+_A_EECR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,040H
+// union <unnamed> volatile __io _A_EEDR
+_A_EEDR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,041H
+// union <unnamed> volatile __io _A_EEARL
+_A_EEARL:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,042H
+// union <unnamed> volatile __io _A_EEARH
+_A_EEARH:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,05fH
+// union <unnamed> volatile __io _A_SREG
+_A_SREG:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,0fcH
+// union <unnamed> volatile __io _A_TRCIDL
+_A_TRCIDL:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,0fdH
+// union <unnamed> volatile __io _A_TRCIDH
+_A_TRCIDH:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,0ffH
+// union <unnamed> volatile __io _A_TRCDR
+_A_TRCDR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,0159H
+// union <unnamed> volatile __ext_io _A_EECR2
+_A_EECR2:
+        DS8 1
+//   52 
+//   53 /*===========================================================================*/
+//   54 /*  DEFINES                                                                  */
+//   55 /*===========================================================================*/
+//   56 
+//   57 #define EEPROM_START_ADD                    0x0000U
+//   58 #define EEPROM_XROW_END_ADD                 0x08FFU
+//   59 #define EEPROM_XROW_BEGIN_ADD               0x0880U
+//   60 #define EEPROM_FAC_LOCK_END_ADD             0x087FU
+//   61 #define EEPROM_FAC_LOCK_BEGIN_ADD           0x0800U
+//   62 #define EEPROM_USER_END_ADD                 0x07FFU
+//   63 #define AP0_START_ADD                       0x0780U
+//   64 
+//   65 /* Start of the Access Right Map */
+//   66 #define EEP_MEM_ACCESS_MAP_ADD              0x0750U
+//   67 
+//   68 /* Byte [29] of the Access Right Map holds the access rights for the map
+//   69    itself */
+//   70 #define EEP_MEM_ACCESS_MAP_SECTION_ADD      0x076DU
+//   71 
+//   72 #define BM_EEP_SECTION_ROW_0_WR_ACC         0x40U
+//   73 #define BM_EEP_SECTION_ROW_1_WR_ACC         0x10U
+//   74 #define BM_EEP_SECTION_ROW_2_WR_ACC         0x04U
+//   75 #define BM_EEP_SECTION_ROW_3_WR_ACC         0x01U
+//   76 
+//   77 #define BM_EEP_SECTION_ROW_0_RD_ACC         0x80U
+//   78 #define BM_EEP_SECTION_ROW_1_RD_ACC         0x20U
+//   79 #define BM_EEP_SECTION_ROW_2_RD_ACC         0x08U
+//   80 #define BM_EEP_SECTION_ROW_3_RD_ACC         0x02U
+//   81 
+//   82 #define EEP_BYTES_PER_PAGE                  0x10U
+//   83 
+//   84 /* Access Map (byte 0x076D goes from Row 1 to 3. */
+//   85 #define EEP_LOWER_MEM_ACCESS_MAP_SECTION    0x01U
+//   86 #define EEP_MIDDL_MEM_ACCESS_MAP_SECTION    0x02U
+//   87 #define EEP_UPPER_MEM_ACCESS_MAP_SECTION    0x03U
+//   88 
+//   89 
+//   90 #define EEP_EEPR_DISABLE_ALL                0x00U
+//   91 
+//   92 /*===========================================================================*/
+//   93 /*  Modul Globals                                                            */
+//   94 /*===========================================================================*/
+//   95 
+//   96 /** \brief <b>g_sEepFacLockRfFrontend</b>
+//   97     contains the Xrow EEPROM setting for RF TX Module.
+//   98 */
+//   99 #pragma location = ".eep_xrow_RfFrontendCalibValues"
+
+        RSEG `.eep_xrow_RfFrontendCalibValues`:DATA:ROOT(0)
+//  100 __root __no_init sEEPromFacLockRfTx g_sEepFacLockRfFrontend;
+g_sEepFacLockRfFrontend:
+        DS8 6
+//  101 
+//  102 
+//  103 /** \brief <b>eepXrowUniqueId</b>
+//  104     contains the unique ID of the chip.
+//  105 */
+//  106 #pragma location = ".eep_xrow_UniqueId"
+
+        RSEG `.eep_xrow_UniqueId`:DATA:ROOT(0)
+//  107 __root __no_init uint8_t eepXrowUniqueId[EEP_XROW_UID_SIZE];
+eepXrowUniqueId:
+        DS8 4
+//  108 
+//  109 
+//  110 /** \brief <b>eepLfReceiverCalibration</b>
+//  111     contains the LF decoder settings.
+//  112 */
+//  113 #pragma location = ".eep_xrow_LfDecoderSettings"
+
+        RSEG `.eep_xrow_LfDecoderSettings`:DATA:ROOT(0)
+//  114 __root __no_init sEEPromLfDecoderSettings eepLfDecoderSettings;
+eepLfDecoderSettings:
+        DS8 11
+//  115 
+//  116 /** \brief <b>eepTransponderCalibValues</b>
+//  117     contains the TP calibration value for TPCALR11 and TPCALR12.
+//  118 */
+//  119 #pragma location = ".eep_xrow_TransponderCalibValues"
+
+        RSEG `.eep_xrow_TransponderCalibValues`:DATA:ROOT(0)
+//  120 __root __no_init uint8_t eepTransponderCalibValues[2];
+eepTransponderCalibValues:
+        DS8 2
+//  121 
+//  122 
+//  123 /** \brief <b>eepLfReceiverCalibration</b>
+//  124     contains the LF calibration values.
+//  125 */
+//  126 #pragma location = ".eep_xrow_LfReceiverCalibRegister"
+
+        RSEG `.eep_xrow_LfReceiverCalibRegister`:DATA:ROOT(0)
+//  127 __root __no_init sEEPromLfReceiverCalibration eepLfReceiverCalibration;
+eepLfReceiverCalibration:
+        DS8 40
+//  128 
+//  129 
+//  130 /** \brief <b>eepSrcCalibration</b>
+//  131     contains the SRC calibration value.
+//  132 */
+//  133 #pragma location = ".eep_xrow_SrcCalibration"
+
+        RSEG `.eep_xrow_SrcCalibration`:DATA:ROOT(0)
+//  134 __root __no_init sEEPromSrcCalibration eepSrcCalibration;
+eepSrcCalibration:
+        DS8 1
+//  135 
+//  136 
+//  137 /** \brief <b>eepSrcTemperatureCompensation</b>
+//  138     contains the SRC temperature compensation value.
+//  139 */
+//  140 #pragma location = ".eep_xrow_SrcTemperatureCompensation"
+
+        RSEG `.eep_xrow_SrcTemperatureCompensation`:DATA:ROOT(0)
+//  141 __root __no_init sEEPromSrcTemperatureCompensation eepSrcTemperatureCompensation;
+eepSrcTemperatureCompensation:
+        DS8 1
+//  142 
+//  143 
+//  144 /** \brief <b>eepMvccSettlingTime</b>
+//  145     contains the value for MVCC settling time
+//  146 */
+//  147 #pragma location = ".eep_xrow_MvccSettlingTime"
+
+        RSEG `.eep_xrow_MvccSettlingTime`:DATA:ROOT(0)
+//  148 __root __no_init sEEPromMvccSettlingTime eepMvccSettlingTime;
+eepMvccSettlingTime:
+        DS8 1
+//  149 
+//  150 
+//  151 /** \brief <b>eepSecretKeyOne</b>
+//  152     contains Secret Key One with two additional backup copies
+//  153 */
+//  154 #pragma location = ".eep_SecretKey_KeyOneSection"
+
+        RSEG `.eep_SecretKey_KeyOneSection`:DATA:ROOT(0)
+//  155 __root __no_init sEepSecretKey eepSecretKeyOne[EEP_NUMBER_OF_SECRET_KEYS];
+eepSecretKeyOne:
+        DS8 48
+//  156 
+//  157 /** \brief <b>eepSecretKeyTwo</b>
+//  158     contains Secret Key Two with two additional backup copies
+//  159 */
+//  160 #pragma location = ".eep_SecretKey_KeyTwoSection"
+
+        RSEG `.eep_SecretKey_KeyTwoSection`:DATA:ROOT(0)
+//  161 __root __no_init sEepSecretKey eepSecretKeyTwo[EEP_NUMBER_OF_SECRET_KEYS];
+eepSecretKeyTwo:
+        DS8 48
+//  162 
+//  163 /** \brief <b>eepXrowRfFrontend</b>
+//  164     contains the Xrow EEPROM setting for RF TX Module.
+//  165 */
+//  166 #pragma location = ".eep_xrow_LfRssiSettings"
+
+        RSEG `.eep_xrow_LfRssiSettings`:DATA:ROOT(0)
+//  167 __root __no_init sEEPromLfRssiSettings eepLfRssiSettings;
+eepLfRssiSettings:
+        DS8 10
+//  168 
+//  169 /** \brief <b>eepRfTxRcsc</b>
+//  170     is the Rolling Code Sequence Counter value in EEPROM.
+//  171 */
+//  172 #pragma location = ".eep_RfTx_RollingCodeSequenceCounter"
+
+        RSEG `.eep_RfTx_RollingCodeSequenceCounter`:DATA:ROOT(0)
+//  173 __root __no_init uint8_t eepRfTxRcc[EEP_RFRCC_SIZE];
+eepRfTxRcc:
+        DS8 4
+//  174 
+//  175 /*===========================================================================*/
+//  176 /*  IMPLEMENTATION                                                           */
+//  177 /*===========================================================================*/
+//  178 
+//  179 /*---------------------------------------------------------------------------*/
+//  180 /** \brief <b>ATA_eepChangeAccessRights_C</b>
+//  181     shall change the EEPROM access rights of a given EEPROM section in
+//  182     accordance with the applicable EEPROM Access Right Map.
+//  183     An EEPROM Access Right Map contains 32 EEPROM sections, each comprising
+//  184     four EEPROM row access right values.
+//  185     Due to performance reasons, one can change all access rights of one EEPROM
+//  186     section.\n
+//  187     Prerequisite:
+//  188     The enabling of read/write access for sections AP0, AP1, AP2 and AP3 in
+//  189     register EEPR needs to be handled by the Application SW in order
+//  190     for this function to work as specified.
+//  191 
+//  192 \param[in] uEepSection          EEPROM section (Byte number of Access Right Map)
+//  193                                 for which the access rights shall be changed
+//  194 \param[in] uAccessRightValue    New access right value for the given EEPROM section
+//  195 \param[in] uAccessRightMask     Mask to only update a dedicated part of the access
+//  196                                 rights of the given EEPROM section
+//  197 
+//  198 \return    Status of the performed EEPROM operation (::eEepErrorCode)
+//  199 
+//  200 \StackUsageInBytes{XXX}
+//  201 
+//  202 \image html ATA_eepChangeAccessRights_C.png
+//  203 
+//  204 \internal
+//  205 \li 005: Update HW Trace Unit with specific function information\n\n
+//  206          Technical background:
+//  207          64 bytes are covered by one Access Right Map byte,
+//  208          4 rows per access byte with 2 bits for each row (== 8 bits for 4 rows).
+//  209          16 bytes per row, 4 rows per access byte, Row = 0..3\n\n
+//  210          IF parameter "uEepSection" in not within the specified range
+//  211           [0x0000 to 0x08FF],
+//  212          THEN
+//  213 \li 010:   Set "return" to EEC_ADDR_OUT_OF_RANGE to indicate that the
+//  214            EEPROM Access Right Map section information was invalid.\n
+//  215          ELSE
+//  216 \li 020:   Wait for any previous EEPROM access to be finished by
+//  217            checking bit "NVMBSY" in register EECR being set to 0.
+//  218 
+//  219 \li 030:   Disable all interrupts to allow for an atomic execution of an EEPROM
+//  220            change of access rights.
+//  221 
+//  222 \li 040:   Get the EEPROM Access Right Map byte corresponding to the
+//  223            EEPROM Access Right Map itself by calling the function macro
+//  224            ::ATA_FM_EEP_READ_BYTE_C() to check whether the EEPROM Access Right
+//  225            Map is allowed to be changed.
+//  226     
+//  227 \li 050:   IF after the EEPROM read access to retrieve the access rights, an
+//  228             uncorrectable EEPROM error was detected, indicated by
+//  229             bit "E2FF" in register EECR2 being set 1,
+//  230            THEN
+//  231              Set "return" to EEC_ERROR_CORRECTION_OCCURED to indicate
+//  232               that an EEPROM error correction occured and further information
+//  233               could be retrieved by reading the EEPROM syndrome value EESYN0 to
+//  234               EESYN3 in register EEST.
+//  235 
+//  236            ELSE
+//  237 \li 060:     Retrieve the access row (two bit defining the access rights for a
+//  238              dedicated EEPROM page) within the EEPROM Access Right Map byte
+//  239              corresponding to parameter "uEepSection".
+//  240 
+//  241 \li 070:     IF the EEPROM section indicated by "uEepSection" is write
+//  242               protected,
+//  243              THEN
+//  244                Set "return" to EEC_ADDR_LOCKED_FOR_WRITING to indicate that
+//  245                this EEPROM Access Right Map section cannot be changed.
+//  246 
+//  247 \li 080:     ELSE
+//  248                Get the EEPROM Access Right Map byte corresponding to the
+//  249                given EEPROM Access Right Map section "uEepSection" by calling
+//  250                the function macro ATA_FM_EEP_READ_BYTE_C().
+//  251 
+//  252 \li 085:       Reset both EEPROM error indications by setting bits "E2CF" and 
+//  253                 "E2FF" in register EECR2 to 1 in order to not have stale flags
+//  254                 when executing a subsequent EEPROM read call.
+//  255 
+//  256 \li 090:       IF after the EEPROM read access to retrieve the access rights,
+//  257                 an uncorrectable EEPROM error was detected, indicated by
+//  258                 bit "E2FF" in register EECR2 being set 1,
+//  259                THEN
+//  260                  Set "return" to EEC_ERROR_CORRECTION_OCCURED to indicate
+//  261                   that an EEPROM error correction occured and further
+//  262                   information could be retrieved by reading the EEPROM syndrome
+//  263                   value EESYN0 to EESYN3 in register EEST.
+//  264 
+//  265 \li 100:       ELSE
+//  266                  Apply the given access rights mask "uAccessRightMask" to the
+//  267                   new access right value "uAccessRightValue".
+//  268 
+//  269 \li 110:         IF at least one WRITE lock is revoked in one of the access rows
+//  270                   within the access right byte corresponding to "uEepSection",
+//  271                  THEN
+//  272                    Set "return" to EEC_INVALID_ACCESS_RIGHT_VALUE to indicate
+//  273                    that the new access right value "uAccessRightValue" together
+//  274                    with the applicable mask "uAccessRightMask" for EEPROM
+//  275                    section "uEepSection" is invalid.
+//  276                  ENDIF
+//  277                ENDIF
+//  278 
+//  279 \li 120:       IF "return" is set to EEC_NO_ERROR, indicating that the intended
+//  280                 change of access rights is valid,
+//  281                THEN
+//  282                  Merge the existing access rights for EEPROM section
+//  283                   "uEepSection" with the new access rights being composed of
+//  284                   "uAccessRightValue" and its mask "uAccessRightMask", AND
+//  285                  execute the EEPROM change access rights request by calling the
+//  286                   function macro ::ATA_FM_EEP_WRITE_BYTE_C() with the newly
+//  287                   computed access right value.
+//  288                ENDIF
+//  289              ENDIF
+//  290            ENDIF
+//  291 
+//  292 \li 130:   Restore SREG status (namely the global interrupt flag), 
+//  293            since the critical section is finished.
+//  294 
+//  295          ENDIF
+//  296 
+//  297 \li 135: Reset both EEPROM error indications by setting bits "E2CF" and 
+//  298           "E2FF" in register EECR2 to 1 in order to not have stale flags
+//  299           when executing a subsequent EEPROM read call.
+//  300 
+//  301 \li 140: Return the function's error code to the calling function.
+//  302 
+//  303 \Derived{No}
+//  304 
+//  305 \Rationale{N/A}
+//  306 
+//  307 \Traceability{Primus2P-891}
+//  308 \endinternal
+//  309 \n
+//  310 */
+//  311 /*---------------------------------------------------------------------------*/
+
+        RSEG CODE:CODE:ROOT(1)
+//  312 __root eEepErrorCode ATA_eepChangeAccessRights_C(uint8_t uEepSection, uint8_t uAccessRightValue, uint8_t uAccessRightMask)
+ATA_eepChangeAccessRights_C:
+          CFI Block cfiBlock0 Using cfiCommon0
+          CFI Function ATA_eepChangeAccessRights_C
+//  313 {
+        MOV     R22, R16
+        MOV     R21, R17
+        MOV     R23, R18
+//  314     uint8_t bSreg = SREG;
+        IN      R0, 0x3F
+//  315   
+//  316     /* Variable to hold the function's return value. */
+//  317     eEepErrorCode retValue = EEC_NO_ERROR;
+        LDI     R17, 0
+//  318 
+//  319     /* Variable to hold the actual row info for EEPROM operations */
+//  320     uint8_t uAccessRowInByte;
+//  321 
+//  322     /* Variable to hold the actual access right value of the EEPROM Access Right
+//  323        Map. */
+//  324     uint8_t uAccessRightAddressValue;
+//  325 
+//  326     /* Variable to hold the actual access right value of the given EEPROM Access
+//  327        Right Map section. */
+//  328     uint8_t uSectionByte;
+//  329 
+//  330     /* LLR-Ref: 005 */
+//  331     ATA_SET_FUNCTION_TRACE_POINT_C(ATA_eepChangeAccessRights_C, uEepSection);
+        IN      R16, 0x3F
+        CLI
+        STS     _A_TRCDR, R22
+        LDI     R18, LOW(ATA_eepChangeAccessRights_C/2)
+        STS     _A_TRCIDL, R18
+        LDI     R18, (ATA_eepChangeAccessRights_C/2) >> 8
+        STS     _A_TRCIDH, R18
+        OUT     0x3F, R16
+//  332 
+//  333     if ( uEepSection > (EEPROM_XROW_END_ADD >> 6) )
+        CPI     R22, 36
+        BRCS    ??ATA_eepChangeAccessRights_C_0
+//  334     {
+//  335         /* LLR-Ref: 010 */
+//  336         retValue = EEC_ADDR_OUT_OF_RANGE;
+        LDI     R17, 3
+        RJMP    ??ATA_eepChangeAccessRights_C_1
+//  337     }
+//  338     else
+//  339     {
+//  340         /* LLR-Ref: 020 */
+//  341         while(EECR & BM_NVMBSY){}
+??ATA_eepChangeAccessRights_C_0:
+        SBIC    0x1F, 0x07
+        RJMP    ??ATA_eepChangeAccessRights_C_0
+//  342 
+//  343         /* LLR-Ref: 030 */
+//  344         __disable_interrupt();
+        CLI
+//  345 
+//  346         /* LLR-Ref: 040 */
+//  347         ATA_FM_EEP_READ_BYTE_C (EEP_MEM_ACCESS_MAP_SECTION_ADD, uAccessRightAddressValue)
+        LDI     R16, 7
+        OUT     0x22, R16
+        LDI     R16, 109
+        OUT     0x21, R16
+        SBI     0x1F, 0x00
+        IN      R18, 0x20
+//  348 
+//  349         if ( EECR2 & BM_E2FF )
+        LDS     R16, _A_EECR2
+        SBRC    R16, 6
+        RJMP    ??ATA_eepChangeAccessRights_C_2
+//  350         {
+//  351             /* LLR-Ref: 050 */
+//  352             retValue = EEC_ERROR_CORRECTION_OCCURED;
+//  353         }
+//  354         else
+//  355         {
+//  356             /* LLR-Ref: 060 */
+//  357             if ( uEepSection < EEP_BYTES_PER_PAGE )
+        CPI     R22, 16
+        BRCC    ??ATA_eepChangeAccessRights_C_3
+//  358             {
+//  359                 uAccessRowInByte = EEP_LOWER_MEM_ACCESS_MAP_SECTION;
+        LDI     R20, 1
+        RJMP    ??ATA_eepChangeAccessRights_C_4
+//  360             }
+//  361             else if ( uEepSection < 2*EEP_BYTES_PER_PAGE )
+??ATA_eepChangeAccessRights_C_3:
+        CPI     R22, 32
+        BRCC    ??ATA_eepChangeAccessRights_C_5
+//  362             {
+//  363                 uAccessRowInByte = EEP_MIDDL_MEM_ACCESS_MAP_SECTION;
+        LDI     R20, 2
+        RJMP    ??ATA_eepChangeAccessRights_C_4
+//  364             }
+//  365             else
+//  366             {
+//  367                 uAccessRowInByte = EEP_UPPER_MEM_ACCESS_MAP_SECTION;
+??ATA_eepChangeAccessRights_C_5:
+        LDI     R20, 3
+//  368             }
+//  369 
+//  370             /* LLR-Ref: 070 */
+//  371             if ( (uAccessRightAddressValue & (BM_EEP_SECTION_ROW_0_WR_ACC >> (uAccessRowInByte * 2))) == FALSE  )
+??ATA_eepChangeAccessRights_C_4:
+        LSL     R20
+        LDI     R16, 64
+        CALL    ?UC_SHR_L01
+        AND     R18, R16
+        BRNE    ??ATA_eepChangeAccessRights_C_6
+//  372             {
+//  373                 retValue = EEC_ADDR_LOCKED_FOR_WRITING;
+        LDI     R17, 2
+        RJMP    ??ATA_eepChangeAccessRights_C_7
+//  374             }
+//  375             else
+//  376             {
+//  377                 /* LLR-Ref: 085: Always clear both EEPROM error flags. */
+//  378                 EECR2 |= (BM_E2CF | BM_E2FF);
+??ATA_eepChangeAccessRights_C_6:
+        LDS     R16, _A_EECR2
+        ORI     R16, 0xC0
+        STS     _A_EECR2, R16
+//  379               
+//  380                 /* LLR-Ref: 080 */
+//  381                 ATA_FM_EEP_READ_BYTE_C (EEP_MEM_ACCESS_MAP_ADD + uEepSection, uSectionByte)
+        MOV     R18, R22
+        LDI     R19, 0
+        SUBI    R18, 176
+        SBCI    R19, 248
+        OUT     0x22, R19
+        OUT     0x21, R18
+        SBI     0x1F, 0x00
+        IN      R20, 0x20
+//  382 
+//  383                 if ( EECR2 & BM_E2FF )
+        LDS     R16, _A_EECR2
+        SBRS    R16, 6
+        RJMP    ??ATA_eepChangeAccessRights_C_8
+//  384                 {
+//  385                     /* LLR-Ref: 090 */
+//  386                     retValue = EEC_ERROR_CORRECTION_OCCURED;
+??ATA_eepChangeAccessRights_C_2:
+        LDI     R17, 4
+        RJMP    ??ATA_eepChangeAccessRights_C_7
+//  387                 }
+//  388                 else
+//  389                 {
+//  390                     /* LLR-Ref: 100 */
+//  391                     uint8_t uSectionByteMasked = (uSectionByte & uAccessRightMask);
+??ATA_eepChangeAccessRights_C_8:
+        MOV     R19, R20
+        AND     R19, R23
+//  392                     uAccessRightValue &= uAccessRightMask;
+        AND     R21, R23
+//  393 
+//  394                     /* LLR-Ref: 110 */
+//  395                     if ( (uSectionByteMasked & BM_EEP_SECTION_ROW_0_WR_ACC) <
+//  396                          (uAccessRightValue  & BM_EEP_SECTION_ROW_0_WR_ACC)
+//  397                        )
+        MOV     R18, R19
+        ANDI    R18, 0x40
+        MOV     R16, R21
+        ANDI    R16, 0x40
+        CP      R18, R16
+        BRCS    ??ATA_eepChangeAccessRights_C_9
+//  398                     {
+//  399                         retValue = EEC_INVALID_ACCESS_RIGHT_VALUE;
+//  400                     }
+//  401                     else if ( (uSectionByteMasked & BM_EEP_SECTION_ROW_1_WR_ACC) <
+//  402                               (uAccessRightValue  & BM_EEP_SECTION_ROW_1_WR_ACC)
+//  403                        )
+        MOV     R18, R19
+        ANDI    R18, 0x10
+        MOV     R16, R21
+        ANDI    R16, 0x10
+        CP      R18, R16
+        BRCS    ??ATA_eepChangeAccessRights_C_9
+//  404                     {
+//  405                         retValue = EEC_INVALID_ACCESS_RIGHT_VALUE;
+//  406                     }
+//  407                     else if ( (uSectionByteMasked & BM_EEP_SECTION_ROW_2_WR_ACC) <
+//  408                               (uAccessRightValue  & BM_EEP_SECTION_ROW_2_WR_ACC)
+//  409                        )
+        MOV     R18, R19
+        ANDI    R18, 0x04
+        MOV     R16, R21
+        ANDI    R16, 0x04
+        CP      R18, R16
+        BRCS    ??ATA_eepChangeAccessRights_C_9
+//  410                     {
+//  411                         retValue = EEC_INVALID_ACCESS_RIGHT_VALUE;
+//  412                     }
+//  413                     else if ( (uSectionByteMasked & BM_EEP_SECTION_ROW_3_WR_ACC) <
+//  414                               (uAccessRightValue  & BM_EEP_SECTION_ROW_3_WR_ACC)
+//  415                        )
+        MOV     R16, R19
+        ANDI    R16, 0x01
+        MOV     R18, R21
+        ANDI    R18, 0x01
+        CP      R16, R18
+        BRCC    ??ATA_eepChangeAccessRights_C_10
+//  416                     {
+//  417                         retValue = EEC_INVALID_ACCESS_RIGHT_VALUE;
+??ATA_eepChangeAccessRights_C_9:
+        LDI     R17, 5
+        RJMP    ??ATA_eepChangeAccessRights_C_7
+//  418                     }
+//  419                     else
+//  420                     {
+//  421                         /* Do nothing */
+//  422                     }
+//  423                 }
+//  424 
+//  425                 if ( retValue == EEC_NO_ERROR )
+//  426                 {
+//  427                     /* LLR-Ref: 120 */
+//  428                     uAccessRightValue |= (uSectionByte & ~uAccessRightMask);
+//  429                     ATA_FM_EEP_WRITE_BYTE_C (EEP_MEM_ACCESS_MAP_ADD + uEepSection, uAccessRightValue)
+??ATA_eepChangeAccessRights_C_10:
+        MOV     R18, R22
+        LDI     R19, 0
+        SUBI    R18, 176
+        SBCI    R19, 248
+        OUT     0x22, R19
+        OUT     0x21, R18
+        COM     R23
+        AND     R20, R23
+        OR      R21, R20
+        OUT     0x20, R21
+        IN      R16, 0x1F
+        ANDI    R16, 0xCF
+        OUT     0x1F, R16
+        SBI     0x1F, 0x02
+        SBI     0x1F, 0x01
+//  430                 }
+//  431             }
+//  432         }
+//  433 
+//  434         /* LLR-Ref: 130 */
+//  435         SREG = bSreg;
+??ATA_eepChangeAccessRights_C_7:
+        OUT     0x3F, R0
+//  436     }
+//  437 
+//  438     /* LLR-Ref: 135 */
+//  439     EECR2 |= (BM_E2CF | BM_E2FF);
+??ATA_eepChangeAccessRights_C_1:
+        LDS     R16, _A_EECR2
+        ORI     R16, 0xC0
+        STS     _A_EECR2, R16
+//  440     
+//  441     /* LLR-Ref: 140 */
+//  442     return retValue;
+        MOV     R16, R17
+        RET
+          CFI EndBlock cfiBlock0
+        REQUIRE _A_SREG
+        REQUIRE _A_TRCDR
+        REQUIRE _A_TRCIDL
+        REQUIRE _A_TRCIDH
+        REQUIRE _A_EECR
+        REQUIRE _A_EEARH
+        REQUIRE _A_EEARL
+        REQUIRE _A_EEDR
+        REQUIRE _A_EECR2
+//  443 }
+//  444 
+//  445 
+//  446 /*---------------------------------------------------------------------------*/
+//  447 /** \brief <b>ATA_eepWriteByte_C</b>
+//  448     shall write a single byte to the EEPROM in accordance with the applicable
+//  449     EEPROM Access Right Map.
+//  450 
+//  451 \param[in]  uAddress        EEPROM address to be written to
+//  452 \param[in]  uDataToWrite    Data to be written to the given EEPROM address
+//  453 
+//  454 \return     Status of the performed EEPROM write access (::eEepErrorCode)
+//  455 
+//  456 \StackUsageInBytes{XXX}
+//  457 
+//  458 \image html ATA_eepWriteByte_C.png
+//  459 
+//  460 \internal
+//  461     Prerequisite:
+//  462     The enabling of read/write access for sections AP0, AP1, AP2 and AP3 in
+//  463     register EEPR needs to be handled by the Application SW in order
+//  464     for this function to work as specified.
+//  465 
+//  466 \li 005: Update HW Trace Unit with specific function information\n\n
+//  467          Technical background:
+//  468          64 bytes are covered by one Access Right Map byte,
+//  469          4 rows per access byte with 2 bits for each row (== 8 bits for 4 rows).
+//  470          16 bytes per row, 4 rows per access byte, Row = 0..3
+//  471 
+//  472 \li 010: Get the EEPROM Access Right Map byte holding the access rights for the
+//  473          row containing EEPROM address "uAddress" by dividing the given address
+//  474          with 64.
+//  475 
+//  476 \li 020: Get the EEPROM Access Right Map row position within the access right
+//  477          byte for the given EEPROM address, by only locking at bits 5 and 6.
+//  478 
+//  479 \li 030: Wait for any previous EEPROM access (Write or AES) to be finished by
+//  480          checking the NVMBSY bit in register EECR being 0.
+//  481 
+//  482 \li 040: Disable all interrupts to allow for an atomic execution of the EEPROM
+//  483          write access.
+//  484 
+//  485 \li 050: IF the given EEPROM address "uAddress" is not in the range
+//  486           EEPROM_START_ADD to EEPROM_USER_END_ADD,
+//  487          THEN
+//  488            Set "return" to EEC_ADDR_OUT_OF_RANGE to indicate that the
+//  489             given EEPROM address is out of range,
+//  490 
+//  491 \li 060: ELSE IF the given EEPROM address "uAddress" falls into section AP0,
+//  492          THEN
+//  493            Set "return" to EEC_ADDR_LOCKED_FOR_WRITING to indicate
+//  494             that the given EEPROM address is locked,
+//  495 
+//  496 \li 070: ELSE
+//  497            Get the EEPROM Access Right Map byte corresponding to the given
+//  498             EEPROM address "uAddress" by calling function macro
+//  499             ::ATA_FM_EEP_READ_BYTE_C().
+//  500            IF after the EEPROM read access to retrieve the access rights, an
+//  501             uncorrectable EEPROM error was detected, indicated by
+//  502             bit "E2FF" in register EECR2 being set 1,
+//  503            THEN
+//  504              Set "return" to EEC_ERROR_CORRECTION_OCCURED to indicate
+//  505               that an EEPROM error correction occured.
+//  506 
+//  507 \li 080:   ELSE IF the given EEPROM address "uAddress" is locked for writing,
+//  508            THEN
+//  509              Set "return" to EEC_ADDR_LOCKED_FOR_WRITING to indicate that
+//  510               the given EEPROM address is locked,
+//  511 
+//  512 \li 090:   ELSE
+//  513              Execute the write request by calling the function macro
+//  514               ::ATA_FM_EEP_WRITE_BYTE_C() with the given EEPROM address
+//  515               "uAddress" and "uDataToWrite" as parameters, AND
+//  516            ENDIF
+//  517 
+//  518 \li 095:   Reset both EEPROM error indications by setting bits "E2CF" and 
+//  519             "E2FF" in register EECR2 to 1 in order to not have stale flags
+//  520             when executing a subsequent EEPROM read call.
+//  521 
+//  522          ENDIF
+//  523 
+//  524 \li 100: Restore SREG status (namely the global interrupt flag), 
+//  525          since the critical section is finished.
+//  526 
+//  527 \li 110: Return the function's error code to the calling function.
+//  528 
+//  529 \Derived{No}
+//  530 
+//  531 \Rationale{N/A}
+//  532 
+//  533 \Traceability{Primus2P-813,Primus2P-1103}
+//  534 \endinternal
+//  535 \n
+//  536 */
+//  537 /*---------------------------------------------------------------------------*/
+
+        RSEG CODE:CODE:ROOT(1)
+//  538 __root eEepErrorCode ATA_eepWriteByte_C(uint16_t uAddress, uint8_t uDataToWrite)
+ATA_eepWriteByte_C:
+          CFI Block cfiBlock1 Using cfiCommon0
+          CFI Function ATA_eepWriteByte_C
+//  539 {
+        MOVW    R1:R0, R17:R16
+        MOV     R19, R18
+//  540     uint8_t bSreg = SREG;
+        IN      R21, 0x3F
+//  541   
+//  542     /* Variable to hold the function's return value. */
+//  543     eEepErrorCode retValue = EEC_NO_ERROR;
+        LDI     R18, 0
+//  544 
+//  545     /* Variable to hold the actual row info for EEPROM operations */
+//  546     uint8_t uAccessRowInByte;
+//  547 
+//  548     /* Variable to hold the actual access right address for EEPROM operations */
+//  549     uint16_t uAccessRightAddress;
+//  550 
+//  551     /* Variable to hold the actual access right value of the given EEPROM address */
+//  552     uint8_t uAccessRightAddressValue;
+//  553 
+//  554     /* LLR-Ref: 005 */
+//  555     ATA_SET_FUNCTION_TRACE_POINT_C(ATA_eepWriteByte_C, 0x00);
+        IN      R20, 0x3F
+        CLI
+        STS     _A_TRCDR, R18
+        LDI     R16, LOW(ATA_eepWriteByte_C/2)
+        STS     _A_TRCIDL, R16
+        LDI     R16, (ATA_eepWriteByte_C/2) >> 8
+        STS     _A_TRCIDH, R16
+        OUT     0x3F, R20
+//  556 
+//  557     /* LLR-Ref: 010 */
+//  558     uAccessRightAddress = EEP_MEM_ACCESS_MAP_ADD + (uAddress >> 6);
+        LDI     R20, 6
+        MOV     R16, R0
+        CALL    ?US_SHR_L02
+        SUBI    R16, 176
+        SBCI    R17, 248
+//  559 
+//  560     /* LLR-Ref: 020 */
+//  561     uAccessRowInByte = (uint8_t)((uAddress & 0x003F) >> 4);
+        MOV     R20, R0
+        SWAP    R20
+        ANDI    R20, 0x03
+//  562 
+//  563     /* LLR-Ref: 030 */
+//  564     while(EECR & BM_NVMBSY){}
+??ATA_eepWriteByte_C_0:
+        SBIC    0x1F, 0x07
+        RJMP    ??ATA_eepWriteByte_C_0
+//  565 
+//  566     /* LLR-Ref: 040 */
+//  567     __disable_interrupt();
+        CLI
+//  568 
+//  569     if ( uAddress > EEPROM_USER_END_ADD )
+        LDI     R22, 8
+        CP      R1, R22
+        BRCS    ??ATA_eepWriteByte_C_1
+//  570     {
+//  571         /* LLR-Ref: 050 */
+//  572         retValue = EEC_ADDR_OUT_OF_RANGE;
+        LDI     R18, 3
+        RJMP    ??ATA_eepWriteByte_C_2
+//  573     }
+//  574     else if ( uAddress >= EEP_MEM_ACCESS_MAP_ADD )
+??ATA_eepWriteByte_C_1:
+        LDI     R22, 80
+        CP      R0, R22
+        LDI     R22, 7
+        CPC     R1, R22
+        BRCS    ??ATA_eepWriteByte_C_3
+//  575     {
+//  576         /* LLR-Ref: 060 */
+//  577         retValue = EEC_ADDR_LOCKED_FOR_WRITING;
+        LDI     R18, 2
+        RJMP    ??ATA_eepWriteByte_C_2
+//  578     }
+//  579     else
+//  580     {
+//  581         /* LLR-Ref: 070 */
+//  582         ATA_FM_EEP_READ_BYTE_C (uAccessRightAddress, uAccessRightAddressValue)
+??ATA_eepWriteByte_C_3:
+        OUT     0x22, R17
+        OUT     0x21, R16
+        SBI     0x1F, 0x00
+        IN      R17, 0x20
+//  583 
+//  584         if ( EECR2 & BM_E2FF )
+        LDS     R16, _A_EECR2
+        SBRS    R16, 6
+        RJMP    ??ATA_eepWriteByte_C_4
+//  585         {
+//  586             retValue = EEC_ERROR_CORRECTION_OCCURED;
+        LDI     R18, 4
+        RJMP    ??ATA_eepWriteByte_C_5
+//  587         }
+//  588         else if ( (uAccessRightAddressValue & (BM_EEP_SECTION_ROW_0_WR_ACC >> (uAccessRowInByte * 2))) == FALSE )
+??ATA_eepWriteByte_C_4:
+        LSL     R20
+        LDI     R16, 64
+        CALL    ?UC_SHR_L01
+        AND     R17, R16
+        BRNE    ??ATA_eepWriteByte_C_6
+//  589         {
+//  590             /* LLR-Ref: 080 */
+//  591             retValue = EEC_ADDR_LOCKED_FOR_WRITING;
+        LDI     R18, 2
+        RJMP    ??ATA_eepWriteByte_C_5
+//  592         }
+//  593         else
+//  594         {
+//  595             /* LLR-Ref: 090 */
+//  596             ATA_FM_EEP_WRITE_BYTE_C (uAddress, uDataToWrite)
+??ATA_eepWriteByte_C_6:
+        OUT     0x22, R1
+        OUT     0x21, R0
+        OUT     0x20, R19
+        IN      R16, 0x1F
+        ANDI    R16, 0xCF
+        OUT     0x1F, R16
+        SBI     0x1F, 0x02
+        SBI     0x1F, 0x01
+//  597         }
+//  598         
+//  599         /* LLR-Ref: 095 */
+//  600         EECR2 |= (BM_E2CF | BM_E2FF);
+??ATA_eepWriteByte_C_5:
+        LDS     R16, _A_EECR2
+        ORI     R16, 0xC0
+        STS     _A_EECR2, R16
+//  601     }
+//  602 
+//  603     /* LLR-Ref: 100 */
+//  604     SREG = bSreg;
+??ATA_eepWriteByte_C_2:
+        OUT     0x3F, R21
+          CFI EndBlock cfiBlock1
+//  605 
+//  606     /* LLR-Ref: 110 */
+//  607     return retValue;
+        REQUIRE ?Subroutine0
+        REQUIRE _A_SREG
+        REQUIRE _A_TRCDR
+        REQUIRE _A_TRCIDL
+        REQUIRE _A_TRCIDH
+        REQUIRE _A_EECR
+        REQUIRE _A_EEARH
+        REQUIRE _A_EEARL
+        REQUIRE _A_EEDR
+        REQUIRE _A_EECR2
+        ;               // Fall through to label ?Subroutine0
+//  608 }
+
+        RSEG CODE:CODE:NOROOT(1)
+?Subroutine0:
+          CFI Block cfiBlock2 Using cfiCommon0
+          CFI NoFunction
+        MOV     R16, R18
+        RET
+          CFI EndBlock cfiBlock2
+//  609 
+//  610 
+//  611 /*---------------------------------------------------------------------------*/
+//  612 /** \brief <b>ATA_eepReadByte_C</b>
+//  613     shall read a single byte from the EEPROM in accordance with the
+//  614     applicable EEPROM Access Right Map.
+//  615 
+//  616 \param[out] pDataToRead     Address to store the data to
+//  617 \param[in]  uAddress        EEPROM address to be read from
+//  618 
+//  619 \return     Status of the performed EEPROM read access (::eEepErrorCode)
+//  620 
+//  621 \StackUsageInBytes{XXX}
+//  622 
+//  623 \image html ATA_eepReadByte_C.png
+//  624 
+//  625 \internal
+//  626     Prerequisite:
+//  627     The enabling of read/write access for sections AP0, AP1, AP2 and AP3 in
+//  628     register EEPR needs to be handled by the Application SW in order
+//  629     for this function to work as specified.
+//  630 
+//  631 \li 005: Update HW Trace Unit with specific function information\n\n
+//  632          Technical background:
+//  633          64 bytes are covered by one Access Right Map byte,
+//  634          4 rows per access byte with 2 bits for each row (== 8 bits for 4 rows).
+//  635          16 bytes per row, 4 rows per access byte, Row = 0..3
+//  636 
+//  637 \li 010: Get the EEPROM Access Right Map byte holding the access rights for the
+//  638          row containing this EEPROM address "uAddress" by dividing the given
+//  639          address with 64.
+//  640 
+//  641 \li 020: Get the EEPROM Access Right Map row position within the access right
+//  642          byte for EEPROM address "uAddress", by only locking at bits 5 and 6.
+//  643 
+//  644 \li 030: Wait for any previous EEPROM access (Write or AES) to be finished by
+//  645          checking the NVMBSY bit in register EECR being 0.
+//  646 
+//  647 \li 040: Disable all interrupts to allow for an atomic execution of the EEPROM
+//  648          read access.
+//  649 
+//  650 \li 050: IF the given EEPROM address "uAddress" is not in the range
+//  651           EEPROM_START_ADD to EEPROM_XROW_END_ADD,
+//  652          THEN
+//  653            Set the return value to EEC_ADDR_OUT_OF_RANGE to indicate that the
+//  654             given EEPROM address is out of range,
+//  655 
+//  656 \li 060: ELSE
+//  657            Get the EEPROM Access Right Map byte corresponding to the given
+//  658            EEPROM address "uAddress" by calling function macro
+//  659            ::ATA_FM_EEP_READ_BYTE_C().
+//  660            IF after the EEPROM read access to retrieve the access rights, an
+//  661             uncorrectable EEPROM error was detected, indicated by
+//  662             bit "E2FF" in register EECR2 being set 1,
+//  663            THEN
+//  664              Set "return" to EEC_ERROR_CORRECTION_OCCURED to indicate
+//  665               that an EEPROM error correction occured.
+//  666 
+//  667 \li 070:   ELSE IF the given EEPROM address "uAddress" is locked for reading,
+//  668            THEN
+//  669              Set the return value to EEC_ADDR_LOCKED_FOR_READING to indicate
+//  670              that the given EEPROM address is locked,
+//  671 
+//  672            ELSE
+//  673 \li 075:     Reset both EEPROM error indications by setting bits "E2CF" and 
+//  674               "E2FF" in register EECR2 to 1 in order to not have stale flags
+//  675               when executing a subsequent EEPROM read call.
+//  676 
+//  677 \li 080:     Execute the write request by calling the function macro
+//  678               ::ATA_FM_EEP_READ_BYTE_C() with EEPROM address "uAddress" and
+//  679               "pDataToRead" as parameters.
+//  680              IF after the EEPROM read access to retrieve the requested data, an
+//  681               uncorrectable EEPROM error was detected, indicated by
+//  682               bit "E2FF" in register EECR2 being set 1,
+//  683              THEN
+//  684                Set "return" to EEC_ERROR_CORRECTION_OCCURED to indicate
+//  685                 that an EEPROM error correction occured.
+//  686              ELSE
+//  687                Set "return" to EEC_NO_ERROR to indicate that the EEPROM read
+//  688                 request was performed successfully.
+//  689              ENDIF
+//  690            ENDIF
+//  691 
+//  692 \li 085:   Reset both EEPROM error indications by setting bits "E2CF" and 
+//  693              "E2FF" in register EECR2 to 1.
+//  694 
+//  695          ENDIF
+//  696 
+//  697 \li 090: Restore SREG status (namely the global interrupt flag), 
+//  698          since the critical section is finished.
+//  699 
+//  700 \li 100: Return the function's error code to the calling function.
+//  701 
+//  702 \Derived{No}
+//  703 
+//  704 \Rationale{N/A}
+//  705 
+//  706 \Traceability{Primus2P-820,Primus2P-1102}
+//  707 \endinternal
+//  708 \n
+//  709 */
+//  710 /*---------------------------------------------------------------------------*/
+
+        RSEG CODE:CODE:ROOT(1)
+//  711 __root eEepErrorCode ATA_eepReadByte_C(uint16_t uAddress, uint8_t* const pDataToRead)
+ATA_eepReadByte_C:
+          CFI Block cfiBlock3 Using cfiCommon0
+          CFI Function ATA_eepReadByte_C
+//  712 {
+        MOVW    R1:R0, R17:R16
+        MOVW    R31:R30, R19:R18
+//  713     uint8_t bSreg = SREG;
+        IN      R19, 0x3F
+//  714     
+//  715     /* Variable to hold the function's return value. */
+//  716     eEepErrorCode retValue = EEC_NO_ERROR;
+        LDI     R18, 0
+//  717 
+//  718     /* Variable to hold the actual row info for EEPROM operations */
+//  719     uint8_t uAccessRowInByte;
+//  720 
+//  721     /* Variable to hold the actual access right address for EEPROM operations */
+//  722     uint16_t uAccessRightAddress;
+//  723 
+//  724     /* Variable to hold the actual access right value of the given EEPROM address */
+//  725     uint8_t uAccessRightAddressValue;
+//  726 
+//  727     /* LLR-Ref: 005 */
+//  728     ATA_SET_FUNCTION_TRACE_POINT_C(ATA_eepReadByte_C, 0x00);
+        IN      R20, 0x3F
+        CLI
+        STS     _A_TRCDR, R18
+        LDI     R16, LOW(ATA_eepReadByte_C/2)
+        STS     _A_TRCIDL, R16
+        LDI     R16, (ATA_eepReadByte_C/2) >> 8
+        STS     _A_TRCIDH, R16
+        OUT     0x3F, R20
+//  729 
+//  730     /* LLR-Ref: 010 */
+//  731     uAccessRightAddress = EEP_MEM_ACCESS_MAP_ADD + (uAddress >> 6);
+        LDI     R20, 6
+        MOV     R16, R0
+        CALL    ?US_SHR_L02
+        SUBI    R16, 176
+        SBCI    R17, 248
+//  732 
+//  733     /* LLR-Ref: 020 */
+//  734     uAccessRowInByte = (uint8_t)((uAddress & 0x003F) >> 4);
+        MOV     R20, R0
+        SWAP    R20
+        ANDI    R20, 0x03
+//  735 
+//  736     /* LLR-Ref: 030 */
+//  737     __disable_interrupt();
+        CLI
+//  738 
+//  739     /* LLR-Ref: 040 */
+//  740     while(EECR & BM_NVMBSY){}
+??ATA_eepReadByte_C_0:
+        SBIC    0x1F, 0x07
+        RJMP    ??ATA_eepReadByte_C_0
+//  741 
+//  742     if ( uAddress > EEPROM_XROW_END_ADD )
+        LDI     R21, 9
+        CP      R1, R21
+        BRCS    ??ATA_eepReadByte_C_1
+//  743     {
+//  744         /* LLR-Ref: 050 */
+//  745         retValue = EEC_ADDR_OUT_OF_RANGE;
+        LDI     R18, 3
+        RJMP    ??ATA_eepReadByte_C_2
+//  746     }
+//  747     else
+//  748     {
+//  749         /* LLR-Ref: 060 */
+//  750         ATA_FM_EEP_READ_BYTE_C(uAccessRightAddress, uAccessRightAddressValue)
+??ATA_eepReadByte_C_1:
+        OUT     0x22, R17
+        OUT     0x21, R16
+        SBI     0x1F, 0x00
+        IN      R17, 0x20
+//  751 
+//  752         if ( EECR2 & BM_E2FF )
+        LDS     R16, _A_EECR2
+        SBRC    R16, 6
+        RJMP    ??ATA_eepReadByte_C_3
+//  753         {
+//  754             retValue = EEC_ERROR_CORRECTION_OCCURED;
+//  755         }
+//  756         else if ( (uAccessRightAddressValue & (BM_EEP_SECTION_ROW_0_RD_ACC >> (uAccessRowInByte * 2))) == FALSE )
+        LSL     R20
+        LDI     R16, 128
+        CALL    ?UC_SHR_L01
+        AND     R17, R16
+        BRNE    ??ATA_eepReadByte_C_4
+//  757         {
+//  758             /* LLR-Ref: 070 */
+//  759             retValue = EEC_ADDR_LOCKED_FOR_READING;
+        LDI     R18, 1
+        RJMP    ??ATA_eepReadByte_C_5
+//  760         }
+//  761         else
+//  762         {
+//  763             /* LLR-Ref: 075 */
+//  764             EECR2 |= (BM_E2CF | BM_E2FF);
+??ATA_eepReadByte_C_4:
+        LDS     R16, _A_EECR2
+        ORI     R16, 0xC0
+        STS     _A_EECR2, R16
+//  765           
+//  766             /* LLR-Ref: 080 */
+//  767             ATA_FM_EEP_READ_BYTE_C(uAddress, *pDataToRead)
+        OUT     0x22, R1
+        OUT     0x21, R0
+        SBI     0x1F, 0x00
+        IN      R16, 0x20
+        ST      Z, R16
+//  768 
+//  769             if ( EECR2 & BM_E2FF )
+        LDS     R16, _A_EECR2
+        SBRC    R16, 6
+//  770             {
+//  771                 retValue = EEC_ERROR_CORRECTION_OCCURED;
+??ATA_eepReadByte_C_3:
+        LDI     R18, 4
+//  772             }
+//  773         }
+//  774         
+//  775         /* LLR-Ref: 085 */
+//  776         EECR2 |= (BM_E2CF | BM_E2FF);
+??ATA_eepReadByte_C_5:
+        LDS     R16, _A_EECR2
+        ORI     R16, 0xC0
+        STS     _A_EECR2, R16
+//  777     }
+//  778 
+//  779     /* LLR-Ref: 090 */
+//  780     SREG = bSreg;
+??ATA_eepReadByte_C_2:
+        OUT     0x3F, R19
+//  781 
+//  782     /* LLR-Ref: 100 */
+//  783     return retValue;
+        RJMP    ?Subroutine0
+          CFI EndBlock cfiBlock3
+        REQUIRE _A_SREG
+        REQUIRE _A_TRCDR
+        REQUIRE _A_TRCIDL
+        REQUIRE _A_TRCIDH
+        REQUIRE _A_EECR
+        REQUIRE _A_EEARH
+        REQUIRE _A_EEARL
+        REQUIRE _A_EEDR
+        REQUIRE _A_EECR2
+//  784 }
+//  785 
+//  786 
+//  787 /*---------------------------------------------------------------------------*/
+//  788 /** \brief <b>ATA_eepReadMultipleBytes_C</b>
+//  789     The purpose of this function is to read multiple bytes from the EEPROM in
+//  790     accordance with the applicable EEPROM Access Right Map.
+//  791     To copy the bytes, the EEPROM burst read mode is used.
+//  792 
+//  793 \param[out] uDataBytes      Address to store the data to
+//  794 \param[in]  uAddress        EEPROM address to be read from
+//  795 \param[in]  uLength         Number of data bytes to be read
+//  796 
+//  797 \return     Status of the performed EEPROM read access (::eEepErrorCode)
+//  798 
+//  799 \StackUsageInBytes{XXX}
+//  800 
+//  801 \image html ATA_eepReadMultipleBytes_C.png
+//  802 
+//  803 \internal
+//  804     Prerequisite:
+//  805     The enabling of read/write access for sections AP0, AP1, AP2 and AP3 in
+//  806     register EEPR needs to be handled by the Application SW in order
+//  807     for this function to work as specified.
+//  808 
+//  809 \li 005: Update HW Trace Unit with specific function information\n\n
+//  810          Technical background:
+//  811          64 bytes are covered by one Access Right Map byte,
+//  812          4 rows per access byte with 2 bits for each row (== 8 bits for 4 rows).
+//  813          16 bytes per row, 4 rows per access byte, Row = 0..3
+//  814 
+//  815 \li 010: Compute the last valid address to be taken into account for reading
+//  816          by adding "uLength" to "uAddress" and subtracting one byte.
+//  817 
+//  818 \li 020: Wait for any previous EEPROM access (Write or AES) to be finished by
+//  819          checking the NVMBSY bit in register EECR being 0.
+//  820 
+//  821 \li 030: Disable all interrupts to allow for an atomic execution of the EEPROM
+//  822          read access.
+//  823 
+//  824 \li 040: IF the given range of EEPROM addresses starting from "uAddress", is
+//  825           not in the range EEPROM_START_ADD to EEPROM_XROW_END_ADD,
+//  826          THEN
+//  827            Set "return" to EEC_ADDR_OUT_OF_RANGE to indicate that the
+//  828            given EEPROM addresses are out of range,
+//  829 
+//  830          ELSE
+//  831            Check all read access rights of the affected EEPROM pages.
+//  832 
+//  833 \li 050:   Get the EEPROM Access Right Map byte holding the access rights for
+//  834            the row containing this EEPROM address "uAddress" by dividing the
+//  835            given address with 64.
+//  836 
+//  837 \li 060:   Get the EEPROM Access Right Map row position within the access right
+//  838            byte for EEPROM address "uAddress", by only locking at bits 5 and 6.
+//  839 
+//  840 \li 070:   Get the EEPROM Access Right Map byte corresponding to the affected
+//  841             EEPROM address by calling function macro ::ATA_FM_EEP_READ_BYTE_C().
+//  842 
+//  843 \li 080:   IF after the EEPROM read access to retrieve the access rights, an
+//  844              uncorrectable EEPROM error was detected, indicated by
+//  845              bit "E2FF" in register EECR2 being set 1,
+//  846            THEN
+//  847              Reset the EEPROM fault indications by 
+//  848               setting bit "E2FF" in register EECR2 to 1, AND
+//  849              Set "return" to EEC_ERROR_CORRECTION_OCCURED to indicate
+//  850               that an EEPROM error correction occured.
+//  851              Stop checking further access rights to not overwrite the given
+//  852               EEPROM error with a different one.
+//  853 
+//  854            ELSE
+//  855 \li 090:     IF the given EEPROM address "uAddress" is locked for reading,
+//  856              THEN
+//  857                Set "return" to EEC_ADDR_LOCKED_FOR_READING to indicate
+//  858                 that the given EEPROM address is locked, AND
+//  859                Stop checking further access rights to not overwrite the given
+//  860                 EEPROM error with a different one.
+//  861              ENDIF
+//  862            ENDIF
+//  863 
+//  864 \li 095:   Reset both EEPROM error indications by setting bits "E2CF" and 
+//  865             "E2FF" in register EECR2 to 1 in order to not have stale flags
+//  866             when executing a subsequent EEPROM read call.
+//  867 
+//  868 \li 100:   IF "return" is set to EEC_NO_ERROR, indicating that the intended
+//  869             EEPROM read access is valid,
+//  870            THEN
+//  871              Execute the EEPROM multi byte read request by calling the function
+//  872               macro ::ATA_FM_EEP_READ_MULTIPLE_BYTES_C() with EEPROM start address
+//  873               "uAddress", "uLength" and "uDataBytes" as parameters.
+//  874 
+//  875 \li 110:     IF after the EEPROM multi byte read access to retrieve the requested
+//  876               data, an uncorrectable EEPROM error was detected, indicated by
+//  877               bit "E2FF" in register EECR2 being set 1,
+//  878              THEN
+//  879                Set "return" to EEC_ERROR_CORRECTION_OCCURED to indicate
+//  880                 that an EEPROM error correction occured.
+//  881              ELSE
+//  882                Set "return" to EEC_NO_ERROR to indicate that the EEPROM read
+//  883                 request was performed successfully.
+//  884              ENDIF
+//  885 
+//  886 \li 115:     Reset both EEPROM error indications by setting bits "E2CF" and 
+//  887               "E2FF" in register EECR2 to 1
+//  888 
+//  889            ENDIF
+//  890          ENDIF
+//  891 
+//  892 \li 120: Restore SREG status (namely the global interrupt flag), 
+//  893          since the critical section is finished.
+//  894 
+//  895 \li 130: Return the function's error code to the calling function.
+//  896 
+//  897 \Derived{No}
+//  898 
+//  899 \Rationale{N/A}
+//  900 
+//  901 \Traceability{Primus2P-815,Primus2P-1102}
+//  902 \endinternal
+//  903 \n
+//  904 */
+//  905 /*---------------------------------------------------------------------------*/
+
+        RSEG CODE:CODE:ROOT(1)
+//  906 __root eEepErrorCode ATA_eepReadMultipleBytes_C(uint16_t uAddress, uint8_t uLength, uint8_t* uDataBytes)
+ATA_eepReadMultipleBytes_C:
+          CFI Block cfiBlock4 Using cfiCommon0
+          CFI Function ATA_eepReadMultipleBytes_C
+//  907 {
+        CALL    ?PROLOGUE4_L09
+          CFI R27 Frame(CFA_Y, -1)
+          CFI R26 Frame(CFA_Y, -2)
+          CFI R25 Frame(CFA_Y, -3)
+          CFI R24 Frame(CFA_Y, -4)
+          CFI CFA_Y Y+4
+        MOVW    R23:R22, R17:R16
+        MOV     R0, R18
+//  908     uint8_t bSreg = SREG;
+        IN      R19, 0x3F
+//  909   
+//  910     /* Performance optimization. */
+//  911     uint8_t* pData;
+//  912 
+//  913     /* Variable to hold the function's return value. */
+//  914     eEepErrorCode retValue = EEC_NO_ERROR;
+        LDI     R18, 0
+//  915 
+//  916     /* Variable to hold the address for which the access right is checked. */
+//  917     uint16_t loopAddress;
+//  918 
+//  919     /* Variable to hold the end address of the EEPROM read opearation */
+//  920     uint16_t uAddressEnd;
+//  921 
+//  922     /* Variable to hold the actual row info for EEPROM operations */
+//  923     uint8_t uAccessRowInByte;
+//  924 
+//  925     /* Variable to hold the actual access right address for EEPROM operations */
+//  926     uint16_t uAccessRightAddress;
+//  927 
+//  928     /* Variable to hold the actual access right value of the given EEPROM address */
+//  929     uint8_t uAccessRightAddressValue;
+//  930 
+//  931     /* LLR-Ref: 005 */
+//  932     ATA_SET_FUNCTION_TRACE_POINT_C(ATA_eepReadMultipleBytes_C, uLength);
+        IN      R1, 0x3F
+        CLI
+        STS     _A_TRCDR, R0
+        LDI     R16, LOW(ATA_eepReadMultipleBytes_C/2)
+        STS     _A_TRCIDL, R16
+        LDI     R16, (ATA_eepReadMultipleBytes_C/2) >> 8
+        STS     _A_TRCIDH, R16
+        OUT     0x3F, R1
+//  933 
+//  934     pData = uDataBytes;
+        MOVW    R31:R30, R21:R20
+//  935 
+//  936     /* LLR-Ref: 010 */
+//  937     uAddressEnd = uAddress + uLength - 0x01U;
+        MOV     R26, R22
+        MOV     R27, R17
+        ADD     R26, R0
+        ADC     R27, R18
+        SBIW    R27:R26, 1
+//  938 
+//  939     /* LLR-Ref: 020 */
+//  940     while(EECR & BM_NVMBSY){}
+??ATA_eepReadMultipleBytes_C_0:
+        SBIC    0x1F, 0x07
+        RJMP    ??ATA_eepReadMultipleBytes_C_0
+//  941 
+//  942     /* LLR-Ref: 030 */
+//  943     __disable_interrupt();
+        CLI
+//  944 
+//  945     /* LLR-Ref: 040 */
+//  946     /* This check detects an address overflow as well! */
+//  947     if ( (uAddress > EEPROM_XROW_END_ADD) || (uAddressEnd > EEPROM_XROW_END_ADD)  )
+        CPI     R17, 9
+        BRCC    ??ATA_eepReadMultipleBytes_C_1
+        CPI     R27, 9
+        BRCS    ??ATA_eepReadMultipleBytes_C_2
+//  948     {
+//  949         retValue = EEC_ADDR_OUT_OF_RANGE;
+??ATA_eepReadMultipleBytes_C_1:
+        LDI     R18, 3
+        RJMP    ??ATA_eepReadMultipleBytes_C_3
+//  950     }
+//  951     else
+//  952     {
+//  953         for ( loopAddress = uAddress;
+??ATA_eepReadMultipleBytes_C_2:
+        MOV     R2, R22
+        MOV     R3, R17
+        RJMP    ??ATA_eepReadMultipleBytes_C_4
+//  954               loopAddress <= uAddressEnd;
+//  955               loopAddress += (0x0010U - (loopAddress & 0x000FU)) )
+??ATA_eepReadMultipleBytes_C_5:
+        MOVW    R25:R24, R3:R2
+        ADIW    R25:R24, 16
+        MOV     R16, R2
+        ANDI    R16, 0x0F
+        MOVW    R3:R2, R25:R24
+        SUB     R2, R16
+        SBC     R3, R18
+??ATA_eepReadMultipleBytes_C_4:
+        CP      R26, R2
+        CPC     R27, R3
+        BRCS    ??ATA_eepReadMultipleBytes_C_6
+//  956         {
+//  957             /* LLR-Ref: 050 */
+//  958             uAccessRightAddress = EEP_MEM_ACCESS_MAP_ADD + (loopAddress >> 6);
+        LDI     R20, 6
+        MOVW    R17:R16, R3:R2
+        CALL    ?US_SHR_L02
+        SUBI    R16, 176
+        SBCI    R17, 248
+//  959 
+//  960             /* LLR-Ref: 060 */
+//  961             uAccessRowInByte = (uint8_t)((loopAddress & 0x003F) >> 4);
+//  962 
+//  963             /* LLR-Ref: 070 */
+//  964             ATA_FM_EEP_READ_BYTE_C(uAccessRightAddress, uAccessRightAddressValue)
+        OUT     0x22, R17
+        OUT     0x21, R16
+        SBI     0x1F, 0x00
+        IN      R17, 0x20
+//  965 
+//  966             if ( EECR2 & BM_E2FF )
+        LDS     R16, _A_EECR2
+        SBRS    R16, 6
+        RJMP    ??ATA_eepReadMultipleBytes_C_7
+//  967             {
+//  968                 /* LLR-Ref: 080 */
+//  969                 retValue = EEC_ERROR_CORRECTION_OCCURED;
+        LDI     R18, 4
+//  970                 break;
+        RJMP    ??ATA_eepReadMultipleBytes_C_6
+//  971             }
+//  972             else
+//  973             {
+//  974                 /* LLR-Ref: 090 */
+//  975                 if ( (uAccessRightAddressValue & (BM_EEP_SECTION_ROW_0_RD_ACC >> (uAccessRowInByte * 2))) == FALSE )
+??ATA_eepReadMultipleBytes_C_7:
+        MOV     R20, R2
+        LSR     R20
+        LSR     R20
+        LSR     R20
+        ANDI    R20, 0x06
+        LDI     R16, 128
+        CALL    ?UC_SHR_L01
+        AND     R17, R16
+        BRNE    ??ATA_eepReadMultipleBytes_C_5
+//  976                 {
+//  977                     retValue = EEC_ADDR_LOCKED_FOR_READING;
+        LDI     R18, 1
+//  978                     break;
+//  979                 }
+//  980             }
+//  981         }
+//  982 
+//  983         /* LLR-Ref: 095 */
+//  984         EECR2 |= (BM_E2CF | BM_E2FF);
+??ATA_eepReadMultipleBytes_C_6:
+        LDS     R16, _A_EECR2
+        ORI     R16, 0xC0
+        STS     _A_EECR2, R16
+//  985         
+//  986         if ( retValue == EEC_NO_ERROR )
+        TST     R18
+        BRNE    ??ATA_eepReadMultipleBytes_C_3
+//  987         {
+//  988             /* LLR-Ref: 100 */
+//  989             ATA_FM_EEP_READ_MULTIPLE_BYTES_C(uAddress, uLength, pData)
+        OUT     0x22, R23
+        OUT     0x21, R22
+        LDS     R16, 345
+        ORI     R16, 0x01
+        STS     345, R16
+        LDI     R16, 0
+        RJMP    ??ATA_eepReadMultipleBytes_C_8
+??ATA_eepReadMultipleBytes_C_9:
+        IN      R17, 0x20
+        ST      Z+, R17
+        INC     R16
+??ATA_eepReadMultipleBytes_C_8:
+        CP      R16, R0
+        BRCS    ??ATA_eepReadMultipleBytes_C_9
+        LDS     R16, _A_EECR2
+        ANDI    R16, 0x3E
+        STS     _A_EECR2, R16
+//  990 
+//  991             if ( EECR2 & BM_E2FF )
+        LDS     R16, _A_EECR2
+        SBRC    R16, 6
+//  992             {
+//  993                 /* LLR-Ref: 110 */
+//  994                 retValue = EEC_ERROR_CORRECTION_OCCURED;
+        LDI     R18, 4
+//  995             }
+//  996             
+//  997             /* LLR-Ref: 115 */
+//  998             EECR2 |= (BM_E2CF | BM_E2FF);
+??ATA_eepReadMultipleBytes_C_10:
+        LDS     R16, _A_EECR2
+        ORI     R16, 0xC0
+        STS     _A_EECR2, R16
+          CFI EndBlock cfiBlock4
+//  999         }
+// 1000     }
+// 1001 
+// 1002     /* LLR-Ref: 120 */
+// 1003     SREG = bSreg;
+??ATA_eepReadMultipleBytes_C_3:
+        REQUIRE ?Subroutine1
+        REQUIRE _A_SREG
+        REQUIRE _A_TRCDR
+        REQUIRE _A_TRCIDL
+        REQUIRE _A_TRCIDH
+        REQUIRE _A_EECR
+        REQUIRE _A_EEARH
+        REQUIRE _A_EEARL
+        REQUIRE _A_EEDR
+        REQUIRE _A_EECR2
+        ;               // Fall through to label ?Subroutine1
+// 1004 
+// 1005     /* LLR-Ref: 130 */
+// 1006     return retValue;
+// 1007 }
+
+        RSEG CODE:CODE:NOROOT(1)
+?Subroutine1:
+          CFI Block cfiBlock5 Using cfiCommon0
+          CFI NoFunction
+          CFI CFA_Y Y+4
+          CFI R24 Frame(CFA_Y, -4)
+          CFI R25 Frame(CFA_Y, -3)
+          CFI R26 Frame(CFA_Y, -2)
+          CFI R27 Frame(CFA_Y, -1)
+        OUT     0x3F, R19
+        MOV     R16, R18
+        LDI     R30, 4
+        JMP     ?EPILOGUE_B4_L09
+          CFI EndBlock cfiBlock5
+// 1008 
+// 1009 
+// 1010 /*---------------------------------------------------------------------------*/
+// 1011 /** \brief <b>ATA_eepWriteMultipleBytes_C</b>
+// 1012     shall write multiple bytes to a defined EEPROM start address in accordance
+// 1013     with the applicable EEPROM Access Right Map.
+// 1014 
+// 1015 \param[in]  uAddress         EEPROM address to be written to
+// 1016 \param[in]  uLength          Number of bytes to be written
+// 1017 \param[in]  pDataToWrite     Data to be written to the given EEPROM address
+// 1018 
+// 1019 \return     Status of the performed EEPROM write access (:.eEepErrorCode)
+// 1020 
+// 1021 \StackUsageInBytes{XXX}
+// 1022 
+// 1023 \image html ATA_eepWriteMultipleBytes_C.png
+// 1024 
+// 1025 \internal
+// 1026     Prerequisite:
+// 1027     The enabling of read/write access for sections AP0, AP1, AP2 and AP3 in
+// 1028     register EEPR needs to be handled by the Application SW in order
+// 1029     for this function to work as specified.
+// 1030 
+// 1031 \li 005: Update HW Trace Unit with specific function information\n\n
+// 1032          Technical background:
+// 1033          64 bytes are covered by one Access Right Map byte,
+// 1034          4 rows per access byte with 2 bits for each row (== 8 bits for 4 rows).
+// 1035          16 bytes per row, 4 rows per access byte, Row = 0..3
+// 1036 
+// 1037 \li 010: Compute the last valid address to be taken into account for reading
+// 1038          by adding "uLength" to "uAddress" and subtracting one byte.
+// 1039 
+// 1040 \li 020: Wait for any previous EEPROM access (Write or AES) to be finished by
+// 1041          checking the NVMBSY bit in register EECR being 0.
+// 1042 
+// 1043 \li 030: Disable all interrupts to allow for an atomic execution of the EEPROM
+// 1044          read access.
+// 1045 
+// 1046 \li 040: IF the given range of EEPROM addresses starting from "uAddress", is
+// 1047           not in the range EEPROM_START_ADD to EEPROM_USER_END_ADD,
+// 1048          THEN
+// 1049            Set "return" to EEC_ADDR_OUT_OF_RANGE to indicate that the
+// 1050            given EEPROM addresses are out of range,
+// 1051 
+// 1052 \li 050: ELSE IF the given range of EEPROM addresses starting from "uAddress",
+// 1053           is not in the range AP0_START_ADD to EEPROM_USER_END_ADD,
+// 1054          THEN
+// 1055            Set "return" to EEC_ADDR_OUT_OF_RANGE to indicate that the
+// 1056            given EEPROM addresses are out of range,
+// 1057 
+// 1058          ELSE
+// 1059            Check all write access rights of the affected EEPROM pages.
+// 1060 
+// 1061 \li 060:   Get the EEPROM Access Right Map byte holding the access rights for
+// 1062            the row containing this EEPROM address "uAddress" by dividing the
+// 1063            given address with 64.
+// 1064 
+// 1065 \li 070:   Get the EEPROM Access Right Map row position within the access right
+// 1066            byte for EEPROM address "uAddress", by only locking at bits 5 and 6.
+// 1067 
+// 1068 \li 080:   Get the EEPROM Access Right Map byte corresponding to the affected
+// 1069            EEPROM address by calling function macro ::ATA_FM_EEP_READ_BYTE_C().
+// 1070 
+// 1071 \li 090:   IF after the EEPROM read access to retrieve the access rights, an
+// 1072              uncorrectable EEPROM error was detected, indicated by
+// 1073              bit "E2FF" in register EECR2 being set 1,
+// 1074            THEN
+// 1075              Set "return" to EEC_ERROR_CORRECTION_OCCURED to indicate
+// 1076               that an EEPROM error correction occured.
+// 1077              Stop checking further access rights to not overwrite the given
+// 1078               EEPROM error with a different one.
+// 1079 
+// 1080            ELSE
+// 1081 \li 100:     IF the given EEPROM address "uAddress" is locked for writing,
+// 1082              THEN
+// 1083                Set "return" to EEC_ADDR_LOCKED_FOR_READING to indicate
+// 1084                 that the given EEPROM address is locked, AND
+// 1085                Stop checking further access rights to not overwrite the given
+// 1086                 EEPROM error with a different one.
+// 1087              ENDIF
+// 1088            ENDIF
+// 1089          ENDIF
+// 1090 
+// 1091 \li 105: Reset both EEPROM error indications by setting bits "E2CF" and 
+// 1092           "E2FF" in register EECR2 to 1 in order to not have stale flags
+// 1093           when executing a subsequent EEPROM read call.
+// 1094 
+// 1095          IF "return" is set to EEC_NO_ERROR, indicating that the intended
+// 1096           EEPROM read access is valid,
+// 1097          THEN
+// 1098            Do the following until all bytes have been written to the EEPROM
+// 1099 
+// 1100 \li 110:   Wait for any previous EEPROM write access to be finished by
+// 1101            checking the NVMBSY bit in register EECR being 0.
+// 1102 
+// 1103 \li 120:   Compute the actual number of bytes to be written to the affected
+// 1104            EEPROM address taking into account that the EEPROM start address is
+// 1105            not EEPROM page aligned and that the last EPPROM write may not
+// 1106            contain a full EPPROM page to be written.
+// 1107 
+// 1108 \li 130:   Execute the EEPROM multi byte wite request by calling the function
+// 1109            macro ::ATA_FM_EEP_WRITE_MULTIPLE_BYTES_C() with the affected EEPROM
+// 1110            address, the number of bytes to be written and the date to be
+// 1111            written as parameters.
+// 1112 
+// 1113 \li 140:   Update the affected EEPROM address with the number of bytes written
+// 1114             in the last cycle, AND
+// 1115            Update the number of bytes to be written with the number of bytes
+// 1116             written in the last cycle.
+// 1117 
+// 1118          ENDIF
+// 1119 
+// 1120 \li 150: Restore SREG status (namely the global interrupt flag), 
+// 1121          since the critical section is finished.
+// 1122 
+// 1123 \li 160: Return the return value to the calling function.
+// 1124 
+// 1125 \Derived{No}
+// 1126 
+// 1127 \Rationale{N/A}
+// 1128 
+// 1129 \Traceability{Primus2P-814,Primus2P-1103}
+// 1130 \endinternal
+// 1131 \n
+// 1132 */
+// 1133 /*---------------------------------------------------------------------------*/
+
+        RSEG CODE:CODE:ROOT(1)
+// 1134 __root eEepErrorCode ATA_eepWriteMultipleBytes_C(uint16_t uAddress, uint8_t uLength, const uint8_t* pDataToWrite)
+ATA_eepWriteMultipleBytes_C:
+          CFI Block cfiBlock6 Using cfiCommon0
+          CFI Function ATA_eepWriteMultipleBytes_C
+// 1135 {
+        CALL    ?PROLOGUE4_L09
+          CFI R27 Frame(CFA_Y, -1)
+          CFI R26 Frame(CFA_Y, -2)
+          CFI R25 Frame(CFA_Y, -3)
+          CFI R24 Frame(CFA_Y, -4)
+          CFI CFA_Y Y+4
+        MOVW    R1:R0, R17:R16
+        MOV     R2, R18
+        MOVW    R31:R30, R21:R20
+// 1136     uint8_t bSreg = SREG;
+        IN      R19, 0x3F
+// 1137   
+// 1138     /* Variable to hold the function's return value. */
+// 1139     eEepErrorCode retValue = EEC_NO_ERROR;
+        LDI     R18, 0
+// 1140 
+// 1141     /* Variable to hold the number of bytes to be written via the EEPROM page mode. */
+// 1142     uint8_t uByteCount;
+// 1143 
+// 1144     /* Variable to hold the address for which the access right is checked. */
+// 1145     uint16_t loopAddress;
+// 1146 
+// 1147     /* Variable to hold the end address of the EEPROM read opearation */
+// 1148     uint16_t uAddressEnd;
+// 1149 
+// 1150     /* Variable to hold the actual row info for EEPROM operations */
+// 1151     uint8_t uAccessRowInByte;
+// 1152 
+// 1153     /* Variable to hold the actual access right address for EEPROM operations */
+// 1154     uint16_t uAccessRightAddress;
+// 1155 
+// 1156     /* Variable to hold the actual access right value of the given EEPROM address */
+// 1157     uint8_t uAccessRightAddressValue;
+// 1158 
+// 1159     /* LLR-Ref: 005 */
+// 1160     ATA_SET_FUNCTION_TRACE_POINT_C(ATA_eepWriteMultipleBytes_C, 0x00);
+        IN      R20, 0x3F
+        CLI
+        STS     _A_TRCDR, R18
+        LDI     R16, LOW(ATA_eepWriteMultipleBytes_C/2)
+        STS     _A_TRCIDL, R16
+        LDI     R16, (ATA_eepWriteMultipleBytes_C/2) >> 8
+        STS     _A_TRCIDH, R16
+        OUT     0x3F, R20
+// 1161 
+// 1162     /* LLR-Ref: 010 */
+// 1163     uAddressEnd = uAddress + uLength - 0x01U;
+        CLR     R3
+        MOV     R22, R0
+        MOV     R23, R17
+        ADD     R22, R2
+        ADC     R23, R18
+        SUBI    R22, 1
+        SBCI    R23, 0
+// 1164 
+// 1165     /* LLR-Ref: 020 */
+// 1166     while(EECR & BM_NVMBSY){}
+??ATA_eepWriteMultipleBytes_C_0:
+        SBIC    0x1F, 0x07
+        RJMP    ??ATA_eepWriteMultipleBytes_C_0
+// 1167 
+// 1168     /* LLR-Ref: 030 */
+// 1169     __disable_interrupt();
+        CLI
+// 1170 
+// 1171     if ( (uAddress > EEPROM_USER_END_ADD) || (uAddressEnd > EEPROM_USER_END_ADD)  )
+        CPI     R17, 8
+        BRCC    ??ATA_eepWriteMultipleBytes_C_1
+        CPI     R23, 8
+        BRCS    ??ATA_eepWriteMultipleBytes_C_2
+// 1172     {
+// 1173         /* LLR-Ref: 040 */
+// 1174         retValue = EEC_ADDR_OUT_OF_RANGE;
+??ATA_eepWriteMultipleBytes_C_1:
+        LDI     R18, 3
+// 1175     }
+// 1176     else if ( (uAddress > AP0_START_ADD) || (uAddressEnd > AP0_START_ADD) )
+// 1177     {
+// 1178         /* LLR-Ref: 050 */
+// 1179         retValue = EEC_ADDR_LOCKED_FOR_WRITING;
+// 1180     }
+// 1181     else
+// 1182     {
+// 1183         for ( loopAddress = uAddress;
+// 1184               loopAddress <= uAddressEnd;
+// 1185               loopAddress += (0x0010U - (loopAddress & 0x000FU)) )
+// 1186         {
+// 1187             /* LLR-Ref: 060 */
+// 1188             uAccessRightAddress = EEP_MEM_ACCESS_MAP_ADD + (loopAddress >> 6);
+// 1189 
+// 1190             /* LLR-Ref: 070 */
+// 1191             uAccessRowInByte = (loopAddress & 0x003F) >> 4;
+// 1192 
+// 1193             /* LLR-Ref: 080 */
+// 1194             ATA_FM_EEP_READ_BYTE_C(uAccessRightAddress, uAccessRightAddressValue)
+// 1195 
+// 1196             if ( EECR2 & BM_E2FF )
+// 1197             {
+// 1198                 /* LLR-Ref: 090 */
+// 1199                 retValue = EEC_ERROR_CORRECTION_OCCURED;
+// 1200                 break;
+// 1201             }
+// 1202             else
+// 1203             {
+// 1204                 /* LLR-Ref: 100 */
+// 1205                 if ( (uAccessRightAddressValue & (BM_EEP_SECTION_ROW_0_WR_ACC >> (uAccessRowInByte * 2))) == FALSE )
+// 1206                 {
+// 1207                     retValue = EEC_ADDR_LOCKED_FOR_WRITING;
+// 1208                     break;
+// 1209                 }
+// 1210             }
+// 1211         }
+// 1212 
+// 1213         /* LLR-Ref: 105 */
+// 1214         EECR2 |= (BM_E2CF | BM_E2FF);
+// 1215         
+// 1216         if ( retValue == EEC_NO_ERROR )
+// 1217         {
+// 1218             while ( uLength > 0 )
+// 1219             {
+// 1220                 /* LLR-Ref: 110 */
+// 1221                 /* Wait until EEPROM write operation has been finished.
+// 1222                    Put at the beginning, since no wait shall occur on the
+// 1223                    last write operation. */
+// 1224                 while(EECR & BM_NVMBSY){}
+// 1225 
+// 1226                 /* LLR-Ref: 120 */
+// 1227                 uByteCount = (0x0010U - (uAddress & 0x000FU));
+// 1228 
+// 1229                 if ( uLength < uByteCount )
+// 1230                 {
+// 1231                     uByteCount = uLength;
+// 1232                 }
+// 1233 
+// 1234                 /* LLR-Ref: 130 */
+// 1235                 ATA_FM_EEP_WRITE_MULTIPLE_BYTES_C(uAddress, uByteCount, pDataToWrite)
+// 1236 
+// 1237                 /* LLR-Ref: 140 */
+// 1238                 uAddress += uByteCount;
+// 1239                 uLength -= uByteCount;
+// 1240             }
+// 1241         }
+// 1242     }
+// 1243 
+// 1244     /* LLR-Ref: 150 */
+// 1245     SREG = bSreg;
+??ATA_eepWriteMultipleBytes_C_3:
+        RJMP    ?Subroutine1
+??ATA_eepWriteMultipleBytes_C_2:
+        LDI     R16, 129
+        CP      R0, R16
+        LDI     R16, 7
+        CPC     R17, R16
+        BRCC    ??ATA_eepWriteMultipleBytes_C_4
+        CPI     R22, 129
+        CPC     R23, R16
+        BRCS    ??ATA_eepWriteMultipleBytes_C_5
+??ATA_eepWriteMultipleBytes_C_4:
+        LDI     R18, 2
+        RJMP    ??ATA_eepWriteMultipleBytes_C_3
+??ATA_eepWriteMultipleBytes_C_5:
+        MOV     R26, R0
+        MOV     R27, R17
+        RJMP    ??ATA_eepWriteMultipleBytes_C_6
+??ATA_eepWriteMultipleBytes_C_7:
+        MOVW    R25:R24, R27:R26
+        ADIW    R25:R24, 16
+        MOV     R16, R26
+        ANDI    R16, 0x0F
+        MOVW    R27:R26, R25:R24
+        SUB     R26, R16
+        SBCI    R27, 0
+??ATA_eepWriteMultipleBytes_C_6:
+        CP      R22, R26
+        CPC     R23, R27
+        BRCS    ??ATA_eepWriteMultipleBytes_C_8
+        LDI     R20, 6
+        MOVW    R17:R16, R27:R26
+        CALL    ?US_SHR_L02
+        SUBI    R16, 176
+        SBCI    R17, 248
+        OUT     0x22, R17
+        OUT     0x21, R16
+        SBI     0x1F, 0x00
+        IN      R17, 0x20
+        LDS     R16, _A_EECR2
+        SBRS    R16, 6
+        RJMP    ??ATA_eepWriteMultipleBytes_C_9
+        LDI     R18, 4
+        RJMP    ??ATA_eepWriteMultipleBytes_C_8
+??ATA_eepWriteMultipleBytes_C_9:
+        MOV     R20, R26
+        LSR     R20
+        LSR     R20
+        LSR     R20
+        ANDI    R20, 0x06
+        LDI     R16, 64
+        CALL    ?UC_SHR_L01
+        AND     R17, R16
+        BRNE    ??ATA_eepWriteMultipleBytes_C_7
+        LDI     R18, 2
+??ATA_eepWriteMultipleBytes_C_8:
+        LDS     R16, _A_EECR2
+        ORI     R16, 0xC0
+        STS     _A_EECR2, R16
+        TST     R18
+        BRNE    ??ATA_eepWriteMultipleBytes_C_3
+        RJMP    ??ATA_eepWriteMultipleBytes_C_10
+??ATA_eepWriteMultipleBytes_C_11:
+        OUT     0x21, R21
+        LD      R17, Z+
+        OUT     0x20, R17
+        INC     R21
+        INC     R16
+??ATA_eepWriteMultipleBytes_C_12:
+        CP      R16, R20
+        BRCS    ??ATA_eepWriteMultipleBytes_C_11
+        IN      R16, 0x1F
+        ANDI    R16, 0xCF
+        OUT     0x1F, R16
+        SBI     0x1F, 0x02
+        SBI     0x1F, 0x01
+        ADD     R0, R20
+        ADC     R1, R3
+        SUB     R2, R20
+??ATA_eepWriteMultipleBytes_C_10:
+        TST     R2
+        BRNE    $+2+2
+        RJMP    ??ATA_eepWriteMultipleBytes_C_3
+??ATA_eepWriteMultipleBytes_C_13:
+        SBIC    0x1F, 0x07
+        RJMP    ??ATA_eepWriteMultipleBytes_C_13
+        LDI     R20, 16
+        MOV     R16, R0
+        ANDI    R16, 0x0F
+        SUB     R20, R16
+        CP      R2, R20
+        BRCC    ??ATA_eepWriteMultipleBytes_C_14
+        MOV     R20, R2
+??ATA_eepWriteMultipleBytes_C_14:
+        MOV     R21, R0
+        SBI     0x1F, 0x06
+        OUT     0x22, R1
+        LDI     R16, 0
+        RJMP    ??ATA_eepWriteMultipleBytes_C_12
+          CFI EndBlock cfiBlock6
+        REQUIRE _A_SREG
+        REQUIRE _A_TRCDR
+        REQUIRE _A_TRCIDL
+        REQUIRE _A_TRCIDH
+        REQUIRE _A_EECR
+        REQUIRE _A_EEARH
+        REQUIRE _A_EEARL
+        REQUIRE _A_EEDR
+        REQUIRE _A_EECR2
+// 1246 
+// 1247     /* LLR-Ref: 160 */
+// 1248     return retValue;
+// 1249 }
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01cH
+__?EECR:
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01dH
+__?EEDR:
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01eH
+__?EEARL:
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01fH
+__?EEARH:
+
+        END
+// 
+//   4 bytes in segment .eep_RfTx_RollingCodeSequenceCounter
+//  48 bytes in segment .eep_SecretKey_KeyOneSection
+//  48 bytes in segment .eep_SecretKey_KeyTwoSection
+//  11 bytes in segment .eep_xrow_LfDecoderSettings
+//  40 bytes in segment .eep_xrow_LfReceiverCalibRegister
+//  10 bytes in segment .eep_xrow_LfRssiSettings
+//   1 byte  in segment .eep_xrow_MvccSettlingTime
+//   6 bytes in segment .eep_xrow_RfFrontendCalibValues
+//   1 byte  in segment .eep_xrow_SrcCalibration
+//   1 byte  in segment .eep_xrow_SrcTemperatureCompensation
+//   2 bytes in segment .eep_xrow_TransponderCalibValues
+//   4 bytes in segment .eep_xrow_UniqueId
+//   9 bytes in segment ABSOLUTE
+// 998 bytes in segment CODE
+// 
+// 998 bytes of CODE memory
+// 176 bytes of DATA memory (+ 9 bytes shared)
+//
+//Errors: none
+//Warnings: none

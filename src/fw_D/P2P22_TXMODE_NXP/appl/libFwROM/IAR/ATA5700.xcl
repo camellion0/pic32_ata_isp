@@ -1,0 +1,274 @@
+/*                      - lnkmSigma.xcl -
+ *
+ *   XLINK command file for the ICCAVR C-compiler using the --cpu=m88, -ms
+ *   options. Segments are defined for an ATmega88 whithout external
+ *   memory. It is also possible to "add" external SRAM, EPROM and EEPROM.
+ *
+ *   Usage: xlink your_file(s) -f lnkmSigma
+ *
+ *   File version: $Revision: 328482 $
+ */
+
+/*=================== CONSTANTS =============================*/
+/* Constants used in the ranges down below,
+ * Do not change these lines,
+ * if it is not stated otherwise
+ */
+
+/* Code (ROM) segments: 32 Kbyte, 16Kwords */
+-D_..X_INTVEC_SIZE=C4       /* 49 Interrupt vectors * 4 bytes each */
+
+-D_..X_ROM_TEND=FF          /* End of tiny flash memory */
+-D_..X_ROM_NEND=7FFF        /* End of near flash memory */
+-D_..X_ROM_END=7FFF         /* End of flash memory */
+-D_..X_ROM_IMMO_END=1FFF    /* End of immobilizer memory */
+-D_..X_ROM_LIB_START=2000   /* Start of ROM library memory */
+-D_..X_ROM_LIB_END=6FFF     /* End of ROM library memory */
+-D_..X_TEST_CODE_START=7000 /* Start of signature test memory */
+
+/* Code (FLASH) segments: 32 Kbyte, 16Kwords */
+-D_..X_FLASH_START=8000     /* Start of flash memory */
+-D_..X_FLASH_END=FFFF       /* End of flash memory 32KB Primus2P */
+-D_..X_FLASH_ENTRY_SIZE=4
+
+/* Internal data memory */
+-D_..X_SRAM_BASE=200    /* Start of RAM memory Primus2P */
+-D_..X_SRAM_TEND=200    /* End of tiny RAM memory */
+-D_..X_SRAM_END=5FF     /* End of RAM memory Primus2P */
+
+/* Internal EEPROM */
+-D_..X_EEPROM_END=8FF   /* End of EEPROM memory Primus2P */
+
+/* Stack */
+-D_..X_STACK_BASE=598    /* Start of STACK memory */
+
+
+/*==================== END OF CONSTANTS =====================*/
+
+/*
+ * Modify the lines below to alter the size of the RSTACK, CSTACK and HEAP
+ * segments. These need to be fine tuned to suit your specific application.
+ * The '_..X_' prefix is used by C-SPY as an indication that the label should
+ * not be displayed in the dissassembly window.
+ */
+-D_..X_CSTACK_SIZE=30   /* 48 bytes for auto variables and saved registers. */
+-D_..X_RSTACK_SIZE=38   /* 56 bytes for return addresses, equivalent to 16 */
+                        /* levels of calls, including interrupts. */
+-D_..X_HEAP_SIZE=0      /* 0 bytes of heap. */
+-D_..X_NEAR_HEAP_SIZE=0     /* 0 bytes of heap. */
+
+
+/* Define CPU */
+-ca90
+
+/*
+ * The following segments are located in the internal memory of
+ * the ATmegaSigma. Do not change these lines.
+ */
+
+/* Code memory */
+-Z(CODE)INTVEC=_..X_ROM_LIB_START-(_..X_ROM_LIB_START+_..X_INTVEC_SIZE-1)
+
+/* Fill unused interrupt vector's with RETI */
+//-h(CODE)0-(_..X_INTVEC_SIZE-1)
+
+-Z(CODE)NEAR_F=(_..X_ROM_LIB_START+_..X_INTVEC_SIZE)-_..X_ROM_LIB_END
+-Z(CODE)NEAR_C=(_..X_ROM_LIB_START+_..X_INTVEC_SIZE)-_..X_ROM_LIB_END
+-Z(CODE)CODE=(_..X_ROM_LIB_START+_..X_INTVEC_SIZE)-_..X_ROM_LIB_END
+
+// Define code section for signature test SW
+-Z(CODE)TESTCODE=_..X_TEST_CODE_START-_..X_ROM_END
+
+///////////////////////////////////////////////////////////////////////////////
+// SRAM configuration
+///////////////////////////////////////////////////////////////////////////////
+-Z(DATA).eventram=200
+-Z(DATA).flowctrl
+-Z(DATA).tmr1ram
+-Z(DATA).tmr2ram
+-Z(DATA).tmr3ram
+-Z(DATA).tmr4ram
+-Z(DATA).tmr5ram
+-Z(DATA).trxram
+-Z(DATA).sleep
+-Z(DATA).frcresram
+-Z(DATA).debug
+-Z(DATA).i2cpara
+-Z(DATA).i2cslavepara
+-Z(DATA).sramAesComponentDataSection
+-Z(DATA).spiConfig
+-Z(DATA).ata5831
+-Z(DATA).trace
+-Z(DATA).rftx
+-Z(DATA).rfrccpara
+-Z(DATA).lfRssi
+-Z(DATA).lfRssiTest
+-Z(DATA).calib
+-Z(DATA).lfRx
+
+-Z(DATA)__BSS__
+
+
+///////////////////////////////////////////////////////////////////////////////
+// EEPROM configuration
+///////////////////////////////////////////////////////////////////////////////
+
+//-----------------------------------------------------------------------------
+// XROW Section
+//-----------------------------------------------------------------------------
+-Z(XDATA).eep_xrow_CrcFinalTest=08FE-08FF
+-Z(XDATA).eep_xrow_RfFrontendCalibValues=08F8-08FD
+// SPARE_1 08F5-08F7
+-Z(XDATA).eep_xrow_LfDecoderSettings=08EA-08F4
+-Z(XDATA).eep_xrow_TransponderCalibValues=08E8-08E9
+-Z(XDATA).eep_xrow_LfReceiverCalibRegister=08C0-08E7
+-Z(XDATA).eep_xrow_LfRssiSettings=08B6-08BF
+-Z(XDATA).eep_xrow_DeviceId=08B4-08B5
+-Z(XDATA).eep_xrow_UniqueId=08B0-08B3
+-Z(XDATA).eep_xrow_SrcCalibration=08AF-08AF
+-Z(XDATA).eep_xrow_SrcTemperatureCompensation=08AE-08AE
+-Z(XDATA).eep_xrow_MvccSettlingTime=08AD-08AD
+// SPARE_2 08A9-08AD
+-Z(XDATA).eep_xrow_Traceability=08A0-08A8
+-Z(XDATA).eep_xrow_ValuesResetStatemachine=0880-089F
+
+
+//-----------------------------------------------------------------------------
+// Factory Locked Section
+//-----------------------------------------------------------------------------
+// SPARE_3 0870-087F
+// SPARE_4 0860-086F
+// SPARE_5 0853-085F
+-Z(XDATA).eep_FactoryLocked_TransponderFieldClockPrescalerValue=0852-0852
+-Z(XDATA).eep_FactoryLocked_TransponderWatchdogNoFieldConfiguration=0851-0851
+-Z(XDATA).eep_FactoryLocked_TransponderEncoderMode=0850-0850
+-Z(XDATA).eep_FactoryLocked_TransponderPreambleAndSynchronization=084C-084F
+-Z(XDATA).eep_FactoryLocked_TransponderPreambleLength=084B-084B
+-Z(XDATA).eep_FactoryLocked_TransponderSynchronizationLength=084A-084A
+-Z(XDATA).eep_FactoryLocked_Crc8PolynomValue=0849-0849
+-Z(XDATA).eep_FactoryLocked_Crc8StartValue=0848-0848
+-Z(XDATA).eep_FactoryLocked_Crc4PolynomValue=0847-0847
+-Z(XDATA).eep_FactoryLocked_Crc4StartValue=0846-0846
+-Z(XDATA).eep_FactoryLocked_TransponderDecoderComparatorValues=0841-0845
+-Z(XDATA).eep_FactoryLocked_AoipResponseDelayTime=0840-0840
+-Z(XDATA).eep_FactoryLocked_DefaultSecretKey=0830-083F
+// SPARE_6 081F-082F
+-Z(XDATA).eep_FactoryLocked_VoltageMonitor=081E-081E
+-Z(XDATA).eep_FactoryLocked_WatchdogTimer=081D-081D
+// SPARE_7 081C-081C
+-Z(XDATA).eep_FactoryLocked_TransponderDampingLengthSelection=081B-081B
+-Z(XDATA).eep_FactoryLocked_ResponseLength=081A-081A
+-Z(XDATA).eep_FactoryLocked_ChallengeLength=0819-0819
+// SPARE_8 0818-0818
+-Z(XDATA).eep_FactoryLocked_BaudRateSetting=0817-0817
+// SPARE_9 0816-0816
+-Z(XDATA).eep_FactoryLocked_ConfigurationOptions=0815-0815
+-Z(XDATA).eep_FactoryLocked_RadioId=0810-0814
+-Z(XDATA).eep_FactoryLocked_SoftwareVersion=080F-080F
+// SPARE_10 0805-080E
+-Z(XDATA).eep_FactoryLocked_CustomerId=0804-0804
+-Z(XDATA).eep_FactoryLocked_UniqueEepromSettingId=0800-0803
+
+//-----------------------------------------------------------------------------
+// Secret Key Section
+//-----------------------------------------------------------------------------
+-Z(XDATA).eep_SecretKey_EnhancedModeFlag=07FF-07FF
+// SPARE_11 07F0-07FE
+-Z(XDATA).eep_SecretKey_KeyOneSection=07C0-07EF
+// SPARE_12 07B0-07BF
+-Z(XDATA).eep_SecretKey_KeyTwoSection=0780-07AF
+
+//-----------------------------------------------------------------------------
+// General EEPROM sections
+//-----------------------------------------------------------------------------
+-Z(XDATA).eep_General_AccessRightMap=0750-077F
+// SPARE_13 0740-074F
+// SPARE_14 073B-073F
+-Z(XDATA).eep_General_EepromChecksum=0739-073A
+-Z(XDATA).eep_General_EepromGuiConfiguration=0731-0738
+-Z(XDATA).eep_General_HwTraceUnitConfiguration=0730-0730
+
+//-----------------------------------------------------------------------------
+// RF TX EEPROM sections
+//-----------------------------------------------------------------------------
+// SPARE_15 072D-072F
+-Z(XDATA).eep_RfTx_TxServiceConfiguration_2=0700-072C
+// SPARE_16 06FD-06FF
+-Z(XDATA).eep_RfTx_TxServiceConfiguration_1=06D0-06FC
+// SPARE_17 06C9-06CF
+-Z(XDATA).eep_calib_FrcCalibrationConfig=06C7-06C8
+-Z(XDATA).eep_calib_SrcCalibrationConfig=06C4-06C6
+-Z(XDATA).eep_RfTx_RollingCodeSequenceCounter=06C0-06C3
+
+//-----------------------------------------------------------------------------
+// LF RECEIVER EEPROM sections
+//-----------------------------------------------------------------------------
+// SPARE_18 06B9-06BF
+-Z(XDATA).eep_LfReceiver_RssiInternalReferenceValues=06B6-06B8
+-Z(XDATA).eep_LfReceiver_RssiNormalizationMeasurements=06B3-6B5
+-Z(XDATA).eep_LfReceiver_QualityFactorRegister=06B0-6B2
+
+// SPARE_19
+
+// SPARE_20 0000-069F
+
+///////////////////////////////////////////////////////////////////////////////
+// CODE configuration
+///////////////////////////////////////////////////////////////////////////////
+-Z(CODE).lfRssiLOG4q4Lut=069BC-06BBB
+-Z(CODE).lfRssiLIN12q4Lut=06BBC-06FEB
+
+// Put version and checksum information at the end of the ROM library address space
+-Z(CODE).romversion=07FFD
+-Z(CODE)CHECKSUM=07FFE
+
+
+/* Internal data memory */
+-Z(DATA)TINY_I,TINY_Z,TINY_N=_..X_SRAM_BASE-_..X_SRAM_TEND
+-Z(DATA)NEAR_I,NEAR_Z,NEAR_N=_..X_SRAM_BASE-_..X_SRAM_END
+
+/*
+ * If external SRAM is available it is possible to place the stacks there.
+ * However, the external memory is slower than the internal so moving the
+ * stacks to the external memory will degrade the system performance.
+ */
+-Z(DATA)RSTACK+_..X_RSTACK_SIZE=_..X_STACK_BASE-_..X_SRAM_END
+-Z(DATA)CSTACK+_..X_CSTACK_SIZE=_..X_STACK_BASE-_..X_SRAM_END
+
+/*
+ * If external SRAM is available it might be a good idea to move the
+ * heap segment there, i.e. remove the _..X_SRAM_BASE-_..X_SRAM_END range.
+ */
+-Z(DATA)HEAP+_..X_HEAP_SIZE=_..X_SRAM_BASE-_..X_SRAM_END
+-Z(DATA)IOSTREAM_N#_..X_SRAM_BASE-_..X_SRAM_END
+-Z(DATA)NEAR_HEAP+_..X_NEAR_HEAP_SIZE=_..X_SRAM_BASE-_..X_SRAM_END
+
+/* Internal eeprom memory */
+-Z(XDATA)EEPROM_I,EEPROM_N=0-_..X_EEPROM_END
+
+/* Select reduced "printf" support to reduce library size.
+   See configuration section in manual concerning printf/sprintf. */
+
+/*Dlib*/
+-e_PrintfSmall=_Printf
+
+/*Clib*/
+-e_small_write=_formatted_write
+
+/*Dlib and Clib*/
+-e_small_write_P=_formatted_write_P
+
+/* Disable floating-point support in "scanf" to reduce library size.
+   See configuration section in manual concerning scanf/sscanf */
+
+/*Dlib*/
+-e_ScanfSmall=_Scanf
+
+/*Clib*/
+-e_medium_read=_formatted_read
+
+/*Dlib and Clib*/
+-e_medium_read_P=_formatted_read_P
+
+/* Suppress one warning which is not relevant for this processor */
+-w29

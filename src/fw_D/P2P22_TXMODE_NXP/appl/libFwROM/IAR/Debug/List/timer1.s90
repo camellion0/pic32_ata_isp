@@ -1,0 +1,498 @@
+///////////////////////////////////////////////////////////////////////////////
+//
+// IAR C/C++ Compiler V6.70.1.929 for Atmel AVR           05/Apr/2016  13:30:43
+// Copyright 1996-2015 IAR Systems AB.
+// Network license: DVRIAR01.corpp.atmel.com (STD)
+//
+//    Source file  =  
+//        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\firmware\timer1\src\timer1.c
+//    Command line =  
+//        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\firmware\timer1\src\timer1.c
+//        -v3 --enhanced_core -ms -o
+//        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\Obj
+//        -lC
+//        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\List
+//        -lA
+//        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\List
+//        --initializers_in_flash --no_cse --no_inline --no_code_motion
+//        --no_cross_call --no_clustering --no_tbaa --debug --64k_flash
+//        -DENABLE_BIT_DEFINITIONS -e -I "C:\Program Files (x86)\IAR
+//        Systems\Embedded Workbench 6.0\avr\inc\" --eeprom_size 1152 --clib
+//        -Ohz
+//    List file    =  
+//        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\List\timer1.s90
+//
+///////////////////////////////////////////////////////////////////////////////
+
+        NAME timer1
+
+        RTMODEL "__64bit_doubles", "disabled"
+        RTMODEL "__SystemLibrary", "CLib"
+        RTMODEL "__cpu", "3"
+        RTMODEL "__enhanced_core", "enabled"
+        RTMODEL "__has_elpm", "false"
+        RTMODEL "__memory_model", "2"
+        RTMODEL "__rt_version", "3"
+
+        RSEG CSTACK:DATA:NOROOT(0)
+        RSEG RSTACK:DATA:NOROOT(0)
+
+        PUBLIC ATA_timer1Close_C
+        PUBLIC ATA_timer1Init_C
+        PUBLIC ATA_timer1Open_C
+        PUBWEAK _A_PRR1
+        PUBWEAK _A_T1COR
+        PUBWEAK _A_T1CR
+        PUBWEAK _A_T1IFR
+        PUBWEAK _A_T1IMR
+        PUBWEAK _A_T1MR
+        PUBWEAK __?EEARH
+        PUBWEAK __?EEARL
+        PUBWEAK __?EECR
+        PUBWEAK __?EEDR
+        PUBLIC g_sTimer1
+        
+          CFI Names cfiNames0
+          CFI StackFrame CFA_Y Y DATA
+          CFI StackFrame CFA_SP SP DATA
+          CFI VirtualResource ?RetPad:1, ?RetHigh:8, ?RetLow:8, ?Ret:17
+          CFI Resource R0:8, R1:8, R2:8, R3:8, R4:8, R5:8, R6:8, R7:8, R8:8, R9:8
+          CFI Resource R10:8, R11:8, R12:8, R13:8, R14:8, R15:8, R16:8, R17:8
+          CFI Resource R18:8, R19:8, R20:8, R21:8, R22:8, R23:8, R24:8, R25:8
+          CFI Resource R26:8, R27:8, R28:8, R29:8, R30:8, R31:8
+          CFI Resource ?RetHighByteMask:8, SP:16, SPH:8, SPL:8, Y:16
+          CFI ResourceParts ?Ret ?RetHigh, ?RetLow, ?RetPad
+          CFI ResourceParts SP SPH, SPL
+          CFI ResourceParts Y R29, R28
+          CFI EndNames cfiNames0
+        
+          CFI Common cfiCommon0 Using cfiNames0
+          CFI CodeAlign 1
+          CFI DataAlign 1
+          CFI ReturnAddress ?Ret CODE
+          CFI CFA_Y Y+0
+          CFI CFA_SP SP+2
+          CFI ?RetPad 0
+          CFI ?RetHigh and(load(1, DATA, sub(CFA_SP, 1)), ?RetHighByteMask)
+          CFI ?RetLow Frame(CFA_SP, 0)
+          CFI ?Ret Concat
+          CFI R0 Undefined
+          CFI R1 Undefined
+          CFI R2 Undefined
+          CFI R3 Undefined
+          CFI R4 SameValue
+          CFI R5 SameValue
+          CFI R6 SameValue
+          CFI R7 SameValue
+          CFI R8 SameValue
+          CFI R9 SameValue
+          CFI R10 SameValue
+          CFI R11 SameValue
+          CFI R12 SameValue
+          CFI R13 SameValue
+          CFI R14 SameValue
+          CFI R15 SameValue
+          CFI R16 Undefined
+          CFI R17 Undefined
+          CFI R18 Undefined
+          CFI R19 Undefined
+          CFI R20 Undefined
+          CFI R21 Undefined
+          CFI R22 Undefined
+          CFI R23 Undefined
+          CFI R24 SameValue
+          CFI R25 SameValue
+          CFI R26 SameValue
+          CFI R27 SameValue
+          CFI R28 Undefined
+          CFI R29 Undefined
+          CFI R30 Undefined
+          CFI R31 Undefined
+          CFI ?RetHighByteMask SameValue
+          CFI SPH Undefined
+          CFI SPL Undefined
+          CFI EndCommon cfiCommon0
+        
+// C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\firmware\timer1\src\timer1.c
+//    1 //lint -e9059
+//    2 /* *C**************************************************************************
+//    3   Use of this software is subject to Atmel's Software License Agreement.
+//    4 -------------------------------------------------------------------------------
+//    5   $URL: http://svnservulm.corp.atmel.com/svn/CDB/Apps/SW_Lib/Car_Access/CARS_GEN2/ATAB5702A/Branches/P2_Gen2_Merge/firmware/timer1/src/timer1.c $
+//    6   $LastChangedRevision: 328482 $
+//    7   $LastChangedDate: 2015-07-22 13:17:23 -0600 (Wed, 22 Jul 2015) $
+//    8   $LastChangedBy: grueter $
+//    9 -------------------------------------------------------------------------------
+//   10   Project:      ATA5700
+//   11   Target MCU:   ATA5700
+//   12   Compiler:     IAR C/C++ Compiler for AVR 6.30.1
+//   13 -------------------------------------------------------------------------------
+//   14   
+//   15 ******************************************************************************
+//   16 * Copyright 2011, Atmel Automotive GmbH                                       *
+//   17 *                                                                             *
+//   18 * This software is owned by the Atmel Automotive GmbH                         *
+//   19 * and is protected by and subject to worldwide patent protection.             *
+//   20 * Atmel hereby grants to licensee a personal,                                 *
+//   21 * non-exclusive, non-transferable license to copy, use, modify, create        *
+//   22 * derivative works of, and compile the Atmel Source Code and derivative       *
+//   23 * works for the sole purpose of creating custom software in support of        *
+//   24 * licensee product to be used only in conjunction with a Atmel integrated     *
+//   25 * circuit as specified in the applicable agreement. Any reproduction,         *
+//   26 * modification, translation, compilation, or representation of this           *
+//   27 * software except as specified above is prohibited without the express        *
+//   28 * written permission of Atmel.                                                *
+//   29 *                                                                             *
+//   30 * Disclaimer: ATMEL MAKES NO WARRANTY OF ANY KIND,EXPRESS OR IMPLIED,         *
+//   31 * WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED    *
+//   32 * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.         *
+//   33 * Atmel reserves the right to make changes without further notice to the      *
+//   34 * materials described herein. Atmel does not assume any liability arising     *
+//   35 * out of the application or use of any product or circuit described herein.   *
+//   36 * Atmel does not authorize its products for use as critical components in     *
+//   37 * life-support systems where a malfunction or failure may reasonably be       *
+//   38 * expected to result in significant injury to the user. The inclusion of      *
+//   39 * Atmel products in a life-support systems application implies that the       *
+//   40 * manufacturer assumes all risk of such use and in doing so indemnifies       *
+//   41 * Atmel against all charges.                                                  *
+//   42 *                                                                             *
+//   43 * Use may be limited by and subject to the applicable Atmel software          *
+//   44 * license agreement.                                                          *
+//   45 ******************************************************************************/
+//   46 /** \file timer1.c
+//   47 */
+//   48 //lint -restore
+//   49 
+//   50 /*---------------------------------------------------------------------------*/
+//   51 /*  INCLUDES                                                                 */
+//   52 /*---------------------------------------------------------------------------*/
+//   53 #include "timer1.h"
+
+        ASEGN ABSOLUTE:DATA:NOROOT,021H
+// union <unnamed> volatile __io _A_PRR1
+_A_PRR1:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,031H
+// union <unnamed> volatile __io _A_T1CR
+_A_T1CR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,070H
+// union <unnamed> volatile __io _A_T1COR
+_A_T1COR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,071H
+// union <unnamed> volatile __io _A_T1MR
+_A_T1MR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,072H
+// union <unnamed> volatile __io _A_T1IMR
+_A_T1IMR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01a2H
+// union <unnamed> volatile __ext_io _A_T1IFR
+_A_T1IFR:
+        DS8 1
+//   54 /*---------------------------------------------------------------------------*/
+//   55 /*  DEFINES                                                                  */
+//   56 /*---------------------------------------------------------------------------*/
+//   57 /*---------------------------------------------------------------------------*/
+//   58 /*  Modul Globals                                                            */
+//   59 /*---------------------------------------------------------------------------*/
+//   60 /** \brief <b>g_sTimer1</b>
+//   61     contains the configuration settings for Timer 1.
+//   62 */
+//   63 #pragma location = ".tmr1ram"
+
+        RSEG `.tmr1ram`:DATA:NOROOT(0)
+//   64 __no_init sTmr1Config g_sTimer1;
+g_sTimer1:
+        DS8 5
+//   65 
+//   66 /*---------------------------------------------------------------------------*/
+//   67 /*  IMPLEMENTATION                                                           */
+//   68 /*---------------------------------------------------------------------------*/
+//   69 /*---------------------------------------------------------------------------*/
+//   70 /** \brief <b>ATA_timer1Init_C</b>
+//   71     shall initialize Timer1 data structure sTmr1Config.
+//   72 
+//   73     Variable Usage:
+//   74     \li [out] ::g_sTimer1 Global Timer 1 component data
+//   75 
+//   76     \image html ATA_timer1Init_C.png
+//   77 
+//   78     \internal
+//   79     \li 010:   Set all ::g_sTimer1 attributes to 0.
+//   80 
+//   81     \Derived{Yes}
+//   82 
+//   83     \Rationale{Since the hardware SRAM initialization is turned off, all SRAM
+//   84                variables need initialization prior to its usage}
+//   85 
+//   86     \Traceability   N/A
+//   87     \endinternal
+//   88 \n
+//   89 */
+//   90 /*---------------------------------------------------------------------------*/
+
+        RSEG CODE:CODE:ROOT(1)
+//   91 VOIDFUNC ATA_timer1Init_C(void)
+ATA_timer1Init_C:
+          CFI Block cfiBlock0 Using cfiCommon0
+          CFI Function ATA_timer1Init_C
+          CFI NoCalls
+//   92 {
+//   93     /* LLR-Ref: 010 */
+//   94     g_sTimer1.bStatus  = 0x00U;
+        LDI     R16, 0
+        STS     g_sTimer1, R16
+//   95     g_sTimer1.fpCompIsr = (timerIRQHandler)0x0000U;
+        STS     (g_sTimer1 + 1), R16
+        STS     (g_sTimer1 + 2), R16
+//   96     g_sTimer1.fpOvfIsr  = (timerIRQHandler)0x0000U;
+        STS     (g_sTimer1 + 3), R16
+        STS     (g_sTimer1 + 4), R16
+//   97 }
+        RET
+          CFI EndBlock cfiBlock0
+//   98 
+//   99 /*---------------------------------------------------------------------------*/
+//  100 /** \brief <b>ATA_timer1Open_C</b>
+//  101     shall open and initialize Timer1, in case it is not yet locked.
+//  102 
+//  103     \param[in]      pTimer1Params   Asynchronous timer configuration settings
+//  104     \return     OK on success, FAIL on failure
+//  105     
+//  106     Variable Usage:
+//  107     \li [in,out] ::g_sTimer1 Global Timer 1 component data
+//  108 
+//  109     \image html ATA_timer1Open_C.png
+//  110 
+//  111     \internal
+//  112              Note:
+//  113              Power up of Timer 1 via register PRR1 needs to occur before any 
+//  114              Timer 1 register is accessed in order for the intended action to 
+//  115              take effect.
+//  116 
+//  117              IF Timer 1 is not locked, i.e. not already used by another component,
+//  118              THEN
+//  119 
+//  120     \li 010:   Lock Timer 1 by setting the lock status in global variable 
+//  121                ::g_sTimer1 in order to synchronize the usage of Timer 1.
+//  122 
+//  123     \li 020:   Power up Timer 1 by setting bit PRT1 in register PRR1 to 0 to 
+//  124                disable the power reduction feature for Timer 1.
+//  125 
+//  126     \li 030:   Disable and reset Timer 1 by writing a 1 to the bit T1RES in
+//  127                 register T1CR and a 0 to bit T1ENA.
+//  128 
+//  129     \li 040:   Store the given function pointer parameters "ovf" and "comp" of 
+//  130                parameter "pTimer1Params" within to the global variable ::g_sTimer1
+//  131                in order for those functions to be called when the corresponding
+//  132                interrupt, overflow and compare, is triggered.
+//  133 
+//  134     \li 050:   Clear Timer 1 interrupt flags in T1IFR. 
+//  135 
+//  136     \li 060:   Set Timer 1 registers T1COR, T1MR, T1IMR and T1CR to the 
+//  137                 given attributes of parameter "pTimer1Params".
+//  138 
+//  139              ENDIF
+//  140 
+//  141     \li 070: Return OK to the calling function if Timer 1 was successfully 
+//  142               configured.
+//  143              Return FAIL if Timer 1 was already locked and therefore could 
+//  144               not be configured.
+//  145 
+//  146     \Derived{No}
+//  147 
+//  148     \Rationale{N/A}
+//  149 
+//  150     \Traceability{Primus2P-881,Primus2P-1328}
+//  151     \endinternal 
+//  152 \n
+//  153 */
+//  154 /*---------------------------------------------------------------------------*/
+
+        RSEG CODE:CODE:ROOT(1)
+//  155 UINT8FUNC ATA_timer1Open_C(const sTimerAsyn8BitParams * const pTimer1Params)
+ATA_timer1Open_C:
+          CFI Block cfiBlock1 Using cfiCommon0
+          CFI Function ATA_timer1Open_C
+          CFI NoCalls
+//  156 {
+//  157     uint8_t retVal = FAIL;
+        LDI     R18, 1
+//  158 
+//  159     if( !(g_sTimer1.bStatus & TMR1LOCK) )
+        LDI     R30, LOW(g_sTimer1)
+        LDI     R31, (g_sTimer1) >> 8
+        LD      R19, Z
+        SBRC    R19, 7
+        RJMP    ??ATA_timer1Open_C_0
+//  160     {   
+//  161         /* LLR-Ref: 010 */
+//  162         g_sTimer1.bStatus |= TMR1LOCK;   
+        ORI     R19, 0x80
+        ST      Z, R19
+//  163         
+//  164         /* LLR-Ref: 020 */
+//  165         ATA_POWERON_C(PRR1, PRT1)
+        CBI     0x01, 0x00
+//  166         
+//  167         /* LLR-Ref: 030 */
+//  168         T1CR &= ~BM_T1ENA;
+        CBI     0x11, 0x07
+//  169         T1CR = BM_T1RES;
+        LDI     R18, 32
+        OUT     0x11, R18
+//  170 
+//  171         /* LLR-Ref: 040 */
+//  172         g_sTimer1.fpCompIsr = pTimer1Params->compIsr;
+        MOVW    R31:R30, R17:R16
+        LDD     R18, Z+6
+        LDD     R19, Z+7
+        STS     (g_sTimer1 + 1), R18
+        STS     (g_sTimer1 + 2), R19
+//  173         g_sTimer1.fpOvfIsr = pTimer1Params->ovfIsr;
+        LDD     R18, Z+4
+        LDD     R19, Z+5
+        STS     (g_sTimer1 + 3), R18
+        STS     (g_sTimer1 + 4), R19
+//  174         
+//  175         /* LLR-Ref: 050 */
+//  176         T1IFR |= ((uint8_t)(BM_T1COF|BM_T1OFF));
+        LDS     R18, _A_T1IFR
+        ORI     R18, 0x03
+        STS     _A_T1IFR, R18
+//  177         
+//  178         /* LLR-Ref: 060 */
+//  179         T1COR = pTimer1Params->comp;
+        LDD     R18, Z+2
+        STS     _A_T1COR, R18
+//  180         T1MR = pTimer1Params->mode;
+        LDD     R18, Z+1
+        STS     _A_T1MR, R18
+//  181         T1IMR = pTimer1Params->irqMask;
+        LDD     R18, Z+3
+        STS     _A_T1IMR, R18
+//  182         T1CR = pTimer1Params->ctrl;
+        LD      R16, Z
+        OUT     0x11, R16
+//  183 
+//  184         retVal = OK;
+        LDI     R18, 0
+//  185     }
+//  186     
+//  187     /* LLR-Ref: 070 */
+//  188     return retVal;
+??ATA_timer1Open_C_0:
+        MOV     R16, R18
+        RET
+          CFI EndBlock cfiBlock1
+        REQUIRE _A_PRR1
+        REQUIRE _A_T1CR
+        REQUIRE _A_T1IFR
+        REQUIRE _A_T1COR
+        REQUIRE _A_T1MR
+        REQUIRE _A_T1IMR
+//  189 }
+//  190 
+//  191 
+//  192 /* ---------------------------------------------------------------------------*/
+//  193 /** \brief <b>ATA_timer1Close_C</b>
+//  194     shall stop Timer 1 and enable the power reduction feature of Timer 1.
+//  195 
+//  196     Variable Usage:
+//  197     \li [out] ::g_sTimer1 Global Timer 1 component data
+//  198 
+//  199     \image html ATA_timer1Close_C.png
+//  200 
+//  201     \internal
+//  202              Note:
+//  203              Disabling of the Power Reduction feature of Timer 1 via register PRR1
+//  204              needs to occur before any Timer 1 register is accessed in order for the
+//  205              intended actions to take effect.
+//  206              Enabling of the Power Reduction feature of Timer 1 via register PRR1 
+//  207              needs to occur after any Timer 1 register is accessed in order for the 
+//  208              intended action to take effect.
+//  209 
+//  210     \li 005: Disable the power reduction feature of Timer 1 by setting bit PRT1 in 
+//  211              register PRR1 to 0.
+//  212 
+//  213     \li 010: Disable Timer 1 by setting all bits of register T1CR to 0,
+//  214              except bit T1RES which is set to 1 to reset the prescaler and counter
+//  215              value.
+//  216 
+//  217     \li 020: Unlock Timer 1 by setting the status indication of the global variable
+//  218              ::g_sTimer1 to 0.
+//  219 
+//  220     \li 030: Enable the power reduction feature of Timer 1 by setting bit PRT1 in 
+//  221              register PRR1 to 1.
+//  222         
+//  223     \Derived{No}
+//  224 
+//  225     \Rationale{N/A}
+//  226 
+//  227     \Traceability{Primus2P-882}
+//  228     \endinternal            
+//  229 \n
+//  230 */
+//  231 /* ---------------------------------------------------------------------------*/
+
+        RSEG CODE:CODE:ROOT(1)
+//  232 VOIDFUNC ATA_timer1Close_C(void)
+ATA_timer1Close_C:
+          CFI Block cfiBlock2 Using cfiCommon0
+          CFI Function ATA_timer1Close_C
+          CFI NoCalls
+//  233 {
+//  234     /* LLR-Ref: 005 */
+//  235     ATA_POWERON_C(PRR1, PRT1)
+        CBI     0x01, 0x00
+//  236   
+//  237     /* LLR-Ref: 010 */
+//  238     T1CR = BM_T1RES;
+        LDI     R16, 32
+        OUT     0x11, R16
+//  239     
+//  240     /* LLR-Ref: 020 */
+//  241     g_sTimer1.bStatus = 0x00U;
+        LDI     R16, 0
+        STS     g_sTimer1, R16
+//  242     
+//  243     /* LLR-Ref: 030 */
+//  244     ATA_POWEROFF_C(PRR1, PRT1);
+        SBI     0x01, 0x00
+//  245 }
+        RET
+          CFI EndBlock cfiBlock2
+        REQUIRE _A_PRR1
+        REQUIRE _A_T1CR
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01cH
+__?EECR:
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01dH
+__?EEDR:
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01eH
+__?EEARL:
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01fH
+__?EEARH:
+
+        END
+// 
+//   5 bytes in segment .tmr1ram
+//   6 bytes in segment ABSOLUTE
+// 128 bytes in segment CODE
+// 
+// 128 bytes of CODE memory
+//   5 bytes of DATA memory (+ 6 bytes shared)
+//
+//Errors: none
+//Warnings: none

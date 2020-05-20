@@ -1,0 +1,222 @@
+###############################################################################
+#                                                                             #
+#     IAR Assembler V6.70.1.929/W32 for Atmel AVR 05/Apr/2016  13:30:38       #
+#     Copyright 2015 IAR Systems AB.                                          #
+#                                                                             #
+#           Target option =  Relative jumps do not wrap                       #
+#           Source file   =  C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\firmware\timer5\src\timer5_asm.s90#
+#           List file     =  C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\List\timer5_asm.lst#
+#           Object file   =  C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\Obj\timer5_asm.r90#
+#           Command line  =  C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\firmware\timer5\src\timer5_asm.s90 #
+#                            -v3                                              #
+#                            -OC:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\Obj #
+#                            -s+ -w+ -r -DHAVE_BITREVERSAL -M<>               #
+#                            -LC:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\List #
+#                            -t8 -u_enhancedCore -D__HAS_ENHANCED_CORE__=1    #
+#                            -D__HAS_MUL__=1                                  #
+#                            -IC:\Program Files (x86)\IAR Systems\Embedded Workbench 7.3\avr\INC\ #
+#                            -IC:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\..\..\..\firmware\stdc\src\ #
+#                            -IC:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\..\..\..\firmware\globals\src\ #
+#                            -IC:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\..\..\..\firmware\eep\src\ #
+#                            -IC:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\..\..\..\firmware\rf\src\ #
+#                            -IC:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\..\..\..\firmware\calib\src\ #
+#                            -D__MEMORY_MODEL__=2                             #
+#                                                                             #
+###############################################################################
+
+      1    00000000              /* *ASM***************************************
+                                 *********************************
+      2    00000000                Use of this software is subject to Atmel's
+                                  Software License Agreement.
+      3    00000000              ----------------------------------------------
+                                 ---------------------------------
+      4    00000000                $URL: http://svnservulm.corp.atmel.com/svn/C
+                                 DB/Apps/SW_Lib/Car_Access/CARS_GEN2/ATAB5702A/
+                                 Branches/P2_Gen2_Merge/firmware/timer5/src/tim
+                                 er5_asm.s90 $
+      5    00000000                $LastChangedRevision: 328482 $
+      6    00000000                $LastChangedDate: 2015-07-22 13:17:23 -0600
+                                  (Wed, 22 Jul 2015) $
+      7    00000000                $LastChangedBy: grueter $
+      8    00000000              ----------------------------------------------
+                                 ---------------------------------
+      9    00000000                Project:      ATA5700
+     10    00000000                Target MCU:   ATA5700
+     11    00000000                Compiler:     IAR Assembler for AVR
+                                  6.3.18.2236
+     12    00000000              ----------------------------------------------
+                                 ---------------------------------
+     13    00000000              
+     14    00000000              **********************************************
+                                 ********************************
+     15    00000000              * Copyright 2011, Atmel Automotive GmbH       
+                                                                 *
+     16    00000000              *                                             
+                                                                 *
+     17    00000000              * This software is owned by the Atmel
+                                  Automotive GmbH                        
+                                  *
+     18    00000000              * and is protected by and subject to worldwide
+                                  patent protection.             *
+     19    00000000              * Atmel hereby grants to licensee a personal, 
+                                                                 *
+     20    00000000              * non-exclusive, non-transferable license to
+                                  copy, use, modify, create        *
+     21    00000000              * derivative works of, and compile the Atmel
+                                  Source Code and derivative       *
+     22    00000000              * works for the sole purpose of creating
+                                  custom software in support of       
+                                  *
+     23    00000000              * licensee product to be used only in
+                                  conjunction with a Atmel integrated    
+                                  *
+     24    00000000              * circuit as specified in the applicable
+                                  agreement. Any reproduction,        
+                                  *
+     25    00000000              * modification, translation, compilation, or
+                                  representation of this           *
+     26    00000000              * software except as specified above is
+                                  prohibited without the express       
+                                  *
+     27    00000000              * written permission of Atmel.                
+                                                                 *
+     28    00000000              *                                             
+                                                                 *
+     29    00000000              * Disclaimer: ATMEL MAKES NO WARRANTY OF ANY
+                                  KIND,EXPRESS OR IMPLIED,         *
+     30    00000000              * WITH REGARD TO THIS MATERIAL, INCLUDING, BUT
+                                  NOT LIMITED TO, THE IMPLIED    *
+     31    00000000              * WARRANTIES OF MERCHANTABILITY AND FITNESS
+                                  FOR A PARTICULAR PURPOSE.         *
+     32    00000000              * Atmel reserves the right to make changes
+                                  without further notice to the      *
+     33    00000000              * materials described herein. Atmel does not
+                                  assume any liability arising     *
+     34    00000000              * out of the application or use of any product
+                                  or circuit described herein.   *
+     35    00000000              * Atmel does not authorize its products for
+                                  use as critical components in     *
+     36    00000000              * life-support systems where a malfunction or
+                                  failure may reasonably be       *
+     37    00000000              * expected to result in significant injury to
+                                  the user. The inclusion of      *
+     38    00000000              * Atmel products in a life-support systems
+                                  application implies that the       *
+     39    00000000              * manufacturer assumes all risk of such use
+                                  and in doing so indemnifies       *
+     40    00000000              * Atmel against all charges.                  
+                                                                 *
+     41    00000000              *                                             
+                                                                 *
+     42    00000000              * Use may be limited by and subject to the
+                                  applicable Atmel software          *
+     43    00000000              * license agreement.                          
+                                                                 *
+     44    00000000              **********************************************
+                                 *********************************/
+     45    00000000              /*  \file timer5_asm.s90
+     46    00000000              */
+     47    00000000                  NAME timer5_asm
+     48    00000000              
+     49    00000000                  PUBLIC ATA_timer5Close_ASM
+     50    00000000              
+     51    00000000                  EXTERN g_sTimer5
+     52    00000000              
+     53    00000000              
+     54    00000000              /* -------------------------------------------
+                                 --------------------------------*/
+     55    00000000              /*   INCLUDES                                 
+                                                                 */
+     56    00000000              /* -------------------------------------------
+                                 --------------------------------*/
+     57    00000000              #include "regs.inc"
+     58    00000000              #include "globals.h"
+     59    00000000              
+     60    00000000              /* -------------------------------------------
+                                 --------------------------------*/
+     61    00000000              /*   DEFINES                                  
+                                                                 */
+     62    00000000              /* -------------------------------------------
+                                 --------------------------------*/
+     63    00000000              
+     64    00000000              /* -------------------------------------------
+                                 --------------------------------*/
+     65    00000000              /*   Modul Globals                            
+                                                                 */
+     66    00000000              /* -------------------------------------------
+                                 --------------------------------*/
+     67    00000000              /* -------------------------------------------
+                                 --------------------------------*/
+     68    00000000              /*   IMPLEMENTATION                           
+                                                                 */
+     69    00000000              /* -------------------------------------------
+                                 --------------------------------*/
+     70    00000000              /* -------------------------------------------
+                                 --------------------------------*/
+     71    00000000              /** \brief <b>ATA_timer5Close_ASM</b>
+     72    00000000                  closes timer5 and removes power from
+                                  timer5 block.
+     73    00000000              
+     74    00000000              \param[out] ::g_sTimer5 is global Timer 5
+                                  component data
+     75    00000000              
+     76    00000000              \return     N/A
+     77    00000000              
+     78    00000000              \StackUsageInBytes{XXX}
+     79    00000000              
+     80    00000000              \image html ATA_timer5Close_ASM.png
+     81    00000000              
+     82    00000000              \internal
+     83    00000000                       Note:
+     84    00000000                       Power down of Timer 5 via register
+                                  PRR1 needs to occur after any 
+     85    00000000                       Timer 5 register is accessed in order
+                                  for the intended action to 
+     86    00000000                       take effect.
+     87    00000000              
+     88    00000000              \li 010: Disable Timer 5 by setting all bits
+                                  of register T5CCR to 0.
+     89    00000000              
+     90    00000000              \li 020: Unlock Timer 5 by setting the status
+                                  indication of the global variable
+     91    00000000                       ::g_sTimer5 to 0.
+     92    00000000              
+     93    00000000              \li 030: Power down Timer 5 by setting bit
+                                  PRT5 in register PRR1 to 1 to 
+     94    00000000                       enable the power reduction feature
+                                  for Timer 5.
+     95    00000000              
+     96    00000000              \Derived{No}
+     97    00000000              
+     98    00000000              \Rationale{N/A}
+     99    00000000              
+    100    00000000              \Traceability{Primus2P-890}
+    101    00000000              \endinternal
+    102    00000000              */
+    103    00000000              /* -------------------------------------------
+                                 --------------------------------*/
+    104    00000000              RSEG CODE:CODE:ROOT(1)
+    105    00000000              ATA_timer5Close_ASM:
+    106    00000000 93FF             PUSH    R31
+    107    00000002                  ; LLR-Ref: 010
+    108    00000002 27FF             CLR     R31
+    109    00000004 93F0008C         STS     T5CCR , R31
+    110    00000008                  ; LLR-Ref: 020
+    111    00000008 93F0....         STS     g_sTimer5 + TMR5STATE , R31
+    112    0000000C                  ; LLR-Ref: 030
+    113    0000000C 9A0C             SBI     PRR1 , PRT5
+    114    0000000E 91FF             POP     R31
+    115    00000010              
+    116    00000010 9508             RET
+    117    00000012              
+    118    00000012                  END
+##############################
+#          CRC:9638          #
+#        Errors:   0         #
+#        Warnings: 0         #
+#         Bytes: 18          #
+##############################
+
+
+
+

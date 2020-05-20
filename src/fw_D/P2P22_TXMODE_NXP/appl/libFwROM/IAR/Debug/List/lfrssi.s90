@@ -1,0 +1,3274 @@
+///////////////////////////////////////////////////////////////////////////////
+//
+// IAR C/C++ Compiler V6.70.1.929 for Atmel AVR           05/Apr/2016  13:30:42
+// Copyright 1996-2015 IAR Systems AB.
+// Network license: DVRIAR01.corpp.atmel.com (STD)
+//
+//    Source file  =  
+//        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\firmware\lfrssi\src\lfrssi.c
+//    Command line =  
+//        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\firmware\lfrssi\src\lfrssi.c
+//        -v3 --enhanced_core -ms -o
+//        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\Obj
+//        -lC
+//        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\List
+//        -lA
+//        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\List
+//        --initializers_in_flash --no_cse --no_inline --no_code_motion
+//        --no_cross_call --no_clustering --no_tbaa --debug --64k_flash
+//        -DENABLE_BIT_DEFINITIONS -e -I "C:\Program Files (x86)\IAR
+//        Systems\Embedded Workbench 6.0\avr\inc\" --eeprom_size 1152 --clib
+//        -Ohz
+//    List file    =  
+//        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\List\lfrssi.s90
+//
+///////////////////////////////////////////////////////////////////////////////
+
+        NAME lfrssi
+
+        RTMODEL "__64bit_doubles", "disabled"
+        RTMODEL "__SystemLibrary", "CLib"
+        RTMODEL "__cpu", "3"
+        RTMODEL "__enhanced_core", "enabled"
+        RTMODEL "__has_elpm", "false"
+        RTMODEL "__memory_model", "2"
+        RTMODEL "__rt_version", "3"
+
+        RSEG CSTACK:DATA:NOROOT(0)
+        RSEG RSTACK:DATA:NOROOT(0)
+
+        EXTERN ?EPILOGUE_B4_L09
+        EXTERN ?L_SHL_L03
+        EXTERN ?PROLOGUE4_L09
+        EXTERN ?S_SHL_L02
+        EXTERN ?UL_SHR_L03
+        EXTERN ?US_SHR_L02
+
+        PUBLIC ATA_lfRssiCalc3dVec_C
+        PUBLIC ATA_lfRssiCalcBappl_C
+        PUBLIC ATA_lfRssiCalcChanCalibVal_C
+        PUBLIC ATA_lfRssiCalcChanCorr_C
+        PUBLIC ATA_lfRssiCalcLog2Lin_C
+        PUBLIC ATA_lfRssiClose_C
+        PUBLIC ATA_lfRssiGetAverageResult_C
+        PUBLIC ATA_lfRssiGetSamplesResult_C
+        PUBLIC ATA_lfRssiInit_C
+        PUBLIC ATA_lfRssiMeasReady_ISR_C
+        PUBLIC ATA_lfRssiMeasStart_C
+        PUBLIC ATA_lfRssiMeasStop_C
+        PUBLIC ATA_lfRssiNormalize12q4_C
+        PUBLIC ATA_lfRssiOpen_C
+        PUBLIC ATA_lfRssiSetEepromConfig_C
+        PUBWEAK _A_EEARH
+        PUBWEAK _A_EEARL
+        PUBWEAK _A_EECR
+        PUBWEAK _A_EECR2
+        PUBWEAK _A_EEDR
+        PUBWEAK _A_LFCR0
+        PUBWEAK _A_LFCR1
+        PUBWEAK _A_PRR0
+        PUBWEAK _A_PRR1
+        PUBWEAK _A_RSCALIB
+        PUBWEAK _A_RSCR
+        PUBWEAK _A_RSDLYR
+        PUBWEAK _A_RSFR
+        PUBWEAK _A_RSMS1R
+        PUBWEAK _A_RSMS2R
+        PUBWEAK _A_RSRES1H
+        PUBWEAK _A_RSRES1L
+        PUBWEAK _A_RSRES2H
+        PUBWEAK _A_RSRES2L
+        PUBWEAK _A_RSRES3H
+        PUBWEAK _A_RSRES3L
+        PUBWEAK _A_RSRES4H
+        PUBWEAK _A_RSRES4L
+        PUBWEAK _A_RSSR
+        PUBWEAK _A_RSSRCR
+        PUBWEAK _A_SD12RR
+        PUBWEAK _A_SD13RR
+        PUBWEAK _A_SD23RR
+        PUBWEAK _A_SD360R
+        PUBWEAK _A_SRCCAL
+        PUBWEAK _A_SREG
+        PUBWEAK _A_TPCR2
+        PUBWEAK _A_TRCDR
+        PUBWEAK _A_TRCIDH
+        PUBWEAK _A_TRCIDL
+        PUBWEAK __?EEARH
+        PUBWEAK __?EEARL
+        PUBWEAK __?EECR
+        PUBWEAK __?EEDR
+        PUBLIC g_sLfRssi
+        
+          CFI Names cfiNames0
+          CFI StackFrame CFA_Y Y DATA
+          CFI StackFrame CFA_SP SP DATA
+          CFI VirtualResource ?RetPad:1, ?RetHigh:8, ?RetLow:8, ?Ret:17
+          CFI Resource R0:8, R1:8, R2:8, R3:8, R4:8, R5:8, R6:8, R7:8, R8:8, R9:8
+          CFI Resource R10:8, R11:8, R12:8, R13:8, R14:8, R15:8, R16:8, R17:8
+          CFI Resource R18:8, R19:8, R20:8, R21:8, R22:8, R23:8, R24:8, R25:8
+          CFI Resource R26:8, R27:8, R28:8, R29:8, R30:8, R31:8
+          CFI Resource ?RetHighByteMask:8, SP:16, SPH:8, SPL:8, Y:16
+          CFI ResourceParts ?Ret ?RetHigh, ?RetLow, ?RetPad
+          CFI ResourceParts SP SPH, SPL
+          CFI ResourceParts Y R29, R28
+          CFI EndNames cfiNames0
+        
+          CFI Common cfiCommon0 Using cfiNames0
+          CFI CodeAlign 1
+          CFI DataAlign 1
+          CFI ReturnAddress ?Ret CODE
+          CFI CFA_Y Y+0
+          CFI CFA_SP SP+2
+          CFI ?RetPad 0
+          CFI ?RetHigh and(load(1, DATA, sub(CFA_SP, 1)), ?RetHighByteMask)
+          CFI ?RetLow Frame(CFA_SP, 0)
+          CFI ?Ret Concat
+          CFI R0 Undefined
+          CFI R1 Undefined
+          CFI R2 Undefined
+          CFI R3 Undefined
+          CFI R4 SameValue
+          CFI R5 SameValue
+          CFI R6 SameValue
+          CFI R7 SameValue
+          CFI R8 SameValue
+          CFI R9 SameValue
+          CFI R10 SameValue
+          CFI R11 SameValue
+          CFI R12 SameValue
+          CFI R13 SameValue
+          CFI R14 SameValue
+          CFI R15 SameValue
+          CFI R16 Undefined
+          CFI R17 Undefined
+          CFI R18 Undefined
+          CFI R19 Undefined
+          CFI R20 Undefined
+          CFI R21 Undefined
+          CFI R22 Undefined
+          CFI R23 Undefined
+          CFI R24 SameValue
+          CFI R25 SameValue
+          CFI R26 SameValue
+          CFI R27 SameValue
+          CFI R28 Undefined
+          CFI R29 Undefined
+          CFI R30 Undefined
+          CFI R31 Undefined
+          CFI ?RetHighByteMask SameValue
+          CFI SPH Undefined
+          CFI SPL Undefined
+          CFI EndCommon cfiCommon0
+        
+        
+          CFI Common cfiCommon1 Using cfiNames0
+          CFI CodeAlign 1
+          CFI DataAlign 1
+          CFI ReturnAddress ?Ret CODE
+          CFI CFA_Y Y+0
+          CFI CFA_SP SP+2
+          CFI ?RetPad 0
+          CFI ?RetHigh and(load(1, DATA, sub(CFA_SP, 1)), ?RetHighByteMask)
+          CFI ?RetLow Frame(CFA_SP, 0)
+          CFI ?Ret Concat
+          CFI R0 SameValue
+          CFI R1 SameValue
+          CFI R2 SameValue
+          CFI R3 SameValue
+          CFI R4 SameValue
+          CFI R5 SameValue
+          CFI R6 SameValue
+          CFI R7 SameValue
+          CFI R8 SameValue
+          CFI R9 SameValue
+          CFI R10 SameValue
+          CFI R11 SameValue
+          CFI R12 SameValue
+          CFI R13 SameValue
+          CFI R14 SameValue
+          CFI R15 SameValue
+          CFI R16 SameValue
+          CFI R17 SameValue
+          CFI R18 SameValue
+          CFI R19 SameValue
+          CFI R20 SameValue
+          CFI R21 SameValue
+          CFI R22 SameValue
+          CFI R23 SameValue
+          CFI R24 SameValue
+          CFI R25 SameValue
+          CFI R26 SameValue
+          CFI R27 SameValue
+          CFI R28 Undefined
+          CFI R29 Undefined
+          CFI R30 SameValue
+          CFI R31 SameValue
+          CFI ?RetHighByteMask SameValue
+          CFI SPH Undefined
+          CFI SPL Undefined
+          CFI EndCommon cfiCommon1
+        
+        EXTERN ATA_globalsMulU16U16_ASM
+        EXTERN g_sAtmelEEPromSection
+        EXTERN g_sDebug
+
+// C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\firmware\lfrssi\src\lfrssi.c
+//    1 //lint -e9059
+//    2 /* *C**************************************************************************
+//    3   Use of this software is subject to Atmel's Software License Agreement.
+//    4 -------------------------------------------------------------------------------
+//    5   $URL: http://svnservulm.corp.atmel.com/svn/CDB/Apps/SW_Lib/Car_Access/CARS_GEN2/ATAB5702A/Branches/P2_Gen2_Merge/firmware/lfrssi/src/lfrssi.c $
+//    6   $LastChangedRevision: 328482 $
+//    7   $LastChangedDate: 2015-07-22 13:17:23 -0600 (Wed, 22 Jul 2015) $
+//    8   $LastChangedBy: grueter $
+//    9 -------------------------------------------------------------------------------
+//   10   Project:      ATA5700
+//   11   Target MCU:   ATA5700
+//   12   Compiler:     IAR C/C++ Compiler for AVR 6.30.1
+//   13 -------------------------------------------------------------------------------
+//   14 
+//   15 ******************************************************************************
+//   16 * Copyright 2011, Atmel Automotive GmbH                                       *
+//   17 *                                                                             *
+//   18 * This software is owned by the Atmel Automotive GmbH                         *
+//   19 * and is protected by and subject to worldwide patent protection.             *
+//   20 * Atmel hereby grants to licensee a personal,                                 *
+//   21 * non-exclusive, non-transferable license to copy, use, modify, create        *
+//   22 * derivative works of, and compile the Atmel Source Code and derivative       *
+//   23 * works for the sole purpose of creating custom software in support of        *
+//   24 * licensee product to be used only in conjunction with a Atmel integrated     *
+//   25 * circuit as specified in the applicable agreement. Any reproduction,         *
+//   26 * modification, translation, compilation, or representation of this           *
+//   27 * software except as specified above is prohibited without the express        *
+//   28 * written permission of Atmel.                                                *
+//   29 *                                                                             *
+//   30 * Disclaimer: ATMEL MAKES NO WARRANTY OF ANY KIND,EXPRESS OR IMPLIED,         *
+//   31 * WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED    *
+//   32 * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.         *
+//   33 * Atmel reserves the right to make changes without further notice to the      *
+//   34 * materials described herein. Atmel does not assume any liability arising     *
+//   35 * out of the application or use of any product or circuit described herein.   *
+//   36 * Atmel does not authorize its products for use as critical components in     *
+//   37 * life-support systems where a malfunction or failure may reasonably be       *
+//   38 * expected to result in significant injury to the user. The inclusion of      *
+//   39 * Atmel products in a life-support systems application implies that the       *
+//   40 * manufacturer assumes all risk of such use and in doing so indemnifies       *
+//   41 * Atmel against all charges.                                                  *
+//   42 *                                                                             *
+//   43 * Use may be limited by and subject to the applicable Atmel software          *
+//   44 * license agreement.                                                          *
+//   45 ******************************************************************************/
+//   46 //lint -restore
+//   47 
+//   48 /*===========================================================================*/
+//   49 /*  INCLUDES                                                                 */
+//   50 /*===========================================================================*/
+//   51 #include "lfrssi.h"
+
+        ASEGN ABSOLUTE:DATA:NOROOT,021H
+// union <unnamed> volatile __io _A_PRR1
+_A_PRR1:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,02cH
+// union <unnamed> volatile __io _A_TPCR2
+_A_TPCR2:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,036H
+// union <unnamed> volatile __io _A_EECR2
+_A_EECR2:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,03aH
+// union <unnamed> volatile __io _A_PRR0
+_A_PRR0:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,03fH
+// union <unnamed> volatile __io _A_EECR
+_A_EECR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,040H
+// union <unnamed> volatile __io _A_EEDR
+_A_EEDR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,041H
+// union <unnamed> volatile __io _A_EEARL
+_A_EEARL:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,042H
+// union <unnamed> volatile __io _A_EEARH
+_A_EEARH:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,04fH
+// union <unnamed> volatile __io _A_LFCR0
+_A_LFCR0:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,050H
+// union <unnamed> volatile __io _A_LFCR1
+_A_LFCR1:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,05fH
+// union <unnamed> volatile __io _A_SREG
+_A_SREG:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,0fcH
+// union <unnamed> volatile __io _A_TRCIDL
+_A_TRCIDL:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,0fdH
+// union <unnamed> volatile __io _A_TRCIDH
+_A_TRCIDH:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,0ffH
+// union <unnamed> volatile __io _A_TRCDR
+_A_TRCDR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01b0H
+// union <unnamed> volatile __ext_io _A_RSCR
+_A_RSCR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01b1H
+// union <unnamed> volatile __ext_io _A_RSSR
+_A_RSSR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01b2H
+// union <unnamed> volatile __ext_io _A_RSMS1R
+_A_RSMS1R:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01b3H
+// union <unnamed> volatile __ext_io _A_RSMS2R
+_A_RSMS2R:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01b4H
+// union <unnamed> volatile __ext_io _A_RSFR
+_A_RSFR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01b6H
+// union <unnamed> volatile __ext_io _A_RSCALIB
+_A_RSCALIB:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01b7H
+// union <unnamed> volatile __ext_io _A_RSDLYR
+_A_RSDLYR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01b8H
+// union <unnamed> volatile __ext_io _A_RSRES1L
+_A_RSRES1L:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01b9H
+// union <unnamed> volatile __ext_io _A_RSRES1H
+_A_RSRES1H:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01baH
+// union <unnamed> volatile __ext_io _A_RSRES2L
+_A_RSRES2L:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01bbH
+// union <unnamed> volatile __ext_io _A_RSRES2H
+_A_RSRES2H:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01bcH
+// union <unnamed> volatile __ext_io _A_RSRES3L
+_A_RSRES3L:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01bdH
+// union <unnamed> volatile __ext_io _A_RSRES3H
+_A_RSRES3H:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01beH
+// union <unnamed> volatile __ext_io _A_RSRES4L
+_A_RSRES4L:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01bfH
+// union <unnamed> volatile __ext_io _A_RSRES4H
+_A_RSRES4H:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01c0H
+// union <unnamed> volatile __ext_io _A_RSSRCR
+_A_RSSRCR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01c1H
+// union <unnamed> volatile __ext_io _A_SD12RR
+_A_SD12RR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01c2H
+// union <unnamed> volatile __ext_io _A_SD13RR
+_A_SD13RR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01c3H
+// union <unnamed> volatile __ext_io _A_SD23RR
+_A_SD23RR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01c4H
+// union <unnamed> volatile __ext_io _A_SD360R
+_A_SD360R:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01f1H
+// union <unnamed> volatile __ext_io _A_SRCCAL
+_A_SRCCAL:
+        DS8 1
+//   52 #include "../../globals/src/globals.h"
+//   53 #include "../../eep/src/eep.h"
+//   54 
+//   55 /*===========================================================================*/
+//   56 /*  DEFINES                                                                  */
+//   57 /*===========================================================================*/
+//   58 #define LF_RSSI_NUM_EEPROM_DATA    12U
+//   59 
+//   60 #define LF_RSSI_12Q4_EXPONENT_MIN   -9
+//   61 #define LF_RSSI_12Q4_EXPONENT_SIZE  4
+//   62 #define LF_RSSI_12Q4_VALUE_SIZE     12
+//   63 
+//   64 /*===========================================================================*/
+//   65 /*  Modul Globals                                                            */
+//   66 /*===========================================================================*/
+//   67 /** \brief <b>g_sLfRssi</b>
+//   68     contains the LF RSSI component data.
+//   69 */
+//   70 //lint -esym(9003, g_sLfRssi) FlSc (10.06.2014)
+//   71 /* disable lint note 9003 - could define variable 'g_sLfRssi' at block scope
+//   72  * variable shall be accessible from outside via flash software or other library
+//   73  * modules
+//   74  */
+//   75 #pragma location = ".lfRssi"
+
+        RSEG `.lfRssi`:DATA:NOROOT(0)
+//   76 __no_init sLfRssi g_sLfRssi;
+g_sLfRssi:
+        DS8 13
+//   77 
+//   78 
+//   79 /*===========================================================================*/
+//   80 /*  IMPLEMENTATION                                                           */
+//   81 /*===========================================================================*/
+//   82 /*---------------------------------------------------------------------------*/
+//   83 /** \brief <b>ATA_lfRssiInit_C</b>
+//   84     initializes the LF RSSI component data with default values.
+//   85 
+//   86     Variable Usage;:
+//   87     \li [in,out] ::g_sLfRssi    Global LF RSSI component data
+//   88 
+//   89     \image html ATA_lfRssiInit_C.png
+//   90 
+//   91     \internal
+//   92     \li 010: Initialize component variables with default values.
+//   93 
+//   94     \Derived{Yes}
+//   95 
+//   96     \Rationale{N/A}
+//   97 
+//   98     \Traceability{N/A}
+//   99     \endinternal
+//  100 \n
+//  101 */
+//  102 /*---------------------------------------------------------------------------*/
+
+        RSEG CODE:CODE:ROOT(1)
+//  103 VOIDFUNC ATA_lfRssiInit_C(void)
+ATA_lfRssiInit_C:
+          CFI Block cfiBlock0 Using cfiCommon0
+          CFI Function ATA_lfRssiInit_C
+          CFI NoCalls
+//  104 {
+//  105     ATA_SET_FUNCTION_TRACE_POINT_C(ATA_lfRssiInit_C, 0x00U);
+        IN      R18, 0x3F
+        CLI
+        LDI     R16, 0
+        STS     _A_TRCDR, R16
+        LDI     R16, LOW(ATA_lfRssiInit_C/2)
+        STS     _A_TRCIDL, R16
+        LDI     R16, (ATA_lfRssiInit_C/2) >> 8
+        STS     _A_TRCIDH, R16
+        OUT     0x3F, R18
+//  106 
+//  107     /* LLR-Ref: 010 */
+//  108     g_sLfRssi.bFlags  = LFRSSI_FLAGS_RESET;
+        LDI     R16, 0
+        STS     g_sLfRssi, R16
+//  109     g_sLfRssi.bStatus = LFRSSI_STATUS_RESET;
+        STS     (g_sLfRssi + 1), R16
+//  110 
+//  111     g_sLfRssi.bOutOfRangeMask = 0U;
+        STS     (g_sLfRssi + 12), R16
+//  112 }
+        RET
+          CFI EndBlock cfiBlock0
+        REQUIRE _A_SREG
+        REQUIRE _A_TRCDR
+        REQUIRE _A_TRCIDL
+        REQUIRE _A_TRCIDH
+//  113 
+//  114 
+//  115 /*----------------------------------------------------------------------------- */
+//  116 /** \brief <b>ATA_lfRssiOpen_C</b>
+//  117     is used to power-up the LF RSSI module, LF transponder and LF receiver.
+//  118     It disables the digital part of the LF receiver and selects the LF RSSI
+//  119     measurement mode.
+//  120     Note: LF channels for LF RSSI measurement has to be already enabled.
+//  121 
+//  122     Variable Usage:
+//  123     \li [in,out] ::g_sLfRssi    Global LF RSSI component data
+//  124 
+//  125     \image html ATA_lfRssiOpen_C.png
+//  126 
+//  127     \internal
+//  128     \li 010:  Disable interrupts globally due to changes on PRR1, transponder
+//  129               and LF receiver settings.
+//  130 
+//  131     \li 020:  Save PRR1 register setting due to configuration changes when using
+//  132               the LF RSSI module. Content will be restored when leaving the module.
+//  133               No need to save PRR0 register affected bit only used within module.
+//  134 
+//  135     \li 030:  Enable power to the RSSI module and LF receiver (the analog
+//  136               RSSI block is also powered on). Enable power to the LF transponder
+//  137               to access TPCR2 register.
+//  138 
+//  139     \li 040:  Save TPCR2 register setting before disabling the transponder mode to
+//  140               prevent system reset in case a present LF field will be turn off.
+//  141 
+//  142     \li 050:  Save LFCR1 register setting and disable LF receiver for mode switching.\n
+//  143               Note: Between disable and enable the LF receiver a waiting time of
+//  144                     at least 3 SRC clock cycles is required.
+//  145 
+//  146     \li 060:  Save SRCCAL register setting.
+//  147               Note: Reading SRCCAL register possible without enabling the clock (PRLFPH).
+//  148 
+//  149     \li 070:  Enable interrupts globally.
+//  150 
+//  151     \li 080:  Reset component variables except error flag.
+//  152 
+//  153     \Derived{No}
+//  154 
+//  155     \Rationale{N/A}
+//  156 
+//  157     \Traceability{Primus2P-2000}
+//  158     \endinternal
+//  159 \n
+//  160 */
+//  161 /*----------------------------------------------------------------------------- */
+
+        RSEG CODE:CODE:ROOT(1)
+//  162 VOIDFUNC ATA_lfRssiOpen_C(void)
+ATA_lfRssiOpen_C:
+          CFI Block cfiBlock1 Using cfiCommon0
+          CFI Function ATA_lfRssiOpen_C
+          CFI NoCalls
+//  163 {
+//  164     ATA_SET_FUNCTION_TRACE_POINT_C(ATA_lfRssiOpen_C, g_sLfRssi.bFlags | g_sLfRssi.bStatus);
+        IN      R18, 0x3F
+        CLI
+        LDS     R16, g_sLfRssi
+        LDS     R17, (g_sLfRssi + 1)
+        OR      R16, R17
+        STS     _A_TRCDR, R16
+        LDI     R16, LOW(ATA_lfRssiOpen_C/2)
+        STS     _A_TRCIDL, R16
+        LDI     R16, (ATA_lfRssiOpen_C/2) >> 8
+        STS     _A_TRCIDH, R16
+        OUT     0x3F, R18
+//  165 
+//  166     /* LLR-Ref: 010 */
+//  167     _CLI;
+        cli
+//  168 
+//  169     /* LLR-Ref: 020 */
+//  170     g_sLfRssi.bPrr1 = PRR1;
+        IN      R16, 0x01
+        STS     (g_sLfRssi + 2), R16
+//  171 
+//  172     /* LLR-Ref: 030 */
+//  173     /* no power reduction bits to enable the digital LF RSSI register block, clocked by cp2io
+//  174        Note: It is assumed that LF receiver has been already enabled. But if not, it is enabled here. */
+//  175     PRR0 &= ~BM_PRLFRS;
+        CBI     0x1A, 0x01
+//  176     PRR1 &= ~(BM_PRLFTP | BM_PRLFR);
+        IN      R16, 0x01
+        ANDI    R16, 0x9F
+        OUT     0x01, R16
+//  177 
+//  178     /* LLR-Ref: 040 */
+//  179     g_sLfRssi.bTpcr2 = TPCR2;
+        IN      R16, 0x0C
+        STS     (g_sLfRssi + 3), R16
+//  180 
+//  181     /* LLR-Ref: 050 */
+//  182     g_sLfRssi.bLfcr1 = LFCR1;
+        IN      R16, 0x30
+        STS     (g_sLfRssi + 5), R16
+//  183     LFCR1 |= BM_LFFM1;
+        IN      R16, 0x30
+        ORI     R16, 0x04
+        OUT     0x30, R16
+//  184     LFCR1 &= ~BM_LFRE;
+        IN      R16, 0x30
+        ANDI    R16, 0x7F
+        OUT     0x30, R16
+//  185 
+//  186     /* LLR-Ref: 060 */
+//  187     g_sLfRssi.bSrcCal = SRCCAL;
+        LDS     R16, _A_SRCCAL
+        STS     (g_sLfRssi + 4), R16
+//  188 
+//  189     /* LLR-Ref: 070 */
+//  190     _SEI;
+        sei
+//  191 
+//  192     /* LLR-Ref: 080 */
+//  193     g_sLfRssi.bFlags &= LFRSSI_FLAGS_BM_ERROR_FLAG;
+        LDS     R16, g_sLfRssi
+        ANDI    R16, 0x80
+        STS     g_sLfRssi, R16
+//  194     g_sLfRssi.bStatus = LFRSSI_STATUS_RESET;
+        LDI     R16, 0
+          CFI EndBlock cfiBlock1
+        REQUIRE ?Subroutine1
+        REQUIRE _A_SREG
+        REQUIRE _A_TRCDR
+        REQUIRE _A_TRCIDL
+        REQUIRE _A_TRCIDH
+        REQUIRE _A_PRR1
+        REQUIRE _A_PRR0
+        REQUIRE _A_TPCR2
+        REQUIRE _A_LFCR1
+        REQUIRE _A_SRCCAL
+        ;               // Fall through to label ?Subroutine1
+//  195 }
+
+        RSEG CODE:CODE:NOROOT(1)
+?Subroutine1:
+          CFI Block cfiBlock2 Using cfiCommon0
+          CFI NoFunction
+        STS     (g_sLfRssi + 1), R16
+        RET
+          CFI EndBlock cfiBlock2
+//  196 
+//  197 
+//  198 /*----------------------------------------------------------------------------- */
+//  199 /** \brief <b>ATA_lfRssiClose_C</b>
+//  200     is used to power-down the LF RSSI module and the LF receiver including the
+//  201     analog RSSI blocks. It also restores temporarily saved register settings.
+//  202 
+//  203     Variable Usage:
+//  204     \li [in,out] ::g_sLfRssi    Global LF RSSI component data
+//  205 
+//  206     \image html ATA_lfRssiClose_C.png
+//  207 
+//  208     \internal
+//  209     \li 010:  Disable interrupts globally to restore register settings.
+//  210 
+//  211     \li 010:  Enable power to the LF protocol handler to restore SRCCAL value.
+//  212 
+//  213     \li 030:  Restore saved register settings.
+//  214               Note: The LF receiver is disabled when leaving LF RSSI module.
+//  215 
+//  216     \li 040:  Disable power to the LF RSSI module.
+//  217 
+//  218     \li 050:  Enable interrupts globally.
+//  219 
+//  220     \Derived{No}
+//  221 
+//  222     \Rationale{N/A}
+//  223 
+//  224     \Traceability{Primus2P-2001}
+//  225     \endinternal
+//  226 \n
+//  227 */
+//  228 /*----------------------------------------------------------------------------- */
+
+        RSEG CODE:CODE:ROOT(1)
+//  229 VOIDFUNC ATA_lfRssiClose_C(void)
+ATA_lfRssiClose_C:
+          CFI Block cfiBlock3 Using cfiCommon0
+          CFI Function ATA_lfRssiClose_C
+          CFI NoCalls
+//  230 {
+//  231     ATA_SET_FUNCTION_TRACE_POINT_C(ATA_lfRssiClose_C, g_sLfRssi.bFlags | g_sLfRssi.bStatus);
+        IN      R18, 0x3F
+        CLI
+        LDS     R16, g_sLfRssi
+        LDS     R17, (g_sLfRssi + 1)
+        OR      R16, R17
+        STS     _A_TRCDR, R16
+        LDI     R16, LOW(ATA_lfRssiClose_C/2)
+        STS     _A_TRCIDL, R16
+        LDI     R16, (ATA_lfRssiClose_C/2) >> 8
+        STS     _A_TRCIDH, R16
+        OUT     0x3F, R18
+//  232 
+//  233     /* LLR-Ref: 010 */
+//  234     _CLI;
+        cli
+//  235 
+//  236     /* LLR-Ref: 020 */
+//  237     ATA_POWERON_C(PRR1, PRLFPH);
+        CBI     0x01, 0x07
+//  238 
+//  239     /* LLR-Ref: 030 */
+//  240     SRCCAL = g_sLfRssi.bSrcCal;
+        LDS     R16, (g_sLfRssi + 4)
+        STS     _A_SRCCAL, R16
+//  241     LFCR1  = g_sLfRssi.bLfcr1 & ~(BM_LFRE | BM_LFFM1);
+        LDS     R16, (g_sLfRssi + 5)
+        ANDI    R16, 0x7B
+        OUT     0x30, R16
+//  242     TPCR2  = g_sLfRssi.bTpcr2 & ~BM_TPD;
+        LDS     R16, (g_sLfRssi + 3)
+        ANDI    R16, 0xF7
+        OUT     0x0C, R16
+//  243 
+//  244     /* no power reduction bits to disable the digital RSSI register block, clocked by cp2io
+//  245        disabling power of the LF receiver disables power of the analog RSSI block */
+//  246     PRR1  = g_sLfRssi.bPrr1;
+        LDS     R16, (g_sLfRssi + 2)
+        OUT     0x01, R16
+//  247 
+//  248     /* LLR-Ref: 040 */
+//  249     PRR0 |= BM_PRLFRS;
+        SBI     0x1A, 0x01
+//  250 
+//  251     /* LLR-Ref: 050 */
+//  252     _SEI;
+        sei
+//  253 }
+        RET
+          CFI EndBlock cfiBlock3
+        REQUIRE _A_SREG
+        REQUIRE _A_TRCDR
+        REQUIRE _A_TRCIDL
+        REQUIRE _A_TRCIDH
+        REQUIRE _A_PRR1
+        REQUIRE _A_SRCCAL
+        REQUIRE _A_LFCR1
+        REQUIRE _A_TPCR2
+        REQUIRE _A_PRR0
+//  254 
+//  255 
+//  256 /*----------------------------------------------------------------------------- */
+//  257 /** \brief <b>ATA_lfRssiSetEepromConfig_C</b>
+//  258     is used to initialize LF RSSI registers with associated EEPROM configuration.
+//  259 
+//  260     \param[in]      bEepRssiSrcCalVal   Contains the SRC calibration setting used during LF RSSI measurement.
+//  261 
+//  262     Variable Usage:
+//  263     \li [out] ::g_sLfRssi   Global LF RSSI component data
+//  264     \li [out] ::g_sDebug    Global Debug component data
+//  265 
+//  266     \image html ATA_lfRssiSetEepromConfig_C.png
+//  267 
+//  268     \internal
+//  269     \li 010:  Enable power to the RSSI module before accessing the registers.
+//  270 
+//  271     \li 020:  Wait until any previous EEPROM access has been finished.
+//  272 
+//  273     \li 030:  Reset the digital LF RSSI block.
+//  274 
+//  275     \li 040:  Setup base address to read from EEPROM first.
+//  276 
+//  277     \li 050:  Enable EEPROM burst read mode.
+//  278 
+//  279     \li 060:  Signalize writing of the LF RSSI calibration configuration.
+//  280 
+//  281     \li 070:  Copy settings from EEPROM: 10 bytes for range correction,
+//  282               1 byte pre-divider switch and 1 byte nameless.
+//  283 
+//  284     \li 080:  Configure LF RSSI with the passed SRC calibration value.
+//  285 
+//  286     \li 090:  Clear bit to signalize end of LF RSSI register calibration
+//  287               sequence.
+//  288 
+//  289     \li 100:  ON occurrence of uncorrectable errors during EEPROM reads,
+//  290               THEN
+//  291 
+//  292     \li 110:    Set component global error flag and the global debug error
+//  293                 variable with error code for EEPROM read error.
+//  294               ENDIF
+//  295 
+//  296     \li 120:  ON occurrence of access violation errors during EEPROM reads,
+//  297               THEN
+//  298 
+//  299     \li 130:    Set component global error flag and the global debug error
+//  300                 variable with error code for EEPROM access error.
+//  301               ENDIF
+//  302 
+//  303     \li 140:  Clear Burst Read Mode flag and implicitly clear both EEPROM
+//  304               error flags.
+//  305 
+//  306     \li 150:  Disable power to the LF RSSI module within protected section.
+//  307 
+//  308     \Derived{No}
+//  309 
+//  310     \Rationale{N/A}
+//  311 
+//  312     \Traceability{Primus2P-2002,Primus2P-2478}
+//  313     \endinternal
+//  314 \n
+//  315 */
+//  316 /*----------------------------------------------------------------------------- */
+
+        RSEG CODE:CODE:ROOT(1)
+//  317 VOIDFUNC ATA_lfRssiSetEepromConfig_C(uint8_t bEepRssiSrcCalVal)  // registers in use: R16 registers unused: R17, R18, R19, R20, R21, R22, R23
+ATA_lfRssiSetEepromConfig_C:
+          CFI Block cfiBlock4 Using cfiCommon0
+          CFI Function ATA_lfRssiSetEepromConfig_C
+          CFI NoCalls
+//  318 {
+        MOV     R18, R16
+//  319     uint8_t i;
+//  320     uint8_t prr0;
+//  321 
+//  322     ATA_SET_FUNCTION_TRACE_POINT_C(ATA_lfRssiSetEepromConfig_C, 0x00);
+        IN      R19, 0x3F
+        CLI
+        LDI     R16, 0
+        STS     _A_TRCDR, R16
+        LDI     R16, LOW(ATA_lfRssiSetEepromConfig_C/2)
+        STS     _A_TRCIDL, R16
+        LDI     R16, (ATA_lfRssiSetEepromConfig_C/2) >> 8
+        STS     _A_TRCIDH, R16
+        OUT     0x3F, R19
+//  323 
+//  324     /* LLR-Ref: 010 */
+//  325     _CLI;
+        cli
+//  326     prr0 = PRR0;
+        IN      R19, 0x1A
+//  327     PRR0 &= ~BM_PRLFRS;
+        CBI     0x1A, 0x01
+//  328     _SEI;
+        sei
+//  329 
+//  330     /* LLR-Ref: 020 */
+//  331     while(EECR & BM_NVMBSY){}
+??ATA_lfRssiSetEepromConfig_C_0:
+        SBIC    0x1F, 0x07
+        RJMP    ??ATA_lfRssiSetEepromConfig_C_0
+//  332 
+//  333     /* LLR-Ref: 030 */
+//  334     RSCR |= BM_RSRES;
+        LDS     R16, 432
+        ORI     R16, 0x80
+        STS     432, R16
+//  335 
+//  336     /* LLR-Ref: 040 */
+//  337     /*lint -e923 GeWi (23nov2011)*/
+//  338     /* disable lint error 923 - Cast between pointer type and an integral type.
+//  339      * Misra Rule 11.3 says: Casting between a pointer and an integer type should be avoided where possible,
+//  340      * but may be unavoidable when addressing memory mapped registers or other hardware specific features.
+//  341      */
+//  342     EEARH = (uint8_t)(((uint16_t)&g_sAtmelEEPromSection.eepRssiRangeCorrectionValues[0]) >> 8U);
+        LDI     R16, HIGH((g_sAtmelEEPromSection + 52))
+        OUT     0x22, R16
+//  343     EEARL = (uint8_t)(((uint16_t)&g_sAtmelEEPromSection.eepRssiRangeCorrectionValues[0]) >> 0U);
+        LDI     R16, LOW((g_sAtmelEEPromSection + 52))
+        OUT     0x21, R16
+//  344     /*lint -restore */
+//  345 
+//  346     /* LLR-Ref: 050 */
+//  347     EECR2 |= BM_EEBRE;
+        SBI     0x16, 0x00
+//  348 
+//  349     /* LLR-Ref: 060 */
+//  350     //RSMS2R = 0;       // already done by reset
+//  351     RSMS1R |= BM_RSSCAL;
+        LDS     R16, 434
+        ORI     R16, 0x80
+        STS     434, R16
+//  352 
+//  353     /* LLR-Ref: 070 */
+//  354     for( i = 1; i < LF_RSSI_NUM_EEPROM_DATA; i++ )
+        LDI     R16, 1
+//  355     {
+//  356         RSCALIB = EEDR;
+??ATA_lfRssiSetEepromConfig_C_1:
+        IN      R17, 0x20
+        STS     _A_RSCALIB, R17
+//  357         RSMS2R = i;
+        STS     _A_RSMS2R, R16
+//  358         while( !(RSSR & BM_RSSVLD) ){}
+??ATA_lfRssiSetEepromConfig_C_2:
+        LDS     R17, _A_RSSR
+        SBRS    R17, 1
+        RJMP    ??ATA_lfRssiSetEepromConfig_C_2
+//  359     }
+        INC     R16
+        CPI     R16, 12
+        BRCS    ??ATA_lfRssiSetEepromConfig_C_1
+//  360 
+//  361     /* LLR-Ref: 080 */
+//  362     RSCALIB = bEepRssiSrcCalVal;
+        STS     _A_RSCALIB, R18
+//  363     RSMS2R  = 0x0C;
+        LDI     R16, 12
+        STS     _A_RSMS2R, R16
+//  364     while( !(RSSR & BM_RSSVLD) ){}
+??ATA_lfRssiSetEepromConfig_C_3:
+        LDS     R16, _A_RSSR
+        SBRS    R16, 1
+        RJMP    ??ATA_lfRssiSetEepromConfig_C_3
+//  365 
+//  366     /* LLR-Ref: 090 */
+//  367     RSMS1R &= ~BM_RSSCAL;
+        LDS     R16, 434
+        ANDI    R16, 0x7F
+        STS     434, R16
+//  368 
+//  369     /* LLR-Ref: 100 */
+//  370     if( EECR2 & BM_E2FF )
+        IN      R16, 0x16
+        LDS     R17, g_sLfRssi
+        BST     R16, 6
+        BRTC    ??ATA_lfRssiSetEepromConfig_C_4
+//  371     {
+//  372         /* LLR-Ref: 110 */
+//  373         g_sLfRssi.bFlags   |= LFRSSI_FLAGS_BM_ERROR_FLAG;
+        ORI     R17, 0x80
+//  374         g_sDebug.bErrorCode = DEBUG_ERROR_CODE_LFRSSI_EEPROM_READ_ERROR;
+        LDI     R16, 41
+        STS     g_sDebug, R16
+//  375         EECR2 |= BM_E2FF;
+        SBI     0x16, 0x06
+//  376     }
+//  377 
+//  378     /* LLR-Ref: 120 */
+//  379     if(EECR2 & BM_E2AVF)
+??ATA_lfRssiSetEepromConfig_C_4:
+        SBIS    0x16, 0x05
+        RJMP    ??ATA_lfRssiSetEepromConfig_C_5
+//  380     {
+//  381         /* LLR-Ref: 130 */
+//  382         g_sLfRssi.bFlags   |= LFRSSI_FLAGS_BM_ERROR_FLAG;
+        ORI     R17, 0x80
+//  383         g_sDebug.bErrorCode = DEBUG_ERROR_CODE_LFRSSI_EEPROM_ACCESS_ERROR;
+        LDI     R16, 42
+        STS     g_sDebug, R16
+//  384         EECR2 |= BM_E2AVF;
+        SBI     0x16, 0x05
+??ATA_lfRssiSetEepromConfig_C_5:
+        STS     g_sLfRssi, R17
+//  385     }
+//  386 
+//  387     /* LLR-Ref: 140 */
+//  388     EECR2 &= ~BM_EEBRE;
+        CBI     0x16, 0x00
+//  389 
+//  390     /* LLR-Ref: 150 */
+//  391     _CLI;
+        cli
+//  392     PRR0 = prr0;
+        OUT     0x1A, R19
+//  393     _SEI;
+        sei
+//  394 }
+        RET
+          CFI EndBlock cfiBlock4
+        REQUIRE _A_SREG
+        REQUIRE _A_TRCDR
+        REQUIRE _A_TRCIDL
+        REQUIRE _A_TRCIDH
+        REQUIRE _A_PRR0
+        REQUIRE _A_EECR
+        REQUIRE _A_RSCR
+        REQUIRE _A_EEARH
+        REQUIRE _A_EEARL
+        REQUIRE _A_EECR2
+        REQUIRE _A_RSMS1R
+        REQUIRE _A_RSCALIB
+        REQUIRE _A_EEDR
+        REQUIRE _A_RSMS2R
+        REQUIRE _A_RSSR
+//  395 
+//  396 
+//  397 /*----------------------------------------------------------------------------- */
+//  398 /** \brief <b>ATA_lfRssiMeasStart_C</b>
+//  399     is used to start the external LF RSSI measurement.
+//  400 
+//  401     \param[in]      pRegConfig  Contains the configuration for the registers RSCR, RSMS1R, RSMS2R, RSDLYR and RSSRCR
+//  402     \param[in]      bMode       Contains internal or external LF RSSI measurement request
+//  403     \param[in]      bSign       Contains sign detection request, only applicable in conjunction with external LF RSSI measurement
+//  404 
+//  405     Variable Usage:
+//  406     \li [in,out] ::g_sLfRssi    Global LF RSSI component data
+//  407     \li [out]    ::g_sDebug     Global Debug component data
+//  408 
+//  409     \image html ATA_lfRssiMeasStart_C.png
+//  410 
+//  411     \internal
+//  412     \li 010:  Reset component flags except the error flag. All previous information
+//  413               are cleared each time a new LF RSSI measurement is started.
+//  414 
+//  415     \li 020:  IF an LF RSSI module operation is still in progress,
+//  416               THEN
+//  417 
+//  418     \li 030:    Set component global error flag and the global debug error
+//  419                 variable with error code for operation still active error.
+//  420               ELSEIF
+//  421 
+//  422     \li 040:  IF the analog LF RSSI part has not finished its initialization,
+//  423               THEN
+//  424 
+//  425     \li 050:    Set component global error flag and the global debug error
+//  426                 variable with error code for RSSI analog part not ready error.
+//  427               ELSEIF
+//  428 
+//  429     \li 060:  IF no LF channel is activated to participate the measurement,
+//  430               THEN
+//  431 
+//  432     \li 070:    Set component global error flag and the global debug error
+//  433                 variable with error code for invalid measurement channels error.
+//  434               ELSE
+//  435 
+//  436     \li 080:    Clear bits RSSCAL and RSINTM of input parameter used to configure
+//  437                 register RSMS1R.
+//  438 
+//  439     \li 090:    IF an internal LF RSSI measurement shall be started,
+//  440                 THEN
+//  441 
+//  442     \li 100:      Set bit RSINTM in register RSMS1R and signalize internal
+//  443                   LF RSSI measurement by setting internal status flag.
+//  444                 ENDIF
+//  445 
+//  446     \li 110:    Clear bit RSOFM of input parameter used to configure
+//  447                 register RSCR.
+//  448 
+//  449     \li 120:    IF an external LF RSSI measurement with sign detection
+//  450                 shall be started,
+//  451                 THEN
+//  452 
+//  453     \li 130:      Enable sign detection by setting bit SDEN in register RSCR and
+//  454                   enable all LF channels to participate the LF RSSI measurement
+//  455                   regardless RSCHxE bit settings of input parameter.
+//  456 
+//  457     \li 140:      Signalize sign detection LF RSSI measurement by setting internal
+//  458                   status flag.
+//  459                 ENDIF
+//  460 
+//  461     \li 150:    IF there is a mismatch in the LF receiver channels participating
+//  462                 the LF RSSI measurement and its enable configuration,
+//  463                 THEN
+//  464 
+//  465     \li 160:      Signalize the mismatch by setting component global warning flag.
+//  466                 ENDIF
+//  467 
+//  468     \li 170:    Configure RSMS2R, RSDLYR and RSSRCR register with input parameters.
+//  469 
+//  470     \li 180:    Clear LF RSSI operation finished flag (RSOFF) in register RSFR.
+//  471 
+//  472     \li 190:    Reset the transponder watchdog timer.
+//  473 
+//  474     \li 200:    Disable interrupts globally before start the measurement.
+//  475 
+//  476     \li 210:    Signalize LF RSSI operation is in progress.
+//  477 
+//  478     \li 220:    Trigger start of LF RSSI measurement by setting bit RSOS in
+//  479                 register RSCR.
+//  480 
+//  481     \li 230:    Enable interrupts globally.
+//  482               ENDIF
+//  483 
+//  484     \Derived{No}
+//  485 
+//  486     \Rationale{N/A}
+//  487 
+//  488     \Traceability{Primus2P-2004}
+//  489     \endinternal
+//  490 \n
+//  491 */
+//  492 /*----------------------------------------------------------------------------- */
+
+        RSEG CODE:CODE:ROOT(1)
+//  493 VOIDFUNC ATA_lfRssiMeasStart_C(void *pRegConfig, uint8_t bMode, uint8_t bSign)  // registers in use: R17:R16, R18, R19 registers unused:  R20, R21, R22, R23
+ATA_lfRssiMeasStart_C:
+          CFI Block cfiBlock5 Using cfiCommon0
+          CFI Function ATA_lfRssiMeasStart_C
+          CFI NoCalls
+//  494 {
+        MOV     R21, R27
+        MOV     R22, R26
+        MOVW    R31:R30, R17:R16
+//  495     ATA_SET_FUNCTION_TRACE_POINT_C(ATA_lfRssiMeasStart_C, g_sLfRssi.bFlags | g_sLfRssi.bStatus);
+        IN      R20, 0x3F
+        CLI
+        LDS     R16, g_sLfRssi
+        LDS     R17, (g_sLfRssi + 1)
+        OR      R16, R17
+        STS     _A_TRCDR, R16
+        LDI     R16, LOW(ATA_lfRssiMeasStart_C/2)
+        STS     _A_TRCIDL, R16
+        LDI     R16, (ATA_lfRssiMeasStart_C/2) >> 8
+        STS     _A_TRCIDH, R16
+        OUT     0x3F, R20
+//  496 
+//  497     uint8_t tmpReg;
+//  498     sLfRssiRegConfig *psLfRssiRegConfig = (sLfRssiRegConfig*)pRegConfig;
+//  499 
+//  500     /* LLR-Ref: 010 */
+//  501     g_sLfRssi.bFlags &= LFRSSI_FLAGS_BM_ERROR_FLAG;
+        LDS     R16, g_sLfRssi
+        ANDI    R16, 0x80
+        STS     g_sLfRssi, R16
+//  502     g_sLfRssi.bStatus = LFRSSI_STATUS_RESET;
+        LDI     R16, 0
+        STS     (g_sLfRssi + 1), R16
+//  503 
+//  504     tmpReg = psLfRssiRegConfig->bRsms1r & 0x07;     // mask RSSI channel enable bits
+        LDD     R16, Z+1
+        ANDI    R16, 0x07
+//  505 
+//  506     /* LLR-Ref: 020 */
+//  507     if( RSCR & BM_RSOS )
+        LDS     R17, _A_RSCR
+        SBRS    R17, 1
+        RJMP    ??ATA_lfRssiMeasStart_C_0
+//  508     {
+//  509         /* LLR-Ref: 030 */
+//  510         g_sLfRssi.bFlags   |= LFRSSI_FLAGS_BM_ERROR_FLAG;
+        LDI     R16, 128
+        STS     g_sLfRssi, R16
+//  511         g_sDebug.bErrorCode = DEBUG_ERROR_CODE_LFRSSI_OPERATION_ACTIVE;
+        LDI     R16, 46
+        RJMP    ??ATA_lfRssiMeasStart_C_1
+//  512     }
+//  513     /* LLR-Ref: 040 */
+//  514     else if( !(RSSR & BM_RSRDY) )
+??ATA_lfRssiMeasStart_C_0:
+        LDS     R17, _A_RSSR
+        SBRC    R17, 0
+        RJMP    ??ATA_lfRssiMeasStart_C_2
+//  515     {
+//  516         /* LLR-Ref: 050 */
+//  517         g_sLfRssi.bFlags   |= LFRSSI_FLAGS_BM_ERROR_FLAG;
+        LDI     R16, 128
+        STS     g_sLfRssi, R16
+//  518         g_sDebug.bErrorCode = DEBUG_ERROR_CODE_LFRSSI_ANALOGPART_NOTREADY;
+        LDI     R16, 43
+        RJMP    ??ATA_lfRssiMeasStart_C_1
+//  519     }
+//  520     /* LLR-Ref: 060 */
+//  521     else if( !tmpReg )
+??ATA_lfRssiMeasStart_C_2:
+        BRNE    ??ATA_lfRssiMeasStart_C_3
+//  522     {
+//  523         /* LLR-Ref: 070 */
+//  524         g_sLfRssi.bFlags   |= LFRSSI_FLAGS_BM_ERROR_FLAG;
+        LDI     R16, 128
+        STS     g_sLfRssi, R16
+//  525         g_sDebug.bErrorCode = DEBUG_ERROR_CODE_LFRSSI_INVALID_MEASUREMENT_CHANNELS;
+        LDI     R16, 44
+??ATA_lfRssiMeasStart_C_1:
+        STS     g_sDebug, R16
+        RJMP    ??ATA_lfRssiMeasStart_C_4
+//  526     }
+//  527     else
+//  528     {
+//  529         /* LLR-Ref: 080 */
+//  530         RSMS1R = psLfRssiRegConfig->bRsms1r & ~(BM_RSSCAL | BM_RSINTM);
+??ATA_lfRssiMeasStart_C_3:
+        LDD     R17, Z+1
+        ANDI    R17, 0x77
+        STS     _A_RSMS1R, R17
+//  531 
+//  532         /* LLR-Ref: 090 */
+//  533         if( bMode )
+        TST     R18
+        BREQ    ??ATA_lfRssiMeasStart_C_5
+//  534         {
+//  535             /* LLR-Ref: 100 */
+//  536             RSMS1R            |= BM_RSINTM;
+        LDS     R17, 434
+        ORI     R17, 0x08
+        STS     434, R17
+//  537             g_sLfRssi.bStatus |= LFRSSI_STATUS_BM_INTERNAL_MEASUREMENT_FLAG;
+        LDI     R17, 8
+        STS     (g_sLfRssi + 1), R17
+//  538         }
+//  539 
+//  540         /* LLR-Ref: 110 */
+//  541         RSCR = psLfRssiRegConfig->bRscr & BM_RSOFM;
+??ATA_lfRssiMeasStart_C_5:
+        LD      R17, Z
+        ANDI    R17, 0x08
+        STS     _A_RSCR, R17
+//  542 
+//  543         /* LLR-Ref: 120 */
+//  544         if( !bMode && bSign )
+        TST     R18
+        BRNE    ??ATA_lfRssiMeasStart_C_6
+        TST     R19
+        BREQ    ??ATA_lfRssiMeasStart_C_6
+//  545         {
+//  546             /* LLR-Ref: 130 */
+//  547             RSCR   |= BM_RSSDEN;
+        LDS     R16, 432
+        ORI     R16, 0x01
+        STS     432, R16
+//  548             RSMS1R |= (BM_RSCH3E | BM_RSCH2E | BM_RSCH1E);
+        LDS     R16, _A_RSMS1R
+        ORI     R16, 0x07
+        STS     _A_RSMS1R, R16
+//  549 
+//  550             /* LLR-Ref: 140 */
+//  551             g_sLfRssi.bStatus |= LFRSSI_STATUS_BM_SIGNDETECT_ENA_FLAG;
+        LDI     R26, LOW((g_sLfRssi + 1))
+        LDI     R27, HIGH((g_sLfRssi + 1))
+        LD      R16, X
+        ORI     R16, 0x02
+        ST      X, R16
+//  552             tmpReg = 0x07;
+        LDI     R16, 7
+//  553         }
+//  554 
+//  555         /* LLR-Ref: 150 */
+//  556         if( (LFCR0 & tmpReg) != tmpReg )    // check desired measurement channels vs. its enable configuration, if mismatching set warning flag
+??ATA_lfRssiMeasStart_C_6:
+        IN      R18, 0x2F
+        LDI     R19, 0
+        AND     R18, R16
+        CP      R18, R16
+        SBCI    R19, 0
+        BREQ    ??ATA_lfRssiMeasStart_C_7
+//  557         {
+//  558             /* LLR-Ref: 160 */
+//  559             g_sLfRssi.bFlags |= LFRSSI_FLAGS_BM_CHANNEL_ENABLE_MISMATCH_FLAG;
+        LDI     R26, LOW(g_sLfRssi)
+        LDI     R27, (g_sLfRssi) >> 8
+        LD      R16, X
+        ORI     R16, 0x10
+        ST      X, R16
+//  560         }
+//  561 
+//  562         /* LLR-Ref: 170 */
+//  563         RSMS2R = psLfRssiRegConfig->bRsms2r;    // check influence of bits RSSADR for measurement
+??ATA_lfRssiMeasStart_C_7:
+        LDD     R16, Z+2
+        STS     _A_RSMS2R, R16
+//  564         RSDLYR = psLfRssiRegConfig->bRsdlyr;    // may be load from EEPROM???
+        LDD     R16, Z+3
+        STS     _A_RSDLYR, R16
+//  565         RSSRCR = psLfRssiRegConfig->bRssrcr;    // obsolete for internal measurement
+        LDD     R16, Z+4
+        STS     _A_RSSRCR, R16
+//  566 
+//  567         /* LLR-Ref: 180 */
+//  568         RSFR  = BM_RSOFF;                       // all other flags are read-only
+        LDI     R16, 8
+        STS     _A_RSFR, R16
+//  569 
+//  570         /* LLR-Ref: 190 */
+//  571         TPCR2 |= BM_TPD;                        // reset transponder watchdog
+        SBI     0x0C, 0x03
+//  572 
+//  573         /* LLR-Ref: 200 */
+//  574         _CLI;
+        cli
+//  575 
+//  576         /* LLR-Ref: 210 */
+//  577         g_sLfRssi.bStatus |= LFRSSI_STATUS_BM_OPERATION_ACTIVE_FLAG;
+        LDI     R30, LOW(g_sLfRssi)
+        LDI     R31, (g_sLfRssi) >> 8
+        LDD     R16, Z+1
+        ORI     R16, 0x01
+        STD     Z+1, R16
+//  578 
+//  579         /* LLR-Ref: 220 */
+//  580         RSCR |= BM_RSOS;                        // start measurement
+        LDS     R16, 432
+        ORI     R16, 0x02
+        STS     432, R16
+//  581 
+//  582         /* LLR-Ref: 230 */
+//  583         _SEI;
+        sei
+//  584     }
+//  585 }
+??ATA_lfRssiMeasStart_C_4:
+          CFI EndBlock cfiBlock5
+        REQUIRE ?Subroutine0
+        REQUIRE _A_SREG
+        REQUIRE _A_TRCDR
+        REQUIRE _A_TRCIDL
+        REQUIRE _A_TRCIDH
+        REQUIRE _A_RSCR
+        REQUIRE _A_RSSR
+        REQUIRE _A_RSMS1R
+        REQUIRE _A_LFCR0
+        REQUIRE _A_RSMS2R
+        REQUIRE _A_RSDLYR
+        REQUIRE _A_RSSRCR
+        REQUIRE _A_RSFR
+        REQUIRE _A_TPCR2
+        ;               // Fall through to label ?Subroutine0
+
+        RSEG CODE:CODE:NOROOT(1)
+?Subroutine0:
+          CFI Block cfiBlock6 Using cfiCommon0
+          CFI NoFunction
+        MOV     R26, R22
+          CFI R26 R22
+        MOV     R27, R21
+          CFI R27 R21
+        RET
+          CFI EndBlock cfiBlock6
+//  586 
+//  587 
+//  588 /*----------------------------------------------------------------------------- */
+//  589 /** \brief <b>ATA_lfRssiMeasStop_C</b>
+//  590     is used to signalize to end an active LF RSSI operation (mainly internal or
+//  591     external measurement). In case no operation is in progress, no unintended
+//  592     behaviour occurs. Measurement end request flag is cleared without side
+//  593     effects.
+//  594 
+//  595     Variable Usage:
+//  596     \li [in,out] ::g_sLfRssi    Global LF RSSI component data
+//  597 
+//  598     \image html ATA_lfRssiMeasStop_C.png
+//  599 
+//  600     \internal
+//  601     \li 010:  Disable interrupts globally to prevent .
+//  602 
+//  603     \li 020:  IF an LF RSSI operation is still in progress,
+//  604               THEN
+//  605 
+//  606     \li 030:    Set bit to finish the current operation and set internal flag
+//  607                 signalizing that operation has been aborted.
+//  608               ENDIF
+//  609 
+//  610     \li 040:  Enable interrupts globally.
+//  611 
+//  612     \Derived{No}
+//  613 
+//  614     \Rationale{N/A}
+//  615 
+//  616     \Traceability{N/A}
+//  617     \endinternal
+//  618     \n
+//  619 */
+//  620 /*----------------------------------------------------------------------------- */
+
+        RSEG CODE:CODE:ROOT(1)
+//  621 VOIDFUNC ATA_lfRssiMeasStop_C(void)
+ATA_lfRssiMeasStop_C:
+          CFI Block cfiBlock7 Using cfiCommon0
+          CFI Function ATA_lfRssiMeasStop_C
+          CFI NoCalls
+//  622 {
+//  623     ATA_SET_FUNCTION_TRACE_POINT_C(ATA_lfRssiMeasStop_C, g_sLfRssi.bFlags | g_sLfRssi.bStatus);
+        IN      R18, 0x3F
+        CLI
+        LDS     R16, g_sLfRssi
+        LDS     R17, (g_sLfRssi + 1)
+        OR      R16, R17
+        STS     _A_TRCDR, R16
+        LDI     R16, LOW(ATA_lfRssiMeasStop_C/2)
+        STS     _A_TRCIDL, R16
+        LDI     R16, (ATA_lfRssiMeasStop_C/2) >> 8
+        STS     _A_TRCIDH, R16
+        OUT     0x3F, R18
+//  624 
+//  625     /* LLR-Ref: 010 */
+//  626     _CLI;
+        cli
+//  627 
+//  628     /* LLR-Ref: 020 */
+//  629     if( RSCR & BM_RSOS )
+        LDS     R16, _A_RSCR
+        SBRS    R16, 1
+        RJMP    ??ATA_lfRssiMeasStop_C_0
+//  630     {
+//  631         /* LLR-Ref: 030 */
+//  632         RSCR |= BM_RSEOR;
+        LDS     R16, 432
+        ORI     R16, 0x04
+        STS     432, R16
+//  633         g_sLfRssi.bFlags |= LFRSSI_FLAGS_BM_MEASUREMENT_ABORTED_FLAG;
+        LDI     R30, LOW(g_sLfRssi)
+        LDI     R31, (g_sLfRssi) >> 8
+        LD      R16, Z
+        ORI     R16, 0x20
+        ST      Z, R16
+//  634     }
+//  635 
+//  636     /* LLR-Ref: 040 */
+//  637     _SEI;
+??ATA_lfRssiMeasStop_C_0:
+        sei
+//  638 }
+        RET
+          CFI EndBlock cfiBlock7
+        REQUIRE _A_SREG
+        REQUIRE _A_TRCDR
+        REQUIRE _A_TRCIDL
+        REQUIRE _A_TRCIDH
+        REQUIRE _A_RSCR
+//  639 
+//  640 
+//  641 /*----------------------------------------------------------------------------- */
+//  642 /** \brief <b>ATA_lfRssiGetAverageResult_C</b>
+//  643     is used to read out the LF RSSI measurement average result for each LF channel
+//  644     and to store it to SRAM location. Furthermore, the results of a sign detection
+//  645     is also read and stored to SRAM location.
+//  646 
+//  647     \param[out]     pResMeas        Base address to data structure to store 3 x 16 bit LF RSSI averaging results
+//  648     \param[out]     pResSignDetect  Base address to data structure to store 4 x 8 bit LF RSSI sign detection results
+//  649 
+//  650     Variable Usage:
+//  651     \li [in,out] ::g_sLfRssi    Global LF RSSI component data
+//  652     \li [out]    ::g_sDebug     Global Debug component data
+//  653 
+//  654     \image html ATA_lfRssiGetAverageResult_C.png
+//  655 
+//  656     \internal
+//  657     \li 010:  Signalize LF RSSI operation is in progress.
+//  658 
+//  659     \li 020:  IF valid pointer to store the averaging results is used,
+//  660               THEN
+//  661 
+//  662     \li 030:    Clear bit RSSSV in register RSMS1R to be sure to read the LF channel
+//  663                 average results from result registers RSRES1..3.
+//  664 
+//  665     \li 040:    Wait as long as the result registers are not containing the
+//  666                 average results.
+//  667 
+//  668     \li 050:    Read the LF channel average result registers and store content
+//  669                 to SRAM location.
+//  670               ENDIF
+//  671 
+//  672     \li 060:  IF valid pointer to store the sign detection results is used,
+//  673               THEN
+//  674 
+//  675     \li 070:    Read sign detection result registers and store content to
+//  676                 SRAM location.
+//  677               ENDIF
+//  678 
+//  679     \li 080:  Signalize LF RSSI operation has been finished/is not in progress.
+//  680 
+//  681     \Derived{No}
+//  682 
+//  683     \Rationale{N/A}
+//  684 
+//  685     \Traceability{Primus2P-2503}
+//  686     \endinternal
+//  687 \n
+//  688 */
+//  689 /*----------------------------------------------------------------------------- */
+
+        RSEG CODE:CODE:ROOT(1)
+//  690 VOIDFUNC ATA_lfRssiGetAverageResult_C(uint8_t *pResMeas, uint8_t *pResSignDetect)  // registers in use: R17:R16, R19:R18 registers unused: R20, R21, R22, R23
+ATA_lfRssiGetAverageResult_C:
+          CFI Block cfiBlock8 Using cfiCommon0
+          CFI Function ATA_lfRssiGetAverageResult_C
+          CFI NoCalls
+//  691 {
+        MOV     R21, R27
+        MOV     R22, R26
+        MOVW    R31:R30, R17:R16
+//  692     ATA_SET_FUNCTION_TRACE_POINT_C(ATA_lfRssiGetAverageResult_C, g_sLfRssi.bFlags | g_sLfRssi.bStatus);
+        IN      R20, 0x3F
+        CLI
+        LDS     R16, g_sLfRssi
+        LDS     R17, (g_sLfRssi + 1)
+        OR      R16, R17
+        STS     _A_TRCDR, R16
+        LDI     R16, LOW(ATA_lfRssiGetAverageResult_C/2)
+        STS     _A_TRCIDL, R16
+        LDI     R16, (ATA_lfRssiGetAverageResult_C/2) >> 8
+        STS     _A_TRCIDH, R16
+        OUT     0x3F, R20
+//  693 
+//  694     /* LLR-Ref: 010 */
+//  695     g_sLfRssi.bStatus |= LFRSSI_STATUS_BM_OPERATION_ACTIVE_FLAG;
+        LDI     R26, LOW((g_sLfRssi + 1))
+        LDI     R27, HIGH((g_sLfRssi + 1))
+        LD      R16, X
+        ORI     R16, 0x01
+        ST      X, R16
+//  696 
+//  697     /* LLR-Ref: 020 */
+//  698     if( pResMeas )
+        MOV     R16, R30
+        OR      R16, R31
+        BREQ    ??ATA_lfRssiGetAverageResult_C_0
+//  699     {
+//  700         /* LLR-Ref: 030 */
+//  701         RSMS1R &= ~(BM_RSSCAL | BM_RSSSV);
+        LDS     R16, _A_RSMS1R
+        ANDI    R16, 0x3F
+        STS     _A_RSMS1R, R16
+//  702 
+//  703         /* LLR-Ref: 040 */
+//  704         // in case RSSVLD never occurs, transponder watchdog expires and should do a software reset
+//  705         while( !(RSSR & BM_RSSVLD) ){}
+??ATA_lfRssiGetAverageResult_C_1:
+        LDS     R16, _A_RSSR
+        SBRS    R16, 1
+        RJMP    ??ATA_lfRssiGetAverageResult_C_1
+//  706 
+//  707         /* LLR-Ref: 050 */
+//  708         *(pResMeas+LFRSSI_BYTEOFFSET_RESULT_RSC1L) = RSRES1L;
+        LDS     R16, _A_RSRES1L
+        ST      Z, R16
+//  709         *(pResMeas+LFRSSI_BYTEOFFSET_RESULT_RSC1H) = RSRES1H;
+        LDS     R16, _A_RSRES1H
+        STD     Z+1, R16
+//  710         *(pResMeas+LFRSSI_BYTEOFFSET_RESULT_RSC2L) = RSRES2L;
+        LDS     R16, _A_RSRES2L
+        STD     Z+2, R16
+//  711         *(pResMeas+LFRSSI_BYTEOFFSET_RESULT_RSC2H) = RSRES2H;
+        LDS     R16, _A_RSRES2H
+        STD     Z+3, R16
+//  712         *(pResMeas+LFRSSI_BYTEOFFSET_RESULT_RSC3L) = RSRES3L;
+        LDS     R16, _A_RSRES3L
+        STD     Z+4, R16
+//  713         *(pResMeas+LFRSSI_BYTEOFFSET_RESULT_RSC3H) = RSRES3H;
+        LDS     R16, _A_RSRES3H
+        STD     Z+5, R16
+//  714     }
+//  715 
+//  716     /* LLR-Ref: 060 */
+//  717     if( pResSignDetect )
+??ATA_lfRssiGetAverageResult_C_0:
+        MOV     R16, R18
+        OR      R16, R19
+        BREQ    ??ATA_lfRssiGetAverageResult_C_2
+//  718     {
+//  719         /* LLR-Ref: 070 */
+//  720         // content of registers only valid, if sign detection has been enabled
+//  721         // for external measurement
+//  722         *(pResSignDetect+LFRSSI_BYTEOFFSET_RESULT_SD12RR) = SD12RR;
+        LDS     R16, _A_SD12RR
+        MOVW    R31:R30, R19:R18
+        ST      Z, R16
+//  723         *(pResSignDetect+LFRSSI_BYTEOFFSET_RESULT_SD13RR) = SD13RR;
+        LDS     R16, _A_SD13RR
+        STD     Z+1, R16
+//  724         *(pResSignDetect+LFRSSI_BYTEOFFSET_RESULT_SD23RR) = SD23RR;
+        LDS     R16, _A_SD23RR
+        STD     Z+2, R16
+//  725         *(pResSignDetect+LFRSSI_BYTEOFFSET_RESULT_SD360R) = SD360R;
+        LDS     R16, _A_SD360R
+        STD     Z+3, R16
+//  726     }
+//  727 
+//  728     /* LLR-Ref: 080 */
+//  729     g_sLfRssi.bStatus &= ~LFRSSI_STATUS_BM_OPERATION_ACTIVE_FLAG;
+??ATA_lfRssiGetAverageResult_C_2:
+        LDI     R30, LOW(g_sLfRssi)
+        LDI     R31, (g_sLfRssi) >> 8
+        LDD     R16, Z+1
+        ANDI    R16, 0xFE
+        STD     Z+1, R16
+//  730 }
+        RJMP    ?Subroutine0
+          CFI EndBlock cfiBlock8
+        REQUIRE _A_SREG
+        REQUIRE _A_TRCDR
+        REQUIRE _A_TRCIDL
+        REQUIRE _A_TRCIDH
+        REQUIRE _A_RSMS1R
+        REQUIRE _A_RSSR
+        REQUIRE _A_RSRES1L
+        REQUIRE _A_RSRES1H
+        REQUIRE _A_RSRES2L
+        REQUIRE _A_RSRES2H
+        REQUIRE _A_RSRES3L
+        REQUIRE _A_RSRES3H
+        REQUIRE _A_SD12RR
+        REQUIRE _A_SD13RR
+        REQUIRE _A_SD23RR
+        REQUIRE _A_SD360R
+//  731 
+//  732 
+//  733 /*----------------------------------------------------------------------------- */
+//  734 /** \brief <b>ATA_lfRssiGetSamplesResult_C</b>
+//  735     is used to read out a certain number of LF RSSI sample values for
+//  736     each LF channel and to store it to SRAM location.
+//  737 
+//  738     \param[out]     pResMeas    Base address to data structure to store 3 x 16 bit LF RSSI sample value(s)
+//  739     \param[in]      bNum        Number of LF RSSI sample values to read
+//  740     \param[in]      bIndex      Index to read the LF RSSI sample value(s) firstly
+//  741 
+//  742     Variable Usage:
+//  743     \li [in,out]  ::g_sLfRssi   Global LF RSSI component data
+//  744     \li [out]     ::g_sDebug    Global Debug component data
+//  745 
+//  746     \image html ATA_lfRssiGetSamplesResult_C.png
+//  747 
+//  748     \internal
+//  749     \li 010:  IF valid pointer to store the sample value(s) is used,
+//  750               THEN
+//  751 
+//  752     \li 020:    Set bit RSSSV in register RSMS1R to be sure to read
+//  753                 the LF channel sample results from result registers RSRES1..3.
+//  754 
+//  755     \li 030:    IF the desired number of samples to read exceeds the maximum
+//  756                 number without index wrap around,
+//  757                 THEN
+//  758 
+//  759     \li 040:      Limit number to 16 samples to read.
+//  760                 ENDIF
+//  761 
+//  762     \li 050:    Signalize LF RSSI operation is in progress.
+//  763 
+//  764     \li 060:    IF the number of samples to read is not reached,
+//  765                 THEN
+//  766 
+//  767     \li 070:      Set read index to register RSMS2R.
+//  768 
+//  769     \li 080:      Wait as long as the result registers are not containing the
+//  770                   sample values.
+//  771 
+//  772     \li 090:      Read the LF channel result registers and store sample value
+//  773                   to SRAM location.
+//  774                 ENDIF
+//  775 
+//  776     \li 100:    Signalize LF RSSI operation has been finished/is not in progress.
+//  777               ELSE
+//  778 
+//  779     \li 110:    Set component global error flag and the global debug error
+//  780                 variable with error code for invalid output pointers are used error.
+//  781               ENDIF
+//  782 
+//  783     \Derived{No}
+//  784 
+//  785     \Rationale{N/A}
+//  786 
+//  787     \Traceability{Primus2P-2503}
+//  788     \endinternal
+//  789 \n
+//  790 */
+//  791 /*----------------------------------------------------------------------------- */
+
+        RSEG CODE:CODE:ROOT(1)
+//  792 VOIDFUNC ATA_lfRssiGetSamplesResult_C(uint8_t *pResMeas, uint8_t bNum, uint8_t bIndex)  // registers in use: R17:R16, R18, R19 registers unused: R20, R21, R22, R23
+ATA_lfRssiGetSamplesResult_C:
+          CFI Block cfiBlock9 Using cfiCommon0
+          CFI Function ATA_lfRssiGetSamplesResult_C
+          CFI NoCalls
+//  793 {
+        MOV     R21, R27
+        MOV     R22, R26
+        MOVW    R31:R30, R17:R16
+//  794     ATA_SET_FUNCTION_TRACE_POINT_C(ATA_lfRssiGetSamplesResult_C, g_sLfRssi.bFlags | g_sLfRssi.bStatus);
+        IN      R20, 0x3F
+        CLI
+        LDS     R16, g_sLfRssi
+        LDS     R17, (g_sLfRssi + 1)
+        OR      R16, R17
+        STS     _A_TRCDR, R16
+        LDI     R16, LOW(ATA_lfRssiGetSamplesResult_C/2)
+        STS     _A_TRCIDL, R16
+        LDI     R16, (ATA_lfRssiGetSamplesResult_C/2) >> 8
+        STS     _A_TRCIDH, R16
+        OUT     0x3F, R20
+//  795 
+//  796     /* LLR-Ref: 010 */
+//  797     if( pResMeas )
+        MOV     R16, R30
+        OR      R16, R31
+        BREQ    ??ATA_lfRssiGetSamplesResult_C_0
+//  798     {
+//  799         /* LLR-Ref: 020 */
+//  800         RSMS1R &= ~BM_RSSCAL;
+        LDS     R16, 434
+        ANDI    R16, 0x7F
+        STS     434, R16
+//  801         RSMS1R |= BM_RSSSV;
+        LDS     R16, 434
+        ORI     R16, 0x40
+        STS     434, R16
+//  802 
+//  803         /* LLR-Ref: 030 */
+//  804         if( bNum > 16 )
+        CPI     R18, 17
+        BRCS    ??ATA_lfRssiGetSamplesResult_C_1
+//  805         {
+//  806             /* LLR-Ref: 040 */
+//  807             bNum = 16;
+        LDI     R18, 16
+//  808         }
+//  809 
+//  810         /* LLR-Ref: 050 */
+//  811         g_sLfRssi.bStatus |= LFRSSI_STATUS_BM_OPERATION_ACTIVE_FLAG;
+??ATA_lfRssiGetSamplesResult_C_1:
+        LDI     R26, LOW((g_sLfRssi + 1))
+        LDI     R27, HIGH((g_sLfRssi + 1))
+        LD      R16, X
+        ORI     R16, 0x01
+        ST      X, R16
+        RJMP    ??ATA_lfRssiGetSamplesResult_C_2
+//  812 
+//  813         /* LLR-Ref: 060 */
+//  814         for( ; bNum > 0; bNum--, bIndex++ )
+//  815         {
+//  816             /* LLR-Ref: 070 */
+//  817             RSMS2R = bIndex & 0x0F; // possibility to apply OR operation to preserve bits RSAVGS[3..0],
+??ATA_lfRssiGetSamplesResult_C_3:
+        MOV     R16, R19
+        ANDI    R16, 0x0F
+        STS     _A_RSMS2R, R16
+//  818                                     // RSAVGS[3..0] are overwritten when start a new measurement
+//  819 
+//  820             /* LLR-Ref: 080 */
+//  821             // in case RSSVLD never occurs, transponder watchdog expires and should do a software reset
+//  822             while( !(RSSR & BM_RSSVLD) ){}
+??ATA_lfRssiGetSamplesResult_C_4:
+        LDS     R16, _A_RSSR
+        SBRS    R16, 1
+        RJMP    ??ATA_lfRssiGetSamplesResult_C_4
+//  823 
+//  824             /* LLR-Ref: 090 */
+//  825             *(pResMeas++) = RSRES1L;
+        LDS     R16, _A_RSRES1L
+        ST      Z+, R16
+//  826             *(pResMeas++) = RSRES1H;
+        LDS     R16, _A_RSRES1H
+        ST      Z+, R16
+//  827             *(pResMeas++) = RSRES2L;
+        LDS     R16, _A_RSRES2L
+        ST      Z+, R16
+//  828             *(pResMeas++) = RSRES2H;
+        LDS     R16, _A_RSRES2H
+        ST      Z+, R16
+//  829             *(pResMeas++) = RSRES3L;
+        LDS     R16, _A_RSRES3L
+        ST      Z+, R16
+//  830             *(pResMeas++) = RSRES3H;
+        LDS     R16, _A_RSRES3H
+        ST      Z+, R16
+//  831         }
+        DEC     R18
+        INC     R19
+??ATA_lfRssiGetSamplesResult_C_2:
+        TST     R18
+        BRNE    ??ATA_lfRssiGetSamplesResult_C_3
+//  832 
+//  833         /* LLR-Ref: 100 */
+//  834         g_sLfRssi.bStatus &= ~LFRSSI_STATUS_BM_OPERATION_ACTIVE_FLAG;
+        LDI     R30, LOW(g_sLfRssi)
+        LDI     R31, (g_sLfRssi) >> 8
+        LDD     R16, Z+1
+        ANDI    R16, 0xFE
+        STD     Z+1, R16
+        RJMP    ??ATA_lfRssiGetSamplesResult_C_5
+//  835     }
+//  836     else
+//  837     {
+//  838         /* LLR-Ref: 110 */
+//  839         g_sLfRssi.bFlags   |= LFRSSI_FLAGS_BM_ERROR_FLAG;
+??ATA_lfRssiGetSamplesResult_C_0:
+        LDI     R30, LOW(g_sLfRssi)
+        LDI     R31, (g_sLfRssi) >> 8
+        LD      R16, Z
+        ORI     R16, 0x80
+        ST      Z, R16
+//  840         g_sDebug.bErrorCode = DEBUG_ERROR_CODE_LFRSSI_NULL_POINTER_PASSED;
+        LDI     R16, 45
+        STS     g_sDebug, R16
+//  841     }
+//  842 
+//  843 }
+??ATA_lfRssiGetSamplesResult_C_5:
+        RJMP    ?Subroutine0
+          CFI EndBlock cfiBlock9
+        REQUIRE _A_SREG
+        REQUIRE _A_TRCDR
+        REQUIRE _A_TRCIDL
+        REQUIRE _A_TRCIDH
+        REQUIRE _A_RSMS1R
+        REQUIRE _A_RSMS2R
+        REQUIRE _A_RSSR
+        REQUIRE _A_RSRES1L
+        REQUIRE _A_RSRES1H
+        REQUIRE _A_RSRES2L
+        REQUIRE _A_RSRES2H
+        REQUIRE _A_RSRES3L
+        REQUIRE _A_RSRES3H
+//  844 
+//  845 /*----------------------------------------------------------------------------- */
+//  846 /** \brief <b>ATA_lfRssiCalcChanCalibVal_C</b>
+//  847     is used to calculate the calibration values for each LF channel.
+//  848 
+//  849     \param[in]      bMargin     MARGIN value for the calculation
+//  850     \param[in]      pRefVal     Pointer to structure containing 3 x 16 bit RSSIref values
+//  851     \param[in]      pNormVal    Pointer to structure containing 3 x 16 bit RSSInorm values
+//  852 
+//  853     Variable Usage:
+//  854     \li [in,out] ::g_sLfRssi    Global LF RSSI component data
+//  855     \li [out]    ::g_sDebug     Global Debug component data
+//  856 
+//  857     \image html ATA_lfRssiCalcChanCalibVal_C.png
+//  858 
+//  859     \internal
+//  860     \li 010:  IF valid input pointer is used,
+//  861               THEN
+//  862 
+//  863     \li 020:    Shift MARGIN value to fit 9q3 data format.
+//  864 
+//  865     \li 030:    Calculate calibration value for LF channel 1 and store it to
+//  866                 component variable.
+//  867 
+//  868     \li 040:    Intermediate calculation.
+//  869 
+//  870     \li 050:    Calculate calibration value for LF channel 2 and store it to
+//  871                 component variable.
+//  872 
+//  873     \li 060:    Calculate calibration value for LF channel 3 and store it to
+//  874                 component variable.
+//  875               ELSE
+//  876 
+//  877     \li 070:    Set component global error flag and the global debug error
+//  878                 variable with error code for invalid input pointers are used error.
+//  879               ENDIF
+//  880 
+//  881     \Derived{No}
+//  882 
+//  883     \Rationale{N/A}
+//  884 
+//  885     \Traceability{N/A}
+//  886     \endinternal
+//  887 \n
+//  888 */
+//  889 /*----------------------------------------------------------------------------- */
+
+        RSEG CODE:CODE:ROOT(1)
+//  890 VOIDFUNC ATA_lfRssiCalcChanCalibVal_C(uint8_t bMargin, uint16_t *pRefVal, uint16_t *pNormVal)  // registers in use: R16, R19:R18, R21:R20, registers unused: R17, R22, R23
+ATA_lfRssiCalcChanCalibVal_C:
+          CFI Block cfiBlock10 Using cfiCommon0
+          CFI Function ATA_lfRssiCalcChanCalibVal_C
+          CFI NoCalls
+//  891 {
+        MOV     R23, R27
+        MOV     R2, R26
+        MOV     R22, R16
+        MOVW    R27:R26, R19:R18
+        MOVW    R31:R30, R21:R20
+//  892     uint16_t result, resultTmp;
+//  893     uint16_t wMargin;
+//  894 
+//  895     ATA_SET_FUNCTION_TRACE_POINT_C(ATA_lfRssiCalcChanCalibVal_C, g_sLfRssi.bFlags | g_sLfRssi.bStatus);
+        IN      R18, 0x3F
+        CLI
+        LDS     R16, g_sLfRssi
+        LDS     R17, (g_sLfRssi + 1)
+        OR      R16, R17
+        STS     _A_TRCDR, R16
+        LDI     R16, LOW(ATA_lfRssiCalcChanCalibVal_C/2)
+        STS     _A_TRCIDL, R16
+        LDI     R16, (ATA_lfRssiCalcChanCalibVal_C/2) >> 8
+        STS     _A_TRCIDH, R16
+        OUT     0x3F, R18
+//  896 
+//  897     /* LLR-Ref: 010 */
+//  898     if( pRefVal && pNormVal )
+        MOV     R16, R26
+        OR      R16, R19
+        BREQ    ??ATA_lfRssiCalcChanCalibVal_C_0
+        OR      R20, R21
+        BREQ    ??ATA_lfRssiCalcChanCalibVal_C_0
+//  899     {
+//  900         /* LLR-Ref: 020 */
+//  901         // shift MARGIN value to fit 9q3 data format
+//  902         wMargin = (uint16_t)(bMargin<<3);
+        LDI     R16, 8
+        MUL     R22, R16
+//  903 
+//  904         /* LLR-Ref: 030 */
+//  905         // RSSIref_x + MARGIN
+//  906         result = pRefVal[LFRSSI_INTOFFSET_REF_VAL_CHAN1] + wMargin;
+        LD      R16, X+
+        LD      R17, X+
+        ADD     R16, R0
+        ADC     R17, R1
+//  907         g_sLfRssi.bChanCalibVal[0] = result;
+        STS     (g_sLfRssi + 6), R16
+//  908         g_sLfRssi.bChanCalibVal[1] = result>>8;
+        STS     (g_sLfRssi + 7), R17
+//  909 
+//  910         /* LLR-Ref: 040 */
+//  911         // MARGIN + RSSInorm_x
+//  912         result    = wMargin + pNormVal[LFRSSI_INTOFFSET_NORM_VAL_CHAN1];
+//  913         resultTmp = result;
+        LD      R16, Z
+        LDD     R17, Z+1
+        ADD     R0, R16
+        ADC     R1, R17
+//  914 
+//  915         /* LLR-Ref: 050 */
+//  916         // RSSIref_y + MARGIN + RSSInorm_x - RSSInorm_y
+//  917         result += pRefVal[LFRSSI_INTOFFSET_REF_VAL_CHAN2];
+//  918         result -= pNormVal[LFRSSI_INTOFFSET_NORM_VAL_CHAN2];
+        LD      R18, X+
+        LD      R19, X+
+        MOVW    R17:R16, R1:R0
+        ADD     R16, R18
+        ADC     R17, R19
+        LDD     R18, Z+2
+        LDD     R19, Z+3
+        SUB     R16, R18
+        SBC     R17, R19
+//  919         g_sLfRssi.bChanCalibVal[2] = result;
+        STS     (g_sLfRssi + 8), R16
+//  920         g_sLfRssi.bChanCalibVal[3] = result>>8;
+        STS     (g_sLfRssi + 9), R17
+//  921 
+//  922         /* LLR-Ref: 060 */
+//  923         // RSSIref_z + MARGIN + RSSInorm_x - RSSInorm_z
+//  924         resultTmp += pRefVal[LFRSSI_INTOFFSET_REF_VAL_CHAN3];
+//  925         resultTmp -= pNormVal[LFRSSI_INTOFFSET_NORM_VAL_CHAN3];
+        LD      R16, X+
+        LD      R17, X
+        ADD     R0, R16
+        ADC     R1, R17
+        LDD     R16, Z+4
+        LDD     R17, Z+5
+        SUB     R0, R16
+        SBC     R1, R17
+//  926         g_sLfRssi.bChanCalibVal[4] = resultTmp;
+        STS     (g_sLfRssi + 10), R0
+//  927         g_sLfRssi.bChanCalibVal[5] = resultTmp>>8;
+        STS     (g_sLfRssi + 11), R1
+        RJMP    ??ATA_lfRssiCalcChanCalibVal_C_1
+//  928     }
+//  929     else
+//  930     {
+//  931         /* LLR-Ref: 070 */
+//  932         g_sLfRssi.bFlags   |= LFRSSI_FLAGS_BM_ERROR_FLAG;
+??ATA_lfRssiCalcChanCalibVal_C_0:
+        LDI     R30, LOW(g_sLfRssi)
+        LDI     R31, (g_sLfRssi) >> 8
+        LD      R16, Z
+        ORI     R16, 0x80
+        ST      Z, R16
+//  933         g_sDebug.bErrorCode = DEBUG_ERROR_CODE_LFRSSI_NULL_POINTER_PASSED;
+        LDI     R16, 45
+        STS     g_sDebug, R16
+//  934     }
+//  935 }
+??ATA_lfRssiCalcChanCalibVal_C_1:
+        MOV     R26, R2
+          CFI R26 R2
+        MOV     R27, R23
+          CFI R27 R23
+        RET
+          CFI EndBlock cfiBlock10
+        REQUIRE _A_SREG
+        REQUIRE _A_TRCDR
+        REQUIRE _A_TRCIDL
+        REQUIRE _A_TRCIDH
+//  936 
+//  937 
+//  938 /*----------------------------------------------------------------------------- */
+//  939 /** \brief <b>ATA_lfRssiCalcChanCorr_C</b>
+//  940     is used to calculate the channel correction value for the LF channels.
+//  941 
+//  942     \param[in]      pExtData    Pointer to structure containing 3 x 16 bit (raw) external LF RSSI values
+//  943     \param[in]      pIntData    Pointer to structure containing 3 x 16 bit (raw) internal LF RSSI values
+//  944     \param[out]     pResult     Pointer to 3 x 16 bit data structure to store the corrected LF RSSI channel values
+//  945 
+//  946     Variable Usage:
+//  947     \li [in,out] ::g_sLfRssi    Global LF RSSI component data
+//  948     \li [out]    ::g_sDebug     Global Debug component data
+//  949 
+//  950     \image html ATA_lfRssiCalcChanCorr_C.png
+//  951 
+//  952     \internal
+//  953     \li 010:  IF valid input and output pointers are used,
+//  954               THEN
+//  955 
+//  956     \li 020:    Disable interrupts globally to do an atomic flag check.
+//  957 
+//  958     \li 030:    IF no LF RSSI operation is in progress,
+//  959                 THEN
+//  960 
+//  961     \li 040:      Signalize LF RSSI operation is in progress and re-enable
+//  962                   interrupts globally.
+//  963 
+//  964     \li 050:      Disable usage of RSSI operation finished interrupt and set
+//  965                   "calculation correction" mode to register RSCR.
+//  966 
+//  967     \li 060:      IF not all LF channel correction values has been calculated,
+//  968                   THEN
+//  969 
+//  970     \li 070:        Clear LF RSSI operation finished flag (RSOFF) in register RSFR.
+//  971 
+//  972     \li 080:        Fill calculation registers with external, internal and
+//  973                     calibration value for the currently selected LF channel.
+//  974 
+//  975     \li 090:        Trigger start of correction calculation by setting bit RSOS in
+//  976                     register RSCR.
+//  977 
+//  978     \li 100:        Wait as long as the calculation has not finished.
+//  979 
+//  980     \li 110:        Read channel correction value and store it to SRAM location.
+//  981                   ENDIF
+//  982 
+//  983     \li 120:      Clear LF RSSI operation finished flag (RSOFF) in register RSFR.
+//  984 
+//  985     \li 130:      Update component flag and status variables:\n
+//  986                   Signalize channel correction calculation has finished and the
+//  987                   associated values are available in SRAM. Additionally signalize
+//  988                   that all previous measurement and calculation data are no longer
+//  989                   available by result registers.
+//  990                 ELSE
+//  991 
+//  992     \li 140:      Enable interrupts globally.
+//  993 
+//  994     \li 150:      Set component global error flag and the global debug error
+//  995                   variable with error code for operation still active error.
+//  996                 ENDIF
+//  997               ELSE
+//  998 
+//  999     \li 160:    Set component global error flag and the global debug error
+// 1000                 variable with error code for invalid pointers are used error.
+// 1001               ENDIF
+// 1002 
+// 1003     \Derived{No}
+// 1004 
+// 1005     \Rationale{N/A}
+// 1006 
+// 1007     \Traceability{N/A}
+// 1008     \endinternal
+// 1009 \n
+// 1010 */
+// 1011 /*----------------------------------------------------------------------------- */
+
+        RSEG CODE:CODE:ROOT(1)
+// 1012 VOIDFUNC ATA_lfRssiCalcChanCorr_C(uint8_t *pExtData, uint8_t *pIntData, uint8_t *pResult)  // registers in use: R17:R16, R19:R18, R21:R20 unused: R22, R23
+ATA_lfRssiCalcChanCorr_C:
+          CFI Block cfiBlock11 Using cfiCommon0
+          CFI Function ATA_lfRssiCalcChanCorr_C
+          CFI NoCalls
+// 1013 {
+// 1014     uint8_t bChanOffset;
+// 1015 
+// 1016     ATA_SET_FUNCTION_TRACE_POINT_C(ATA_lfRssiCalcChanCorr_C, g_sLfRssi.bFlags | g_sLfRssi.bStatus);
+        IN      R0, 0x3F
+        CLI
+        LDS     R22, g_sLfRssi
+        LDS     R23, (g_sLfRssi + 1)
+        OR      R22, R23
+        STS     _A_TRCDR, R22
+        LDI     R22, LOW(ATA_lfRssiCalcChanCorr_C/2)
+        STS     _A_TRCIDL, R22
+        LDI     R22, (ATA_lfRssiCalcChanCorr_C/2) >> 8
+        STS     _A_TRCIDH, R22
+        OUT     0x3F, R0
+// 1017 
+// 1018     /* LLR-Ref: 010 */
+// 1019     if( pExtData && pIntData && pResult )
+        MOV     R22, R16
+        OR      R22, R17
+        BRNE    $+2+2
+        RJMP    ??ATA_lfRssiCalcChanCorr_C_0
+        MOV     R22, R18
+        OR      R22, R19
+        BRNE    $+2+2
+        RJMP    ??ATA_lfRssiCalcChanCorr_C_0
+        MOV     R22, R20
+        OR      R22, R21
+        BRNE    $+2+2
+        RJMP    ??ATA_lfRssiCalcChanCorr_C_0
+// 1020     {
+// 1021         /* LLR-Ref: 020 */
+// 1022         _CLI;
+        cli
+// 1023 
+// 1024         /* LLR-Ref: 030 */
+// 1025         if( !(RSCR & BM_RSOS) )
+        LDS     R22, _A_RSCR
+        SBRC    R22, 1
+        RJMP    ??ATA_lfRssiCalcChanCorr_C_1
+// 1026         {
+// 1027             /* LLR-Ref: 040 */
+// 1028             g_sLfRssi.bStatus |= LFRSSI_STATUS_BM_OPERATION_ACTIVE_FLAG;
+        LDI     R30, LOW(g_sLfRssi)
+        LDI     R31, (g_sLfRssi) >> 8
+        LDD     R22, Z+1
+        ORI     R22, 0x01
+        STD     Z+1, R22
+// 1029             _SEI;
+        sei
+// 1030 
+// 1031             /* LLR-Ref: 050 */
+// 1032             RSMS1R &= ~BM_RSSCAL;
+        LDS     R22, 434
+        ANDI    R22, 0x7F
+        STS     434, R22
+// 1033             RSCR   &= ~(BM_RSMODE1 | BM_RSOFM | BM_RSEOR);
+        LDS     R22, _A_RSCR
+        ANDI    R22, 0xD3
+        STS     _A_RSCR, R22
+// 1034             RSCR   |= BM_RSMODE0;
+        LDS     R22, 432
+        ORI     R22, 0x10
+        STS     432, R22
+// 1035 
+// 1036             /* LLR-Ref: 060 */
+// 1037             for( bChanOffset = 0; bChanOffset < 6; bChanOffset += 2 )
+        LDI     R22, 0
+// 1038             {
+// 1039                 /* LLR-Ref: 070 */
+// 1040                 RSFR = BM_RSOFF;
+??ATA_lfRssiCalcChanCorr_C_2:
+        LDI     R23, 8
+        STS     _A_RSFR, R23
+// 1041 
+// 1042                 /* LLR-Ref: 080 */
+// 1043                 RSRES1L = *(pExtData + bChanOffset + LFRSSI_LOW_BYTE);
+        LDI     R23, 0
+        MOVW    R31:R30, R17:R16
+        ADD     R30, R22
+        ADC     R31, R23
+        LD      R23, Z
+        STS     _A_RSRES1L, R23
+// 1044                 RSRES1H = *(pExtData + bChanOffset + LFRSSI_HIGH_BYTE);
+        LDI     R23, 0
+        MOVW    R31:R30, R17:R16
+        ADD     R30, R22
+        ADC     R31, R23
+        LDD     R23, Z+1
+        STS     _A_RSRES1H, R23
+// 1045                 RSRES2L = *(pIntData + bChanOffset + LFRSSI_LOW_BYTE);
+        LDI     R23, 0
+        MOVW    R31:R30, R19:R18
+        ADD     R30, R22
+        ADC     R31, R23
+        LD      R23, Z
+        STS     _A_RSRES2L, R23
+// 1046                 RSRES2H = *(pIntData + bChanOffset + LFRSSI_HIGH_BYTE);
+        LDI     R23, 0
+        MOVW    R31:R30, R19:R18
+        ADD     R30, R22
+        ADC     R31, R23
+        LDD     R23, Z+1
+        STS     _A_RSRES2H, R23
+// 1047                 RSRES3L = g_sLfRssi.bChanCalibVal[bChanOffset + LFRSSI_LOW_BYTE];
+        LDI     R31, 0
+        MOV     R30, R22
+        SUBI    R30, LOW((-(g_sLfRssi) & 0xFFFF))
+        SBCI    R31, (-(g_sLfRssi) & 0xFFFF) >> 8
+        LDD     R23, Z+6
+        STS     _A_RSRES3L, R23
+// 1048                 RSRES3H = g_sLfRssi.bChanCalibVal[bChanOffset + LFRSSI_HIGH_BYTE];
+        LDI     R31, 0
+        MOV     R30, R22
+        SUBI    R30, LOW((-(g_sLfRssi) & 0xFFFF))
+        SBCI    R31, (-(g_sLfRssi) & 0xFFFF) >> 8
+        LDD     R23, Z+7
+        STS     _A_RSRES3H, R23
+// 1049 
+// 1050                 /* LLR-Ref: 090 */
+// 1051                 _CLI;
+        cli
+// 1052                 RSCR |= BM_RSOS;    // start correction calculation
+        LDS     R23, 432
+        ORI     R23, 0x02
+        STS     432, R23
+// 1053                 _SEI;
+        sei
+// 1054 
+// 1055                 /* LLR-Ref: 100 */
+// 1056                 while( !(RSFR & BM_RSOFF) ){}
+??ATA_lfRssiCalcChanCorr_C_3:
+        LDS     R23, _A_RSFR
+        SBRS    R23, 3
+        RJMP    ??ATA_lfRssiCalcChanCorr_C_3
+// 1057 
+// 1058                 /* LLR-Ref: 110 */
+// 1059                 *(pResult + bChanOffset + LFRSSI_LOW_BYTE)  = RSRES4L;
+        LDS     R0, _A_RSRES4L
+        LDI     R23, 0
+        MOVW    R31:R30, R21:R20
+        ADD     R30, R22
+        ADC     R31, R23
+        ST      Z, R0
+// 1060                 *(pResult + bChanOffset + LFRSSI_HIGH_BYTE) = RSRES4H;
+        LDS     R0, _A_RSRES4H
+        MOVW    R31:R30, R21:R20
+        ADD     R30, R22
+        ADC     R31, R23
+        STD     Z+1, R0
+// 1061             }
+        SUBI    R22, 254
+        CPI     R22, 6
+        BRCC    $+2+2
+        RJMP    ??ATA_lfRssiCalcChanCorr_C_2
+// 1062 
+// 1063             /* LLR-Ref: 120 */
+// 1064             RSFR = BM_RSOFF;
+        LDI     R16, 8
+        STS     _A_RSFR, R16
+// 1065 
+// 1066             /* LLR-Ref: 130 */
+// 1067             g_sLfRssi.bStatus &= ~(LFRSSI_STATUS_BM_MEAS_DATA_AVAILABLE_FLAG | LFRSSI_STATUS_BM_3DVEC_DATA_AVAILABLE_FLAG | LFRSSI_STATUS_BM_LINEAR_DATA_AVAILABLE_FLAG | LFRSSI_STATUS_BM_OPERATION_ACTIVE_FLAG);
+// 1068             g_sLfRssi.bStatus |= LFRSSI_STATUS_BM_CHANCORR_DATA_AVAILABLE_FLAG;
+        LDS     R16, (g_sLfRssi + 1)
+        ANDI    R16, 0x4E
+        STS     (g_sLfRssi + 1), R16
+        ORI     R16, 0x40
+        RJMP    ?Subroutine1
+// 1069         }
+// 1070         else
+// 1071         {
+// 1072             /* LLR-Ref: 140 */
+// 1073             _SEI;
+??ATA_lfRssiCalcChanCorr_C_1:
+        sei
+// 1074 
+// 1075             /* LLR-Ref: 150 */
+// 1076             g_sLfRssi.bFlags   |= LFRSSI_FLAGS_BM_ERROR_FLAG;
+        LDI     R30, LOW(g_sLfRssi)
+        LDI     R31, (g_sLfRssi) >> 8
+        LD      R16, Z
+        ORI     R16, 0x80
+        ST      Z, R16
+// 1077             g_sDebug.bErrorCode = DEBUG_ERROR_CODE_LFRSSI_OPERATION_ACTIVE;
+        LDI     R16, 46
+        RJMP    ??ATA_lfRssiCalcChanCorr_C_4
+// 1078         }
+// 1079     }
+// 1080     else
+// 1081     {
+// 1082         /* LLR-Ref: 160 */
+// 1083         g_sLfRssi.bFlags   |= LFRSSI_FLAGS_BM_ERROR_FLAG;
+??ATA_lfRssiCalcChanCorr_C_0:
+        LDI     R30, LOW(g_sLfRssi)
+        LDI     R31, (g_sLfRssi) >> 8
+        LD      R16, Z
+        ORI     R16, 0x80
+        ST      Z, R16
+// 1084         g_sDebug.bErrorCode = DEBUG_ERROR_CODE_LFRSSI_NULL_POINTER_PASSED;
+        LDI     R16, 45
+// 1085     }
+??ATA_lfRssiCalcChanCorr_C_4:
+          CFI EndBlock cfiBlock11
+        REQUIRE ?Subroutine2
+        REQUIRE _A_SREG
+        REQUIRE _A_TRCDR
+        REQUIRE _A_TRCIDL
+        REQUIRE _A_TRCIDH
+        REQUIRE _A_RSCR
+        REQUIRE _A_RSMS1R
+        REQUIRE _A_RSFR
+        REQUIRE _A_RSRES1L
+        REQUIRE _A_RSRES1H
+        REQUIRE _A_RSRES2L
+        REQUIRE _A_RSRES2H
+        REQUIRE _A_RSRES3L
+        REQUIRE _A_RSRES3H
+        REQUIRE _A_RSRES4L
+        REQUIRE _A_RSRES4H
+        ;               // Fall through to label ?Subroutine2
+// 1086 }
+
+        RSEG CODE:CODE:NOROOT(1)
+?Subroutine2:
+          CFI Block cfiBlock12 Using cfiCommon0
+          CFI NoFunction
+        STS     g_sDebug, R16
+        RET
+          CFI EndBlock cfiBlock12
+// 1087 
+// 1088 
+// 1089 /*----------------------------------------------------------------------------- */
+// 1090 /** \brief <b>ATA_lfRssiCalc3dVec_C</b>
+// 1091     is used to calculate the length of the logarithmic LF RSSI 3D vector.
+// 1092 
+// 1093     \param[in]      pData       Pointer to structure containing 3 x 16 bit channel correction values
+// 1094     \param[out]     pResult     Pointer to 16 bit location to store the calculated length of the 3D vector
+// 1095 
+// 1096     Variable Usage:
+// 1097     \li [in,out] ::g_sLfRssi    Global LF RSSI component data
+// 1098     \li [out]    ::g_sDebug     Global Debug component data
+// 1099 
+// 1100     \image html ATA_lfRssiCalc3dVec_C.png
+// 1101 
+// 1102     \internal
+// 1103     \li 010:  IF valid input and output pointers are used,
+// 1104               THEN
+// 1105 
+// 1106     \li 020:    Disable interrupts globally to do an atomic flag check.
+// 1107 
+// 1108     \li 030:    IF no LF RSSI operation is in progress,
+// 1109                 THEN
+// 1110 
+// 1111     \li 040:      Enable interrupts globally.
+// 1112 
+// 1113     \li 050:      Disable usage of RSSI operation finished interrupt and set
+// 1114                   "calculate vector" mode to register RSCR.
+// 1115 
+// 1116     \li 060:      Clear LF RSSI operation finished flag (RSOFF) in register RSFR.
+// 1117 
+// 1118     \li 070:      Fill calculation registers with channel correction values.
+// 1119 
+// 1120     \li 080:      Signalize LF RSSI operation is in progress and trigger start
+// 1121                   of length calculation by setting bit RSOS in register RSCR.
+// 1122 
+// 1123     \li 090:      Wait as long as the calculation has not finished.
+// 1124 
+// 1125     \li 100:      Read 3D vector lenght value and store it to SRAM location.
+// 1126 
+// 1127     \li 110:      Clear LF RSSI operation finished flag (RSOFF) in register RSFR.
+// 1128 
+// 1129     \li 120:      Update component flag and status variables:\n
+// 1130                   Signalize 3d vector length calculation has finished and the
+// 1131                   associated value is available in SRAM. Additionally signalize
+// 1132                   that all previous measurement and calculation data are no longer
+// 1133                   available by result registers.
+// 1134                 ELSE
+// 1135 
+// 1136     \li 130:      Enable interrupts globally.
+// 1137 
+// 1138     \li 140:      Set component global error flag and the global debug error
+// 1139                   variable with error code for operation still active error.
+// 1140                 ENDIF
+// 1141               ELSE
+// 1142 
+// 1143     \li 150:    Set component global error flag and the global debug error
+// 1144                 variable with error code for invalid pointers are used error.
+// 1145               ENDIF
+// 1146 
+// 1147     \Derived{No}
+// 1148 
+// 1149     \Rationale{N/A}
+// 1150 
+// 1151     \Traceability{N/A}
+// 1152     \endinternal
+// 1153 \n
+// 1154 */
+// 1155 /*----------------------------------------------------------------------------- */
+
+        RSEG CODE:CODE:ROOT(1)
+// 1156 VOIDFUNC ATA_lfRssiCalc3dVec_C(uint8_t *pData, uint8_t *pResult)    // registers in use: R17:R16, R19:R18 unused: R21, R20, R22, R23
+ATA_lfRssiCalc3dVec_C:
+          CFI Block cfiBlock13 Using cfiCommon0
+          CFI Function ATA_lfRssiCalc3dVec_C
+          CFI NoCalls
+// 1157 {
+        MOVW    R31:R30, R17:R16
+// 1158     ATA_SET_FUNCTION_TRACE_POINT_C(ATA_lfRssiCalc3dVec_C, g_sLfRssi.bFlags | g_sLfRssi.bStatus);
+        IN      R20, 0x3F
+        CLI
+        LDS     R16, g_sLfRssi
+        LDS     R17, (g_sLfRssi + 1)
+        OR      R16, R17
+        STS     _A_TRCDR, R16
+        LDI     R16, LOW(ATA_lfRssiCalc3dVec_C/2)
+        STS     _A_TRCIDL, R16
+        LDI     R16, (ATA_lfRssiCalc3dVec_C/2) >> 8
+        STS     _A_TRCIDH, R16
+        OUT     0x3F, R20
+// 1159 
+// 1160     /* LLR-Ref: 010 */
+// 1161     if( pData && pResult )
+        MOV     R16, R30
+        OR      R16, R31
+        BRNE    $+2+2
+        RJMP    ??ATA_lfRssiCalc3dVec_C_0
+        MOV     R16, R18
+        OR      R16, R19
+        BRNE    $+2+2
+        RJMP    ??ATA_lfRssiCalc3dVec_C_0
+// 1162     {
+// 1163         /* LLR-Ref: 020 */
+// 1164         _CLI;
+        cli
+// 1165 
+// 1166         /* LLR-Ref: 030 */
+// 1167         if( !(RSCR & BM_RSOS) )
+        LDS     R16, _A_RSCR
+        SBRC    R16, 1
+        RJMP    ??ATA_lfRssiCalc3dVec_C_1
+// 1168         {
+// 1169             /* LLR-Ref: 040 */
+// 1170             _SEI;
+        sei
+// 1171 
+// 1172             /* LLR-Ref: 050 */
+// 1173             RSMS1R &= ~BM_RSSCAL;
+        LDS     R16, 434
+        ANDI    R16, 0x7F
+        STS     434, R16
+// 1174             RSCR   &= ~(BM_RSMODE0 | BM_RSOFM | BM_RSEOR);
+        LDS     R16, _A_RSCR
+        ANDI    R16, 0xE3
+        STS     _A_RSCR, R16
+// 1175             RSCR   |= BM_RSMODE1;
+        LDS     R16, 432
+        ORI     R16, 0x20
+        STS     432, R16
+// 1176 
+// 1177             /* LLR-Ref: 060 */
+// 1178             RSFR = BM_RSOFF;
+        LDI     R16, 8
+        STS     _A_RSFR, R16
+// 1179 
+// 1180             /* LLR-Ref: 070 */
+// 1181             RSRES1L = *(pData + LFRSSI_BYTEOFFSET_RESULT_RSC1L);
+        LD      R16, Z
+        STS     _A_RSRES1L, R16
+// 1182             RSRES1H = *(pData + LFRSSI_BYTEOFFSET_RESULT_RSC1H);
+        LDD     R16, Z+1
+        STS     _A_RSRES1H, R16
+// 1183             RSRES2L = *(pData + LFRSSI_BYTEOFFSET_RESULT_RSC2L);
+        LDD     R16, Z+2
+        STS     _A_RSRES2L, R16
+// 1184             RSRES2H = *(pData + LFRSSI_BYTEOFFSET_RESULT_RSC2H);
+        LDD     R16, Z+3
+        STS     _A_RSRES2H, R16
+// 1185             RSRES3L = *(pData + LFRSSI_BYTEOFFSET_RESULT_RSC3L);
+        LDD     R16, Z+4
+        STS     _A_RSRES3L, R16
+// 1186             RSRES3H = *(pData + LFRSSI_BYTEOFFSET_RESULT_RSC3H);
+        LDD     R16, Z+5
+        STS     _A_RSRES3H, R16
+// 1187 
+// 1188             /* LLR-Ref: 080 */
+// 1189             _CLI;
+        cli
+// 1190             g_sLfRssi.bStatus |= LFRSSI_STATUS_BM_OPERATION_ACTIVE_FLAG;
+        LDI     R30, LOW(g_sLfRssi)
+        LDI     R31, (g_sLfRssi) >> 8
+        LDD     R16, Z+1
+        ORI     R16, 0x01
+        STD     Z+1, R16
+// 1191 
+// 1192             RSCR |= BM_RSOS;    // start 3D vector length calculation
+        LDS     R16, 432
+        ORI     R16, 0x02
+        STS     432, R16
+// 1193             _SEI;
+        sei
+// 1194 
+// 1195             /* LLR-Ref: 090 */
+// 1196             while( !(RSFR & BM_RSOFF) ){}
+??ATA_lfRssiCalc3dVec_C_2:
+        LDS     R16, _A_RSFR
+        SBRS    R16, 3
+        RJMP    ??ATA_lfRssiCalc3dVec_C_2
+// 1197 
+// 1198             /* LLR-Ref: 100 */
+// 1199             *(pResult + LFRSSI_LOW_BYTE)  = RSRES4L;
+        LDS     R16, _A_RSRES4L
+        MOVW    R31:R30, R19:R18
+        ST      Z, R16
+// 1200             *(pResult + LFRSSI_HIGH_BYTE) = RSRES4H;
+        LDS     R16, _A_RSRES4H
+        STD     Z+1, R16
+// 1201 
+// 1202             /* LLR-Ref: 110 */
+// 1203             RSFR = BM_RSOFF;
+        LDI     R16, 8
+        STS     _A_RSFR, R16
+// 1204 
+// 1205             /* LLR-Ref: 120 */
+// 1206             g_sLfRssi.bStatus &= ~(LFRSSI_STATUS_BM_MEAS_DATA_AVAILABLE_FLAG | LFRSSI_STATUS_BM_CHANCORR_DATA_AVAILABLE_FLAG | LFRSSI_STATUS_BM_LINEAR_DATA_AVAILABLE_FLAG | LFRSSI_STATUS_BM_OPERATION_ACTIVE_FLAG);
+// 1207             g_sLfRssi.bStatus |= LFRSSI_STATUS_BM_3DVEC_DATA_AVAILABLE_FLAG;
+        LDS     R16, (g_sLfRssi + 1)
+        ANDI    R16, 0x2E
+        STS     (g_sLfRssi + 1), R16
+        ORI     R16, 0x20
+        RJMP    ?Subroutine1
+// 1208         }
+// 1209         else
+// 1210         {
+// 1211             /* LLR-Ref: 130 */
+// 1212             _SEI;
+??ATA_lfRssiCalc3dVec_C_1:
+        sei
+// 1213 
+// 1214             /* LLR-Ref: 140 */
+// 1215             g_sLfRssi.bFlags   |= LFRSSI_FLAGS_BM_ERROR_FLAG;
+        LDI     R30, LOW(g_sLfRssi)
+        LDI     R31, (g_sLfRssi) >> 8
+        LD      R16, Z
+        ORI     R16, 0x80
+        ST      Z, R16
+// 1216             g_sDebug.bErrorCode = DEBUG_ERROR_CODE_LFRSSI_OPERATION_ACTIVE;
+        LDI     R16, 46
+        RJMP    ??ATA_lfRssiCalc3dVec_C_3
+// 1217         }
+// 1218     }
+// 1219     else
+// 1220     {
+// 1221         /* LLR-Ref: 150 */
+// 1222         g_sLfRssi.bFlags   |= LFRSSI_FLAGS_BM_ERROR_FLAG;
+??ATA_lfRssiCalc3dVec_C_0:
+        LDI     R30, LOW(g_sLfRssi)
+        LDI     R31, (g_sLfRssi) >> 8
+        LD      R16, Z
+        ORI     R16, 0x80
+        ST      Z, R16
+// 1223         g_sDebug.bErrorCode = DEBUG_ERROR_CODE_LFRSSI_NULL_POINTER_PASSED;
+        LDI     R16, 45
+// 1224     }
+??ATA_lfRssiCalc3dVec_C_3:
+        RJMP    ?Subroutine2
+          CFI EndBlock cfiBlock13
+        REQUIRE _A_SREG
+        REQUIRE _A_TRCDR
+        REQUIRE _A_TRCIDL
+        REQUIRE _A_TRCIDH
+        REQUIRE _A_RSCR
+        REQUIRE _A_RSMS1R
+        REQUIRE _A_RSFR
+        REQUIRE _A_RSRES1L
+        REQUIRE _A_RSRES1H
+        REQUIRE _A_RSRES2L
+        REQUIRE _A_RSRES2H
+        REQUIRE _A_RSRES3L
+        REQUIRE _A_RSRES3H
+        REQUIRE _A_RSRES4L
+        REQUIRE _A_RSRES4H
+// 1225 }
+// 1226 
+// 1227 
+// 1228 /*----------------------------------------------------------------------------- */
+// 1229 /** \brief <b>ATA_lfRssiCalcLog2Lin_C</b>
+// 1230     is used to calculate the linear encoded RSSI value from a logarithmic
+// 1231     (3D vector) length value.
+// 1232 
+// 1233     \param[in]      p3dVec      Pointer to structure containing the 16 bit logarithmic length value
+// 1234     \param[out]     pResult     Pointer to 16 bit location to store the calculated linear encoded RSSI value
+// 1235 
+// 1236     Variable Usage:
+// 1237     \li [in,out] ::g_sLfRssi    Global LF RSSI component data
+// 1238     \li [out]    ::g_sDebug     Global Debug component data
+// 1239 
+// 1240     \image html ATA_lfRssiCalcLog2Lin_C.png
+// 1241 
+// 1242     \internal
+// 1243     \li 010:  IF valid input and output pointers are used,
+// 1244               THEN
+// 1245 
+// 1246     \li 020:    Disable interrupts globally to do an atomic flag check.
+// 1247 
+// 1248     \li 030:    IF no LF RSSI operation is in progress,
+// 1249                 THEN
+// 1250 
+// 1251     \li 040:      Enable interrupts globally.
+// 1252 
+// 1253     \li 050:      Disable usage of RSSI operation finished interrupt and set
+// 1254                   "calculate linear value" mode to register RSCR.
+// 1255 
+// 1256     \li 060:      Clear LF RSSI operation finished flag (RSOFF) in register RSFR.
+// 1257 
+// 1258     \li 070:      Fill calculation registers with logarithmic length value.
+// 1259 
+// 1260     \li 080:      Signalize LF RSSI operation is in progress and trigger start
+// 1261                   of logarithmic to linear calculation by setting bit RSOS in
+// 1262                   register RSCR.
+// 1263 
+// 1264     \li 090:      Wait as long as the calculation has not finished.
+// 1265 
+// 1266     \li 100:      Read linear encoded RSSI value and store it to SRAM location.
+// 1267 
+// 1268     \li 110:      Clear LF RSSI operation finished flag (RSOFF) in register RSFR.
+// 1269 
+// 1270     \li 120:      Update component flag and status variables:\n
+// 1271                   Signalize logarithmic to linear calculation has finished and the
+// 1272                   associated value is available in SRAM. Additionally signalize
+// 1273                   that all previous measurement and calculation data are no longer
+// 1274                   available by result registers.
+// 1275                 ELSE
+// 1276 
+// 1277     \li 130:      Enable interrupts globally.
+// 1278 
+// 1279     \li 140:      Set component global error flag and the global debug error
+// 1280                   variable with error code for operation still active error.
+// 1281                 ENDIF
+// 1282               ELSE
+// 1283 
+// 1284     \li 150:    Set component global error flag and the global debug error
+// 1285                 variable with error code for invalid pointers are used error.
+// 1286               ENDIF
+// 1287 
+// 1288     \Derived{No}
+// 1289 
+// 1290     \Rationale{N/A}
+// 1291 
+// 1292     \Traceability{N/A}
+// 1293     \endinternal
+// 1294 \n
+// 1295 */
+// 1296 /*----------------------------------------------------------------------------- */
+
+        RSEG CODE:CODE:ROOT(1)
+// 1297 VOIDFUNC ATA_lfRssiCalcLog2Lin_C(uint8_t *p3dVec, uint8_t *pResult)     // registers in use: R17:R16, R19:R18 unused: R21, R20, R22, R23
+ATA_lfRssiCalcLog2Lin_C:
+          CFI Block cfiBlock14 Using cfiCommon0
+          CFI Function ATA_lfRssiCalcLog2Lin_C
+          CFI NoCalls
+// 1298 {
+        MOVW    R31:R30, R17:R16
+// 1299     ATA_SET_FUNCTION_TRACE_POINT_C(ATA_lfRssiCalcLog2Lin_C, g_sLfRssi.bFlags | g_sLfRssi.bStatus);
+        IN      R20, 0x3F
+        CLI
+        LDS     R16, g_sLfRssi
+        LDS     R17, (g_sLfRssi + 1)
+        OR      R16, R17
+        STS     _A_TRCDR, R16
+        LDI     R16, LOW(ATA_lfRssiCalcLog2Lin_C/2)
+        STS     _A_TRCIDL, R16
+        LDI     R16, (ATA_lfRssiCalcLog2Lin_C/2) >> 8
+        STS     _A_TRCIDH, R16
+        OUT     0x3F, R20
+// 1300 
+// 1301     /* LLR-Ref: 010 */
+// 1302     if( p3dVec && pResult )
+        MOV     R16, R30
+        OR      R16, R31
+        BRNE    $+2+2
+        RJMP    ??ATA_lfRssiCalcLog2Lin_C_0
+        MOV     R16, R18
+        OR      R16, R19
+        BRNE    $+2+2
+        RJMP    ??ATA_lfRssiCalcLog2Lin_C_0
+// 1303     {
+// 1304         /* LLR-Ref: 020 */
+// 1305         _CLI;
+        cli
+// 1306 
+// 1307         /* LLR-Ref: 030 */
+// 1308         if( !(RSCR & BM_RSOS) )
+        LDS     R16, _A_RSCR
+        SBRC    R16, 1
+        RJMP    ??ATA_lfRssiCalcLog2Lin_C_1
+// 1309         {
+// 1310             /* LLR-Ref: 040 */
+// 1311             _SEI;
+        sei
+// 1312 
+// 1313             /* LLR-Ref: 050 */
+// 1314             RSMS1R &= ~BM_RSSCAL;
+        LDS     R16, 434
+        ANDI    R16, 0x7F
+        STS     434, R16
+// 1315             RSCR   &= ~(BM_RSOFM | BM_RSEOR);
+        LDS     R16, _A_RSCR
+        ANDI    R16, 0xF3
+        STS     _A_RSCR, R16
+// 1316             RSCR   |= (BM_RSMODE1 | BM_RSMODE0);
+        LDS     R16, _A_RSCR
+        ORI     R16, 0x30
+        STS     _A_RSCR, R16
+// 1317 
+// 1318             /* LLR-Ref: 060 */
+// 1319             RSFR |= BM_RSOFF;
+        LDS     R16, 436
+        ORI     R16, 0x08
+        STS     436, R16
+// 1320 
+// 1321             /* LLR-Ref: 070 */
+// 1322             RSRES4L = *(p3dVec + LFRSSI_LOW_BYTE);
+        LD      R16, Z
+        STS     _A_RSRES4L, R16
+// 1323             RSRES4H = *(p3dVec + LFRSSI_HIGH_BYTE);
+        LDD     R16, Z+1
+        STS     _A_RSRES4H, R16
+// 1324 
+// 1325             /* LLR-Ref: 080 */
+// 1326             _CLI;
+        cli
+// 1327             g_sLfRssi.bStatus |= LFRSSI_STATUS_BM_OPERATION_ACTIVE_FLAG;
+        LDI     R30, LOW(g_sLfRssi)
+        LDI     R31, (g_sLfRssi) >> 8
+        LDD     R16, Z+1
+        ORI     R16, 0x01
+        STD     Z+1, R16
+// 1328 
+// 1329             RSCR |= BM_RSOS;    // start logarithmic to linear calculation
+        LDS     R16, 432
+        ORI     R16, 0x02
+        STS     432, R16
+// 1330             _SEI;
+        sei
+// 1331 
+// 1332             /* LLR-Ref: 090 */
+// 1333             while( !(RSFR & BM_RSOFF) ){}
+??ATA_lfRssiCalcLog2Lin_C_2:
+        LDS     R16, _A_RSFR
+        SBRS    R16, 3
+        RJMP    ??ATA_lfRssiCalcLog2Lin_C_2
+// 1334 
+// 1335             /* LLR-Ref: 100 */
+// 1336             *(pResult + LFRSSI_LOW_BYTE)  = RSRES4L;
+        LDS     R16, _A_RSRES4L
+        MOVW    R31:R30, R19:R18
+        ST      Z, R16
+// 1337             *(pResult + LFRSSI_HIGH_BYTE) = RSRES4H;
+        LDS     R16, _A_RSRES4H
+        STD     Z+1, R16
+// 1338 
+// 1339             /* LLR-Ref: 110 */
+// 1340             RSFR = BM_RSOFF;
+        LDI     R16, 8
+        STS     _A_RSFR, R16
+// 1341 
+// 1342             /* LLR-Ref: 120 */
+// 1343             g_sLfRssi.bStatus &= ~(LFRSSI_STATUS_BM_MEAS_DATA_AVAILABLE_FLAG | LFRSSI_STATUS_BM_CHANCORR_DATA_AVAILABLE_FLAG | LFRSSI_STATUS_BM_3DVEC_DATA_AVAILABLE_FLAG | LFRSSI_STATUS_BM_OPERATION_ACTIVE_FLAG);
+// 1344             g_sLfRssi.bStatus |= LFRSSI_STATUS_BM_LINEAR_DATA_AVAILABLE_FLAG;
+        LDS     R16, (g_sLfRssi + 1)
+        ANDI    R16, 0x1E
+        STS     (g_sLfRssi + 1), R16
+        ORI     R16, 0x10
+        RJMP    ?Subroutine1
+// 1345         }
+// 1346         else
+// 1347         {
+// 1348             /* LLR-Ref: 130 */
+// 1349             _SEI;
+??ATA_lfRssiCalcLog2Lin_C_1:
+        sei
+// 1350 
+// 1351             /* LLR-Ref: 140 */
+// 1352             g_sLfRssi.bFlags   |= LFRSSI_FLAGS_BM_ERROR_FLAG;
+        LDI     R30, LOW(g_sLfRssi)
+        LDI     R31, (g_sLfRssi) >> 8
+        LD      R16, Z
+        ORI     R16, 0x80
+        ST      Z, R16
+// 1353             g_sDebug.bErrorCode = DEBUG_ERROR_CODE_LFRSSI_OPERATION_ACTIVE;
+        LDI     R16, 46
+        RJMP    ??ATA_lfRssiCalcLog2Lin_C_3
+// 1354         }
+// 1355     }
+// 1356     else
+// 1357     {
+// 1358         /* LLR-Ref: 150 */
+// 1359         g_sLfRssi.bFlags   |= LFRSSI_FLAGS_BM_ERROR_FLAG;
+??ATA_lfRssiCalcLog2Lin_C_0:
+        LDI     R30, LOW(g_sLfRssi)
+        LDI     R31, (g_sLfRssi) >> 8
+        LD      R16, Z
+        ORI     R16, 0x80
+        ST      Z, R16
+// 1360         g_sDebug.bErrorCode = DEBUG_ERROR_CODE_LFRSSI_NULL_POINTER_PASSED;
+        LDI     R16, 45
+// 1361     }
+??ATA_lfRssiCalcLog2Lin_C_3:
+        RJMP    ?Subroutine2
+          CFI EndBlock cfiBlock14
+        REQUIRE _A_SREG
+        REQUIRE _A_TRCDR
+        REQUIRE _A_TRCIDL
+        REQUIRE _A_TRCIDH
+        REQUIRE _A_RSCR
+        REQUIRE _A_RSMS1R
+        REQUIRE _A_RSFR
+        REQUIRE _A_RSRES4L
+        REQUIRE _A_RSRES4H
+// 1362 }
+
+        RSEG CODE:CODE:ROOT(1)
+ATA_lfRssiNormalize12q4_C:
+          CFI Block cfiBlock15 Using cfiCommon0
+          CFI Function ATA_lfRssiNormalize12q4_C
+        MOV     R30, R20
+        LDI     R20, 0
+        LDI     R21, 0
+        BST     R30, 0
+        BRTS    ??ATA_lfRssiNormalize12q4_C_0
+        LSL     R16
+        ROL     R17
+        ROL     R18
+        ROL     R19
+        DEC     R30
+??ATA_lfRssiNormalize12q4_C_0:
+        MOV     R22, R16
+        OR      R22, R17
+        OR      R22, R18
+        OR      R22, R19
+        BREQ    ??ATA_lfRssiNormalize12q4_C_1
+        CPI     R16, 0
+        LDI     R20, 16
+        CPC     R17, R20
+        CPC     R18, R21
+        CPC     R19, R21
+        BRCS    ??ATA_lfRssiNormalize12q4_C_2
+??ATA_lfRssiNormalize12q4_C_3:
+        CPI     R16, 0
+        LDI     R20, 16
+        CPC     R17, R20
+        CPC     R18, R21
+        CPC     R19, R21
+        BRCC    ??ATA_lfRssiNormalize12q4_C_4
+        CPI     R30, 247
+        BRGE    ??ATA_lfRssiNormalize12q4_C_5
+??ATA_lfRssiNormalize12q4_C_4:
+        LDI     R20, 2
+          CFI FunCall ?UL_SHR_L03
+        CALL    ?UL_SHR_L03
+        SUBI    R30, 254
+        RJMP    ??ATA_lfRssiNormalize12q4_C_3
+??ATA_lfRssiNormalize12q4_C_2:
+        CPI     R30, 248
+        BRLT    ??ATA_lfRssiNormalize12q4_C_6
+??ATA_lfRssiNormalize12q4_C_7:
+        CPI     R16, 0
+        LDI     R20, 4
+        CPC     R17, R20
+        CPC     R18, R21
+        CPC     R19, R21
+        BRCC    ??ATA_lfRssiNormalize12q4_C_5
+        CPI     R30, 249
+        BRLT    ??ATA_lfRssiNormalize12q4_C_5
+        LDI     R20, 2
+          CFI FunCall ?L_SHL_L03
+        CALL    ?L_SHL_L03
+        SUBI    R30, 2
+        RJMP    ??ATA_lfRssiNormalize12q4_C_7
+??ATA_lfRssiNormalize12q4_C_8:
+        LDI     R20, 2
+          CFI FunCall ?UL_SHR_L03
+        CALL    ?UL_SHR_L03
+        SUBI    R30, 254
+??ATA_lfRssiNormalize12q4_C_6:
+        CPI     R30, 247
+        BRLT    ??ATA_lfRssiNormalize12q4_C_8
+??ATA_lfRssiNormalize12q4_C_5:
+        LDI     R20, 4
+          CFI FunCall ?S_SHL_L02
+        CALL    ?S_SHL_L02
+        MOVW    R21:R20, R17:R16
+        MOV     R31, R30
+        LSL     R31
+        SBC     R31, R31
+        ADIW    R31:R30, 9
+        ASR     R31
+        ROR     R30
+        OR      R20, R30
+        OR      R21, R31
+??ATA_lfRssiNormalize12q4_C_1:
+        MOVW    R17:R16, R21:R20
+        RET
+          CFI EndBlock cfiBlock15
+// 1363 
+// 1364 
+// 1365 /*---------------------------------------------------------------------------*/
+// 1366 /** \brief <b>ATA_lfRssiCalcBappl_C</b>
+// 1367     calculates flux density for given RSSI value.
+// 1368 
+// 1369     \param[in]  wBref           Multiplier in 12q4 format
+// 1370     \param[in]  wRssiValue      Mulitplicand in 12q4 format
+// 1371 
+// 1372     \return     Product in Atmel 12q4 floating point format
+// 1373 
+// 1374     \image html ATA_lfRssiCalcBappl_C.png
+// 1375 
+// 1376     \internal
+// 1377     \li 010:  Calculate product of wBref and wRssiValue.
+// 1378 
+// 1379     \li 020:  Normalize and return result 12q4 format.
+// 1380 
+// 1381     \Derived{No}
+// 1382 
+// 1383     \Rationale{N/A}
+// 1384 
+// 1385     \Traceability{N/A}
+// 1386     \endinternal
+// 1387 \n
+// 1388 */
+// 1389 /*---------------------------------------------------------------------------*/
+
+        RSEG CODE:CODE:ROOT(1)
+// 1390 UINT16FUNC ATA_lfRssiCalcBappl_C(uint16_t wBref, uint16_t wRssiValue)
+ATA_lfRssiCalcBappl_C:
+          CFI Block cfiBlock16 Using cfiCommon0
+          CFI Function ATA_lfRssiCalcBappl_C
+// 1391 {
+        CALL    ?PROLOGUE4_L09
+          CFI R27 Frame(CFA_Y, -1)
+          CFI R26 Frame(CFA_Y, -2)
+          CFI R25 Frame(CFA_Y, -3)
+          CFI R24 Frame(CFA_Y, -4)
+          CFI CFA_Y Y+4
+        MOVW    R27:R26, R17:R16
+        MOV     R24, R18
+// 1392     uint16_t wMultiplicand  = wBref >> 4;
+// 1393     uint16_t wMultiplicator = wRssiValue >> 4;
+// 1394 
+// 1395     /* LLR-Ref: 010 */
+// 1396     uint32_t dwProduct = ATA_globalsMulU16U16_ASM(wMultiplicand, wMultiplicator);
+        LDI     R20, 4
+        MOVW    R17:R16, R19:R18
+          CFI FunCall ?US_SHR_L02
+        CALL    ?US_SHR_L02
+        MOVW    R19:R18, R17:R16
+        LDI     R20, 4
+        MOVW    R17:R16, R27:R26
+          CFI FunCall ?US_SHR_L02
+        CALL    ?US_SHR_L02
+          CFI FunCall ATA_globalsMulU16U16_ASM
+        CALL    ATA_globalsMulU16U16_ASM
+// 1397     int8_t   bExponent = (2*(wBref & 0x000F) - 9) + (2*(wRssiValue & 0x000F) - 9);
+// 1398 
+// 1399     /* LLR-Ref: 020 */
+// 1400     return ATA_lfRssiNormalize12q4_C(dwProduct, bExponent);
+        ANDI    R26, 0x0F
+        ANDI    R24, 0x0F
+        ADD     R26, R24
+        LSL     R26
+        SUBI    R26, 18
+        MOV     R20, R26
+          CFI FunCall ATA_lfRssiNormalize12q4_C
+        RCALL   ATA_lfRssiNormalize12q4_C
+        LDI     R30, 4
+        JMP     ?EPILOGUE_B4_L09
+// 1401 }
+          CFI EndBlock cfiBlock16
+// 1402 
+// 1403 
+// 1404 /*---------------------------------------------------------------------------*/
+// 1405 /** \brief <b>ATA_lfRssiNormalize12q4_C</b>
+// 1406     normalizes dwValue and bExponent to Atmels 12q4 format.
+// 1407 
+// 1408     \param[in]  dwValue     Value for Atmel 12q4 floating point format
+// 1409     \param[in]  bExponent   Exponent for Atmel 12q4 floating point format
+// 1410 
+// 1411     \return     Normalized value in Atmel 12q4 floating point format
+// 1412 
+// 1413     \image html ATA_lfRssiNormalize12q4_C.png
+// 1414 
+// 1415     \internal
+// 1416     \li 010:  Ensure odd exponent to avoid rounding error (/2) of exponent
+// 1417               calculation.
+// 1418 
+// 1419     \li 020:  IF value to normalize is different than 0,
+// 1420               THEN
+// 1421 
+// 1422     \li 030:    IF value is greater or equal to 12bit,
+// 1423                 THEN
+// 1424 
+// 1425     \li 040:      Shift values to the right and increment exponent until minimum
+// 1426                   exponent value has reached or value is normalized.
+// 1427                 ELSE
+// 1428 
+// 1429     \li 050:      IF exponent is greater than minimum exponent value,
+// 1430                   THEN
+// 1431 
+// 1432     \li 060:        Shift values to the left until minimum exponent value has not
+// 1433                     reached and value is normalized.
+// 1434                   ELSE
+// 1435 
+// 1436     \li 070:        IF the exponent value is less than minimum exponent value,
+// 1437                     THEN
+// 1438 
+// 1439     \li 080:          Shift values to the right until exponent reaches -9.
+// 1440                     ENDIF
+// 1441                   ENDIF
+// 1442                 ENDIF
+// 1443 
+// 1444     \li 090:    Encode value and exponent in Atmel 12q4 format
+// 1445               ENDIF
+// 1446 
+// 1447     \Derived{No}
+// 1448 
+// 1449     \Rationale{N/A}
+// 1450 
+// 1451     \Traceability{N/A}
+// 1452     \endinternal
+// 1453 \n
+// 1454 */
+// 1455 /*---------------------------------------------------------------------------*/
+// 1456 UINT16FUNC ATA_lfRssiNormalize12q4_C(uint32_t dwValue, int8_t bExponent)
+// 1457 {
+// 1458     uint16_t wResult = 0;
+// 1459 
+// 1460     /* LLR-Ref: 010 */
+// 1461     if( (bExponent & 0x01) == 0 )
+// 1462     {
+// 1463         dwValue  <<= 1;
+// 1464         bExponent -= 1;
+// 1465     }
+// 1466 
+// 1467     /* LLR-Ref: 020 */
+// 1468     if( dwValue != 0 )
+// 1469     {
+// 1470         /* LLR-Ref: 030 */
+// 1471         if( dwValue >= (1<<LF_RSSI_12Q4_VALUE_SIZE) )
+// 1472         {
+// 1473             /* LLR-Ref: 040 */
+// 1474             while( dwValue >= (1<<LF_RSSI_12Q4_VALUE_SIZE) || bExponent < LF_RSSI_12Q4_EXPONENT_MIN )
+// 1475             {
+// 1476                 dwValue >>= 2;
+// 1477                 bExponent += 2;
+// 1478             }
+// 1479         }
+// 1480         else
+// 1481         {
+// 1482             /* LLR-Ref: 050 */
+// 1483             if( bExponent > LF_RSSI_12Q4_EXPONENT_MIN )
+// 1484             {
+// 1485                 /* LLR-Ref: 060 */
+// 1486                 while ( (dwValue < (1<<(LF_RSSI_12Q4_VALUE_SIZE-2))) && (bExponent > LF_RSSI_12Q4_EXPONENT_MIN+1) )
+// 1487                 {
+// 1488                     dwValue  <<= 2;
+// 1489                     bExponent -= 2;
+// 1490                 }
+// 1491             }
+// 1492             else
+// 1493             {
+// 1494                 /* LLR-Ref: 070 */
+// 1495                 while( bExponent < LF_RSSI_12Q4_EXPONENT_MIN )
+// 1496                 {
+// 1497                     /* LLR-Ref: 080 */
+// 1498                     dwValue >>= 2;
+// 1499                     bExponent += 2;
+// 1500                 }
+// 1501             }
+// 1502         }
+// 1503 
+// 1504         /* LLR-Ref: 090 */
+// 1505         wResult = (dwValue) << LF_RSSI_12Q4_EXPONENT_SIZE | ((bExponent + 9)>>1);
+// 1506     }
+// 1507     return wResult;
+// 1508 }
+// 1509 
+// 1510 
+// 1511 /*---------------------------------------------------------------------------*/
+// 1512 /** \brief <b>ATA_lfRssiMeasReady_ISR_C</b>
+// 1513     interrupt function is used to store the measured LF RSSI values from
+// 1514     LF RSSI data registers to internal array and signals availability of data
+// 1515     and signals also the end of current measurement. Furthermore it masks the
+// 1516     participated measurement channels with its associated timeout flags. In
+// 1517     case channel timeout(s) is(are) detected, the error flag inside the status
+// 1518     variable is set. The associated channel timeout mask is stored to
+// 1519     component variable.
+// 1520 
+// 1521     Variable Usage:
+// 1522     \li [in,out] ::g_sLfRssi Global LF RSSI component data
+// 1523 
+// 1524     \image html ATA_lfRssiMeasReady_ISR_C.png
+// 1525 
+// 1526     \internal
+// 1527     \li 010:  Disable occurrences of further LF RSSI operation finished interrupts
+// 1528               by clearing associated interrupt mask bit.
+// 1529 
+// 1530     \li 020:  Create channel out of range mask. LF Channels which signals out of
+// 1531               range are AND masked with its digital enable/disable bit settings.
+// 1532               The resulting mask is stored to component variable.
+// 1533 
+// 1534     \li 030:  IF the measurement participating LF channel(s) signalizes out of range,
+// 1535               THEN
+// 1536 
+// 1537     \li 040:    Set internal status flag indicating field strenght value outside
+// 1538                 the accessible range.
+// 1539                 Set component global error flag and the global debug error
+// 1540                 variable with error code for field strenght value outside the
+// 1541                 accessible range error.
+// 1542               ENDIF
+// 1543 
+// 1544     \li 050:  Update component flag and status variables:\n
+// 1545               Signalize LF RSSI measurement has finished and raw RSSI data are
+// 1546               available in the result register. Additionally signalize
+// 1547               that all previous calculation data are no longer available by the
+// 1548               result registers.
+// 1549 
+// 1550     \Derived{No}
+// 1551 
+// 1552     \Rationale{N/A}
+// 1553 
+// 1554     \Traceability   N/A
+// 1555     \endinternal
+// 1556 \n
+// 1557 */
+// 1558 /*---------------------------------------------------------------------------*/
+// 1559 /* #pragma vector=LFRSCO_vect */
+// 1560 //lint -esym(714, ATA_lfRssiMeasReady_ISR_C) FlSc (10.06.2014)
+// 1561 //lint -esym(765, ATA_lfRssiMeasReady_ISR_C) FlSc (10.06.2014)
+// 1562 /* disable lint rule 714 - symbol 'ATA_lfRssiMeasReady_ISR_C' not referenced
+// 1563  * interrupt assignment to Interrupt Vector Table is done by Flash application
+// 1564  *
+// 1565  * disable lint rule 765 - external symbol 'ATA_lfRssiMeasReady_ISR_C' could be made static
+// 1566  * variable shall be accessible from outside via flash software or other library
+// 1567  * modules
+// 1568  */
+// 1569 #pragma diag_suppress=Ta006
+
+        RSEG CODE:CODE:ROOT(1)
+        CALL_GRAPH_ROOT ATA_lfRssiMeasReady_ISR_C, "interrupt"
+// 1570 __interrupt VOIDFUNC ATA_lfRssiMeasReady_ISR_C(void)
+ATA_lfRssiMeasReady_ISR_C:
+          CFI Block cfiBlock17 Using cfiCommon1
+          CFI Function ATA_lfRssiMeasReady_ISR_C
+          CFI NoCalls
+// 1571 {
+        ST      -Y, R31
+          CFI R31 Frame(CFA_Y, -1)
+          CFI CFA_Y Y+1
+        ST      -Y, R30
+          CFI R30 Frame(CFA_Y, -2)
+          CFI CFA_Y Y+2
+        ST      -Y, R19
+          CFI R19 Frame(CFA_Y, -3)
+          CFI CFA_Y Y+3
+        ST      -Y, R18
+          CFI R18 Frame(CFA_Y, -4)
+          CFI CFA_Y Y+4
+        ST      -Y, R17
+          CFI R17 Frame(CFA_Y, -5)
+          CFI CFA_Y Y+5
+        ST      -Y, R16
+          CFI R16 Frame(CFA_Y, -6)
+          CFI CFA_Y Y+6
+        IN      R19, 0x3F
+// 1572     ATA_SET_FUNCTION_TRACE_POINT_ISR_C(ATA_lfRssiMeasReady_ISR_C, g_sLfRssi.bFlags | g_sLfRssi.bStatus);
+        LDS     R16, g_sLfRssi
+        LDS     R17, (g_sLfRssi + 1)
+        OR      R16, R17
+        STS     _A_TRCDR, R16
+        LDI     R16, LOW(ATA_lfRssiMeasReady_ISR_C/2)
+        STS     _A_TRCIDL, R16
+        LDI     R16, (ATA_lfRssiMeasReady_ISR_C/2) >> 8
+        STS     _A_TRCIDH, R16
+// 1573 
+// 1574     uint8_t tmpReg, mask;
+// 1575 
+// 1576     /* LLR-Ref: 010 */
+// 1577     RSCR &= ~(BM_RSOFM | BM_RSOS);
+        LDS     R16, _A_RSCR
+        ANDI    R16, 0xF5
+        STS     _A_RSCR, R16
+// 1578 
+// 1579     /* LLR-Ref: 020 */
+// 1580     mask    = RSMS1R & (BM_RSCH3E | BM_RSCH2E | BM_RSCH1E); // result range is 0x00 - 0x07
+        LDS     R16, _A_RSMS1R
+        ANDI    R16, 0x07
+// 1581     tmpReg  = RSFR & mask;                                  // result range is 0x00 - 0x07
+        LDS     R17, _A_RSFR
+// 1582     tmpReg |= (RSFR & (mask<<5U));                          // result range is 0x00 - 0xE7
+// 1583 
+// 1584     g_sLfRssi.bOutOfRangeMask = tmpReg;                     // result is max. 0xE7 absolutely
+        AND     R17, R16
+        LDS     R18, _A_RSFR
+        SWAP    R16
+        LSL     R16
+        AND     R18, R16
+        OR      R17, R18
+        STS     (g_sLfRssi + 12), R17
+// 1585 
+// 1586     /* LLR-Ref: 030 */
+// 1587     if( tmpReg )
+        BREQ    ??ATA_lfRssiMeasReady_ISR_C_0
+// 1588     {
+// 1589         /* LLR-Ref: 040 */
+// 1590         g_sLfRssi.bStatus  |= LFRSSI_STATUS_BM_CHANNELS_OUTOFRANGE_FLAG;
+        LDI     R30, LOW(g_sLfRssi)
+        LDI     R31, (g_sLfRssi) >> 8
+        LDD     R16, Z+1
+        ORI     R16, 0x04
+        STD     Z+1, R16
+// 1591         g_sLfRssi.bFlags   |= LFRSSI_FLAGS_BM_ERROR_FLAG;
+        LD      R16, Z
+        ORI     R16, 0x80
+        ST      Z, R16
+// 1592         g_sDebug.bErrorCode = DEBUG_ERROR_CODE_LFRSSI_CHANNELS_OUTOFRANGE;
+        LDI     R16, 47
+        STS     g_sDebug, R16
+// 1593     }
+// 1594 
+// 1595     /* LLR-Ref: 050 */
+// 1596     g_sLfRssi.bStatus &= ~(LFRSSI_STATUS_BM_CHANCORR_DATA_AVAILABLE_FLAG | LFRSSI_STATUS_BM_3DVEC_DATA_AVAILABLE_FLAG | LFRSSI_STATUS_BM_LINEAR_DATA_AVAILABLE_FLAG | LFRSSI_STATUS_BM_OPERATION_ACTIVE_FLAG);
+// 1597     g_sLfRssi.bStatus |= LFRSSI_STATUS_BM_MEAS_DATA_AVAILABLE_FLAG;
+??ATA_lfRssiMeasReady_ISR_C_0:
+        LDS     R16, (g_sLfRssi + 1)
+        ANDI    R16, 0x8E
+        STS     (g_sLfRssi + 1), R16
+        LDI     R30, LOW(g_sLfRssi)
+        LDI     R31, (g_sLfRssi) >> 8
+        ORI     R16, 0x80
+        STD     Z+1, R16
+// 1598     g_sLfRssi.bFlags  |= LFRSSI_FLAGS_BM_MEASUREMENT_READY_FLAG;
+        LD      R16, Z
+        ORI     R16, 0x40
+        ST      Z, R16
+// 1599 }
+        OUT     0x3F, R19
+        LD      R16, Y+
+          CFI R16 SameValue
+          CFI CFA_Y Y+5
+        LD      R17, Y+
+          CFI R17 SameValue
+          CFI CFA_Y Y+4
+        LD      R18, Y+
+          CFI R18 SameValue
+          CFI CFA_Y Y+3
+        LD      R19, Y+
+          CFI R19 SameValue
+          CFI CFA_Y Y+2
+        LD      R30, Y+
+          CFI R30 SameValue
+          CFI CFA_Y Y+1
+        LD      R31, Y+
+          CFI R31 SameValue
+          CFI CFA_Y Y+0
+        RETI
+          CFI EndBlock cfiBlock17
+        REQUIRE _A_TRCDR
+        REQUIRE _A_TRCIDL
+        REQUIRE _A_TRCIDH
+        REQUIRE _A_RSCR
+        REQUIRE _A_RSMS1R
+        REQUIRE _A_RSFR
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01cH
+__?EECR:
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01dH
+__?EEDR:
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01eH
+__?EEARL:
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01fH
+__?EEARH:
+
+        END
+// 1600 
+// 1601 
+// 1602 
+// 1603 
+// 1604 
+// 
+//    13 bytes in segment .lfRssi
+//    35 bytes in segment ABSOLUTE
+// 2 270 bytes in segment CODE
+// 
+// 2 270 bytes of CODE memory
+//    13 bytes of DATA memory (+ 35 bytes shared)
+//
+//Errors: none
+//Warnings: none

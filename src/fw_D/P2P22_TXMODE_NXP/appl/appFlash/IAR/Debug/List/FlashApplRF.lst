@@ -1,0 +1,486 @@
+###############################################################################
+#
+# IAR C/C++ Compiler V7.10.1.1197 for Atmel AVR           13/May/2020  17:03:19
+# Copyright 1996-2017 IAR Systems AB.
+# Network license: dvriar01.mchp-main.com (STD)
+#
+#    Source file  =  
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\src\FlashApplRF.c
+#    Command line =  
+#        -f C:\Users\C41045\AppData\Local\Temp\EWE40.tmp
+#        (C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\src\FlashApplRF.c
+#        -v3 --enhanced_core -ms -o
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\Obj
+#        -lCN
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\List
+#        -lA
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\List
+#        --no_cse --no_inline --no_code_motion --no_cross_call --no_clustering
+#        --no_tbaa --debug --64k_flash -DENABLE_BIT_DEFINITIONS -e
+#        --eeprom_size 2304 --clib -Ohz)
+#    Locale       =  English_USA.1252
+#    List file    =  
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\List\FlashApplRF.lst
+#    Object file  =  
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\Obj\FlashApplRF.r90
+#
+###############################################################################
+
+C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\src\FlashApplRF.c
+      1          /******************************************************************************
+      2            Use of this software is subject to Microchip's Software License Agreement.
+      3          --------------------------------------------------------------------------------
+      4            $URL: http://svnservulm.corp.atmel.com/svn/CDB/Apps/SW_Lib/Car_Access/CARS_GEN2/ATAB5702A/Branches/P2P22_TXMODE_NXP/appl/appFlash/src/FlashApplRF.c $
+      5            $LastChangedRevision: 458065 $
+      6            $LastChangedDate: 2017-05-02 04:55:50 -0600 (Tue, 02 May 2017) $
+      7            $LastChangedBy: krishna.balan $
+      8          -------------------------------------------------------------------------------
+      9            Project:      ATA5700
+     10            Target MCU:   ATA5700
+     11            Compiler:     IAR C/C++ Compiler for AVR 5.51.0
+     12          -------------------------------------------------------------------------------
+     13          
+     14          ******************************************************************************
+     15          * Copyright 2017, Microchip Technology Incorporated and its subsidiaries.     *
+     16          *                                                                             *
+     17          * This software is owned by the Microchip Technology Incorporated.            *
+     18          * Microchip hereby grants to licensee a personal                              *
+     19          * non-exclusive, non-transferable license to copy, use, modify, create        *
+     20          * derivative works of, and compile the Microchip Source Code and derivative   *
+     21          * works for the sole and exclusive purpose of creating custom software in     *
+     22          * support of licensee product to be used only in conjunction with a Microchip *
+     23          * integrated circuit as specified in the applicable agreement. Any            *        
+     24          * reproduction, modification, translation, compilation, or representation of  *
+     25          * this software except as specified above is prohibited without the express   *
+     26          * written permission of Microchip.                                            *
+     27          *                                                                             *
+     28          * Disclaimer: MICROCHIP MAKES NO WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,    *
+     29          * WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED    *
+     30          * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.         *
+     31          * Microchip reserves the right to make changes without further notice to the  *
+     32          * materials described herein. Microchip does not assume any liability arising *
+     33          * out of the application or use of any product or circuit described herein.   *
+     34          * Microchip does not authorize its products for use as critical components in *
+     35          * life-support systems where a malfunction or failure may reasonably be       *
+     36          * expected to result in significant injury to the user. The inclusion of      *
+     37          * Microchip products in a life-support systems application implies that the   *
+     38          * manufacturer assumes all risk of such use and in doing so indemnifies       *
+     39          * Microchip against all charges.                                              *
+     40          *                                                                             *
+     41          * Use may be limited by and subject to the applicable Microchip software      *
+     42          * license agreement.                                                          *
+     43          ******************************************************************************/
+     44          
+     45          /** \file FlashApplRF.c
+     46              this file contains an ATA5700 Flash application software
+     47          */
+     48          
+     49          /*===========================================================================*/
+     50          /*  INCLUDES                                                                 */
+     51          /*===========================================================================*/
+     52          #include "../../../firmware/init/src/init.h"
+
+   \                                 In  segment ABSOLUTE, at 0x28
+   \   union <unnamed> volatile __io _A_PORTC
+   \                     _A_PORTC:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x88
+   \   union <unnamed> volatile __io _A_T4IMR
+   \                     _A_T4IMR:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0xcc
+   \   union <unnamed> volatile __io _A_SUPCR
+   \                     _A_SUPCR:
+   \   00000000                      DS8 1
+     53          #include "../../../firmware/rftx/src/rftx.h"
+     54          #include "../../../firmware/rftx/src/rftx_flash.h"
+     55          #include "../../../firmware/lfrx/src/lfrx.h"
+     56          #include "../../../firmware/spi/src/ata5700_command_set.h"
+     57          #include "../../../firmware/lfrssi/src/lfrssi_flash.h"
+     58          #include "../../../firmware/init/src/init_flash.h"
+     59          #include "../../../firmware/system/src/system_flash.h"
+     60          
+     61          #include "../../../firmware/timer1/src/timer1.h"
+     62          #include "../../../firmware/globals/src/globals.h"
+     63          #include "../../../firmware/timer5/src/timer5_flash.h"
+     64          #include "../../../firmware/timer4/src/timer4_flash.h"
+     65          
+     66          #include "../../../firmware/lfrx/src/lfrx_flash.h"
+     67          #include "../../../firmware/tp/src/tp_flash.h"
+     68          
+     69          #include "../../../firmware/extif/src/extif_flash.h"
+     70          
+     71          #include "../../../firmware/lfrssi/src/lfrssi.h"
+     72          #include "../../../firmware/lfrssi/src/lfrssi_flash.h"
+     73          
+     74          #include "../../../firmware/calib/src/calib.h"
+     75          #include "../../../firmware/aes/src/aes.h"
+     76          
+     77          //--------
+     78          
+     79          #include "../src/FlashApplPEPS.h"
+     80          #include "../src/FlashApplRF.h"
+     81          #include "../src/FlashApplLF.h" 
+     82          #include "../src/micro.h"
+     83          #include "../src/FlashApplVars.h"
+     84          #include "rfrcc_flash.h"
+     85          #include "FlashApplVars.h"
+     86          #include "FlashApplMsg.h"
+     87          
+     88          /*===========================================================================*/
+     89          /*  DEFINES                                                                  */
+     90          /*===========================================================================*/
+     91          #define TX_PAYLOADDATALENGTH    32
+     92          #define RF_FRAME_LENGTH(NB_BYTES) (1000.0/CFG_RF1_BITRATE*8.0*(NB_BYTES+0.5))
+     93          /*===========================================================================*/
+     94          /*  Modul Globals                                                             */
+     95          /*===========================================================================*/
+     96          
+     97          extern sRfTxServicePathConfig g_sRfTxServicePathConfig0;
+     98          extern sFlashApplVars gFlashApplVars;
+     99          extern RFMSG_FRAME_TS g_MsgRXbuffer;
+    100          extern RFMSG_FRAME_TS g_MsgTXbuffer;
+    101          extern sFlashApplState gFlashApplState;
+    102          extern sFlashApplVars gFlashApplVars;
+    103          extern tTimer5Status gTimer5Status;
+    104          extern tTimer4Status gTimer4Status;
+    105          //RF message length (with only one byte of preamble)
+
+   \                                 In  segment NEAR_F, align 1, keep-with-next
+    106          static CONST uint8_t caub_frame_auth_delay[8] =
+   \                     caub_frame_auth_delay:
+   \   00000000   24006C48B490       DC8 0, 36, 72, 108, 144, 180, 216, 252
+   \              FCD8        
+    107          {
+    108            0,
+    109            (uint8_t)((RF_FRAME_LENGTH(PEPS_SIZE_TX_MSG_AUTH) + INTERFRAME)*1 + 0.5),
+    110            (uint8_t)((RF_FRAME_LENGTH(PEPS_SIZE_TX_MSG_AUTH) + INTERFRAME)*2 + 0.5),
+    111            (uint8_t)((RF_FRAME_LENGTH(PEPS_SIZE_TX_MSG_AUTH) + INTERFRAME)*3 + 0.5),
+    112            (uint8_t)((RF_FRAME_LENGTH(PEPS_SIZE_TX_MSG_AUTH) + INTERFRAME)*4 + 0.5),
+    113            (uint8_t)((RF_FRAME_LENGTH(PEPS_SIZE_TX_MSG_AUTH) + INTERFRAME)*5 + 0.5),
+    114            (uint8_t)((RF_FRAME_LENGTH(PEPS_SIZE_TX_MSG_AUTH) + INTERFRAME)*6 + 0.5),
+    115            (uint8_t)((RF_FRAME_LENGTH(PEPS_SIZE_TX_MSG_AUTH) + INTERFRAME)*7 + 0.5),
+    116          };
+
+   \                                 In  segment NEAR_F, align 1, keep-with-next
+    117          static CONST uint8_t caub_tx_length[16] =
+   \                     caub_tx_length:
+   \   00000000   190C00191009       DC8 12, 25, 25, 0, 9, 16, 16, 16, 16, 0, 30, 17, 0, 0, 11, 10
+   \              10100010111E
+   \              00000A0B    
+    118          {
+    119            PEPS_SIZE_TX_MSG_ID,//Needs EOM GR - Removed
+    120            PEPS_SIZE_TX_MSG_PARAM, //PEPS_CID_RD_PARAM  1
+    121            PEPS_SIZE_TX_MSG_PARAM, //PEPS_CID_WR_PARAM  2
+    122            0,
+    123            PEPS_SIZE_TX_MSG_2WAY, //PEPS_CID_2WAY 4
+    124            PEPS_SIZE_TX_MSG_AUTH, //PEPS_CID_UNI_AUTH 5//*GR* add 4 with coil phase  
+    125            PEPS_SIZE_TX_MSG_AUTH, //PEPS_CID_BI_AUTH  6//*GR* add 4 with coil phase  
+    126            PEPS_SIZE_TX_MSG_AUTH, //PEPS_CID_UNI_AUTH_SINGLE 7
+    127            PEPS_SIZE_TX_MSG_AUTH, //PEPS_CID_UNI_AUTH_SINGLE 8
+    128            0,
+    129            PEPS_SIZE_TX_MSG_LF_TST, //PEPS_CID_LF_TST  10
+    130            PEPS_SIZE_TX_MSG_LF_PARAM, //PEPS_CID_LF_PARAM 11
+    131            0,
+    132            0,
+    133            PEPS_SIZE_TX_MSG_SWID, //PEPS_CID_SWID 14
+    134            PEPS_SIZE_TX_MSG_MODE  //PEPS_CID_MODE 15
+    135          };
+    136          extern uint8_t rub_cid;
+    137          /*===========================================================================*/
+    138          /*  IMPLEMENTATION                                                           */
+    139          /*===========================================================================*/
+    140          void ATA_rfTx_PEPSmsg_flash_C(void);
+    141          void ATA_rfTx_PEPSframe_flash_C(void);
+    142          /*----------------------------------------------------------------------------- */
+    143          /**\brief  TODO - code here
+    144          
+    145           */
+    146          /*----------------------------------------------------------------------------- */
+
+   \                                 In  segment CODE, align 2, keep-with-next
+    147          void ATA_rfTx_PEPSmsg_flash_C(void)
+   \                     ATA_rfTx_PEPSmsg_flash_C:
+    148          {
+   \   00000000   939A               ST      -Y, R25
+   \   00000002   938A               ST      -Y, R24
+    149            /*
+    150            Notes on P2P RF response collision avoidance and timing 11 Feb 2016 GeRu
+    151            
+    152            1. EEPROM transcations are time consuming, a read modify write cycle takes
+    153            about 18 mS based on measurements of the CRC disable function. EEPROM read
+    154            cycles I did not measure but based on the delay from LF off to RF function
+    155            calls they are also time consuming. 
+    156            
+    157            2. Misc timing observations 
+    158            LF message end to RF start - 16 mS
+    159            Car Access Kit RF receive on interval from LF message end - 210 mS
+    160            P2P autehnticcation RF Telegram length 1/4K period * 8 bits * 10 bytes - 19 mS
+    161            
+    162            3. P2P TImer 4 implementation
+    163            Timer 4 clock source is programmed to be FRC/8. In function
+    164            ATA_PEPStimerStart(uint8_T tempo)the argument is multiplpied by 506 and the 
+    165            product programmed into the comparison registers. Measured results are as follows;
+    166            Tempo     Delay time (mS)   Delay per count (mS)
+    167            50        45.3              0.9
+    168            10        9.1               0.9
+    169            2         1.9               0.95
+    170              
+    171            4. LDL code is very abstracted so here is the #DEFINES used to calculate the
+    172            tempo;
+    173            
+    174            Fob_tempo = (uint8_t)INTERFRAME + caub_frame_auth_delay[Fob_tempo]; 
+    175            Note caub_interframe_delay os decelared as a uint8_t so all results are rounded
+    176            to the nearest integer
+    177          
+    178            static CONST uint8_t caub_frame_auth_delay[8] =
+    179          {
+    180            0,//0
+    181            (uint8_t)((RF_FRAME_LENGTH(PEPS_SIZE_TX_MSG_AUTH) + INTERFRAME)*1 + 0.5),//12.5
+    182            (uint8_t)((RF_FRAME_LENGTH(PEPS_SIZE_TX_MSG_AUTH) + INTERFRAME)*2 + 0.5),//24.5
+    183            (uint8_t)((RF_FRAME_LENGTH(PEPS_SIZE_TX_MSG_AUTH) + INTERFRAME)*3 + 0.5),//36.5
+    184            (uint8_t)((RF_FRAME_LENGTH(PEPS_SIZE_TX_MSG_AUTH) + INTERFRAME)*4 + 0.5),//48.5
+    185            (uint8_t)((RF_FRAME_LENGTH(PEPS_SIZE_TX_MSG_AUTH) + INTERFRAME)*5 + 0.5),//60.5
+    186            (uint8_t)((RF_FRAME_LENGTH(PEPS_SIZE_TX_MSG_AUTH) + INTERFRAME)*6 + 0.5),//72.5
+    187            (uint8_t)((RF_FRAME_LENGTH(PEPS_SIZE_TX_MSG_AUTH) + INTERFRAME)*7 + 0.5),//84.5
+    188          };
+    189          #define INTERFRAME    3.0
+    190          #define RF_FRAME_LENGTH(NB_BYTES) (1000.0/CFG_RF1_BITRATE*8.0*(NB_BYTES+0.5))//NB_BYTES=10 then 8.75 (9) 
+    191          #define CFG_RF1_BITRATE       9600
+    192          
+    193          #define PEPS_SIZE_TX_MSG_AUTH        (PEPS_SIZE_TX_MSG_COMMON+1+CFG_PEPS_CHALLENGE_LENGTH)//10
+    194          #define PEPS_SIZE_TX_MSG_COMMON      (1 + CFG_PEPS_PREAMBLE_LENGTH)//5
+    195          #define CFG_PEPS_PREAMBLE_LENGTH        4 
+    196          #define CFG_PEPS_CHALLENGE_LENGTH       4  
+    197          
+    198            
+    199            
+    200            */
+    201            
+    202            //Send message in common and FOB index time slots
+    203            uint8_t Fob_tempo;//Delay timing position (slot)
+    204            uint8_t Fob_slots;//TX slots 
+    205            // compute interframe for anti-collicion process
+    206            Fob_tempo = 0;
+   \   00000004   E080               LDI     R24, 0
+    207            Fob_slots = SLOT_COMMON;
+   \   00000006   E090               LDI     R25, 0
+    208           
+    209            if ((rub_cid==PEPS_CID_UNI_AUTH) || (rub_cid==PEPS_CID_BI_AUTH))
+   \   00000008   9100....           LDS     R16, rub_cid
+   \   0000000C   3005               CPI     R16, 5
+   \   0000000E   F011               BREQ    ??ATA_rfTx_PEPSmsg_flash_C_0
+   \   00000010   3006               CPI     R16, 6
+   \   00000012   F499               BRNE    ??ATA_rfTx_PEPSmsg_flash_C_1
+    210            {
+    211            Fob_slots = SLOT_COMMON|SLOT_SINGLES;//1 | 2
+   \                     ??ATA_rfTx_PEPSmsg_flash_C_0:
+   \   00000014   E092               LDI     R25, 2
+    212              // common slot + wait xxx ms before 2nd frame
+    213              Fob_tempo = MSG_TX_DATA.peps.fidx - ((RX_MSG_PEPS_TS*)MSG_RX_DATA)->fidx;//TX Data FOB Index - RX message FOB Index    
+   \   00000016   9180....           LDS     R24, (g_MsgTXbuffer + 6)
+   \   0000001A   9586               LSR     R24
+   \   0000001C   7087               ANDI    R24, 0x07
+   \   0000001E   9100....           LDS     R16, (g_MsgRXbuffer + 5)
+   \   00000022   9506               LSR     R16
+   \   00000024   7007               ANDI    R16, 0x07
+   \   00000026   1B80               SUB     R24, R16
+    214              if (Fob_tempo & 0x80)  
+   \   00000028   FB87               BST     R24, 7
+   \   0000002A   F40E               BRTC    ??ATA_rfTx_PEPSmsg_flash_C_2
+    215              {
+    216                // Fob index lower than index requested
+    217                Fob_tempo += PEPS_NB_FOB_MAX; //Add 4 to it?
+   \   0000002C   5F8C               SUBI    R24, 252
+    218              }
+    219              // interframe is 3ms, and frame length is around 8ms
+    220              // =((1000/CFG_RF1_BITRATE*8*(PEPS_SIZE_TX_MSG_AUTH+CFG_PEPS_PREAMBLE_LENGTH-1+0.5)+0.5)
+    221              Fob_tempo = (uint8_t)INTERFRAME + caub_frame_auth_delay[Fob_tempo];    
+   \                     ??ATA_rfTx_PEPSmsg_flash_C_2:
+   \   0000002E   2FE8               MOV     R30, R24
+   \   00000030   E0F0               LDI     R31, 0
+   \   00000032   ....               SUBI    R30, LOW((-(caub_frame_auth_delay) & 0xFFFF))
+   \   00000034   ....               SBCI    R31, (-(caub_frame_auth_delay) & 0xFFFF) >> 8
+   \   00000036   9184               LPM     R24, Z
+   \   00000038   5F8D               SUBI    R24, 253
+    222            }
+    223            // send first frame
+    224            if (Fob_slots&SLOT_COMMON)
+    225            {
+    226               ATA_rfTx_PEPSframe_flash_C();    
+   \                     ??ATA_rfTx_PEPSmsg_flash_C_1:
+   \   0000003A   ....               RCALL   ATA_rfTx_PEPSframe_flash_C
+    227            }  
+    228            // send second frame
+    229            if (Fob_slots&SLOT_SINGLES)
+   \   0000003C   2399               TST     R25
+   \   0000003E   F051               BREQ    ??ATA_rfTx_PEPSmsg_flash_C_3
+    230            {
+    231              if (Fob_tempo)
+   \   00000040   2388               TST     R24
+   \   00000042   F041               BREQ    ??ATA_rfTx_PEPSmsg_flash_C_3
+    232              {
+    233               ATA_PEPStimerStart(Fob_tempo);
+   \   00000044   2F08               MOV     R16, R24
+   \   00000046   ........           CALL    ATA_PEPStimerStart
+    234               gFlashApplState.State |= BM_PEPSRFTIMERACTIVE;     
+   \   0000004A   ....               LDI     R30, LOW(gFlashApplState)
+   \   0000004C   ....               LDI     R31, (gFlashApplState) >> 8
+   \   0000004E   8101               LDD     R16, Z+1
+   \   00000050   6200               ORI     R16, 0x20
+   \   00000052   8301               STD     Z+1, R16
+    235               }    
+    236            
+    237            }   
+    238          }
+   \                     ??ATA_rfTx_PEPSmsg_flash_C_3:
+   \   00000054   9189               LD      R24, Y+
+   \   00000056   9199               LD      R25, Y+
+   \   00000058   9508               RET
+    239          
+
+   \                                 In  segment CODE, align 2, keep-with-next
+    240          void ATA_rfTx_PEPSrftimingprocess_flash_C(void)
+   \                     ATA_rfTx_PEPSrftimingprocess_flash_C:
+    241          { 
+    242                T4IMR = 0x00; 
+   \   00000000   E000               LDI     R16, 0
+   \   00000002   9300....           STS     _A_T4IMR, R16
+    243                //_WDR;  
+    244                ATA_PEPStimerProcess();
+   \   00000006   ........           CALL    ATA_PEPStimerProcess
+    245                gFlashApplState.State &= ~(BM_PEPSRFTIMERACTIVE);   
+   \   0000000A   ....               LDI     R30, LOW(gFlashApplState)
+   \   0000000C   ....               LDI     R31, (gFlashApplState) >> 8
+   \   0000000E   8101               LDD     R16, Z+1
+   \   00000010   7D0F               ANDI    R16, 0xDF
+   \   00000012   8301               STD     Z+1, R16
+    246                gTimer4Status &= ~(BM_TIMER4COMPARETRUE);
+   \   00000014   ....               LDI     R30, LOW(gTimer4Status)
+   \   00000016   ....               LDI     R31, (gTimer4Status) >> 8
+   \   00000018   8100               LD      R16, Z
+   \   0000001A   770F               ANDI    R16, 0x7F
+   \   0000001C   8300               ST      Z, R16
+    247              // send 2nd frame
+    248                ATA_rfTx_PEPSframe_flash_C();  
+   \   0000001E   ....               RCALL   ATA_rfTx_PEPSframe_flash_C
+    249                ATA_timer4Close_C();   
+   \   00000020   ........           JMP     ATA_timer4Close_C
+   \   00000024                      REQUIRE _A_T4IMR
+    250          }
+    251          
+
+   \                                 In  segment CODE, align 2, keep-with-next
+    252          void ATA_rfTx_PEPSframe_flash_C(void)
+   \                     ATA_rfTx_PEPSframe_flash_C:
+    253          {
+    254             if (bit_test(LED2)) bit_clear(LED2);
+   \   00000000   9B41               SBIS    0x08, 0x01
+   \   00000002   C002               RJMP    ??ATA_rfTx_PEPSframe_flash_C_0
+   \   00000004   9841               CBI     0x08, 0x01
+   \   00000006   C001               RJMP    ??ATA_rfTx_PEPSframe_flash_C_1
+    255             else bit_set(LED2);
+   \                     ??ATA_rfTx_PEPSframe_flash_C_0:
+   \   00000008   9A41               SBI     0x08, 0x01
+    256            g_MsgTXbuffer.ub_size = caub_tx_length[rub_cid];//Need EOM byte
+   \                     ??ATA_rfTx_PEPSframe_flash_C_1:
+   \   0000000A   91E0....           LDS     R30, rub_cid
+   \   0000000E   E0F0               LDI     R31, 0
+   \   00000010   ....               SUBI    R30, LOW((-(caub_tx_length) & 0xFFFF))
+   \   00000012   ....               SBCI    R31, (-(caub_tx_length) & 0xFFFF) >> 8
+   \   00000014   9104               LPM     R16, Z
+   \   00000016   9300....           STS     g_MsgTXbuffer, R16
+    257           // for (uint8_t loopcnt=0;loopcnt<3;loopcnt++)
+    258           // { 
+    259            
+    260               ATA_rfTxInit_C();   
+   \   0000001A   ........           CALL    ATA_rfTxInit_C
+    261               ATA_rfTxFillDFifo_C(g_MsgTXbuffer.ub_size, g_MsgTXbuffer.aub_data);//gFlashApplVars.RfTxbuffer);
+   \   0000001E   ....               LDI     R18, LOW((g_MsgTXbuffer + 2))
+   \   00000020   ....               LDI     R19, HIGH((g_MsgTXbuffer + 2))
+   \   00000022   9100....           LDS     R16, g_MsgTXbuffer
+   \   00000026   ........           CALL    ATA_rfTxFillDFifo_C
+    262             //  ATA_rfTxFillSFifo_C(g_MsgTXbuffer.ub_size, g_MsgTXbuffer.aub_data);//gFlashApplVars.RfTxbuffer);
+    263             //  ATA_rfTxStartTx_C(0x48, (uint8_t *) 0x06D0);
+    264               uint16_t eepService = ATA_rfTxGetIndirectEEPromServiceConfigAddr_flash_C((uint16_t)&g_sCustomerEEPromSection.eepRfTxSer0Ptr_l);
+   \   0000002A   ....               LDI     R16, LOW((g_sCustomerEEPromSection + 108))
+   \   0000002C   ....               LDI     R17, HIGH((g_sCustomerEEPromSection + 108))
+   \   0000002E   ........           CALL    ATA_rfTxGetIndirectEEPromServiceConfigAddr_flash_C
+   \   00000032   0198               MOVW    R19:R18, R17:R16
+    265             //  ATA_rfTxStartTx_C((BM_RFTXCONFIG_BCONFIG_SVC_LOCATION|BM_RFTXCONFIG_BCONFIG_VCO_TUNING|loopcnt), (uint8_t*)eepService);
+    266               ATA_rfTxStartTx_C((BM_RFTXCONFIG_BCONFIG_SVC_LOCATION|BM_RFTXCONFIG_BCONFIG_VCO_TUNING|0), (uint8_t*)eepService);//Only TX on 433.02 MHz
+   \   00000034   E408               LDI     R16, 72
+   \   00000036   ........           CALL    ATA_rfTxStartTx_C
+    267               do {
+    268                  ATA_rfTxProcessing_C();
+   \                     ??ATA_rfTx_PEPSframe_flash_C_2:
+   \   0000003A   ........           CALL    ATA_rfTxProcessing_C
+    269                  }while (g_sRfTx.bStatus & BM_RFTXCONFIG_BSTATUS_ACTIVE);
+   \   0000003E   9100....           LDS     R16, (g_sRfTx + 2)
+   \   00000042   FD04               SBRC    R16, 4
+   \   00000044   CFFA               RJMP    ??ATA_rfTx_PEPSframe_flash_C_2
+    270                ATA_rfTxStop_C();
+   \   00000046   ........           CALL    ATA_rfTxStop_C
+    271           // }
+    272             SUPCR &= ~BM_AVEN;
+   \   0000004A   910000CC           LDS     R16, 204
+   \   0000004E   7E0F               ANDI    R16, 0xEF
+   \   00000050   930000CC           STS     204, R16
+    273             if (bit_test(LED2)) bit_clear(LED2);
+   \   00000054   9B41               SBIS    0x08, 0x01
+   \   00000056   C002               RJMP    ??ATA_rfTx_PEPSframe_flash_C_3
+   \   00000058   9841               CBI     0x08, 0x01
+   \   0000005A   9508               RET
+    274             else bit_set(LED2);   
+   \                     ??ATA_rfTx_PEPSframe_flash_C_3:
+   \   0000005C   9A41               SBI     0x08, 0x01
+    275          }
+   \   0000005E   9508               RET
+   \   00000060                      REQUIRE _A_PORTC
+   \   00000060                      REQUIRE _A_SUPCR
+
+   Maximum stack usage in bytes:
+
+   CSTACK RSTACK Function
+   ------ ------ --------
+      0      2   ATA_rfTx_PEPSframe_flash_C
+        0      2   -> ATA_rfTxFillDFifo_C
+        0      2   -> ATA_rfTxGetIndirectEEPromServiceConfigAddr_flash_C
+        0      2   -> ATA_rfTxInit_C
+        0      2   -> ATA_rfTxProcessing_C
+        0      2   -> ATA_rfTxStartTx_C
+        0      2   -> ATA_rfTxStop_C
+      2      2   ATA_rfTx_PEPSmsg_flash_C
+        2      2   -> ATA_PEPStimerStart
+        2      2   -> ATA_rfTx_PEPSframe_flash_C
+      0      2   ATA_rfTx_PEPSrftimingprocess_flash_C
+        0      2   -> ATA_PEPStimerProcess
+        0      2   -> ATA_rfTx_PEPSframe_flash_C
+        0      2   -> ATA_timer4Close_C
+
+
+   Segment part sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+      96  ATA_rfTx_PEPSframe_flash_C
+      90  ATA_rfTx_PEPSmsg_flash_C
+      36  ATA_rfTx_PEPSrftimingprocess_flash_C
+       1  _A_PORTC
+       1  _A_SUPCR
+       1  _A_T4IMR
+       8  caub_frame_auth_delay
+      16  caub_tx_length
+
+ 
+   3 bytes in segment ABSOLUTE
+ 222 bytes in segment CODE
+  24 bytes in segment NEAR_F
+ 
+ 246 bytes of CODE memory
+   0 bytes of DATA memory (+ 3 bytes shared)
+
+Errors: none
+Warnings: none

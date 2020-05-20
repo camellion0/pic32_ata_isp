@@ -1,0 +1,1778 @@
+///////////////////////////////////////////////////////////////////////////////
+//
+// IAR C/C++ Compiler V6.70.1.929 for Atmel AVR           05/Apr/2016  13:30:39
+// Copyright 1996-2015 IAR Systems AB.
+// Network license: DVRIAR01.corpp.atmel.com (STD)
+//
+//    Source file  =  
+//        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\firmware\aes\src\aes.c
+//    Command line =  
+//        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\firmware\aes\src\aes.c
+//        -v3 --enhanced_core -ms -o
+//        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\Obj
+//        -lC
+//        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\List
+//        -lA
+//        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\List
+//        --initializers_in_flash --no_cse --no_inline --no_code_motion
+//        --no_cross_call --no_clustering --no_tbaa --debug --64k_flash
+//        -DENABLE_BIT_DEFINITIONS -e -I "C:\Program Files (x86)\IAR
+//        Systems\Embedded Workbench 6.0\avr\inc\" --eeprom_size 1152 --clib
+//        -Ohz
+//    List file    =  
+//        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\List\aes.s90
+//
+///////////////////////////////////////////////////////////////////////////////
+
+        NAME aes
+
+        RTMODEL "__64bit_doubles", "disabled"
+        RTMODEL "__SystemLibrary", "CLib"
+        RTMODEL "__cpu", "3"
+        RTMODEL "__enhanced_core", "enabled"
+        RTMODEL "__has_elpm", "false"
+        RTMODEL "__memory_model", "2"
+        RTMODEL "__rt_version", "3"
+
+        RSEG CSTACK:DATA:NOROOT(0)
+        RSEG RSTACK:DATA:NOROOT(0)
+
+        EXTERN ?EPILOGUE_B3_L09
+        EXTERN ?PROLOGUE3_L09
+        EXTERN ?S_SHL_L02
+        EXTERN ?US_SHR_L02
+
+        PUBLIC ATA_aesApplyPaddingScheme_C
+        PUBLIC ATA_aesComplete_ISR_C
+        PUBLIC ATA_aesDecryptData_C
+        PUBLIC ATA_aesEncryptData_C
+        PUBLIC ATA_aesInit_C
+        PUBLIC ATA_aesKeyLoad_C
+        PUBLIC ATA_aesLoadData_C
+        PUBLIC ATA_aesSetConfig_C
+        PUBLIC ATA_aesTriggerKeyDma_C
+        PUBWEAK _A_AESCR
+        PUBWEAK _A_AESDR
+        PUBWEAK _A_AESKR
+        PUBWEAK _A_AESSR
+        PUBWEAK _A_EEARH
+        PUBWEAK _A_EEARL
+        PUBWEAK _A_EECR2
+        PUBWEAK _A_PRR0
+        PUBWEAK _A_SREG
+        PUBWEAK _A_TRCDR
+        PUBWEAK _A_TRCIDH
+        PUBWEAK _A_TRCIDL
+        PUBWEAK __?EEARH
+        PUBWEAK __?EEARL
+        PUBWEAK __?EECR
+        PUBWEAK __?EEDR
+        PUBLIC g_sAesComponentData
+        
+          CFI Names cfiNames0
+          CFI StackFrame CFA_Y Y DATA
+          CFI StackFrame CFA_SP SP DATA
+          CFI VirtualResource ?RetPad:1, ?RetHigh:8, ?RetLow:8, ?Ret:17
+          CFI Resource R0:8, R1:8, R2:8, R3:8, R4:8, R5:8, R6:8, R7:8, R8:8, R9:8
+          CFI Resource R10:8, R11:8, R12:8, R13:8, R14:8, R15:8, R16:8, R17:8
+          CFI Resource R18:8, R19:8, R20:8, R21:8, R22:8, R23:8, R24:8, R25:8
+          CFI Resource R26:8, R27:8, R28:8, R29:8, R30:8, R31:8
+          CFI Resource ?RetHighByteMask:8, SP:16, SPH:8, SPL:8, Y:16
+          CFI ResourceParts ?Ret ?RetHigh, ?RetLow, ?RetPad
+          CFI ResourceParts SP SPH, SPL
+          CFI ResourceParts Y R29, R28
+          CFI EndNames cfiNames0
+        
+          CFI Common cfiCommon0 Using cfiNames0
+          CFI CodeAlign 1
+          CFI DataAlign 1
+          CFI ReturnAddress ?Ret CODE
+          CFI CFA_Y Y+0
+          CFI CFA_SP SP+2
+          CFI ?RetPad 0
+          CFI ?RetHigh and(load(1, DATA, sub(CFA_SP, 1)), ?RetHighByteMask)
+          CFI ?RetLow Frame(CFA_SP, 0)
+          CFI ?Ret Concat
+          CFI R0 Undefined
+          CFI R1 Undefined
+          CFI R2 Undefined
+          CFI R3 Undefined
+          CFI R4 SameValue
+          CFI R5 SameValue
+          CFI R6 SameValue
+          CFI R7 SameValue
+          CFI R8 SameValue
+          CFI R9 SameValue
+          CFI R10 SameValue
+          CFI R11 SameValue
+          CFI R12 SameValue
+          CFI R13 SameValue
+          CFI R14 SameValue
+          CFI R15 SameValue
+          CFI R16 Undefined
+          CFI R17 Undefined
+          CFI R18 Undefined
+          CFI R19 Undefined
+          CFI R20 Undefined
+          CFI R21 Undefined
+          CFI R22 Undefined
+          CFI R23 Undefined
+          CFI R24 SameValue
+          CFI R25 SameValue
+          CFI R26 SameValue
+          CFI R27 SameValue
+          CFI R28 Undefined
+          CFI R29 Undefined
+          CFI R30 Undefined
+          CFI R31 Undefined
+          CFI ?RetHighByteMask SameValue
+          CFI SPH Undefined
+          CFI SPL Undefined
+          CFI EndCommon cfiCommon0
+        
+        
+          CFI Common cfiCommon1 Using cfiNames0
+          CFI CodeAlign 1
+          CFI DataAlign 1
+          CFI ReturnAddress ?Ret CODE
+          CFI CFA_Y Y+0
+          CFI CFA_SP SP+2
+          CFI ?RetPad 0
+          CFI ?RetHigh and(load(1, DATA, sub(CFA_SP, 1)), ?RetHighByteMask)
+          CFI ?RetLow Frame(CFA_SP, 0)
+          CFI ?Ret Concat
+          CFI R0 SameValue
+          CFI R1 SameValue
+          CFI R2 SameValue
+          CFI R3 SameValue
+          CFI R4 SameValue
+          CFI R5 SameValue
+          CFI R6 SameValue
+          CFI R7 SameValue
+          CFI R8 SameValue
+          CFI R9 SameValue
+          CFI R10 SameValue
+          CFI R11 SameValue
+          CFI R12 SameValue
+          CFI R13 SameValue
+          CFI R14 SameValue
+          CFI R15 SameValue
+          CFI R16 SameValue
+          CFI R17 SameValue
+          CFI R18 SameValue
+          CFI R19 SameValue
+          CFI R20 SameValue
+          CFI R21 SameValue
+          CFI R22 SameValue
+          CFI R23 SameValue
+          CFI R24 SameValue
+          CFI R25 SameValue
+          CFI R26 SameValue
+          CFI R27 SameValue
+          CFI R28 Undefined
+          CFI R29 Undefined
+          CFI R30 SameValue
+          CFI R31 SameValue
+          CFI ?RetHighByteMask SameValue
+          CFI SPH Undefined
+          CFI SPL Undefined
+          CFI EndCommon cfiCommon1
+        
+        EXTERN ATA_eepFuseRead_C
+        EXTERN ATA_eepReadBytes_C
+        EXTERN ATA_globalsInitSramSpace_C
+        EXTERN g_sCustomerEEPromSection
+        EXTERN g_sDebug
+
+// C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\firmware\aes\src\aes.c
+//    1 //lint -e9059
+//    2 /* *C**************************************************************************
+//    3   Use of this software is subject to Atmel's Software License Agreement.
+//    4 -------------------------------------------------------------------------------
+//    5   $URL: http://svnservulm.corp.atmel.com/svn/CDB/Apps/SW_Lib/Car_Access/CARS_GEN2/ATAB5702A/Branches/P2_Gen2_Merge/firmware/aes/src/aes.c $
+//    6   $LastChangedRevision: 328482 $
+//    7   $LastChangedDate: 2015-07-22 13:17:23 -0600 (Wed, 22 Jul 2015) $
+//    8   $LastChangedBy: grueter $
+//    9 -------------------------------------------------------------------------------
+//   10   Project:      ATA5700
+//   11   Target MCU:   ATA5700
+//   12   Compiler:     IAR C/C++ Compiler for AVR 6.30.1
+//   13 -------------------------------------------------------------------------------
+//   14 
+//   15 ******************************************************************************
+//   16 * Copyright 2011, Atmel Automotive GmbH                                       *
+//   17 *                                                                             *
+//   18 * This software is owned by the Atmel Automotive GmbH                         *
+//   19 * and is protected by and subject to worldwide patent protection.             *
+//   20 * Atmel hereby grants to licensee a personal,                                 *
+//   21 * non-exclusive, non-transferable license to copy, use, modify, create        *
+//   22 * derivative works of, and compile the Atmel Source Code and derivative       *
+//   23 * works for the sole purpose of creating custom software in support of        *
+//   24 * licensee product to be used only in conjunction with a Atmel integrated     *
+//   25 * circuit as specified in the applicable agreement. Any reproduction,         *
+//   26 * modification, translation, compilation, or representation of this           *
+//   27 * software except as specified above is prohibited without the express        *
+//   28 * written permission of Atmel.                                                *
+//   29 *                                                                             *
+//   30 * Disclaimer: ATMEL MAKES NO WARRANTY OF ANY KIND,EXPRESS OR IMPLIED,         *
+//   31 * WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED    *
+//   32 * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.         *
+//   33 * Atmel reserves the right to make changes without further notice to the      *
+//   34 * materials described herein. Atmel does not assume any liability arising     *
+//   35 * out of the application or use of any product or circuit described herein.   *
+//   36 * Atmel does not authorize its products for use as critical components in     *
+//   37 * life-support systems where a malfunction or failure may reasonably be       *
+//   38 * expected to result in significant injury to the user. The inclusion of      *
+//   39 * Atmel products in a life-support systems application implies that the       *
+//   40 * manufacturer assumes all risk of such use and in doing so indemnifies       *
+//   41 * Atmel against all charges.                                                  *
+//   42 *                                                                             *
+//   43 * Use may be limited by and subject to the applicable Atmel software          *
+//   44 * license agreement.                                                          *
+//   45 ******************************************************************************/
+//   46 /** \file firmware/aes/src/aes.c
+//   47 */
+//   48 //lint -restore
+//   49 
+//   50 /*---------------------------------------------------------------------------*/
+//   51 /** \brief <b>Module AES</b>
+//   52     This Modules handels everything dealing with AES coding and encoding. 
+//   53     The available AES keys are also handled via this module.        
+//   54 
+//   55 \internal      
+//   56 \Traceability{Primus2P-808, Primus2P-809, Primus2P-810, Primus2P-811,\ 
+//   57               Primus2P-1354, Primus2P-1355, Primus2P-1357, Primus2P-1358,\ 
+//   58               Primus2P-3161, Primus2P-3190, Primus2P-3195, Primus2P-3212}
+//   59 \endinternal
+//   60 \n
+//   61 */    
+//   62 /*---------------------------------------------------------------------------*/
+//   63 
+//   64 /*===========================================================================*/
+//   65 /*  INCLUDES                                                                 */
+//   66 /*===========================================================================*/
+//   67 #include "aes.h"
+
+        ASEGN ABSOLUTE:DATA:NOROOT,036H
+// union <unnamed> volatile __io _A_EECR2
+_A_EECR2:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,03aH
+// union <unnamed> volatile __io _A_PRR0
+_A_PRR0:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,03dH
+// union <unnamed> volatile __io _A_AESCR
+_A_AESCR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,03eH
+// union <unnamed> volatile __io _A_AESSR
+_A_AESSR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,041H
+// union <unnamed> volatile __io _A_EEARL
+_A_EEARL:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,042H
+// union <unnamed> volatile __io _A_EEARH
+_A_EEARH:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,05fH
+// union <unnamed> volatile __io _A_SREG
+_A_SREG:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,0fcH
+// union <unnamed> volatile __io _A_TRCIDL
+_A_TRCIDL:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,0fdH
+// union <unnamed> volatile __io _A_TRCIDH
+_A_TRCIDH:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,0ffH
+// union <unnamed> volatile __io _A_TRCDR
+_A_TRCDR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,0180H
+// union <unnamed> volatile __ext_io _A_AESKR
+_A_AESKR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,0181H
+// union <unnamed> volatile __ext_io _A_AESDR
+_A_AESDR:
+        DS8 1
+//   68 
+//   69 /*===========================================================================*/
+//   70 /*  DEFINES                                                                  */
+//   71 /*===========================================================================*/
+//   72 #define MAX_BYTE_VAL    255U
+//   73 
+//   74 /*===========================================================================*/
+//   75 /*  GLOBALS                                                                  */
+//   76 /*===========================================================================*/
+//   77 
+//   78 /** \brief <b>g_sAesComponentData</b>
+//   79     contains the parameters necessary to perform AES encryption/decryption
+//   80     and error reporting.
+//   81 */
+//   82 #pragma location = ".sramAesComponentDataSection"
+
+        RSEG `.sramAesComponentDataSection`:DATA:ROOT(0)
+//   83 __root __no_init sAesComponentData g_sAesComponentData;
+g_sAesComponentData:
+        DS8 21
+//   84 
+//   85 /** \brief <b>m_bAesLastSubKey</b>
+//   86     holds the last subkey read out of AESKR.
+//   87 */
+//   88 #pragma location = ".sramAesComponentDataSection"
+
+        RSEG `.sramAesComponentDataSection`:DATA:NOROOT(0)
+//   89 static __no_init uint8_t m_bAesLastSubKey[16];
+m_bAesLastSubKey:
+        DS8 16
+//   90 
+//   91 
+//   92 /*===========================================================================*/
+//   93 /*  LOCAL PROTOTYPES (Functions)                                             */
+//   94 /*===========================================================================*/
+//   95 
+//   96 /**/
+//   97 static VOIDFUNC ATA_aesGetResultSynch_C(void);
+//   98 
+//   99 /**/
+//  100 static VOIDFUNC ATA_aesGetData_C(uint8_t *pDestBuf, unsigned char volatile *pSourceReg);
+//  101 
+//  102 /*===========================================================================*/
+//  103 /*  IMPLEMENTATION                                                           */
+//  104 /*===========================================================================*/
+//  105 
+//  106 /*---------------------------------------------------------------------------*/
+//  107 /** \brief <b>ATA_aesInit_C</b>
+//  108     initializes the AES component data with default values and clears the
+//  109     temporary buffer storing the last subkey.
+//  110 
+//  111     Variables Usage:
+//  112     \li [out] ::g_sAesComponentData   Global AES component data
+//  113     \li [out] ::m_bAesLastSubKey      Module global AES last subkey data
+//  114 
+//  115     \image html ATA_aesInit_C.png
+//  116 
+//  117     \internal
+//  118     \li 005: Update HW Trace Unit with function information.
+//  119 
+//  120     \li 010: Set the AES component input data buffer to zero. Clear the sub-key
+//  121              buffer to 0.
+//  122 
+//  123     \li 020: Clear the element bFlags of the structure ::g_sAesComponentData to 0.
+//  124 
+//  125     \li 030: Set Secret Key One as the default secret key to be used,
+//  126              error code indication to no error, and module locked status to unlocked.
+//  127 
+//  128     \li 040: Set AES configuration to the default value 0.
+//  129 
+//  130     \li 050: Initialize the length of the source data to 0.
+//  131 
+//  132     \Derived{Yes}
+//  133 
+//  134     \Rationale{The global AES data needs to be se to default values before
+//  135                usage, since no SRAM initialization takes place during reset}
+//  136 
+//  137     \Traceability{N/A}
+//  138     \endinternal
+//  139 \n
+//  140 */
+//  141 /*---------------------------------------------------------------------------*/
+
+        RSEG CODE:CODE:ROOT(1)
+//  142 VOIDFUNC ATA_aesInit_C (void)
+ATA_aesInit_C:
+          CFI Block cfiBlock0 Using cfiCommon0
+          CFI Function ATA_aesInit_C
+//  143 {
+//  144     /* LLR-Ref: 005 */
+//  145     ATA_SET_FUNCTION_TRACE_POINT_C(ATA_aesInit_C, 0x00U);
+        IN      R18, 0x3F
+        CLI
+        LDI     R16, 0
+        STS     _A_TRCDR, R16
+        LDI     R16, LOW(ATA_aesInit_C/2)
+        STS     _A_TRCIDL, R16
+        LDI     R16, (ATA_aesInit_C/2) >> 8
+        STS     _A_TRCIDH, R16
+        OUT     0x3F, R18
+//  146 
+//  147     /* LLR-Ref: 010 */
+//  148     ATA_globalsInitSramSpace_C(g_sAesComponentData.bDataBuffer, EEP_SECRET_KEY_LENGTH);
+        LDI     R18, 16
+        LDI     R16, LOW((g_sAesComponentData + 4))
+        LDI     R17, HIGH((g_sAesComponentData + 4))
+          CFI FunCall ATA_globalsInitSramSpace_C
+        CALL    ATA_globalsInitSramSpace_C
+//  149     ATA_globalsInitSramSpace_C(m_bAesLastSubKey, EEP_SECRET_KEY_LENGTH);
+        LDI     R18, 16
+        LDI     R16, LOW(m_bAesLastSubKey)
+        LDI     R17, (m_bAesLastSubKey) >> 8
+          CFI FunCall ATA_globalsInitSramSpace_C
+        CALL    ATA_globalsInitSramSpace_C
+//  150 
+//  151     /* LLR-Ref: 020 */
+//  152     g_sAesComponentData.bFlags = AES_FLAGS_RESET;
+        LDI     R16, 0
+        STS     g_sAesComponentData, R16
+//  153 
+//  154     /* LLR-Ref: 030 */
+//  155     g_sAesComponentData.bStatus = AES_STATUS_RESET;
+        STS     (g_sAesComponentData + 1), R16
+//  156 
+//  157     /* LLR-Ref: 040 */
+//  158     g_sAesComponentData.bConfig = AES_CONFIG_RESET;
+        STS     (g_sAesComponentData + 2), R16
+//  159 
+//  160     /* LLR-Ref: 050 */
+//  161     g_sAesComponentData.bDataLength = 0;
+        STS     (g_sAesComponentData + 20), R16
+//  162 
+//  163     /* LLR-Ref: 060 */
+//  164     g_sAesComponentData.bKeyId = 0x00U;
+        STS     (g_sAesComponentData + 3), R16
+//  165 }
+        RET
+          CFI EndBlock cfiBlock0
+        REQUIRE _A_SREG
+        REQUIRE _A_TRCDR
+        REQUIRE _A_TRCIDL
+        REQUIRE _A_TRCIDH
+//  166 
+//  167 
+//  168 /*---------------------------------------------------------------------------*/
+//  169 /** \brief <b>ATA_aesSetConfig_C</b>
+//  170     sets the secret key and the configuration settings chosen by the application.
+//  171 
+//  172     \param[in]  uSecretKey  The secret key selected
+//  173     \param[in]  uUserConfig The configuration settings requested.
+//  174     \param[in]  bKeyId      AES key group IDs
+//  175     
+//  176     Variables Usage:
+//  177     \li [out] ::g_sAesComponentData   Global AES component data
+//  178     
+//  179     \image html ATA_aesSetConfig_C.png
+//  180 
+//  181     \internal
+//  182     \li 005: Update HW Trace Unit with function information.
+//  183 
+//  184     \li 010: Store the given configuration requested to
+//  185               ::g_sAesComponentData .bConfig without modifying 
+//  186               the secret key selection bits.
+//  187 
+//  188     \li 020: Copy the selected secret key information to
+//  189               ::g_sAesComponentData .bConfig[0].
+//  190 
+//  191     \li 030: Setup the AES key group IDs to be used for the AES.
+//  192 
+//  193     \Derived{Yes}
+//  194 
+//  195     \Rationale{A convenient function to initialize the AES component configuration}
+//  196 
+//  197     \Traceability{N/A}
+//  198     \endinternal
+//  199 \n
+//  200 */
+//  201 /*---------------------------------------------------------------------------*/
+
+        RSEG CODE:CODE:ROOT(1)
+//  202 VOIDFUNC ATA_aesSetConfig_C(uint8_t uSecretKey, uint8_t uUserConfig, uint8_t bKeyId)
+ATA_aesSetConfig_C:
+          CFI Block cfiBlock1 Using cfiCommon0
+          CFI Function ATA_aesSetConfig_C
+          CFI NoCalls
+//  203 {
+//  204     /* LLR-Ref: 005 */
+//  205     ATA_SET_FUNCTION_TRACE_POINT_C(ATA_aesSetConfig_C, uUserConfig);
+        IN      R19, 0x3F
+        CLI
+        STS     _A_TRCDR, R17
+        LDI     R20, LOW(ATA_aesSetConfig_C/2)
+        STS     _A_TRCIDL, R20
+        LDI     R20, (ATA_aesSetConfig_C/2) >> 8
+        STS     _A_TRCIDH, R20
+        OUT     0x3F, R19
+//  206 
+//  207     /* LLR-Ref: 010 */
+//  208     g_sAesComponentData.bConfig = uUserConfig & ~(AES_COMMON_KEY_MASK|AES_CONFIG_BM_SECRET_KEY_SELECTION) ;
+//  209 
+//  210     /* LLR-Ref: 020 */    
+//  211     g_sAesComponentData.bConfig |= (uSecretKey & (AES_COMMON_KEY_MASK|AES_CONFIG_BM_SECRET_KEY_SELECTION));
+        ANDI    R17, 0x3E
+        ANDI    R16, 0xC1
+        OR      R17, R16
+        STS     (g_sAesComponentData + 2), R17
+//  212     
+//  213     /* LLR-Ref: 030 */
+//  214     g_sAesComponentData.bKeyId = bKeyId;
+        STS     (g_sAesComponentData + 3), R18
+//  215 }
+        RET
+          CFI EndBlock cfiBlock1
+        REQUIRE _A_SREG
+        REQUIRE _A_TRCDR
+        REQUIRE _A_TRCIDL
+        REQUIRE _A_TRCIDH
+//  216 
+//  217 /*---------------------------------------------------------------------------*/
+//  218 /** \brief <b>ATA_aesTriggerKeyDma_C</b>
+//  219     shall store the EEProm data starting at the given EEProm address to the 
+//  220     AES key memory. The AES block needs to be powered up already via PRR0.PRCU.
+//  221 
+//  222     \param[in]  wAddr   Starting address to transfered 
+//  223                         16 bytes via DMA from EEProm to 
+//  224                         the AES block
+//  225     
+//  226     Variables Usage:
+//  227     \li [in,out]  ::g_sAesComponentData       Global AES component data
+//  228     \li [out]     ::g_sDebug                  Global Debug component data
+//  229 
+//  230     \internal
+//  231     \li 010: Setup EEProm address registers for AES key to be loaded
+//  232     \li 020: Trigger the DMA transfer of the AES key located in EEPROM
+//  233     \li 030: Wait for the DMA transfer to be carried out
+//  234     \li 040: IF an EEPROM correction error occured during the AES DMA transfer,
+//  235              THEN
+//  236                Set the AES error flag within AES component data 
+//  237                 ::g_sAesComponentData and the global error status ::g_sDebug
+//  238                Clear the EEPROM correction error in register EECR2 to have a well-
+//  239                 defined EEPROM interface status
+//  240     \Derived{No}
+//  241 
+//  242     \Rationale{N/A}
+//  243 
+//  244     \Traceability{Primus2P-3161, Primus2P-3190}
+//  245     \endinternal
+//  246 \n
+//  247 */
+//  248 /*---------------------------------------------------------------------------*/
+
+        RSEG CODE:CODE:ROOT(1)
+//  249 VOIDFUNC ATA_aesTriggerKeyDma_C(uint16_t wAddr)
+ATA_aesTriggerKeyDma_C:
+          CFI Block cfiBlock2 Using cfiCommon0
+          CFI Function ATA_aesTriggerKeyDma_C
+          CFI NoCalls
+//  250 /*---------------------------------------------------------------------------*/
+//  251 {
+//  252     /* LLR-Ref: 010 */
+//  253     EEARH = (uint8_t)(wAddr>>8);
+        OUT     0x22, R17
+//  254     EEARL = (uint8_t)wAddr;
+        OUT     0x21, R16
+//  255     
+//  256     /* LLR-Ref: 020 */
+//  257     AESCR |= BM_AESLKM;
+        SBI     0x1D, 0x06
+//  258     
+//  259     /* LLR-Ref: 030 */
+//  260     while((AESCR & BM_AESLKM)!= 0x00U);
+??ATA_aesTriggerKeyDma_C_0:
+        SBIC    0x1D, 0x06
+        RJMP    ??ATA_aesTriggerKeyDma_C_0
+//  261 
+//  262     /* LLR-Ref: 040 */
+//  263     if(EECR2 & BM_E2FF)
+        SBIS    0x16, 0x06
+        RJMP    ??ATA_aesTriggerKeyDma_C_1
+//  264     {
+//  265         g_sAesComponentData.bFlags |= AES_FLAGS_BM_ERROR_FLAG;
+        LDI     R30, LOW(g_sAesComponentData)
+        LDI     R31, (g_sAesComponentData) >> 8
+        LD      R16, Z
+        ORI     R16, 0x80
+        ST      Z, R16
+//  266         g_sDebug.bErrorCode = DEBUG_ERROR_CODE_AES_INVALID_KEY_ERROR;
+        LDI     R16, 51
+        STS     g_sDebug, R16
+//  267         EECR2 |= BM_E2FF;
+        SBI     0x16, 0x06
+//  268     }
+//  269 }
+??ATA_aesTriggerKeyDma_C_1:
+        RET
+          CFI EndBlock cfiBlock2
+        REQUIRE _A_EEARH
+        REQUIRE _A_EEARL
+        REQUIRE _A_AESCR
+        REQUIRE _A_EECR2
+
+        RSEG CODE:CODE:ROOT(1)
+ATA_aesGetData_C:
+          CFI Block cfiBlock3 Using cfiCommon0
+          CFI Function ATA_aesGetData_C
+          CFI NoCalls
+        LDI     R20, 0
+        LDI     R21, 0
+??ATA_aesGetData_C_0:
+        MOVW    R31:R30, R19:R18
+        LD      R22, Z
+        MOVW    R31:R30, R17:R16
+        ADD     R30, R20
+        ADC     R31, R21
+        ST      Z, R22
+        INC     R20
+        CPI     R20, 16
+        BRCS    ??ATA_aesGetData_C_0
+        RET
+          CFI EndBlock cfiBlock3
+
+        RSEG CODE:CODE:ROOT(1)
+ATA_aesGetResultSynch_C:
+??ATA_aesGetResultSynch_C_0:
+          CFI Block cfiBlock4 Using cfiCommon0
+          CFI Function ATA_aesGetResultSynch_C
+        IN      R16, 0x1E
+        ANDI    R16, 0x81
+        BREQ    ??ATA_aesGetResultSynch_C_0
+        SBIS    0x1E, 0x07
+        RJMP    ??ATA_aesGetResultSynch_C_1
+        LDI     R30, LOW(g_sAesComponentData)
+        LDI     R31, (g_sAesComponentData) >> 8
+        LD      R16, Z
+        ORI     R16, 0x80
+        ST      Z, R16
+        LDI     R16, 52
+        STS     g_sDebug, R16
+        RJMP    ??ATA_aesGetResultSynch_C_2
+??ATA_aesGetResultSynch_C_1:
+        LDI     R18, LOW(385)
+        LDI     R19, (385) >> 8
+        LDI     R16, LOW((g_sAesComponentData + 4))
+        LDI     R17, HIGH((g_sAesComponentData + 4))
+          CFI FunCall ATA_aesGetData_C
+        RCALL   ATA_aesGetData_C
+        LDI     R30, LOW(g_sAesComponentData)
+        LDI     R31, (g_sAesComponentData) >> 8
+        LDD     R16, Z+1
+        SBRC    R16, 0
+        RJMP    ??ATA_aesGetResultSynch_C_2
+        LD      R16, Z
+        ORI     R16, 0x40
+        ST      Z, R16
+??ATA_aesGetResultSynch_C_2:
+        LDI     R16, 129
+        OUT     0x1E, R16
+        RET
+          CFI EndBlock cfiBlock4
+        REQUIRE _A_AESSR
+        REQUIRE _A_AESDR
+//  270 
+//  271 
+//  272 /*---------------------------------------------------------------------------*/
+//  273 /** \brief <b>ATA_aesKeyLoad_C</b>
+//  274     Function stores the key from the given EEPROM address to the AES key memory.
+//  275     AES block needs to be powered up already via PRR0.PRCU.
+//  276 
+//  277     \param[in] bKeyId  Index of used AES key (A/B as well 
+//  278                        as COMMON keys)
+//  279                        In case of an secret key it is a 
+//  280                        direct copy of the bKeyId variable.
+//  281                        In case of the common key the 
+//  282                        lower to bits will indicate the 
+//  283                        index of the used common AES key.
+//  284     \param[in] bConfig Encode/decode -> Key or subKey 
+//  285                        loading (bit 3)
+//  286                        KeyA / KeyB selection (bit 0)
+//  287                        COM Key selection (bit 7/6)
+//  288 
+//  289     Variables Usage:
+//  290     \li [in,out]  ::g_sAesComponentData       Global AES component data
+//  291     \li [out]     ::g_sDebug                  Global Debug component data
+//  292     \li [in]      ::g_sCustomerEEPromSection  Global customer EEPROM section
+//  293 
+//  294     \internal
+//  295     \li 010: Get base address of the desired AES key (COMMON, A or B) intended to 
+//  296              be used in the following cyphering task.
+//  297              For the COMMON keys, either COMMON key 1, 2 or 3 is used, depending
+//  298              on the given parameter ::bConfig.
+//  299              Regarding Secret Key A, respectively B, the key index of the
+//  300              key group (A or B) will be used to get the base address of the 
+//  301              selected key, with the last subkey of the corresponding key being 
+//  302              stored after the original AES key.
+//  303 
+//  304              Note: (Not valid anymore)
+//  305                 EEPROM error checking is not required after retrieving the Secret
+//  306                 Key address, since the EEPROM error indication will not be 
+//  307                 overwritten with a different error indication. The whole function
+//  308                 raises the same error condition, in case EEPROM data could not be
+//  309                 read.
+//  310 
+//  311              IF an AES decryption sequence is to be carried out,
+//  312              THEN
+//  313     \li 020:   IF no AESKR register is available,
+//  314                THEN
+//  315                  Load the last subkey of the corresponding AES key from EEPROM via
+//  316                  DMA by calling function "ATA_aesTriggerKeyDma_C" with the
+//  317                  computed (16 bytes offset) subkey address.
+//  318                ELSE
+//  319                  
+//  320                ENDIF
+//  321              ELSE
+//  322                Load the the AES key from EEPROM via DMA by calling function 
+//  323                "ATA_aesTriggerKeyDma_C" with the computed (16 bytes offset)
+//  324                subkey address.
+//  325              ENDIF
+//  326 
+//  327     \li 020: Store the AES key base address to the EEProm address register
+//  328              Flow depends on AESKR presence or not. In case not, the subKey will already
+//  329              reside inside the EEProm.
+//  330     \li 030: Start the key transfer via DMA from EEProm to AES IP
+//  331 
+//  332     TBD
+//  333 
+//  334     \Derived{No}
+//  335 
+//  336     \Rationale{N/A}
+//  337 
+//  338     \Traceability{Primus2P-809, Primus2P-1354, Primus2P-3161, Primus2P-3190}
+//  339     \endinternal
+//  340 \n
+//  341 */
+//  342 /*---------------------------------------------------------------------------*/
+
+        RSEG CODE:CODE:ROOT(1)
+//  343 VOIDFUNC ATA_aesKeyLoad_C(uint8_t bConfig , uint8_t bKeyId)
+ATA_aesKeyLoad_C:
+          CFI Block cfiBlock5 Using cfiCommon0
+          CFI Function ATA_aesKeyLoad_C
+//  344 /*---------------------------------------------------------------------------*/
+//  345 {
+        CALL    ?PROLOGUE3_L09
+          CFI R26 Frame(CFA_Y, -1)
+          CFI R25 Frame(CFA_Y, -2)
+          CFI R24 Frame(CFA_Y, -3)
+          CFI CFA_Y Y+3
+        SBIW    R29:R28, 2
+          CFI CFA_Y Y+5
+        MOV     R26, R16
+//  346     uint8_t ary[2];
+//  347     uint16_t tmp;
+//  348     uint8_t i;
+//  349 
+//  350     /* LLR-Ref: 010 */
+//  351     if(bConfig&AES_COMMON_KEY_MASK)
+        ANDI    R16, 0xC0
+        BREQ    ??ATA_aesKeyLoad_C_0
+//  352     {
+//  353         i = (bConfig&AES_COMMON_KEY_MASK)>>6U;
+//  354         i--;
+//  355         
+//  356         ATA_eepReadBytes_C(&ary[0],(((uint16_t)&g_sCustomerEEPromSection.eepComKeyAddr1_l)+(i<<1)),2U);
+        LDI     R20, 2
+        LDI     R18, LOW((g_sCustomerEEPromSection + 36))
+        LDI     R19, HIGH((g_sCustomerEEPromSection + 36))
+        LDI     R16, 4
+        MUL     R26, R16
+        DEC     R1
+        MOV     R16, R1
+        MUL     R16, R20
+        RJMP    ??ATA_aesKeyLoad_C_1
+//  357     }
+//  358     else
+//  359     {
+//  360         if(g_sAesComponentData.bConfig&AES_CONFIG_BM_SECRET_KEY_SELECTION)
+??ATA_aesKeyLoad_C_0:
+        LDS     R16, (g_sAesComponentData + 2)
+        LDI     R20, 2
+        SBRS    R16, 0
+        RJMP    ??ATA_aesKeyLoad_C_2
+//  361         {
+//  362             ATA_eepReadBytes_C(&ary[0],(((uint16_t)&g_sCustomerEEPromSection.eepSecKeyAddrB)+(bKeyId>>3U)),2U);
+        LDI     R18, LOW((g_sCustomerEEPromSection + 74))
+        LDI     R19, HIGH((g_sCustomerEEPromSection + 74))
+        LSR     R17
+        LSR     R17
+        LSR     R17
+        LDI     R23, 0
+        ADD     R18, R17
+        ADC     R19, R23
+        RJMP    ??ATA_aesKeyLoad_C_3
+//  363         }
+//  364         else
+//  365         {
+//  366             ATA_eepReadBytes_C(&ary[0],(((uint16_t)&g_sCustomerEEPromSection.eepSecKeyAddrA)+(bKeyId<<1U)),2U);
+??ATA_aesKeyLoad_C_2:
+        LDI     R18, LOW((g_sCustomerEEPromSection + 42))
+        LDI     R19, HIGH((g_sCustomerEEPromSection + 42))
+        MUL     R17, R20
+??ATA_aesKeyLoad_C_1:
+        ADD     R18, R0
+        ADC     R19, R1
+??ATA_aesKeyLoad_C_3:
+        MOVW    R17:R16, R29:R28
+          CFI FunCall ATA_eepReadBytes_C
+        CALL    ATA_eepReadBytes_C
+//  367         }
+//  368     }
+//  369     
+//  370     /**/
+//  371     tmp = ((ary[1]<<8U|ary[0]));
+        LDD     R25, Y+1
+        LD      R16, Y
+        MOV     R24, R16
+//  372     
+//  373     if(bConfig&AES_BM_CRYPTO_DIRECTION)
+        BST     R26, 3
+        BRTS    $+2+2
+        RJMP    ??ATA_aesKeyLoad_C_4
+//  374     {
+//  375         /* LLR-Ref: 020 */
+//  376         if(!(ATA_eepFuseRead_C(BM_GET_FUSE_SECF)&HAVE_NO_AESKR))
+        LDI     R16, 25
+          CFI FunCall ATA_eepFuseRead_C
+        CALL    ATA_eepFuseRead_C
+        BST     R16, 2
+        BRTS    ??ATA_aesKeyLoad_C_5
+//  377         {
+//  378             tmp+=16U;
+//  379             ATA_aesTriggerKeyDma_C(tmp);
+        ADIW    R25:R24, 16
+        MOVW    R17:R16, R25:R24
+        RJMP    ??ATA_aesKeyLoad_C_6
+//  380         }
+//  381         else
+//  382         {
+//  383             /* LLR-Ref: 070 */                   
+//  384             AESCR = g_sAesComponentData.bConfig & AES_CONFIG_BM_CRYPTO_MODULE_RESET;
+??ATA_aesKeyLoad_C_5:
+        LDS     R16, (g_sAesComponentData + 2)
+        ANDI    R16, 0x20
+        OUT     0x1D, R16
+//  385             g_sAesComponentData.bStatus |= AES_STATUS_BM_ENCR_WITHIN_DECR_FLAG;            
+        LDI     R30, LOW(g_sAesComponentData)
+        LDI     R31, (g_sAesComponentData) >> 8
+        LDD     R16, Z+1
+        ORI     R16, 0x01
+        STD     Z+1, R16
+//  386             ATA_aesTriggerKeyDma_C(tmp);
+        MOVW    R17:R16, R25:R24
+          CFI FunCall ATA_aesTriggerKeyDma_C
+        RCALL   ATA_aesTriggerKeyDma_C
+//  387             
+//  388             /* Trigger AES operation to generate the needed subKey make sure IRQs are disabled */
+//  389             AESCR = g_sAesComponentData.bConfig & AES_CONFIG_BM_XOR_STATE_MEMORY;
+        LDS     R16, (g_sAesComponentData + 2)
+        ANDI    R16, 0x10
+        OUT     0x1D, R16
+//  390             
+//  391             /* LLR-Ref: 200, back up copy for original data! */ 
+//  392             for(i=0;i<16;i++)
+        LDI     R16, 0
+//  393             {
+//  394                 m_bAesLastSubKey[i] = g_sAesComponentData.bDataBuffer[i];
+??ATA_aesKeyLoad_C_7:
+        MOV     R30, R16
+        LDI     R31, 0
+        SUBI    R30, LOW((-(g_sAesComponentData) & 0xFFFF))
+        SBCI    R31, (-(g_sAesComponentData) & 0xFFFF) >> 8
+        LDD     R18, Z+4
+        MOV     R30, R16
+        LDI     R31, 0
+        SUBI    R30, LOW((-(m_bAesLastSubKey) & 0xFFFF))
+        SBCI    R31, (-(m_bAesLastSubKey) & 0xFFFF) >> 8
+        ST      Z, R18
+//  395             }
+        INC     R16
+        CPI     R16, 16
+        BRCS    ??ATA_aesKeyLoad_C_7
+//  396     
+//  397             /* LLR-Ref: 200 */            
+//  398             AESCR |= BM_AESE;
+        SBI     0x1D, 0x07
+//  399             
+//  400             /* LLR-Ref: 210 */
+//  401             ATA_aesGetResultSynch_C();
+          CFI FunCall ATA_aesGetResultSynch_C
+        RCALL   ATA_aesGetResultSynch_C
+//  402             
+//  403             /* LLR-Ref: 200, restore original data! */ 
+//  404             for(i=0;i<16;i++)
+        LDI     R16, 0
+//  405             {
+//  406                 g_sAesComponentData.bDataBuffer[i] = m_bAesLastSubKey[i];
+??ATA_aesKeyLoad_C_8:
+        MOV     R30, R16
+        LDI     R31, 0
+        SUBI    R30, LOW((-(m_bAesLastSubKey) & 0xFFFF))
+        SBCI    R31, (-(m_bAesLastSubKey) & 0xFFFF) >> 8
+        LD      R18, Z
+        MOV     R30, R16
+        LDI     R31, 0
+        SUBI    R30, LOW((-(g_sAesComponentData) & 0xFFFF))
+        SBCI    R31, (-(g_sAesComponentData) & 0xFFFF) >> 8
+        STD     Z+4, R18
+//  407             }                        
+        INC     R16
+        CPI     R16, 16
+        BRCS    ??ATA_aesKeyLoad_C_8
+//  408                 
+//  409             for(i=0;i<16;i++)
+        LDI     R16, 0
+//  410             {
+//  411                 m_bAesLastSubKey[i] = AESKR;
+??ATA_aesKeyLoad_C_9:
+        LDS     R18, _A_AESKR
+        MOV     R30, R16
+        LDI     R31, 0
+        SUBI    R30, LOW((-(m_bAesLastSubKey) & 0xFFFF))
+        SBCI    R31, (-(m_bAesLastSubKey) & 0xFFFF) >> 8
+        ST      Z, R18
+//  412             }
+        INC     R16
+        CPI     R16, 16
+        BRCS    ??ATA_aesKeyLoad_C_9
+//  413             
+//  414             /* Store back subKey */
+//  415             for(i=0;i<16;i++)
+        LDI     R16, 0
+//  416             {
+//  417                 AESKR = m_bAesLastSubKey[i];
+??ATA_aesKeyLoad_C_10:
+        LDI     R31, 0
+        MOV     R30, R16
+        SUBI    R30, LOW((-(m_bAesLastSubKey) & 0xFFFF))
+        SBCI    R31, (-(m_bAesLastSubKey) & 0xFFFF) >> 8
+        LD      R17, Z
+        STS     _A_AESKR, R17
+//  418             }
+        INC     R16
+        CPI     R16, 16
+        BRCS    ??ATA_aesKeyLoad_C_10
+//  419             
+//  420             /* LLR-Ref: 045 */
+//  421             g_sAesComponentData.bStatus &= ~AES_STATUS_BM_ENCR_WITHIN_DECR_FLAG;
+        LDI     R30, LOW(g_sAesComponentData)
+        LDI     R31, (g_sAesComponentData) >> 8
+        LDD     R16, Z+1
+        ANDI    R16, 0xFE
+        STD     Z+1, R16
+        RJMP    ??ATA_aesKeyLoad_C_11
+//  422         }
+//  423     }
+//  424     else
+//  425     {
+//  426         /* LLR-Ref: 020 */
+//  427         ATA_aesTriggerKeyDma_C(tmp);
+??ATA_aesKeyLoad_C_4:
+        MOV     R17, R25
+??ATA_aesKeyLoad_C_6:
+          CFI FunCall ATA_aesTriggerKeyDma_C
+        RCALL   ATA_aesTriggerKeyDma_C
+//  428     }
+//  429 }
+??ATA_aesKeyLoad_C_11:
+        ADIW    R29:R28, 2
+          CFI CFA_Y Y+3
+        LDI     R30, 3
+        JMP     ?EPILOGUE_B3_L09
+          CFI EndBlock cfiBlock5
+        REQUIRE _A_AESCR
+        REQUIRE _A_AESKR
+//  430 
+//  431 /*---------------------------------------------------------------------------*/
+//  432 /** \brief <b>ATA_aesEncryptData_C</b>
+//  433     Encrypts the given data with either the Secret Key 1 or Secret Key 2
+//  434     stored in the chip's EEPROM. The completion of an AES phase is indicated
+//  435     via either polling (or) the AES Crypto Unit Interrupt depending on the
+//  436     user configuration, and its result is made available in the AES State Memory.
+//  437     DMA Burst Read Mode will be used for this function.
+//  438 
+//  439     Variables Usage:
+//  440     \li [in,out]  ::g_sAesComponentData  Global AES component data
+//  441 
+//  442     \internal
+//  443     \li 005: Update HW Trace Unit with function information.\n
+//  444 
+//  445     TBD
+//  446 
+//  447     \Derived{No}
+//  448 
+//  449     \Rationale{N/A}
+//  450 
+//  451     \Traceability{Primus2P-810, Primus2P-811, Primus2P-3195}
+//  452     \endinternal
+//  453 \n
+//  454 */
+//  455 /*---------------------------------------------------------------------------*/
+//  456 VOIDFUNC ATA_aesEncryptData_C (void)
+//  457 {
+//  458     /* LLR-Ref: 005 */
+//  459     ATA_SET_FUNCTION_TRACE_POINT_C(ATA_aesEncryptData_C, g_sAesComponentData.bConfig);
+//  460     
+//  461     /* signalize encryption in progress */
+//  462     g_sAesComponentData.bFlags = AES_FLAGS_RESET;
+//  463     
+//  464     /* Enable clock for AES */
+//  465     PRR0 &= ~BM_PRCU;
+//  466     
+//  467     /* LLR-Ref: 050 */
+//  468     AESCR = g_sAesComponentData.bConfig & AES_CONFIG_BM_CRYPTO_MODULE_RESET;
+//  469     
+//  470     /* LLR-Ref: 070 */
+//  471     ATA_aesKeyLoad_C(g_sAesComponentData.bConfig&(~AES_BM_CRYPTO_DIRECTION) , g_sAesComponentData.bKeyId);
+//  472 
+//  473     /* LLR-Ref: 170 */
+//  474     if( !(g_sAesComponentData.bFlags & AES_FLAGS_BM_ERROR_FLAG) )
+//  475     {
+//  476         /* There is no error in loading the secret key */
+//  477         AESCR = g_sAesComponentData.bConfig & (AES_CONFIG_BM_XOR_STATE_MEMORY | AES_CONFIG_BM_USE_INTERRUPT);
+//  478 
+//  479         /* Pad the source data and copy the padded bytes into state memory,
+//  480            only if encryption was requested by the user. If user requested
+//  481            decryption, state memory contents can be directly encrypted. */
+//  482         if( g_sAesComponentData.bDataLength < 128 )
+//  483         {
+//  484             /* LLR-Ref: 180 */
+//  485             ATA_aesApplyPaddingScheme_C(g_sAesComponentData.bDataLength);
+//  486         }
+//  487         /* LLR-Ref: 190 */
+//  488         ATA_aesLoadData_C(&AESDR, &g_sAesComponentData.bDataBuffer[0]);
+//  489 
+//  490         /* LLR-Ref: 200 */
+//  491         AESCR |= BM_AESE;
+//  492 
+//  493         if( !(g_sAesComponentData.bConfig & AES_CONFIG_BM_USE_INTERRUPT) )
+//  494         {
+//  495             /* LLR-Ref: 210 */
+//  496             ATA_aesGetResultSynch_C();
+//  497             PRR0 |= BM_PRCU;
+//  498         }
+//  499     }
+//  500     else
+//  501     {
+//  502         /* LLR-Ref: 220 */
+//  503         PRR0 |= BM_PRCU;
+//  504     }
+//  505 }
+//  506 
+//  507 
+//  508 /*---------------------------------------------------------------------------*/
+//  509 /** \brief <b>ATA_aesDecryptData_C</b>
+//  510     Decrypts the given data with either the Secret Key 1 or Secret Key 2
+//  511     stored in the chip's EEPROM. The completion of an AES phase is indicated
+//  512     via either polling (or) the AES Crypto Unit Interrupt depending on the
+//  513     user configuration, and its result is made available in the AES State Memory.
+//  514     DMA Burst Read Mode will be used for this function.
+//  515 
+//  516     Variables Usage:
+//  517     \li [in,out]  ::g_sAesComponentData   Global AES component data
+//  518     \li [out]     ::m_bAesLastSubKey      Module global AES last subkey data
+//  519 
+//  520     \internal
+//  521     \li 005: Update HW Trace Unit with function information.\n
+//  522              IF the AES module is currently not in use, THEN
+//  523 
+//  524     TBD
+//  525 
+//  526     \Derived{No}
+//  527 
+//  528     \Rationale{N/A}
+//  529 
+//  530     \Traceability{Primus2P-808,Primus2P-809,Primus2P-1354,Primus2P-1358}
+//  531     \endinternal
+//  532 \n
+//  533 */
+//  534 /*---------------------------------------------------------------------------*/
+//  535 VOIDFUNC ATA_aesDecryptData_C(void)
+//  536 {
+//  537     /* LLR-Ref: 005 */
+//  538     ATA_SET_FUNCTION_TRACE_POINT_C(ATA_aesDecryptData_C, g_sAesComponentData.bConfig);
+//  539 
+//  540     /* signalize encryption in progress */
+//  541     g_sAesComponentData.bFlags = AES_FLAGS_RESET;
+//  542     
+//  543     /* Enable clock for AES */
+//  544     PRR0 &= ~BM_PRCU;
+//  545     
+//  546     /* LLR-Ref: 050 */
+//  547     AESCR = g_sAesComponentData.bConfig & AES_CONFIG_BM_CRYPTO_MODULE_RESET;
+//  548     
+//  549     /* LLR-Ref: 070 */
+//  550 	ATA_aesKeyLoad_C(g_sAesComponentData.bConfig|(AES_BM_CRYPTO_DIRECTION) , g_sAesComponentData.bKeyId);
+//  551 
+//  552     /* LLR-Ref: 170 */
+//  553     if( !(g_sAesComponentData.bFlags & AES_FLAGS_BM_ERROR_FLAG) )
+//  554     {
+//  555         /* There is no error in loading the secret key */
+//  556         AESCR = g_sAesComponentData.bConfig & (AES_CONFIG_BM_XOR_STATE_MEMORY | AES_CONFIG_BM_USE_INTERRUPT);
+//  557 
+//  558         /* LLR-Ref: 190 */
+//  559         ATA_aesLoadData_C(&AESDR, &g_sAesComponentData.bDataBuffer[0]);
+//  560 
+//  561         /* LLR-Ref: 200 */
+//  562         AESCR |= (BM_AESE|BM_AESD);
+//  563 
+//  564         if( !(g_sAesComponentData.bConfig & AES_CONFIG_BM_USE_INTERRUPT) )
+//  565         {
+//  566             /* LLR-Ref: 210 */
+//  567             ATA_aesGetResultSynch_C();
+//  568             
+//  569             PRR0 |= BM_PRCU;
+//  570         }
+//  571     }
+//  572     else
+//  573     {
+//  574         /* LLR-Ref: 220 */
+//  575         PRR0 |= BM_PRCU;
+//  576     }
+//  577 }
+//  578 
+//  579 
+//  580 /*---------------------------------------------------------------------------*/
+//  581 /** \brief <b>ATA_aesGetResultSynch_C</b>
+//  582     gets the result of encryption / decryption from the state buffer.
+//  583 
+//  584     Variables Usage:
+//  585     \li [out] ::g_sAesComponentData   Global AES component data
+//  586     \li [out] ::g_sDebug              Global Debug component data
+//  587 
+//  588     \internal
+//  589     \li 010: In the synchronous mode, the program waits for the completion of the
+//  590              running encryption/decryption, which is indicated by setting of
+//  591              the AESRF bit in register AESSR (or) the occurence of an error which is
+//  592              indicated by setting of the AESERF bit in register AESSR.
+//  593 
+//  594     \li 035: Set bit 7 of the element bFlags of AES component data to 1 and the debug
+//  595              error code byte to DEBUG_ERROR_CODE_AES_RUN_ERROR.
+//  596 
+//  597     \li 040: If the AESRF is set, indicate that the encrypted/decrypted result is
+//  598              available by setting bit 1 in the status byte of the component data.
+//  599              Copy the content of AESDR into the data buffer (code optimized, take
+//  600              ~20us longer than 16 individual steps).\n
+//  601              IF the application requested an encryption and the encryption is successful
+//  602               OR
+//  603              the application requested a decryption AND result of the overall
+//  604              decryption is successful
+//  605     \li 060:   Set bit 1 in the status byte of AES component data to indicate that
+//  606                encryption/decryption is successfully completed.
+//  607                (This flag should not be set if the encryption done within a
+//  608                 decryption is error-free, since it is only an intermediary result)\n
+//  609              ENDIF
+//  610 
+//  611     \Derived{Yes}
+//  612 
+//  613     \Rationale{Convenience function to retrieve the encrypted/decrypted data
+//  614                from the AES block}
+//  615 
+//  616     \Traceability{N/A}
+//  617     \endinternal
+//  618 \n
+//  619 */
+//  620 /*---------------------------------------------------------------------------*/
+//  621 static VOIDFUNC ATA_aesGetResultSynch_C(void)
+//  622 {
+//  623     /* LLR-Ref: 010 */
+//  624     while( (AESSR & (BM_AESERF|BM_AESRF)) == 0U )
+//  625     {}
+//  626 
+//  627     if( AESSR & BM_AESERF )
+//  628     {
+//  629         /* LLR-Ref: 035 */
+//  630         g_sAesComponentData.bFlags |= AES_FLAGS_BM_ERROR_FLAG;
+//  631         g_sDebug.bErrorCode = DEBUG_ERROR_CODE_AES_RUN_ERROR;
+//  632     }
+//  633     else
+//  634     {
+//  635         /* Since control has exited the while loop, the AESRF is set this point*/
+//  636         /* LLR-Ref: 040 */
+//  637         ATA_aesGetData_C(&g_sAesComponentData.bDataBuffer[0], &AESDR);
+//  638         
+//  639 
+//  640         /* LLR-Ref: 060 */
+//  641         if(!(g_sAesComponentData.bStatus & AES_STATUS_BM_ENCR_WITHIN_DECR_FLAG)){
+//  642             g_sAesComponentData.bFlags |= AES_FLAGS_BM_READY_FLAG;
+//  643         }
+//  644     }
+//  645 
+//  646     /* clear flags */
+//  647     AESSR = BM_AESERF|BM_AESRF;
+//  648 }
+//  649 
+//  650 
+//  651 /*---------------------------------------------------------------------------*/
+//  652 /** \brief <b>ATA_aesLoadData_C</b>
+//  653     This function loads a 16 source byte buffer to the destination register.
+//  654 
+//  655     \param[out] pDestReg    Pointer to destination register
+//  656     \param[in]  pSourceBuf  Pointer to source data buffer
+//  657 
+//  658     \internal
+//  659     \li 010: Copy exactly 16 bytes from the given source buffer to the destination
+//  660              register (which is realized as a port, i.e. internally the register
+//  661              address represents multiple values).
+//  662 
+//  663     \Derived{Yes}
+//  664 
+//  665     \Rationale{Convenience function to easily copy data back and forth
+//  666                between registers, realized as ports and data buffers}
+//  667 
+//  668     \Traceability{N/A}
+//  669     \endinternal
+//  670 \n
+//  671 */
+//  672 /*---------------------------------------------------------------------------*/
+
+        RSEG CODE:CODE:ROOT(1)
+//  673 VOIDFUNC ATA_aesLoadData_C(unsigned char volatile *pDestReg, uint8_t *pSourceBuf)
+ATA_aesLoadData_C:
+          CFI Block cfiBlock6 Using cfiCommon0
+          CFI Function ATA_aesLoadData_C
+          CFI NoCalls
+//  674 {
+//  675     /* LLR-Ref: 010 */
+//  676     for(uint8_t i = 0; i < 16; i++)
+        LDI     R20, 0
+//  677     {
+//  678         *pDestReg = pSourceBuf[i];
+??ATA_aesLoadData_C_0:
+        LDI     R21, 0
+        MOVW    R31:R30, R19:R18
+        ADD     R30, R20
+        ADC     R31, R21
+        LD      R21, Z
+        MOVW    R31:R30, R17:R16
+        ST      Z, R21
+//  679     }
+        INC     R20
+        CPI     R20, 16
+        BRCS    ??ATA_aesLoadData_C_0
+//  680 }
+        RET
+          CFI EndBlock cfiBlock6
+
+        RSEG CODE:CODE:ROOT(1)
+ATA_aesApplyPaddingScheme_C:
+          CFI Block cfiBlock7 Using cfiCommon0
+          CFI Function ATA_aesApplyPaddingScheme_C
+        MOV     R18, R16
+        IN      R19, 0x3F
+        CLI
+        LDS     R16, (g_sAesComponentData + 2)
+        STS     _A_TRCDR, R16
+        LDI     R16, LOW(ATA_aesApplyPaddingScheme_C/2)
+        STS     _A_TRCIDL, R16
+        LDI     R16, (ATA_aesApplyPaddingScheme_C/2) >> 8
+        STS     _A_TRCIDH, R16
+        OUT     0x3F, R19
+        MOV     R22, R18
+        LSR     R22
+        LSR     R22
+        LSR     R22
+        ANDI    R18, 0x07
+        BREQ    ??ATA_aesApplyPaddingScheme_C_0
+        LDS     R16, (g_sAesComponentData + 2)
+        LDI     R20, 8
+        SUB     R20, R18
+        SBRS    R16, 1
+        RJMP    ??ATA_aesApplyPaddingScheme_C_1
+        LDI     R16, 255
+        LDI     R17, 0
+          CFI FunCall ?US_SHR_L02
+        CALL    ?US_SHR_L02
+        RJMP    ??ATA_aesApplyPaddingScheme_C_2
+??ATA_aesApplyPaddingScheme_C_1:
+        LDI     R16, 255
+        LDI     R17, 0
+          CFI FunCall ?S_SHL_L02
+        CALL    ?S_SHL_L02
+??ATA_aesApplyPaddingScheme_C_2:
+        LDI     R31, 0
+        MOV     R30, R22
+        SUBI    R30, LOW((-(g_sAesComponentData) & 0xFFFF))
+        SBCI    R31, (-(g_sAesComponentData) & 0xFFFF) >> 8
+        LDD     R17, Z+4
+        AND     R17, R16
+        STD     Z+4, R17
+        INC     R22
+??ATA_aesApplyPaddingScheme_C_0:
+        CPI     R22, 16
+        BRCC    ??ATA_aesApplyPaddingScheme_C_3
+        LDI     R18, 16
+        SUB     R18, R22
+        LDI     R16, LOW((g_sAesComponentData + 4))
+        LDI     R17, HIGH((g_sAesComponentData + 4))
+        LDI     R23, 0
+        ADD     R16, R22
+        ADC     R17, R23
+          CFI FunCall ATA_globalsInitSramSpace_C
+        CALL    ATA_globalsInitSramSpace_C
+??ATA_aesApplyPaddingScheme_C_3:
+        RET
+          CFI EndBlock cfiBlock7
+        REQUIRE _A_SREG
+        REQUIRE _A_TRCDR
+        REQUIRE _A_TRCIDL
+        REQUIRE _A_TRCIDH
+
+        RSEG CODE:CODE:ROOT(1)
+ATA_aesEncryptData_C:
+          CFI Block cfiBlock8 Using cfiCommon0
+          CFI Function ATA_aesEncryptData_C
+        IN      R18, 0x3F
+        CLI
+        LDS     R16, (g_sAesComponentData + 2)
+        STS     _A_TRCDR, R16
+        LDI     R16, LOW(ATA_aesEncryptData_C/2)
+        STS     _A_TRCIDL, R16
+        LDI     R16, (ATA_aesEncryptData_C/2) >> 8
+        STS     _A_TRCIDH, R16
+        OUT     0x3F, R18
+        LDI     R16, 0
+        STS     g_sAesComponentData, R16
+        CBI     0x1A, 0x06
+        LDS     R16, (g_sAesComponentData + 2)
+        ANDI    R16, 0x20
+        OUT     0x1D, R16
+        LDS     R17, (g_sAesComponentData + 3)
+        LDS     R16, (g_sAesComponentData + 2)
+        ANDI    R16, 0xF7
+          CFI FunCall ATA_aesKeyLoad_C
+        RCALL   ATA_aesKeyLoad_C
+        LDS     R16, g_sAesComponentData
+        SBRC    R16, 7
+        RJMP    ??ATA_aesEncryptData_C_0
+        LDS     R16, (g_sAesComponentData + 2)
+        ANDI    R16, 0x14
+        OUT     0x1D, R16
+        LDS     R16, (g_sAesComponentData + 20)
+        CPI     R16, 128
+        BRCC    ??ATA_aesEncryptData_C_1
+          CFI FunCall ATA_aesApplyPaddingScheme_C
+        RCALL   ATA_aesApplyPaddingScheme_C
+??ATA_aesEncryptData_C_1:
+        LDI     R18, LOW((g_sAesComponentData + 4))
+        LDI     R19, HIGH((g_sAesComponentData + 4))
+        LDI     R16, LOW(385)
+        LDI     R17, (385) >> 8
+          CFI FunCall ATA_aesLoadData_C
+        RCALL   ATA_aesLoadData_C
+        SBI     0x1D, 0x07
+        LDS     R16, (g_sAesComponentData + 2)
+        SBRC    R16, 2
+        RJMP    ??ATA_aesEncryptData_C_2
+        RJMP    ?Subroutine0
+??ATA_aesEncryptData_C_0:
+        SBI     0x1A, 0x06
+??ATA_aesEncryptData_C_2:
+        RET
+          CFI EndBlock cfiBlock8
+        REQUIRE _A_SREG
+        REQUIRE _A_TRCDR
+        REQUIRE _A_TRCIDL
+        REQUIRE _A_TRCIDH
+        REQUIRE _A_PRR0
+        REQUIRE _A_AESCR
+        REQUIRE _A_AESDR
+
+        RSEG CODE:CODE:NOROOT(1)
+?Subroutine0:
+          CFI Block cfiBlock9 Using cfiCommon0
+          CFI NoFunction
+          CFI FunCall ATA_aesEncryptData_C ATA_aesGetResultSynch_C
+          CFI FunCall ATA_aesDecryptData_C ATA_aesGetResultSynch_C
+        RCALL   ATA_aesGetResultSynch_C
+        SBI     0x1A, 0x06
+        RET
+          CFI EndBlock cfiBlock9
+
+        RSEG CODE:CODE:ROOT(1)
+ATA_aesDecryptData_C:
+          CFI Block cfiBlock10 Using cfiCommon0
+          CFI Function ATA_aesDecryptData_C
+        IN      R18, 0x3F
+        CLI
+        LDS     R16, (g_sAesComponentData + 2)
+        STS     _A_TRCDR, R16
+        LDI     R16, LOW(ATA_aesDecryptData_C/2)
+        STS     _A_TRCIDL, R16
+        LDI     R16, (ATA_aesDecryptData_C/2) >> 8
+        STS     _A_TRCIDH, R16
+        OUT     0x3F, R18
+        LDI     R16, 0
+        STS     g_sAesComponentData, R16
+        CBI     0x1A, 0x06
+        LDS     R16, (g_sAesComponentData + 2)
+        ANDI    R16, 0x20
+        OUT     0x1D, R16
+        LDS     R17, (g_sAesComponentData + 3)
+        LDS     R16, (g_sAesComponentData + 2)
+        ORI     R16, 0x08
+          CFI FunCall ATA_aesKeyLoad_C
+        RCALL   ATA_aesKeyLoad_C
+        LDS     R16, g_sAesComponentData
+        SBRC    R16, 7
+        RJMP    ??ATA_aesDecryptData_C_0
+        LDS     R16, (g_sAesComponentData + 2)
+        ANDI    R16, 0x14
+        OUT     0x1D, R16
+        LDI     R18, LOW((g_sAesComponentData + 4))
+        LDI     R19, HIGH((g_sAesComponentData + 4))
+        LDI     R16, LOW(385)
+        LDI     R17, (385) >> 8
+          CFI FunCall ATA_aesLoadData_C
+        RCALL   ATA_aesLoadData_C
+        IN      R16, 0x1D
+        ORI     R16, 0x88
+        OUT     0x1D, R16
+        LDS     R16, (g_sAesComponentData + 2)
+        SBRC    R16, 2
+        RJMP    ??ATA_aesDecryptData_C_1
+        RJMP    ?Subroutine0
+??ATA_aesDecryptData_C_0:
+        SBI     0x1A, 0x06
+??ATA_aesDecryptData_C_1:
+        RET
+          CFI EndBlock cfiBlock10
+        REQUIRE _A_SREG
+        REQUIRE _A_TRCDR
+        REQUIRE _A_TRCIDL
+        REQUIRE _A_TRCIDH
+        REQUIRE _A_PRR0
+        REQUIRE _A_AESCR
+        REQUIRE _A_AESDR
+//  681 
+//  682 
+//  683 /*---------------------------------------------------------------------------*/
+//  684 /** \brief <b>ATA_aesGetData_C</b>
+//  685     This function loads 16 bytes from source register to the destination bufffer.
+//  686 
+//  687     \param[out] pDestBuf    Pointer to destination buffer
+//  688     \param[in]  pSourceReg  Pointer to source register
+//  689 
+//  690     \image html ATA_aesGetData_C.png
+//  691 
+//  692     \internal
+//  693     \li 010: Copy exactly 16 bytes from the given source register (which is realized
+//  694              as a port, i.e. internally the register address represents multiple
+//  695              values) to the destination buffer.
+//  696 
+//  697     \Derived{Yes}
+//  698 
+//  699     \Rationale{Convenience function to easily copy data back and forth
+//  700                between registers, realized as ports and data buffers}
+//  701 
+//  702     \Traceability{N/A}
+//  703     \endinternal
+//  704 \n
+//  705 */
+//  706 /*---------------------------------------------------------------------------*/
+//  707 static VOIDFUNC ATA_aesGetData_C(uint8_t *pDestBuf, unsigned char volatile *pSourceReg)
+//  708 {
+//  709     /* LLR-Ref: 010 */
+//  710     for(uint8_t i = 0; i < 16; i++)
+//  711     {
+//  712         pDestBuf[i] = *pSourceReg;
+//  713     }
+//  714 }
+//  715 
+//  716 
+//  717 /*---------------------------------------------------------------------------*/
+//  718 /** \brief <b>ATA_aesApplyPaddingScheme_C</b>
+//  719     pads the raw data with a 0 immediately after the last data
+//  720     bit, and 0s for the remainder of the 128 bits. Depending on the user
+//  721     configuration, the incomplete byte of the source data must be padded
+//  722     LSB aligned (or) MSB aligned. If the source data length is a multiple
+//  723     of 8, the LSB- (or) MSB-aligned padding must be carried out in the next
+//  724     byte of the source data.
+//  725     NOTE: The numbering of all bit and byte positions starts from 0.
+//  726 
+//  727     \param[in] bDataSize    Size in bits of the source data
+//  728                             to be encrypted (or) decrypted
+//  729     
+//  730     Variables Usage:
+//  731     \li [in,out]  ::g_sAesComponentData   Global AES component data
+//  732 
+//  733     \image html ATA_aesApplyPaddingScheme_C.png
+//  734 
+//  735     \internal
+//  736     \li 010: Determine the number of whole bytes in the raw (source) data. The
+//  737              padding with '0' will be entered into the data at this byte position.
+//  738 
+//  739     \li 020: Determine the bit position at which '0' is to be padded : this is the
+//  740              number of incomplete bits in the last byte of the source data.
+//  741 
+//  742     \li 030: IF the number of source data bits is not a multiple of 8, do the
+//  743               padding depending on the user configuration how data are aligned in
+//  744               the incomplete byte.
+//  745 
+//  746     \li 040: Increase the index to the next padding byte.
+//  747 
+//  748     \li 050: Do the padding of the remaining bytes with '0'.
+//  749 
+//  750     \Derived{No}
+//  751 
+//  752     \Rationale{N/A}
+//  753 
+//  754     \Traceability{Primus2P-1355,Primus2P-1357}
+//  755     \endinternal
+//  756 \n
+//  757 */
+//  758 /*---------------------------------------------------------------------------*/
+//  759 VOIDFUNC ATA_aesApplyPaddingScheme_C(uint8_t bDataSize)
+//  760 {
+//  761     uint8_t bNumDataBytes;    /* number of complete bytes in the raw data */
+//  762     uint8_t bPadPos;          /* Bit position within the incomplete byte where
+//  763                               the first padding bit will be written */
+//  764 
+//  765     /* Update HW Trace Unit with function information */
+//  766     ATA_SET_FUNCTION_TRACE_POINT_C(ATA_aesApplyPaddingScheme_C, g_sAesComponentData.bConfig);
+//  767 
+//  768     /* LLR-Ref: 010 */
+//  769     bNumDataBytes = (bDataSize >> BIT_3);
+//  770 
+//  771     /* LLR-Ref: 020 */
+//  772     bPadPos = (bDataSize % 8);
+//  773 
+//  774     /* LLR-Ref: 030 */
+//  775     if(bPadPos != BIT_0)
+//  776     {
+//  777         if(g_sAesComponentData.bConfig & AES_STATUS_BM_PAD_DIRECTION_LSB)
+//  778         { /* xxxx 1011 -> 0000 1011
+//  779                 ^            ^      */
+//  780             g_sAesComponentData.bDataBuffer[bNumDataBytes] &= (MAX_BYTE_VAL >> (8U - bPadPos));
+//  781         }
+//  782         else
+//  783         { /* 1011 xxxx -> 1011 0000
+//  784                   ^            ^    */
+//  785             g_sAesComponentData.bDataBuffer[bNumDataBytes] &= (MAX_BYTE_VAL << (8U - bPadPos));
+//  786         }
+//  787 
+//  788         /* LLR-Ref: 040 */
+//  789         bNumDataBytes++;
+//  790     }
+//  791 
+//  792     /* LLR-Ref: 050 */
+//  793     if(bNumDataBytes < EEP_SECRET_KEY_LENGTH)
+//  794     {
+//  795         ATA_globalsInitSramSpace_C(&g_sAesComponentData.bDataBuffer[bNumDataBytes], (EEP_SECRET_KEY_LENGTH - bNumDataBytes));
+//  796     }
+//  797 }
+//  798 
+//  799 
+//  800 /*---------------------------------------------------------------------------*/
+//  801 /** \brief <b>ATA_aesComplete_ISR_C</b>
+//  802     handles the AES interrupt triggered in case an encryption, respectively
+//  803     decryption phase has been completed.
+//  804 
+//  805     Variables Usage:
+//  806     \li [in,out]  ::g_sAesComponentData   Global AES component data
+//  807     \li [out]     ::g_sDebug              Global Debug component data
+//  808 
+//  809     \image html ATA_aesComplete_ISR_C.png
+//  810 
+//  811     \internal
+//  812              IF the AESERF bit in AEESR register is set to 1, THEN
+//  813     \li 010: A run error occured during the last AES operation. Update bits 4:4 of
+//  814              the error status byte with AES_RUN_ERROR.
+//  815 
+//  816     \li 020: Set ::g_sDebug .bFlags[7] to DEBUG_ERROR_CODE_AES_RUN_ERROR.\n
+//  817            ELSE
+//  818     \li 040: The AES operation has been completed successfully. Call function
+//  819              ::ATA_aesGetData_C to copy the AESDR
+//  820              the elements of the data buffer of AES component data (code
+//  821              optimized, take ~20us longer than 16 individual steps).
+//  822 
+//  823     \li 050 Set ::g_sAesComponentData .bFlags[6] to denote that an encryption/decr.
+//  824              user request is completed successfully.\ 
+//  825            ENDIF
+//  826 
+//  827     \li 060: Clear the AES Ready and Error bit in AESSR register by writing a
+//  828               logical 1 to it.
+//  829 
+//  830     \li 060: Disable clock input for AES block.
+//  831 
+//  832     \Derived{No}
+//  833 
+//  834     \Rationale{N/A}
+//  835 
+//  836     \Traceability{Primus2P-809, Primus2P-811}
+//  837     \endinternal
+//  838 \n
+//  839 */
+//  840 /*---------------------------------------------------------------------------*/
+//  841 //lint -esym(765, ATA_aesComplete_ISR_C) FlSc (26.05.2014)
+//  842 /* disable lint note 765 - external 'ATA_aesComplete_ISR_C' could be made static
+//  843  * interrupt service routine shall be accessed from outside via flash software 
+//  844  */
+//  845 //lint -esym(714, ATA_aesComplete_ISR_C) FlSc (26.05.2014)
+//  846 /* disable lint note 765 - Symbol 'ATA_aesComplete_ISR_C' not referenced
+//  847  * interrupt service routines are not directly referenced but are called
+//  848  * by the HW interrupt handler
+//  849  */
+//  850 /* #pragma vector=AES_vect*/
+//  851 #pragma diag_suppress=Ta006
+
+        RSEG CODE:CODE:ROOT(1)
+        CALL_GRAPH_ROOT ATA_aesComplete_ISR_C, "interrupt"
+//  852 __interrupt VOIDFUNC ATA_aesComplete_ISR_C(void)
+ATA_aesComplete_ISR_C:
+          CFI Block cfiBlock11 Using cfiCommon1
+          CFI Function ATA_aesComplete_ISR_C
+//  853 {
+        ST      -Y, R31
+          CFI R31 Frame(CFA_Y, -1)
+          CFI CFA_Y Y+1
+        ST      -Y, R30
+          CFI R30 Frame(CFA_Y, -2)
+          CFI CFA_Y Y+2
+        ST      -Y, R23
+          CFI R23 Frame(CFA_Y, -3)
+          CFI CFA_Y Y+3
+        ST      -Y, R22
+          CFI R22 Frame(CFA_Y, -4)
+          CFI CFA_Y Y+4
+        ST      -Y, R21
+          CFI R21 Frame(CFA_Y, -5)
+          CFI CFA_Y Y+5
+        ST      -Y, R20
+          CFI R20 Frame(CFA_Y, -6)
+          CFI CFA_Y Y+6
+        ST      -Y, R19
+          CFI R19 Frame(CFA_Y, -7)
+          CFI CFA_Y Y+7
+        ST      -Y, R18
+          CFI R18 Frame(CFA_Y, -8)
+          CFI CFA_Y Y+8
+        ST      -Y, R17
+          CFI R17 Frame(CFA_Y, -9)
+          CFI CFA_Y Y+9
+        ST      -Y, R16
+          CFI R16 Frame(CFA_Y, -10)
+          CFI CFA_Y Y+10
+        IN      R23, 0x3F
+//  854     /* Update HW Trace Unit with function information */
+//  855     ATA_SET_FUNCTION_TRACE_POINT_ISR_C(ATA_aesComplete_ISR_C, g_sAesComponentData.bConfig);
+        LDS     R16, (g_sAesComponentData + 2)
+        STS     _A_TRCDR, R16
+        LDI     R16, LOW(ATA_aesComplete_ISR_C/2)
+        STS     _A_TRCIDL, R16
+        LDI     R16, (ATA_aesComplete_ISR_C/2) >> 8
+        STS     _A_TRCIDH, R16
+//  856 
+//  857     if(AESSR & BM_AESERF)
+        SBIS    0x1E, 0x07
+        RJMP    ??ATA_aesComplete_ISR_C_0
+//  858     {
+//  859         /* LLR-Ref: 020 */
+//  860         g_sAesComponentData.bFlags |= AES_FLAGS_BM_ERROR_FLAG;
+        LDI     R30, LOW(g_sAesComponentData)
+        LDI     R31, (g_sAesComponentData) >> 8
+        LD      R16, Z
+        ORI     R16, 0x80
+        ST      Z, R16
+//  861         g_sDebug.bErrorCode = DEBUG_ERROR_CODE_AES_RUN_ERROR;
+        LDI     R16, 52
+        STS     g_sDebug, R16
+        RJMP    ??ATA_aesComplete_ISR_C_1
+//  862     }
+//  863     else
+//  864     {
+//  865         /* LLR-Ref: 040 */
+//  866         ATA_aesGetData_C(&g_sAesComponentData.bDataBuffer[0], &AESDR);
+??ATA_aesComplete_ISR_C_0:
+        LDI     R18, LOW(385)
+        LDI     R19, (385) >> 8
+        LDI     R16, LOW((g_sAesComponentData + 4))
+        LDI     R17, HIGH((g_sAesComponentData + 4))
+          CFI FunCall ATA_aesGetData_C
+        RCALL   ATA_aesGetData_C
+//  867 
+//  868         /* LLR-Ref: 050 */
+//  869         g_sAesComponentData.bFlags |= AES_FLAGS_BM_READY_FLAG;
+        LDI     R30, LOW(g_sAesComponentData)
+        LDI     R31, (g_sAesComponentData) >> 8
+        LD      R16, Z
+        ORI     R16, 0x40
+        ST      Z, R16
+//  870     }
+//  871 
+//  872     /* LLR-Ref: 060 */
+//  873     AESSR = BM_AESERF|BM_AESRF;
+??ATA_aesComplete_ISR_C_1:
+        LDI     R16, 129
+        OUT     0x1E, R16
+//  874 
+//  875     /* LLR-Ref: 070 */
+//  876     PRR0 |= BM_PRCU;
+        SBI     0x1A, 0x06
+//  877 }
+        OUT     0x3F, R23
+        LD      R16, Y+
+          CFI R16 SameValue
+          CFI CFA_Y Y+9
+        LD      R17, Y+
+          CFI R17 SameValue
+          CFI CFA_Y Y+8
+        LD      R18, Y+
+          CFI R18 SameValue
+          CFI CFA_Y Y+7
+        LD      R19, Y+
+          CFI R19 SameValue
+          CFI CFA_Y Y+6
+        LD      R20, Y+
+          CFI R20 SameValue
+          CFI CFA_Y Y+5
+        LD      R21, Y+
+          CFI R21 SameValue
+          CFI CFA_Y Y+4
+        LD      R22, Y+
+          CFI R22 SameValue
+          CFI CFA_Y Y+3
+        LD      R23, Y+
+          CFI R23 SameValue
+          CFI CFA_Y Y+2
+        LD      R30, Y+
+          CFI R30 SameValue
+          CFI CFA_Y Y+1
+        LD      R31, Y+
+          CFI R31 SameValue
+          CFI CFA_Y Y+0
+        RETI
+          CFI EndBlock cfiBlock11
+        REQUIRE _A_TRCDR
+        REQUIRE _A_TRCIDL
+        REQUIRE _A_TRCIDH
+        REQUIRE _A_AESSR
+        REQUIRE _A_AESDR
+        REQUIRE _A_PRR0
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01cH
+__?EECR:
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01dH
+__?EEDR:
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01eH
+__?EEARL:
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01fH
+__?EEARH:
+
+        END
+// 
+//  37 bytes in segment .sramAesComponentDataSection
+//  12 bytes in segment ABSOLUTE
+// 944 bytes in segment CODE
+// 
+// 944 bytes of CODE memory
+//  37 bytes of DATA memory (+ 12 bytes shared)
+//
+//Errors: none
+//Warnings: none

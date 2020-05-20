@@ -1,0 +1,149 @@
+/* *ASM************************************************************************
+  Use of this software is subject to Atmel's Software License Agreement.
+-------------------------------------------------------------------------------
+  $URL: http://svnservulm.corp.atmel.com/svn/CDB/Apps/SW_Lib/Car_Access/CARS_GEN2/ATAB5702A/Branches/P2P22_TXMODE_NXP/firmware/timer2/src/timer2_asm.s90 $
+  $LastChangedRevision: 328482 $
+  $LastChangedDate: 2015-07-22 13:17:23 -0600 (Wed, 22 Jul 2015) $
+  $LastChangedBy: grueter $
+-------------------------------------------------------------------------------
+  Project:      ATA5700
+  Target MCU:   ATA5700
+  Compiler:     IAR Assembler for AVR 6.3.18.2236
+-------------------------------------------------------------------------------
+
+******************************************************************************
+* Copyright 2011, Atmel Automotive GmbH                                       *
+*                                                                             *
+* This software is owned by the Atmel Automotive GmbH                         *
+* and is protected by and subject to worldwide patent protection.             *
+* Atmel hereby grants to licensee a personal,                                 *
+* non-exclusive, non-transferable license to copy, use, modify, create        *
+* derivative works of, and compile the Atmel Source Code and derivative       *
+* works for the sole purpose of creating custom software in support of        *
+* licensee product to be used only in conjunction with a Atmel integrated     *
+* circuit as specified in the applicable agreement. Any reproduction,         *
+* modification, translation, compilation, or representation of this           *
+* software except as specified above is prohibited without the express        *
+* written permission of Atmel.                                                *
+*                                                                             *
+* Disclaimer: ATMEL MAKES NO WARRANTY OF ANY KIND,EXPRESS OR IMPLIED,         *
+* WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED    *
+* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.         *
+* Atmel reserves the right to make changes without further notice to the      *
+* materials described herein. Atmel does not assume any liability arising     *
+* out of the application or use of any product or circuit described herein.   *
+* Atmel does not authorize its products for use as critical components in     *
+* life-support systems where a malfunction or failure may reasonably be       *
+* expected to result in significant injury to the user. The inclusion of      *
+* Atmel products in a life-support systems application implies that the       *
+* manufacturer assumes all risk of such use and in doing so indemnifies       *
+* Atmel against all charges.                                                  *
+*                                                                             *
+* Use may be limited by and subject to the applicable Atmel software          *
+* license agreement.                                                          *
+*******************************************************************************/
+/* \file timer2_asm.s90
+*/
+    NAME timer2_asm
+
+    PUBLIC ATA_timer2Close_ASM
+    PUBLIC ATA_timer2ResetRun_ASM
+
+    EXTERN g_sTimer2
+/* ---------------------------------------------------------------------------*/
+/*   INCLUDES                                                                 */
+/* ---------------------------------------------------------------------------*/
+#include "regs.inc"
+#include "globals.h"
+
+/* ---------------------------------------------------------------------------*/
+/*   DEFINES                                                                  */
+/* ---------------------------------------------------------------------------*/
+
+/* ---------------------------------------------------------------------------*/
+/*   Modul Globals                                                            */
+/* ---------------------------------------------------------------------------*/
+/* ---------------------------------------------------------------------------*/
+/*   IMPLEMENTATION                                                           */
+/* ---------------------------------------------------------------------------*/
+/* ---------------------------------------------------------------------------*/
+/** \brief <b>ATA_timer2Close_ASM</b>
+    closes timer2 and removes power from timer2 block.
+
+\param[out] ::g_sTimer2 is global Timer 2 component
+
+\return     N/A
+
+\StackUsageInBytes{XXX}
+
+\image html ATA_timer2Close_ASM.png
+
+\internal
+         Note:
+         Power down of Timer 2 via register PRR1 needs to occur after any 
+         Timer 2 register is accessed in order for the intended action to 
+         take effect.
+
+\li 010: Disable Timer 2 by setting all bits of register T2CR to 0,
+         except bit T2RES which is set to 1 to reset the prescaler and counter
+         value.
+
+\li 020: Unlock Timer 2 by setting the status indication of the global variable
+         ::g_sTimer2 to 0.
+
+\li 030: Power down Timer 2 by setting bit PRT2 in register PRR1 to 1 to 
+         enable the power reduction feature for Timer 2.
+
+\Derived{No}
+
+\Rationale{N/A}
+
+\Traceability{Primus2P-884}
+\endinternal
+*/
+/* ---------------------------------------------------------------------------*/
+RSEG CODE:CODE:ROOT(1)
+ATA_timer2Close_ASM:
+    PUSH    R31
+    ; LLR-Ref: 010
+    LDI     R31 , BM_T2RES
+    OUT     T2CR , R31
+    ; LLR-Ref: 020
+    CLR     R31
+    STS     g_sTimer2 + TMR2STATE , R31
+    ; LLR-Ref: 030
+    SBI     PRR1 , PRT2
+    POP     R31
+    RET
+
+/* ---------------------------------------------------------------------------*/
+/** \brief <b>ATA_timer2ResetRun_ASM</b>
+    resets the prescaler and count register of Timer 2 and sets Timer 2 to run
+    mode.
+
+\param      N/A
+
+\return     N/A
+
+\StackUsageInBytes{XXX}
+
+\image html ATA_timer2ResetRun_ASM.png
+
+\internal
+\Derived{No}
+
+\Rationale{This function provides a dedicated reset and run functionality for
+           Timer 2}
+
+\Traceability   N/A
+\endinternal
+\n
+*/
+/* ---------------------------------------------------------------------------*/
+RSEG CODE:CODE:ROOT(1)
+ATA_timer2ResetRun_ASM:
+    SBI     T2CR , T2RES                 ; reset timer2
+    SBI     T2CR , T2ENA                 ; re-enable timer2
+    RET
+
+    END

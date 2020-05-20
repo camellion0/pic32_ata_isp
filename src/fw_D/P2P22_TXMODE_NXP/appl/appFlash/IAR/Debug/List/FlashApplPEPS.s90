@@ -1,0 +1,3420 @@
+///////////////////////////////////////////////////////////////////////////////
+//
+// IAR C/C++ Compiler V7.10.1.1197 for Atmel AVR          13/May/2020  17:03:20
+// Copyright 1996-2017 IAR Systems AB.
+// Network license: dvriar01.mchp-main.com (STD)
+//
+//    Source file  =  
+//        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\src\FlashApplPEPS.c
+//    Command line =  
+//        -f C:\Users\C41045\AppData\Local\Temp\EWCF7.tmp
+//        (C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\src\FlashApplPEPS.c
+//        -v3 --enhanced_core -ms -o
+//        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\Obj
+//        -lCN
+//        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\List
+//        -lA
+//        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\List
+//        --no_cse --no_inline --no_code_motion --no_cross_call --no_clustering
+//        --no_tbaa --debug --64k_flash -DENABLE_BIT_DEFINITIONS -e
+//        --eeprom_size 2304 --clib -Ohz)
+//    Locale       =  English_USA.1252
+//    List file    =  
+//        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\List\FlashApplPEPS.s90
+//
+///////////////////////////////////////////////////////////////////////////////
+
+        NAME FlashApplPEPS
+
+        RTMODEL "__64bit_doubles", "disabled"
+        RTMODEL "__SystemLibrary", "CLib"
+        RTMODEL "__cpu", "3"
+        RTMODEL "__enhanced_core", "enabled"
+        RTMODEL "__has_elpm", "false"
+        RTMODEL "__memory_model", "2"
+        RTMODEL "__rt_version", "3"
+        RTMODEL "__vtable_memory", "__nearflash"
+
+        RSEG CSTACK:DATA:NOROOT(0)
+        RSEG RSTACK:DATA:NOROOT(0)
+
+        EXTERN ?EPILOGUE_B5_L09
+        EXTERN ?L_EC_MUL_L03
+        EXTERN ?PROLOGUE5_L09
+        EXTERN ?Register_R4_is_cg_reg
+        EXTERN ?S_EC_MUL_L02
+        EXTERN ?UL_DIVMOD_L03
+        EXTERN ?need_segment_init
+
+        PUBWEAK `?<Segment init: NEAR_I>`
+        PUBWEAK `?<Segment init: NEAR_Z>`
+        PUBLIC ATA_CheckLfData_flash_C
+        PUBLIC ATA_PerformLfRSSI_flash_C
+        PUBLIC ATA_TuneLfAllChannels
+        PUBLIC ATA_lFRssiGetResult_flash_C
+        PUBLIC ATA_lfRxEnableWakeup_flash_C
+        PUBLIC CRCdisable
+        PUBLIC CRCenable
+        PUBLIC CalcCoilPhaseSig
+        PUBLIC Init_LfRssi_flash_C
+        PUBLIC SW_ID
+        PUBLIC Stopbyteenable
+        PUBWEAK _A_AESCR
+        PUBWEAK _A_AESDR
+        PUBWEAK _A_AESSR
+        PUBWEAK _A_LDFC
+        PUBWEAK _A_LDFCKSW
+        PUBWEAK _A_LDFD
+        PUBWEAK _A_LDFFL
+        PUBWEAK _A_LFCR0
+        PUBWEAK _A_LFCR1
+        PUBWEAK _A_LFCR2
+        PUBWEAK _A_LFCR3
+        PUBWEAK _A_LFQC1
+        PUBWEAK _A_LFQC2
+        PUBWEAK _A_LFQC3
+        PUBWEAK _A_LFSYLE
+        PUBWEAK _A_LFSYSY0
+        PUBWEAK _A_LTEMR
+        PUBWEAK _A_PHID00
+        PUBWEAK _A_PHID01
+        PUBWEAK _A_PHID02
+        PUBWEAK _A_PHID03
+        PUBWEAK _A_PHID0L
+        PUBWEAK _A_PHID10
+        PUBWEAK _A_PHID11
+        PUBWEAK _A_PHID12
+        PUBWEAK _A_PHID13
+        PUBWEAK _A_PHID1L
+        PUBWEAK _A_PHIDFR
+        PUBWEAK _A_PHIMR
+        PUBWEAK _A_PHTBLR
+        PUBWEAK _A_PORTC
+        PUBWEAK _A_PRR0
+        PUBWEAK _A_RSMS1R
+        PUBWEAK _A_RSRES1H
+        PUBWEAK _A_RSRES1L
+        PUBWEAK _A_RSRES2H
+        PUBWEAK _A_RSRES2L
+        PUBWEAK _A_RSRES3H
+        PUBWEAK _A_RSRES3L
+        PUBWEAK _A_SD12RR
+        PUBWEAK _A_SD13RR
+        PUBWEAK _A_SD23RR
+        PUBWEAK _A_SD360R
+        PUBWEAK _A_VMCR
+        PUBWEAK _A_VMSCR
+        PUBWEAK __?EEARH
+        PUBWEAK __?EEARL
+        PUBWEAK __?EECR
+        PUBWEAK __?EEDR
+        PUBLIC app_peps_handler
+        PUBLIC app_rssi_set_ref
+        PUBLIC cabb_cmd_with_cw
+        PUBLIC fubar
+        PUBLIC g3dVector
+        PUBLIC g3dVectorFlag
+        PUBLIC g3dVectorLin
+        PUBLIC gAES_DataBuffer
+        PUBLIC gExtLfRssi
+        PUBLIC gFlashApplignSignDetect
+        PUBLIC gIntLfRssi
+        PUBLIC gLfMessageReceived
+        PUBLIC gLfNmbrRxByts
+        PUBLIC gLfRssiRes
+        PUBLIC gLfRxData
+        PUBLIC gLfqcTrim
+        PUBLIC gNTE_DIAG_MODE
+        PUBLIC gRSSI_ResBuffer
+        PUBLIC gVbat_Status
+        PUBLIC g_MsgRXbuffer
+        PUBLIC g_MsgTXbuffer
+        PUBLIC g_sRfTxServicePathConfig0
+        PUBLIC rts_cram
+        PUBLIC rub_cid
+        PUBLIC rub_fob_idx
+        PUBLIC rub_rf_chan
+        PUBLIC rub_wuip
+        PUBLIC rul_fob_id
+        PUBLIC wBref
+        PUBLIC wLfRssiNorm
+        PUBLIC wLfRssiref
+        
+          CFI Names cfiNames0
+          CFI StackFrame CFA_Y Y DATA
+          CFI StackFrame CFA_SP SP DATA
+          CFI VirtualResource ?RetPad:1, ?RetHigh:8, ?RetLow:8, ?Ret:17
+          CFI Resource R0:8, R1:8, R2:8, R3:8, R4:8, R5:8, R6:8, R7:8, R8:8, R9:8
+          CFI Resource R10:8, R11:8, R12:8, R13:8, R14:8, R15:8, R16:8, R17:8
+          CFI Resource R18:8, R19:8, R20:8, R21:8, R22:8, R23:8, R24:8, R25:8
+          CFI Resource R26:8, R27:8, R28:8, R29:8, R30:8, R31:8
+          CFI Resource ?RetHighByteMask:8, SP:16, SPH:8, SPL:8, Y:16
+          CFI ResourceParts ?Ret ?RetHigh, ?RetLow, ?RetPad
+          CFI ResourceParts SP SPH, SPL
+          CFI ResourceParts Y R29, R28
+          CFI EndNames cfiNames0
+        
+          CFI Common cfiCommon0 Using cfiNames0
+          CFI CodeAlign 1
+          CFI DataAlign 1
+          CFI ReturnAddress ?Ret CODE
+          CFI CFA_Y Y+0
+          CFI CFA_SP SP+2
+          CFI ?RetPad 0
+          CFI ?RetHigh and(load(1, DATA, sub(CFA_SP, 1)), ?RetHighByteMask)
+          CFI ?RetLow Frame(CFA_SP, 0)
+          CFI ?Ret Concat
+          CFI R0 Undefined
+          CFI R1 Undefined
+          CFI R2 Undefined
+          CFI R3 Undefined
+          CFI R4 SameValue
+          CFI R5 SameValue
+          CFI R6 SameValue
+          CFI R7 SameValue
+          CFI R8 SameValue
+          CFI R9 SameValue
+          CFI R10 SameValue
+          CFI R11 SameValue
+          CFI R12 SameValue
+          CFI R13 SameValue
+          CFI R14 SameValue
+          CFI R15 SameValue
+          CFI R16 Undefined
+          CFI R17 Undefined
+          CFI R18 Undefined
+          CFI R19 Undefined
+          CFI R20 Undefined
+          CFI R21 Undefined
+          CFI R22 Undefined
+          CFI R23 Undefined
+          CFI R24 SameValue
+          CFI R25 SameValue
+          CFI R26 SameValue
+          CFI R27 SameValue
+          CFI R28 Undefined
+          CFI R29 Undefined
+          CFI R30 Undefined
+          CFI R31 Undefined
+          CFI ?RetHighByteMask SameValue
+          CFI SPH Undefined
+          CFI SPL Undefined
+          CFI EndCommon cfiCommon0
+        
+        EXTERN ATA_StartRssi_flash_C
+        EXTERN ATA_aesLoadData_C
+        EXTERN ATA_aesTriggerKeyDma_C
+        EXTERN ATA_eepReadBytes_C
+        EXTERN ATA_eepWriteBytes_C
+        EXTERN ATA_globalsSetVoltageMonitor_C
+        EXTERN ATA_lfRssiGetAverageResult_C
+        EXTERN ATA_lfRssiInit_C
+        EXTERN ATA_lfRssiMeasStart_C
+        EXTERN ATA_rfTx_PEPSmsg_flash_C
+        EXTERN CalcLinVector
+        EXTERN ID0_Wake
+        EXTERN ID1_Wake
+        EXTERN LF_DecErrFlag
+        EXTERN gFlashApplState
+        EXTERN g_sCustomerEEPromSection
+        EXTERN g_sEepFlashApp_RKEPEPS
+        EXTERN g_sLfRssi
+        EXTERN g_sLfRssiRegConfig_flash
+        EXTERN memcmp_G
+        EXTERN memory_compare
+        EXTERN memory_compare_const
+        EXTERN memory_copy
+        EXTERN memory_set
+
+// C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\src\FlashApplPEPS.c
+//    1 /******************************************************************************
+//    2   Use of this software is subject to Microchip's Software License Agreement.
+//    3 --------------------------------------------------------------------------------
+//    4   $URL: http://svnservulm.corp.atmel.com/svn/CDB/Apps/SW_Lib/Car_Access/CARS_GEN2/ATAB5702A/Branches/P2P22_TXMODE_NXP/appl/appFlash/src/FlashApplPEPS.c $
+//    5   $LastChangedRevision: 571136 $
+//    6   $LastChangedDate: 2019-08-14 14:11:27 -0600 (Wed, 14 Aug 2019) $
+//    7   $LastChangedBy: grueter $
+//    8 -------------------------------------------------------------------------------
+//    9   Project:      ATA5700
+//   10   Target MCU:   ATA5700
+//   11   Compiler:     IAR C/C++ Compiler for AVR 5.51.0
+//   12 -------------------------------------------------------------------------------
+//   13 
+//   14 ******************************************************************************
+//   15 * Copyright 2017, Microchip Technology Incorporated and its subsidiaries.     *
+//   16 *                                                                             *
+//   17 * This software is owned by the Microchip Technology Incorporated.            *
+//   18 * Microchip hereby grants to licensee a personal                              *
+//   19 * non-exclusive, non-transferable license to copy, use, modify, create        *
+//   20 * derivative works of, and compile the Microchip Source Code and derivative   *
+//   21 * works for the sole and exclusive purpose of creating custom software in     *
+//   22 * support of licensee product to be used only in conjunction with a Microchip *
+//   23 * integrated circuit as specified in the applicable agreement. Any            *        
+//   24 * reproduction, modification, translation, compilation, or representation of  *
+//   25 * this software except as specified above is prohibited without the express   *
+//   26 * written permission of Microchip.                                            *
+//   27 *                                                                             *
+//   28 * Disclaimer: MICROCHIP MAKES NO WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,    *
+//   29 * WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED    *
+//   30 * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.         *
+//   31 * Microchip reserves the right to make changes without further notice to the  *
+//   32 * materials described herein. Microchip does not assume any liability arising *
+//   33 * out of the application or use of any product or circuit described herein.   *
+//   34 * Microchip does not authorize its products for use as critical components in *
+//   35 * life-support systems where a malfunction or failure may reasonably be       *
+//   36 * expected to result in significant injury to the user. The inclusion of      *
+//   37 * Microchip products in a life-support systems application implies that the   *
+//   38 * manufacturer assumes all risk of such use and in doing so indemnifies       *
+//   39 * Microchip against all charges.                                              *
+//   40 *                                                                             *
+//   41 * Use may be limited by and subject to the applicable Microchip software      *
+//   42 * license agreement.                                                          *
+//   43 ******************************************************************************/
+//   44 
+//   45 /** \file FlashApplPEPS.c
+//   46     this file contains an ATA5700 Flash application software
+//   47 */
+//   48 
+//   49 /*===========================================================================*/
+//   50 /*  INCLUDES                                                                 */
+//   51 /*===========================================================================*/
+//   52 #include "../../../firmware/init/src/init.h"
+
+        ASEGN ABSOLUTE:DATA:NOROOT,028H
+// union <unnamed> volatile __io _A_PORTC
+_A_PORTC:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,038H
+// union <unnamed> volatile __io _A_LDFFL
+_A_LDFFL:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,039H
+// union <unnamed> volatile __io _A_LDFD
+_A_LDFD:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,03aH
+// union <unnamed> volatile __io _A_PRR0
+_A_PRR0:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,03dH
+// union <unnamed> volatile __io _A_AESCR
+_A_AESCR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,03eH
+// union <unnamed> volatile __io _A_AESSR
+_A_AESSR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,049H
+// union <unnamed> volatile __io _A_LDFCKSW
+_A_LDFCKSW:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,04aH
+// union <unnamed> volatile __io _A_VMSCR
+_A_VMSCR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,04fH
+// union <unnamed> volatile __io _A_LFCR0
+_A_LFCR0:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,050H
+// union <unnamed> volatile __io _A_LFCR1
+_A_LFCR1:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,05aH
+// union <unnamed> volatile __io _A_LFCR2
+_A_LFCR2:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,05bH
+// union <unnamed> volatile __io _A_LFCR3
+_A_LFCR3:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,0181H
+// union <unnamed> volatile __ext_io _A_AESDR
+_A_AESDR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,0190H
+// union <unnamed> volatile __ext_io _A_PHID00
+_A_PHID00:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,0191H
+// union <unnamed> volatile __ext_io _A_PHID01
+_A_PHID01:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,0192H
+// union <unnamed> volatile __ext_io _A_PHID02
+_A_PHID02:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,0193H
+// union <unnamed> volatile __ext_io _A_PHID03
+_A_PHID03:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,0194H
+// union <unnamed> volatile __ext_io _A_PHID0L
+_A_PHID0L:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,0195H
+// union <unnamed> volatile __ext_io _A_PHID10
+_A_PHID10:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,0196H
+// union <unnamed> volatile __ext_io _A_PHID11
+_A_PHID11:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,0197H
+// union <unnamed> volatile __ext_io _A_PHID12
+_A_PHID12:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,0198H
+// union <unnamed> volatile __ext_io _A_PHID13
+_A_PHID13:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,0199H
+// union <unnamed> volatile __ext_io _A_PHID1L
+_A_PHID1L:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,019aH
+// union <unnamed> volatile __ext_io _A_PHIDFR
+_A_PHIDFR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,019bH
+// union <unnamed> volatile __ext_io _A_LFSYSY0
+_A_LFSYSY0:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,019fH
+// union <unnamed> volatile __ext_io _A_LFSYLE
+_A_LFSYLE:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01a4H
+// union <unnamed> volatile __ext_io _A_PHTBLR
+_A_PHTBLR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01a6H
+// union <unnamed> volatile __ext_io _A_LTEMR
+_A_LTEMR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01a7H
+// union <unnamed> volatile __ext_io _A_LFQC3
+_A_LFQC3:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01a8H
+// union <unnamed> volatile __ext_io _A_LFQC2
+_A_LFQC2:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01a9H
+// union <unnamed> volatile __ext_io _A_LFQC1
+_A_LFQC1:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01b2H
+// union <unnamed> volatile __ext_io _A_RSMS1R
+_A_RSMS1R:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01b8H
+// union <unnamed> volatile __ext_io _A_RSRES1L
+_A_RSRES1L:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01b9H
+// union <unnamed> volatile __ext_io _A_RSRES1H
+_A_RSRES1H:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01baH
+// union <unnamed> volatile __ext_io _A_RSRES2L
+_A_RSRES2L:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01bbH
+// union <unnamed> volatile __ext_io _A_RSRES2H
+_A_RSRES2H:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01bcH
+// union <unnamed> volatile __ext_io _A_RSRES3L
+_A_RSRES3L:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01bdH
+// union <unnamed> volatile __ext_io _A_RSRES3H
+_A_RSRES3H:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01c1H
+// union <unnamed> volatile __ext_io _A_SD12RR
+_A_SD12RR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01c2H
+// union <unnamed> volatile __ext_io _A_SD13RR
+_A_SD13RR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01c3H
+// union <unnamed> volatile __ext_io _A_SD23RR
+_A_SD23RR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01c4H
+// union <unnamed> volatile __ext_io _A_SD360R
+_A_SD360R:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01d7H
+// union <unnamed> volatile __ext_io _A_LDFC
+_A_LDFC:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01d8H
+// union <unnamed> volatile __ext_io _A_PHIMR
+_A_PHIMR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01e6H
+// union <unnamed> volatile __ext_io _A_VMCR
+_A_VMCR:
+        DS8 1
+//   53 #include "../../../firmware/rftx/src/rftx.h"
+//   54 #include "../../../firmware/lfrx/src/lfrx.h"
+//   55 #include "../../../firmware/spi/src/ata5700_command_set_flash.h"
+//   56 
+//   57 #include "../../../firmware/init/src/init_flash.h"
+//   58 #include "../../../firmware/system/src/system_flash.h"
+//   59 
+//   60 #include "../../../firmware/timer1/src/timer1.h"
+//   61 #include "../../../firmware/globals/src/globals.h"
+//   62 
+//   63 #include "../../../firmware/lfrx/src/lfrx_flash.h"
+//   64 #include "../../../firmware/tp/src/tp_flash.h"
+//   65 
+//   66 #include "../../../firmware/extif/src/extif_flash.h"
+//   67 
+//   68 #include "../../../firmware/lfrssi/src/lfrssi.h"
+//   69 #include "../../../firmware/lfrssi/src/lfrssi_flash.h"
+//   70 
+//   71 #include "../../../firmware/calib/src/calib.h"
+//   72 #include "../../../firmware/eep/src/eep.h"
+//   73 
+//   74 #include "../src/FlashApplPEPS.h"
+//   75 #include "../src/FlashApplLF.h" 
+//   76 #include "../src/micro.h"
+//   77 
+//   78 #include "../src/FlashApplVars.h"
+//   79 #include "FlashApplMSG.h"
+//   80 #include <stdbool.h>
+//   81 #include <pgmspace.h>
+//   82 #include <math.h>
+//   83 
+//   84 /*===========================================================================*/
+//   85 /*  DEFINES                                                                  */
+//   86 /*===========================================================================*/
+//   87 
+//   88 #define MSG_RX_DATA (g_MsgRXbuffer.aub_data)
+//   89 /*===========================================================================*/
+//   90 /*  Modul Globals                                                             */
+//   91 /*===========================================================================*/
+//   92 
+//   93 uint8_t CalcCoilPhaseSig(void);
+//   94 
+
+        RSEG NEAR_Z:DATA:NOROOT(0)
+        REQUIRE `?<Segment init: NEAR_Z>`
+//   95 uint8_t gLfMessageReceived; 
+gLfMessageReceived:
+        DS8 1
+
+        RSEG NEAR_Z:DATA:NOROOT(0)
+        REQUIRE `?<Segment init: NEAR_Z>`
+//   96 uint8_t gLfRxData[CFG_LF_BUFFER_SIZE];           // max LF buffer size = 32 bytes
+gLfRxData:
+        DS8 32
+
+        RSEG NEAR_Z:DATA:NOROOT(0)
+        REQUIRE `?<Segment init: NEAR_Z>`
+//   97 uint8_t gLfNmbrRxByts;
+gLfNmbrRxByts:
+        DS8 1
+
+        RSEG NEAR_Z:DATA:NOROOT(0)
+        REQUIRE `?<Segment init: NEAR_Z>`
+//   98 uint16_t gExtLfRssi[3];
+gExtLfRssi:
+        DS8 6
+
+        RSEG NEAR_Z:DATA:NOROOT(0)
+        REQUIRE `?<Segment init: NEAR_Z>`
+//   99 uint16_t gIntLfRssi[3];
+gIntLfRssi:
+        DS8 6
+
+        RSEG NEAR_Z:DATA:NOROOT(0)
+        REQUIRE `?<Segment init: NEAR_Z>`
+//  100 uint16_t gLfRssiRes[3];
+gLfRssiRes:
+        DS8 6
+
+        RSEG NEAR_I:DATA:NOROOT(0)
+        REQUIRE `?<Segment init: NEAR_I>`
+//  101 uint8_t gLfqcTrim[3] = {LFRX_R_Trim90k, LFRX_R_Trim90k, LFRX_R_Trim117k};
+gLfqcTrim:
+        DS8 3
+        REQUIRE `?<Initializer for gLfqcTrim>`
+
+        RSEG NEAR_Z:DATA:NOROOT(0)
+        REQUIRE `?<Segment init: NEAR_Z>`
+//  102 uint16_t wLfRssiref[3];
+wLfRssiref:
+        DS8 6
+
+        RSEG NEAR_Z:DATA:NOROOT(0)
+        REQUIRE `?<Segment init: NEAR_Z>`
+//  103 uint16_t wLfRssiNorm[3];
+wLfRssiNorm:
+        DS8 6
+
+        RSEG NEAR_Z:DATA:NOROOT(0)
+        REQUIRE `?<Segment init: NEAR_Z>`
+//  104 uint16_t wBref;
+wBref:
+        DS8 2
+
+        RSEG NEAR_Z:DATA:NOROOT(0)
+        REQUIRE `?<Segment init: NEAR_Z>`
+//  105 uint8_t gRSSI_ResBuffer[6];
+gRSSI_ResBuffer:
+        DS8 6
+
+        RSEG NEAR_Z:DATA:NOROOT(0)
+        REQUIRE `?<Segment init: NEAR_Z>`
+//  106 uint8_t g3dVector[2];
+g3dVector:
+        DS8 2
+
+        RSEG NEAR_Z:DATA:NOROOT(0)
+        REQUIRE `?<Segment init: NEAR_Z>`
+//  107 uint8_t g3dVectorLin[2];
+g3dVectorLin:
+        DS8 2
+
+        RSEG NEAR_Z:DATA:NOROOT(0)
+        REQUIRE `?<Segment init: NEAR_Z>`
+//  108 uint8_t g3dVectorFlag;
+g3dVectorFlag:
+        DS8 1
+
+        RSEG NEAR_Z:DATA:NOROOT(0)
+        REQUIRE `?<Segment init: NEAR_Z>`
+//  109 uint8_t gAES_DataBuffer[16];
+gAES_DataBuffer:
+        DS8 16
+
+        RSEG NEAR_Z:DATA:NOROOT(0)
+        REQUIRE `?<Segment init: NEAR_Z>`
+//  110 uint8_t gVbat_Status; 
+gVbat_Status:
+        DS8 1
+
+        RSEG NEAR_Z:DATA:NOROOT(0)
+        REQUIRE `?<Segment init: NEAR_Z>`
+//  111 uint8_t fubar[6] = {0,0,0,0,0,0};  
+fubar:
+        DS8 6
+
+        RSEG NEAR_Z:DATA:NOROOT(0)
+        REQUIRE `?<Segment init: NEAR_Z>`
+//  112 sFlashApplignSignDetect gFlashApplignSignDetect;
+gFlashApplignSignDetect:
+        DS8 4
+//  113 
+//  114 /* Software identifiers*/
+//  115 #ifdef CFG_APP_2WAYRF
+//  116 uint8_t SW_ID[]={0x57,0x02,0x02/*Device*/,0x02/*Kitphase*/,0x02/*RFdirection*/,0x00/*Rev Major/Minor*/};         
+//  117 #else // ONE_WAY
+
+        RSEG NEAR_I:DATA:NOROOT(0)
+        REQUIRE `?<Segment init: NEAR_I>`
+//  118 uint8_t SW_ID[]={0x57,0x02,0x22/*Device*/,0x03/*Kitphase*/,0x01/*RFdirection*/,0x05/*Rev Major/Minor*/};   
+SW_ID:
+        DS8 6
+        REQUIRE `?<Initializer for SW_ID>`
+//  119 #endif
+//  120 
+//  121 extern uint8_t g_EepFlashApp_PARAMdata[32][16];
+//  122 
+
+        RSEG NEAR_Z:DATA:NOROOT(0)
+        REQUIRE `?<Segment init: NEAR_Z>`
+//  123 sRfTxServicePathConfig g_sRfTxServicePathConfig0;
+g_sRfTxServicePathConfig0:
+        DS8 20
+//  124 extern sFlashApplState gFlashApplState;
+//  125 
+//  126 
+//  127 
+//  128 #pragma location = ".sram_FlashApp_MsgTXbuffer"
+
+        RSEG `.sram_FlashApp_MsgTXbuffer`:DATA:NOROOT(0)
+//  129 __no_init RFMSG_FRAME_TS g_MsgTXbuffer;
+g_MsgTXbuffer:
+        DS8 50
+//  130 
+//  131 #pragma location = ".sram_FlashApp_MsgRXbuffer"
+
+        RSEG `.sram_FlashApp_MsgRXbuffer`:DATA:NOROOT(0)
+//  132 __no_init RFMSG_FRAME_TS g_MsgRXbuffer;
+g_MsgRXbuffer:
+        DS8 50
+//  133 
+//  134 // command ID received
+
+        RSEG NEAR_Z:DATA:NOROOT(0)
+        REQUIRE `?<Segment init: NEAR_Z>`
+//  135 uint8_t rub_cid;
+rub_cid:
+        DS8 1
+//  136 
+//  137 // information on source message (channel LF/RF and wake-up id)
+
+        RSEG NEAR_Z:DATA:NOROOT(0)
+        REQUIRE `?<Segment init: NEAR_Z>`
+//  138 uint8_t rub_wuip;
+rub_wuip:
+        DS8 1
+//  139 
+//  140 // Fob Index
+
+        RSEG NEAR_Z:DATA:NOROOT(0)
+        REQUIRE `?<Segment init: NEAR_Z>`
+//  141 uint8_t rub_fob_idx;
+rub_fob_idx:
+        DS8 1
+//  142 
+//  143 // Fob ID
+
+        RSEG NEAR_Z:DATA:NOROOT(0)
+        REQUIRE `?<Segment init: NEAR_Z>`
+//  144 uint32_t rul_fob_id; //KarM_CH_20160115_change to 32bits FOB ID;
+rul_fob_id:
+        DS8 4
+//  145 
+//  146 // RF channel to use
+
+        RSEG NEAR_Z:DATA:NOROOT(0)
+        REQUIRE `?<Segment init: NEAR_Z>`
+//  147 uint8_t rub_rf_chan;
+rub_rf_chan:
+        DS8 1
+//  148 
+//  149 //uint8_t gBattStatus; 
+
+        RSEG NEAR_Z:DATA:NOROOT(0)
+        REQUIRE `?<Segment init: NEAR_Z>`
+//  150 uint8_t gNTE_DIAG_MODE;
+gNTE_DIAG_MODE:
+        DS8 1
+//  151 
+//  152 VOIDFUNC ATA_lfRxEnableWakeup_flash_C(uint8_t bLfBdrate,uint8_t bSense);
+//  153 VOIDFUNC ATA_CheckLfData_flash_C(void);
+//  154 VOIDFUNC Init_LfRssi_flash_C(void);
+//  155 VOIDFUNC ATA_PerformLfRSSI_flash_C(uint8_t bmode, uint8_t bsign);
+//  156 extern VOIDFUNC ATA_StartRssi_flash_C(uint8_t bmode);
+//  157 VOIDFUNC ATA_lFRssiGetResult_flash_C(uint8_t bmode, uint8_t bsign);
+//  158 static VOIDFUNC ATA_GetIntRssiValues(void);
+//  159 VOIDFUNC app_rssi_set_ref(bool IntMeasure);
+//  160 VOIDFUNC app_peps_handler(uint8_t lub_channel);
+//  161 static VOIDFUNC _app_peps_task(void);
+//  162 
+//  163 bool _peps_cmd_validity(void);
+//  164 // Build PEPS RF message
+//  165 static void _peps_build_msg(void);
+//  166 
+//  167 extern void memory_copy(uint8_t*, uint8_t*, uint8_t);
+//  168 extern bool memory_compare(uint8_t*,uint8_t*,uint8_t);
+//  169 extern void memory_set(uint8_t* lpub_dst,
+//  170                        uint8_t lub_value, 
+//  171                        uint8_t lub_length);
+//  172 extern void memory_copy_const(uint8_t* lpub_dst,
+//  173                               const uint8_t* lpub_src,
+//  174                               uint8_t lub_length);
+//  175 extern bool memory_compare_const(uint8_t* lpub_src1,
+//  176                                     const uint8_t* lpub_src2,                                    
+//  177                                     uint8_t lub_length);
+//  178 
+//  179 
+//  180 extern VOIDFUNC app_rssi_load_factors(void);
+//  181 extern VOIDFUNC ATA_StartRssi_flash_C(uint8_t bmode);
+//  182 extern VOIDFUNC CalcLinVector(void);
+//  183 
+//  184 extern sEepFlashApp_RKEPEPS g_sEepFlashApp_RKEPEPS;
+//  185 
+//  186 
+//  187 //Command with LF CW ?
+//  188 
+
+        RSEG NEAR_I:DATA:NOROOT(0)
+        REQUIRE `?<Segment init: NEAR_I>`
+//  189 uint8_t cabb_cmd_with_cw[16] =
+cabb_cmd_with_cw:
+        DS8 16
+        REQUIRE `?<Initializer for cabb_cmd_with_cw>`
+//  190 {
+//  191   FALSE, //PEPS_CID_Read_UID
+//  192   FALSE, //PEPS_CID_RD_PARAM  1
+//  193   FALSE, //PEPS_CID_WR_PARAM  2
+//  194   FALSE,
+//  195   TRUE,  //PEPS_CID_2WAY     4
+//  196   TRUE,  //PEPS_CID_UNI_AUTH 5
+//  197   TRUE,  //PEPS_CID_BI_AUTH  6
+//  198   TRUE,  //PEPS_CID_UNI_AUTH_SING 7
+//  199   TRUE,  //PEPS_CID_BI_AUTH_SING  8
+//  200   FALSE,
+//  201   TRUE,  //PEPS_CID_LF_TST   10
+//  202   TRUE, //PEPS_CID_SET_REF  11
+//  203   FALSE,
+//  204   FALSE,
+//  205   FALSE, //PEPS_CID_SWID 14
+//  206   FALSE  //PEPS_CID_MODE 15
+//  207 };
+//  208 
+//  209 // Access codes for diagnostic (OEM, AS)
+
+        RSEG NEAR_F:CODE:NOROOT(0)
+//  210 static CONST uint8_t caub_diag_code[2][4] =
+caub_diag_code:
+        DC8 14, 14, 192, 222, 165, 165, 192, 222
+//  211 {
+//  212   {
+//  213     (CFG_APP_OEM_CODE>>24)&0xFF,
+//  214     (CFG_APP_OEM_CODE>>16)&0xFF,
+//  215     (CFG_APP_OEM_CODE>>8)&0xFF,
+//  216     (CFG_APP_OEM_CODE&0xFF)
+//  217   },
+//  218   {
+//  219     (CFG_APP_AS_CODE>>24)&0xFF,
+//  220     (CFG_APP_AS_CODE>>16)&0xFF,
+//  221     (CFG_APP_AS_CODE>>8)&0xFF,
+//  222     (CFG_APP_AS_CODE&0xFF)
+//  223   }
+//  224 };
+//  225 
+//  226 /* Software identifiers*/
+//  227 //#ifdef CFG_APP_2WAYRF
+//  228 //uint8_t SW_ID[]={0x57,0x02,0x02/*Device*/,0x02/*Kitphase*/,0x02/*RFdirection*/,0x00/*Rev Major/Minor*/};         
+//  229 //#else // ONE_WAY
+//  230 //uint8_t SW_ID[]={0x57,0x02,0x02/*Device*/,0x02/*Kitphase*/,0x01/*RFdirection*/,0x01/*Rev Major/Minor*/};   
+//  231 //#endif
+//  232 
+//  233 
+
+        RSEG NEAR_N:DATA:NOROOT(0)
+//  234 NO_INIT_DATA CRAM_TS rts_cram;
+rts_cram:
+        DS8 9
+//  235 
+//  236 
+//  237 /*===========================================================================*/
+//  238 /*  IMPLEMENTATION                                                           */
+//  239 /*===========================================================================*/
+//  240 
+//  241 
+//  242 /*===========================================================================*/
+//  243 /*  IMPLEMENTATION                                                           */
+//  244 /*===========================================================================*/
+//  245 
+//  246 //-----------------------------------------------------------------------------
+//  247 /** \brief <b>ATA_lfRxEnableWakeup_flash_C</b>
+//  248     Shall configure the 3D LF receiver into LF listen mode and activate
+//  249       the ID0 wake-up interrupt
+//  250 
+//  251     \param[in]  bLfBdrate       selects the LF baud rate
+//  252                 bSense          selects the LF RX sensitivity
+//  253                 pLf_Id          pointer to the LF wake-up ID
+//  254                 bLf_IdLength    number of LF ID bits
+//  255 
+//  256     \return none
+//  257 
+//  258 
+//  259     \Traceability None
+//  260 
+//  261     \image none
+//  262     \n
+//  263 */
+//  264 /*---------------------------------------------------------------------------*/
+
+        RSEG CODE:CODE:ROOT(1)
+//  265 void ATA_lfRxEnableWakeup_flash_C(uint8_t bLfBdrate,uint8_t bSense)
+ATA_lfRxEnableWakeup_flash_C:
+          CFI Block cfiBlock0 Using cfiCommon0
+          CFI Function ATA_lfRxEnableWakeup_flash_C
+//  266 {
+        SBIW    R29:R28, 4
+          CFI CFA_Y Y+4
+//  267   uint8_t laub_data[4];
+//  268   
+//  269   LDFCKSW |= (1<<LDFSCSW); 
+        IN      R18, 0x29
+        ORI     R18, 0x01
+        OUT     0x29, R18
+//  270   while ((LDFCKSW & (1<<LDFSCKS)) ==0);            // wait until clock source is switched
+??ATA_lfRxEnableWakeup_flash_C_0:
+        IN      R18, 0x29
+        SBRS    R18, 1
+        RJMP    ??ATA_lfRxEnableWakeup_flash_C_0
+//  271  
+//  272 
+//  273   LFQC1 = gLfqcTrim[0];         //LFRX_R_Trim90k;
+        LDS     R18, gLfqcTrim
+        STS     _A_LFQC1, R18
+//  274   LFQC2 = gLfqcTrim[1];         //LFRX_R_Trim90k;
+        LDS     R18, (gLfqcTrim + 1)
+        STS     _A_LFQC2, R18
+//  275   LFQC3 = gLfqcTrim[2];         //LFRX_R_Trim117k;
+        LDS     R18, (gLfqcTrim + 2)
+        STS     _A_LFQC3, R18
+//  276   LFCR0 = 0x80 | bLfBdrate | BM_LFCE1 | BM_LFCE2 | BM_LFCE3;    // activate all channels and set baudrate
+        ORI     R16, 0x87
+        OUT     0x2F, R16
+//  277   
+//  278   
+//  279   LFCR1 = BM_LFRE | BM_LFPEEN;                              // enable RX, ID and Data Mode
+        LDI     R16, 192
+        OUT     0x30, R16
+//  280   LFCR3 |= ( (1<<LFSBEN) | (1<<LFTS2) | (1<<LFTS0) );//LF polling enable 3072 uS standby time
+        IN      R16, 0x3B
+        ORI     R16, 0xD0
+        OUT     0x3B, R16
+//  281   LTEMR = BM_ID0EM | ID1EM;
+        LDI     R16, 1
+        STS     _A_LTEMR, R16
+//  282   //LTEMR = BM_FLEM;
+//  283   
+//  284   LFCR2 = bSense;                                        // select sensitivity
+        OUT     0x3A, R17
+//  285   //LFCR3 = ;                                            // at first without trimming function
+//  286   LDFFL =0x80;
+        LDI     R16, 128
+        OUT     0x18, R16
+//  287   
+//  288   
+//  289   
+//  290   
+//  291   #ifdef CFG_LF_WUP0_IN_EEPROM
+//  292   // Wake-up ID stored in EEprom as a buffer (MSB first)
+//  293   ATA_eepReadBytes_C(laub_data, CFG_LF_WUP0_Adr, 0x04 );
+        LDI     R20, 4
+        LDI     R18, LOW((g_sEepFlashApp_RKEPEPS + 12))
+        LDI     R19, HIGH((g_sEepFlashApp_RKEPEPS + 12))
+        MOVW    R17:R16, R29:R28
+          CFI FunCall ATA_eepReadBytes_C
+        CALL    ATA_eepReadBytes_C
+//  294  
+//  295   
+//  296   PHID00 = laub_data[(CFG_LF_WUP0_LENGTH/8-1)%4];//2
+        LDD     R16, Y+2
+        STS     _A_PHID00, R16
+//  297   PHID01 = laub_data[(CFG_LF_WUP0_LENGTH/8-2)%4];//1
+        LDD     R16, Y+1
+        STS     _A_PHID01, R16
+//  298   PHID02 = laub_data[(CFG_LF_WUP0_LENGTH/8-3)%4];//0
+        LD      R16, Y
+        STS     _A_PHID02, R16
+//  299   PHID03 = laub_data[(CFG_LF_WUP0_LENGTH/8)%4];//3
+        LDD     R16, Y+3
+        STS     _A_PHID03, R16
+//  300   
+//  301 #else
+//  302   // Wake-up ID stored in RAM or Flash
+//  303   PHID00 = (CFG_LF_WUP0) & 0xFF;
+//  304   PHID01 = (CFG_LF_WUP0>> 8) & 0xFF;
+//  305   PHID02 = (CFG_LF_WUP0>>16) & 0xFF;
+//  306   PHID03 = (CFG_LF_WUP0>>24) & 0xFF;
+//  307 #endif
+//  308 
+//  309   //Low Frequency IDentifier 1 data register (LFID1)
+//  310 #ifdef CFG_LF_WUP1_IN_EEPROM
+//  311   // Wake-up ID stored in EEprom as a buffer (MSB first)
+//  312   ATA_eepReadBytes_C(laub_data, CFG_LF_WUP1_Adr);
+//  313   PHID10 = laub_data[(CFG_LF_WUP1_LENGTH/8-1)%4];
+//  314   PHID11 = laub_data[(CFG_LF_WUP1_LENGTH/8-2)%4];
+//  315   PHID12 = laub_data[(CFG_LF_WUP1_LENGTH/8-3)%4];
+//  316   PHID13 = laub_data[(CFG_LF_WUP1_LENGTH/8)%4];
+//  317 #else
+//  318   // Wake-up ID stored in RAM or Flash
+//  319   PHID10 = (CFG_LF_WUP1) & 0xFF;
+        LDI     R16, 255
+        STS     _A_PHID10, R16
+//  320   PHID11 = (CFG_LF_WUP1>> 8) & 0xFF;
+        STS     _A_PHID11, R16
+//  321   PHID12 = (CFG_LF_WUP1>>16) & 0xFF;
+        STS     _A_PHID12, R16
+//  322   PHID13 = (CFG_LF_WUP1>>24) & 0xFF;
+        STS     _A_PHID13, R16
+//  323 #endif
+//  324   
+//  325   
+//  326   // Settings for the protocol handler
+//  327  
+//  328   PHID0L = CFG_LF_WUP0_LENGTH;
+        LDI     R16, 24
+        STS     _A_PHID0L, R16
+//  329   PHID1L = CFG_LF_WUP1_LENGTH;
+        STS     _A_PHID1L, R16
+//  330   PHIDFR = LF_IDFRAMELENGTH;
+        STS     _A_PHIDFR, R16
+//  331   
+//  332   PHTBLR = 0xFF;                // Protocol Handler Telegram bit length
+        LDI     R16, 255
+        STS     _A_PHTBLR, R16
+//  333 //  PHDFR = 48;
+//  334   
+//  335   LFSYSY0 = 0x09;               //Define wakeup ID pattern;
+        LDI     R16, 9
+        STS     _A_LFSYSY0, R16
+//  336   LFSYLE = 0x04;
+        LDI     R16, 4
+        STS     _A_LFSYLE, R16
+//  337   
+//  338   PHIMR |= BM_PHID0IM | BM_PHID1IM;       // enable both wake-up ID interrupt
+        LDS     R16, _A_PHIMR
+        ORI     R16, 0x30
+        STS     _A_PHIMR, R16
+//  339   
+//  340   LDFC = (1<<LDFMSB) | 5;//KarM_Data Fifo setting
+        LDI     R16, 69
+        STS     _A_LDFC, R16
+//  341   ID0_Wake = 0x00;
+        LDI     R16, 0
+        STS     ID0_Wake, R16
+//  342   ID1_Wake = 0x00;
+        STS     ID1_Wake, R16
+//  343   LF_DecErrFlag = 0x00; 
+        STS     LF_DecErrFlag, R16
+//  344 }
+        ADIW    R29:R28, 4
+          CFI CFA_Y Y+0
+        RET
+          CFI EndBlock cfiBlock0
+        REQUIRE _A_LDFCKSW
+        REQUIRE _A_LFQC1
+        REQUIRE _A_LFQC2
+        REQUIRE _A_LFQC3
+        REQUIRE _A_LFCR0
+        REQUIRE _A_LFCR1
+        REQUIRE _A_LFCR3
+        REQUIRE _A_LTEMR
+        REQUIRE _A_LFCR2
+        REQUIRE _A_LDFFL
+        REQUIRE _A_PHID00
+        REQUIRE _A_PHID01
+        REQUIRE _A_PHID02
+        REQUIRE _A_PHID03
+        REQUIRE _A_PHID10
+        REQUIRE _A_PHID11
+        REQUIRE _A_PHID12
+        REQUIRE _A_PHID13
+        REQUIRE _A_PHID0L
+        REQUIRE _A_PHID1L
+        REQUIRE _A_PHIDFR
+        REQUIRE _A_PHTBLR
+        REQUIRE _A_LFSYSY0
+        REQUIRE _A_LFSYLE
+        REQUIRE _A_PHIMR
+        REQUIRE _A_LDFC
+//  345 
+//  346 
+//  347 //-----------------------------------------------------------------------------
+//  348 /** \brief <b>Init_LfRssi_flash_C</b>
+//  349     Prepare LF RSSI block for measurements
+//  350     
+//  351 
+//  352     \param[in]  none
+//  353 
+//  354 
+//  355     \return none
+//  356 
+//  357 
+//  358     \Traceability None
+//  359 
+//  360     \image none
+//  361     \n
+//  362 */
+//  363 /*---------------------------------------------------------------------------*/
+
+        RSEG CODE:CODE:ROOT(1)
+//  364 VOIDFUNC Init_LfRssi_flash_C(void)
+Init_LfRssi_flash_C:
+          CFI Block cfiBlock1 Using cfiCommon0
+          CFI Function Init_LfRssi_flash_C
+//  365 {
+//  366   /* Temp. initialization of LF RSSI component data for use during System
+//  367   Verification */
+//  368   g_sLfRssi.bFlags = LFRSSI_FLAGS_RESET;
+        LDI     R16, 0
+        STS     g_sLfRssi, R16
+//  369   g_sLfRssi.bStatus = LFRSSI_STATUS_RESET;
+        STS     (g_sLfRssi + 1), R16
+//  370   ATA_lfRssiInit_C();
+          CFI FunCall ATA_lfRssiInit_C
+        JMP     ATA_lfRssiInit_C
+//  371   
+//  372 }
+          CFI EndBlock cfiBlock1
+//  373 
+//  374 //-----------------------------------------------------------------------------
+//  375 /** \brief <b>ATA_PerformLfRSSI_flash_C</b>
+//  376     Contains the complete flow for performing an LF RSSI measurement
+//  377     
+//  378 
+//  379     \param[in]  bMode       Contains internal or external LF RSSI measurement request
+//  380 
+//  381 
+//  382     \return none
+//  383 
+//  384 
+//  385     \Traceability None
+//  386 
+//  387     \image none
+//  388     \n
+//  389 */
+//  390 /*---------------------------------------------------------------------------*/
+
+        RSEG CODE:CODE:ROOT(1)
+//  391 VOIDFUNC ATA_PerformLfRSSI_flash_C(uint8_t bmode, uint8_t bsign)
+ATA_PerformLfRSSI_flash_C:
+          CFI Block cfiBlock2 Using cfiCommon0
+          CFI Function ATA_PerformLfRSSI_flash_C
+//  392 {
+        ST      -Y, R25
+          CFI R25 Frame(CFA_Y, -1)
+          CFI CFA_Y Y+1
+        ST      -Y, R24
+          CFI R24 Frame(CFA_Y, -2)
+          CFI CFA_Y Y+2
+        MOVW    R25:R24, R17:R16
+//  393   ATA_StartRssi_flash_C(bmode);
+          CFI FunCall ATA_StartRssi_flash_C
+        CALL    ATA_StartRssi_flash_C
+//  394   __delay_cycles(3000);
+        LDI     R16, 237
+        LDI     R17, 2
+        SUBI    R16, 1
+        SBCI    R17, 0
+        BRNE    $-4
+        RJMP    $+2
+        NOP
+//  395   ATA_lfRssiMeasStart_C( &g_sLfRssiRegConfig_flash, bmode, bsign );
+        MOVW    R19:R18, R25:R24
+        LDI     R16, LOW(g_sLfRssiRegConfig_flash)
+        LDI     R17, (g_sLfRssiRegConfig_flash) >> 8
+          CFI FunCall ATA_lfRssiMeasStart_C
+        CALL    ATA_lfRssiMeasStart_C
+//  396   __delay_cycles(10);
+        LDI     R16, 3
+        DEC     R16
+        BRNE    $-2
+        NOP
+//  397   do 
+//  398   {
+//  399     
+//  400   }
+//  401   while ((g_sLfRssi.bStatus & LFRSSI_STATUS_BM_MEAS_DATA_AVAILABLE_FLAG)==0);
+??ATA_PerformLfRSSI_flash_C_0:
+        LDS     R16, (g_sLfRssi + 1)
+        SBRS    R16, 7
+        RJMP    ??ATA_PerformLfRSSI_flash_C_0
+//  402   
+//  403   if (bmode==LFRSSI_INT) 
+        CPI     R24, 1
+        BRNE    ??ATA_PerformLfRSSI_flash_C_1
+//  404   {
+//  405     ATA_lfRssiGetAverageResult_C((uint8_t*)&gIntLfRssi[0], (uint8_t*)0x0000);
+        LDI     R18, 0
+        LDI     R19, 0
+        LDI     R16, LOW(gIntLfRssi)
+        LDI     R17, (gIntLfRssi) >> 8
+          CFI FunCall ATA_lfRssiGetAverageResult_C
+        CALL    ATA_lfRssiGetAverageResult_C
+        RJMP    ??ATA_PerformLfRSSI_flash_C_2
+//  406   }
+//  407   if (bmode==LFRSSI_EXT)
+??ATA_PerformLfRSSI_flash_C_1:
+        TST     R24
+        BRNE    ??ATA_PerformLfRSSI_flash_C_2
+//  408   {  
+//  409     ATA_lfRssiGetAverageResult_C((uint8_t*)&gExtLfRssi[0], (uint8_t*)0x0000);
+        LDI     R18, 0
+        LDI     R19, 0
+        LDI     R16, LOW(gExtLfRssi)
+        LDI     R17, (gExtLfRssi) >> 8
+          CFI FunCall ATA_lfRssiGetAverageResult_C
+        CALL    ATA_lfRssiGetAverageResult_C
+//  410     gFlashApplignSignDetect.SD12result = SD12RR;
+        LDS     R16, _A_SD12RR
+        STS     gFlashApplignSignDetect, R16
+//  411     gFlashApplignSignDetect.SD13result = SD13RR;
+        LDS     R16, _A_SD13RR
+        STS     (gFlashApplignSignDetect + 1), R16
+//  412     gFlashApplignSignDetect.SD23result = SD23RR;
+        LDS     R16, _A_SD23RR
+        STS     (gFlashApplignSignDetect + 2), R16
+//  413     gFlashApplignSignDetect.SD360result = SD360R;
+        LDS     R16, _A_SD360R
+        STS     (gFlashApplignSignDetect + 3), R16
+//  414   }
+//  415 }
+??ATA_PerformLfRSSI_flash_C_2:
+        LD      R24, Y+
+          CFI R24 SameValue
+          CFI CFA_Y Y+1
+        LD      R25, Y+
+          CFI R25 SameValue
+          CFI CFA_Y Y+0
+        RET
+          CFI EndBlock cfiBlock2
+        REQUIRE _A_SD12RR
+        REQUIRE _A_SD13RR
+        REQUIRE _A_SD23RR
+        REQUIRE _A_SD360R
+//  416 
+//  417 //-----------------------------------------------------------------------------
+//  418 /** \brief <b>ATA_CheckLfData_flash_C</b>
+//  419     Reads out the received LF telegram from the internal LF data buffer
+//  420 
+//  421     \param[in]  none
+//  422 
+//  423     \return none
+//  424 
+//  425     \Traceability None
+//  426 
+//  427     \image none
+//  428     \n
+//  429 */
+//  430 /*---------------------------------------------------------------------------*/
+
+        RSEG CODE:CODE:ROOT(1)
+//  431 VOIDFUNC ATA_CheckLfData_flash_C(void)
+ATA_CheckLfData_flash_C:
+          CFI Block cfiBlock3 Using cfiCommon0
+          CFI Function ATA_CheckLfData_flash_C
+          CFI NoCalls
+//  432 {
+//  433   uint8_t index;
+//  434   
+//  435   LDFCKSW |= (1<<LDFSCSW); 
+        IN      R16, 0x29
+        ORI     R16, 0x01
+        OUT     0x29, R16
+//  436   while ((LDFCKSW & (1<<LDFSCKS)) ==0);            // wait until clock source is switched
+??ATA_CheckLfData_flash_C_0:
+        IN      R16, 0x29
+        SBRS    R16, 1
+        RJMP    ??ATA_CheckLfData_flash_C_0
+//  437   gLfNmbrRxByts = LDFFL; 
+        IN      R16, 0x18
+        STS     gLfNmbrRxByts, R16
+//  438   if (gLfNmbrRxByts !=0)
+        TST     R16
+        BREQ    ??ATA_CheckLfData_flash_C_1
+//  439   {
+//  440     for (index=0; index < gLfNmbrRxByts; index++)
+        LDI     R18, 0
+//  441     {     
+//  442       g_MsgRXbuffer.aub_data[index + 3] = LDFD;//VID is only 3 bytes, so here start from 3;
+??ATA_CheckLfData_flash_C_2:
+        IN      R17, 0x19
+        LDI     R31, 0
+        MOV     R30, R18
+        SUBI    R30, LOW((-(g_MsgRXbuffer) & 0xFFFF))
+        SBCI    R31, (-(g_MsgRXbuffer) & 0xFFFF) >> 8
+        STD     Z+5, R17
+//  443     }
+        INC     R18
+        DEC     R16
+        BRNE    ??ATA_CheckLfData_flash_C_2
+//  444     g_MsgRXbuffer.ub_size = gLfNmbrRxByts;
+        LDS     R16, gLfNmbrRxByts
+        STS     g_MsgRXbuffer, R16
+//  445   }
+//  446   LDFCKSW &= ~(1<<LDFSCSW);
+??ATA_CheckLfData_flash_C_1:
+        IN      R16, 0x29
+        ANDI    R16, 0xFE
+        OUT     0x29, R16
+//  447 }
+        RET
+          CFI EndBlock cfiBlock3
+        REQUIRE _A_LDFCKSW
+        REQUIRE _A_LDFFL
+        REQUIRE _A_LDFD
+//  448 
+//  449 //-----------------------------------------------------------------------------
+//  450 /** \brief <b>ATA_TuneLfAllChannels</b>
+//  451     Tunes the LF circuitry using CTRIM to match the resonant frequency.
+//  452     
+//  453     \param[in]  none
+//  454 
+//  455     \return none
+//  456 
+//  457     \Traceability None
+//  458 
+//  459     \image none
+//  460     \n
+//  461 */
+//  462 /*---------------------------------------------------------------------------*/
+
+        RSEG CODE:CODE:NOROOT(1)
+//  463 void ATA_TuneLfAllChannels(void)
+ATA_TuneLfAllChannels:
+          CFI Block cfiBlock4 Using cfiCommon0
+          CFI Function ATA_TuneLfAllChannels
+//  464 {
+        CALL    ?PROLOGUE5_L09
+          CFI R4 Frame(CFA_Y, -1)
+          CFI R27 Frame(CFA_Y, -2)
+          CFI R26 Frame(CFA_Y, -3)
+          CFI R25 Frame(CFA_Y, -4)
+          CFI R24 Frame(CFA_Y, -5)
+          CFI CFA_Y Y+5
+        REQUIRE ?Register_R4_is_cg_reg
+//  465   uint8_t rtrim, ctrim;
+//  466   uint16_t last_RssiValue;
+//  467   
+//  468   // Enable the Trim feature
+//  469   LFCR3 |= 0x07;
+        IN      R16, 0x3B
+        ORI     R16, 0x07
+        OUT     0x3B, R16
+//  470   
+//  471   for (uint8_t channel = 0; channel < 3; channel++)
+        LDI     R26, 0
+        LDI     R16, 3
+        MOV     R4, R16
+//  472   {
+//  473     // Tune LF channel X
+//  474     rtrim = LFRX_R_Trim270k;               // Default value of QTRIM, fix during C trimming
+//  475     ctrim = LFRX_C_TrimOff;                    // Start value of trimming capacitors
+??ATA_TuneLfAllChannels_0:
+        LDI     R27, 0
+//  476     last_RssiValue = 0;
+        LDI     R24, 0
+        LDI     R25, 0
+//  477     
+//  478     do
+//  479     {
+//  480       if (channel == 0)
+??ATA_TuneLfAllChannels_1:
+        TST     R26
+        BRNE    ??ATA_TuneLfAllChannels_2
+//  481       {                  
+//  482         gLfqcTrim[0] = ctrim | rtrim;           // Set trimming register
+        MOV     R16, R27
+        ORI     R16, 0x08
+        STS     gLfqcTrim, R16
+//  483         LFQC1 = gLfqcTrim[0];
+        STS     _A_LFQC1, R16
+        RJMP    ??ATA_TuneLfAllChannels_3
+//  484       }
+//  485       else if (channel == 1)
+??ATA_TuneLfAllChannels_2:
+        CPI     R26, 1
+        BRNE    ??ATA_TuneLfAllChannels_4
+//  486       {
+//  487         gLfqcTrim[1] = ctrim | rtrim;
+        MOV     R16, R27
+        ORI     R16, 0x08
+        STS     (gLfqcTrim + 1), R16
+//  488         LFQC2 = gLfqcTrim[1];
+        STS     _A_LFQC2, R16
+        RJMP    ??ATA_TuneLfAllChannels_3
+//  489       }
+//  490       else if (channel == 2)
+??ATA_TuneLfAllChannels_4:
+        CPI     R26, 2
+        BRNE    ??ATA_TuneLfAllChannels_3
+//  491       {
+//  492         gLfqcTrim[2] = ctrim | rtrim;
+        MOV     R16, R27
+        ORI     R16, 0x08
+        STS     (gLfqcTrim + 2), R16
+//  493         LFQC3 = gLfqcTrim[2];
+        STS     _A_LFQC3, R16
+//  494         
+//  495       }
+//  496       Init_LfRssi_flash_C();
+??ATA_TuneLfAllChannels_3:
+          CFI FunCall Init_LfRssi_flash_C
+        RCALL   Init_LfRssi_flash_C
+//  497       // Internal RSSI measurement
+//  498       //__delay_cycles(18000);
+//  499       ATA_PerformLfRSSI_flash_C(LFRSSI_INT, NO_SIGNDET);
+        LDI     R17, 0
+        LDI     R16, 1
+          CFI FunCall ATA_PerformLfRSSI_flash_C
+        RCALL   ATA_PerformLfRSSI_flash_C
+//  500       if (gIntLfRssi[channel] >= last_RssiValue) 
+        LDI     R16, 2
+        MUL     R26, R16
+        MOVW    R31:R30, R1:R0
+        SUBI    R30, LOW((-(gIntLfRssi) & 0xFFFF))
+        SBCI    R31, (-(gIntLfRssi) & 0xFFFF) >> 8
+        LD      R16, Z
+        LDD     R17, Z+1
+        CP      R16, R24
+        CPC     R17, R25
+        BRCS    ??ATA_TuneLfAllChannels_5
+//  501       {
+//  502         ctrim += LFRX_C_Trim6pf;               // Increase trim capacitor by 6pF
+        SUBI    R27, 240
+//  503         last_RssiValue = gIntLfRssi[channel];
+        MOVW    R25:R24, R17:R16
+//  504       }
+//  505     } while ((gIntLfRssi[channel] == last_RssiValue) && (ctrim != 0x00));
+??ATA_TuneLfAllChannels_5:
+        CP      R16, R24
+        CPC     R17, R25
+        BRNE    ??ATA_TuneLfAllChannels_6
+        TST     R27
+        BRNE    ??ATA_TuneLfAllChannels_1
+//  506   }
+??ATA_TuneLfAllChannels_6:
+        INC     R26
+        DEC     R4
+        BRNE    ??ATA_TuneLfAllChannels_0
+//  507   
+//  508   ATA_lfRxEnableWakeup_flash_C(LFRX_BDR_3_90,LFRX_H_SENSE);
+        LDI     R17, 4
+        LDI     R16, 8
+          CFI FunCall ATA_lfRxEnableWakeup_flash_C
+        RCALL   ATA_lfRxEnableWakeup_flash_C
+//  509 }
+        LDI     R30, 5
+        JMP     ?EPILOGUE_B5_L09
+          CFI EndBlock cfiBlock4
+        REQUIRE _A_LFCR3
+        REQUIRE _A_LFQC1
+        REQUIRE _A_LFQC2
+        REQUIRE _A_LFQC3
+//  510 
+//  511 /**
+//  512  * \brief Update internal reference (compensation factor) in EEprom
+//  513  *        Values stored in raub_lf_rssi[LF_MEAS_INT] are used
+//  514  *
+//  515  * \param[in] lbb_with_acq TRUE execute an internal RSSI measurements and update
+//  516  *                         raub_lf_rssi[LF_MEAS_INT] before updating EEprom
+//  517  *                         FALSE otherwise
+//  518  *
+//  519  * \return void
+//  520  */
+
+        RSEG CODE:CODE:ROOT(1)
+//  521 VOIDFUNC app_rssi_set_ref(bool IntMeasure)
+app_rssi_set_ref:
+          CFI Block cfiBlock5 Using cfiCommon0
+          CFI Function app_rssi_set_ref
+//  522 {
+//  523   if (IntMeasure == TRUE)
+        TST     R16
+        BREQ    ??app_rssi_set_ref_0
+//  524   {
+//  525   // acquire RSSI internal
+//  526   Init_LfRssi_flash_C();
+          CFI FunCall Init_LfRssi_flash_C
+        RCALL   Init_LfRssi_flash_C
+//  527   ATA_PerformLfRSSI_flash_C(LFRSSI_INT, NO_SIGNDET);
+        LDI     R17, 0
+        LDI     R16, 1
+          CFI FunCall ATA_PerformLfRSSI_flash_C
+        RCALL   ATA_PerformLfRSSI_flash_C
+//  528   }
+//  529   
+//  530   // Store RSSI in EEProm
+//  531   ATA_eepWriteBytes_C((uint8_t*)&gIntLfRssi[0],(uint16_t)&g_sEepFlashApp_RKEPEPS.aub_rssi_intref,6);
+??app_rssi_set_ref_0:
+        LDI     R20, 6
+        LDI     R18, LOW((g_sEepFlashApp_RKEPEPS + 36))
+        LDI     R19, HIGH((g_sEepFlashApp_RKEPEPS + 36))
+        LDI     R16, LOW(gIntLfRssi)
+        LDI     R17, (gIntLfRssi) >> 8
+          CFI FunCall ATA_eepWriteBytes_C
+        JMP     ATA_eepWriteBytes_C
+//  532 }
+          CFI EndBlock cfiBlock5
+
+        RSEG CODE:CODE:NOROOT(1)
+CRCenable:
+          CFI Block cfiBlock6 Using cfiCommon0
+          CFI Function CRCenable
+        SBIW    R29:R28, 2
+          CFI CFA_Y Y+2
+        LDI     R16, 0
+        ST      Y, R16
+        STD     Y+1, R16
+        LDI     R20, 2
+        LDI     R18, LOW((g_sCustomerEEPromSection + 108))
+        LDI     R19, HIGH((g_sCustomerEEPromSection + 108))
+        MOVW    R17:R16, R29:R28
+          CFI FunCall ATA_eepReadBytes_C
+        CALL    ATA_eepReadBytes_C
+        LDI     R20, 9
+        LD      R18, Y
+        LDD     R19, Y+1
+        SUBI    R18, 237
+        SBCI    R19, 255
+        LDI     R16, LOW((g_sRfTxServicePathConfig0 + 11))
+        LDI     R17, HIGH((g_sRfTxServicePathConfig0 + 11))
+          CFI FunCall ATA_eepReadBytes_C
+        CALL    ATA_eepReadBytes_C
+        LDS     R16, (g_sRfTxServicePathConfig0 + 11)
+        SBRC    R16, 0
+        RJMP    ??CRCenable_0
+        LDI     R16, 32
+        STS     (g_sRfTxServicePathConfig0 + 19), R16
+        LDS     R16, (g_sRfTxServicePathConfig0 + 11)
+        ORI     R16, 0x03
+        STS     (g_sRfTxServicePathConfig0 + 11), R16
+        LDI     R16, 7
+        STS     (g_sRfTxServicePathConfig0 + 15), R16
+        LDI     R20, 9
+        LD      R18, Y
+        LDD     R19, Y+1
+        SUBI    R18, 237
+        SBCI    R19, 255
+        LDI     R16, LOW((g_sRfTxServicePathConfig0 + 11))
+        LDI     R17, HIGH((g_sRfTxServicePathConfig0 + 11))
+          CFI FunCall ATA_eepWriteBytes_C
+        CALL    ATA_eepWriteBytes_C
+??CRCenable_0:
+        LDI     R30, LOW(gFlashApplState)
+        LDI     R31, (gFlashApplState) >> 8
+        LDD     R16, Z+1
+        ORI     R16, 0x10
+          CFI EndBlock cfiBlock6
+        REQUIRE ?Subroutine0
+        ;               // Fall through to label ?Subroutine0
+
+        RSEG CODE:CODE:NOROOT(1)
+?Subroutine0:
+          CFI Block cfiBlock7 Using cfiCommon0
+          CFI NoFunction
+          CFI CFA_Y Y+2
+        STD     Z+1, R16
+          CFI EndBlock cfiBlock7
+        REQUIRE ??Subroutine1_0
+        ;               // Fall through to label ??Subroutine1_0
+//  533 
+//  534 
+//  535 /**
+//  536  * \brief PEPS Task on frame reception
+//  537  *        Start LF RSSI acquisiotns if needed
+//  538  *        Check WUID is coming from RF link
+//  539  *        Call PEPS handler
+//  540  *
+//  541  * \return none
+//  542  */
+//  543 void app_peps_handler(uint8_t lub_channel)
+//  544 {
+//  545  
+//  546   // accept only frames with more than 2 bytes (WUID + CID + CKS)
+//  547   if (gLfNmbrRxByts >= 2)              
+//  548   {  
+//  549     rub_cid = ((g_MsgRXbuffer.aub_data[3]& BM_CID)>>4);  
+//  550     rub_wuip = lub_channel;
+//  551     
+//  552     if (rub_wuip&RX_CHAN_LF_MSK)
+//  553     { 
+//  554       // message received by LF
+//  555       rub_wuip |= (rub_wuip<<3);    // set WUID source
+//  556       // RSSI acquisitions ?
+//  557       if (cabb_cmd_with_cw[rub_cid])
+//  558       {
+//  559         // acquire internal RSSI (CW OFF)
+//  560         Init_LfRssi_flash_C();      
+//  561         if (bit_test(LED2)) bit_clear(LED2);
+//  562         else bit_set(LED2);
+//  563         ATA_PerformLfRSSI_flash_C(LFRSSI_EXT, SIGNDET);
+//  564          __delay_cycles(18000);//12000  - 1 in 50 miss
+//  565         if (bit_test(LED2)) bit_clear(LED2);
+//  566         else bit_set(LED2);
+//  567          ATA_PerformLfRSSI_flash_C(LFRSSI_INT, NO_SIGNDET);
+//  568       }
+//  569       // force emission on channel 1 when command is received by LF
+//  570       rub_rf_chan = 0; //Toby - was 1
+//  571     }
+//  572     else
+//  573     {
+//  574 
+//  575     }
+//  576       _app_peps_task();         
+//  577 
+//  578   }
+//  579 }
+//  580 
+//  581 //-----------------------------------------------------------------------------
+//  582 /** \brief <b>ATA_lFRssiGetResult_flash_C<void>
+//  583     Read out the result from the last LF RSSI measurements and store them 
+//  584       to the global variables
+//  585 
+//  586     \param[in] none
+//  587 
+//  588     \return none
+//  589 
+//  590 
+//  591     \Traceability None
+//  592 
+//  593     \image none
+//  594     \n
+//  595 */
+//  596 /*---------------------------------------------------------------------------*/
+//  597 
+//  598 void ATA_lFRssiGetResult_flash_C(uint8_t bmode, uint8_t bsign)
+//  599 {
+//  600 
+//  601   RSMS1R &= ~(1<<RSSSV);        // for output the everage value
+//  602   if (bmode == 0)
+//  603   {
+//  604     gExtLfRssi[0] = (RSRES1H<<8) ;
+//  605     gExtLfRssi[0] |= RSRES1L;
+//  606     gExtLfRssi[1] = (RSRES2H<<8) ;
+//  607     gExtLfRssi[1] |= RSRES2L;
+//  608     gExtLfRssi[2] = (RSRES3H<<8) ;
+//  609     gExtLfRssi[2] |= RSRES3L;
+//  610     
+//  611   }
+//  612   else 
+//  613   {
+//  614     gIntLfRssi[0] = (RSRES1H<<8) ;
+//  615     gIntLfRssi[0] |= RSRES1L;
+//  616     gIntLfRssi[1] = (RSRES2H<<8) ;
+//  617     gIntLfRssi[1] |= RSRES2L;
+//  618     gIntLfRssi[2] = (RSRES3H<<8) ;
+//  619     gIntLfRssi[2] |= RSRES3L;
+//  620   }
+//  621 }
+//  622 
+//  623 
+//  624 
+//  625 /**
+//  626  * \brief PEPS common Task
+//  627  *        Analyse and execute frame receive
+//  628  *        Prepare RF message reply
+//  629  *        Send RF message reply
+//  630  *        Acquire battery status
+//  631  *        Light ON LED for 50ms
+//  632  *
+//  633  * \return none
+//  634  */
+//  635 static void _app_peps_task(void)
+//  636 {
+//  637   // execute command
+//  638   if (_peps_cmd_validity())
+//  639   
+//  640   {
+//  641     // light on LED
+//  642     bit_set(LED1);
+//  643     
+//  644 //#ifdef CFG_APP_2WAYRF
+//  645 //    // wake-up RF
+//  646 //    rf_ata5831_setmode(E_STATE_IDLE, (RF_ATA5831_CONFIG_TU){0});
+//  647 //#else // ONE WAY
+//  648 //    // start XTO quartz now so that it is stabilized when we need to transmit
+//  649 //    rf_ata5791_setmode(RF_MODE_IDLE);
+//  650 //#endif
+//  651 
+//  652     // Build RF message
+//  653     _peps_build_msg();     
+//  654 
+//  655     //activate voltage monitor
+//  656    
+//  657     uint8_t VMCR_set = BM_VM_VBAT | BM_VM_2_5V; 
+//  658     ATA_globalsSetVoltageMonitor_C(VMCR_set);//Set Voltage montitor @ 2.5V
+//  659         
+//  660     //load up the data message to be tested
+//  661     for (uint8_t index = 0; index < (CFG_PEPS_PREAMBLE_LENGTH-1); index++)
+//  662     {
+//  663       MSG_TX_DATA.peps.preamble0[index]=0xff;
+//  664     }     
+//  665     MSG_TX_DATA.peps.preamble1 = 0xfe;
+//  666     
+//  667 
+//  668     // Send RF message
+//  669     ATA_rfTx_PEPSmsg_flash_C();      
+//  670    
+//  671     // update battery flag
+//  672     gVbat_Status = (VMSCR & BM_VMF);
+//  673  
+//  674     // stop voltage monitor
+//  675     VMCR = BM_VM_DISABLE;
+//  676     PRR0 |= (1<<PRVM);
+//  677 
+//  678     // must be checked if delay must be added
+//  679     bit_clear(LED1);
+//  680   }
+//  681 }
+//  682 
+//  683 /**
+//  684  * \brief Verify LF frame command validity
+//  685  *        Check managed CID, Frame lenght, CRC if any, WUP ID used, Diag mode
+//  686  *        Command parameter (with cyphered challenge in case of bilateral authent)
+//  687  *
+//  688  * \return TRUE if command is valid, FALSE otherwise
+//  689  */
+
+        RSEG CODE:CODE:NOROOT(1)
+??Subroutine1_0:
+          CFI Block cfiBlock8 Using cfiCommon0
+          CFI NoFunction
+          CFI CFA_Y Y+2
+//  690 static bool _peps_cmd_validity(void)
+//  691 {
+//  692   uint16_t AES_KeyAddr; 
+//  693   ATA_eepReadBytes_C((uint8_t*)&rub_fob_idx, (uint16_t) &g_sEepFlashApp_RKEPEPS.ub_fidx, 0x01);
+//  694   ATA_eepReadBytes_C((uint8_t*)&rul_fob_id, eul_key_id, 0x04);
+//  695   
+//  696   // check wake-up ID source
+//  697   switch (rub_cid)
+//  698   {
+//  699     case PEPS_CID_WR_PARAM:
+//  700     case PEPS_CID_RD_PARAM:
+//  701       if ((rub_wuip&RX_WUID_MSK) == RX_WUID1)
+//  702       {
+//  703         // wrong wake-up or wrong index
+//  704         return FALSE;
+//  705       }
+//  706       else if (((RX_MSG_PEPS_TS*)MSG_RX_DATA)->fidx != rub_fob_idx)
+//  707       {
+//  708         // wrong fob index
+//  709         return FALSE;
+//  710       }
+//  711       break;
+//  712 
+//  713     case PEPS_CID_2WAY:
+//  714       // allowed everytime
+//  715       break;
+//  716       
+//  717     case PEPS_CID_UNI_AUTH_SINGLE:
+//  718     case PEPS_CID_BI_AUTH_SINGLE:
+//  719       if (((RX_MSG_PEPS_TS*)MSG_RX_DATA)->fidx != rub_fob_idx)
+//  720       {
+//  721         // wrong fob index
+//  722         return FALSE;
+//  723       }
+//  724     case PEPS_CID_UNI_AUTH:
+//  725     case PEPS_CID_BI_AUTH:
+//  726       if ((rub_wuip&RX_WUID_MSK) == RX_WUID1)
+//  727       {
+//  728         // wrong wake-up
+//  729         return FALSE;
+//  730       }
+//  731       break;
+//  732       
+//  733     default:
+//  734       if ((rub_wuip&RX_WUID_MSK) == RX_WUID0)
+//  735       {
+//  736         // vehicle wake-up
+//  737         if (((RX_MSG_PEPS_TS*)MSG_RX_DATA)->fidx != rub_fob_idx)
+//  738         {
+//  739           // wrong fob index
+//  740           return FALSE;
+//  741         }
+//  742       }
+//  743   }
+//  744 
+//  745   // check mode
+//  746   switch (rub_cid)
+//  747   {
+//  748     case PEPS_CID_RD_PARAM:
+//  749     case PEPS_CID_WR_PARAM:
+//  750       if (gNTE_DIAG_MODE == DIAG_OFF)
+//  751       {
+//  752         // forbiddden in DIAG OFF
+//  753         return FALSE;
+//  754       }
+//  755       break;
+//  756 
+//  757     case PEPS_CID_LF_PARAM:
+//  758       if (gNTE_DIAG_MODE != DIAG_OEM)
+//  759       {
+//  760         // only allowed in OEM mode
+//  761         return FALSE;
+//  762       }
+//  763       break;
+//  764       
+//  765     default:
+//  766       break;
+//  767   }
+//  768 
+//  769    // check command parameters
+//  770   switch (rub_cid)
+//  771   {
+//  772     case PEPS_CID_RD_PARAM:
+//  773     case PEPS_CID_WR_PARAM:
+//  774       
+//  775       //**
+//  776       if (((RX_MSG_PEPS_TS*)MSG_RX_DATA)->data_rd_param.param_index >=32)
+//  777       {
+//  778         // wrong parameter index
+//  779         return FALSE;
+//  780       }
+//  781       break;
+//  782 
+//  783     case PEPS_CID_BI_AUTH:
+//  784     case PEPS_CID_BI_AUTH_SINGLE:
+//  785     
+//  786      PRR0 &= ~BM_PRCU;         //disable power reduction for AES
+//  787      AESCR = BM_AESRES;
+//  788      
+//  789      ATA_eepReadBytes_C((uint8_t*)&AES_KeyAddr, (uint16_t)&g_sCustomerEEPromSection.eepSecKeyAddrB, 0x02); //KeyB(Vehicle_SK) for Authentication; 
+//  790      ATA_aesTriggerKeyDma_C(AES_KeyAddr);
+//  791      __delay_cycles(30);    
+//  792      memory_copy(&gAES_DataBuffer[0], (uint8_t*)((RX_MSG_PEPS_TS*)MSG_RX_DATA)->data_auth_bi.challenge, CFG_PEPS_CHALLENGE_LENGTH);
+//  793      for (uint8_t index = CFG_PEPS_CHALLENGE_LENGTH; index < 16; index++)
+//  794       {
+//  795           gAES_DataBuffer[index] = gAES_DataBuffer[(index & 3)]; 
+//  796       }
+//  797       ATA_aesLoadData_C(&AESDR, &gAES_DataBuffer[0]);
+//  798       AESCR = BM_AESE; 
+//  799       while ((AESSR & BM_AESRF)== 0x00U);       //wait until ready
+//  800       AESSR |= BM_AESRF;                        // clear flag
+//  801       for (uint8_t index = 0; index < 16; index++)
+//  802       {
+//  803         gAES_DataBuffer[index] = AESDR;
+//  804       }
+//  805       PRR0 |= BM_PRCU;         //enable power reduction for AES
+//  806       
+//  807       // compare challenge cyphered with the on received
+//  808       if (!memory_compare(&gAES_DataBuffer[0],
+//  809                           (((RX_MSG_PEPS_TS*)MSG_RX_DATA)->data_auth_bi.cyph_challenge),
+//  810                           CFG_PEPS_CHALLENGE_CYPH_LENGTH))
+//  811       {
+//  812         return FALSE;
+//  813       }
+//  814       break;
+//  815 
+//  816     case PEPS_CID_MODE:
+//  817       // check FOB ID
+//  818       if (rul_fob_id != ((RX_MSG_PEPS_TS*)MSG_RX_DATA)->data_mode.fid)
+//  819       {
+//  820         // wrong ID
+//  821         return FALSE;
+//  822       }
+//  823       break;
+//  824       
+//  825     default:
+//  826       break;
+//  827   }
+//  828 
+//  829   return TRUE;
+        ADIW    R29:R28, 2
+          CFI CFA_Y Y+0
+        RET
+          CFI EndBlock cfiBlock8
+
+        RSEG CODE:CODE:NOROOT(1)
+_peps_build_msg:
+          CFI Block cfiBlock9 Using cfiCommon0
+          CFI Function _peps_build_msg
+        ST      -Y, R27
+          CFI R27 Frame(CFA_Y, -1)
+          CFI CFA_Y Y+1
+        ST      -Y, R26
+          CFI R26 Frame(CFA_Y, -2)
+          CFI CFA_Y Y+2
+        SBIW    R29:R28, 2
+          CFI CFA_Y Y+4
+        LDI     R19, 15
+        LDI     R18, 0
+        LDI     R16, LOW((g_MsgTXbuffer + 2))
+        LDI     R17, HIGH((g_MsgTXbuffer + 2))
+          CFI FunCall memory_set
+        CALL    memory_set
+        LDI     R16, 1
+        STS     (g_MsgTXbuffer + 5), R16
+        LDS     R18, gVbat_Status
+        LDS     R16, rub_fob_idx
+        LSL     R16
+        ANDI    R16, 0x0E
+        ANDI    R18, 0x01
+        OR      R16, R18
+        LDS     R17, rub_cid
+        SWAP    R17
+        ANDI    R17, 0xF0
+        OR      R16, R17
+        STS     (g_MsgTXbuffer + 6), R16
+        LDS     R16, rub_cid
+        TST     R16
+        BREQ    ??_peps_build_msg_0
+        DEC     R16
+        BRNE    $+2+2
+        RJMP    ??_peps_build_msg_1
+        DEC     R16
+        BRNE    $+2+2
+        RJMP    ??_peps_build_msg_2
+        SUBI    R16, 2
+        BRNE    $+2+2
+        RJMP    ??_peps_build_msg_3
+        SUBI    R16, 1
+        BRCS    ??_peps_build_msg_4
+        SUBI    R16, 4
+        BRCS    ??_peps_build_msg_5
+        DEC     R16
+        BRNE    $+2+2
+        RJMP    ??_peps_build_msg_6
+        DEC     R16
+        BRNE    $+2+2
+        RJMP    ??_peps_build_msg_7
+        SUBI    R16, 3
+        BRNE    $+2+2
+        RJMP    ??_peps_build_msg_8
+        DEC     R16
+        BRNE    $+2+2
+        RJMP    ??_peps_build_msg_9
+??_peps_build_msg_4:
+        RJMP    ??_peps_build_msg_10
+??_peps_build_msg_0:
+        LDI     R30, LOW(rul_fob_id)
+        LDI     R31, (rul_fob_id) >> 8
+        LD      R16, Z
+        LDD     R17, Z+1
+        LDD     R18, Z+2
+        LDD     R19, Z+3
+        LDI     R30, LOW(g_MsgTXbuffer)
+        LDI     R31, (g_MsgTXbuffer) >> 8
+        STD     Z+7, R16
+        STD     Z+8, R17
+        STD     Z+9, R18
+        STD     Z+10, R19
+        LDI     R20, 4
+        LDI     R18, LOW((g_sEepFlashApp_RKEPEPS + 12))
+        LDI     R19, HIGH((g_sEepFlashApp_RKEPEPS + 12))
+        LDI     R16, LOW((g_MsgTXbuffer + 11))
+        LDI     R17, HIGH((g_MsgTXbuffer + 11))
+          CFI FunCall ATA_eepReadBytes_C
+        CALL    ATA_eepReadBytes_C
+        RJMP    ??_peps_build_msg_11
+??_peps_build_msg_5:
+          CFI FunCall CalcLinVector
+        CALL    CalcLinVector
+        LDS     R16, g3dVector
+        STS     (g_MsgTXbuffer + 7), R16
+        LDS     R16, (g3dVector + 1)
+        STS     (g_MsgTXbuffer + 8), R16
+        LDS     R16, g3dVectorFlag
+        ANDI    R16, 0x7F
+        STS     (g_MsgTXbuffer + 9), R16
+        LDS     R16, gFlashApplignSignDetect
+        STS     (g_MsgTXbuffer + 10), R16
+        LDS     R16, (gFlashApplignSignDetect + 1)
+        STS     (g_MsgTXbuffer + 11), R16
+        LDS     R16, (gFlashApplignSignDetect + 2)
+        STS     (g_MsgTXbuffer + 12), R16
+        LDS     R16, (gFlashApplignSignDetect + 3)
+        STS     (g_MsgTXbuffer + 13), R16
+        CBI     0x1A, 0x06
+        LDI     R16, 32
+        OUT     0x1D, R16
+        LDI     R20, 2
+        LDI     R18, LOW((g_sCustomerEEPromSection + 42))
+        LDI     R19, HIGH((g_sCustomerEEPromSection + 42))
+        MOVW    R17:R16, R29:R28
+          CFI FunCall ATA_eepReadBytes_C
+        CALL    ATA_eepReadBytes_C
+        LD      R16, Y
+        LDD     R17, Y+1
+          CFI FunCall ATA_aesTriggerKeyDma_C
+        CALL    ATA_aesTriggerKeyDma_C
+        LDI     R20, 4
+        LDI     R18, LOW((g_MsgRXbuffer + 6))
+        LDI     R19, HIGH((g_MsgRXbuffer + 6))
+        LDI     R16, LOW((g_MsgTXbuffer + 14))
+        LDI     R17, HIGH((g_MsgTXbuffer + 14))
+          CFI FunCall memory_copy
+        CALL    memory_copy
+        LDI     R30, LOW(rul_fob_id)
+        LDI     R31, (rul_fob_id) >> 8
+        LD      R16, Z
+        LDD     R17, Z+1
+        LDD     R18, Z+2
+        LDD     R19, Z+3
+        LDI     R30, LOW(g_MsgTXbuffer)
+        LDI     R31, (g_MsgTXbuffer) >> 8
+        STD     Z+18, R16
+        STD     Z+19, R17
+        STD     Z+20, R18
+        STD     Z+21, R19
+        LDI     R20, 16
+        LDI     R18, LOW((g_MsgTXbuffer + 6))
+        LDI     R19, HIGH((g_MsgTXbuffer + 6))
+        LDI     R16, LOW(gAES_DataBuffer)
+        LDI     R17, (gAES_DataBuffer) >> 8
+          CFI FunCall memory_copy
+        CALL    memory_copy
+        LDI     R18, LOW(gAES_DataBuffer)
+        LDI     R19, (gAES_DataBuffer) >> 8
+        LDI     R16, LOW(385)
+        LDI     R17, (385) >> 8
+          CFI FunCall ATA_aesLoadData_C
+        CALL    ATA_aesLoadData_C
+        LDI     R16, 128
+        OUT     0x1D, R16
+??_peps_build_msg_12:
+        SBIS    0x1E, 0x00
+        RJMP    ??_peps_build_msg_12
+        SBI     0x1E, 0x00
+        LDI     R18, 0
+        LDI     R16, 16
+??_peps_build_msg_13:
+        LDS     R17, _A_AESDR
+        LDI     R31, 0
+        MOV     R30, R18
+        SUBI    R30, LOW((-(gAES_DataBuffer) & 0xFFFF))
+        SBCI    R31, (-(gAES_DataBuffer) & 0xFFFF) >> 8
+        ST      Z, R17
+        INC     R18
+        DEC     R16
+        BRNE    ??_peps_build_msg_13
+        LDI     R20, 4
+        LDI     R18, LOW(gAES_DataBuffer)
+        LDI     R19, (gAES_DataBuffer) >> 8
+        LDI     R16, LOW((g_MsgTXbuffer + 14))
+        LDI     R17, HIGH((g_MsgTXbuffer + 14))
+          CFI FunCall memory_copy
+        CALL    memory_copy
+        SBI     0x1A, 0x06
+        RJMP    ??_peps_build_msg_10
+??_peps_build_msg_2:
+        LDS     R16, (g_MsgRXbuffer + 6)
+        LDI     R17, 0
+        LDI     R20, 45
+        LDI     R21, 0
+          CFI FunCall ?S_EC_MUL_L02
+        CALL    ?S_EC_MUL_L02
+        MOVW    R19:R18, R17:R16
+        SUBI    R18, 48
+        SBCI    R19, 255
+        LDI     R20, 15
+        LDI     R16, LOW((g_MsgRXbuffer + 7))
+        LDI     R17, HIGH((g_MsgRXbuffer + 7))
+          CFI FunCall ATA_eepWriteBytes_C
+        CALL    ATA_eepWriteBytes_C
+??_peps_build_msg_1:
+        LDI     R20, 4
+        LDI     R18, LOW((g_sEepFlashApp_RKEPEPS + 12))
+        LDI     R19, HIGH((g_sEepFlashApp_RKEPEPS + 12))
+        LDI     R16, LOW((g_MsgTXbuffer + 7))
+        LDI     R17, HIGH((g_MsgTXbuffer + 7))
+          CFI FunCall ATA_eepReadBytes_C
+        CALL    ATA_eepReadBytes_C
+        LDS     R16, (g_MsgRXbuffer + 6)
+        LDI     R17, 0
+        LDI     R20, 45
+        LDI     R21, 0
+          CFI FunCall ?S_EC_MUL_L02
+        CALL    ?S_EC_MUL_L02
+        MOVW    R19:R18, R17:R16
+        SUBI    R18, 48
+        SBCI    R19, 255
+        LDI     R20, 15
+        LDI     R16, LOW((g_MsgTXbuffer + 11))
+        LDI     R17, HIGH((g_MsgTXbuffer + 11))
+          CFI FunCall ATA_eepReadBytes_C
+        CALL    ATA_eepReadBytes_C
+        LDS     R16, (g_MsgRXbuffer + 6)
+        STS     (g_MsgTXbuffer + 10), R16
+        RJMP    ??_peps_build_msg_11
+??_peps_build_msg_3:
+          CFI FunCall CalcLinVector
+        CALL    CalcLinVector
+        LDS     R16, g3dVector
+        STS     (g_MsgTXbuffer + 7), R16
+        LDS     R16, (g3dVector + 1)
+        STS     (g_MsgTXbuffer + 8), R16
+        LDS     R16, g3dVectorFlag
+        STS     (g_MsgTXbuffer + 9), R16
+        LDS     R16, gFlashApplignSignDetect
+        STS     (g_MsgTXbuffer + 10), R16
+        LDS     R16, (gFlashApplignSignDetect + 1)
+        STS     (g_MsgTXbuffer + 11), R16
+        LDS     R16, (gFlashApplignSignDetect + 2)
+        STS     (g_MsgTXbuffer + 12), R16
+        LDS     R16, (gFlashApplignSignDetect + 3)
+        STS     (g_MsgTXbuffer + 13), R16
+        LDS     R16, (g_MsgRXbuffer + 5)
+        LSR     R16
+        LSR     R16
+        ANDI    R16, 0x03
+        STS     rub_rf_chan, R16
+        RJMP    ??_peps_build_msg_10
+??_peps_build_msg_6:
+          CFI FunCall CalcLinVector
+        CALL    CalcLinVector
+        LDS     R19, (g3dVector + 1)
+        LDS     R16, g3dVector
+        LDI     R30, LOW(g_MsgTXbuffer)
+        LDI     R31, (g_MsgTXbuffer) >> 8
+        STD     Z+29, R16
+        STD     Z+30, R19
+        LDS     R16, g3dVectorFlag
+        STD     Z+31, R16
+        LDS     R16, gFlashApplignSignDetect
+        STD     Z+7, R16
+        LDS     R16, (gFlashApplignSignDetect + 1)
+        STD     Z+8, R16
+        LDS     R16, (gFlashApplignSignDetect + 2)
+        STD     Z+9, R16
+        LDS     R16, (gFlashApplignSignDetect + 3)
+        STD     Z+10, R16
+        LDI     R30, LOW(wLfRssiref)
+        LDI     R31, (wLfRssiref) >> 8
+        LDD     R16, Z+4
+        LDD     R17, Z+5
+        LDI     R30, LOW(g_MsgTXbuffer)
+        LDI     R31, (g_MsgTXbuffer) >> 8
+        STD     Z+11, R16
+        STD     Z+12, R17
+        LDI     R30, LOW(wLfRssiref)
+        LDI     R31, (wLfRssiref) >> 8
+        LDD     R16, Z+2
+        LDD     R17, Z+3
+        LDI     R30, LOW(g_MsgTXbuffer)
+        LDI     R31, (g_MsgTXbuffer) >> 8
+        STD     Z+13, R16
+        STD     Z+14, R17
+        LDI     R30, LOW(wLfRssiref)
+        LDI     R31, (wLfRssiref) >> 8
+        LD      R16, Z
+        LDD     R17, Z+1
+        LDI     R30, LOW(g_MsgTXbuffer)
+        LDI     R31, (g_MsgTXbuffer) >> 8
+        STD     Z+15, R16
+        STD     Z+16, R17
+        LDI     R30, LOW(gExtLfRssi)
+        LDI     R31, (gExtLfRssi) >> 8
+        LDD     R16, Z+4
+        LDD     R17, Z+5
+        LDI     R30, LOW(g_MsgTXbuffer)
+        LDI     R31, (g_MsgTXbuffer) >> 8
+        STD     Z+17, R16
+        STD     Z+18, R17
+        LDI     R30, LOW(gExtLfRssi)
+        LDI     R31, (gExtLfRssi) >> 8
+        LDD     R16, Z+2
+        LDD     R17, Z+3
+        LDI     R30, LOW(g_MsgTXbuffer)
+        LDI     R31, (g_MsgTXbuffer) >> 8
+        STD     Z+19, R16
+        STD     Z+20, R17
+        LDI     R30, LOW(gExtLfRssi)
+        LDI     R31, (gExtLfRssi) >> 8
+        LD      R16, Z
+        LDD     R17, Z+1
+        LDI     R30, LOW(g_MsgTXbuffer)
+        LDI     R31, (g_MsgTXbuffer) >> 8
+        STD     Z+21, R16
+        STD     Z+22, R17
+        LDI     R30, LOW(gIntLfRssi)
+        LDI     R31, (gIntLfRssi) >> 8
+        LDD     R16, Z+4
+        LDD     R17, Z+5
+        LDI     R30, LOW(g_MsgTXbuffer)
+        LDI     R31, (g_MsgTXbuffer) >> 8
+        STD     Z+23, R16
+        STD     Z+24, R17
+        LDI     R30, LOW(gIntLfRssi)
+        LDI     R31, (gIntLfRssi) >> 8
+        LDD     R16, Z+2
+        LDD     R17, Z+3
+        LDI     R30, LOW(g_MsgTXbuffer)
+        LDI     R31, (g_MsgTXbuffer) >> 8
+        STD     Z+25, R16
+        STD     Z+26, R17
+        LDI     R30, LOW(gIntLfRssi)
+        LDI     R31, (gIntLfRssi) >> 8
+        LD      R16, Z
+        LDD     R17, Z+1
+        LDI     R30, LOW(g_MsgTXbuffer)
+        LDI     R31, (g_MsgTXbuffer) >> 8
+        STD     Z+27, R16
+        STD     Z+28, R17
+        RJMP    ??_peps_build_msg_11
+??_peps_build_msg_7:
+        LDI     R26, LOW((g_MsgRXbuffer + 6))
+        LDI     R27, HIGH((g_MsgRXbuffer + 6))
+        LD      R30, X+
+        LD      R31, X
+        CPI     R30, 255
+        SBCI    R31, 255
+        BRNE    ??_peps_build_msg_14
+        LDI     R26, LOW((g_MsgRXbuffer + 8))
+        LDI     R27, HIGH((g_MsgRXbuffer + 8))
+        LD      R30, X+
+        LD      R31, X
+        CPI     R30, 255
+        SBCI    R31, 255
+        BRNE    ??_peps_build_msg_14
+        LDI     R26, LOW((g_MsgRXbuffer + 10))
+        LDI     R27, HIGH((g_MsgRXbuffer + 10))
+        LD      R30, X+
+        LD      R31, X
+        CPI     R30, 255
+        SBCI    R31, 255
+        BREQ    ??_peps_build_msg_15
+??_peps_build_msg_14:
+        LDI     R30, LOW(g_MsgRXbuffer)
+        LDI     R31, (g_MsgRXbuffer) >> 8
+        LDD     R16, Z+6
+        LDD     R17, Z+7
+        LDI     R30, LOW(wLfRssiNorm)
+        LDI     R31, (wLfRssiNorm) >> 8
+        STD     Z+4, R16
+        STD     Z+5, R17
+        LDI     R30, LOW(g_MsgRXbuffer)
+        LDI     R31, (g_MsgRXbuffer) >> 8
+        LDD     R16, Z+8
+        LDD     R17, Z+9
+        LDI     R30, LOW(wLfRssiNorm)
+        LDI     R31, (wLfRssiNorm) >> 8
+        STD     Z+2, R16
+        STD     Z+3, R17
+        LDI     R30, LOW(g_MsgRXbuffer)
+        LDI     R31, (g_MsgRXbuffer) >> 8
+        LDD     R16, Z+10
+        LDD     R17, Z+11
+        LDI     R30, LOW(wLfRssiNorm)
+        LDI     R31, (wLfRssiNorm) >> 8
+        ST      Z, R16
+        STD     Z+1, R17
+        LDI     R20, 6
+        LDI     R18, LOW((g_sEepFlashApp_RKEPEPS + 27))
+        LDI     R19, HIGH((g_sEepFlashApp_RKEPEPS + 27))
+        MOVW    R17:R16, R31:R30
+          CFI FunCall ATA_eepWriteBytes_C
+        CALL    ATA_eepWriteBytes_C
+??_peps_build_msg_15:
+        LDI     R26, LOW((g_MsgRXbuffer + 12))
+        LDI     R27, HIGH((g_MsgRXbuffer + 12))
+        LD      R30, X+
+        LD      R31, X
+        CPI     R30, 255
+        SBCI    R31, 255
+        BREQ    ??_peps_build_msg_16
+        LDI     R26, LOW((g_MsgRXbuffer + 14))
+        LDI     R27, HIGH((g_MsgRXbuffer + 14))
+        LD      R30, X+
+        LD      R31, X
+        CPI     R30, 255
+        SBCI    R31, 255
+        BREQ    ??_peps_build_msg_16
+        LDI     R26, LOW((g_MsgRXbuffer + 16))
+        LDI     R27, HIGH((g_MsgRXbuffer + 16))
+        LD      R30, X+
+        LD      R31, X
+        CPI     R30, 255
+        SBCI    R31, 255
+        BREQ    ??_peps_build_msg_16
+        LDI     R30, LOW(g_MsgRXbuffer)
+        LDI     R31, (g_MsgRXbuffer) >> 8
+        LDD     R16, Z+12
+        LDD     R17, Z+13
+        LDI     R30, LOW(gIntLfRssi)
+        LDI     R31, (gIntLfRssi) >> 8
+        STD     Z+4, R16
+        STD     Z+5, R17
+        LDI     R30, LOW(g_MsgRXbuffer)
+        LDI     R31, (g_MsgRXbuffer) >> 8
+        LDD     R16, Z+14
+        LDD     R17, Z+15
+        LDI     R30, LOW(gIntLfRssi)
+        LDI     R31, (gIntLfRssi) >> 8
+        STD     Z+2, R16
+        STD     Z+3, R17
+        LDI     R30, LOW(g_MsgRXbuffer)
+        LDI     R31, (g_MsgRXbuffer) >> 8
+        LDD     R16, Z+16
+        LDD     R17, Z+17
+        LDI     R30, LOW(gIntLfRssi)
+        LDI     R31, (gIntLfRssi) >> 8
+        ST      Z, R16
+        STD     Z+1, R17
+        LDI     R16, 0
+          CFI FunCall app_rssi_set_ref
+        RCALL   app_rssi_set_ref
+??_peps_build_msg_16:
+        LDI     R30, LOW(wLfRssiNorm)
+        LDI     R31, (wLfRssiNorm) >> 8
+        LDD     R16, Z+4
+        LDD     R17, Z+5
+        LDI     R30, LOW(g_MsgTXbuffer)
+        LDI     R31, (g_MsgTXbuffer) >> 8
+        STD     Z+7, R16
+        STD     Z+8, R17
+        LDI     R30, LOW(wLfRssiNorm)
+        LDI     R31, (wLfRssiNorm) >> 8
+        LDD     R16, Z+2
+        LDD     R17, Z+3
+        LDI     R30, LOW(g_MsgTXbuffer)
+        LDI     R31, (g_MsgTXbuffer) >> 8
+        STD     Z+9, R16
+        STD     Z+10, R17
+        LDI     R30, LOW(wLfRssiNorm)
+        LDI     R31, (wLfRssiNorm) >> 8
+        LD      R16, Z
+        LDD     R17, Z+1
+        LDI     R30, LOW(g_MsgTXbuffer)
+        LDI     R31, (g_MsgTXbuffer) >> 8
+        STD     Z+11, R16
+        STD     Z+12, R17
+        LDI     R30, LOW(wLfRssiref)
+        LDI     R31, (wLfRssiref) >> 8
+        LDD     R16, Z+4
+        LDD     R17, Z+5
+        LDI     R30, LOW(g_MsgTXbuffer)
+        LDI     R31, (g_MsgTXbuffer) >> 8
+        STD     Z+13, R16
+        STD     Z+14, R17
+        LDI     R30, LOW(wLfRssiref)
+        LDI     R31, (wLfRssiref) >> 8
+        LDD     R16, Z+2
+        LDD     R17, Z+3
+        LDI     R30, LOW(g_MsgTXbuffer)
+        LDI     R31, (g_MsgTXbuffer) >> 8
+        STD     Z+15, R16
+        STD     Z+16, R17
+        LDI     R30, LOW(wLfRssiref)
+        LDI     R31, (wLfRssiref) >> 8
+        LD      R16, Z
+        LDD     R17, Z+1
+        LDI     R30, LOW(g_MsgTXbuffer)
+        LDI     R31, (g_MsgTXbuffer) >> 8
+        STD     Z+17, R16
+        STD     Z+18, R17
+        RJMP    ??_peps_build_msg_11
+??_peps_build_msg_8:
+        LDI     R20, 6
+        LDI     R18, LOW(SW_ID)
+        LDI     R19, (SW_ID) >> 8
+        LDI     R16, LOW((g_MsgTXbuffer + 7))
+        LDI     R17, HIGH((g_MsgTXbuffer + 7))
+          CFI FunCall memory_copy
+        CALL    memory_copy
+        RJMP    ??_peps_build_msg_11
+??_peps_build_msg_9:
+        LDS     R16, (g_MsgRXbuffer + 10)
+        CPI     R16, 3
+        BRCC    ??_peps_build_msg_17
+        LDI     R20, 4
+        LDI     R18, LOW((caub_diag_code - 4))
+        LDI     R19, HIGH((caub_diag_code - 4))
+        MUL     R16, R20
+        ADD     R18, R0
+        ADC     R19, R1
+        LDI     R16, LOW((g_MsgRXbuffer + 11))
+        LDI     R17, HIGH((g_MsgRXbuffer + 11))
+          CFI FunCall memory_compare_const
+        CALL    memory_compare_const
+        TST     R16
+        BREQ    ??_peps_build_msg_18
+        LDI     R16, 1
+        RJMP    ??_peps_build_msg_19
+??_peps_build_msg_18:
+        LDI     R16, 0
+??_peps_build_msg_19:
+        TST     R16
+        BRNE    ??_peps_build_msg_20
+        LDI     R16, 4
+        LDI     R17, 0
+        LDI     R30, LOW((caub_diag_code - 4))
+        LDI     R31, HIGH((caub_diag_code - 4))
+        LDS     R18, (g_MsgRXbuffer + 10)
+        MUL     R18, R16
+        ADD     R30, R0
+        ADC     R31, R1
+        LDI     R19, 0
+        LDI     R26, LOW((g_MsgRXbuffer + 11))
+        LDI     R27, HIGH((g_MsgRXbuffer + 11))
+          CFI FunCall memcmp_G
+        CALL    memcmp_G
+        OR      R16, R17
+        BREQ    ??_peps_build_msg_17
+??_peps_build_msg_20:
+        LDS     R16, (g_MsgRXbuffer + 10)
+        STS     gNTE_DIAG_MODE, R16
+        RJMP    ??_peps_build_msg_21
+??_peps_build_msg_17:
+        LDI     R16, 0
+        STS     (rts_cram + 5), R16
+??_peps_build_msg_21:
+        LDI     R30, LOW(g_MsgRXbuffer)
+        LDI     R31, (g_MsgRXbuffer) >> 8
+        LDD     R16, Z+6
+        LDD     R17, Z+7
+        LDD     R18, Z+8
+        LDD     R19, Z+9
+        LDI     R30, LOW(g_MsgTXbuffer)
+        LDI     R31, (g_MsgTXbuffer) >> 8
+        STD     Z+7, R16
+        STD     Z+8, R17
+        STD     Z+9, R18
+        STD     Z+10, R19
+        LDS     R16, gNTE_DIAG_MODE
+        STD     Z+11, R16
+??_peps_build_msg_11:
+          CFI FunCall CRCenable
+        RCALL   CRCenable
+??_peps_build_msg_10:
+        ADIW    R29:R28, 2
+          CFI CFA_Y Y+2
+        LD      R26, Y+
+          CFI R26 SameValue
+          CFI CFA_Y Y+1
+        LD      R27, Y+
+          CFI R27 SameValue
+          CFI CFA_Y Y+0
+        RET
+          CFI EndBlock cfiBlock9
+        REQUIRE _A_PRR0
+        REQUIRE _A_AESCR
+        REQUIRE _A_AESDR
+        REQUIRE _A_AESSR
+
+        RSEG CODE:CODE:ROOT(1)
+_app_peps_task:
+          CFI Block cfiBlock10 Using cfiCommon0
+          CFI Function _app_peps_task
+          CFI FunCall _peps_cmd_validity
+        RCALL   _peps_cmd_validity
+        TST     R16
+        BREQ    ??_app_peps_task_0
+        SBI     0x08, 0x00
+          CFI FunCall _peps_build_msg
+        RCALL   _peps_build_msg
+        LDI     R16, 6
+          CFI FunCall ATA_globalsSetVoltageMonitor_C
+        CALL    ATA_globalsSetVoltageMonitor_C
+        LDI     R18, 0
+        LDI     R16, 3
+        LDI     R17, 255
+??_app_peps_task_1:
+        LDI     R31, 0
+        MOV     R30, R18
+        SUBI    R30, LOW((-(g_MsgTXbuffer) & 0xFFFF))
+        SBCI    R31, (-(g_MsgTXbuffer) & 0xFFFF) >> 8
+        STD     Z+2, R17
+        INC     R18
+        DEC     R16
+        BRNE    ??_app_peps_task_1
+        LDI     R16, 254
+        STS     (g_MsgTXbuffer + 5), R16
+          CFI FunCall ATA_rfTx_PEPSmsg_flash_C
+        CALL    ATA_rfTx_PEPSmsg_flash_C
+        IN      R16, 0x2A
+        ANDI    R16, 0x01
+        STS     gVbat_Status, R16
+        LDI     R16, 0
+        STS     _A_VMCR, R16
+        SBI     0x1A, 0x04
+        CBI     0x08, 0x00
+??_app_peps_task_0:
+        RET
+          CFI EndBlock cfiBlock10
+        REQUIRE _A_PORTC
+        REQUIRE _A_VMSCR
+        REQUIRE _A_VMCR
+        REQUIRE _A_PRR0
+
+        RSEG CODE:CODE:ROOT(1)
+app_peps_handler:
+          CFI Block cfiBlock11 Using cfiCommon0
+          CFI Function app_peps_handler
+        LDS     R17, gLfNmbrRxByts
+        CPI     R17, 2
+        BRCS    ??app_peps_handler_0
+        LDS     R17, (g_MsgRXbuffer + 5)
+        SWAP    R17
+        ANDI    R17, 0x0F
+        STS     rub_cid, R17
+        STS     rub_wuip, R16
+        ANDI    R16, 0x18
+        BREQ    ??app_peps_handler_1
+        LDS     R16, rub_wuip
+        LSL     R16
+        LSL     R16
+        LSL     R16
+        LDS     R17, rub_wuip
+        OR      R17, R16
+        STS     rub_wuip, R17
+        LDS     R30, rub_cid
+        LDI     R31, 0
+        SUBI    R30, LOW((-(cabb_cmd_with_cw) & 0xFFFF))
+        SBCI    R31, (-(cabb_cmd_with_cw) & 0xFFFF) >> 8
+        LD      R16, Z
+        TST     R16
+        BREQ    ??app_peps_handler_2
+          CFI FunCall Init_LfRssi_flash_C
+        RCALL   Init_LfRssi_flash_C
+        SBIS    0x08, 0x01
+        RJMP    ??app_peps_handler_3
+        CBI     0x08, 0x01
+        RJMP    ??app_peps_handler_4
+??app_peps_handler_3:
+        SBI     0x08, 0x01
+??app_peps_handler_4:
+        LDI     R17, 1
+        LDI     R16, 0
+          CFI FunCall ATA_PerformLfRSSI_flash_C
+        RCALL   ATA_PerformLfRSSI_flash_C
+        LDI     R16, 147
+        LDI     R17, 17
+        SUBI    R16, 1
+        SBCI    R17, 0
+        BRNE    $-4
+        RJMP    $+2
+        NOP
+        SBIS    0x08, 0x01
+        RJMP    ??app_peps_handler_5
+        CBI     0x08, 0x01
+        RJMP    ??app_peps_handler_6
+??app_peps_handler_5:
+        SBI     0x08, 0x01
+??app_peps_handler_6:
+        LDI     R17, 0
+        LDI     R16, 1
+          CFI FunCall ATA_PerformLfRSSI_flash_C
+        RCALL   ATA_PerformLfRSSI_flash_C
+??app_peps_handler_2:
+        LDI     R16, 0
+        STS     rub_rf_chan, R16
+??app_peps_handler_1:
+          CFI FunCall _app_peps_task
+        RCALL   _app_peps_task
+??app_peps_handler_0:
+        RET
+          CFI EndBlock cfiBlock11
+        REQUIRE _A_PORTC
+
+        RSEG CODE:CODE:ROOT(1)
+ATA_lFRssiGetResult_flash_C:
+          CFI Block cfiBlock12 Using cfiCommon0
+          CFI Function ATA_lFRssiGetResult_flash_C
+          CFI NoCalls
+        LDS     R17, 434
+        ANDI    R17, 0xBF
+        STS     434, R17
+        TST     R16
+        LDS     R19, _A_RSRES1H
+        LDS     R16, _A_RSRES1L
+        BRNE    ??ATA_lFRssiGetResult_flash_C_0
+        LDI     R30, LOW(gExtLfRssi)
+        LDI     R31, (gExtLfRssi) >> 8
+        RJMP    ??ATA_lFRssiGetResult_flash_C_1
+??ATA_lFRssiGetResult_flash_C_0:
+        LDI     R30, LOW(gIntLfRssi)
+        LDI     R31, (gIntLfRssi) >> 8
+??ATA_lFRssiGetResult_flash_C_1:
+        ST      Z, R16
+        STD     Z+1, R19
+        LDS     R19, _A_RSRES2H
+        LDS     R16, _A_RSRES2L
+        STD     Z+2, R16
+        STD     Z+3, R19
+        LDS     R19, _A_RSRES3H
+        LDS     R16, _A_RSRES3L
+        STD     Z+4, R16
+        STD     Z+5, R19
+        RET
+          CFI EndBlock cfiBlock12
+        REQUIRE _A_RSMS1R
+        REQUIRE _A_RSRES1H
+        REQUIRE _A_RSRES1L
+        REQUIRE _A_RSRES2H
+        REQUIRE _A_RSRES2L
+        REQUIRE _A_RSRES3H
+        REQUIRE _A_RSRES3L
+
+        RSEG CODE:CODE:NOROOT(1)
+_peps_cmd_validity:
+          CFI Block cfiBlock13 Using cfiCommon0
+          CFI Function _peps_cmd_validity
+        SBIW    R29:R28, 2
+          CFI CFA_Y Y+2
+        LDI     R20, 1
+        LDI     R18, LOW((g_sEepFlashApp_RKEPEPS + 24))
+        LDI     R19, HIGH((g_sEepFlashApp_RKEPEPS + 24))
+        LDI     R16, LOW(rub_fob_idx)
+        LDI     R17, (rub_fob_idx) >> 8
+          CFI FunCall ATA_eepReadBytes_C
+        CALL    ATA_eepReadBytes_C
+        LDI     R20, 4
+        LDI     R18, 176
+        LDI     R19, 8
+        LDI     R16, LOW(rul_fob_id)
+        LDI     R17, (rul_fob_id) >> 8
+          CFI FunCall ATA_eepReadBytes_C
+        CALL    ATA_eepReadBytes_C
+        LDS     R16, rub_cid
+        DEC     R16
+        BREQ    ??_peps_cmd_validity_0
+        DEC     R16
+        BREQ    ??_peps_cmd_validity_0
+        SUBI    R16, 2
+        BREQ    ??_peps_cmd_validity_1
+        DEC     R16
+        BREQ    ??_peps_cmd_validity_2
+        DEC     R16
+        BREQ    ??_peps_cmd_validity_2
+        DEC     R16
+        BREQ    ??_peps_cmd_validity_3
+        DEC     R16
+        BREQ    ??_peps_cmd_validity_3
+        RJMP    ??_peps_cmd_validity_4
+??_peps_cmd_validity_0:
+        LDS     R16, rub_wuip
+        ANDI    R16, 0xC0
+        CPI     R16, 128
+        BRNE    ??_peps_cmd_validity_5
+        RJMP    ??_peps_cmd_validity_6
+??_peps_cmd_validity_3:
+        LDS     R16, (g_MsgRXbuffer + 5)
+        LSR     R16
+        ANDI    R16, 0x07
+        LDS     R17, rub_fob_idx
+        CP      R16, R17
+        BREQ    $+2+2
+        RJMP    ??_peps_cmd_validity_6
+??_peps_cmd_validity_2:
+        LDS     R16, rub_wuip
+        ANDI    R16, 0xC0
+        CPI     R16, 128
+        BRNE    ??_peps_cmd_validity_1
+        RJMP    ??_peps_cmd_validity_6
+??_peps_cmd_validity_4:
+        LDS     R16, rub_wuip
+        ANDI    R16, 0xC0
+        CPI     R16, 64
+        BRNE    ??_peps_cmd_validity_1
+??_peps_cmd_validity_5:
+        LDS     R16, (g_MsgRXbuffer + 5)
+        LSR     R16
+        ANDI    R16, 0x07
+        LDS     R17, rub_fob_idx
+        CP      R16, R17
+        BREQ    $+2+2
+        RJMP    ??_peps_cmd_validity_6
+??_peps_cmd_validity_1:
+        LDS     R16, rub_cid
+        DEC     R16
+        BREQ    ??_peps_cmd_validity_7
+        DEC     R16
+        BREQ    ??_peps_cmd_validity_7
+        SUBI    R16, 9
+        BREQ    ??_peps_cmd_validity_8
+        RJMP    ??_peps_cmd_validity_9
+??_peps_cmd_validity_7:
+        LDS     R16, gNTE_DIAG_MODE
+        TST     R16
+        BRNE    $+2+2
+        RJMP    ??_peps_cmd_validity_6
+??_peps_cmd_validity_9:
+        LDS     R16, rub_cid
+        DEC     R16
+        BREQ    ??_peps_cmd_validity_10
+        DEC     R16
+        BREQ    ??_peps_cmd_validity_10
+        SUBI    R16, 4
+        BREQ    ??_peps_cmd_validity_11
+        SUBI    R16, 2
+        BREQ    ??_peps_cmd_validity_11
+        SUBI    R16, 7
+        BRNE    $+2+2
+        RJMP    ??_peps_cmd_validity_12
+        RJMP    ??_peps_cmd_validity_13
+??_peps_cmd_validity_10:
+        LDS     R16, (g_MsgRXbuffer + 6)
+        CPI     R16, 32
+        BRCS    ??_peps_cmd_validity_13
+        RJMP    ??_peps_cmd_validity_6
+??_peps_cmd_validity_8:
+        LDS     R16, gNTE_DIAG_MODE
+        CPI     R16, 1
+        BREQ    $+2+2
+        RJMP    ??_peps_cmd_validity_6
+??_peps_cmd_validity_13:
+        LDI     R16, 1
+??_peps_cmd_validity_14:
+        RJMP    ??Subroutine1_0
+??_peps_cmd_validity_11:
+        CBI     0x1A, 0x06
+        LDI     R16, 32
+        OUT     0x1D, R16
+        LDI     R20, 2
+        LDI     R18, LOW((g_sCustomerEEPromSection + 74))
+        LDI     R19, HIGH((g_sCustomerEEPromSection + 74))
+        MOVW    R17:R16, R29:R28
+          CFI FunCall ATA_eepReadBytes_C
+        CALL    ATA_eepReadBytes_C
+        LD      R16, Y
+        LDD     R17, Y+1
+          CFI FunCall ATA_aesTriggerKeyDma_C
+        CALL    ATA_aesTriggerKeyDma_C
+        LDI     R16, 10
+        DEC     R16
+        BRNE    $-2
+        LDI     R20, 4
+        LDI     R18, LOW((g_MsgRXbuffer + 6))
+        LDI     R19, HIGH((g_MsgRXbuffer + 6))
+        LDI     R16, LOW(gAES_DataBuffer)
+        LDI     R17, (gAES_DataBuffer) >> 8
+          CFI FunCall memory_copy
+        CALL    memory_copy
+        LDI     R20, 4
+        LDI     R18, 12
+??_peps_cmd_validity_15:
+        MOV     R16, R20
+        LDI     R31, 0
+        ANDI    R16, 0x03
+        MOV     R30, R16
+        SUBI    R30, LOW((-(gAES_DataBuffer) & 0xFFFF))
+        SBCI    R31, (-(gAES_DataBuffer) & 0xFFFF) >> 8
+        LD      R16, Z
+        LDI     R31, 0
+        MOV     R30, R20
+        SUBI    R30, LOW((-(gAES_DataBuffer) & 0xFFFF))
+        SBCI    R31, (-(gAES_DataBuffer) & 0xFFFF) >> 8
+        ST      Z, R16
+        INC     R20
+        DEC     R18
+        BRNE    ??_peps_cmd_validity_15
+        LDI     R18, LOW(gAES_DataBuffer)
+        LDI     R19, (gAES_DataBuffer) >> 8
+        LDI     R16, LOW(385)
+        LDI     R17, (385) >> 8
+          CFI FunCall ATA_aesLoadData_C
+        CALL    ATA_aesLoadData_C
+        LDI     R16, 128
+        OUT     0x1D, R16
+??_peps_cmd_validity_16:
+        SBIS    0x1E, 0x00
+        RJMP    ??_peps_cmd_validity_16
+        SBI     0x1E, 0x00
+        LDI     R18, 0
+        LDI     R16, 16
+??_peps_cmd_validity_17:
+        LDS     R17, _A_AESDR
+        LDI     R31, 0
+        MOV     R30, R18
+        SUBI    R30, LOW((-(gAES_DataBuffer) & 0xFFFF))
+        SBCI    R31, (-(gAES_DataBuffer) & 0xFFFF) >> 8
+        ST      Z, R17
+        INC     R18
+        DEC     R16
+        BRNE    ??_peps_cmd_validity_17
+        SBI     0x1A, 0x06
+        LDI     R20, 4
+        LDI     R18, LOW((g_MsgRXbuffer + 10))
+        LDI     R19, HIGH((g_MsgRXbuffer + 10))
+        LDI     R16, LOW(gAES_DataBuffer)
+        LDI     R17, (gAES_DataBuffer) >> 8
+          CFI FunCall memory_compare
+        CALL    memory_compare
+        TST     R16
+        BREQ    $+2+2
+        RJMP    ??_peps_cmd_validity_13
+        RJMP    ??_peps_cmd_validity_6
+??_peps_cmd_validity_12:
+        LDI     R30, LOW(rul_fob_id)
+        LDI     R31, (rul_fob_id) >> 8
+        LD      R16, Z
+        LDD     R17, Z+1
+        LDD     R18, Z+2
+        LDD     R19, Z+3
+        LDI     R30, LOW(g_MsgRXbuffer)
+        LDI     R31, (g_MsgRXbuffer) >> 8
+        LDD     R20, Z+6
+        LDD     R21, Z+7
+        LDD     R22, Z+8
+        LDD     R23, Z+9
+        CP      R16, R20
+        CPC     R17, R21
+        CPC     R18, R22
+        CPC     R19, R23
+        BRNE    $+2+2
+        RJMP    ??_peps_cmd_validity_13
+??_peps_cmd_validity_6:
+        LDI     R16, 0
+        RJMP    ??_peps_cmd_validity_14
+          CFI EndBlock cfiBlock13
+        REQUIRE _A_PRR0
+        REQUIRE _A_AESCR
+        REQUIRE _A_AESDR
+        REQUIRE _A_AESSR
+//  830 }
+//  831 
+//  832 /**
+//  833  * \brief Execute command and build PEPS RF message
+//  834  *        RF message is stored in MSG_TX_DATA variable
+//  835  *        Authent : compute AES and RSSI values
+//  836  *        Write param: update param in EEprom
+//  837  *        LF test: compute RSSI
+//  838  *        LF param: update parameters in EEprom
+//  839  *        Mode: change DIAG mode
+//  840  *
+//  841  * \return void
+//  842  */
+//  843 static void _peps_build_msg(void)
+//  844 {
+//  845   uint32_t* lpul_id;
+//  846   uint16_t AES_KeyAddr;
+//  847   uint16_t Normvalues[3];
+//  848   uint16_t msg_length = 0;
+//  849   
+//  850  // common message data
+//  851   memory_set(MSG_TX_DATA.rke.preamble0, 0x00, CFG_RKE_PREAMBLE_LENGTH-1);
+//  852   MSG_TX_DATA.peps.preamble1 = 0x01;
+//  853   MSG_TX_DATA.peps.fidx = rub_fob_idx&0x07;
+//  854   MSG_TX_DATA.peps.bat = gVbat_Status;
+//  855   MSG_TX_DATA.peps.cid = rub_cid;
+//  856 
+//  857   // specific message data
+//  858   switch (rub_cid)
+//  859   {
+//  860     case PEPS_CID_RD_ID://Read ID command
+//  861       MSG_TX_DATA.peps.data_id.fid = rul_fob_id;//Load Fob ID in response
+//  862       ATA_eepReadBytes_C((uint8_t*)&MSG_TX_DATA.peps.data_id.vid, (uint16_t)&g_sEepFlashApp_RKEPEPS.aub_vid, VID_LENGTH);//Load vehicle ID in resposne      
+//  863       CRCenable();//Enable CRC appended to RF response
+//  864       break;
+//  865 
+//  866     case PEPS_CID_UNI_AUTH:
+//  867     case PEPS_CID_BI_AUTH:
+//  868     case PEPS_CID_UNI_AUTH_SINGLE:
+//  869     case PEPS_CID_BI_AUTH_SINGLE:
+//  870         CalcLinVector();
+//  871        
+//  872         MSG_TX_DATA.peps.data_authent.rssil = g3dVector[0];   
+//  873         MSG_TX_DATA.peps.data_authent.rssih = g3dVector[1];
+//  874         MSG_TX_DATA.peps.data_authent.rssiFlag = (g3dVectorFlag & 0x7f);  // Clear RFFI error flag - stop red box in CARS GUI
+//  875 
+//  876         MSG_TX_DATA.peps.data_authent.CoilPhase12 = gFlashApplignSignDetect.SD12result; 
+//  877         MSG_TX_DATA.peps.data_authent.CoilPhase13 = gFlashApplignSignDetect.SD13result; 
+//  878         MSG_TX_DATA.peps.data_authent.CoilPhase23 = gFlashApplignSignDetect.SD23result; 
+//  879         MSG_TX_DATA.peps.data_authent.CoilPhase360 = gFlashApplignSignDetect.SD360result; 
+//  880         
+//  881         
+//  882         /* Sign Detect Data to be added - 1 byte - needs to be construncted 
+//  883         MSG_TX_DATA.peps.data_lf_tst.phase12 = gFlashApplignSignDetect.SD12result;
+//  884         MSG_TX_DATA.peps.data_lf_tst.phase13 = gFlashApplignSignDetect.SD13result;
+//  885         MSG_TX_DATA.peps.data_lf_tst.phase23 = gFlashApplignSignDetect.SD23result;
+//  886         */
+//  887                    
+//  888           // compute MAC
+//  889           // load AES key
+//  890           PRR0 &= ~BM_PRCU;         //disable power reduction for AES
+//  891           AESCR = BM_AESRES;
+//  892           ATA_eepReadBytes_C((uint8_t*)&AES_KeyAddr, (uint16_t)&g_sCustomerEEPromSection.eepSecKeyAddrA, 0x02);//KEYA is used for Auth;KeyB is not defined in the EEP;
+//  893 
+//  894           ATA_aesTriggerKeyDma_C(AES_KeyAddr);
+//  895           // load message and cypher it
+//  896           memory_copy(MSG_TX_DATA.peps.data_authent.mac, 
+//  897                       ((RX_MSG_PEPS_TS*)MSG_RX_DATA)->data_auth_uni.challenge,
+//  898                       CFG_PEPS_CHALLENGE_LENGTH);
+//  899           lpul_id = (uint32_t*)(MSG_TX_DATA.peps.data_authent.mac + CFG_PEPS_CHALLENGE_LENGTH);
+//  900           *lpul_id = rul_fob_id;
+//  901                 
+//  902           msg_length = (CFG_PEPS_CID_LENGTH + CFG_PEPS_RSSI_LENGTH + CFG_PEPS_PHASEDATA_LENGTH 
+//  903                         +CFG_PEPS_CHALLENGE_LENGTH + CFG_PEPS_FID_LENGTH);
+//  904           memory_copy(&gAES_DataBuffer[0], (uint8_t*)&MSG_TX_DATA.peps.data_authent-1, msg_length);
+//  905          
+//  906           // Pad the message to match AES length.
+//  907           for (uint8_t index = msg_length; index < 16; index++)
+//  908           {
+//  909             gAES_DataBuffer[index] = AES_PADD_PATTERN;
+//  910           }
+//  911           
+//  912           ATA_aesLoadData_C(&AESDR, &gAES_DataBuffer[0]);
+//  913           //compute AES
+//  914           AESCR = BM_AESE; 
+//  915           while ((AESSR & BM_AESRF)== 0x00U);       //wait until ready
+//  916           AESSR |= BM_AESRF;                        // clear flag
+//  917           for (uint8_t index = 0; index < 16; index++)
+//  918           {
+//  919             gAES_DataBuffer[index] = AESDR;
+//  920           }
+//  921           memory_copy(MSG_TX_DATA.peps.data_authent.mac,
+//  922                       &gAES_DataBuffer[0],
+//  923                       CFG_PEPS_CHALLENGE_LENGTH);
+//  924           PRR0 |= BM_PRCU;         //enable power reduction for AES
+//  925 
+//  926     #ifdef CFG_APP_2WAYRF
+//  927           // enable ATA5831 communication back
+//  928         #endif      
+//  929       break;
+//  930 
+//  931     case PEPS_CID_WR_PARAM:
+//  932       // store parameter in EEprom
+//  933       ATA_eepWriteBytes_C(((RX_MSG_PEPS_TS*)MSG_RX_DATA)->data_wr_param.param_data,
+//  934                     eaub_param +(((RX_MSG_PEPS_TS*)MSG_RX_DATA)->data_wr_param.param_index)* 3 * PARAMBLOCK_SIZE, PARAMBLOCK_SIZE);
+//  935       // no break in switch case to send reply
+//  936     case PEPS_CID_RD_PARAM:
+//  937       // return VID
+//  938       // read 4 bytes in every case, but last byte may be overwritte by cks
+//  939       ATA_eepReadBytes_C((uint8_t*)&MSG_TX_DATA.peps.data_param.vid, (uint16_t)&g_sEepFlashApp_RKEPEPS.aub_vid, 4);      
+//  940       // read parameter in EEprom
+//  941       ATA_eepReadBytes_C(&MSG_TX_DATA.peps.data_param.param_data[0],
+//  942                    eaub_param + (((RX_MSG_PEPS_TS*)MSG_RX_DATA)->data_wr_param.param_index) * 3 * PARAMBLOCK_SIZE, PARAMBLOCK_SIZE);
+//  943       // complete message (index + checksum)
+//  944       MSG_TX_DATA.peps.data_param.param_index =
+//  945         ((RX_MSG_PEPS_TS*)MSG_RX_DATA)->data_wr_param.param_index;
+//  946        CRCenable();
+//  947       break;
+//  948 
+//  949     case PEPS_CID_2WAY:
+//  950       CalcLinVector();
+//  951       //MSG_TX_DATA.peps.data_2way.rssil = g3dVectorLin[0];
+//  952       //MSG_TX_DATA.peps.data_2way.rssih = g3dVectorLin[1];
+//  953       MSG_TX_DATA.peps.data_2way.rssil = g3dVector[0];
+//  954       MSG_TX_DATA.peps.data_2way.rssih = g3dVector[1];
+//  955       MSG_TX_DATA.peps.data_2way.rssiFlag = g3dVectorFlag;
+//  956       MSG_TX_DATA.peps.data_authent.CoilPhase12 = gFlashApplignSignDetect.SD12result; 
+//  957       MSG_TX_DATA.peps.data_authent.CoilPhase13 = gFlashApplignSignDetect.SD13result; 
+//  958       MSG_TX_DATA.peps.data_authent.CoilPhase23 = gFlashApplignSignDetect.SD23result; 
+//  959       MSG_TX_DATA.peps.data_authent.CoilPhase360 = gFlashApplignSignDetect.SD360result; 
+//  960       // save rF channel for reply
+//  961       rub_rf_chan = (((RX_MSG_PEPS_TS*)MSG_RX_DATA)->fidx)>>1;
+//  962       // enable RF reception for 1s
+//  963       // return msg already completed
+//  964       break;
+//  965 
+//  966     case PEPS_CID_LF_TST:
+//  967       CalcLinVector();
+//  968       // MSG_TX_DATA.peps.data_lf_tst.rss = g3dVectorLin[1]<<8 | g3dVectorLin[0];
+//  969       MSG_TX_DATA.peps.data_lf_tst.rss = ((((uint16_t)g3dVector[1]) << 8) | g3dVector[0]);
+//  970       MSG_TX_DATA.peps.data_lf_tst.rssiFlag = g3dVectorFlag;
+//  971       // MSG_TX_DATA.peps.data_lf_tst.norm_x = wLfRssiNorm[LF_AXIS_X];
+//  972       // MSG_TX_DATA.peps.data_lf_tst.norm_y = wLfRssiNorm[LF_AXIS_Y];
+//  973       // MSG_TX_DATA.peps.data_lf_tst.norm_z = wLfRssiNorm[LF_AXIS_Z];
+//  974       MSG_TX_DATA.peps.data_lf_tst.SD_12 = gFlashApplignSignDetect.SD12result;
+//  975       MSG_TX_DATA.peps.data_lf_tst.SD_13 = gFlashApplignSignDetect.SD13result;
+//  976       MSG_TX_DATA.peps.data_lf_tst.SD_23 = gFlashApplignSignDetect.SD23result;
+//  977       MSG_TX_DATA.peps.data_lf_tst.SD_360 = gFlashApplignSignDetect.SD360result;
+//  978       MSG_TX_DATA.peps.data_lf_tst.ref_x = wLfRssiref[LF_AXIS_X];
+//  979       MSG_TX_DATA.peps.data_lf_tst.ref_y = wLfRssiref[LF_AXIS_Y];
+//  980       MSG_TX_DATA.peps.data_lf_tst.ref_z = wLfRssiref[LF_AXIS_Z];
+//  981       MSG_TX_DATA.peps.data_lf_tst.ext_x = gExtLfRssi[LF_AXIS_X];
+//  982       MSG_TX_DATA.peps.data_lf_tst.ext_y = gExtLfRssi[LF_AXIS_Y];
+//  983       MSG_TX_DATA.peps.data_lf_tst.ext_z = gExtLfRssi[LF_AXIS_Z];
+//  984       MSG_TX_DATA.peps.data_lf_tst.int_x = gIntLfRssi[LF_AXIS_X];
+//  985       MSG_TX_DATA.peps.data_lf_tst.int_y = gIntLfRssi[LF_AXIS_Y];
+//  986       MSG_TX_DATA.peps.data_lf_tst.int_z = gIntLfRssi[LF_AXIS_Z];
+//  987       CRCenable();
+//  988       
+//  989       break;
+//  990 
+//  991     case PEPS_CID_LF_PARAM:
+//  992       // update normalization factors
+//  993       if ((((RX_MSG_PEPS_TS*)MSG_RX_DATA)->data_lf_param.norm_x != 0xFFFF) ||
+//  994           (((RX_MSG_PEPS_TS*)MSG_RX_DATA)->data_lf_param.norm_y != 0xFFFF) ||
+//  995           (((RX_MSG_PEPS_TS*)MSG_RX_DATA)->data_lf_param.norm_z != 0xFFFF))
+//  996       {
+//  997         /* Update phase 3 - modifed GUI and CARS board to eliminate offset. Now
+//  998         receved external RSSI values are returned inthe LF parameter command */
+//  999         
+// 1000         /*Normalization values returned as difference from a user input setpoint 
+// 1001         by the GUI. Unfortunately this yields negative values that the 
+// 1002         P2P cannot use. So here if all are positive we will use them as is,
+// 1003         Else if any one is negative we will offset subtracte all from 155 and use 
+// 1004         the difference. It is only neccessary to use the difference in the coil 
+// 1005         response for normalization as the only relevant info is the difference
+// 1006         between the axis measurements. .  
+// 1007         
+// 1008         Much discussion on this point to accomodate the existing GUI one byte
+// 1009         delta values. For now I shift left 8 bits and use that. This discards
+// 1010         four fractional bits and one integer bit. When the GUI is upgraded 
+// 1011         the RAW RSSI two byte measurement for each axis should be returned. 
+// 1012         GeRu 11 Mar 2013         
+// 1013         */
+// 1014         
+// 1015         /*initialize some convenient variables to process the norm values. Extracting
+// 1016         them form the RX message gets to be messy*/        
+// 1017         
+// 1018         Normvalues[0] =(((RX_MSG_PEPS_TS*)MSG_RX_DATA)->data_lf_param.norm_z); 
+// 1019         Normvalues[1] =(((RX_MSG_PEPS_TS*)MSG_RX_DATA)->data_lf_param.norm_y);   
+// 1020         Normvalues[2] =(((RX_MSG_PEPS_TS*)MSG_RX_DATA)->data_lf_param.norm_x); 
+// 1021        
+// 1022         
+// 1023        // /* they are receved as 2s complemet values with bit 7 flipped. How was
+// 1024        // this scheme arrived at? So if bit 7 is set it is a positive value*/
+// 1025         /*
+// 1026         if (Normvalues[0]<128 || Normvalues[1]<128 || Normvalues[2]<128) //Any negatives?
+// 1027         {
+// 1028           uint8_t nrmoffset=0;
+// 1029         */  
+// 1030         /* Find the least value (greatest negative magnitude)*/ 
+// 1031         /* Phase 3 
+// 1032         for (uint8_t nrmcntr=0; nrmcntr<3; nrmcntr++)
+// 1033          {
+// 1034            if (nrmcntr==0) nrmoffset = Normvalues[nrmcntr];
+// 1035            else if(Normvalues[nrmcntr]<nrmoffset) nrmoffset=Normvalues[nrmcntr];
+// 1036          }
+// 1037          nrmoffset |= 0x80;//Flip bit 7
+// 1038          nrmoffset = ~nrmoffset+1;//Complement and add one
+// 1039          for (uint8_t nrmcntr=0; nrmcntr<3; nrmcntr++)//Get rid of LDL +128 offset
+// 1040          {
+// 1041            if (Normvalues[nrmcntr] & 0x80)Normvalues[nrmcntr] &= 0x7f;
+// 1042            else Normvalues[nrmcntr] |= 0x80;
+// 1043          }
+// 1044          Normvalues[0] =  Normvalues[0] + nrmoffset;
+// 1045          Normvalues[1] =  Normvalues[1] + nrmoffset;
+// 1046          Normvalues[2] =  Normvalues[2] + nrmoffset;
+// 1047         }
+// 1048         else //All positive - clear the offset bit
+// 1049         {
+// 1050           Normvalues[0] &= 0x7f;
+// 1051           Normvalues[1] &= 0x7f;
+// 1052           Normvalues[2] &= 0x7f;                 
+// 1053         }
+// 1054          Normvalues[0] = 255 - Normvalues[0];
+// 1055          Normvalues[1] = 255 - Normvalues[1];
+// 1056          Normvalues[2] = 255 - Normvalues[2];
+// 1057         */
+// 1058         wLfRssiNorm[LF_AXIS_X] = Normvalues[2];
+// 1059         wLfRssiNorm[LF_AXIS_Y] = Normvalues[1];
+// 1060         wLfRssiNorm[LF_AXIS_Z] = Normvalues[0];   
+// 1061         
+// 1062          //ATA_eepWriteBytes_C((uint8_t*)&wLfRssiNorm[0],LF_RSSI_NORM_X,6);
+// 1063          ATA_eepWriteBytes_C((uint8_t*)&wLfRssiNorm[0], (uint16_t)&g_sEepFlashApp_RKEPEPS.aub_rssi_norm,6);
+// 1064       
+// 1065       }
+// 1066       // update compensation factors
+// 1067       if ((((RX_MSG_PEPS_TS*)MSG_RX_DATA)->data_lf_param.ref_x != 0xFFFF) &&
+// 1068           (((RX_MSG_PEPS_TS*)MSG_RX_DATA)->data_lf_param.ref_y != 0xFFFF) &&
+// 1069           (((RX_MSG_PEPS_TS*)MSG_RX_DATA)->data_lf_param.ref_z != 0xFFFF))
+// 1070       { 
+// 1071         gIntLfRssi[LF_AXIS_X] = (((RX_MSG_PEPS_TS*)MSG_RX_DATA)->data_lf_param.ref_x);
+// 1072         gIntLfRssi[LF_AXIS_Y] = (((RX_MSG_PEPS_TS*)MSG_RX_DATA)->data_lf_param.ref_y);
+// 1073         gIntLfRssi[LF_AXIS_Z] = (((RX_MSG_PEPS_TS*)MSG_RX_DATA)->data_lf_param.ref_z);
+// 1074         app_rssi_set_ref(FALSE);//Move to EEPROM
+// 1075         
+// 1076       }
+// 1077       else if ((((RX_MSG_PEPS_TS*)MSG_RX_DATA)->data_lf_param.ref_x == 0xFE) &&
+// 1078                (((RX_MSG_PEPS_TS*)MSG_RX_DATA)->data_lf_param.ref_y == 0xFE) &&
+// 1079                (((RX_MSG_PEPS_TS*)MSG_RX_DATA)->data_lf_param.ref_z == 0xFE))
+// 1080       {
+// 1081         // auto acquire new internal reference
+// 1082         
+// 1083         app_rssi_set_ref(TRUE);//Measure and move to EEPROM
+// 1084       }
+// 1085       else
+// 1086       {
+// 1087         // No change 
+// 1088       }
+// 1089 
+// 1090       // Populate RF resposne message - Shift right 4 bits and for NOrm values flip the MSbit   
+// 1091       MSG_TX_DATA.peps.data_lf_param.norm_x =wLfRssiNorm[LF_AXIS_X];
+// 1092       MSG_TX_DATA.peps.data_lf_param.norm_y =wLfRssiNorm[LF_AXIS_Y];
+// 1093       MSG_TX_DATA.peps.data_lf_param.norm_z =wLfRssiNorm[LF_AXIS_Z];
+// 1094       MSG_TX_DATA.peps.data_lf_param.ref_x =wLfRssiref[LF_AXIS_X];
+// 1095       MSG_TX_DATA.peps.data_lf_param.ref_y =wLfRssiref[LF_AXIS_Y];
+// 1096       MSG_TX_DATA.peps.data_lf_param.ref_z =wLfRssiref[LF_AXIS_Z];
+// 1097       CRCenable();      
+// 1098       break;
+// 1099 
+// 1100     case PEPS_CID_SWID:
+// 1101       // send Software ID  
+// 1102  
+// 1103   memory_copy(MSG_TX_DATA.peps.data_swid.swid,
+// 1104                         SW_ID,
+// 1105                        6);   
+// 1106       
+// 1107  
+// 1108       CRCenable();//Enable CRC appended to RF response
+// 1109       break;
+// 1110 
+// 1111     case PEPS_CID_MODE:
+// 1112       // check mode and code
+// 1113       if (((RX_MSG_PEPS_TS*)MSG_RX_DATA)->data_mode.mode > 2)
+// 1114       {
+// 1115         // unknown mode, back to diag OFF
+// 1116         //NTE_DIAG_MODE = DIAG_OFF;
+// 1117         rts_cram.data.te_diag_mode = DIAG_OFF;
+// 1118       }
+// 1119       else if (memory_compare_const(
+// 1120                  (uint8_t*)&((RX_MSG_PEPS_TS*)MSG_RX_DATA)->data_mode.code,
+// 1121                 (const uint8_t*)caub_diag_code[((RX_MSG_PEPS_TS*)MSG_RX_DATA)->data_mode.mode-1],                 
+// 1122                  4))
+// 1123       {
+// 1124         gNTE_DIAG_MODE = (DIAG_MODE_TE)((RX_MSG_PEPS_TS*)MSG_RX_DATA)->data_mode.mode;
+// 1125         // activate long timeout @8s to exit diag
+// 1126         // timeb_timer_start_s(CFG_TIMER_MODE, 8); //ToDo
+// 1127       }
+// 1128       else if (memcmp_G(
+// 1129                  (uint8_t*)&((RX_MSG_PEPS_TS*)MSG_RX_DATA)->data_mode.code,
+// 1130                 (const uint8_t*)caub_diag_code[((RX_MSG_PEPS_TS*)MSG_RX_DATA)->data_mode.mode-1],                 
+// 1131                  4))
+// 1132         gNTE_DIAG_MODE = (DIAG_MODE_TE)((RX_MSG_PEPS_TS*)MSG_RX_DATA)->data_mode.mode;
+// 1133 
+// 1134        
+// 1135       else
+// 1136       {
+// 1137         //wrong code
+// 1138         //NTE_DIAG_MODE = DIAG_OFF;
+// 1139         rts_cram.data.te_diag_mode = DIAG_OFF;
+// 1140       }
+// 1141       MSG_TX_DATA.peps.data_mode.fid = ((RX_MSG_PEPS_TS*)MSG_RX_DATA)->data_mode.fid;
+// 1142       MSG_TX_DATA.peps.data_mode.mode = (uint8_t)gNTE_DIAG_MODE;
+// 1143       CRCenable();
+// 1144       break;
+// 1145      
+// 1146     default:
+// 1147       break;
+// 1148   }
+// 1149  
+// 1150 }
+// 1151 
+// 1152 
+
+        RSEG CODE:CODE:NOROOT(1)
+// 1153 void CRCdisable(void)
+CRCdisable:
+          CFI Block cfiBlock14 Using cfiCommon0
+          CFI Function CRCdisable
+// 1154 {
+        SBIW    R29:R28, 2
+          CFI CFA_Y Y+2
+// 1155    uint16_t serv0Addr = 0;
+        LDI     R16, 0
+        ST      Y, R16
+        STD     Y+1, R16
+// 1156    // Get the Service 0 address from the EEPROM
+// 1157    ATA_eepReadBytes_C((uint8_t*)&serv0Addr, (uint16_t)&g_sCustomerEEPromSection.eepRfTxSer0Ptr_l, 0x02);
+        LDI     R20, 2
+        LDI     R18, LOW((g_sCustomerEEPromSection + 108))
+        LDI     R19, HIGH((g_sCustomerEEPromSection + 108))
+        MOVW    R17:R16, R29:R28
+          CFI FunCall ATA_eepReadBytes_C
+        CALL    ATA_eepReadBytes_C
+// 1158    // Load the bTMCR2 value from the EEPROM                 
+// 1159    ATA_eepReadBytes_C((uint8_t*)&g_sRfTxServicePathConfig0.bTMCR2, (uint16_t)&((sRfTxServiceConfig *)serv0Addr)->sPathConfig->bTMCR2, 0x01);
+        LDI     R20, 1
+        LD      R18, Y
+        LDD     R19, Y+1
+        SUBI    R18, 237
+        SBCI    R19, 255
+        LDI     R16, LOW((g_sRfTxServicePathConfig0 + 11))
+        LDI     R17, HIGH((g_sRfTxServicePathConfig0 + 11))
+          CFI FunCall ATA_eepReadBytes_C
+        CALL    ATA_eepReadBytes_C
+// 1160    
+// 1161    if (g_sRfTxServicePathConfig0.bTMCR2 & 0x01)  //CRC enabled? then disable
+        LDI     R30, LOW(g_sRfTxServicePathConfig0)
+        LDI     R31, (g_sRfTxServicePathConfig0) >> 8
+        LDD     R16, Z+11
+        SBRS    R16, 0
+        RJMP    ??CRCdisable_0
+// 1162    {  
+// 1163      g_sRfTxServicePathConfig0.bTMCR2 &= ~(1 << TMCRCE);  //Turn off CRC
+        ANDI    R16, 0xFE
+        STD     Z+11, R16
+// 1164      // Save to EEPROM
+// 1165      ATA_eepWriteBytes_C((uint8_t *)&g_sRfTxServicePathConfig0.bTMCR2, (uint16_t)&((sRfTxServiceConfig *)serv0Addr)->sPathConfig->bTMCR2, 0x01);
+        LDI     R20, 1
+        LD      R18, Y
+        LDD     R19, Y+1
+        SUBI    R18, 237
+        SBCI    R19, 255
+        LDI     R16, LOW((g_sRfTxServicePathConfig0 + 11))
+        LDI     R17, HIGH((g_sRfTxServicePathConfig0 + 11))
+          CFI FunCall ATA_eepWriteBytes_C
+        CALL    ATA_eepWriteBytes_C
+// 1166    }
+// 1167    gFlashApplState.State &= ~(BM_RFTXCRCACTIVE); //Clear state variable
+??CRCdisable_0:
+        LDI     R30, LOW(gFlashApplState)
+        LDI     R31, (gFlashApplState) >> 8
+        LDD     R16, Z+1
+        ANDI    R16, 0xEF
+        RJMP    ?Subroutine0
+// 1168 }
+          CFI EndBlock cfiBlock14
+// 1169 
+// 1170 
+// 1171 void CRCenable(void)
+// 1172 {
+// 1173    uint16_t serv0Addr = 0;
+// 1174    // Get the Service 0 address from the EEPROM
+// 1175    ATA_eepReadBytes_C((uint8_t*)&serv0Addr, (uint16_t)&g_sCustomerEEPromSection.eepRfTxSer0Ptr_l, 0x02);
+// 1176    
+// 1177    // Load the bTMCR2...bTMCSB values from the EEPROM                 
+// 1178    ATA_eepReadBytes_C((uint8_t*)&g_sRfTxServicePathConfig0.bTMCR2, (uint16_t)&((sRfTxServiceConfig *)serv0Addr)->sPathConfig->bTMCR2, 0x09); 
+// 1179    
+// 1180    if ((g_sRfTxServicePathConfig0.bTMCR2 & 0x01) == 0)  //CRC disabled? then enable 
+// 1181    { 
+// 1182      g_sRfTxServicePathConfig0.bTMCSB = ((sizeof(MSG_TX_DATA.peps.preamble0) + 1))*8;  //CRC calculation skip preamble
+// 1183      g_sRfTxServicePathConfig0.bTMCR2 |= ((1 << TMCRCE) | (1 << TMCRCSE0));            //ENable CRC engine - 8 bit
+// 1184      g_sRfTxServicePathConfig0.bTMCP[0] = 0x07;                                        //Load CRC polynomial; 
+// 1185      // Save to EEPROM 
+// 1186      ATA_eepWriteBytes_C((uint8_t *)&g_sRfTxServicePathConfig0.bTMCR2, (uint16_t)&((sRfTxServiceConfig *)serv0Addr)->sPathConfig->bTMCR2, 0x09); 
+// 1187    }
+// 1188    gFlashApplState.State |= BM_RFTXCRCACTIVE; //Set state variable 
+// 1189 }
+// 1190 
+// 1191 
+
+        RSEG CODE:CODE:NOROOT(1)
+// 1192 void Stopbyteenable(void)
+Stopbyteenable:
+          CFI Block cfiBlock15 Using cfiCommon0
+          CFI Function Stopbyteenable
+// 1193 {
+        SBIW    R29:R28, 2
+          CFI CFA_Y Y+2
+// 1194    uint16_t serv0Addr = 0;
+        LDI     R16, 0
+        ST      Y, R16
+        STD     Y+1, R16
+// 1195    // Get the Service 0 address from the EEPROM
+// 1196    ATA_eepReadBytes_C((uint8_t*)&serv0Addr, (uint16_t)&g_sCustomerEEPromSection.eepRfTxSer0Ptr_l, 0x02);
+        LDI     R20, 2
+        LDI     R18, LOW((g_sCustomerEEPromSection + 108))
+        LDI     R19, HIGH((g_sCustomerEEPromSection + 108))
+        MOVW    R17:R16, R29:R28
+          CFI FunCall ATA_eepReadBytes_C
+        CALL    ATA_eepReadBytes_C
+// 1197    
+// 1198    // Load the bTMCR2...bTMSSC values from the EEPROM                 
+// 1199    ATA_eepReadBytes_C((uint8_t*)&g_sRfTxServicePathConfig0.bTMCR2, (uint16_t)&((sRfTxServiceConfig *)serv0Addr)->sPathConfig->bTMCR2, 0x02);
+        LDI     R20, 2
+        LD      R18, Y
+        LDD     R19, Y+1
+        SUBI    R18, 237
+        SBCI    R19, 255
+        LDI     R16, LOW((g_sRfTxServicePathConfig0 + 11))
+        LDI     R17, HIGH((g_sRfTxServicePathConfig0 + 11))
+          CFI FunCall ATA_eepReadBytes_C
+        CALL    ATA_eepReadBytes_C
+// 1200    
+// 1201    if (((g_sRfTxServicePathConfig0.bTMCR2 & 0x20) == 0))    //Stop sequence enabled? then skip 
+        LDI     R30, LOW(g_sRfTxServicePathConfig0)
+        LDI     R31, (g_sRfTxServicePathConfig0) >> 8
+        LDD     R16, Z+11
+        SBRC    R16, 5
+        RJMP    ??Stopbyteenable_0
+// 1202    {  
+// 1203       g_sRfTxServicePathConfig0.bTMCR2 |= (1 << TMSSE);     //ENable STop sequence engine - 8 bit
+        ORI     R16, 0x20
+        STD     Z+11, R16
+// 1204       g_sRfTxServicePathConfig0.bTMSSC &= ~(1 << TMSSH);    //Hold mode off 
+// 1205       g_sRfTxServicePathConfig0.bTMSSC |= ((1 << TMSSP0) | (1 << TMSSP1) | (1 << TMSSP3)); //0010 stop sequence
+// 1206       g_sRfTxServicePathConfig0.bTMSSC &= ~(1 << TMSSP2);
+// 1207       g_sRfTxServicePathConfig0.bTMSSC &= ~((1 << TMSSL0) | (1 << TMSSL1) | (1 << TMSSL2)); //length 8 bits (SSL = 0)
+        LDI     R16, 11
+        STD     Z+12, R16
+// 1208       // Save to EEPROM 
+// 1209       ATA_eepWriteBytes_C((uint8_t *)&g_sRfTxServicePathConfig0.bTMCR2, (uint16_t)&((sRfTxServiceConfig *)serv0Addr)->sPathConfig->bTMCR2, 0x02); 
+        LDI     R20, 2
+        LD      R18, Y
+        LDD     R19, Y+1
+        SUBI    R18, 237
+        SBCI    R19, 255
+        LDI     R16, LOW((g_sRfTxServicePathConfig0 + 11))
+        LDI     R17, HIGH((g_sRfTxServicePathConfig0 + 11))
+          CFI FunCall ATA_eepWriteBytes_C
+        CALL    ATA_eepWriteBytes_C
+// 1210    }
+// 1211    gFlashApplState.State |= BM_RFTXSTOPACTIVE;
+??Stopbyteenable_0:
+        LDI     R30, LOW(gFlashApplState)
+        LDI     R31, (gFlashApplState) >> 8
+        LDD     R16, Z+1
+        ORI     R16, 0x08
+        RJMP    ?Subroutine0
+// 1212 }
+          CFI EndBlock cfiBlock15
+// 1213 
+// 1214 
+
+        RSEG CODE:CODE:NOROOT(1)
+// 1215 uint8_t CalcCoilPhaseSig(void)
+CalcCoilPhaseSig:
+          CFI Block cfiBlock16 Using cfiCommon0
+          CFI Function CalcCoilPhaseSig
+// 1216 {
+// 1217   //#define NumDeg 360
+// 1218   //#define quad1 90
+// 1219   //#define quad3 270  
+// 1220   uint8_t CoilPhaseSig=0x00;
+        LDI     R31, 0
+// 1221   uint32_t fubar32;
+// 1222   
+// 1223   fubar32 = ((uint32_t)gFlashApplignSignDetect.SD12result*0x168)/(uint32_t)gFlashApplignSignDetect.SD360result;
+// 1224   if ((fubar32>0x5a) && (fubar32<0x10e)) CoilPhaseSig |= 0x80;
+        LDS     R16, gFlashApplignSignDetect
+        LDI     R17, 0
+        LDI     R18, 0
+        LDI     R19, 0
+        LDI     R20, 104
+        LDI     R21, 1
+        LDI     R22, 0
+        LDI     R23, 0
+          CFI FunCall ?L_EC_MUL_L03
+        CALL    ?L_EC_MUL_L03
+        LDS     R20, (gFlashApplignSignDetect + 3)
+        LDI     R21, 0
+          CFI FunCall ?UL_DIVMOD_L03
+        CALL    ?UL_DIVMOD_L03
+        SUBI    R16, 91
+        SBCI    R17, 0
+        SBCI    R18, 0
+        SBCI    R19, 0
+        CPI     R16, 179
+        SBCI    R17, 0
+        SBCI    R18, 0
+        SBCI    R19, 0
+        BRCC    ??CalcCoilPhaseSig_0
+        LDI     R31, 128
+// 1225   fubar32 = ((uint32_t)gFlashApplignSignDetect.SD13result*0x168)/(uint32_t)gFlashApplignSignDetect.SD360result;
+// 1226   if ((fubar32>0x5a) && (fubar32<0x10e)) CoilPhaseSig |= 0x40;
+??CalcCoilPhaseSig_0:
+        LDS     R16, (gFlashApplignSignDetect + 1)
+        LDI     R17, 0
+        LDI     R18, 0
+        LDI     R19, 0
+        LDI     R20, 104
+        LDI     R21, 1
+        LDI     R22, 0
+        LDI     R23, 0
+          CFI FunCall ?L_EC_MUL_L03
+        CALL    ?L_EC_MUL_L03
+        LDS     R20, (gFlashApplignSignDetect + 3)
+        LDI     R21, 0
+          CFI FunCall ?UL_DIVMOD_L03
+        CALL    ?UL_DIVMOD_L03
+        SUBI    R16, 91
+        SBCI    R17, 0
+        SBCI    R18, 0
+        SBCI    R19, 0
+        CPI     R16, 179
+        SBCI    R17, 0
+        SBCI    R18, 0
+        SBCI    R19, 0
+        BRCC    ??CalcCoilPhaseSig_1
+        ORI     R31, 0x40
+// 1227   fubar32 = ((uint32_t)gFlashApplignSignDetect.SD23result*0x168)/(uint32_t)gFlashApplignSignDetect.SD360result;
+// 1228   if ((fubar32>0x5a) && (fubar32<0x10e)) CoilPhaseSig |= 0x20;
+??CalcCoilPhaseSig_1:
+        LDS     R16, (gFlashApplignSignDetect + 2)
+        LDI     R17, 0
+        LDI     R18, 0
+        LDI     R19, 0
+        LDI     R20, 104
+        LDI     R21, 1
+        LDI     R22, 0
+        LDI     R23, 0
+          CFI FunCall ?L_EC_MUL_L03
+        CALL    ?L_EC_MUL_L03
+        LDS     R20, (gFlashApplignSignDetect + 3)
+        LDI     R21, 0
+          CFI FunCall ?UL_DIVMOD_L03
+        CALL    ?UL_DIVMOD_L03
+        SUBI    R16, 91
+        SBCI    R17, 0
+        SBCI    R18, 0
+        SBCI    R19, 0
+        CPI     R16, 179
+        SBCI    R17, 0
+        SBCI    R18, 0
+        SBCI    R19, 0
+        BRCC    ??CalcCoilPhaseSig_2
+        ORI     R31, 0x20
+// 1229   return CoilPhaseSig;
+??CalcCoilPhaseSig_2:
+        MOV     R16, R31
+        RET
+// 1230 }
+          CFI EndBlock cfiBlock16
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01cH
+__?EECR:
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01dH
+__?EEDR:
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01eH
+__?EEARL:
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01fH
+__?EEARH:
+
+        RSEG INITTAB:CODE:NOROOT(0)
+`?<Segment init: NEAR_Z>`:
+        DC16    SFE(NEAR_Z) - SFB(NEAR_Z)
+        DC16    SFB(NEAR_Z)
+        DC16    0
+        REQUIRE ?need_segment_init
+
+        RSEG NEAR_ID:CODE:NOROOT(0)
+`?<Initializer for gLfqcTrim>`:
+        DC8 4, 4, 5
+
+        RSEG INITTAB:CODE:NOROOT(0)
+`?<Segment init: NEAR_I>`:
+        DC16    SFE(NEAR_I) - SFB(NEAR_I)
+        DC16    SFB(NEAR_I)
+        DC16    SFB(NEAR_ID)
+        REQUIRE ?need_segment_init
+
+        RSEG NEAR_ID:CODE:NOROOT(0)
+`?<Initializer for SW_ID>`:
+        DC8 87, 2, 34, 3, 1, 5
+
+        RSEG NEAR_ID:CODE:NOROOT(0)
+`?<Initializer for cabb_cmd_with_cw>`:
+        DC8 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0
+
+        END
+// 1231 
+// 1232 
+// 
+//    50 bytes in segment .sram_FlashApp_MsgRXbuffer
+//    50 bytes in segment .sram_FlashApp_MsgTXbuffer
+//    45 bytes in segment ABSOLUTE
+// 2 774 bytes in segment CODE
+//    12 bytes in segment INITTAB
+//     8 bytes in segment NEAR_F
+//    25 bytes in segment NEAR_I
+//    25 bytes in segment NEAR_ID
+//     9 bytes in segment NEAR_N
+//   133 bytes in segment NEAR_Z
+// 
+// 2 807 bytes of CODE memory (+ 12 bytes shared)
+//   267 bytes of DATA memory (+ 45 bytes shared)
+//
+//Errors: none
+//Warnings: none

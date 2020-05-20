@@ -1,0 +1,9026 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="setEEPromX2html.xsl"?>
+
+<sysconfig>
+<!--Product Information-->
+<product>
+<productcode pcode="11">ATA5785</productcode>
+<productversion>ROM2.x</productversion>
+</product>
+<!--Begin of EEprom Settings-->
+<eeprom>
+<created>2014/07/09 09:25:19</created>
+<section base="0x0097" id="eepSleepMode">
+<reg id="sleepModeConf">
+<addr>0x0097</addr>
+<value>0x80</value>
+</reg>
+</section>
+<section base="0x0036" id="eepID">
+<reg id="idByte0">
+<addr>0x0037</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte1">
+<addr>0x0038</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte10">
+<addr>0x0043</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte11">
+<addr>0x0044</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte12">
+<addr>0x0046</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte13">
+<addr>0x0047</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte14">
+<addr>0x0048</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte15">
+<addr>0x0049</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte16">
+<addr>0x004B</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte17">
+<addr>0x004C</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte18">
+<addr>0x004D</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte19">
+<addr>0x004E</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte2">
+<addr>0x0039</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte20">
+<addr>0x0050</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte21">
+<addr>0x0051</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte22">
+<addr>0x0052</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte23">
+<addr>0x0053</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte24">
+<addr>0x0055</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte25">
+<addr>0x0056</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte26">
+<addr>0x0057</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte27">
+<addr>0x0058</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte28">
+<addr>0x005A</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte29">
+<addr>0x005B</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte3">
+<addr>0x003A</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte30">
+<addr>0x005C</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte31">
+<addr>0x005D</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte32">
+<addr>0x005F</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte33">
+<addr>0x0060</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte34">
+<addr>0x0061</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte35">
+<addr>0x0062</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte36">
+<addr>0x0064</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte37">
+<addr>0x0065</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte38">
+<addr>0x0066</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte39">
+<addr>0x0067</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte4">
+<addr>0x003C</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte40">
+<addr>0x0069</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte41">
+<addr>0x006A</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte42">
+<addr>0x006B</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte43">
+<addr>0x006C</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte44">
+<addr>0x006E</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte45">
+<addr>0x006F</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte46">
+<addr>0x0070</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte47">
+<addr>0x0071</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte48">
+<addr>0x0073</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte49">
+<addr>0x0074</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte5">
+<addr>0x003D</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte50">
+<addr>0x0075</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte51">
+<addr>0x0076</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte52">
+<addr>0x0078</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte53">
+<addr>0x0079</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte54">
+<addr>0x007A</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte55">
+<addr>0x007B</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte56">
+<addr>0x007D</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte57">
+<addr>0x007E</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte58">
+<addr>0x007F</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte59">
+<addr>0x0080</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte6">
+<addr>0x003E</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte60">
+<addr>0x0082</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte61">
+<addr>0x0083</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte62">
+<addr>0x0084</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte63">
+<addr>0x0085</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte64">
+<addr>0x0087</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte65">
+<addr>0x0088</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte66">
+<addr>0x0089</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte67">
+<addr>0x008A</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte68">
+<addr>0x008C</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte69">
+<addr>0x008D</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte7">
+<addr>0x003F</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte70">
+<addr>0x008E</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte71">
+<addr>0x008F</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte8">
+<addr>0x0041</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idByte9">
+<addr>0x0042</addr>
+<value>0xFF</value>
+</reg>
+<reg id="idCtrl0">
+<addr>0x003B</addr>
+<value>0x83</value>
+</reg>
+<reg id="idCtrl1">
+<addr>0x0040</addr>
+<value>0x83</value>
+</reg>
+<reg id="idCtrl10">
+<addr>0x006D</addr>
+<value>0x83</value>
+</reg>
+<reg id="idCtrl11">
+<addr>0x0072</addr>
+<value>0x83</value>
+</reg>
+<reg id="idCtrl12">
+<addr>0x0077</addr>
+<value>0x83</value>
+</reg>
+<reg id="idCtrl13">
+<addr>0x007C</addr>
+<value>0x83</value>
+</reg>
+<reg id="idCtrl14">
+<addr>0x0081</addr>
+<value>0x83</value>
+</reg>
+<reg id="idCtrl15">
+<addr>0x0086</addr>
+<value>0x83</value>
+</reg>
+<reg id="idCtrl16">
+<addr>0x008B</addr>
+<value>0x83</value>
+</reg>
+<reg id="idCtrl17">
+<addr>0x0090</addr>
+<value>0x83</value>
+</reg>
+<reg id="idCtrl2">
+<addr>0x0045</addr>
+<value>0x83</value>
+</reg>
+<reg id="idCtrl3">
+<addr>0x004A</addr>
+<value>0x83</value>
+</reg>
+<reg id="idCtrl4">
+<addr>0x004F</addr>
+<value>0x83</value>
+</reg>
+<reg id="idCtrl5">
+<addr>0x0054</addr>
+<value>0x83</value>
+</reg>
+<reg id="idCtrl6">
+<addr>0x0059</addr>
+<value>0x83</value>
+</reg>
+<reg id="idCtrl7">
+<addr>0x005E</addr>
+<value>0x83</value>
+</reg>
+<reg id="idCtrl8">
+<addr>0x0063</addr>
+<value>0x83</value>
+</reg>
+<reg id="idCtrl9">
+<addr>0x0068</addr>
+<value>0x83</value>
+</reg>
+<reg id="idEna">
+<addr>0x0036</addr>
+<value>0x00</value>
+</reg>
+</section>
+<section base="0x00BB" id="eepServices" index="0" size="141">
+<reg id="TMTLB0">
+<addr>0x012C</addr>
+<value>0x00</value>
+</reg>
+<reg id="SFIDCB">
+<addr>0x00EE</addr>
+<value>0x17</value>
+</reg>
+<reg id="TXDRA0">
+<addr>0x00FD</addr>
+<value>0x7B</value>
+</reg>
+<reg id="SFIDCA">
+<addr>0x00ED</addr>
+<value>0x0F</value>
+</reg>
+<reg id="TXDRA1">
+<addr>0x00FE</addr>
+<value>0x01</value>
+</reg>
+<reg id="RXCIB0">
+<addr>0x0120</addr>
+<value>0xFF</value>
+</reg>
+<reg id="RXCIB1">
+<addr>0x0121</addr>
+<value>0xFF</value>
+</reg>
+<reg id="TMCPA1">
+<addr>0x012F</addr>
+<value>0x00</value>
+</reg>
+<reg id="EOT2A">
+<addr>0x00C8</addr>
+<value>0x1F</value>
+</reg>
+<reg id="WUPA3">
+<addr>0x010E</addr>
+<value>0x55</value>
+</reg>
+<reg id="TMCPA0">
+<addr>0x012E</addr>
+<value>0x1D</value>
+</reg>
+<reg id="EOT2B">
+<addr>0x00C9</addr>
+<value>0x1F</value>
+</reg>
+<reg id="TMTLA0">
+<addr>0x012A</addr>
+<value>0x00</value>
+</reg>
+<reg id="TMTLA1">
+<addr>0x012B</addr>
+<value>0x00</value>
+</reg>
+<reg id="WUPA0">
+<addr>0x010B</addr>
+<value>0x55</value>
+</reg>
+<reg id="WUPA1">
+<addr>0x010C</addr>
+<value>0x55</value>
+</reg>
+<reg id="WUPA2">
+<addr>0x010D</addr>
+<value>0x55</value>
+</reg>
+<reg id="SYCA">
+<addr>0x00F7</addr>
+<value>0xB6</value>
+</reg>
+<reg id="SYCB">
+<addr>0x00F8</addr>
+<value>0xF6</value>
+</reg>
+<reg id="RXBC1">
+<addr>0x0125</addr>
+<value>0xAA</value>
+</reg>
+<reg id="GACDIVA1">
+<addr>0x00D8</addr>
+<value>0x00</value>
+</reg>
+<reg id="GACDIVA0">
+<addr>0x00D7</addr>
+<value>0x7E</value>
+</reg>
+<reg id="TMSSCB">
+<addr>0x0129</addr>
+<value>0x2F</value>
+</reg>
+<reg id="EOT1B">
+<addr>0x00C7</addr>
+<value>0x1F</value>
+</reg>
+<reg id="TMSSCA">
+<addr>0x0128</addr>
+<value>0xCF</value>
+</reg>
+<reg id="EOT1A">
+<addr>0x00C6</addr>
+<value>0x1F</value>
+</reg>
+<reg id="IF1">
+<addr>0x00DC</addr>
+<value>0x0A</value>
+</reg>
+<reg id="WUPB2">
+<addr>0x0111</addr>
+<value>0xAA</value>
+</reg>
+<reg id="IF0">
+<addr>0x00DB</addr>
+<value>0x8E</value>
+</reg>
+<reg id="WUPB3">
+<addr>0x0112</addr>
+<value>0xAA</value>
+</reg>
+<reg id="TMTLB1">
+<addr>0x012D</addr>
+<value>0x00</value>
+</reg>
+<reg id="WUPB0">
+<addr>0x010F</addr>
+<value>0xAA</value>
+</reg>
+<reg id="WUPB1">
+<addr>0x0110</addr>
+<value>0xAA</value>
+</reg>
+<reg id="rxSetPathA1">
+<addr>0x00E0</addr>
+<value>0x40</value>
+</reg>
+<reg id="trxSysConf">
+<addr>0x00FC</addr>
+<value>0x00</value>
+</reg>
+<reg id="txSetPathA0">
+<addr>0x0101</addr>
+<value>0x01</value>
+</reg>
+<reg id="rxSetPathA0">
+<addr>0x00DF</addr>
+<value>0x41</value>
+</reg>
+<reg id="txSetPathA1">
+<addr>0x0102</addr>
+<value>0x00</value>
+</reg>
+<reg id="TXDEVB1">
+<addr>0x00D6</addr>
+<value>0x00</value>
+</reg>
+<reg id="GACDIVB0">
+<addr>0x00D9</addr>
+<value>0x7E</value>
+</reg>
+<reg id="FEPAC">
+<addr>0x00CE</addr>
+<value>0x2B</value>
+</reg>
+<reg id="GACDIVB1">
+<addr>0x00DA</addr>
+<value>0x00</value>
+</reg>
+<reg id="TMCR2A">
+<addr>0x0126</addr>
+<value>0x72</value>
+</reg>
+<reg id="RXTLA1">
+<addr>0x011D</addr>
+<value>0x00</value>
+</reg>
+<reg id="RXTLA0">
+<addr>0x011C</addr>
+<value>0x00</value>
+</reg>
+<reg id="TMCR2B">
+<addr>0x0127</addr>
+<value>0x52</value>
+</reg>
+<reg id="txSetPathB0">
+<addr>0x0103</addr>
+<value>0x01</value>
+</reg>
+<reg id="txSetPathB1">
+<addr>0x0104</addr>
+<value>0x00</value>
+</reg>
+<reg id="rxSysSet">
+<addr>0x00E4</addr>
+<value>0x20</value>
+</reg>
+<reg id="rxSetPathB1">
+<addr>0x00E2</addr>
+<value>0x40</value>
+</reg>
+<reg id="FEVCO">
+<addr>0x00CF</addr>
+<value>0x10</value>
+</reg>
+<reg id="TXDEVA1">
+<addr>0x00D4</addr>
+<value>0x00</value>
+</reg>
+<reg id="TDFCRB">
+<addr>0x00FA</addr>
+<value>0x70</value>
+</reg>
+<reg id="TXDEVA0">
+<addr>0x00D3</addr>
+<value>0xAD</value>
+</reg>
+<reg id="TDFCRA">
+<addr>0x00F9</addr>
+<value>0x60</value>
+</reg>
+<reg id="FEVCT">
+<addr>0x00D0</addr>
+<value>0x07</value>
+</reg>
+<reg id="TMCIB1">
+<addr>0x0135</addr>
+<value>0xFF</value>
+</reg>
+<reg id="FEAT">
+<addr>0x00CD</addr>
+<value>0x07</value>
+</reg>
+<reg id="WCOtimeOutA">
+<addr>0x0109</addr>
+<value>0xC9</value>
+</reg>
+<reg id="RXCIA0">
+<addr>0x0119</addr>
+<value>0xFF</value>
+</reg>
+<reg id="TMCIB0">
+<addr>0x0134</addr>
+<value>0xFF</value>
+</reg>
+<reg id="RXTLB0">
+<addr>0x0123</addr>
+<value>0x00</value>
+</reg>
+<reg id="RXTLB1">
+<addr>0x0124</addr>
+<value>0x00</value>
+</reg>
+<reg id="TXDRB1">
+<addr>0x0100</addr>
+<value>0x01</value>
+</reg>
+<reg id="WCOtimeOutB">
+<addr>0x010A</addr>
+<value>0xD6</value>
+</reg>
+<reg id="RXCIA1">
+<addr>0x011A</addr>
+<value>0xFF</value>
+</reg>
+<reg id="TXDEVB0">
+<addr>0x00D5</addr>
+<value>0xAD</value>
+</reg>
+<reg id="TXDRB0">
+<addr>0x00FF</addr>
+<value>0x7B</value>
+</reg>
+<reg id="TMCPB0">
+<addr>0x0130</addr>
+<value>0x1D</value>
+</reg>
+<reg id="TMCPB1">
+<addr>0x0131</addr>
+<value>0x00</value>
+</reg>
+<reg id="rxSetPathB0">
+<addr>0x00E1</addr>
+<value>0x00</value>
+</reg>
+<reg id="EOT3B">
+<addr>0x00CB</addr>
+<value>0x0F</value>
+</reg>
+<reg id="EOT3A">
+<addr>0x00CA</addr>
+<value>0x0F</value>
+</reg>
+<reg id="RXSBA">
+<addr>0x011B</addr>
+<value>0x00</value>
+</reg>
+<reg id="RXSBB">
+<addr>0x0122</addr>
+<value>0x00</value>
+</reg>
+<reg id="SOTtimeOutB">
+<addr>0x00F6</addr>
+<value>0xD3</value>
+</reg>
+<reg id="SOTtimeOutA">
+<addr>0x00F5</addr>
+<value>0xC9</value>
+</reg>
+<reg id="RSSC">
+<addr>0x0138</addr>
+<value>0x08</value>
+</reg>
+<reg id="TMCIA1">
+<addr>0x0133</addr>
+<value>0x00</value>
+</reg>
+<reg id="TMCIA0">
+<addr>0x0132</addr>
+<value>0x00</value>
+</reg>
+<reg id="RDOCR">
+<addr>0x00DD</addr>
+<value>0x00</value>
+</reg>
+<reg id="TMUL">
+<addr>0x00FB</addr>
+<value>0x95</value>
+</reg>
+<reg id="rxSysEvent">
+<addr>0x00E3</addr>
+<value>0x11</value>
+</reg>
+<reg id="SOT1A">
+<addr>0x00F1</addr>
+<value>0x3F</value>
+</reg>
+<reg id="SOT1B">
+<addr>0x00F2</addr>
+<value>0x3F</value>
+</reg>
+<reg id="FEANT">
+<addr>0x00CC</addr>
+<value>0x00</value>
+</reg>
+<reg id="txPreambleSysEventB">
+<addr>0x0108</addr>
+<value>0x00</value>
+</reg>
+<reg id="txPreambleSysEventA">
+<addr>0x0107</addr>
+<value>0x00</value>
+</reg>
+<reg id="SFIDA2">
+<addr>0x00E7</addr>
+<value>0x55</value>
+</reg>
+<reg id="SFIDA1">
+<addr>0x00E6</addr>
+<value>0x55</value>
+</reg>
+<reg id="SFIDA0">
+<addr>0x00E5</addr>
+<value>0x56</value>
+</reg>
+<reg id="rssiSysConf">
+<addr>0x00DE</addr>
+<value>0x08</value>
+</reg>
+<reg id="SFIDLA">
+<addr>0x00EF</addr>
+<value>0x10</value>
+</reg>
+<reg id="FREQoffset0">
+<addr>0x00D1</addr>
+<value>0xAF</value>
+</reg>
+<reg id="FREQoffset1">
+<addr>0x00D2</addr>
+<value>0x01</value>
+</reg>
+<reg id="SFIDLB">
+<addr>0x00F0</addr>
+<value>0x18</value>
+</reg>
+<reg id="SOT2B">
+<addr>0x00F4</addr>
+<value>0x2F</value>
+</reg>
+<reg id="WUPTB">
+<addr>0x0116</addr>
+<value>0x15</value>
+</reg>
+<reg id="SOT2A">
+<addr>0x00F3</addr>
+<value>0x2F</value>
+</reg>
+<reg id="SFIDB1">
+<addr>0x00EA</addr>
+<value>0xAA</value>
+</reg>
+<reg id="DMCRB">
+<addr>0x00C1</addr>
+<value>0xC5</value>
+</reg>
+<reg id="RXCPB0">
+<addr>0x011E</addr>
+<value>0x1D</value>
+</reg>
+<reg id="SFIDB0">
+<addr>0x00E9</addr>
+<value>0xA9</value>
+</reg>
+<reg id="RXCPB1">
+<addr>0x011F</addr>
+<value>0x00</value>
+</reg>
+<reg id="SFIDB3">
+<addr>0x00EC</addr>
+<value>0xAA</value>
+</reg>
+<reg id="SFIDB2">
+<addr>0x00EB</addr>
+<value>0xAA</value>
+</reg>
+<reg id="DMCRA">
+<addr>0x00C0</addr>
+<value>0xC5</value>
+</reg>
+<reg id="CHSTARTFILTER">
+<addr>0x00BD</addr>
+<value>0x14</value>
+</reg>
+<reg id="SFIDA3">
+<addr>0x00E8</addr>
+<value>0x55</value>
+</reg>
+<reg id="WUPLA">
+<addr>0x0113</addr>
+<value>0x0E</value>
+</reg>
+<reg id="txSysEventA">
+<addr>0x0105</addr>
+<value>0x00</value>
+</reg>
+<reg id="txSysEventB">
+<addr>0x0106</addr>
+<value>0x00</value>
+</reg>
+<reg id="DMDRB">
+<addr>0x00C3</addr>
+<value>0x26</value>
+</reg>
+<reg id="DMDRA">
+<addr>0x00C2</addr>
+<value>0x26</value>
+</reg>
+<reg id="CHCR">
+<addr>0x00BB</addr>
+<value>0x02</value>
+</reg>
+<reg id="WUPLB">
+<addr>0x0114</addr>
+<value>0x16</value>
+</reg>
+<reg id="DMMA">
+<addr>0x00C4</addr>
+<value>0x28</value>
+</reg>
+<reg id="DMMB">
+<addr>0x00C5</addr>
+<value>0x28</value>
+</reg>
+<reg id="CHDN">
+<addr>0x00BC</addr>
+<value>0x03</value>
+</reg>
+<reg id="RXCPA0">
+<addr>0x0117</addr>
+<value>0x1D</value>
+</reg>
+<reg id="RXCPA1">
+<addr>0x0118</addr>
+<value>0x00</value>
+</reg>
+<reg id="TMCSBB">
+<addr>0x0137</addr>
+<value>0x10</value>
+</reg>
+<reg id="TMCSBA">
+<addr>0x0136</addr>
+<value>0x00</value>
+</reg>
+<reg id="DMCDB">
+<addr>0x00BF</addr>
+<value>0x63</value>
+</reg>
+<reg id="DMCDA">
+<addr>0x00BE</addr>
+<value>0x63</value>
+</reg>
+<reg id="WUPTA">
+<addr>0x0115</addr>
+<value>0x0D</value>
+</reg>
+<channel index="0">
+<reg id="FEFREQ1">
+<addr>0x013A</addr>
+<value>0x40</value>
+</reg>
+<reg id="FEFREQ2">
+<addr>0x013B</addr>
+<value>0x02</value>
+</reg>
+<reg id="FEFREQ0">
+<addr>0x0139</addr>
+<value>0xB3</value>
+</reg>
+<reg id="FECR">
+<addr>0x013D</addr>
+<value>0x03</value>
+</reg>
+<reg id="FEMS">
+<addr>0x013C</addr>
+<value>0x85</value>
+</reg>
+</channel>
+<channel index="1">
+<reg id="FEFREQ1">
+<addr>0x013F</addr>
+<value>0x7D</value>
+</reg>
+<reg id="FEFREQ2">
+<addr>0x0140</addr>
+<value>0x02</value>
+</reg>
+<reg id="FEFREQ0">
+<addr>0x013E</addr>
+<value>0x55</value>
+</reg>
+<reg id="FECR">
+<addr>0x0142</addr>
+<value>0x03</value>
+</reg>
+<reg id="FEMS">
+<addr>0x0141</addr>
+<value>0x85</value>
+</reg>
+</channel>
+<channel index="2">
+<reg id="FEFREQ1">
+<addr>0x0144</addr>
+<value>0x5F</value>
+</reg>
+<reg id="FEFREQ2">
+<addr>0x0145</addr>
+<value>0x02</value>
+</reg>
+<reg id="FEFREQ0">
+<addr>0x0143</addr>
+<value>0x04</value>
+</reg>
+<reg id="FECR">
+<addr>0x0147</addr>
+<value>0x03</value>
+</reg>
+<reg id="FEMS">
+<addr>0x0146</addr>
+<value>0x85</value>
+</reg>
+</channel>
+</section>
+<section base="0x0148" id="eepServices" index="1" size="141">
+<reg id="TMTLB0">
+<addr>0x01B9</addr>
+<value>0x00</value>
+</reg>
+<reg id="SFIDCB">
+<addr>0x017B</addr>
+<value>0x11</value>
+</reg>
+<reg id="TXDRA0">
+<addr>0x018A</addr>
+<value>0x9D</value>
+</reg>
+<reg id="SFIDCA">
+<addr>0x017A</addr>
+<value>0x0F</value>
+</reg>
+<reg id="TXDRA1">
+<addr>0x018B</addr>
+<value>0x00</value>
+</reg>
+<reg id="RXCIB0">
+<addr>0x01AD</addr>
+<value>0xFF</value>
+</reg>
+<reg id="RXCIB1">
+<addr>0x01AE</addr>
+<value>0xFF</value>
+</reg>
+<reg id="TMCPA1">
+<addr>0x01BC</addr>
+<value>0x00</value>
+</reg>
+<reg id="EOT2A">
+<addr>0x0155</addr>
+<value>0x1F</value>
+</reg>
+<reg id="WUPA3">
+<addr>0x019B</addr>
+<value>0x55</value>
+</reg>
+<reg id="TMCPA0">
+<addr>0x01BB</addr>
+<value>0x1D</value>
+</reg>
+<reg id="EOT2B">
+<addr>0x0156</addr>
+<value>0x1F</value>
+</reg>
+<reg id="TMTLA0">
+<addr>0x01B7</addr>
+<value>0x00</value>
+</reg>
+<reg id="TMTLA1">
+<addr>0x01B8</addr>
+<value>0x00</value>
+</reg>
+<reg id="WUPA0">
+<addr>0x0198</addr>
+<value>0x55</value>
+</reg>
+<reg id="WUPA1">
+<addr>0x0199</addr>
+<value>0x55</value>
+</reg>
+<reg id="WUPA2">
+<addr>0x019A</addr>
+<value>0x55</value>
+</reg>
+<reg id="SYCA">
+<addr>0x0184</addr>
+<value>0xB6</value>
+</reg>
+<reg id="SYCB">
+<addr>0x0185</addr>
+<value>0xF6</value>
+</reg>
+<reg id="RXBC1">
+<addr>0x01B2</addr>
+<value>0xAA</value>
+</reg>
+<reg id="GACDIVA1">
+<addr>0x0165</addr>
+<value>0x00</value>
+</reg>
+<reg id="GACDIVA0">
+<addr>0x0164</addr>
+<value>0x34</value>
+</reg>
+<reg id="TMSSCB">
+<addr>0x01B6</addr>
+<value>0x20</value>
+</reg>
+<reg id="EOT1B">
+<addr>0x0154</addr>
+<value>0x1F</value>
+</reg>
+<reg id="TMSSCA">
+<addr>0x01B5</addr>
+<value>0xCF</value>
+</reg>
+<reg id="EOT1A">
+<addr>0x0153</addr>
+<value>0x1F</value>
+</reg>
+<reg id="IF1">
+<addr>0x0169</addr>
+<value>0x0A</value>
+</reg>
+<reg id="WUPB2">
+<addr>0x019E</addr>
+<value>0xAA</value>
+</reg>
+<reg id="IF0">
+<addr>0x0168</addr>
+<value>0x8E</value>
+</reg>
+<reg id="WUPB3">
+<addr>0x019F</addr>
+<value>0xAA</value>
+</reg>
+<reg id="TMTLB1">
+<addr>0x01BA</addr>
+<value>0x00</value>
+</reg>
+<reg id="WUPB0">
+<addr>0x019C</addr>
+<value>0xAA</value>
+</reg>
+<reg id="WUPB1">
+<addr>0x019D</addr>
+<value>0xAA</value>
+</reg>
+<reg id="rxSetPathA1">
+<addr>0x016D</addr>
+<value>0x40</value>
+</reg>
+<reg id="trxSysConf">
+<addr>0x0189</addr>
+<value>0x00</value>
+</reg>
+<reg id="txSetPathA0">
+<addr>0x018E</addr>
+<value>0x01</value>
+</reg>
+<reg id="rxSetPathA0">
+<addr>0x016C</addr>
+<value>0x41</value>
+</reg>
+<reg id="txSetPathA1">
+<addr>0x018F</addr>
+<value>0x00</value>
+</reg>
+<reg id="TXDEVB1">
+<addr>0x0163</addr>
+<value>0x01</value>
+</reg>
+<reg id="GACDIVB0">
+<addr>0x0166</addr>
+<value>0x34</value>
+</reg>
+<reg id="FEPAC">
+<addr>0x015B</addr>
+<value>0x2B</value>
+</reg>
+<reg id="GACDIVB1">
+<addr>0x0167</addr>
+<value>0x00</value>
+</reg>
+<reg id="TMCR2A">
+<addr>0x01B3</addr>
+<value>0x72</value>
+</reg>
+<reg id="RXTLA1">
+<addr>0x01AA</addr>
+<value>0x00</value>
+</reg>
+<reg id="RXTLA0">
+<addr>0x01A9</addr>
+<value>0x00</value>
+</reg>
+<reg id="TMCR2B">
+<addr>0x01B4</addr>
+<value>0x50</value>
+</reg>
+<reg id="txSetPathB0">
+<addr>0x0190</addr>
+<value>0x01</value>
+</reg>
+<reg id="txSetPathB1">
+<addr>0x0191</addr>
+<value>0x00</value>
+</reg>
+<reg id="rxSysSet">
+<addr>0x0171</addr>
+<value>0x20</value>
+</reg>
+<reg id="rxSetPathB1">
+<addr>0x016F</addr>
+<value>0x40</value>
+</reg>
+<reg id="FEVCO">
+<addr>0x015C</addr>
+<value>0x10</value>
+</reg>
+<reg id="TXDEVA1">
+<addr>0x0161</addr>
+<value>0x01</value>
+</reg>
+<reg id="TDFCRB">
+<addr>0x0187</addr>
+<value>0x60</value>
+</reg>
+<reg id="TXDEVA0">
+<addr>0x0160</addr>
+<value>0xAF</value>
+</reg>
+<reg id="TDFCRA">
+<addr>0x0186</addr>
+<value>0x60</value>
+</reg>
+<reg id="FEVCT">
+<addr>0x015D</addr>
+<value>0x07</value>
+</reg>
+<reg id="TMCIB1">
+<addr>0x01C2</addr>
+<value>0x00</value>
+</reg>
+<reg id="FEAT">
+<addr>0x015A</addr>
+<value>0x07</value>
+</reg>
+<reg id="WCOtimeOutA">
+<addr>0x0196</addr>
+<value>0xC9</value>
+</reg>
+<reg id="RXCIA0">
+<addr>0x01A6</addr>
+<value>0xFF</value>
+</reg>
+<reg id="TMCIB0">
+<addr>0x01C1</addr>
+<value>0x00</value>
+</reg>
+<reg id="RXTLB0">
+<addr>0x01B0</addr>
+<value>0x00</value>
+</reg>
+<reg id="RXTLB1">
+<addr>0x01B1</addr>
+<value>0x00</value>
+</reg>
+<reg id="TXDRB1">
+<addr>0x018D</addr>
+<value>0x00</value>
+</reg>
+<reg id="WCOtimeOutB">
+<addr>0x0197</addr>
+<value>0xD6</value>
+</reg>
+<reg id="RXCIA1">
+<addr>0x01A7</addr>
+<value>0xFF</value>
+</reg>
+<reg id="TXDEVB0">
+<addr>0x0162</addr>
+<value>0xAF</value>
+</reg>
+<reg id="TXDRB0">
+<addr>0x018C</addr>
+<value>0x9D</value>
+</reg>
+<reg id="TMCPB0">
+<addr>0x01BD</addr>
+<value>0x1D</value>
+</reg>
+<reg id="TMCPB1">
+<addr>0x01BE</addr>
+<value>0x00</value>
+</reg>
+<reg id="rxSetPathB0">
+<addr>0x016E</addr>
+<value>0x5E</value>
+</reg>
+<reg id="EOT3B">
+<addr>0x0158</addr>
+<value>0x0C</value>
+</reg>
+<reg id="EOT3A">
+<addr>0x0157</addr>
+<value>0x0F</value>
+</reg>
+<reg id="RXSBA">
+<addr>0x01A8</addr>
+<value>0x00</value>
+</reg>
+<reg id="RXSBB">
+<addr>0x01AF</addr>
+<value>0x00</value>
+</reg>
+<reg id="SOTtimeOutB">
+<addr>0x0183</addr>
+<value>0xD3</value>
+</reg>
+<reg id="SOTtimeOutA">
+<addr>0x0182</addr>
+<value>0xC9</value>
+</reg>
+<reg id="RSSC">
+<addr>0x01C5</addr>
+<value>0x08</value>
+</reg>
+<reg id="TMCIA1">
+<addr>0x01C0</addr>
+<value>0x00</value>
+</reg>
+<reg id="TMCIA0">
+<addr>0x01BF</addr>
+<value>0x00</value>
+</reg>
+<reg id="RDOCR">
+<addr>0x016A</addr>
+<value>0x00</value>
+</reg>
+<reg id="TMUL">
+<addr>0x0188</addr>
+<value>0x95</value>
+</reg>
+<reg id="rxSysEvent">
+<addr>0x0170</addr>
+<value>0x11</value>
+</reg>
+<reg id="SOT1A">
+<addr>0x017E</addr>
+<value>0x3F</value>
+</reg>
+<reg id="SOT1B">
+<addr>0x017F</addr>
+<value>0x3F</value>
+</reg>
+<reg id="FEANT">
+<addr>0x0159</addr>
+<value>0x00</value>
+</reg>
+<reg id="txPreambleSysEventB">
+<addr>0x0195</addr>
+<value>0x00</value>
+</reg>
+<reg id="txPreambleSysEventA">
+<addr>0x0194</addr>
+<value>0x00</value>
+</reg>
+<reg id="SFIDA2">
+<addr>0x0174</addr>
+<value>0x55</value>
+</reg>
+<reg id="SFIDA1">
+<addr>0x0173</addr>
+<value>0x55</value>
+</reg>
+<reg id="SFIDA0">
+<addr>0x0172</addr>
+<value>0x56</value>
+</reg>
+<reg id="rssiSysConf">
+<addr>0x016B</addr>
+<value>0x08</value>
+</reg>
+<reg id="SFIDLA">
+<addr>0x017C</addr>
+<value>0x10</value>
+</reg>
+<reg id="FREQoffset0">
+<addr>0x015E</addr>
+<value>0xAF</value>
+</reg>
+<reg id="FREQoffset1">
+<addr>0x015F</addr>
+<value>0x01</value>
+</reg>
+<reg id="SFIDLB">
+<addr>0x017D</addr>
+<value>0x12</value>
+</reg>
+<reg id="SOT2B">
+<addr>0x0181</addr>
+<value>0x2F</value>
+</reg>
+<reg id="WUPTB">
+<addr>0x01A3</addr>
+<value>0x0F</value>
+</reg>
+<reg id="SOT2A">
+<addr>0x0180</addr>
+<value>0x2F</value>
+</reg>
+<reg id="SFIDB1">
+<addr>0x0177</addr>
+<value>0xAA</value>
+</reg>
+<reg id="DMCRB">
+<addr>0x014E</addr>
+<value>0xCB</value>
+</reg>
+<reg id="RXCPB0">
+<addr>0x01AB</addr>
+<value>0x1D</value>
+</reg>
+<reg id="SFIDB0">
+<addr>0x0176</addr>
+<value>0xA9</value>
+</reg>
+<reg id="RXCPB1">
+<addr>0x01AC</addr>
+<value>0x00</value>
+</reg>
+<reg id="SFIDB3">
+<addr>0x0179</addr>
+<value>0xAA</value>
+</reg>
+<reg id="SFIDB2">
+<addr>0x0178</addr>
+<value>0xAA</value>
+</reg>
+<reg id="DMCRA">
+<addr>0x014D</addr>
+<value>0x8B</value>
+</reg>
+<reg id="CHSTARTFILTER">
+<addr>0x014A</addr>
+<value>0x14</value>
+</reg>
+<reg id="SFIDA3">
+<addr>0x0175</addr>
+<value>0x55</value>
+</reg>
+<reg id="WUPLA">
+<addr>0x01A0</addr>
+<value>0x0E</value>
+</reg>
+<reg id="txSysEventA">
+<addr>0x0192</addr>
+<value>0x00</value>
+</reg>
+<reg id="txSysEventB">
+<addr>0x0193</addr>
+<value>0x00</value>
+</reg>
+<reg id="DMDRB">
+<addr>0x0150</addr>
+<value>0x1A</value>
+</reg>
+<reg id="DMDRA">
+<addr>0x014F</addr>
+<value>0x1A</value>
+</reg>
+<reg id="CHCR">
+<addr>0x0148</addr>
+<value>0x02</value>
+</reg>
+<reg id="WUPLB">
+<addr>0x01A1</addr>
+<value>0x10</value>
+</reg>
+<reg id="DMMA">
+<addr>0x0151</addr>
+<value>0x23</value>
+</reg>
+<reg id="DMMB">
+<addr>0x0152</addr>
+<value>0x23</value>
+</reg>
+<reg id="CHDN">
+<addr>0x0149</addr>
+<value>0x03</value>
+</reg>
+<reg id="RXCPA0">
+<addr>0x01A4</addr>
+<value>0x1D</value>
+</reg>
+<reg id="RXCPA1">
+<addr>0x01A5</addr>
+<value>0x00</value>
+</reg>
+<reg id="TMCSBB">
+<addr>0x01C4</addr>
+<value>0x00</value>
+</reg>
+<reg id="TMCSBA">
+<addr>0x01C3</addr>
+<value>0x00</value>
+</reg>
+<reg id="DMCDB">
+<addr>0x014C</addr>
+<value>0x42</value>
+</reg>
+<reg id="DMCDA">
+<addr>0x014B</addr>
+<value>0x42</value>
+</reg>
+<reg id="WUPTA">
+<addr>0x01A2</addr>
+<value>0x0D</value>
+</reg>
+<channel index="0">
+<reg id="FEFREQ1">
+<addr>0x01C7</addr>
+<value>0x40</value>
+</reg>
+<reg id="FEFREQ2">
+<addr>0x01C8</addr>
+<value>0x02</value>
+</reg>
+<reg id="FEFREQ0">
+<addr>0x01C6</addr>
+<value>0xB3</value>
+</reg>
+<reg id="FECR">
+<addr>0x01CA</addr>
+<value>0x03</value>
+</reg>
+<reg id="FEMS">
+<addr>0x01C9</addr>
+<value>0x85</value>
+</reg>
+</channel>
+<channel index="1">
+<reg id="FEFREQ1">
+<addr>0x01CC</addr>
+<value>0x7D</value>
+</reg>
+<reg id="FEFREQ2">
+<addr>0x01CD</addr>
+<value>0x02</value>
+</reg>
+<reg id="FEFREQ0">
+<addr>0x01CB</addr>
+<value>0x55</value>
+</reg>
+<reg id="FECR">
+<addr>0x01CF</addr>
+<value>0x03</value>
+</reg>
+<reg id="FEMS">
+<addr>0x01CE</addr>
+<value>0x85</value>
+</reg>
+</channel>
+<channel index="2">
+<reg id="FEFREQ1">
+<addr>0x01D1</addr>
+<value>0x5F</value>
+</reg>
+<reg id="FEFREQ2">
+<addr>0x01D2</addr>
+<value>0x02</value>
+</reg>
+<reg id="FEFREQ0">
+<addr>0x01D0</addr>
+<value>0x04</value>
+</reg>
+<reg id="FECR">
+<addr>0x01D4</addr>
+<value>0x03</value>
+</reg>
+<reg id="FEMS">
+<addr>0x01D3</addr>
+<value>0x85</value>
+</reg>
+</channel>
+</section>
+<section base="0x01D5" id="eepServices" index="2" size="141">
+<reg id="TMTLB0">
+<addr>0x0246</addr>
+<value>0x00</value>
+</reg>
+<reg id="SFIDCB">
+<addr>0x0208</addr>
+<value>0x0F</value>
+</reg>
+<reg id="TXDRA0">
+<addr>0x0217</addr>
+<value>0x2F</value>
+</reg>
+<reg id="SFIDCA">
+<addr>0x0207</addr>
+<value>0x0F</value>
+</reg>
+<reg id="TXDRA1">
+<addr>0x0218</addr>
+<value>0x01</value>
+</reg>
+<reg id="RXCIB0">
+<addr>0x023A</addr>
+<value>0xFF</value>
+</reg>
+<reg id="RXCIB1">
+<addr>0x023B</addr>
+<value>0xFF</value>
+</reg>
+<reg id="TMCPA1">
+<addr>0x0249</addr>
+<value>0x00</value>
+</reg>
+<reg id="EOT2A">
+<addr>0x01E2</addr>
+<value>0x1F</value>
+</reg>
+<reg id="WUPA3">
+<addr>0x0228</addr>
+<value>0x55</value>
+</reg>
+<reg id="TMCPA0">
+<addr>0x0248</addr>
+<value>0x1D</value>
+</reg>
+<reg id="EOT2B">
+<addr>0x01E3</addr>
+<value>0x1F</value>
+</reg>
+<reg id="TMTLA0">
+<addr>0x0244</addr>
+<value>0x00</value>
+</reg>
+<reg id="TMTLA1">
+<addr>0x0245</addr>
+<value>0x00</value>
+</reg>
+<reg id="WUPA0">
+<addr>0x0225</addr>
+<value>0x55</value>
+</reg>
+<reg id="WUPA1">
+<addr>0x0226</addr>
+<value>0x55</value>
+</reg>
+<reg id="WUPA2">
+<addr>0x0227</addr>
+<value>0x55</value>
+</reg>
+<reg id="SYCA">
+<addr>0x0211</addr>
+<value>0xF6</value>
+</reg>
+<reg id="SYCB">
+<addr>0x0212</addr>
+<value>0xF6</value>
+</reg>
+<reg id="RXBC1">
+<addr>0x023F</addr>
+<value>0x22</value>
+</reg>
+<reg id="GACDIVA1">
+<addr>0x01F2</addr>
+<value>0x00</value>
+</reg>
+<reg id="GACDIVA0">
+<addr>0x01F1</addr>
+<value>0x64</value>
+</reg>
+<reg id="TMSSCB">
+<addr>0x0243</addr>
+<value>0x2F</value>
+</reg>
+<reg id="EOT1B">
+<addr>0x01E1</addr>
+<value>0x1F</value>
+</reg>
+<reg id="TMSSCA">
+<addr>0x0242</addr>
+<value>0x2F</value>
+</reg>
+<reg id="EOT1A">
+<addr>0x01E0</addr>
+<value>0x1F</value>
+</reg>
+<reg id="IF1">
+<addr>0x01F6</addr>
+<value>0x0A</value>
+</reg>
+<reg id="WUPB2">
+<addr>0x022B</addr>
+<value>0xAA</value>
+</reg>
+<reg id="IF0">
+<addr>0x01F5</addr>
+<value>0x90</value>
+</reg>
+<reg id="WUPB3">
+<addr>0x022C</addr>
+<value>0xAA</value>
+</reg>
+<reg id="TMTLB1">
+<addr>0x0247</addr>
+<value>0x00</value>
+</reg>
+<reg id="WUPB0">
+<addr>0x0229</addr>
+<value>0xAA</value>
+</reg>
+<reg id="WUPB1">
+<addr>0x022A</addr>
+<value>0xAA</value>
+</reg>
+<reg id="rxSetPathA1">
+<addr>0x01FA</addr>
+<value>0x40</value>
+</reg>
+<reg id="trxSysConf">
+<addr>0x0216</addr>
+<value>0x0C</value>
+</reg>
+<reg id="txSetPathA0">
+<addr>0x021B</addr>
+<value>0x01</value>
+</reg>
+<reg id="rxSetPathA0">
+<addr>0x01F9</addr>
+<value>0x00</value>
+</reg>
+<reg id="txSetPathA1">
+<addr>0x021C</addr>
+<value>0x01</value>
+</reg>
+<reg id="TXDEVB1">
+<addr>0x01F0</addr>
+<value>0x00</value>
+</reg>
+<reg id="GACDIVB0">
+<addr>0x01F3</addr>
+<value>0x64</value>
+</reg>
+<reg id="FEPAC">
+<addr>0x01E8</addr>
+<value>0x23</value>
+</reg>
+<reg id="GACDIVB1">
+<addr>0x01F4</addr>
+<value>0x00</value>
+</reg>
+<reg id="TMCR2A">
+<addr>0x0240</addr>
+<value>0x02</value>
+</reg>
+<reg id="RXTLA1">
+<addr>0x0237</addr>
+<value>0x00</value>
+</reg>
+<reg id="RXTLA0">
+<addr>0x0236</addr>
+<value>0x00</value>
+</reg>
+<reg id="TMCR2B">
+<addr>0x0241</addr>
+<value>0x02</value>
+</reg>
+<reg id="txSetPathB0">
+<addr>0x021D</addr>
+<value>0x05</value>
+</reg>
+<reg id="txSetPathB1">
+<addr>0x021E</addr>
+<value>0x05</value>
+</reg>
+<reg id="rxSysSet">
+<addr>0x01FE</addr>
+<value>0x20</value>
+</reg>
+<reg id="rxSetPathB1">
+<addr>0x01FC</addr>
+<value>0x40</value>
+</reg>
+<reg id="FEVCO">
+<addr>0x01E9</addr>
+<value>0x10</value>
+</reg>
+<reg id="TXDEVA1">
+<addr>0x01EE</addr>
+<value>0x00</value>
+</reg>
+<reg id="TDFCRB">
+<addr>0x0214</addr>
+<value>0x80</value>
+</reg>
+<reg id="TXDEVA0">
+<addr>0x01ED</addr>
+<value>0xD8</value>
+</reg>
+<reg id="TDFCRA">
+<addr>0x0213</addr>
+<value>0x80</value>
+</reg>
+<reg id="FEVCT">
+<addr>0x01EA</addr>
+<value>0x07</value>
+</reg>
+<reg id="TMCIB1">
+<addr>0x024F</addr>
+<value>0xFF</value>
+</reg>
+<reg id="FEAT">
+<addr>0x01E7</addr>
+<value>0x07</value>
+</reg>
+<reg id="WCOtimeOutA">
+<addr>0x0223</addr>
+<value>0xD6</value>
+</reg>
+<reg id="RXCIA0">
+<addr>0x0233</addr>
+<value>0xFF</value>
+</reg>
+<reg id="TMCIB0">
+<addr>0x024E</addr>
+<value>0xFF</value>
+</reg>
+<reg id="RXTLB0">
+<addr>0x023D</addr>
+<value>0x00</value>
+</reg>
+<reg id="RXTLB1">
+<addr>0x023E</addr>
+<value>0x00</value>
+</reg>
+<reg id="TXDRB1">
+<addr>0x021A</addr>
+<value>0x01</value>
+</reg>
+<reg id="WCOtimeOutB">
+<addr>0x0224</addr>
+<value>0xD6</value>
+</reg>
+<reg id="RXCIA1">
+<addr>0x0234</addr>
+<value>0xFF</value>
+</reg>
+<reg id="TXDEVB0">
+<addr>0x01EF</addr>
+<value>0xD8</value>
+</reg>
+<reg id="TXDRB0">
+<addr>0x0219</addr>
+<value>0x2F</value>
+</reg>
+<reg id="TMCPB0">
+<addr>0x024A</addr>
+<value>0x1D</value>
+</reg>
+<reg id="TMCPB1">
+<addr>0x024B</addr>
+<value>0x00</value>
+</reg>
+<reg id="rxSetPathB0">
+<addr>0x01FB</addr>
+<value>0x00</value>
+</reg>
+<reg id="EOT3B">
+<addr>0x01E5</addr>
+<value>0x0F</value>
+</reg>
+<reg id="EOT3A">
+<addr>0x01E4</addr>
+<value>0x0F</value>
+</reg>
+<reg id="RXSBA">
+<addr>0x0235</addr>
+<value>0x00</value>
+</reg>
+<reg id="RXSBB">
+<addr>0x023C</addr>
+<value>0x00</value>
+</reg>
+<reg id="SOTtimeOutB">
+<addr>0x0210</addr>
+<value>0xD6</value>
+</reg>
+<reg id="SOTtimeOutA">
+<addr>0x020F</addr>
+<value>0xD6</value>
+</reg>
+<reg id="RSSC">
+<addr>0x0252</addr>
+<value>0x08</value>
+</reg>
+<reg id="TMCIA1">
+<addr>0x024D</addr>
+<value>0xFF</value>
+</reg>
+<reg id="TMCIA0">
+<addr>0x024C</addr>
+<value>0xFF</value>
+</reg>
+<reg id="RDOCR">
+<addr>0x01F7</addr>
+<value>0x18</value>
+</reg>
+<reg id="TMUL">
+<addr>0x0215</addr>
+<value>0x96</value>
+</reg>
+<reg id="rxSysEvent">
+<addr>0x01FD</addr>
+<value>0x11</value>
+</reg>
+<reg id="SOT1A">
+<addr>0x020B</addr>
+<value>0x3F</value>
+</reg>
+<reg id="SOT1B">
+<addr>0x020C</addr>
+<value>0x3F</value>
+</reg>
+<reg id="FEANT">
+<addr>0x01E6</addr>
+<value>0x00</value>
+</reg>
+<reg id="txPreambleSysEventB">
+<addr>0x0222</addr>
+<value>0x00</value>
+</reg>
+<reg id="txPreambleSysEventA">
+<addr>0x0221</addr>
+<value>0x00</value>
+</reg>
+<reg id="SFIDA2">
+<addr>0x0201</addr>
+<value>0x55</value>
+</reg>
+<reg id="SFIDA1">
+<addr>0x0200</addr>
+<value>0x55</value>
+</reg>
+<reg id="SFIDA0">
+<addr>0x01FF</addr>
+<value>0x56</value>
+</reg>
+<reg id="rssiSysConf">
+<addr>0x01F8</addr>
+<value>0x08</value>
+</reg>
+<reg id="SFIDLA">
+<addr>0x0209</addr>
+<value>0x10</value>
+</reg>
+<reg id="FREQoffset0">
+<addr>0x01EB</addr>
+<value>0xAF</value>
+</reg>
+<reg id="FREQoffset1">
+<addr>0x01EC</addr>
+<value>0x01</value>
+</reg>
+<reg id="SFIDLB">
+<addr>0x020A</addr>
+<value>0x10</value>
+</reg>
+<reg id="SOT2B">
+<addr>0x020E</addr>
+<value>0x2F</value>
+</reg>
+<reg id="WUPTB">
+<addr>0x0230</addr>
+<value>0x0D</value>
+</reg>
+<reg id="SOT2A">
+<addr>0x020D</addr>
+<value>0x2F</value>
+</reg>
+<reg id="SFIDB1">
+<addr>0x0204</addr>
+<value>0xAA</value>
+</reg>
+<reg id="DMCRB">
+<addr>0x01DB</addr>
+<value>0x87</value>
+</reg>
+<reg id="RXCPB0">
+<addr>0x0238</addr>
+<value>0x1D</value>
+</reg>
+<reg id="SFIDB0">
+<addr>0x0203</addr>
+<value>0xA9</value>
+</reg>
+<reg id="RXCPB1">
+<addr>0x0239</addr>
+<value>0x00</value>
+</reg>
+<reg id="SFIDB3">
+<addr>0x0206</addr>
+<value>0xAA</value>
+</reg>
+<reg id="SFIDB2">
+<addr>0x0205</addr>
+<value>0xAA</value>
+</reg>
+<reg id="DMCRA">
+<addr>0x01DA</addr>
+<value>0xC7</value>
+</reg>
+<reg id="CHSTARTFILTER">
+<addr>0x01D7</addr>
+<value>0x14</value>
+</reg>
+<reg id="SFIDA3">
+<addr>0x0202</addr>
+<value>0x55</value>
+</reg>
+<reg id="WUPLA">
+<addr>0x022D</addr>
+<value>0x0E</value>
+</reg>
+<reg id="txSysEventA">
+<addr>0x021F</addr>
+<value>0x02</value>
+</reg>
+<reg id="txSysEventB">
+<addr>0x0220</addr>
+<value>0x00</value>
+</reg>
+<reg id="DMDRB">
+<addr>0x01DD</addr>
+<value>0x10</value>
+</reg>
+<reg id="DMDRA">
+<addr>0x01DC</addr>
+<value>0x10</value>
+</reg>
+<reg id="CHCR">
+<addr>0x01D5</addr>
+<value>0x02</value>
+</reg>
+<reg id="WUPLB">
+<addr>0x022E</addr>
+<value>0x0E</value>
+</reg>
+<reg id="DMMA">
+<addr>0x01DE</addr>
+<value>0x06</value>
+</reg>
+<reg id="DMMB">
+<addr>0x01DF</addr>
+<value>0x06</value>
+</reg>
+<reg id="CHDN">
+<addr>0x01D6</addr>
+<value>0x03</value>
+</reg>
+<reg id="RXCPA0">
+<addr>0x0231</addr>
+<value>0x1D</value>
+</reg>
+<reg id="RXCPA1">
+<addr>0x0232</addr>
+<value>0x00</value>
+</reg>
+<reg id="TMCSBB">
+<addr>0x0251</addr>
+<value>0x00</value>
+</reg>
+<reg id="TMCSBA">
+<addr>0x0250</addr>
+<value>0x00</value>
+</reg>
+<reg id="DMCDB">
+<addr>0x01D9</addr>
+<value>0x63</value>
+</reg>
+<reg id="DMCDA">
+<addr>0x01D8</addr>
+<value>0x63</value>
+</reg>
+<reg id="WUPTA">
+<addr>0x022F</addr>
+<value>0x0D</value>
+</reg>
+<channel index="0">
+<reg id="FEFREQ1">
+<addr>0x0254</addr>
+<value>0x4C</value>
+</reg>
+<reg id="FEFREQ2">
+<addr>0x0255</addr>
+<value>0x02</value>
+</reg>
+<reg id="FEFREQ0">
+<addr>0x0253</addr>
+<value>0x11</value>
+</reg>
+<reg id="FECR">
+<addr>0x0257</addr>
+<value>0x03</value>
+</reg>
+<reg id="FEMS">
+<addr>0x0256</addr>
+<value>0x85</value>
+</reg>
+</channel>
+<channel index="1">
+<reg id="FEFREQ1">
+<addr>0x0259</addr>
+<value>0x71</value>
+</reg>
+<reg id="FEFREQ2">
+<addr>0x025A</addr>
+<value>0x02</value>
+</reg>
+<reg id="FEFREQ0">
+<addr>0x0258</addr>
+<value>0xF7</value>
+</reg>
+<reg id="FECR">
+<addr>0x025C</addr>
+<value>0x03</value>
+</reg>
+<reg id="FEMS">
+<addr>0x025B</addr>
+<value>0x85</value>
+</reg>
+</channel>
+<channel index="2">
+<reg id="FEFREQ1">
+<addr>0x025E</addr>
+<value>0x5F</value>
+</reg>
+<reg id="FEFREQ2">
+<addr>0x025F</addr>
+<value>0x02</value>
+</reg>
+<reg id="FEFREQ0">
+<addr>0x025D</addr>
+<value>0x04</value>
+</reg>
+<reg id="FECR">
+<addr>0x0261</addr>
+<value>0x03</value>
+</reg>
+<reg id="FEMS">
+<addr>0x0260</addr>
+<value>0x85</value>
+</reg>
+</channel>
+</section>
+<section base="0x0000" id="spareRegs"/>
+<section base="0x040A" id="eepRSSI">
+<reg id="RSHDV">
+<addr>0x040C</addr>
+<value>0x24</value>
+</reg>
+<reg id="RSLDV">
+<addr>0x040B</addr>
+<value>0x1E</value>
+</reg>
+<reg id="RSSIFG">
+<addr>0x040A</addr>
+<value>0x14</value>
+</reg>
+</section>
+<section base="0x0008" id="eepConfValid">
+<reg id="confInitFlags">
+<addr>0x0008</addr>
+<value>0x00</value>
+</reg>
+<reg id="confVMCSR">
+<addr>0x000A</addr>
+<value>0x00</value>
+</reg>
+<reg id="confVal">
+<addr>0x0009</addr>
+<value>0x02</value>
+</reg>
+<reg id="funcPtr0">
+<addr>0x000B</addr>
+<value>0x00</value>
+</reg>
+<reg id="funcPtr1">
+<addr>0x000C</addr>
+<value>0x00</value>
+</reg>
+</section>
+<section base="0x0400" id="eepFacLock">
+<reg id="confFEBT">
+<addr>0x0401</addr>
+<value>0x0A</value>
+</reg>
+<reg id="confFELNA">
+<addr>0x0402</addr>
+<value>0x73</value>
+</reg>
+<reg id="confFELNA2">
+<addr>0x0403</addr>
+<value>0x73</value>
+</reg>
+<reg id="confFETN4">
+<addr>0x0404</addr>
+<value>0x77</value>
+</reg>
+<reg id="confFEVCOoffset">
+<addr>0x0405</addr>
+<value>0x00</value>
+</reg>
+<reg id="confTEMPCAL1">
+<addr>0x0406</addr>
+<value>0x00</value>
+</reg>
+<reg id="confTEMPCAL2">
+<addr>0x0407</addr>
+<value>0x00</value>
+</reg>
+<reg id="confTEMPCAL3">
+<addr>0x0408</addr>
+<value>0x00</value>
+</reg>
+<reg id="confTEMPCAL4">
+<addr>0x0409</addr>
+<value>0x00</value>
+</reg>
+</section>
+<section base="0x0094" id="eepEventConf">
+<reg id="cmdRdyConf">
+<addr>0x0096</addr>
+<value>0x00</value>
+</reg>
+<reg id="pinEventConf">
+<addr>0x0094</addr>
+<value>0x00</value>
+</reg>
+<reg id="sysEventConf">
+<addr>0x0095</addr>
+<value>0xA2</value>
+</reg>
+</section>
+<section base="0x0000" id="eepInternals">
+<reg id="XFREQ0">
+<addr>0x0003</addr>
+<value>0x68</value>
+</reg>
+<reg id="XFREQ1">
+<addr>0x0004</addr>
+<value>0xDD</value>
+</reg>
+<reg id="XFREQ2">
+<addr>0x0005</addr>
+<value>0x72</value>
+</reg>
+<reg id="XFREQ3">
+<addr>0x0006</addr>
+<value>0x01</value>
+</reg>
+<reg id="checksum">
+<addr>0x0007</addr>
+<value>0x00</value>
+</reg>
+<reg id="vers0">
+<addr>0x0000</addr>
+<value>0x5A</value>
+</reg>
+<reg id="vers1">
+<addr>0x0001</addr>
+<value>0x06</value>
+</reg>
+<reg id="vers2">
+<addr>0x0002</addr>
+<value>0x04</value>
+</reg>
+</section>
+<section base="0x0091" id="eepWdtConf">
+<reg id="confT0CR">
+<addr>0x0091</addr>
+<value>0x00</value>
+</reg>
+<reg id="confT0IFR">
+<addr>0x0092</addr>
+<value>0x00</value>
+</reg>
+<reg id="confWDTCR">
+<addr>0x0093</addr>
+<value>0x00</value>
+</reg>
+</section>
+<section base="0x0262" id="eepDebug">
+<reg id="DBGSW">
+<addr>0x0262</addr>
+<value>0x00</value>
+</reg>
+</section>
+<section base="0x0267" id="eepServChSw" index="0" size="2">
+<reg id="ServChanSwitchMask">
+<addr>0x0267</addr>
+<value>0x3F</value>
+</reg>
+<reg id="ServChanSwitchConf">
+<addr>0x0268</addr>
+<value>0x00</value>
+</reg>
+</section>
+<section base="0x0269" id="eepServChSw" index="1" size="2">
+<reg id="ServChanSwitchMask">
+<addr>0x0269</addr>
+<value>0x3F</value>
+</reg>
+<reg id="ServChanSwitchConf">
+<addr>0x026A</addr>
+<value>0x00</value>
+</reg>
+</section>
+<section base="0x026B" id="eepServChSw" index="2" size="2">
+<reg id="ServChanSwitchMask">
+<addr>0x026B</addr>
+<value>0x3F</value>
+</reg>
+<reg id="ServChanSwitchConf">
+<addr>0x026C</addr>
+<value>0x00</value>
+</reg>
+</section>
+<section base="0x000D" id="eepIO">
+<reg id="confDDRB">
+<addr>0x000D</addr>
+<value>0xC9</value>
+</reg>
+<reg id="confDDRC">
+<addr>0x000E</addr>
+<value>0x2C</value>
+</reg>
+<reg id="confMCUCR">
+<addr>0x000F</addr>
+<value>0x08</value>
+</reg>
+<reg id="confPCICR">
+<addr>0x0010</addr>
+<value>0x03</value>
+</reg>
+<reg id="confPCMSK0">
+<addr>0x0011</addr>
+<value>0x00</value>
+</reg>
+<reg id="confPCMSK1">
+<addr>0x0012</addr>
+<value>0x00</value>
+</reg>
+<reg id="confPORTB">
+<addr>0x0013</addr>
+<value>0x48</value>
+</reg>
+<reg id="confPORTC">
+<addr>0x0014</addr>
+<value>0x13</value>
+</reg>
+</section>
+<section base="0x0280" id="eepCustomer"/>
+<section base="0x0015" id="eepTrxConf">
+<reg id="clkConfig">
+<addr>0x0015</addr>
+<value>0x05</value>
+</reg>
+<reg id="clkOutDiv">
+<addr>0x0018</addr>
+<value>0x03</value>
+</reg>
+<reg id="spiConfig">
+<addr>0x0016</addr>
+<value>0x00</value>
+</reg>
+<reg id="svcInitConf">
+<addr>0x001B</addr>
+<value>0x10</value>
+</reg>
+<reg id="sysConfig">
+<addr>0x0017</addr>
+<value>0x03</value>
+</reg>
+<reg id="sysStartConf">
+<addr>0x0019</addr>
+<value>0x00</value>
+</reg>
+<reg id="sysStartSvcChConfig">
+<addr>0x001A</addr>
+<value>0x00</value>
+</reg>
+</section>
+<section base="0x0263" id="eepDebounce">
+<reg id="DBCR">
+<addr>0x0263</addr>
+<value>0x04</value>
+</reg>
+<reg id="DBENB">
+<addr>0x0265</addr>
+<value>0x00</value>
+</reg>
+<reg id="DBENC">
+<addr>0x0266</addr>
+<value>0x00</value>
+</reg>
+<reg id="DBTC">
+<addr>0x0264</addr>
+<value>0x00</value>
+</reg>
+</section>
+<section base="0x001C" id="eepTrxCal">
+<reg id="calConf1">
+<addr>0x001C</addr>
+<value>0x00</value>
+</reg>
+<reg id="calConf2">
+<addr>0x001D</addr>
+<value>0x85</value>
+</reg>
+<reg id="selfChk">
+<addr>0x001E</addr>
+<value>0x00</value>
+</reg>
+<reg id="tempCal0">
+<addr>0x001F</addr>
+<value>0x00</value>
+</reg>
+<reg id="tempCal1">
+<addr>0x0020</addr>
+<value>0x07</value>
+</reg>
+<reg id="tempCal10">
+<addr>0x0029</addr>
+<value>0xFC</value>
+</reg>
+<reg id="tempCal11">
+<addr>0x002A</addr>
+<value>0xF7</value>
+</reg>
+<reg id="tempCal12">
+<addr>0x002B</addr>
+<value>0xF3</value>
+</reg>
+<reg id="tempCal13">
+<addr>0x002C</addr>
+<value>0xEF</value>
+</reg>
+<reg id="tempCal14">
+<addr>0x002D</addr>
+<value>0xEB</value>
+</reg>
+<reg id="tempCal15">
+<addr>0x002E</addr>
+<value>0xE9</value>
+</reg>
+<reg id="tempCal16">
+<addr>0x002F</addr>
+<value>0xE8</value>
+</reg>
+<reg id="tempCal17">
+<addr>0x0030</addr>
+<value>0xE9</value>
+</reg>
+<reg id="tempCal18">
+<addr>0x0031</addr>
+<value>0xEC</value>
+</reg>
+<reg id="tempCal19">
+<addr>0x0032</addr>
+<value>0xF0</value>
+</reg>
+<reg id="tempCal2">
+<addr>0x0021</addr>
+<value>0x0C</value>
+</reg>
+<reg id="tempCal20">
+<addr>0x0033</addr>
+<value>0xF7</value>
+</reg>
+<reg id="tempCal21">
+<addr>0x0034</addr>
+<value>0x01</value>
+</reg>
+<reg id="tempCal22">
+<addr>0x0035</addr>
+<value>0x0D</value>
+</reg>
+<reg id="tempCal3">
+<addr>0x0022</addr>
+<value>0x0E</value>
+</reg>
+<reg id="tempCal4">
+<addr>0x0023</addr>
+<value>0x0F</value>
+</reg>
+<reg id="tempCal5">
+<addr>0x0024</addr>
+<value>0x0E</value>
+</reg>
+<reg id="tempCal6">
+<addr>0x0025</addr>
+<value>0x0C</value>
+</reg>
+<reg id="tempCal7">
+<addr>0x0026</addr>
+<value>0x09</value>
+</reg>
+<reg id="tempCal8">
+<addr>0x0027</addr>
+<value>0x05</value>
+</reg>
+<reg id="tempCal9">
+<addr>0x0028</addr>
+<value>0x01</value>
+</reg>
+</section>
+<section base="0x0099" id="eepPollLoopConf">
+<reg id="confT1COR">
+<addr>0x0099</addr>
+<value>0xC3</value>
+</reg>
+<reg id="confT1MR">
+<addr>0x009A</addr>
+<value>0x14</value>
+</reg>
+<reg id="pollLoopConf0">
+<addr>0x009B</addr>
+<value>0x03</value>
+</reg>
+<reg id="pollLoopConf1">
+<addr>0x009D</addr>
+<value>0x00</value>
+</reg>
+<reg id="pollLoopConf10">
+<addr>0x00AF</addr>
+<value>0x00</value>
+</reg>
+<reg id="pollLoopConf11">
+<addr>0x00B1</addr>
+<value>0x00</value>
+</reg>
+<reg id="pollLoopConf12">
+<addr>0x00B3</addr>
+<value>0x00</value>
+</reg>
+<reg id="pollLoopConf13">
+<addr>0x00B5</addr>
+<value>0x00</value>
+</reg>
+<reg id="pollLoopConf14">
+<addr>0x00B7</addr>
+<value>0x00</value>
+</reg>
+<reg id="pollLoopConf15">
+<addr>0x00B9</addr>
+<value>0x00</value>
+</reg>
+<reg id="pollLoopConf2">
+<addr>0x009F</addr>
+<value>0x00</value>
+</reg>
+<reg id="pollLoopConf3">
+<addr>0x00A1</addr>
+<value>0x00</value>
+</reg>
+<reg id="pollLoopConf4">
+<addr>0x00A3</addr>
+<value>0x00</value>
+</reg>
+<reg id="pollLoopConf5">
+<addr>0x00A5</addr>
+<value>0x00</value>
+</reg>
+<reg id="pollLoopConf6">
+<addr>0x00A7</addr>
+<value>0x00</value>
+</reg>
+<reg id="pollLoopConf7">
+<addr>0x00A9</addr>
+<value>0x00</value>
+</reg>
+<reg id="pollLoopConf8">
+<addr>0x00AB</addr>
+<value>0x00</value>
+</reg>
+<reg id="pollLoopConf9">
+<addr>0x00AD</addr>
+<value>0x00</value>
+</reg>
+<reg id="pollLoopSCconf0">
+<addr>0x009C</addr>
+<value>0x00</value>
+</reg>
+<reg id="pollLoopSCconf1">
+<addr>0x009E</addr>
+<value>0x00</value>
+</reg>
+<reg id="pollLoopSCconf10">
+<addr>0x00B0</addr>
+<value>0x00</value>
+</reg>
+<reg id="pollLoopSCconf11">
+<addr>0x00B2</addr>
+<value>0x00</value>
+</reg>
+<reg id="pollLoopSCconf12">
+<addr>0x00B4</addr>
+<value>0x00</value>
+</reg>
+<reg id="pollLoopSCconf13">
+<addr>0x00B6</addr>
+<value>0x00</value>
+</reg>
+<reg id="pollLoopSCconf14">
+<addr>0x00B8</addr>
+<value>0x00</value>
+</reg>
+<reg id="pollLoopSCconf15">
+<addr>0x00BA</addr>
+<value>0x00</value>
+</reg>
+<reg id="pollLoopSCconf2">
+<addr>0x00A0</addr>
+<value>0x00</value>
+</reg>
+<reg id="pollLoopSCconf3">
+<addr>0x00A2</addr>
+<value>0x00</value>
+</reg>
+<reg id="pollLoopSCconf4">
+<addr>0x00A4</addr>
+<value>0x00</value>
+</reg>
+<reg id="pollLoopSCconf5">
+<addr>0x00A6</addr>
+<value>0x00</value>
+</reg>
+<reg id="pollLoopSCconf6">
+<addr>0x00A8</addr>
+<value>0x00</value>
+</reg>
+<reg id="pollLoopSCconf7">
+<addr>0x00AA</addr>
+<value>0x00</value>
+</reg>
+<reg id="pollLoopSCconf8">
+<addr>0x00AC</addr>
+<value>0x00</value>
+</reg>
+<reg id="pollLoopSCconf9">
+<addr>0x00AE</addr>
+<value>0x00</value>
+</reg>
+</section>
+<section base="0x040D" id="eepVsPa">
+<reg id="SUPCA1">
+<addr>0x040D</addr>
+<value>0x70</value>
+</reg>
+</section>
+<section base="0x0098" id="eepFRCcalib">
+<reg id="frcCalibGate">
+<addr>0x0098</addr>
+<value>0xBF</value>
+</reg>
+</section>
+</eeprom>
+<!--Begin of SRAM Settings-->
+<sram>
+<section base="0x0513" id="endOfMessageConfig">
+<reg id="endOfMessageConfig">
+<addr>0x0513</addr>
+<value>0x00</value>
+</reg>
+<reg id="endOfMessageConfig0">
+<addr>0x0514</addr>
+<value>0x00</value>
+</reg>
+<reg id="endOfMessageConfig1">
+<addr>0x0515</addr>
+<value>0x00</value>
+</reg>
+<reg id="endOfMessageConfig2">
+<addr>0x0516</addr>
+<value>0x00</value>
+</reg>
+<reg id="endOfMessageConfig3">
+<addr>0x0517</addr>
+<value>0x00</value>
+</reg>
+<reg id="endOfMessageConfig4">
+<addr>0x0518</addr>
+<value>0x00</value>
+</reg>
+</section>
+<section base="0x04FB" id="gapMode">
+<reg id="gapLengthService0PathA">
+<addr>0x04FB</addr>
+<value>0x00</value>
+</reg>
+<reg id="gapLengthService0PathB">
+<addr>0x04FC</addr>
+<value>0x00</value>
+</reg>
+<reg id="gapLengthService1PathA">
+<addr>0x04FD</addr>
+<value>0x00</value>
+</reg>
+<reg id="gapLengthService1PathB">
+<addr>0x04FE</addr>
+<value>0x00</value>
+</reg>
+<reg id="gapLengthService2PathA">
+<addr>0x04FF</addr>
+<value>0x00</value>
+</reg>
+<reg id="gapLengthService2PathB">
+<addr>0x0500</addr>
+<value>0x00</value>
+</reg>
+<reg id="gapLengthService3PathA">
+<addr>0x0501</addr>
+<value>0x00</value>
+</reg>
+<reg id="gapLengthService3PathB">
+<addr>0x0502</addr>
+<value>0x00</value>
+</reg>
+<reg id="gapLengthService4PathA">
+<addr>0x0503</addr>
+<value>0x00</value>
+</reg>
+<reg id="gapLengthService4PathB">
+<addr>0x0504</addr>
+<value>0x00</value>
+</reg>
+<reg id="rxModeLengthService0PathA">
+<addr>0x0505</addr>
+<value>0x00</value>
+</reg>
+<reg id="rxModeLengthService0PathB">
+<addr>0x0506</addr>
+<value>0x00</value>
+</reg>
+<reg id="rxModeLengthService1PathA">
+<addr>0x0507</addr>
+<value>0x00</value>
+</reg>
+<reg id="rxModeLengthService1PathB">
+<addr>0x0508</addr>
+<value>0x00</value>
+</reg>
+<reg id="rxModeLengthService2PathA">
+<addr>0x0509</addr>
+<value>0x00</value>
+</reg>
+<reg id="rxModeLengthService2PathB">
+<addr>0x050A</addr>
+<value>0x00</value>
+</reg>
+<reg id="rxModeLengthService3PathA">
+<addr>0x050B</addr>
+<value>0x00</value>
+</reg>
+<reg id="rxModeLengthService3PathB">
+<addr>0x050C</addr>
+<value>0x00</value>
+</reg>
+<reg id="rxModeLengthService4PathA">
+<addr>0x050D</addr>
+<value>0x00</value>
+</reg>
+<reg id="rxModeLengthService4PathB">
+<addr>0x050E</addr>
+<value>0x00</value>
+</reg>
+</section>
+<section base="0x011A" id="eepServChSw" index="3" size="2">
+<reg id="ServChanSwitchMask">
+<addr>0x011A</addr>
+<value>0x3F</value>
+</reg>
+<reg id="ServChanSwitchConf">
+<addr>0x011B</addr>
+<value>0x00</value>
+</reg>
+</section>
+<section base="0x011C" id="eepServChSw" index="4" size="2">
+<reg id="ServChanSwitchMask">
+<addr>0x011C</addr>
+<value>0x3F</value>
+</reg>
+<reg id="ServChanSwitchConf">
+<addr>0x011D</addr>
+<value>0x00</value>
+</reg>
+</section>
+<section base="0x0000" id="eepServices" index="3" size="141">
+<reg id="TMTLB0">
+<addr>0x0071</addr>
+<value>0x00</value>
+</reg>
+<reg id="SFIDCB">
+<addr>0x0033</addr>
+<value>0x17</value>
+</reg>
+<reg id="TXDRA0">
+<addr>0x0042</addr>
+<value>0x7B</value>
+</reg>
+<reg id="SFIDCA">
+<addr>0x0032</addr>
+<value>0x0F</value>
+</reg>
+<reg id="TXDRA1">
+<addr>0x0043</addr>
+<value>0x01</value>
+</reg>
+<reg id="RXCIB0">
+<addr>0x0065</addr>
+<value>0xFF</value>
+</reg>
+<reg id="RXCIB1">
+<addr>0x0066</addr>
+<value>0xFF</value>
+</reg>
+<reg id="TMCPA1">
+<addr>0x0074</addr>
+<value>0x00</value>
+</reg>
+<reg id="EOT2A">
+<addr>0x000D</addr>
+<value>0x1F</value>
+</reg>
+<reg id="WUPA3">
+<addr>0x0053</addr>
+<value>0x55</value>
+</reg>
+<reg id="TMCPA0">
+<addr>0x0073</addr>
+<value>0x1D</value>
+</reg>
+<reg id="EOT2B">
+<addr>0x000E</addr>
+<value>0x1F</value>
+</reg>
+<reg id="TMTLA0">
+<addr>0x006F</addr>
+<value>0x00</value>
+</reg>
+<reg id="TMTLA1">
+<addr>0x0070</addr>
+<value>0x00</value>
+</reg>
+<reg id="WUPA0">
+<addr>0x0050</addr>
+<value>0x55</value>
+</reg>
+<reg id="WUPA1">
+<addr>0x0051</addr>
+<value>0x55</value>
+</reg>
+<reg id="WUPA2">
+<addr>0x0052</addr>
+<value>0x55</value>
+</reg>
+<reg id="SYCA">
+<addr>0x003C</addr>
+<value>0xB6</value>
+</reg>
+<reg id="SYCB">
+<addr>0x003D</addr>
+<value>0xF6</value>
+</reg>
+<reg id="RXBC1">
+<addr>0x006A</addr>
+<value>0xAA</value>
+</reg>
+<reg id="GACDIVA1">
+<addr>0x001D</addr>
+<value>0x00</value>
+</reg>
+<reg id="GACDIVA0">
+<addr>0x001C</addr>
+<value>0x7E</value>
+</reg>
+<reg id="TMSSCB">
+<addr>0x006E</addr>
+<value>0x2F</value>
+</reg>
+<reg id="EOT1B">
+<addr>0x000C</addr>
+<value>0x1F</value>
+</reg>
+<reg id="TMSSCA">
+<addr>0x006D</addr>
+<value>0xCF</value>
+</reg>
+<reg id="EOT1A">
+<addr>0x000B</addr>
+<value>0x1F</value>
+</reg>
+<reg id="IF1">
+<addr>0x0021</addr>
+<value>0x0A</value>
+</reg>
+<reg id="WUPB2">
+<addr>0x0056</addr>
+<value>0xAA</value>
+</reg>
+<reg id="IF0">
+<addr>0x0020</addr>
+<value>0x8E</value>
+</reg>
+<reg id="WUPB3">
+<addr>0x0057</addr>
+<value>0xAA</value>
+</reg>
+<reg id="TMTLB1">
+<addr>0x0072</addr>
+<value>0x00</value>
+</reg>
+<reg id="WUPB0">
+<addr>0x0054</addr>
+<value>0xAA</value>
+</reg>
+<reg id="WUPB1">
+<addr>0x0055</addr>
+<value>0xAA</value>
+</reg>
+<reg id="rxSetPathA1">
+<addr>0x0025</addr>
+<value>0x40</value>
+</reg>
+<reg id="trxSysConf">
+<addr>0x0041</addr>
+<value>0x00</value>
+</reg>
+<reg id="txSetPathA0">
+<addr>0x0046</addr>
+<value>0x01</value>
+</reg>
+<reg id="rxSetPathA0">
+<addr>0x0024</addr>
+<value>0x41</value>
+</reg>
+<reg id="txSetPathA1">
+<addr>0x0047</addr>
+<value>0x00</value>
+</reg>
+<reg id="TXDEVB1">
+<addr>0x001B</addr>
+<value>0x00</value>
+</reg>
+<reg id="GACDIVB0">
+<addr>0x001E</addr>
+<value>0x7E</value>
+</reg>
+<reg id="FEPAC">
+<addr>0x0013</addr>
+<value>0x2B</value>
+</reg>
+<reg id="GACDIVB1">
+<addr>0x001F</addr>
+<value>0x00</value>
+</reg>
+<reg id="TMCR2A">
+<addr>0x006B</addr>
+<value>0x72</value>
+</reg>
+<reg id="RXTLA1">
+<addr>0x0062</addr>
+<value>0x00</value>
+</reg>
+<reg id="RXTLA0">
+<addr>0x0061</addr>
+<value>0x00</value>
+</reg>
+<reg id="TMCR2B">
+<addr>0x006C</addr>
+<value>0x52</value>
+</reg>
+<reg id="txSetPathB0">
+<addr>0x0048</addr>
+<value>0x01</value>
+</reg>
+<reg id="txSetPathB1">
+<addr>0x0049</addr>
+<value>0x00</value>
+</reg>
+<reg id="rxSysSet">
+<addr>0x0029</addr>
+<value>0x2C</value>
+</reg>
+<reg id="rxSetPathB1">
+<addr>0x0027</addr>
+<value>0x40</value>
+</reg>
+<reg id="FEVCO">
+<addr>0x0014</addr>
+<value>0x10</value>
+</reg>
+<reg id="TXDEVA1">
+<addr>0x0019</addr>
+<value>0x00</value>
+</reg>
+<reg id="TDFCRB">
+<addr>0x003F</addr>
+<value>0x70</value>
+</reg>
+<reg id="TXDEVA0">
+<addr>0x0018</addr>
+<value>0xAD</value>
+</reg>
+<reg id="TDFCRA">
+<addr>0x003E</addr>
+<value>0x60</value>
+</reg>
+<reg id="FEVCT">
+<addr>0x0015</addr>
+<value>0x07</value>
+</reg>
+<reg id="TMCIB1">
+<addr>0x007A</addr>
+<value>0xFF</value>
+</reg>
+<reg id="FEAT">
+<addr>0x0012</addr>
+<value>0x07</value>
+</reg>
+<reg id="WCOtimeOutA">
+<addr>0x004E</addr>
+<value>0xC9</value>
+</reg>
+<reg id="RXCIA0">
+<addr>0x005E</addr>
+<value>0xFF</value>
+</reg>
+<reg id="TMCIB0">
+<addr>0x0079</addr>
+<value>0xFF</value>
+</reg>
+<reg id="RXTLB0">
+<addr>0x0068</addr>
+<value>0x00</value>
+</reg>
+<reg id="RXTLB1">
+<addr>0x0069</addr>
+<value>0x00</value>
+</reg>
+<reg id="TXDRB1">
+<addr>0x0045</addr>
+<value>0x01</value>
+</reg>
+<reg id="WCOtimeOutB">
+<addr>0x004F</addr>
+<value>0xD6</value>
+</reg>
+<reg id="RXCIA1">
+<addr>0x005F</addr>
+<value>0xFF</value>
+</reg>
+<reg id="TXDEVB0">
+<addr>0x001A</addr>
+<value>0xAD</value>
+</reg>
+<reg id="TXDRB0">
+<addr>0x0044</addr>
+<value>0x7B</value>
+</reg>
+<reg id="TMCPB0">
+<addr>0x0075</addr>
+<value>0x1D</value>
+</reg>
+<reg id="TMCPB1">
+<addr>0x0076</addr>
+<value>0x00</value>
+</reg>
+<reg id="rxSetPathB0">
+<addr>0x0026</addr>
+<value>0x00</value>
+</reg>
+<reg id="EOT3B">
+<addr>0x0010</addr>
+<value>0x0F</value>
+</reg>
+<reg id="EOT3A">
+<addr>0x000F</addr>
+<value>0x0F</value>
+</reg>
+<reg id="RXSBA">
+<addr>0x0060</addr>
+<value>0x00</value>
+</reg>
+<reg id="RXSBB">
+<addr>0x0067</addr>
+<value>0x00</value>
+</reg>
+<reg id="SOTtimeOutB">
+<addr>0x003B</addr>
+<value>0xD3</value>
+</reg>
+<reg id="SOTtimeOutA">
+<addr>0x003A</addr>
+<value>0xC9</value>
+</reg>
+<reg id="RSSC">
+<addr>0x007D</addr>
+<value>0x08</value>
+</reg>
+<reg id="TMCIA1">
+<addr>0x0078</addr>
+<value>0x00</value>
+</reg>
+<reg id="TMCIA0">
+<addr>0x0077</addr>
+<value>0x00</value>
+</reg>
+<reg id="RDOCR">
+<addr>0x0022</addr>
+<value>0x00</value>
+</reg>
+<reg id="TMUL">
+<addr>0x0040</addr>
+<value>0x95</value>
+</reg>
+<reg id="rxSysEvent">
+<addr>0x0028</addr>
+<value>0x11</value>
+</reg>
+<reg id="SOT1A">
+<addr>0x0036</addr>
+<value>0x3F</value>
+</reg>
+<reg id="SOT1B">
+<addr>0x0037</addr>
+<value>0x3F</value>
+</reg>
+<reg id="FEANT">
+<addr>0x0011</addr>
+<value>0x00</value>
+</reg>
+<reg id="txPreambleSysEventB">
+<addr>0x004D</addr>
+<value>0x00</value>
+</reg>
+<reg id="txPreambleSysEventA">
+<addr>0x004C</addr>
+<value>0x00</value>
+</reg>
+<reg id="SFIDA2">
+<addr>0x002C</addr>
+<value>0x55</value>
+</reg>
+<reg id="SFIDA1">
+<addr>0x002B</addr>
+<value>0x55</value>
+</reg>
+<reg id="SFIDA0">
+<addr>0x002A</addr>
+<value>0x56</value>
+</reg>
+<reg id="rssiSysConf">
+<addr>0x0023</addr>
+<value>0x08</value>
+</reg>
+<reg id="SFIDLA">
+<addr>0x0034</addr>
+<value>0x10</value>
+</reg>
+<reg id="FREQoffset0">
+<addr>0x0016</addr>
+<value>0x00</value>
+</reg>
+<reg id="FREQoffset1">
+<addr>0x0017</addr>
+<value>0x00</value>
+</reg>
+<reg id="SFIDLB">
+<addr>0x0035</addr>
+<value>0x18</value>
+</reg>
+<reg id="SOT2B">
+<addr>0x0039</addr>
+<value>0x2F</value>
+</reg>
+<reg id="WUPTB">
+<addr>0x005B</addr>
+<value>0x15</value>
+</reg>
+<reg id="SOT2A">
+<addr>0x0038</addr>
+<value>0x2F</value>
+</reg>
+<reg id="SFIDB1">
+<addr>0x002F</addr>
+<value>0xAA</value>
+</reg>
+<reg id="DMCRB">
+<addr>0x0006</addr>
+<value>0xC5</value>
+</reg>
+<reg id="RXCPB0">
+<addr>0x0063</addr>
+<value>0x1D</value>
+</reg>
+<reg id="SFIDB0">
+<addr>0x002E</addr>
+<value>0xA9</value>
+</reg>
+<reg id="RXCPB1">
+<addr>0x0064</addr>
+<value>0x00</value>
+</reg>
+<reg id="SFIDB3">
+<addr>0x0031</addr>
+<value>0xAA</value>
+</reg>
+<reg id="SFIDB2">
+<addr>0x0030</addr>
+<value>0xAA</value>
+</reg>
+<reg id="DMCRA">
+<addr>0x0005</addr>
+<value>0xC5</value>
+</reg>
+<reg id="CHSTARTFILTER">
+<addr>0x0002</addr>
+<value>0x14</value>
+</reg>
+<reg id="SFIDA3">
+<addr>0x002D</addr>
+<value>0x55</value>
+</reg>
+<reg id="WUPLA">
+<addr>0x0058</addr>
+<value>0x0E</value>
+</reg>
+<reg id="txSysEventA">
+<addr>0x004A</addr>
+<value>0x00</value>
+</reg>
+<reg id="txSysEventB">
+<addr>0x004B</addr>
+<value>0x00</value>
+</reg>
+<reg id="DMDRB">
+<addr>0x0008</addr>
+<value>0x26</value>
+</reg>
+<reg id="DMDRA">
+<addr>0x0007</addr>
+<value>0x26</value>
+</reg>
+<reg id="CHCR">
+<addr>0x0000</addr>
+<value>0x02</value>
+</reg>
+<reg id="WUPLB">
+<addr>0x0059</addr>
+<value>0x16</value>
+</reg>
+<reg id="DMMA">
+<addr>0x0009</addr>
+<value>0x28</value>
+</reg>
+<reg id="DMMB">
+<addr>0x000A</addr>
+<value>0x28</value>
+</reg>
+<reg id="CHDN">
+<addr>0x0001</addr>
+<value>0x03</value>
+</reg>
+<reg id="RXCPA0">
+<addr>0x005C</addr>
+<value>0x1D</value>
+</reg>
+<reg id="RXCPA1">
+<addr>0x005D</addr>
+<value>0x00</value>
+</reg>
+<reg id="TMCSBB">
+<addr>0x007C</addr>
+<value>0x10</value>
+</reg>
+<reg id="TMCSBA">
+<addr>0x007B</addr>
+<value>0x00</value>
+</reg>
+<reg id="DMCDB">
+<addr>0x0004</addr>
+<value>0x63</value>
+</reg>
+<reg id="DMCDA">
+<addr>0x0003</addr>
+<value>0x63</value>
+</reg>
+<reg id="WUPTA">
+<addr>0x005A</addr>
+<value>0x0D</value>
+</reg>
+<channel index="0">
+<reg id="FEFREQ1">
+<addr>0x007F</addr>
+<value>0x40</value>
+</reg>
+<reg id="FEFREQ2">
+<addr>0x0080</addr>
+<value>0x02</value>
+</reg>
+<reg id="FEFREQ0">
+<addr>0x007E</addr>
+<value>0xB3</value>
+</reg>
+<reg id="FECR">
+<addr>0x0082</addr>
+<value>0x03</value>
+</reg>
+<reg id="FEMS">
+<addr>0x0081</addr>
+<value>0x85</value>
+</reg>
+</channel>
+<channel index="1">
+<reg id="FEFREQ1">
+<addr>0x0084</addr>
+<value>0x7D</value>
+</reg>
+<reg id="FEFREQ2">
+<addr>0x0085</addr>
+<value>0x02</value>
+</reg>
+<reg id="FEFREQ0">
+<addr>0x0083</addr>
+<value>0x55</value>
+</reg>
+<reg id="FECR">
+<addr>0x0087</addr>
+<value>0x03</value>
+</reg>
+<reg id="FEMS">
+<addr>0x0086</addr>
+<value>0x85</value>
+</reg>
+</channel>
+<channel index="2">
+<reg id="FEFREQ1">
+<addr>0x0089</addr>
+<value>0x5F</value>
+</reg>
+<reg id="FEFREQ2">
+<addr>0x008A</addr>
+<value>0x02</value>
+</reg>
+<reg id="FEFREQ0">
+<addr>0x0088</addr>
+<value>0x04</value>
+</reg>
+<reg id="FECR">
+<addr>0x008C</addr>
+<value>0x03</value>
+</reg>
+<reg id="FEMS">
+<addr>0x008B</addr>
+<value>0x85</value>
+</reg>
+</channel>
+</section>
+<section base="0x008D" id="eepServices" index="4" size="141">
+<reg id="TMTLB0">
+<addr>0x00FE</addr>
+<value>0x00</value>
+</reg>
+<reg id="SFIDCB">
+<addr>0x00C0</addr>
+<value>0x11</value>
+</reg>
+<reg id="TXDRA0">
+<addr>0x00CF</addr>
+<value>0x9D</value>
+</reg>
+<reg id="SFIDCA">
+<addr>0x00BF</addr>
+<value>0x0F</value>
+</reg>
+<reg id="TXDRA1">
+<addr>0x00D0</addr>
+<value>0x00</value>
+</reg>
+<reg id="RXCIB0">
+<addr>0x00F2</addr>
+<value>0xFF</value>
+</reg>
+<reg id="RXCIB1">
+<addr>0x00F3</addr>
+<value>0xFF</value>
+</reg>
+<reg id="TMCPA1">
+<addr>0x0101</addr>
+<value>0x00</value>
+</reg>
+<reg id="EOT2A">
+<addr>0x009A</addr>
+<value>0x1F</value>
+</reg>
+<reg id="WUPA3">
+<addr>0x00E0</addr>
+<value>0x55</value>
+</reg>
+<reg id="TMCPA0">
+<addr>0x0100</addr>
+<value>0x1D</value>
+</reg>
+<reg id="EOT2B">
+<addr>0x009B</addr>
+<value>0x1F</value>
+</reg>
+<reg id="TMTLA0">
+<addr>0x00FC</addr>
+<value>0x00</value>
+</reg>
+<reg id="TMTLA1">
+<addr>0x00FD</addr>
+<value>0x00</value>
+</reg>
+<reg id="WUPA0">
+<addr>0x00DD</addr>
+<value>0x55</value>
+</reg>
+<reg id="WUPA1">
+<addr>0x00DE</addr>
+<value>0x55</value>
+</reg>
+<reg id="WUPA2">
+<addr>0x00DF</addr>
+<value>0x55</value>
+</reg>
+<reg id="SYCA">
+<addr>0x00C9</addr>
+<value>0xB6</value>
+</reg>
+<reg id="SYCB">
+<addr>0x00CA</addr>
+<value>0xF6</value>
+</reg>
+<reg id="RXBC1">
+<addr>0x00F7</addr>
+<value>0xAA</value>
+</reg>
+<reg id="GACDIVA1">
+<addr>0x00AA</addr>
+<value>0x00</value>
+</reg>
+<reg id="GACDIVA0">
+<addr>0x00A9</addr>
+<value>0x34</value>
+</reg>
+<reg id="TMSSCB">
+<addr>0x00FB</addr>
+<value>0x20</value>
+</reg>
+<reg id="EOT1B">
+<addr>0x0099</addr>
+<value>0x1F</value>
+</reg>
+<reg id="TMSSCA">
+<addr>0x00FA</addr>
+<value>0xCF</value>
+</reg>
+<reg id="EOT1A">
+<addr>0x0098</addr>
+<value>0x1F</value>
+</reg>
+<reg id="IF1">
+<addr>0x00AE</addr>
+<value>0x0A</value>
+</reg>
+<reg id="WUPB2">
+<addr>0x00E3</addr>
+<value>0xAA</value>
+</reg>
+<reg id="IF0">
+<addr>0x00AD</addr>
+<value>0x8E</value>
+</reg>
+<reg id="WUPB3">
+<addr>0x00E4</addr>
+<value>0xAA</value>
+</reg>
+<reg id="TMTLB1">
+<addr>0x00FF</addr>
+<value>0x00</value>
+</reg>
+<reg id="WUPB0">
+<addr>0x00E1</addr>
+<value>0xAA</value>
+</reg>
+<reg id="WUPB1">
+<addr>0x00E2</addr>
+<value>0xAA</value>
+</reg>
+<reg id="rxSetPathA1">
+<addr>0x00B2</addr>
+<value>0x40</value>
+</reg>
+<reg id="trxSysConf">
+<addr>0x00CE</addr>
+<value>0x00</value>
+</reg>
+<reg id="txSetPathA0">
+<addr>0x00D3</addr>
+<value>0x01</value>
+</reg>
+<reg id="rxSetPathA0">
+<addr>0x00B1</addr>
+<value>0x41</value>
+</reg>
+<reg id="txSetPathA1">
+<addr>0x00D4</addr>
+<value>0x00</value>
+</reg>
+<reg id="TXDEVB1">
+<addr>0x00A8</addr>
+<value>0x01</value>
+</reg>
+<reg id="GACDIVB0">
+<addr>0x00AB</addr>
+<value>0x34</value>
+</reg>
+<reg id="FEPAC">
+<addr>0x00A0</addr>
+<value>0x2B</value>
+</reg>
+<reg id="GACDIVB1">
+<addr>0x00AC</addr>
+<value>0x00</value>
+</reg>
+<reg id="TMCR2A">
+<addr>0x00F8</addr>
+<value>0x72</value>
+</reg>
+<reg id="RXTLA1">
+<addr>0x00EF</addr>
+<value>0x00</value>
+</reg>
+<reg id="RXTLA0">
+<addr>0x00EE</addr>
+<value>0x00</value>
+</reg>
+<reg id="TMCR2B">
+<addr>0x00F9</addr>
+<value>0x50</value>
+</reg>
+<reg id="txSetPathB0">
+<addr>0x00D5</addr>
+<value>0x01</value>
+</reg>
+<reg id="txSetPathB1">
+<addr>0x00D6</addr>
+<value>0x00</value>
+</reg>
+<reg id="rxSysSet">
+<addr>0x00B6</addr>
+<value>0x2C</value>
+</reg>
+<reg id="rxSetPathB1">
+<addr>0x00B4</addr>
+<value>0x40</value>
+</reg>
+<reg id="FEVCO">
+<addr>0x00A1</addr>
+<value>0x10</value>
+</reg>
+<reg id="TXDEVA1">
+<addr>0x00A6</addr>
+<value>0x01</value>
+</reg>
+<reg id="TDFCRB">
+<addr>0x00CC</addr>
+<value>0x60</value>
+</reg>
+<reg id="TXDEVA0">
+<addr>0x00A5</addr>
+<value>0xAF</value>
+</reg>
+<reg id="TDFCRA">
+<addr>0x00CB</addr>
+<value>0x60</value>
+</reg>
+<reg id="FEVCT">
+<addr>0x00A2</addr>
+<value>0x07</value>
+</reg>
+<reg id="TMCIB1">
+<addr>0x0107</addr>
+<value>0x00</value>
+</reg>
+<reg id="FEAT">
+<addr>0x009F</addr>
+<value>0x07</value>
+</reg>
+<reg id="WCOtimeOutA">
+<addr>0x00DB</addr>
+<value>0xC9</value>
+</reg>
+<reg id="RXCIA0">
+<addr>0x00EB</addr>
+<value>0xFF</value>
+</reg>
+<reg id="TMCIB0">
+<addr>0x0106</addr>
+<value>0x00</value>
+</reg>
+<reg id="RXTLB0">
+<addr>0x00F5</addr>
+<value>0x00</value>
+</reg>
+<reg id="RXTLB1">
+<addr>0x00F6</addr>
+<value>0x00</value>
+</reg>
+<reg id="TXDRB1">
+<addr>0x00D2</addr>
+<value>0x00</value>
+</reg>
+<reg id="WCOtimeOutB">
+<addr>0x00DC</addr>
+<value>0xD6</value>
+</reg>
+<reg id="RXCIA1">
+<addr>0x00EC</addr>
+<value>0xFF</value>
+</reg>
+<reg id="TXDEVB0">
+<addr>0x00A7</addr>
+<value>0xAF</value>
+</reg>
+<reg id="TXDRB0">
+<addr>0x00D1</addr>
+<value>0x9D</value>
+</reg>
+<reg id="TMCPB0">
+<addr>0x0102</addr>
+<value>0x1D</value>
+</reg>
+<reg id="TMCPB1">
+<addr>0x0103</addr>
+<value>0x00</value>
+</reg>
+<reg id="rxSetPathB0">
+<addr>0x00B3</addr>
+<value>0x5E</value>
+</reg>
+<reg id="EOT3B">
+<addr>0x009D</addr>
+<value>0x0C</value>
+</reg>
+<reg id="EOT3A">
+<addr>0x009C</addr>
+<value>0x0F</value>
+</reg>
+<reg id="RXSBA">
+<addr>0x00ED</addr>
+<value>0x00</value>
+</reg>
+<reg id="RXSBB">
+<addr>0x00F4</addr>
+<value>0x00</value>
+</reg>
+<reg id="SOTtimeOutB">
+<addr>0x00C8</addr>
+<value>0xD3</value>
+</reg>
+<reg id="SOTtimeOutA">
+<addr>0x00C7</addr>
+<value>0xC9</value>
+</reg>
+<reg id="RSSC">
+<addr>0x010A</addr>
+<value>0x08</value>
+</reg>
+<reg id="TMCIA1">
+<addr>0x0105</addr>
+<value>0x00</value>
+</reg>
+<reg id="TMCIA0">
+<addr>0x0104</addr>
+<value>0x00</value>
+</reg>
+<reg id="RDOCR">
+<addr>0x00AF</addr>
+<value>0x00</value>
+</reg>
+<reg id="TMUL">
+<addr>0x00CD</addr>
+<value>0x95</value>
+</reg>
+<reg id="rxSysEvent">
+<addr>0x00B5</addr>
+<value>0x11</value>
+</reg>
+<reg id="SOT1A">
+<addr>0x00C3</addr>
+<value>0x3F</value>
+</reg>
+<reg id="SOT1B">
+<addr>0x00C4</addr>
+<value>0x3F</value>
+</reg>
+<reg id="FEANT">
+<addr>0x009E</addr>
+<value>0x00</value>
+</reg>
+<reg id="txPreambleSysEventB">
+<addr>0x00DA</addr>
+<value>0x00</value>
+</reg>
+<reg id="txPreambleSysEventA">
+<addr>0x00D9</addr>
+<value>0x00</value>
+</reg>
+<reg id="SFIDA2">
+<addr>0x00B9</addr>
+<value>0x55</value>
+</reg>
+<reg id="SFIDA1">
+<addr>0x00B8</addr>
+<value>0x55</value>
+</reg>
+<reg id="SFIDA0">
+<addr>0x00B7</addr>
+<value>0x56</value>
+</reg>
+<reg id="rssiSysConf">
+<addr>0x00B0</addr>
+<value>0x08</value>
+</reg>
+<reg id="SFIDLA">
+<addr>0x00C1</addr>
+<value>0x10</value>
+</reg>
+<reg id="FREQoffset0">
+<addr>0x00A3</addr>
+<value>0xAF</value>
+</reg>
+<reg id="FREQoffset1">
+<addr>0x00A4</addr>
+<value>0x01</value>
+</reg>
+<reg id="SFIDLB">
+<addr>0x00C2</addr>
+<value>0x12</value>
+</reg>
+<reg id="SOT2B">
+<addr>0x00C6</addr>
+<value>0x2F</value>
+</reg>
+<reg id="WUPTB">
+<addr>0x00E8</addr>
+<value>0x0F</value>
+</reg>
+<reg id="SOT2A">
+<addr>0x00C5</addr>
+<value>0x2F</value>
+</reg>
+<reg id="SFIDB1">
+<addr>0x00BC</addr>
+<value>0xAA</value>
+</reg>
+<reg id="DMCRB">
+<addr>0x0093</addr>
+<value>0xCB</value>
+</reg>
+<reg id="RXCPB0">
+<addr>0x00F0</addr>
+<value>0x1D</value>
+</reg>
+<reg id="SFIDB0">
+<addr>0x00BB</addr>
+<value>0xA9</value>
+</reg>
+<reg id="RXCPB1">
+<addr>0x00F1</addr>
+<value>0x00</value>
+</reg>
+<reg id="SFIDB3">
+<addr>0x00BE</addr>
+<value>0xAA</value>
+</reg>
+<reg id="SFIDB2">
+<addr>0x00BD</addr>
+<value>0xAA</value>
+</reg>
+<reg id="DMCRA">
+<addr>0x0092</addr>
+<value>0x8B</value>
+</reg>
+<reg id="CHSTARTFILTER">
+<addr>0x008F</addr>
+<value>0x14</value>
+</reg>
+<reg id="SFIDA3">
+<addr>0x00BA</addr>
+<value>0x55</value>
+</reg>
+<reg id="WUPLA">
+<addr>0x00E5</addr>
+<value>0x0E</value>
+</reg>
+<reg id="txSysEventA">
+<addr>0x00D7</addr>
+<value>0x00</value>
+</reg>
+<reg id="txSysEventB">
+<addr>0x00D8</addr>
+<value>0x00</value>
+</reg>
+<reg id="DMDRB">
+<addr>0x0095</addr>
+<value>0x1A</value>
+</reg>
+<reg id="DMDRA">
+<addr>0x0094</addr>
+<value>0x1A</value>
+</reg>
+<reg id="CHCR">
+<addr>0x008D</addr>
+<value>0x02</value>
+</reg>
+<reg id="WUPLB">
+<addr>0x00E6</addr>
+<value>0x10</value>
+</reg>
+<reg id="DMMA">
+<addr>0x0096</addr>
+<value>0x23</value>
+</reg>
+<reg id="DMMB">
+<addr>0x0097</addr>
+<value>0x23</value>
+</reg>
+<reg id="CHDN">
+<addr>0x008E</addr>
+<value>0x03</value>
+</reg>
+<reg id="RXCPA0">
+<addr>0x00E9</addr>
+<value>0x1D</value>
+</reg>
+<reg id="RXCPA1">
+<addr>0x00EA</addr>
+<value>0x00</value>
+</reg>
+<reg id="TMCSBB">
+<addr>0x0109</addr>
+<value>0x00</value>
+</reg>
+<reg id="TMCSBA">
+<addr>0x0108</addr>
+<value>0x00</value>
+</reg>
+<reg id="DMCDB">
+<addr>0x0091</addr>
+<value>0x42</value>
+</reg>
+<reg id="DMCDA">
+<addr>0x0090</addr>
+<value>0x42</value>
+</reg>
+<reg id="WUPTA">
+<addr>0x00E7</addr>
+<value>0x0D</value>
+</reg>
+<channel index="0">
+<reg id="FEFREQ1">
+<addr>0x010C</addr>
+<value>0x40</value>
+</reg>
+<reg id="FEFREQ2">
+<addr>0x010D</addr>
+<value>0x02</value>
+</reg>
+<reg id="FEFREQ0">
+<addr>0x010B</addr>
+<value>0xB3</value>
+</reg>
+<reg id="FECR">
+<addr>0x010F</addr>
+<value>0x03</value>
+</reg>
+<reg id="FEMS">
+<addr>0x010E</addr>
+<value>0x85</value>
+</reg>
+</channel>
+<channel index="1">
+<reg id="FEFREQ1">
+<addr>0x0111</addr>
+<value>0x7D</value>
+</reg>
+<reg id="FEFREQ2">
+<addr>0x0112</addr>
+<value>0x02</value>
+</reg>
+<reg id="FEFREQ0">
+<addr>0x0110</addr>
+<value>0x55</value>
+</reg>
+<reg id="FECR">
+<addr>0x0114</addr>
+<value>0x03</value>
+</reg>
+<reg id="FEMS">
+<addr>0x0113</addr>
+<value>0x85</value>
+</reg>
+</channel>
+<channel index="2">
+<reg id="FEFREQ1">
+<addr>0x0116</addr>
+<value>0x5F</value>
+</reg>
+<reg id="FEFREQ2">
+<addr>0x0117</addr>
+<value>0x02</value>
+</reg>
+<reg id="FEFREQ0">
+<addr>0x0115</addr>
+<value>0x04</value>
+</reg>
+<reg id="FECR">
+<addr>0x0119</addr>
+<value>0x03</value>
+</reg>
+<reg id="FEMS">
+<addr>0x0118</addr>
+<value>0x85</value>
+</reg>
+</channel>
+</section>
+</sram>
+<!--Begin of GUI Section-->
+<gui>
+<tool>eepromGui</tool>
+<toolversion date="2014/07/09 09:25:03">2.06.04</toolversion>
+<form id="General">
+<field id="confPINB">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="confPINC">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="SUPCA1">
+<type>hex</type>
+<value>0x70</value>
+</field>
+<field id="confTEMPCAL2">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="confTEMPCAL3">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="confTEMPCAL4">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="confTEMPCAL1">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="tempCal17">
+<type>int</type>
+<value>-23</value>
+</field>
+<field id="tempCal18">
+<type>int</type>
+<value>-20</value>
+</field>
+<field id="tempCal19">
+<type>int</type>
+<value>-16</value>
+</field>
+<field id="tempCal21">
+<type>int</type>
+<value>1</value>
+</field>
+<field id="tempCal20">
+<type>int</type>
+<value>-9</value>
+</field>
+<field id="tempCal22">
+<type>int</type>
+<value>13</value>
+</field>
+<field id="endOfMessageConfig4">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="endOfMessageConfig3">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="endOfMessageConfig0">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="endOfMessageConfig2">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="endOfMessageConfig1">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="TM_FEVCO">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="FEBT_RTN">
+<type>int</type>
+<value>2</value>
+</field>
+<field id="pinEventConf">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="confInitFlags">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="confVMCSR">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="rxModeLengthService2PathB">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="rxModeLengthService2PathA">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="idCtrl12">
+<type>hex</type>
+<value>0x83</value>
+</field>
+<field id="idCtrl11">
+<type>hex</type>
+<value>0x83</value>
+</field>
+<field id="idCtrl10">
+<type>hex</type>
+<value>0x83</value>
+</field>
+<field id="idCtrl17">
+<type>hex</type>
+<value>0x83</value>
+</field>
+<field id="idCtrl16">
+<type>hex</type>
+<value>0x83</value>
+</field>
+<field id="idCtrl15">
+<type>hex</type>
+<value>0x83</value>
+</field>
+<field id="idCtrl14">
+<type>hex</type>
+<value>0x83</value>
+</field>
+<field id="idCtrl13">
+<type>hex</type>
+<value>0x83</value>
+</field>
+<field id="gapLengthService2PathA">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="gapLengthService2PathB">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="cust_0300">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="idCtrl7">
+<type>hex</type>
+<value>0x83</value>
+</field>
+<field id="idCtrl6">
+<type>hex</type>
+<value>0x83</value>
+</field>
+<field id="idCtrl9">
+<type>hex</type>
+<value>0x83</value>
+</field>
+<field id="idCtrl8">
+<type>hex</type>
+<value>0x83</value>
+</field>
+<field id="idCtrl2">
+<type>hex</type>
+<value>0x83</value>
+</field>
+<field id="idCtrl3">
+<type>hex</type>
+<value>0x83</value>
+</field>
+<field id="idCtrl4">
+<type>hex</type>
+<value>0x83</value>
+</field>
+<field id="idCtrl5">
+<type>hex</type>
+<value>0x83</value>
+</field>
+<field id="idCtrl0">
+<type>hex</type>
+<value>0x83</value>
+</field>
+<field id="idCtrl1">
+<type>hex</type>
+<value>0x83</value>
+</field>
+<field id="cust_0309">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0308">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0307">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0306">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_0305" id="cust_0305">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0304">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_0303" id="cust_0303">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_0302" id="cust_0302">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_0301" id="cust_0301">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0310">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0311">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_030A">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_030B">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_030C">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_030D" id="cust_030D">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_030E">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_030F">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="svcInitConf">
+<type>hex</type>
+<value>0x10</value>
+</field>
+<field id="TM_FFREQ">
+<type>int</type>
+<value>0</value>
+</field>
+<field cname="cust_031A" id="cust_031A">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0313">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0312">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0315">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="FEVCO_OFFSET_CPCC">
+<type>int</type>
+<value>8</value>
+</field>
+<field id="cust_0314">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0317">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0316">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0319">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="clkOutDiv">
+<type>int</type>
+<value>3</value>
+</field>
+<field id="cust_0318">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_0321" id="cust_0321">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_0322" id="cust_0322">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="RSSIFG">
+<type>int</type>
+<value>20</value>
+</field>
+<field cname="cust_0320" id="cust_0320">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_031D">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_031E">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_031B">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_031C">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_031F">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="tempCal5">
+<type>int</type>
+<value>14</value>
+</field>
+<field id="pollLoopConf14">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="tempCal4">
+<type>int</type>
+<value>15</value>
+</field>
+<field id="pollLoopConf15">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="tempCal3">
+<type>int</type>
+<value>14</value>
+</field>
+<field id="pollLoopConf12">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="tempCal2">
+<type>int</type>
+<value>12</value>
+</field>
+<field id="pollLoopConf13">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field cname="cust_032B" id="cust_032B">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="sysStartOpMode">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="tempCal9">
+<type>int</type>
+<value>1</value>
+</field>
+<field id="cust_032A">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="tempCal8">
+<type>int</type>
+<value>5</value>
+</field>
+<field id="tempCal7">
+<type>int</type>
+<value>9</value>
+</field>
+<field id="tempCal6">
+<type>int</type>
+<value>12</value>
+</field>
+<field cname="cust_0326" id="cust_0326">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_0325" id="cust_0325">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_0324" id="cust_0324">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_0323" id="cust_0323">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="tempCal1">
+<type>int</type>
+<value>7</value>
+</field>
+<field id="pollLoopConf10">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field cname="cust_0329" id="cust_0329">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="tempCal0">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="pollLoopConf11">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field cname="cust_0328" id="cust_0328">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_0327" id="cust_0327">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02AE" id="cust_02AE">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="rxModeLengthService1PathB">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="idEna">
+<type>int</type>
+<value>0</value>
+</field>
+<field cname="cust_02AF" id="cust_02AF">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="rxModeLengthService1PathA">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="cust_02AC">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02AD" id="cust_02AD">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02B2" id="cust_02B2">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02B3" id="cust_02B3">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02B0" id="cust_02B0">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02B1" id="cust_02B1">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_02A9">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_02A8">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02A7" id="cust_02A7">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02A6" id="cust_02A6">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02A5" id="cust_02A5">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02A4" id="cust_02A4">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02A3" id="cust_02A3">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="frcCalibGate">
+<type>hex</type>
+<value>0xBF</value>
+</field>
+<field cname="cust_02AB" id="cust_02AB">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02AA" id="cust_02AA">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02BD" id="cust_02BD">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02BE" id="cust_02BE">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02BF" id="cust_02BF">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02C1" id="cust_02C1">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02C2" id="cust_02C2">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02C3" id="cust_02C3">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02C4" id="cust_02C4">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02C0" id="cust_02C0">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02B9" id="cust_02B9">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02B8" id="cust_02B8">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02B5" id="cust_02B5">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="FEVCO_OFFSET_0">
+<type>int</type>
+<value>8</value>
+</field>
+<field cname="cust_02B4" id="cust_02B4">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_02B7">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="sleepModeConf">
+<type>hex</type>
+<value>0x80</value>
+</field>
+<field cname="cust_02B6" id="cust_02B6">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02BA" id="cust_02BA">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02BC" id="cust_02BC">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02BB" id="cust_02BB">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="FELNA_1_LBL">
+<type>int</type>
+<value>7</value>
+</field>
+<field id="PB1">
+<type>int</type>
+<value>0</value>
+</field>
+<field cname="cust_02CE" id="cust_02CE">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="PB0">
+<type>int</type>
+<value>3</value>
+</field>
+<field cname="cust_02CF" id="cust_02CF">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02D0" id="cust_02D0">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02D1" id="cust_02D1">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="T1cycle">
+<type>float</type>
+<value>50.0</value>
+</field>
+<field cname="cust_02D4" id="cust_02D4">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02D5" id="cust_02D5">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02D2" id="cust_02D2">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02D3" id="cust_02D3">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02C8" id="cust_02C8">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02C7" id="cust_02C7">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02C6" id="cust_02C6">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02C5" id="cust_02C5">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02C9" id="cust_02C9">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02CD" id="cust_02CD">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_02CC">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="confPCICR">
+<type>hex</type>
+<value>0x03</value>
+</field>
+<field id="sysEventConf">
+<type>hex</type>
+<value>0xA2</value>
+</field>
+<field cname="cust_02CB" id="cust_02CB">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02CA" id="cust_02CA">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02DF" id="cust_02DF">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02E0" id="cust_02E0">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02E1" id="cust_02E1">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02E2" id="cust_02E2">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02E3" id="cust_02E3">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02E4" id="cust_02E4">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02E5" id="cust_02E5">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02E6" id="cust_02E6">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02D7" id="cust_02D7">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02D6" id="cust_02D6">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02D9" id="cust_02D9">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02D8" id="cust_02D8">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="TM_FEMS">
+<type>int</type>
+<value>0</value>
+</field>
+<field cname="cust_02DA" id="cust_02DA">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02DC" id="cust_02DC">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02DB" id="cust_02DB">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02DE" id="cust_02DE">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02DD" id="cust_02DD">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03EA">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02F7" id="cust_02F7">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02F6" id="cust_02F6">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="pollStartInd_I">
+<type>int</type>
+<value>0</value>
+</field>
+<field cname="cust_02F5" id="cust_02F5">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02F4" id="cust_02F4">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03EE">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02F3" id="cust_02F3">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03ED">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02F2" id="cust_02F2">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="FELNA_2_LBL">
+<type>int</type>
+<value>7</value>
+</field>
+<field id="cust_03EC">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02F1" id="cust_02F1">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03EB">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02F0" id="cust_02F0">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03E9">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03E8">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="FELNA_2_LBH">
+<type>int</type>
+<value>3</value>
+</field>
+<field id="cust_03E7">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03E6">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03F1">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="PC4">
+<type>int</type>
+<value>1</value>
+</field>
+<field cname="cust_02EE" id="cust_02EE">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03F2">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="PC3">
+<type>int</type>
+<value>3</value>
+</field>
+<field cname="cust_02EF" id="cust_02EF">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02EC" id="cust_02EC">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03F0">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="PC5">
+<type>int</type>
+<value>3</value>
+</field>
+<field cname="cust_02ED" id="cust_02ED">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03F5">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02EA" id="cust_02EA">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03F6">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02EB" id="cust_02EB">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03F3">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03F4">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03EF">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02E9" id="cust_02E9">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02E7" id="cust_02E7">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02E8" id="cust_02E8">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03FB">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03FA">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03FD">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03FC">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03FF">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03FE">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03F8">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03F7">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="confMCUCR">
+<type>hex</type>
+<value>0x08</value>
+</field>
+<field id="cust_03F9">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="sysStartConf">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="PC1">
+<type>int</type>
+<value>1</value>
+</field>
+<field id="PC2">
+<type>int</type>
+<value>3</value>
+</field>
+<field id="PC0">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="PB5">
+<type>int</type>
+<value>0</value>
+</field>
+<field cname="cust_02FD" id="cust_02FD">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="PB4">
+<type>int</type>
+<value>0</value>
+</field>
+<field cname="cust_02FE" id="cust_02FE">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="PB3">
+<type>int</type>
+<value>0</value>
+</field>
+<field cname="cust_02FF" id="cust_02FF">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="PB2">
+<type>int</type>
+<value>0</value>
+</field>
+<field cname="cust_02FA" id="cust_02FA">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="PB7">
+<type>int</type>
+<value>3</value>
+</field>
+<field cname="cust_02FB" id="cust_02FB">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="PB6">
+<type>int</type>
+<value>0</value>
+</field>
+<field cname="cust_02FC" id="cust_02FC">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02F8" id="cust_02F8">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02F9" id="cust_02F9">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03CC">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03CB">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03CA">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="tempCal10">
+<type>int</type>
+<value>-4</value>
+</field>
+<field id="cust_03C9">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="DBCR">
+<type>hex</type>
+<value>0x04</value>
+</field>
+<field id="tempCal11">
+<type>int</type>
+<value>-9</value>
+</field>
+<field id="cust_03C8">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="tempCal12">
+<type>int</type>
+<value>-13</value>
+</field>
+<field id="cust_03C7">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="tempCal13">
+<type>int</type>
+<value>-17</value>
+</field>
+<field id="cust_03C6">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="tempCal14">
+<type>int</type>
+<value>-21</value>
+</field>
+<field id="cust_03C5">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="tempCal15">
+<type>int</type>
+<value>-23</value>
+</field>
+<field id="cust_03C4">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="tempCal16">
+<type>int</type>
+<value>-24</value>
+</field>
+<field id="cust_03D3">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03D4">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03D1">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03D2">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03D0">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="funcPtr">
+<type>hex</type>
+<value>0x0000</value>
+</field>
+<field id="cust_03CF">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03CD">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03CE">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03DB">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03DA">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03DD">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03DC">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03D9">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03D6">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="gapLengthService0PathB">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="cust_03D5">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="gapLengthService0PathA">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="cust_03D8">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03D7">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03E2">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03E3">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03E4">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03E5">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03E0">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03E1">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03DE">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03DF">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="rxModeLengthService3PathA">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="idByte10">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="idByte11">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="spiConfig">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="idByte14">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="rxModeLengthService3PathB">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="idByte15">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="idByte12">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="idByte13">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="idByte18">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="High_and_Low_Side">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="idByte19">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="idByte16">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="idByte17">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="PCmsk0">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="PCmsk1">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="sysConfig">
+<type>hex</type>
+<value>0x03</value>
+</field>
+<field id="endOfMessageConfig">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="idByte40">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="idByte36">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="idByte37">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="idByte34">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="idByte35">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="idByte32">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="idByte33">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="idByte30">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="idByte31">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="idByte38">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="idByte39">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0294">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0293">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0296">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0295">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0298">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_0297" id="cust_0297">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_0299" id="cust_0299">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="clkConfig">
+<type>hex</type>
+<value>0x05</value>
+</field>
+<field id="cust_0290">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="Title">
+<type>text</type>
+<value>empty</value>
+</field>
+<field id="confWDTCR">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="cust_0292">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="T1cycleInp">
+<type>float</type>
+<value>50.0</value>
+</field>
+<field id="cust_0291">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="idByte23">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_029C" id="cust_029C">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="idByte24">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_029D" id="cust_029D">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="idByte25">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_029E" id="cust_029E">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="idByte26">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_029F" id="cust_029F">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="pollLoopSCconf11">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="idByte20">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="pollLoopSCconf10">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="idByte21">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="idByte22">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="pollLoopSCconf15">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="pollLoopSCconf14">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="pollLoopSCconf13">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="pollLoopSCconf12">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="idByte27">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="idByte28">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="DBGSW">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="idByte29">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_029A" id="cust_029A">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_029B">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="idByte61">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="idByte62">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="idByte60">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="Filename">
+<type>text</type>
+<value>ATA5785_EEPROM_Default.xml</value>
+</field>
+<field id="rxModeLengthService0PathA">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="rxModeLengthService0PathB">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="cust_03A1">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03A0">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="idByte55">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="pollLoopSCconf2">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="cust_02A2">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="pollLoopSCconf1">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="idByte54">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02A1" id="cust_02A1">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="pollLoopSCconf0">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="idByte53">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_02A0" id="cust_02A0">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="idByte52">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="idByte59">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="pollLoopSCconf6">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="idByte58">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="pollLoopSCconf5">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="idByte57">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="pollLoopSCconf4">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="idByte56">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="pollLoopSCconf3">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="gapLengthService3PathB">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="pollLoopSCconf7">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="gapLengthService3PathA">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="pollLoopSCconf8">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="pollLoopSCconf9">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="idByte50">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="idByte51">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="confVal">
+<type>hex</type>
+<value>0x02</value>
+</field>
+<field id="idByte49">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="idByte42">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="idByte41">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="idByte44">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="idByte43">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="idByte46">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="idByte45">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="idByte48">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="idByte47">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03BA">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03BB">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03B9">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="pollLoopConf9">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="cust_03B7">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="pollLoopConf7">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="cust_03B8">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="pollLoopConf8">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="cust_03B5">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="gapLengthService4PathA">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="cust_03B6">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="gapLengthService4PathB">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="cust_03B3">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03B4">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03C3">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="pollLoopConf2">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="High_Side">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="cust_03C2">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="pollLoopConf1">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="cust_03C1">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="pollLoopConf0">
+<type>hex</type>
+<value>0x03</value>
+</field>
+<field id="cust_03C0">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="pollLoopConf6">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="pollLoopConf5">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="cmdRdyConf">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="pollLoopConf4">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="pollLoopConf3">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="cust_03BF">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03BE">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="Fxo">
+<type>float</type>
+<value>24.305</value>
+</field>
+<field id="cust_03BD">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03BC">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="idByte70">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="idByte71">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="Description">
+<type>text</type>
+<value>empty</value>
+</field>
+<field id="cust_03AA">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="T1CS">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="cust_03A6">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03A7">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03A8">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03A9">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03A2">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03A3">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03A4">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03A5">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03B0">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03B2">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03B1">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="idByte68">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03AF">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="idByte67">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="idByte69">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03AC">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="idByte64">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03AB">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="idByte63">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03AE">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="idByte66">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_03AD">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="idByte65">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0345">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_0346" id="cust_0346">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0347">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0348">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0349">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="TM_CHDN">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="gapLengthService1PathA">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="gapLengthService1PathB">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="cust_034A">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_034B">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_034C">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_034D" id="cust_034D">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_033E" id="cust_033E">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_033D">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="DBENC">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="RSHDV">
+<type>int</type>
+<value>36</value>
+</field>
+<field id="cust_033F">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="DBENB">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="cust_0340">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0342">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_0341" id="cust_0341">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0344">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0343">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_0336" id="cust_0336">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0337">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0334">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="selfChk">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="TM_CHSTARTFILTER">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="cust_0335">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_0338" id="cust_0338">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0339">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="TM_CHCR">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="sysStartSvcChConfig">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field cname="cust_033B" id="cust_033B">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_033C">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_033A">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_032F">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="FETN4_RTN4">
+<type>int</type>
+<value>7</value>
+</field>
+<field id="cust_032E">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_032D">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_032C">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0333">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0332">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0331">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0330">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="rxModeLengthService4PathA">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="cust_0367">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="rxModeLengthService4PathB">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="cust_0368">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0369">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_036C">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_036D">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_036E">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="sysStartSvc_I">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="cust_036F">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="idByte1">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="idByte2">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_036A">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_036B">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="idByte0">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="idByte6">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="idByte5">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="confPORTC">
+<type>hex</type>
+<value>0x13</value>
+</field>
+<field id="idByte4">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="confPORTB">
+<type>hex</type>
+<value>0x48</value>
+</field>
+<field id="idByte3">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_035F">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="idByte9">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="idByte8">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="idByte7">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0364">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0363">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0366">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0365">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0360">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0362">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0361">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0358">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0359">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="TM_FECR">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="cust_0356">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0357">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_035D">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_035E">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_035B">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_035C">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_035A">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="toolversion2">
+<type>int</type>
+<value>4</value>
+</field>
+<field id="toolversion1">
+<type>int</type>
+<value>6</value>
+</field>
+<field id="toolversion0">
+<type>int</type>
+<value>90</value>
+</field>
+<field id="cust_034F">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_034E">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_0355" id="cust_0355">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0354">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0353">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="ExpCustSet">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="cust_0352">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0351">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0350">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_038B">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_038A">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_038D">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_028A">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_038C">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_038F">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_038E">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0389">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_028F">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_028C">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_028B">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_028E">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_028D">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0381">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0382">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0383">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0280">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0384">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field cname="cust_0281" id="cust_0281">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0385">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0386">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0387">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0388">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0286">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0287">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="RSLDV">
+<type>int</type>
+<value>30</value>
+</field>
+<field cname="cust_0288" id="cust_0288">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0289">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0282">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0283">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0284">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0380">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0285">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_037C">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_037B">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_037A">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_037F">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_037E">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_037D">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0379">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0378">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0372">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0373">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0370">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="confDDRB">
+<type>hex</type>
+<value>0xC9</value>
+</field>
+<field id="cust_0371">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="confDDRC">
+<type>hex</type>
+<value>0x2C</value>
+</field>
+<field id="cust_0376">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0377">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0374">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="DBTime">
+<type>float</type>
+<value>56.0</value>
+</field>
+<field id="cust_0375">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="FETN4_CTN4">
+<type>int</type>
+<value>7</value>
+</field>
+<field id="cust_039F">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_039E">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_039D">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_039C">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_039B">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_039A">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="FEBT_CTN">
+<type>int</type>
+<value>2</value>
+</field>
+<field id="confVMCSR_I">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="cust_0398">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0399">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0396">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0397">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0394">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="calConf1">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="cust_0395">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0392">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0393">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0390">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+<field id="cust_0391">
+<type>hex</type>
+<value>0xFF</value>
+</field>
+</form>
+<form id="Service0">
+<field id="trxSysConf">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="ServChanSwitchOutp">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="FREQoffset">
+<type>float</type>
+<value>40.0</value>
+</field>
+<field id="RSSC">
+<type>hex</type>
+<value>0x08</value>
+</field>
+<field id="CHSTARTFILTER">
+<type>int</type>
+<value>20</value>
+</field>
+<field id="bandwidth">
+<type>int</type>
+<value>18</value>
+</field>
+<field id="ServChanSwitchMask">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="RDOCR">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="ServiceName">
+<type>text</type>
+<value>Service 0</value>
+</field>
+<field id="rxSysEvent">
+<type>hex</type>
+<value>0x11</value>
+</field>
+<field id="rxSysSet">
+<type>hex</type>
+<value>0x20</value>
+</field>
+<field id="RXBC1">
+<type>hex</type>
+<value>0xAA</value>
+</field>
+<field id="fepac_I">
+<type>float</type>
+<value>9.0</value>
+</field>
+<field id="FEVCT">
+<type>int</type>
+<value>7</value>
+</field>
+<field id="FEAT">
+<type>int</type>
+<value>7</value>
+</field>
+<field id="rssiSysConf">
+<type>hex</type>
+<value>0x08</value>
+</field>
+<field id="EOT1" path="A">
+<type>hex</type>
+<value>0x1F</value>
+</field>
+<field id="DMCD" path="A">
+<type>hex</type>
+<value>0x63</value>
+</field>
+<field id="FSFCR" path="A">
+<type>hex</type>
+<value>0x60</value>
+</field>
+<field id="SFIDT" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="WUPL" path="A">
+<type>int</type>
+<value>14</value>
+</field>
+<field id="sy1t" path="A">
+<type>int</type>
+<value>1</value>
+</field>
+<field id="SASK" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="EOT2" path="A">
+<type>hex</type>
+<value>0x1F</value>
+</field>
+<field id="EOT3" path="A">
+<type>hex</type>
+<value>0x0F</value>
+</field>
+<field id="DMCR" path="A">
+<type>hex</type>
+<value>0xC5</value>
+</field>
+<field id="TMCR2" path="A">
+<type>hex</type>
+<value>0x72</value>
+</field>
+<field id="WUP" path="A">
+<type>text</type>
+<value>0x55555555</value>
+</field>
+<field id="TMSSC" path="A">
+<type>hex</type>
+<value>0xCF</value>
+</field>
+<field id="txPreambleSysEvent" path="A">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="txSysEvent" path="A">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="TMCSB" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="rxSetPath1" path="A">
+<type>hex</type>
+<value>0x40</value>
+</field>
+<field id="SYCL" path="A">
+<type>int</type>
+<value>11</value>
+</field>
+<field id="DMDEV" path="A">
+<type>float</type>
+<value>8.0</value>
+</field>
+<field id="dmsid" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="WOKinp" path="A">
+<type>float</type>
+<value>34.0</value>
+</field>
+<field id="dmar" path="A">
+<type>int</type>
+<value>1</value>
+</field>
+<field id="SYCS" path="A">
+<type>int</type>
+<value>6</value>
+</field>
+<field id="SOTinp" path="A">
+<type>float</type>
+<value>34.0</value>
+</field>
+<field id="rxSetPath0" path="A">
+<type>hex</type>
+<value>0x41</value>
+</field>
+<field id="WUPT" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="SFIDL" path="A">
+<type>int</type>
+<value>16</value>
+</field>
+<field id="RXCI" path="A">
+<type>hex</type>
+<value>0xFFFF</value>
+</field>
+<field id="TMCP" path="A">
+<type>hex</type>
+<value>0x001D</value>
+</field>
+<field id="DMNE" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="DMH" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="DMAT" path="A">
+<type>int</type>
+<value>8</value>
+</field>
+<field id="RXCP" path="A">
+<type>hex</type>
+<value>0x001D</value>
+</field>
+<field id="RXSB" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="SFID" path="A">
+<type>text</type>
+<value>0x55555556</value>
+</field>
+<field id="SEME" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="RXTL_I" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="TXDEVinp" path="A">
+<type>float</type>
+<value>8.0</value>
+</field>
+<field id="TXsetPath1" path="A">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="TMTL_I" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="TXsetPath0" path="A">
+<type>hex</type>
+<value>0x01</value>
+</field>
+<field id="dmdr_I" path="A">
+<type>float</type>
+<value>8.0</value>
+</field>
+<field id="DMP" path="A">
+<type>int</type>
+<value>1</value>
+</field>
+<field id="DMM" path="A">
+<type>hex</type>
+<value>0x28</value>
+</field>
+<field id="GACDIV" path="A">
+<type>int</type>
+<value>126</value>
+</field>
+<field id="RXTL" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="TXDRinp" path="A">
+<type>float</type>
+<value>8.0</value>
+</field>
+<field id="TMCI" path="A">
+<type>hex</type>
+<value>0x0000</value>
+</field>
+<field id="SOT2" path="A">
+<type>hex</type>
+<value>0x2F</value>
+</field>
+<field id="dmcl" path="A">
+<type>int</type>
+<value>3</value>
+</field>
+<field id="SOT1" path="A">
+<type>hex</type>
+<value>0x3F</value>
+</field>
+<field id="DMDR" path="A">
+<type>hex</type>
+<value>0x26</value>
+</field>
+<field id="TMTL" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="dmct" path="A">
+<type>int</type>
+<value>3</value>
+</field>
+<field id="EOT1" path="B">
+<type>hex</type>
+<value>0x1F</value>
+</field>
+<field id="DMCD" path="B">
+<type>hex</type>
+<value>0x63</value>
+</field>
+<field id="FSFCR" path="B">
+<type>hex</type>
+<value>0x70</value>
+</field>
+<field id="SFIDT" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="WUPL" path="B">
+<type>int</type>
+<value>22</value>
+</field>
+<field id="sy1t" path="B">
+<type>int</type>
+<value>1</value>
+</field>
+<field id="SASK" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="EOT2" path="B">
+<type>hex</type>
+<value>0x1F</value>
+</field>
+<field id="EOT3" path="B">
+<type>hex</type>
+<value>0x0F</value>
+</field>
+<field id="DMCR" path="B">
+<type>hex</type>
+<value>0xC5</value>
+</field>
+<field id="TMCR2" path="B">
+<type>hex</type>
+<value>0x52</value>
+</field>
+<field id="WUP" path="B">
+<type>text</type>
+<value>0xAAAAAAAA</value>
+</field>
+<field id="TMSSC" path="B">
+<type>hex</type>
+<value>0x2F</value>
+</field>
+<field id="txPreambleSysEvent" path="B">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="txSysEvent" path="B">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="TMCSB" path="B">
+<type>int</type>
+<value>16</value>
+</field>
+<field id="rxSetPath1" path="B">
+<type>hex</type>
+<value>0x40</value>
+</field>
+<field id="SYCL" path="B">
+<type>int</type>
+<value>15</value>
+</field>
+<field id="DMDEV" path="B">
+<type>float</type>
+<value>8.0</value>
+</field>
+<field id="dmsid" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="WOKinp" path="B">
+<type>float</type>
+<value>60.0</value>
+</field>
+<field id="dmar" path="B">
+<type>int</type>
+<value>1</value>
+</field>
+<field id="SYCS" path="B">
+<type>int</type>
+<value>6</value>
+</field>
+<field id="SOTinp" path="B">
+<type>float</type>
+<value>50.0</value>
+</field>
+<field id="rxSetPath0" path="B">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="WUPT" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="SFIDL" path="B">
+<type>int</type>
+<value>24</value>
+</field>
+<field id="RXCI" path="B">
+<type>hex</type>
+<value>0xFFFF</value>
+</field>
+<field id="TMCP" path="B">
+<type>hex</type>
+<value>0x001D</value>
+</field>
+<field id="DMNE" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="DMH" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="DMAT" path="B">
+<type>int</type>
+<value>8</value>
+</field>
+<field id="RXCP" path="B">
+<type>hex</type>
+<value>0x001D</value>
+</field>
+<field id="RXSB" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="SFID" path="B">
+<type>text</type>
+<value>0xAAAAAAA9</value>
+</field>
+<field id="SEME" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="RXTL_I" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="TXDEVinp" path="B">
+<type>float</type>
+<value>8.0</value>
+</field>
+<field id="TXsetPath1" path="B">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="TMTL_I" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="TXsetPath0" path="B">
+<type>hex</type>
+<value>0x01</value>
+</field>
+<field id="dmdr_I" path="B">
+<type>float</type>
+<value>8.0</value>
+</field>
+<field id="DMP" path="B">
+<type>int</type>
+<value>1</value>
+</field>
+<field id="DMM" path="B">
+<type>hex</type>
+<value>0x28</value>
+</field>
+<field id="GACDIV" path="B">
+<type>int</type>
+<value>126</value>
+</field>
+<field id="RXTL" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="TXDRinp" path="B">
+<type>float</type>
+<value>8.0</value>
+</field>
+<field id="TMCI" path="B">
+<type>hex</type>
+<value>0xFFFF</value>
+</field>
+<field id="SOT2" path="B">
+<type>hex</type>
+<value>0x2F</value>
+</field>
+<field id="dmcl" path="B">
+<type>int</type>
+<value>3</value>
+</field>
+<field id="SOT1" path="B">
+<type>hex</type>
+<value>0x3F</value>
+</field>
+<field id="DMDR" path="B">
+<type>hex</type>
+<value>0x26</value>
+</field>
+<field id="TMTL" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="dmct" path="B">
+<type>int</type>
+<value>3</value>
+</field>
+<field channel="0" id="FRF">
+<type>float</type>
+<value>433.2</value>
+</field>
+<field channel="1" id="FRF">
+<type>float</type>
+<value>434.64</value>
+</field>
+<field channel="2" id="FRF">
+<type>float</type>
+<value>433.92</value>
+</field>
+</form>
+<form id="Service1">
+<field id="trxSysConf">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="ServChanSwitchOutp">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="FREQoffset">
+<type>float</type>
+<value>40.0</value>
+</field>
+<field id="RSSC">
+<type>hex</type>
+<value>0x08</value>
+</field>
+<field id="CHSTARTFILTER">
+<type>int</type>
+<value>20</value>
+</field>
+<field id="bandwidth">
+<type>int</type>
+<value>18</value>
+</field>
+<field id="ServChanSwitchMask">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="RDOCR">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="ServiceName">
+<type>text</type>
+<value>Service 1</value>
+</field>
+<field id="rxSysEvent">
+<type>hex</type>
+<value>0x11</value>
+</field>
+<field id="rxSysSet">
+<type>hex</type>
+<value>0x20</value>
+</field>
+<field id="RXBC1">
+<type>hex</type>
+<value>0xAA</value>
+</field>
+<field id="fepac_I">
+<type>float</type>
+<value>9.0</value>
+</field>
+<field id="FEVCT">
+<type>int</type>
+<value>7</value>
+</field>
+<field id="FEAT">
+<type>int</type>
+<value>7</value>
+</field>
+<field id="rssiSysConf">
+<type>hex</type>
+<value>0x08</value>
+</field>
+<field id="EOT1" path="A">
+<type>hex</type>
+<value>0x1F</value>
+</field>
+<field id="DMCD" path="A">
+<type>hex</type>
+<value>0x42</value>
+</field>
+<field id="FSFCR" path="A">
+<type>hex</type>
+<value>0x60</value>
+</field>
+<field id="SFIDT" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="WUPL" path="A">
+<type>int</type>
+<value>14</value>
+</field>
+<field id="sy1t" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="SASK" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="EOT2" path="A">
+<type>hex</type>
+<value>0x1F</value>
+</field>
+<field id="EOT3" path="A">
+<type>hex</type>
+<value>0x0F</value>
+</field>
+<field id="DMCR" path="A">
+<type>hex</type>
+<value>0x8B</value>
+</field>
+<field id="TMCR2" path="A">
+<type>hex</type>
+<value>0x72</value>
+</field>
+<field id="WUP" path="A">
+<type>text</type>
+<value>0x55555555</value>
+</field>
+<field id="TMSSC" path="A">
+<type>hex</type>
+<value>0xCF</value>
+</field>
+<field id="txPreambleSysEvent" path="A">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="txSysEvent" path="A">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="TMCSB" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="rxSetPath1" path="A">
+<type>hex</type>
+<value>0x40</value>
+</field>
+<field id="SYCL" path="A">
+<type>int</type>
+<value>11</value>
+</field>
+<field id="DMDEV" path="A">
+<type>float</type>
+<value>20.0</value>
+</field>
+<field id="dmsid" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="WOKinp" path="A">
+<type>float</type>
+<value>34.0</value>
+</field>
+<field id="dmar" path="A">
+<type>int</type>
+<value>1</value>
+</field>
+<field id="SYCS" path="A">
+<type>int</type>
+<value>6</value>
+</field>
+<field id="SOTinp" path="A">
+<type>float</type>
+<value>34.0</value>
+</field>
+<field id="rxSetPath0" path="A">
+<type>hex</type>
+<value>0x41</value>
+</field>
+<field id="WUPT" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="SFIDL" path="A">
+<type>int</type>
+<value>16</value>
+</field>
+<field id="RXCI" path="A">
+<type>hex</type>
+<value>0xFFFF</value>
+</field>
+<field id="TMCP" path="A">
+<type>hex</type>
+<value>0x001D</value>
+</field>
+<field id="DMNE" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="DMH" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="DMAT" path="A">
+<type>int</type>
+<value>3</value>
+</field>
+<field id="RXCP" path="A">
+<type>hex</type>
+<value>0x001D</value>
+</field>
+<field id="RXSB" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="SFID" path="A">
+<type>text</type>
+<value>0x55555556</value>
+</field>
+<field id="SEME" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="RXTL_I" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="TXDEVinp" path="A">
+<type>float</type>
+<value>20.0</value>
+</field>
+<field id="TXsetPath1" path="A">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="TMTL_I" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="TXsetPath0" path="A">
+<type>hex</type>
+<value>0x01</value>
+</field>
+<field id="dmdr_I" path="A">
+<type>float</type>
+<value>19.2</value>
+</field>
+<field id="DMP" path="A">
+<type>int</type>
+<value>1</value>
+</field>
+<field id="DMM" path="A">
+<type>hex</type>
+<value>0x23</value>
+</field>
+<field id="GACDIV" path="A">
+<type>int</type>
+<value>52</value>
+</field>
+<field id="RXTL" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="TXDRinp" path="A">
+<type>float</type>
+<value>19.2</value>
+</field>
+<field id="TMCI" path="A">
+<type>hex</type>
+<value>0x0000</value>
+</field>
+<field id="SOT2" path="A">
+<type>hex</type>
+<value>0x2F</value>
+</field>
+<field id="dmcl" path="A">
+<type>int</type>
+<value>2</value>
+</field>
+<field id="SOT1" path="A">
+<type>hex</type>
+<value>0x3F</value>
+</field>
+<field id="DMDR" path="A">
+<type>hex</type>
+<value>0x1A</value>
+</field>
+<field id="TMTL" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="dmct" path="A">
+<type>int</type>
+<value>2</value>
+</field>
+<field id="EOT1" path="B">
+<type>hex</type>
+<value>0x1F</value>
+</field>
+<field id="DMCD" path="B">
+<type>hex</type>
+<value>0x42</value>
+</field>
+<field id="FSFCR" path="B">
+<type>hex</type>
+<value>0x60</value>
+</field>
+<field id="SFIDT" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="WUPL" path="B">
+<type>int</type>
+<value>16</value>
+</field>
+<field id="sy1t" path="B">
+<type>int</type>
+<value>1</value>
+</field>
+<field id="SASK" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="EOT2" path="B">
+<type>hex</type>
+<value>0x1F</value>
+</field>
+<field id="EOT3" path="B">
+<type>hex</type>
+<value>0x0C</value>
+</field>
+<field id="DMCR" path="B">
+<type>hex</type>
+<value>0xCB</value>
+</field>
+<field id="TMCR2" path="B">
+<type>hex</type>
+<value>0x50</value>
+</field>
+<field id="WUP" path="B">
+<type>text</type>
+<value>0xAAAAAAAA</value>
+</field>
+<field id="TMSSC" path="B">
+<type>hex</type>
+<value>0x20</value>
+</field>
+<field id="txPreambleSysEvent" path="B">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="txSysEvent" path="B">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="TMCSB" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="rxSetPath1" path="B">
+<type>hex</type>
+<value>0x40</value>
+</field>
+<field id="SYCL" path="B">
+<type>int</type>
+<value>15</value>
+</field>
+<field id="DMDEV" path="B">
+<type>float</type>
+<value>20.0</value>
+</field>
+<field id="dmsid" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="WOKinp" path="B">
+<type>float</type>
+<value>60.0</value>
+</field>
+<field id="dmar" path="B">
+<type>int</type>
+<value>1</value>
+</field>
+<field id="SYCS" path="B">
+<type>int</type>
+<value>6</value>
+</field>
+<field id="SOTinp" path="B">
+<type>float</type>
+<value>50.0</value>
+</field>
+<field id="rxSetPath0" path="B">
+<type>hex</type>
+<value>0x5E</value>
+</field>
+<field id="WUPT" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="SFIDL" path="B">
+<type>int</type>
+<value>18</value>
+</field>
+<field id="RXCI" path="B">
+<type>hex</type>
+<value>0xFFFF</value>
+</field>
+<field id="TMCP" path="B">
+<type>hex</type>
+<value>0x001D</value>
+</field>
+<field id="DMNE" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="DMH" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="DMAT" path="B">
+<type>int</type>
+<value>3</value>
+</field>
+<field id="RXCP" path="B">
+<type>hex</type>
+<value>0x001D</value>
+</field>
+<field id="RXSB" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="SFID" path="B">
+<type>text</type>
+<value>0xAAAAAAA9</value>
+</field>
+<field id="SEME" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="RXTL_I" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="TXDEVinp" path="B">
+<type>float</type>
+<value>20.0</value>
+</field>
+<field id="TXsetPath1" path="B">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="TMTL_I" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="TXsetPath0" path="B">
+<type>hex</type>
+<value>0x01</value>
+</field>
+<field id="dmdr_I" path="B">
+<type>float</type>
+<value>19.2</value>
+</field>
+<field id="DMP" path="B">
+<type>int</type>
+<value>1</value>
+</field>
+<field id="DMM" path="B">
+<type>hex</type>
+<value>0x23</value>
+</field>
+<field id="GACDIV" path="B">
+<type>int</type>
+<value>52</value>
+</field>
+<field id="RXTL" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="TXDRinp" path="B">
+<type>float</type>
+<value>19.2</value>
+</field>
+<field id="TMCI" path="B">
+<type>hex</type>
+<value>0x0000</value>
+</field>
+<field id="SOT2" path="B">
+<type>hex</type>
+<value>0x2F</value>
+</field>
+<field id="dmcl" path="B">
+<type>int</type>
+<value>2</value>
+</field>
+<field id="SOT1" path="B">
+<type>hex</type>
+<value>0x3F</value>
+</field>
+<field id="DMDR" path="B">
+<type>hex</type>
+<value>0x1A</value>
+</field>
+<field id="TMTL" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="dmct" path="B">
+<type>int</type>
+<value>2</value>
+</field>
+<field channel="0" id="FRF">
+<type>float</type>
+<value>433.2</value>
+</field>
+<field channel="1" id="FRF">
+<type>float</type>
+<value>434.64</value>
+</field>
+<field channel="2" id="FRF">
+<type>float</type>
+<value>433.92</value>
+</field>
+</form>
+<form id="Service2">
+<field id="trxSysConf">
+<type>hex</type>
+<value>0x0C</value>
+</field>
+<field id="ServChanSwitchOutp">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="FREQoffset">
+<type>float</type>
+<value>40.0</value>
+</field>
+<field id="RSSC">
+<type>hex</type>
+<value>0x08</value>
+</field>
+<field id="CHSTARTFILTER">
+<type>int</type>
+<value>20</value>
+</field>
+<field id="bandwidth">
+<type>int</type>
+<value>18</value>
+</field>
+<field id="ServChanSwitchMask">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="RDOCR">
+<type>hex</type>
+<value>0x18</value>
+</field>
+<field id="ServiceName">
+<type>text</type>
+<value>Service 2</value>
+</field>
+<field id="rxSysEvent">
+<type>hex</type>
+<value>0x11</value>
+</field>
+<field id="rxSysSet">
+<type>hex</type>
+<value>0x20</value>
+</field>
+<field id="RXBC1">
+<type>hex</type>
+<value>0x22</value>
+</field>
+<field id="fepac_I">
+<type>float</type>
+<value>6.0</value>
+</field>
+<field id="FEVCT">
+<type>int</type>
+<value>7</value>
+</field>
+<field id="FEAT">
+<type>int</type>
+<value>7</value>
+</field>
+<field id="rssiSysConf">
+<type>hex</type>
+<value>0x08</value>
+</field>
+<field id="EOT1" path="A">
+<type>hex</type>
+<value>0x1F</value>
+</field>
+<field id="DMCD" path="A">
+<type>hex</type>
+<value>0x63</value>
+</field>
+<field id="FSFCR" path="A">
+<type>hex</type>
+<value>0x80</value>
+</field>
+<field id="SFIDT" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="WUPL" path="A">
+<type>int</type>
+<value>14</value>
+</field>
+<field id="sy1t" path="A">
+<type>int</type>
+<value>1</value>
+</field>
+<field id="SASK" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="EOT2" path="A">
+<type>hex</type>
+<value>0x1F</value>
+</field>
+<field id="EOT3" path="A">
+<type>hex</type>
+<value>0x0F</value>
+</field>
+<field id="DMCR" path="A">
+<type>hex</type>
+<value>0xC7</value>
+</field>
+<field id="TMCR2" path="A">
+<type>hex</type>
+<value>0x02</value>
+</field>
+<field id="WUP" path="A">
+<type>text</type>
+<value>0x55555555</value>
+</field>
+<field id="TMSSC" path="A">
+<type>hex</type>
+<value>0x2F</value>
+</field>
+<field id="txPreambleSysEvent" path="A">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="txSysEvent" path="A">
+<type>hex</type>
+<value>0x02</value>
+</field>
+<field id="TMCSB" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="rxSetPath1" path="A">
+<type>hex</type>
+<value>0x40</value>
+</field>
+<field id="SYCL" path="A">
+<type>int</type>
+<value>15</value>
+</field>
+<field id="DMDEV" path="A">
+<type>float</type>
+<value>10.0</value>
+</field>
+<field id="dmsid" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="WOKinp" path="A">
+<type>float</type>
+<value>60.0</value>
+</field>
+<field id="dmar" path="A">
+<type>int</type>
+<value>1</value>
+</field>
+<field id="SYCS" path="A">
+<type>int</type>
+<value>6</value>
+</field>
+<field id="SOTinp" path="A">
+<type>float</type>
+<value>60.0</value>
+</field>
+<field id="rxSetPath0" path="A">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="WUPT" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="SFIDL" path="A">
+<type>int</type>
+<value>16</value>
+</field>
+<field id="RXCI" path="A">
+<type>hex</type>
+<value>0xFFFF</value>
+</field>
+<field id="TMCP" path="A">
+<type>hex</type>
+<value>0x001D</value>
+</field>
+<field id="DMNE" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="DMH" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="DMAT" path="A">
+<type>int</type>
+<value>6</value>
+</field>
+<field id="RXCP" path="A">
+<type>hex</type>
+<value>0x001D</value>
+</field>
+<field id="RXSB" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="SFID" path="A">
+<type>text</type>
+<value>0x55555556</value>
+</field>
+<field id="SEME" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="RXTL_I" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="TXDEVinp" path="A">
+<type>float</type>
+<value>10.0</value>
+</field>
+<field id="TXsetPath1" path="A">
+<type>hex</type>
+<value>0x01</value>
+</field>
+<field id="TMTL_I" path="A">
+<type>int</type>
+<value>88</value>
+</field>
+<field id="TXsetPath0" path="A">
+<type>hex</type>
+<value>0x01</value>
+</field>
+<field id="dmdr_I" path="A">
+<type>float</type>
+<value>10.0</value>
+</field>
+<field id="DMP" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="DMM" path="A">
+<type>hex</type>
+<value>0x06</value>
+</field>
+<field id="GACDIV" path="A">
+<type>int</type>
+<value>100</value>
+</field>
+<field id="RXTL" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="TXDRinp" path="A">
+<type>float</type>
+<value>10.0</value>
+</field>
+<field id="TMCI" path="A">
+<type>hex</type>
+<value>0xFFFF</value>
+</field>
+<field id="SOT2" path="A">
+<type>hex</type>
+<value>0x2F</value>
+</field>
+<field id="dmcl" path="A">
+<type>int</type>
+<value>3</value>
+</field>
+<field id="SOT1" path="A">
+<type>hex</type>
+<value>0x3F</value>
+</field>
+<field id="DMDR" path="A">
+<type>hex</type>
+<value>0x10</value>
+</field>
+<field id="TMTL" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="dmct" path="A">
+<type>int</type>
+<value>3</value>
+</field>
+<field id="EOT1" path="B">
+<type>hex</type>
+<value>0x1F</value>
+</field>
+<field id="DMCD" path="B">
+<type>hex</type>
+<value>0x63</value>
+</field>
+<field id="FSFCR" path="B">
+<type>hex</type>
+<value>0x80</value>
+</field>
+<field id="SFIDT" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="WUPL" path="B">
+<type>int</type>
+<value>14</value>
+</field>
+<field id="sy1t" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="SASK" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="EOT2" path="B">
+<type>hex</type>
+<value>0x1F</value>
+</field>
+<field id="EOT3" path="B">
+<type>hex</type>
+<value>0x0F</value>
+</field>
+<field id="DMCR" path="B">
+<type>hex</type>
+<value>0x87</value>
+</field>
+<field id="TMCR2" path="B">
+<type>hex</type>
+<value>0x02</value>
+</field>
+<field id="WUP" path="B">
+<type>text</type>
+<value>0xAAAAAAAA</value>
+</field>
+<field id="TMSSC" path="B">
+<type>hex</type>
+<value>0x2F</value>
+</field>
+<field id="txPreambleSysEvent" path="B">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="txSysEvent" path="B">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="TMCSB" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="rxSetPath1" path="B">
+<type>hex</type>
+<value>0x40</value>
+</field>
+<field id="SYCL" path="B">
+<type>int</type>
+<value>15</value>
+</field>
+<field id="DMDEV" path="B">
+<type>float</type>
+<value>10.0</value>
+</field>
+<field id="dmsid" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="WOKinp" path="B">
+<type>float</type>
+<value>60.0</value>
+</field>
+<field id="dmar" path="B">
+<type>int</type>
+<value>1</value>
+</field>
+<field id="SYCS" path="B">
+<type>int</type>
+<value>6</value>
+</field>
+<field id="SOTinp" path="B">
+<type>float</type>
+<value>60.0</value>
+</field>
+<field id="rxSetPath0" path="B">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="WUPT" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="SFIDL" path="B">
+<type>int</type>
+<value>16</value>
+</field>
+<field id="RXCI" path="B">
+<type>hex</type>
+<value>0xFFFF</value>
+</field>
+<field id="TMCP" path="B">
+<type>hex</type>
+<value>0x001D</value>
+</field>
+<field id="DMNE" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="DMH" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="DMAT" path="B">
+<type>int</type>
+<value>6</value>
+</field>
+<field id="RXCP" path="B">
+<type>hex</type>
+<value>0x001D</value>
+</field>
+<field id="RXSB" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="SFID" path="B">
+<type>text</type>
+<value>0xAAAAAAA9</value>
+</field>
+<field id="SEME" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="RXTL_I" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="TXDEVinp" path="B">
+<type>float</type>
+<value>10.0</value>
+</field>
+<field id="TXsetPath1" path="B">
+<type>hex</type>
+<value>0x05</value>
+</field>
+<field id="TMTL_I" path="B">
+<type>int</type>
+<value>88</value>
+</field>
+<field id="TXsetPath0" path="B">
+<type>hex</type>
+<value>0x05</value>
+</field>
+<field id="dmdr_I" path="B">
+<type>float</type>
+<value>10.0</value>
+</field>
+<field id="DMP" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="DMM" path="B">
+<type>hex</type>
+<value>0x06</value>
+</field>
+<field id="GACDIV" path="B">
+<type>int</type>
+<value>100</value>
+</field>
+<field id="RXTL" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="TXDRinp" path="B">
+<type>float</type>
+<value>10.0</value>
+</field>
+<field id="TMCI" path="B">
+<type>hex</type>
+<value>0xFFFF</value>
+</field>
+<field id="SOT2" path="B">
+<type>hex</type>
+<value>0x2F</value>
+</field>
+<field id="dmcl" path="B">
+<type>int</type>
+<value>3</value>
+</field>
+<field id="SOT1" path="B">
+<type>hex</type>
+<value>0x3F</value>
+</field>
+<field id="DMDR" path="B">
+<type>hex</type>
+<value>0x10</value>
+</field>
+<field id="TMTL" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="dmct" path="B">
+<type>int</type>
+<value>3</value>
+</field>
+<field channel="0" id="FRF">
+<type>float</type>
+<value>433.47</value>
+</field>
+<field channel="1" id="FRF">
+<type>float</type>
+<value>434.37</value>
+</field>
+<field channel="2" id="FRF">
+<type>float</type>
+<value>433.92</value>
+</field>
+</form>
+<form id="Service3">
+<field id="trxSysConf">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="ServChanSwitchOutp">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="FREQoffset">
+<type>float</type>
+<value>0.0</value>
+</field>
+<field id="RSSC">
+<type>hex</type>
+<value>0x08</value>
+</field>
+<field id="CHSTARTFILTER">
+<type>int</type>
+<value>20</value>
+</field>
+<field id="bandwidth">
+<type>int</type>
+<value>18</value>
+</field>
+<field id="ServChanSwitchMask">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="RDOCR">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="ServiceName">
+<type>text</type>
+<value>Service 0</value>
+</field>
+<field id="rxSysEvent">
+<type>hex</type>
+<value>0x11</value>
+</field>
+<field id="rxSysSet">
+<type>hex</type>
+<value>0x2C</value>
+</field>
+<field id="RXBC1">
+<type>hex</type>
+<value>0xAA</value>
+</field>
+<field id="fepac_I">
+<type>float</type>
+<value>9.0</value>
+</field>
+<field id="FEVCT">
+<type>int</type>
+<value>7</value>
+</field>
+<field id="FEAT">
+<type>int</type>
+<value>7</value>
+</field>
+<field id="rssiSysConf">
+<type>hex</type>
+<value>0x08</value>
+</field>
+<field id="EOT1" path="A">
+<type>hex</type>
+<value>0x1F</value>
+</field>
+<field id="DMCD" path="A">
+<type>hex</type>
+<value>0x63</value>
+</field>
+<field id="FSFCR" path="A">
+<type>hex</type>
+<value>0x60</value>
+</field>
+<field id="SFIDT" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="WUPL" path="A">
+<type>int</type>
+<value>14</value>
+</field>
+<field id="sy1t" path="A">
+<type>int</type>
+<value>1</value>
+</field>
+<field id="SASK" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="EOT2" path="A">
+<type>hex</type>
+<value>0x1F</value>
+</field>
+<field id="EOT3" path="A">
+<type>hex</type>
+<value>0x0F</value>
+</field>
+<field id="DMCR" path="A">
+<type>hex</type>
+<value>0xC5</value>
+</field>
+<field id="TMCR2" path="A">
+<type>hex</type>
+<value>0x72</value>
+</field>
+<field id="WUP" path="A">
+<type>text</type>
+<value>0x55555555</value>
+</field>
+<field id="TMSSC" path="A">
+<type>hex</type>
+<value>0xCF</value>
+</field>
+<field id="txPreambleSysEvent" path="A">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="txSysEvent" path="A">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="TMCSB" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="rxSetPath1" path="A">
+<type>hex</type>
+<value>0x40</value>
+</field>
+<field id="SYCL" path="A">
+<type>int</type>
+<value>11</value>
+</field>
+<field id="DMDEV" path="A">
+<type>float</type>
+<value>8.0</value>
+</field>
+<field id="dmsid" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="WOKinp" path="A">
+<type>float</type>
+<value>34.0</value>
+</field>
+<field id="dmar" path="A">
+<type>int</type>
+<value>1</value>
+</field>
+<field id="SYCS" path="A">
+<type>int</type>
+<value>6</value>
+</field>
+<field id="SOTinp" path="A">
+<type>float</type>
+<value>34.0</value>
+</field>
+<field id="rxSetPath0" path="A">
+<type>hex</type>
+<value>0x41</value>
+</field>
+<field id="WUPT" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="SFIDL" path="A">
+<type>int</type>
+<value>16</value>
+</field>
+<field id="RXCI" path="A">
+<type>hex</type>
+<value>0xFFFF</value>
+</field>
+<field id="TMCP" path="A">
+<type>hex</type>
+<value>0x001D</value>
+</field>
+<field id="DMNE" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="DMH" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="DMAT" path="A">
+<type>int</type>
+<value>8</value>
+</field>
+<field id="RXCP" path="A">
+<type>hex</type>
+<value>0x001D</value>
+</field>
+<field id="RXSB" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="SFID" path="A">
+<type>text</type>
+<value>0x55555556</value>
+</field>
+<field id="SEME" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="RXTL_I" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="TXDEVinp" path="A">
+<type>float</type>
+<value>8.0</value>
+</field>
+<field id="TXsetPath1" path="A">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="TMTL_I" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="TXsetPath0" path="A">
+<type>hex</type>
+<value>0x01</value>
+</field>
+<field id="dmdr_I" path="A">
+<type>float</type>
+<value>8.0</value>
+</field>
+<field id="DMP" path="A">
+<type>int</type>
+<value>1</value>
+</field>
+<field id="DMM" path="A">
+<type>hex</type>
+<value>0x28</value>
+</field>
+<field id="GACDIV" path="A">
+<type>int</type>
+<value>126</value>
+</field>
+<field id="RXTL" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="TXDRinp" path="A">
+<type>float</type>
+<value>8.0</value>
+</field>
+<field id="TMCI" path="A">
+<type>hex</type>
+<value>0x0000</value>
+</field>
+<field id="SOT2" path="A">
+<type>hex</type>
+<value>0x2F</value>
+</field>
+<field id="dmcl" path="A">
+<type>int</type>
+<value>3</value>
+</field>
+<field id="SOT1" path="A">
+<type>hex</type>
+<value>0x3F</value>
+</field>
+<field id="DMDR" path="A">
+<type>hex</type>
+<value>0x26</value>
+</field>
+<field id="TMTL" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="dmct" path="A">
+<type>int</type>
+<value>3</value>
+</field>
+<field id="EOT1" path="B">
+<type>hex</type>
+<value>0x1F</value>
+</field>
+<field id="DMCD" path="B">
+<type>hex</type>
+<value>0x63</value>
+</field>
+<field id="FSFCR" path="B">
+<type>hex</type>
+<value>0x70</value>
+</field>
+<field id="SFIDT" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="WUPL" path="B">
+<type>int</type>
+<value>22</value>
+</field>
+<field id="sy1t" path="B">
+<type>int</type>
+<value>1</value>
+</field>
+<field id="SASK" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="EOT2" path="B">
+<type>hex</type>
+<value>0x1F</value>
+</field>
+<field id="EOT3" path="B">
+<type>hex</type>
+<value>0x0F</value>
+</field>
+<field id="DMCR" path="B">
+<type>hex</type>
+<value>0xC5</value>
+</field>
+<field id="TMCR2" path="B">
+<type>hex</type>
+<value>0x52</value>
+</field>
+<field id="WUP" path="B">
+<type>text</type>
+<value>0xAAAAAAAA</value>
+</field>
+<field id="TMSSC" path="B">
+<type>hex</type>
+<value>0x2F</value>
+</field>
+<field id="txPreambleSysEvent" path="B">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="txSysEvent" path="B">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="TMCSB" path="B">
+<type>int</type>
+<value>16</value>
+</field>
+<field id="rxSetPath1" path="B">
+<type>hex</type>
+<value>0x40</value>
+</field>
+<field id="SYCL" path="B">
+<type>int</type>
+<value>15</value>
+</field>
+<field id="DMDEV" path="B">
+<type>float</type>
+<value>8.0</value>
+</field>
+<field id="dmsid" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="WOKinp" path="B">
+<type>float</type>
+<value>60.0</value>
+</field>
+<field id="dmar" path="B">
+<type>int</type>
+<value>1</value>
+</field>
+<field id="SYCS" path="B">
+<type>int</type>
+<value>6</value>
+</field>
+<field id="SOTinp" path="B">
+<type>float</type>
+<value>50.0</value>
+</field>
+<field id="rxSetPath0" path="B">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="WUPT" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="SFIDL" path="B">
+<type>int</type>
+<value>24</value>
+</field>
+<field id="RXCI" path="B">
+<type>hex</type>
+<value>0xFFFF</value>
+</field>
+<field id="TMCP" path="B">
+<type>hex</type>
+<value>0x001D</value>
+</field>
+<field id="DMNE" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="DMH" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="DMAT" path="B">
+<type>int</type>
+<value>8</value>
+</field>
+<field id="RXCP" path="B">
+<type>hex</type>
+<value>0x001D</value>
+</field>
+<field id="RXSB" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="SFID" path="B">
+<type>text</type>
+<value>0xAAAAAAA9</value>
+</field>
+<field id="SEME" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="RXTL_I" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="TXDEVinp" path="B">
+<type>float</type>
+<value>8.0</value>
+</field>
+<field id="TXsetPath1" path="B">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="TMTL_I" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="TXsetPath0" path="B">
+<type>hex</type>
+<value>0x01</value>
+</field>
+<field id="dmdr_I" path="B">
+<type>float</type>
+<value>8.0</value>
+</field>
+<field id="DMP" path="B">
+<type>int</type>
+<value>1</value>
+</field>
+<field id="DMM" path="B">
+<type>hex</type>
+<value>0x28</value>
+</field>
+<field id="GACDIV" path="B">
+<type>int</type>
+<value>126</value>
+</field>
+<field id="RXTL" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="TXDRinp" path="B">
+<type>float</type>
+<value>8.0</value>
+</field>
+<field id="TMCI" path="B">
+<type>hex</type>
+<value>0xFFFF</value>
+</field>
+<field id="SOT2" path="B">
+<type>hex</type>
+<value>0x2F</value>
+</field>
+<field id="dmcl" path="B">
+<type>int</type>
+<value>3</value>
+</field>
+<field id="SOT1" path="B">
+<type>hex</type>
+<value>0x3F</value>
+</field>
+<field id="DMDR" path="B">
+<type>hex</type>
+<value>0x26</value>
+</field>
+<field id="TMTL" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="dmct" path="B">
+<type>int</type>
+<value>3</value>
+</field>
+<field channel="0" id="FRF">
+<type>float</type>
+<value>433.2</value>
+</field>
+<field channel="1" id="FRF">
+<type>float</type>
+<value>434.64</value>
+</field>
+<field channel="2" id="FRF">
+<type>float</type>
+<value>433.92</value>
+</field>
+</form>
+<form id="Service4">
+<field id="trxSysConf">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="ServChanSwitchOutp">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="FREQoffset">
+<type>float</type>
+<value>40.0</value>
+</field>
+<field id="RSSC">
+<type>hex</type>
+<value>0x08</value>
+</field>
+<field id="CHSTARTFILTER">
+<type>int</type>
+<value>20</value>
+</field>
+<field id="bandwidth">
+<type>int</type>
+<value>18</value>
+</field>
+<field id="ServChanSwitchMask">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="RDOCR">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="ServiceName">
+<type>text</type>
+<value>Service 1</value>
+</field>
+<field id="rxSysEvent">
+<type>hex</type>
+<value>0x11</value>
+</field>
+<field id="rxSysSet">
+<type>hex</type>
+<value>0x2C</value>
+</field>
+<field id="RXBC1">
+<type>hex</type>
+<value>0xAA</value>
+</field>
+<field id="fepac_I">
+<type>float</type>
+<value>9.0</value>
+</field>
+<field id="FEVCT">
+<type>int</type>
+<value>7</value>
+</field>
+<field id="FEAT">
+<type>int</type>
+<value>7</value>
+</field>
+<field id="rssiSysConf">
+<type>hex</type>
+<value>0x08</value>
+</field>
+<field id="EOT1" path="A">
+<type>hex</type>
+<value>0x1F</value>
+</field>
+<field id="DMCD" path="A">
+<type>hex</type>
+<value>0x42</value>
+</field>
+<field id="FSFCR" path="A">
+<type>hex</type>
+<value>0x60</value>
+</field>
+<field id="SFIDT" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="WUPL" path="A">
+<type>int</type>
+<value>14</value>
+</field>
+<field id="sy1t" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="SASK" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="EOT2" path="A">
+<type>hex</type>
+<value>0x1F</value>
+</field>
+<field id="EOT3" path="A">
+<type>hex</type>
+<value>0x0F</value>
+</field>
+<field id="DMCR" path="A">
+<type>hex</type>
+<value>0x8B</value>
+</field>
+<field id="TMCR2" path="A">
+<type>hex</type>
+<value>0x72</value>
+</field>
+<field id="WUP" path="A">
+<type>text</type>
+<value>0x55555555</value>
+</field>
+<field id="TMSSC" path="A">
+<type>hex</type>
+<value>0xCF</value>
+</field>
+<field id="txPreambleSysEvent" path="A">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="txSysEvent" path="A">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="TMCSB" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="rxSetPath1" path="A">
+<type>hex</type>
+<value>0x40</value>
+</field>
+<field id="SYCL" path="A">
+<type>int</type>
+<value>11</value>
+</field>
+<field id="DMDEV" path="A">
+<type>float</type>
+<value>20.0</value>
+</field>
+<field id="dmsid" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="WOKinp" path="A">
+<type>float</type>
+<value>34.0</value>
+</field>
+<field id="dmar" path="A">
+<type>int</type>
+<value>1</value>
+</field>
+<field id="SYCS" path="A">
+<type>int</type>
+<value>6</value>
+</field>
+<field id="SOTinp" path="A">
+<type>float</type>
+<value>34.0</value>
+</field>
+<field id="rxSetPath0" path="A">
+<type>hex</type>
+<value>0x41</value>
+</field>
+<field id="WUPT" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="SFIDL" path="A">
+<type>int</type>
+<value>16</value>
+</field>
+<field id="RXCI" path="A">
+<type>hex</type>
+<value>0xFFFF</value>
+</field>
+<field id="TMCP" path="A">
+<type>hex</type>
+<value>0x001D</value>
+</field>
+<field id="DMNE" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="DMH" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="DMAT" path="A">
+<type>int</type>
+<value>3</value>
+</field>
+<field id="RXCP" path="A">
+<type>hex</type>
+<value>0x001D</value>
+</field>
+<field id="RXSB" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="SFID" path="A">
+<type>text</type>
+<value>0x55555556</value>
+</field>
+<field id="SEME" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="RXTL_I" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="TXDEVinp" path="A">
+<type>float</type>
+<value>20.0</value>
+</field>
+<field id="TXsetPath1" path="A">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="TMTL_I" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="TXsetPath0" path="A">
+<type>hex</type>
+<value>0x01</value>
+</field>
+<field id="dmdr_I" path="A">
+<type>float</type>
+<value>19.2</value>
+</field>
+<field id="DMP" path="A">
+<type>int</type>
+<value>1</value>
+</field>
+<field id="DMM" path="A">
+<type>hex</type>
+<value>0x23</value>
+</field>
+<field id="GACDIV" path="A">
+<type>int</type>
+<value>52</value>
+</field>
+<field id="RXTL" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="TXDRinp" path="A">
+<type>float</type>
+<value>19.2</value>
+</field>
+<field id="TMCI" path="A">
+<type>hex</type>
+<value>0x0000</value>
+</field>
+<field id="SOT2" path="A">
+<type>hex</type>
+<value>0x2F</value>
+</field>
+<field id="dmcl" path="A">
+<type>int</type>
+<value>2</value>
+</field>
+<field id="SOT1" path="A">
+<type>hex</type>
+<value>0x3F</value>
+</field>
+<field id="DMDR" path="A">
+<type>hex</type>
+<value>0x1A</value>
+</field>
+<field id="TMTL" path="A">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="dmct" path="A">
+<type>int</type>
+<value>2</value>
+</field>
+<field id="EOT1" path="B">
+<type>hex</type>
+<value>0x1F</value>
+</field>
+<field id="DMCD" path="B">
+<type>hex</type>
+<value>0x42</value>
+</field>
+<field id="FSFCR" path="B">
+<type>hex</type>
+<value>0x60</value>
+</field>
+<field id="SFIDT" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="WUPL" path="B">
+<type>int</type>
+<value>16</value>
+</field>
+<field id="sy1t" path="B">
+<type>int</type>
+<value>1</value>
+</field>
+<field id="SASK" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="EOT2" path="B">
+<type>hex</type>
+<value>0x1F</value>
+</field>
+<field id="EOT3" path="B">
+<type>hex</type>
+<value>0x0C</value>
+</field>
+<field id="DMCR" path="B">
+<type>hex</type>
+<value>0xCB</value>
+</field>
+<field id="TMCR2" path="B">
+<type>hex</type>
+<value>0x50</value>
+</field>
+<field id="WUP" path="B">
+<type>text</type>
+<value>0xAAAAAAAA</value>
+</field>
+<field id="TMSSC" path="B">
+<type>hex</type>
+<value>0x20</value>
+</field>
+<field id="txPreambleSysEvent" path="B">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="txSysEvent" path="B">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="TMCSB" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="rxSetPath1" path="B">
+<type>hex</type>
+<value>0x40</value>
+</field>
+<field id="SYCL" path="B">
+<type>int</type>
+<value>15</value>
+</field>
+<field id="DMDEV" path="B">
+<type>float</type>
+<value>20.0</value>
+</field>
+<field id="dmsid" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="WOKinp" path="B">
+<type>float</type>
+<value>60.0</value>
+</field>
+<field id="dmar" path="B">
+<type>int</type>
+<value>1</value>
+</field>
+<field id="SYCS" path="B">
+<type>int</type>
+<value>6</value>
+</field>
+<field id="SOTinp" path="B">
+<type>float</type>
+<value>50.0</value>
+</field>
+<field id="rxSetPath0" path="B">
+<type>hex</type>
+<value>0x5E</value>
+</field>
+<field id="WUPT" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="SFIDL" path="B">
+<type>int</type>
+<value>18</value>
+</field>
+<field id="RXCI" path="B">
+<type>hex</type>
+<value>0xFFFF</value>
+</field>
+<field id="TMCP" path="B">
+<type>hex</type>
+<value>0x001D</value>
+</field>
+<field id="DMNE" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="DMH" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="DMAT" path="B">
+<type>int</type>
+<value>3</value>
+</field>
+<field id="RXCP" path="B">
+<type>hex</type>
+<value>0x001D</value>
+</field>
+<field id="RXSB" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="SFID" path="B">
+<type>text</type>
+<value>0xAAAAAAA9</value>
+</field>
+<field id="SEME" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="RXTL_I" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="TXDEVinp" path="B">
+<type>float</type>
+<value>20.0</value>
+</field>
+<field id="TXsetPath1" path="B">
+<type>hex</type>
+<value>0x00</value>
+</field>
+<field id="TMTL_I" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="TXsetPath0" path="B">
+<type>hex</type>
+<value>0x01</value>
+</field>
+<field id="dmdr_I" path="B">
+<type>float</type>
+<value>19.2</value>
+</field>
+<field id="DMP" path="B">
+<type>int</type>
+<value>1</value>
+</field>
+<field id="DMM" path="B">
+<type>hex</type>
+<value>0x23</value>
+</field>
+<field id="GACDIV" path="B">
+<type>int</type>
+<value>52</value>
+</field>
+<field id="RXTL" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="TXDRinp" path="B">
+<type>float</type>
+<value>19.2</value>
+</field>
+<field id="TMCI" path="B">
+<type>hex</type>
+<value>0x0000</value>
+</field>
+<field id="SOT2" path="B">
+<type>hex</type>
+<value>0x2F</value>
+</field>
+<field id="dmcl" path="B">
+<type>int</type>
+<value>2</value>
+</field>
+<field id="SOT1" path="B">
+<type>hex</type>
+<value>0x3F</value>
+</field>
+<field id="DMDR" path="B">
+<type>hex</type>
+<value>0x1A</value>
+</field>
+<field id="TMTL" path="B">
+<type>int</type>
+<value>0</value>
+</field>
+<field id="dmct" path="B">
+<type>int</type>
+<value>2</value>
+</field>
+<field channel="0" id="FRF">
+<type>float</type>
+<value>433.2</value>
+</field>
+<field channel="1" id="FRF">
+<type>float</type>
+<value>434.64</value>
+</field>
+<field channel="2" id="FRF">
+<type>float</type>
+<value>433.92</value>
+</field>
+</form>
+</gui>
+</sysconfig>

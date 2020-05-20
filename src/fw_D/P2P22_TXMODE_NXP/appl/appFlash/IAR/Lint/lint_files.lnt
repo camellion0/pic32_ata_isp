@@ -1,0 +1,45 @@
+/*LNT***************************************************************************
+  Use of this software is subject to Atmel's Software License Agreement.
+--------------------------------------------------------------------------------
+  $URL: http://svnservulm.corp.atmel.com/svn/CDB/Apps/SW_Lib/Car_Access/CARS_GEN2/ATAB5702A/Branches/P2P22_TXMODE_NXP/appl/appFlash/IAR/Lint/lint_files.lnt $
+  $LastChangedRevision: 328482 $
+  $LastChangedDate: 2015-07-22 13:17:23 -0600 (Wed, 22 Jul 2015) $
+  $LastChangedBy: grueter $
+--------------------------------------------------------------------------------
+  Created by:   gwillbol on: 15.05.2013 16:59
+  Copyright:    Atmel Automotive GmbH, Design Center Ulm
+--------------------------------------------------------------------------------
+  Purpose:
+    Primus2P lint file configuration
+*******************************************************************************/
+
+// sets the include pathes
+-i..\..\firmware\compiler\src
+-i..\..\firmware\eep\src
+-i..\..\firmware\extif\src
+-i..\..\firmware\globals\src
+-i..\..\firmware\init\src
+-i..\..\firmware\lfrx\src
+-i..\..\firmware\spi\src
+-i..\..\firmware\stdc\src
+-i..\..\firmware\system\src
+-i..\..\firmware\timer1\src
+-i..\..\firmware\timer2\src
+-i..\..\firmware\timer3\src
+-i..\..\firmware\timer4\src
+-i..\..\firmware\timer5\src
+-i..\..\firmware\tp\src
+-i..\..\appl\appFlash\src
+// define all the needed source to build the ROM library
+..\..\firmware\eep\src\eep_flash.c
+..\..\firmware\extif\src\extif_flash.c
+..\..\firmware\globals\src\globals_flash.c
+..\..\firmware\init\src\init_flash.c
+..\..\firmware\lfrx\src\lfrx_flash.c
+..\..\firmware\lfrx\src\lfrx_immo.c
+..\..\firmware\spi\src\ata5700_command_set.c
+..\..\firmware\system\src\system_flash.c
+..\..\firmware\timer3\src\timer3_flash.c
+..\..\firmware\timer4\src\timer4_flash.c
+..\..\firmware\tp\src\tp_flash.c
+..\..\appl\appFlash\src\FlashAppl.c

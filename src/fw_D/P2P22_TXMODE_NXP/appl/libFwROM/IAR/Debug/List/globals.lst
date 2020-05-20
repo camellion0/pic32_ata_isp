@@ -1,0 +1,1626 @@
+###############################################################################
+#
+# IAR C/C++ Compiler V6.70.1.929 for Atmel AVR            05/Apr/2016  13:30:41
+# Copyright 1996-2015 IAR Systems AB.
+# Network license: DVRIAR01.corpp.atmel.com (STD)
+#
+#    Source file  =  
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\firmware\globals\src\globals.c
+#    Command line =  
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\firmware\globals\src\globals.c
+#        -v3 --enhanced_core -ms -o
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\Obj
+#        -lC
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\List
+#        -lA
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\List
+#        --initializers_in_flash --no_cse --no_inline --no_code_motion
+#        --no_cross_call --no_clustering --no_tbaa --debug --64k_flash
+#        -DENABLE_BIT_DEFINITIONS -e -I "C:\Program Files (x86)\IAR
+#        Systems\Embedded Workbench 6.0\avr\inc\" --eeprom_size 1152 --clib
+#        -Ohz
+#    List file    =  
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\List\globals.lst
+#    Object file  =  
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\Obj\globals.r90
+#
+###############################################################################
+
+C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\firmware\globals\src\globals.c
+      1          //lint -e9059
+      2          /* *C**************************************************************************
+      3            Use of this software is subject to Atmel's Software License Agreement.
+      4          -------------------------------------------------------------------------------
+      5            $URL: http://svnservulm.corp.atmel.com/svn/CDB/Apps/SW_Lib/Car_Access/CARS_GEN2/ATAB5702A/Branches/P2_Gen2_Merge/firmware/globals/src/globals.c $
+      6            $LastChangedRevision: 328482 $
+      7            $LastChangedDate: 2015-07-22 13:17:23 -0600 (Wed, 22 Jul 2015) $
+      8            $LastChangedBy: grueter $
+      9          -------------------------------------------------------------------------------
+     10            Project:      ATA5700
+     11            Target MCU:   ATA5700
+     12            Compiler:     IAR C/C++ Compiler for AVR 6.30.1
+     13          -------------------------------------------------------------------------------
+     14          
+     15          ******************************************************************************
+     16          * Copyright 2011, Atmel Automotive GmbH                                       *
+     17          *                                                                             *
+     18          * This software is owned by the Atmel Automotive GmbH                         *
+     19          * and is protected by and subject to worldwide patent protection.             *
+     20          * Atmel hereby grants to licensee a personal,                                 *
+     21          * non-exclusive, non-transferable license to copy, use, modify, create        *
+     22          * derivative works of, and compile the Atmel Source Code and derivative       *
+     23          * works for the sole purpose of creating custom software in support of        *
+     24          * licensee product to be used only in conjunction with a Atmel integrated     *
+     25          * circuit as specified in the applicable agreement. Any reproduction,         *
+     26          * modification, translation, compilation, or representation of this           *
+     27          * software except as specified above is prohibited without the express        *
+     28          * written permission of Atmel.                                                *
+     29          *                                                                             *
+     30          * Disclaimer: ATMEL MAKES NO WARRANTY OF ANY KIND,EXPRESS OR IMPLIED,         *
+     31          * WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED    *
+     32          * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.         *
+     33          * Atmel reserves the right to make changes without further notice to the      *
+     34          * materials described herein. Atmel does not assume any liability arising     *
+     35          * out of the application or use of any product or circuit described herein.   *
+     36          * Atmel does not authorize its products for use as critical components in     *
+     37          * life-support systems where a malfunction or failure may reasonably be       *
+     38          * expected to result in significant injury to the user. The inclusion of      *
+     39          * Atmel products in a life-support systems application implies that the       *
+     40          * manufacturer assumes all risk of such use and in doing so indemnifies       *
+     41          * Atmel against all charges.                                                  *
+     42          *                                                                             *
+     43          * Use may be limited by and subject to the applicable Atmel software          *
+     44          * license agreement.                                                          *
+     45          ******************************************************************************/
+     46          //lint -restore
+     47          
+     48          /*===========================================================================*/
+     49          /*  INCLUDES                                                                 */
+     50          /*===========================================================================*/
+     51          #include "globals.h"
+
+   \                                 In  segment ABSOLUTE, at 0x3a
+   \   union <unnamed> volatile __io _A_PRR0
+   \                     _A_PRR0:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x4a
+   \   union <unnamed> volatile __io _A_VMSCR
+   \                     _A_VMSCR:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x4b
+   \   union <unnamed> volatile __io _A_MCUSR
+   \                     _A_MCUSR:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x58
+   \   union <unnamed> volatile __io _A_SMCR
+   \                     _A_SMCR:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x5f
+   \   union <unnamed> volatile __io _A_SREG
+   \                     _A_SREG:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x6e
+   \   union <unnamed> volatile __io _A_WDTCR
+   \                     _A_WDTCR:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0xc9
+   \   union <unnamed> volatile __io _A_CMSR
+   \                     _A_CMSR:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0xca
+   \   union <unnamed> volatile __io _A_CMOCR
+   \                     _A_CMOCR:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0xcb
+   \   union <unnamed> volatile __io _A_SUPFR
+   \                     _A_SUPFR:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0xcc
+   \   union <unnamed> volatile __io _A_SUPCR
+   \                     _A_SUPCR:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x100
+   \   union <unnamed> volatile __ext_io _A_FESR
+   \                     _A_FESR:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x101
+   \   union <unnamed> volatile __ext_io _A_FEEN1
+   \                     _A_FEEN1:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x109
+   \   union <unnamed> volatile __ext_io _A_FETN4
+   \                     _A_FETN4:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x1e3
+   \   union <unnamed> volatile __ext_io _A_CMCR
+   \                     _A_CMCR:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x1e4
+   \   union <unnamed> volatile __ext_io _A_CMIMR
+   \                     _A_CMIMR:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x1e5
+   \   union <unnamed> volatile __ext_io _A_CLPR
+   \                     _A_CLPR:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x1e6
+   \   union <unnamed> volatile __ext_io _A_VMCR
+   \                     _A_VMCR:
+   \   00000000                      DS8 1
+     52          #include "../../timer1/src/timer1.h"
+     53          #include "../../eep/src/eep.h"
+     54          #include "../../calib/src/calib.h"
+     55          
+     56          
+     57          /*===========================================================================*/
+     58          /*  DEFINES                                                                  */
+     59          /*===========================================================================*/
+     60          /** \brief <b>COPY_SERVICE_AND_CHANNEL_FROM_EEPROM</b> is used as define to
+     61              copy complete service and channel information from EEPROM
+     62           */
+     63          #define COPY_SERVICE_AND_CHANNEL_FROM_EEPROM    (uint8_t)0x81U
+     64          /** \brief <b>COPY_CHANNEL_ONLY_FROM_EEPROM</b> is used as define to
+     65              copy only channel information from EEPROM
+     66           */
+     67          #define COPY_CHANNEL_ONLY_FROM_EEPROM           (uint8_t)0x41U
+     68          /** \brief <b>COPY_SERVICE_AND_CHANNEL_FROM_SRAM</b> is used as define to
+     69              copy complete service and channel information from SRAM
+     70           */
+     71          #define COPY_SERVICE_AND_CHANNEL_FROM_SRAM      (uint8_t)0x80U
+     72          /** \brief <b>COPY_CHANNEL_ONLY_FROM_SRAM</b> is used as define to
+     73              copy only channel information from SRAM
+     74           */
+     75          #define COPY_CHANNEL_ONLY_FROM_SRAM             (uint8_t)0x40U
+     76          
+     77          
+     78          #define VOLTAGE_MONITOR_MRC_WAIT_CYCLES       4U
+     79          #define VOLTAGE_MONITOR_SRC_WAIT_CYCLES       1U
+     80          #define VOLTAGE_MONITOR_FRC_WAIT_CYCLES      35U
+     81          #define VOLTAGE_MONITOR_XTO4_WAIT_CYCLES     32U
+     82          
+     83          /*===========================================================================*/
+     84          /*  Modul Globals (Variables)                                                */
+     85          /*===========================================================================*/
+     86          
+     87          /** \brief <b>g_sDebug</b>
+     88              contains the last error codes for system error and ssm error.
+     89          */
+     90          #pragma location = ".debug"
+
+   \                                 In  segment .debug, align 1, keep-with-next
+     91          __no_init sDebugErrorCodes g_sDebug;
+   \                     g_sDebug:
+   \   00000000                      DS8 2
+     92          
+     93          /** \brief <b>romVersion</b>
+     94              contains the ROM version
+     95          */
+     96          #pragma location = ".romversion"
+
+   \                                 In  segment .romversion, align 1, keep-with-next, root
+     97          __root const prog_char romVersion = ROM_VERSION;
+   \                     romVersion:
+   \   00000000   20                 DC8 32
+     98          
+     99          /** \brief <b>romPatchVersion</b>
+    100              contains the ROM patch version
+    101          */
+    102          #pragma location = ".rompatchversion"
+
+   \                                 In  segment .rompatchversion, align 1, keep-with-next, root
+    103          __root const prog_char romPatchVersion = ROMPATCH_VERSION;
+   \                     romPatchVersion:
+   \   00000000   00                 DC8 0
+    104          
+    105          /*===========================================================================*/
+    106          /*  Modul Globals (Functions)                                                */
+    107          /*===========================================================================*/
+    108          
+    109          static __root uint8_t ATA_globalsReadMvccSettlingTime_C(void);
+    110          
+    111          /*===========================================================================*/
+    112          /*  IMPLEMENTATION                                                           */
+    113          /*===========================================================================*/
+    114          
+    115          /*---------------------------------------------------------------------------*/
+    116          /** \brief <b>ATA_globalsSetClk_C</b>
+    117              sets the timer and system clock prescaler value.
+    118          
+    119              \param[in]  bClockPrescalerValue    System clock and timer prescaler value
+    120          
+    121              \image html ATA_globalsSetClk_C.png
+    122          
+    123              \internal
+    124              \li 010: Save global SREG register content and disable the global interrupt flag
+    125                       by calling function "_CLI" to be able to consistently
+    126                       update register WDRCR.
+    127          
+    128              \li 020: Set bit "CLPCE" in register CLPR to 1 to be able to change any of
+    129                       the CLTPS or CLKPS bits.
+    130          
+    131              \li 030: Set register CLPR to input parameter "uClockPrescalerValue" to apply
+    132                       the given timer and system clock prescaler settings.
+    133          
+    134              \Derived{Yes}
+    135          
+    136              \Rationale{This function is necessary in order for the Application SW to
+    137                         change the system clock prescaler as well as the system timer
+    138                         clock prescaler in a performant manner}
+    139          
+    140              \Traceability   N/A
+    141              \endinternal
+    142          \n
+    143          */
+    144          /*---------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    145          VOIDFUNC ATA_globalsSetClk_C(uint8_t bClockPrescalerValue)
+   \                     ATA_globalsSetClk_C:
+    146          {
+    147              uint8_t bSreg;
+    148          
+    149              /* LLR-Ref: 010 */
+    150              bSreg = SREG;
+   \   00000000   B72F               IN      R18, 0x3F
+    151              _CLI;
+   \   00000002   94F8               cli
+    152          
+    153              /* LLR-Ref: 020 */
+    154              CLPR = BM_CLPCE;
+   \   00000004   E810               LDI     R17, 128
+   \   00000006   9310....           STS     _A_CLPR, R17
+    155              CLPR = bClockPrescalerValue;
+   \   0000000A   ....               RJMP    ??Subroutine2_0
+   \   0000000C                      REQUIRE _A_SREG
+   \   0000000C                      REQUIRE _A_CLPR
+    156          
+    157              /* LLR-Ref: 030 */
+    158              SREG = bSreg;
+    159          }
+
+   \                                 In  segment CODE, align 2, keep-with-next
+   \                     ??Subroutine2_0:
+   \   00000000   9300....           STS     _A_CLPR, R16
+   \   00000004                      REQUIRE ??Subroutine3_0
+   \   00000004                      ;               // Fall through to label ??Subroutine3_0
+
+   \                                 In  segment CODE, align 2, keep-with-next
+   \                     ??Subroutine3_0:
+   \   00000000   BF2F               OUT     0x3F, R18
+   \   00000002   9508               RET
+    160          /*---------------------------------------------------------------------------*/
+    161          /** \brief <b>ATA_globalsWdtDisable_C</b>
+    162              disables the watchdog timer.
+    163          
+    164              \image html ATA_globalsWdtDisable_C.png
+    165          
+    166              \internal
+    167              \li 010: Save global SREG register content and disable the global interrupt flag
+    168                       by calling function "_CLI" to be able to consistently
+    169                       update register WDRCR.\n\n
+    170                       Note:
+    171                       WDE is overwritten by WDRF, thus to clear WDE, WDRF has to be cleared first.
+    172          
+    173              \li 020: Set bit "WDRF" in register MCUSR to 0 to be able to set bit "WDE" in register WDTCR
+    174                       to 0.
+    175          
+    176              \li 030: Set bits "WDCE" and "WDE" in register WDTCR to 1 to be able to reset WDE and
+    177                       withing 4 cycles set WDE to 0 in order to disable the Watchdog timer.
+    178                       The Watchdog prescaler value is set to its maximum value per default.
+    179          
+    180              \li 040: Restore global SREG register with the previously saved content.
+    181          
+    182              \Derived{No}
+    183          
+    184              \Rationale{N/A}
+    185          
+    186              \Traceability{Primus2P-878}
+    187              \endinternal
+    188          \n
+    189          */
+    190          /*---------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    191          VOIDFUNC ATA_globalsWdtDisable_C(void)
+   \                     ATA_globalsWdtDisable_C:
+    192          {
+    193              uint8_t bSreg;
+    194          
+    195              /* LLR-Ref: 010 */
+    196              bSreg = SREG;
+   \   00000000   B71F               IN      R17, 0x3F
+    197              _CLI;
+   \   00000002   94F8               cli
+    198          
+    199              /* LLR-Ref: 020 */
+    200              MCUSR &= (uint8_t)(~BM_WDRF);
+   \   00000004   B50B               IN      R16, 0x2B
+   \   00000006   7F07               ANDI    R16, 0xF7
+   \   00000008   BD0B               OUT     0x2B, R16
+    201          
+    202              /* LLR-Ref: 030 */
+    203              WDTCR = (BM_WDCE | BM_WDE);
+   \   0000000A   E108               LDI     R16, 24
+   \   0000000C   9300....           STS     _A_WDTCR, R16
+    204              WDTCR = (BM_WDPS2 | BM_WDPS1 | BM_WDPS0);
+   \   00000010   E007               LDI     R16, 7
+   \   00000012   9300....           STS     _A_WDTCR, R16
+    205          
+    206              /* LLR-Ref: 040 */
+    207              SREG = bSreg;
+   \   00000016                      REQUIRE ?Subroutine1
+   \   00000016                      REQUIRE _A_SREG
+   \   00000016                      REQUIRE _A_MCUSR
+   \   00000016                      REQUIRE _A_WDTCR
+   \   00000016                      ;               // Fall through to label ?Subroutine1
+    208          }
+
+   \                                 In  segment CODE, align 2, keep-with-next
+   \                     ?Subroutine1:
+   \   00000000   BF1F               OUT     0x3F, R17
+   \   00000002   9508               RET
+    209          
+    210          
+    211          /*---------------------------------------------------------------------------*/
+    212          /** \brief <b>ATA_globalsWdtEnable_C</b>
+    213              enables the watchdog timer.
+    214          
+    215              \param[in]  uConfWDTCR      Configuration value for register WDTCR
+    216              
+    217              \image html ATA_globalsWdtEnable_C.png
+    218          
+    219              \internal
+    220              \li 010: Save global SREG register content and disable the global interrupt flag
+    221                       by calling macro "_CLI" to be able to consistently update register
+    222                       WDRCR.
+    223          
+    224              \li 020: Set bit WDCE in register WDTCR in order to be able to change any of the
+    225                       WDTCR content.\n\n
+    226                       Note:
+    227                       Enabling the Watchdog and setting the prescaler at the same time is not
+    228                       possible from a HW point of view.
+    229          
+    230              \li 030: Set register WDTCR to the given parameter "confWDTCR" two
+    231                       times in order to enable the Watchdog and to set the Watchdog prescaler
+    232                       value.
+    233          
+    234              \li 040: Restore global SREG register with the previously saved content.
+    235          
+    236              \Derived{No}
+    237          
+    238              \Rationale{N/A}
+    239          
+    240              \Traceability{Primus2P-877}
+    241              \endinternal
+    242          \n
+    243          */
+    244          /*---------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    245          VOIDFUNC ATA_globalsWdtEnable_C(uint8_t uConfWDTCR)
+   \                     ATA_globalsWdtEnable_C:
+    246          {
+    247              uint8_t bSreg = SREG;
+   \   00000000   B72F               IN      R18, 0x3F
+    248          
+    249              /* LLR-Ref: 010 */
+    250              _CLI;
+   \   00000002   94F8               cli
+    251          
+    252              /* LLR-Ref: 020 */
+    253              WDTCR |= (BM_WDCE | BM_WDE);
+   \   00000004   9110....           LDS     R17, _A_WDTCR
+   \   00000008   6118               ORI     R17, 0x18
+   \   0000000A   9310....           STS     _A_WDTCR, R17
+    254          
+    255              /* LLR-Ref: 030 */
+    256              WDTCR = uConfWDTCR;
+   \   0000000E   9300....           STS     _A_WDTCR, R16
+    257              WDTCR = uConfWDTCR;
+   \   00000012   9300....           STS     _A_WDTCR, R16
+    258          
+    259              /* LLR-Ref: 040 */
+    260              SREG = bSreg;
+   \   00000016   ....               RJMP    ??Subroutine3_0
+   \   00000018                      REQUIRE _A_SREG
+   \   00000018                      REQUIRE _A_WDTCR
+    261          }
+    262          
+    263          /*---------------------------------------------------------------------------*/
+    264          /** \brief <b>ATA_globalsSleep_C</b>
+    265              activates the given AVR sleep mode.
+    266          
+    267              \param[in]  bSleepModeConfig    Sleep mode to be applied
+    268          
+    269              \image html ATA_globalsSleep_C.png
+    270          
+    271              \internal
+    272              \li 010: Disable the global interrupt flag by calling macro "_CLI" to be able to
+    273                       consistently update register SMCR.
+    274          
+    275              \li 020: Apply the given sleep mode via parameter "bSleepModeConfig" to register
+    276                        SMCR, AND
+    277                       set the "Sleep enable" bit in register SMCR to 1 in order for the AVR
+    278                        to enter the selected sleep mode when the SLEEP instruction is
+    279                        executed.
+    280          
+    281              \li 030: Enable the global interrupt flag by calling macro "_SEI" to allow
+    282                        any interrupt handling during sleep in order for the AVR to wake up
+    283                        on dedicated events,
+    284                       AND
+    285                        enter the sleep mode by calling macro "_SLEEP".\n\n
+    286                       Note:
+    287                       If the MCU wakes up again, execution starts after the _SLEEP
+    288                       instruction!
+    289          
+    290              \li 040: Set the "Sleep enable" bit in register SMCR to 0 in order to avoid
+    291                       any unintended entering of the MCU into sleep mode.
+    292          
+    293              \Derived{No}
+    294          
+    295              \Rationale{N/A}
+    296          
+    297              \Traceability{Primus2P-900}
+    298              \endinternal
+    299          \n
+    300          */
+    301          /*---------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    302          VOIDFUNC ATA_globalsSleep_C(uint8_t bSleepModeConfig)
+   \                     ATA_globalsSleep_C:
+    303          {
+    304              /* LLR-Ref: 010 */
+    305              _CLI;
+   \   00000000   94F8               cli
+    306          
+    307              /* LLR-Ref: 020 */
+    308              SMCR = bSleepModeConfig & (BM_SM2 | BM_SM1 | BM_SM0 );
+   \   00000002   700E               ANDI    R16, 0x0E
+   \   00000004   BF08               OUT     0x38, R16
+    309              SMCR |= BM_SE;
+   \   00000006   B708               IN      R16, 0x38
+   \   00000008   6001               ORI     R16, 0x01
+   \   0000000A   BF08               OUT     0x38, R16
+    310          
+    311              /* LLR-Ref: 030 */
+    312              _SEI;
+   \   0000000C   9478               sei
+    313              _SLEEP;
+   \   0000000E   9588               sleep
+    314          
+    315              /* LLR-Ref: 040 */
+    316              SMCR &= (uint8_t)~BM_SE;
+   \   00000010   B708               IN      R16, 0x38
+   \   00000012   7F0E               ANDI    R16, 0xFE
+   \   00000014   BF08               OUT     0x38, R16
+    317          }
+   \   00000016   9508               RET
+   \   00000018                      REQUIRE _A_SMCR
+    318          
+    319          /*-----------------------------------------------------------------------------*/
+    320          /**  \brief <b>ATA_globalsClkSwitchFrc_C</b>
+    321              switches the AVR core to be clocked with the FRC (FRC activation included
+    322              and DVCC High Enable included).
+    323              Keep prescaler settings in mind.\n\n
+    324              HW considerations:
+    325              The CCS bit and CMM2..0 bits in register CMCR need to be set separately in
+    326              order to switch from XTO to FRC correctly (both clocks require bit CCS to be
+    327              set to 1).
+    328              The following code snippet "CMCR = BM_CMCCE" does not set bit CCS to 0, as
+    329              only the CMCCE is enabled. Any change has to occur one cycle after CMCCE
+    330              is set to 1.
+    331          
+    332              \image html ATA_globalsClkSwitchFrc_C.png
+    333          
+    334              \internal
+    335              \li 010: Clear temporary clock value for register CMCR without changing bits
+    336                       4 and 5 AND store CMOCR register settings at function entry.
+    337          
+    338              \li 012: Enable "DVCC high enable" in order to provide enough current for the
+    339                       AVR core when running with FRC.\n
+    340                       Set AVR clock to FRC:
+    341          
+    342              \li 015: Start the FRC manually by setting bit FRCAO in register CMOCR to 1 AND
+    343                       wait until the FRC is active.
+    344          
+    345              \li 020: Disable all interrupts to allow for an atomic execution of a register
+    346                       CMCR change and
+    347                       enabling changing register CMCR by setting bit CMCCE in register CMCR
+    348                        to 1 and, within four cycles, assign the temporary clock value to
+    349                        register CMCR with bit CCS set to 0 and bits CMM2..0 set to FRC
+    350                        in order to be able to change bits CMM2..0 to FRC.
+    351          
+    352              \li 030: Enabling changing register CMCR by setting bit CMCCE in register CMCR
+    353                        to 1 and, within four cycles, assign the temporary clock value to
+    354                        register CMCR with bit CCS set to 1 in order to activate the value of
+    355                        CMM2..0 bits.\n\n
+    356                       End of AVR clock change to FRC
+    357          
+    358              \li 040: Set the timer clock prescaler value to 1 by first enabling to change
+    359                        register CLPR by setting bit CLPCE in register CLPR to 1 and, within
+    360                        four cycles, set register CLPR to the value CLTPS0.
+    361          
+    362              \li 050: Restore register CMOCR settings regarding the FRC always on flag 
+    363                        before activation of the FRC in order to reflect the overall FRC 
+    364                        always on status after FRC activation and
+    365                       restore global interrupt configuration, since the critical section is
+    366                       finished.
+    367          
+    368              \Derived{No}
+    369          
+    370              \Rationale{N/A}
+    371          
+    372              \Traceability{Primus2P-871,Primus2P-873}
+    373              \endinternal
+    374          \n
+    375          */
+    376          /*-----------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    377          VOIDFUNC ATA_globalsClkSwitchFrc_C(void)
+   \                     ATA_globalsClkSwitchFrc_C:
+    378          {
+    379              /* LLR-Ref: 010 */
+    380              uint8_t bSreg = SREG;
+   \   00000000   B72F               IN      R18, 0x3F
+    381              uint8_t cmcr = CMCR & 0x30U;
+   \   00000002   9100....           LDS     R16, _A_CMCR
+   \   00000006   7300               ANDI    R16, 0x30
+    382              uint8_t bCmocrFrcao = CMOCR & BM_FRCAO;
+   \   00000008   9130....           LDS     R19, _A_CMOCR
+    383              
+    384              /* LLR-Ref: 012 */
+    385              SUPCR |= BM_DVHEN;
+   \   0000000C   911000CC           LDS     R17, 204
+   \   00000010   6210               ORI     R17, 0x20
+   \   00000012   931000CC           STS     204, R17
+    386          
+    387              /* LLR-Ref: 015 */
+    388              CMOCR |= BM_FRCAO;
+   \   00000016   911000CA           LDS     R17, 202
+   \   0000001A   6011               ORI     R17, 0x01
+   \   0000001C   931000CA           STS     202, R17
+    389              do
+    390              {
+    391                  _NOP;
+   \                     ??ATA_globalsClkSwitchFrc_C_0:
+   \   00000020   0000               nop
+    392              } while((CMOCR & BM_FRCACT) == 0U);
+   \   00000022   9110....           LDS     R17, _A_CMOCR
+   \   00000026   FF12               SBRS    R17, 2
+   \   00000028   CFFB               RJMP    ??ATA_globalsClkSwitchFrc_C_0
+    393          
+    394              /* LLR-Ref: 020 */
+    395              cmcr |= BM_CMM0;
+   \   0000002A   6001               ORI     R16, 0x01
+    396          
+    397              _CLI;
+   \   0000002C   94F8               cli
+    398              CMCR = BM_CMCCE;
+   \   0000002E   E810               LDI     R17, 128
+   \   00000030   9310....           STS     _A_CMCR, R17
+    399              CMCR = cmcr;
+   \   00000034   9300....           STS     _A_CMCR, R16
+    400          
+    401              /* LLR-Ref: 030 */
+    402              cmcr |= BM_CCS;
+    403          
+    404              CMCR = BM_CMCCE;
+   \   00000038   9310....           STS     _A_CMCR, R17
+    405              CMCR = cmcr;
+   \   0000003C   6008               ORI     R16, 0x08
+   \   0000003E   9300....           STS     _A_CMCR, R16
+    406          
+    407              /* LLR-Ref: 040 */
+    408              CLPR = BM_CLPCE;
+   \   00000042   9310....           STS     _A_CLPR, R17
+    409              CLPR = BM_CLTPS0;
+   \   00000046   E008               LDI     R16, 8
+   \   00000048   9300....           STS     _A_CLPR, R16
+    410          
+    411              /* LLR-Ref: 050 */
+    412              if ( bCmocrFrcao == 0x00U )
+   \   0000004C   FB30               BST     R19, 0
+   \   0000004E   F02E               BRTS    ??ATA_globalsClkSwitchFrc_C_1
+    413              {
+    414                  CMOCR &= ~BM_FRCAO;
+   \   00000050   910000CA           LDS     R16, 202
+   \   00000054   7F0E               ANDI    R16, 0xFE
+   \   00000056   930000CA           STS     202, R16
+    415              }
+    416          
+    417              SREG = bSreg;
+   \                     ??ATA_globalsClkSwitchFrc_C_1:
+   \   0000005A   ....               RJMP    ??Subroutine3_0
+   \   0000005C                      REQUIRE _A_SREG
+   \   0000005C                      REQUIRE _A_CMCR
+   \   0000005C                      REQUIRE _A_CMOCR
+   \   0000005C                      REQUIRE _A_SUPCR
+   \   0000005C                      REQUIRE _A_CLPR
+    418          }
+    419          
+    420          /*-----------------------------------------------------------------------------*/
+    421          /**  \brief <b>ATA_globalsClkSwitchFrcWithDelay_C</b>
+    422              switches the AVR core to be clocked with the FRC (FRC activation included
+    423              and DVCC High Enable included). After clock switching a programmable wait
+    424              time is executed
+    425              \param[in] bDelay wait time which is executed after clock switching
+    426              
+    427              \internal
+    428                  \Traceability{Primus2P-3750}
+    429              \endinternal
+    430           */
+    431          /*-----------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    432          VOIDFUNC ATA_globalsClkSwitchFrcWithDelay_C(uint8_t bDelay)
+   \                     ATA_globalsClkSwitchFrcWithDelay_C:
+    433          {
+   \   00000000   2F40               MOV     R20, R16
+    434              ATA_globalsClkSwitchFrc_C();
+   \   00000002   ....               RCALL   ATA_globalsClkSwitchFrc_C
+    435              for(uint8_t i = 0U; i < bDelay; i++) {
+   \   00000004   E000               LDI     R16, 0
+   \   00000006   C002               RJMP    ??ATA_globalsClkSwitchFrcWithDelay_C_0
+    436                _NOP;
+   \                     ??ATA_globalsClkSwitchFrcWithDelay_C_1:
+   \   00000008   0000               nop
+    437              }    
+   \   0000000A   9503               INC     R16
+   \                     ??ATA_globalsClkSwitchFrcWithDelay_C_0:
+   \   0000000C   1704               CP      R16, R20
+   \   0000000E   F3E0               BRCS    ??ATA_globalsClkSwitchFrcWithDelay_C_1
+    438          }
+   \   00000010   9508               RET
+    439          
+    440          /*-----------------------------------------------------------------------------*/
+    441          /**  \brief <b>ATA_globalsClkSwitchMrc_C</b>
+    442              switches the AVR core to be clocked with the MRC. Keep prescaler
+    443              settings in mind.\n\n
+    444              HW considerations:
+    445              The MRC is always on when DVCC is on, i.e. when the AVR is running, the MRC
+    446              is on and can only be turned off via dedicated sleep modes.
+    447          
+    448              \image html ATA_globalsClkSwitchMrc_C.png
+    449          
+    450              \internal
+    451              \li 010: Disable all interrupts to allow for an atomic execution of an AVR clock
+    452                       switch to the MRC and
+    453                       set AVR clock to MRC by first enabling to change register CMCR by
+    454                        setting bit CMCCE in register CMCR to 1 and, within four cycles, set
+    455                        bit CCS to 0.
+    456          
+    457              \li 015: Disable "DVCC high enable" as it is no longer required, since the AVR
+    458                       core has been switched to the MRC.
+    459          
+    460              \li 020: Set the timer clock prescaler value to 1 by first enabling to change
+    461                        register CLPR by setting bit CLPCE in register CLPR to 1 and, within
+    462                        four cycles, set register CLPR to the value CLTPS0 and
+    463                       restore the previous interrupt setting, since the critical section is
+    464                        finished.
+    465          
+    466              \Derived{No}
+    467          
+    468              \Rationale{N/A}
+    469          
+    470              \Traceability{Primus2P-872,Primus2P-874}
+    471              \endinternal
+    472          \n
+    473          */
+    474          /*-----------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    475          VOIDFUNC ATA_globalsClkSwitchMrc_C(void)
+   \                     ATA_globalsClkSwitchMrc_C:
+    476          {
+    477              uint8_t bSreg = SREG;
+   \   00000000   B71F               IN      R17, 0x3F
+    478              uint8_t cmcr = 0x00U;
+    479          
+    480              /* LLR-Ref: 010 */
+    481              _CLI;
+   \   00000002   94F8               cli
+    482              CMCR = BM_CMCCE;
+   \   00000004   E800               LDI     R16, 128
+   \   00000006   9300....           STS     _A_CMCR, R16
+    483              CMCR = cmcr;
+   \   0000000A   E000               LDI     R16, 0
+   \   0000000C   9300....           STS     _A_CMCR, R16
+    484          
+    485              /* LLR-Ref: 015 */
+    486              SUPCR &= ~BM_DVHEN;
+   \   00000010   910000CC           LDS     R16, 204
+   \   00000014   7D0F               ANDI    R16, 0xDF
+   \   00000016   930000CC           STS     204, R16
+    487          
+    488              /* LLR-Ref: 020 */
+    489              CLPR = BM_CLPCE;
+   \   0000001A   E800               LDI     R16, 128
+   \   0000001C   9300....           STS     _A_CLPR, R16
+    490              CLPR = BM_CLTPS0;
+   \   00000020   E008               LDI     R16, 8
+   \   00000022   9300....           STS     _A_CLPR, R16
+    491              SREG = bSreg;
+   \   00000026   ....               RJMP    ?Subroutine1
+   \   00000028                      REQUIRE _A_SREG
+   \   00000028                      REQUIRE _A_CMCR
+   \   00000028                      REQUIRE _A_SUPCR
+   \   00000028                      REQUIRE _A_CLPR
+    492          }
+    493          
+    494          /*-----------------------------------------------------------------------------*/
+    495          /**  \brief <b>ATA_globalsClkSwitchSrc_C</b>
+    496              switches the AVR core to be clocked with the SRC. Keep prescaler
+    497              settings in mind.\n\n
+    498              HW considerations:
+    499              The SRC is always on when DVCC is on, i.e. when the AVR is running, the SRC
+    500              is on and can only be turned off via dedicated sleep modes.
+    501          
+    502              \image html ATA_globalsClkSwitchSrc_C.png
+    503          
+    504              \internal
+    505                       Beginning of AVR clock change to SRC
+    506          
+    507              \li 010: Disable all interrupts to allow for an atomic execution of an AVR clock
+    508                       switch to the SRC and
+    509                       enabling changing register CMCR by setting bit CMCCE in register CMCR
+    510                        to 1 and, within four cycles, set bit CCS to 0 and bits CMM2..0 set
+    511                        to 0 (SRC) in order to be able to change bits CMM2..0 to SRC.
+    512          
+    513              \li 020: Enabling changing register CMCR by setting bit CMCCE in register CMCR
+    514                        to 1 and, within four cycles, set bit CCS set to 1 in order to
+    515                        activate the value of CMM2..0 bits.\n\n
+    516                       End of AVR clock change to SRC
+    517          
+    518              \li 030: Disable "DVCC high enable" as it is no longer required, since the AVR
+    519                       core has been switched to the SRC.
+    520          
+    521              \li 040: Set the timer clock prescaler value to 1 by first enabling to change
+    522                        register CLPR by setting bit CLPCE in register CLPR to 1 and, within
+    523                        four cycles, set register CLPR to the value CLTPS0 and
+    524                       restore the previous interrupt setting, since the critical section is
+    525                        finished.
+    526          
+    527              \Derived{No}
+    528          
+    529              \Rationale{N/A}
+    530          
+    531              \Traceability{Pimus2P-2527}
+    532              \endinternal
+    533          \n
+    534          */
+    535          /*-----------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next
+   \                     ?Subroutine0:
+   \   00000000   E008               LDI     R16, 8
+   \   00000002                      REQUIRE ??Subroutine2_0
+   \   00000002                      ;               // Fall through to label ??Subroutine2_0
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    536          VOIDFUNC ATA_globalsClkSwitchSrc_C(void)
+   \                     ATA_globalsClkSwitchSrc_C:
+    537          {
+    538              uint8_t bSreg = SREG;
+   \   00000000   B72F               IN      R18, 0x3F
+    539              uint8_t cmcr = CMCR & 0x30U;
+   \   00000002   9100....           LDS     R16, _A_CMCR
+   \   00000006   7300               ANDI    R16, 0x30
+    540          
+    541              /* LLR-Ref: 010 */
+    542              _CLI;
+   \   00000008   94F8               cli
+    543              CMCR = BM_CMCCE;
+   \   0000000A   E810               LDI     R17, 128
+   \   0000000C   9310....           STS     _A_CMCR, R17
+    544              CMCR = cmcr;
+   \   00000010   9300....           STS     _A_CMCR, R16
+    545          
+    546              /* LLR-Ref: 020 */
+    547              cmcr |= BM_CCS;
+    548          
+    549              CMCR = BM_CMCCE;
+   \   00000014   9310....           STS     _A_CMCR, R17
+    550              CMCR = cmcr;
+   \   00000018   6008               ORI     R16, 0x08
+   \   0000001A   9300....           STS     _A_CMCR, R16
+    551          
+    552              /* LLR-Ref: 030 */
+    553              SUPCR &= ~BM_DVHEN;
+   \   0000001E   910000CC           LDS     R16, 204
+   \   00000022   7D0F               ANDI    R16, 0xDF
+   \   00000024   930000CC           STS     204, R16
+    554          
+    555              /* LLR-Ref: 040 */
+    556              CLPR = BM_CLPCE;
+   \   00000028   9310....           STS     _A_CLPR, R17
+    557              CLPR = BM_CLTPS0;
+   \   0000002C   ....               RJMP    ?Subroutine0
+   \   0000002E                      REQUIRE _A_SREG
+   \   0000002E                      REQUIRE _A_CMCR
+   \   0000002E                      REQUIRE _A_SUPCR
+   \   0000002E                      REQUIRE _A_CLPR
+    558              SREG = bSreg;
+    559          }
+    560          
+    561          
+    562          /*-----------------------------------------------------------------------------*/
+    563          /**  \brief <b>ATA_globalsClkSwitchExt_C</b>
+    564              switches the AVR core to be clocked with the an external clock source.
+    565              Keep prescaler settings in mind.\n\n
+    566              HW considerations:
+    567              If the external clock fails while external clock monitoring is still
+    568              active, it is up to the Application SW whether or not the corresponding
+    569              interrupt routine is executed (depends on the configuration of CMIMR).
+    570              This function is not enabling the external clock monitoring fail interrupt.
+    571          
+    572              \param[in]  fDvccHighEnable         Indication whether to enable DVCC High enable
+    573          
+    574              \image html ATA_globalsClkSwitchExt_C.png
+    575          
+    576              \internal
+    577                       Note:
+    578                       To allow for any "high priority" interrupt to be executed faster,
+    579                       interrupts are enabled and disabled again.\n\n
+    580                       Beginning of AVR clock change to external clock source
+    581          
+    582              \li 010: IF parameter "fDvccHighEnable" is set to TRUE (indicating an external
+    583                       clock greater 1 MHZ, THEN
+    584                         Enable "DVCC high enable" by setting bit DVHEN in register
+    585                         SUPCR to 1, since the AVR system clock is greater than 1 MHZ.
+    586                       ELSE
+    587                         Disable "DVCC high enable" by setting bit DVHEN in register SUPCR to
+    588                         0, since the AVR system clock is smaller than or equal to 1 MHZ.
+    589                       ENDIF
+    590          
+    591              \li 015: Clear any previous External Clock error indication via bit ECF in
+    592                       register CMSR
+    593                        AND
+    594                       enable the External Clock Monitoring error interrupt via bit ECIE
+    595                       in register CMIMR
+    596          
+    597              \li 020: Disable all interrupts to allow for an atomic execution of an AVR clock
+    598                       switch to the external clock source and
+    599                       enable changing register CMCR by setting bit CMCCE in register CMCR
+    600                        to 1 and, within four cycles, set bit CCS to 0 and bit CMM1 to 1
+    601                        (External Clock) and bit CMOEN to 1 to enable the external clock
+    602                         monitoring.
+    603          
+    604              \li 030: Enabling changing register CMCR by setting bit CMCCE in register CMCR
+    605                        to 1 and, within four cycles, set bit CCS set to 1 in order to
+    606                        activate the value of CMM2..0 bits.\n\n
+    607                       End of AVR clock change to the external clock
+    608          
+    609              \li 040: Set the timer clock prescaler value to 1 by first enabling to change
+    610                        register CLPR by setting bit CLPCE in register CLPR to 1 and, within
+    611                        four cycles, set register CLPR to the value CLTPS0 and
+    612                       Restore global interrupt configuration, since the critical section is
+    613                       finished.
+    614          
+    615              \Derived{No}
+    616          
+    617              \Rationale{N/A}
+    618          
+    619              \Traceability{Primus2P-1994}
+    620              \endinternal
+    621          \n
+    622          */
+    623          /*-----------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    624          VOIDFUNC ATA_globalsClkSwitchExt_C(uint8_t fDvccHighEnable)
+   \                     ATA_globalsClkSwitchExt_C:
+    625          {
+    626              uint8_t bSreg = SREG;
+   \   00000000   B72F               IN      R18, 0x3F
+    627              uint8_t cmcr = CMCR & 0x30U;
+   \   00000002   9110....           LDS     R17, _A_CMCR
+   \   00000006   7310               ANDI    R17, 0x30
+    628          
+    629              /* LLR-Ref: 010 */
+    630              if (fDvccHighEnable == TRUE)
+   \   00000008   3001               CPI     R16, 1
+   \   0000000A   910000CC           LDS     R16, 204
+   \   0000000E   F411               BRNE    ??ATA_globalsClkSwitchExt_C_0
+    631              {
+    632                  SUPCR |= BM_DVHEN;
+   \   00000010   6200               ORI     R16, 0x20
+   \   00000012   C001               RJMP    ??ATA_globalsClkSwitchExt_C_1
+    633              }
+    634              else
+    635              {
+    636                  SUPCR &= ~BM_DVHEN;
+   \                     ??ATA_globalsClkSwitchExt_C_0:
+   \   00000014   7D0F               ANDI    R16, 0xDF
+   \                     ??ATA_globalsClkSwitchExt_C_1:
+   \   00000016   930000CC           STS     204, R16
+    637              }
+    638          
+    639              /* LLR-Ref: 015 */
+    640              CMSR  |= BM_ECF;
+   \   0000001A   910000C9           LDS     R16, 201
+   \   0000001E   6001               ORI     R16, 0x01
+   \   00000020   930000C9           STS     201, R16
+    641              CMIMR |= BM_ECIE;
+   \   00000024   910001E4           LDS     R16, 484
+   \   00000028   6001               ORI     R16, 0x01
+   \   0000002A   930001E4           STS     484, R16
+    642          
+    643              /* LLR-Ref: 020 */
+    644              cmcr |= (BM_CMONEN | BM_CMM1);
+   \   0000002E   6412               ORI     R17, 0x42
+    645          
+    646              _CLI;
+   \   00000030   94F8               cli
+    647              CMCR = BM_CMCCE;
+   \   00000032   E800               LDI     R16, 128
+   \   00000034   9300....           STS     _A_CMCR, R16
+    648              CMCR = cmcr;
+   \   00000038   9310....           STS     _A_CMCR, R17
+    649          
+    650              /* LLR-Ref: 030 */
+    651              cmcr |= BM_CCS;
+    652          
+    653              CMCR = BM_CMCCE;
+   \   0000003C   9300....           STS     _A_CMCR, R16
+    654              CMCR = cmcr;
+   \   00000040   6018               ORI     R17, 0x08
+   \   00000042   9310....           STS     _A_CMCR, R17
+    655          
+    656              /* LLR-Ref: 040 */
+    657              CLPR = BM_CLPCE;
+   \   00000046   9300....           STS     _A_CLPR, R16
+    658              CLPR = BM_CLTPS0;
+   \   0000004A   ....               RJMP    ?Subroutine0
+   \   0000004C                      REQUIRE _A_SREG
+   \   0000004C                      REQUIRE _A_CMCR
+   \   0000004C                      REQUIRE _A_SUPCR
+   \   0000004C                      REQUIRE _A_CMSR
+   \   0000004C                      REQUIRE _A_CMIMR
+   \   0000004C                      REQUIRE _A_CLPR
+    659              SREG = bSreg;
+    660          }
+    661          
+    662          /* ---------------------------------------------------------------------------*/
+    663          /** \brief <b>ATA_globalsClkSwitchXTO_C</b>
+    664              switches the AVR core to be clocked with the given XTO value (including DVCC
+    665              high enable activation)
+    666              Keep prescaler settings in mind.\n\n
+    667              Precondition:
+    668              In order for this function to perform its intended functionality
+    669              successfully, the XTO must have been activated already.\n\n
+    670              HW considerations:
+    671              The CCS bit and CMM2..0 bits in register CMCR need to be set separately in
+    672              order to switch from XTO to FRC correctly (both clocks require bit CCS to be
+    673              set to 1).
+    674              The following code snippet "CMCR = BM_CMCCE" does not set bit CCS to 0, as
+    675              only the CMCCE is enabled. Any change has to occur one cycle after CMCCE
+    676              is set to 1.
+    677          
+    678              \param[in]  bXtoClockSelect     Indication whether to select XTO4 or XTO6 as system clock
+    679          
+    680              \image html ATA_globalsClkSwitchXTO_C.png
+    681          
+    682              \internal
+    683              \li 010: Keep upper 4 MSB bits of register CMCR for future use, since these
+    684                       bits are not to be altered by this function.
+    685          
+    686              \li 012: Enable "DVCC high enable" in order to provide enough current for the
+    687                       AVR core when running with FRC.\n\n
+    688                       Set AVR clock to selected XTO value:
+    689          
+    690              \li 020: Disable all interrupts to allow for an atomic execution of a register
+    691                       CMCR change and
+    692                       enabling changing register CMCR by setting bit CMCCE in register CMCR
+    693                        to 1 and, within four cycles, assign the temporary clock value to
+    694                        register CMCR, bit CCS set to 0 in order to be able to change
+    695                        bits CMM2..0 to the given XTO value "bXtoClockSelect".\n\n
+    696                       Note:
+    697                       To allow for any "high priority" interrupt to be executed faster,
+    698                       interrupts are enabled and disabled shortly after.
+    699          
+    700              \li 030: Enabling changing register CMCR by setting bit CMCCE in register CMCR
+    701                        to 1 and, within four cycles, assign the temporary clock value to
+    702                        register CMCR, bit CCS set to 1 in order to activate the value of
+    703                        CMM2..0 bits.\n\n
+    704                       End of AVR clock change to the given XTO value
+    705          
+    706              \li 040: Set the timer clock prescaler value to 1 by first enabling to change
+    707                        register CLPR by setting bit CLPCE in register CLPR to 1 and, within
+    708                        four cycles, set register CLPR to the value CLTPS0 and
+    709                       restore global interrupt configuration, since the critical section is
+    710                        finished.
+    711          
+    712              \Derived{No}
+    713          
+    714              \Rationale{N/A}
+    715          
+    716              \Traceability{Primus2P-1793,Primus2P-1794}
+    717              \endinternal
+    718          \n
+    719          */
+    720          /* ---------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    721          VOIDFUNC ATA_globalsClkSwitchXTO_C(uint8_t bXtoClockSelect)
+   \                     ATA_globalsClkSwitchXTO_C:
+    722          {
+    723              /* LLR-Ref: 010 */
+    724              uint8_t bSreg = SREG;
+   \   00000000   B73F               IN      R19, 0x3F
+    725              uint8_t bCmcr = CMCR & 0x30U;
+   \   00000002   9110....           LDS     R17, _A_CMCR
+    726          
+    727              /* LLR-Ref: 012 */
+    728              SUPCR |= BM_DVHEN;
+   \   00000006   912000CC           LDS     R18, 204
+   \   0000000A   6220               ORI     R18, 0x20
+   \   0000000C   932000CC           STS     204, R18
+    729          
+    730              /* LLR-Ref: 020 */
+    731              bCmcr |= (bXtoClockSelect & 0x07U);
+   \   00000010   7310               ANDI    R17, 0x30
+   \   00000012   7007               ANDI    R16, 0x07
+   \   00000014   2B10               OR      R17, R16
+    732          
+    733              _CLI;
+   \   00000016   94F8               cli
+    734              CMCR = BM_CMCCE;
+   \   00000018   E800               LDI     R16, 128
+   \   0000001A   9300....           STS     _A_CMCR, R16
+    735              CMCR = bCmcr;
+   \   0000001E   9310....           STS     _A_CMCR, R17
+    736          
+    737              /* LLR-Ref: 030 */
+    738              bCmcr |= BM_CCS;
+    739          
+    740              CMCR = BM_CMCCE;
+   \   00000022   9300....           STS     _A_CMCR, R16
+    741              CMCR = bCmcr;
+   \   00000026   6018               ORI     R17, 0x08
+   \   00000028   9310....           STS     _A_CMCR, R17
+    742          
+    743              /* LLR-Ref: 040 */
+    744              CLPR = BM_CLPCE;
+   \   0000002C   9300....           STS     _A_CLPR, R16
+    745              CLPR = BM_CLTPS0;
+   \   00000030   E008               LDI     R16, 8
+   \   00000032   9300....           STS     _A_CLPR, R16
+    746              SREG = bSreg;
+   \   00000036   BF3F               OUT     0x3F, R19
+    747          }
+   \   00000038   9508               RET
+   \   0000003A                      REQUIRE _A_SREG
+   \   0000003A                      REQUIRE _A_CMCR
+   \   0000003A                      REQUIRE _A_SUPCR
+   \   0000003A                      REQUIRE _A_CLPR
+    748          
+    749          
+    750          /*-----------------------------------------------------------------------------*/
+    751          /**  \brief <b>ATA_globalsDeActivateXTO_C</b>
+    752              deactivates the XTO.
+    753          
+    754              \image html ATA_globalsDeActivateXTO_C.png
+    755          
+    756              \internal
+    757              \li 010: Deactivate by clearing FEEN1 register and SUPCR AVCC related bits
+    758                       if AVCC is enabled
+    759          
+    760              \Derived{No}
+    761          
+    762              \Rationale{N/A}
+    763          
+    764              \Traceability{Primus2P-2524}
+    765              \endinternal
+    766          \n
+    767          */
+    768          /*-----------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    769          VOIDFUNC ATA_globalsDeActivateXTO_C(void)
+   \                     ATA_globalsDeActivateXTO_C:
+    770          {
+    771              /* LLR-Ref: 010 */
+    772              if (SUPCR & BM_AVEN) {
+   \   00000000   9100....           LDS     R16, _A_SUPCR
+   \   00000004   FF04               SBRS    R16, 4
+   \   00000006   C008               RJMP    ??ATA_globalsDeActivateXTO_C_0
+    773                  FEEN1 = 0U;
+   \   00000008   E000               LDI     R16, 0
+   \   0000000A   9300....           STS     _A_FEEN1, R16
+    774                  SUPCR &= (uint8_t)~(BM_AVEN | BM_AVCCRM | BM_AVCCLM | BM_AVDIC);
+   \   0000000E   9100....           LDS     R16, _A_SUPCR
+   \   00000012   7E04               ANDI    R16, 0xE4
+   \   00000014   9300....           STS     _A_SUPCR, R16
+    775              }
+    776          }
+   \                     ??ATA_globalsDeActivateXTO_C_0:
+   \   00000018   9508               RET
+   \   0000001A                      REQUIRE _A_SUPCR
+   \   0000001A                      REQUIRE _A_FEEN1
+    777          
+    778          /*-----------------------------------------------------------------------------*/
+    779          /**  \brief <b>ATA_globalsActivateXTO_C</b>
+    780              activates AVCC as a precondition for the XTO and the XTO itself.
+    781          
+    782              Variable Usage:
+    783              \li [out] ::g_sTimer1 Global Timer 1 component data
+    784              \li [out] ::g_sDebug Global Debug component data
+    785          
+    786              \image html ATA_globalsActivateXTO_C.png
+    787          
+    788              \internal
+    789              \li 010:    Enable AVCC via SUPCR.AVEN
+    790              \li 035:    Load FETN4 value from EEPROM, since this value is mandatory for the
+    791                           XTO to work correctly. In case of an EEPROM read error, set the 
+    792                           ::g_sDebug to DEBUG_ERROR_CODE_GLOBALS_EEPROM_READ_ERROR
+    793          
+    794                          Note:
+    795                          FETN4 is loaded while waiting for AVCC and MVCC settling time
+    796                           to be finished to not extend the overall execution time of this 
+    797                           function
+    798                          Loading of register FETN4 has to be done after AVCC is up and 
+    799                           running in order for the register assigned value to be stored 
+    800                           correctly.
+    801          
+    802              \li 040:    Wait until AVCC is stable (SUPFR.AVVCLF and SUPFR.AVCCRF 
+    803                           are cleared)
+    804              \li 070:    Store loaded EEPROM value for FETN4 to register FETN4 and enable 
+    805                           XTO
+    806              \li 080:    Wait until XTO is ready via polling of bit FESR.XRDY
+    807          
+    808              \Derived{No}
+    809          
+    810              \Rationale{N/A}
+    811          
+    812              \Traceability{Primus2P-865,Primus2P-867}
+    813              \endinternal
+    814          \n
+    815          */
+    816          /*-----------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    817          VOIDFUNC ATA_globalsActivateXTO_C(void)
+   \                     ATA_globalsActivateXTO_C:
+    818          {
+   \   00000000   9721               SBIW    R29:R28, 1
+    819              uint8_t bFetn4Val = 0x00;
+   \   00000002   E000               LDI     R16, 0
+   \   00000004   8308               ST      Y, R16
+    820              
+    821              /* LLR-Ref: 010 */
+    822              SUPCR |= BM_AVEN;
+   \   00000006   910000CC           LDS     R16, 204
+   \   0000000A   6100               ORI     R16, 0x10
+   \   0000000C   930000CC           STS     204, R16
+    823          
+    824              /* LLR-Ref: 035 */
+    825              eEepErrorCode sEepErrCode = ATA_eepReadBytes_C(&bFetn4Val, (uint16_t)&g_sAtmelEEPromSection.eepFETN4, 1U);
+    826              if(sEepErrCode != EEC_NO_ERROR)
+   \   00000010   E041               LDI     R20, 1
+   \   00000012   ....               LDI     R18, LOW((g_sAtmelEEPromSection + 132))
+   \   00000014   ....               LDI     R19, HIGH((g_sAtmelEEPromSection + 132))
+   \   00000016   018E               MOVW    R17:R16, R29:R28
+   \   00000018   ........           CALL    ATA_eepReadBytes_C
+   \   0000001C   2300               TST     R16
+   \   0000001E   F019               BREQ    ??ATA_globalsActivateXTO_C_0
+    827              {
+    828                  g_sDebug.bErrorCode = DEBUG_ERROR_CODE_GLOBALS_EEPROM_READ_ERROR;
+   \   00000020   E400               LDI     R16, 64
+   \   00000022   9300....           STS     g_sDebug, R16
+    829              }
+    830              
+    831              /* LLR-Ref: 040 */
+    832              do
+    833              {
+    834                  SUPFR |= (BM_AVCCLF | BM_AVCCRF);
+   \                     ??ATA_globalsActivateXTO_C_0:
+   \   00000026   9100....           LDS     R16, _A_SUPFR
+   \   0000002A   6003               ORI     R16, 0x03
+   \   0000002C   9300....           STS     _A_SUPFR, R16
+    835          
+    836              } while ( SUPFR&(BM_AVCCLF|BM_AVCCRF) );
+   \   00000030   9100....           LDS     R16, _A_SUPFR
+   \   00000034   7003               ANDI    R16, 0x03
+   \   00000036   F7B9               BRNE    ??ATA_globalsActivateXTO_C_0
+    837          
+    838              /* LLR-Ref: 070 */
+    839              FETN4 = bFetn4Val;
+   \   00000038   8108               LD      R16, Y
+   \   0000003A   9300....           STS     _A_FETN4, R16
+    840              FEEN1 |= BM_XTOEN;
+   \   0000003E   91000101           LDS     R16, 257
+   \   00000042   6004               ORI     R16, 0x04
+   \   00000044   93000101           STS     257, R16
+    841          
+    842              /* LLR-Ref: 080 */
+    843              while ( !(FESR & BM_XRDY))
+   \                     ??ATA_globalsActivateXTO_C_1:
+   \   00000048   9100....           LDS     R16, _A_FESR
+   \   0000004C   FF02               SBRS    R16, 2
+   \   0000004E   CFFC               RJMP    ??ATA_globalsActivateXTO_C_1
+    844              {}
+    845          }
+   \   00000050   9621               ADIW    R29:R28, 1
+   \   00000052   9508               RET
+   \   00000054                      REQUIRE _A_SUPCR
+   \   00000054                      REQUIRE _A_SUPFR
+   \   00000054                      REQUIRE _A_FETN4
+   \   00000054                      REQUIRE _A_FEEN1
+   \   00000054                      REQUIRE _A_FESR
+    846          
+    847          /*-----------------------------------------------------------------------------*/
+    848          /** \brief <b>ATA_globalsInitSramSpace_C</b>
+    849              initializes length bytes of the sram starting from address pData
+    850          
+    851              \param[out] pData       start address of initialization
+    852              \param[in]  bLength     number of bytes to initialize
+    853          
+    854              \image html ATA_globalsInitSramSpace_C.png
+    855          
+    856              \internal
+    857              \li 010:    Check if length is greater 0 otherwise skip initialization
+    858              \li 020:    Initialize length bytes "bLength" of sram space starting from
+    859                          "pData"
+    860          
+    861              \Derived{Yes}
+    862          
+    863              \Rationale{A means is to be provided to efficiently and consistently
+    864                         initialize SRAM data of arbitrary length}
+    865          
+    866              \Traceability   N/A
+    867              \endinternal
+    868          \n
+    869           */
+    870          /*-----------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    871          VOIDFUNC ATA_globalsInitSramSpace_C(uint8_t *pData, uint8_t bLength)
+   \                     ATA_globalsInitSramSpace_C:
+    872          {
+    873              uint8_t *ptr = pData;
+   \   00000000   01F8               MOVW    R31:R30, R17:R16
+    874          
+    875              /* LLR-Ref: 010 */
+    876              if (bLength) {
+   \   00000002   2322               TST     R18
+   \   00000004   F021               BREQ    ??ATA_globalsInitSramSpace_C_0
+    877          
+    878                  /* LLR-Ref: 020 */
+    879                  do{
+    880                      *ptr++ = 0x00U;
+   \                     ??ATA_globalsInitSramSpace_C_1:
+   \   00000006   E000               LDI     R16, 0
+   \   00000008   9301               ST      Z+, R16
+    881                  }while (--bLength);
+   \   0000000A   952A               DEC     R18
+   \   0000000C   F7E1               BRNE    ??ATA_globalsInitSramSpace_C_1
+    882              }
+    883          }
+   \                     ??ATA_globalsInitSramSpace_C_0:
+   \   0000000E   9508               RET
+    884          
+    885          /*-----------------------------------------------------------------------------*/
+    886          /** \brief <b>ATA_globalsCopySramSpace_C</b>
+    887              initializes length bytes of the sram starting from address pData
+    888          
+    889              \param[out] pDestination    destination address
+    890              \param[in]  pSource         source address
+    891              \param[in]  bLength         number of bytes to copy
+    892          
+    893              \image html ATA_globalsCopySramSpace_C.png
+    894          
+    895              \internal
+    896              \li 010:    Check if length is greater 0 otherwise skip initialization
+    897              \li 020:    Copy length bytes from source to destination
+    898          
+    899              \Derived{Yes}
+    900          
+    901              \Rationale{A means is to be provided to efficiently and consistently
+    902                         copy SRAM data of arbitrary length}
+    903          
+    904              \Traceability   N/A
+    905              \endinternal
+    906          \n
+    907           */
+    908          /*-----------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    909          VOIDFUNC ATA_globalsCopySramSpace_C(uint8_t *pDestination, uint8_t *pSource, uint8_t bLength)
+   \                     ATA_globalsCopySramSpace_C:
+    910          {
+    911              /* LLR-Ref: 010 */
+    912              if (bLength) {
+   \   00000000   2344               TST     R20
+   \   00000002   F041               BREQ    ??ATA_globalsCopySramSpace_C_0
+    913                  /* LLR-Ref: 020 */
+    914                  do {
+    915                      *pDestination++ = *pSource++;
+   \                     ??ATA_globalsCopySramSpace_C_1:
+   \   00000004   01F9               MOVW    R31:R30, R19:R18
+   \   00000006   9151               LD      R21, Z+
+   \   00000008   019F               MOVW    R19:R18, R31:R30
+   \   0000000A   01F8               MOVW    R31:R30, R17:R16
+   \   0000000C   9351               ST      Z+, R21
+   \   0000000E   018F               MOVW    R17:R16, R31:R30
+    916                  } while(--bLength);
+   \   00000010   954A               DEC     R20
+   \   00000012   F7C1               BRNE    ??ATA_globalsCopySramSpace_C_1
+    917              }
+    918          }
+   \                     ??ATA_globalsCopySramSpace_C_0:
+   \   00000014   9508               RET
+    919          
+    920          /*---------------------------------------------------------------------------*/
+    921          /** \brief <b>ATA_globalsSetVoltageMonitor_C</b>
+    922              set a new value for the voltage monitor control register VMCR.
+    923          
+    924              \param[in]  bVmcrVal  New value for VMCR
+    925          
+    926              \image html ATA_globalsSetVoltageMonitor_C.png
+    927          
+    928              \internal
+    929              \li 010:    Calculate content of variable bWaitVmCycles dependent from AVR core clock
+    930                          - AVR core clock XTO4 bWaitVmCycles = VOLTAGE_MONITOR_XTO4_WAIT_CYCLES
+    931                          - AVR core clock SRC  bWaitVmCycles = VOLTAGE_MONITOR_SRC_WAIT_CYCLES
+    932                          - AVR core clock FRC  bWaitVmCycles = VOLTAGE_MONITOR_FRC_WAIT_CYCLES
+    933                          - AVR core clock MRC  bWaitVmCycles = VOLTAGE_MONITOR_MRC_WAIT_CYCLES
+    934              \li 020:    Disable the Voltage Monitor via PRR0.PRVM = 1
+    935              \li 030:    Check if Voltage Monitor shall be enabled via variable bVmcrVal[3..0]
+    936                          If Voltage Monitor shall be enabled
+    937              \li 040:    Power up voltage monitor via PRR0.PRVM = 0
+    938              \li 050:    Set VMCR register configuration with bVmcrVal except VMCR.VMIM setting
+    939              \li 060:    Wait ~25us
+    940              \li 070:    Clear the interrupt flag VMSR.VMF by writing a 1 in order to not trigger an
+    941                          interrupt when the mask flag is set.
+    942              \li 080:    Wait ~25us
+    943              \li 090:    Enable VMCR.VMIM if set in bVmcrVal
+    944          
+    945              \Derived{No}
+    946          
+    947              \Rationale{N/A}
+    948          
+    949              \Traceability{Primus2P-1473}
+    950              \endinternal
+    951          \n
+    952          */
+    953          /*---------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    954          VOIDFUNC ATA_globalsSetVoltageMonitor_C( uint8_t bVmcrVal )
+   \                     ATA_globalsSetVoltageMonitor_C:
+    955          {
+    956              uint8_t bWaitVmCycles = 0U;
+    957          
+    958              /* LLR-Ref: 010 */
+    959              if (CMCR & BM_CCS) {
+   \   00000000   9110....           LDS     R17, _A_CMCR
+   \   00000004   FF13               SBRS    R17, 3
+   \   00000006   C00E               RJMP    ??ATA_globalsSetVoltageMonitor_C_0
+    960                  if (CMCR & BM_CMM2) {                                   // AVR core running with XTO4
+   \   00000008   9110....           LDS     R17, _A_CMCR
+   \   0000000C   FF12               SBRS    R17, 2
+   \   0000000E   C002               RJMP    ??ATA_globalsSetVoltageMonitor_C_1
+    961                      bWaitVmCycles = VOLTAGE_MONITOR_XTO4_WAIT_CYCLES;
+   \   00000010   E210               LDI     R17, 32
+   \   00000012   C009               RJMP    ??ATA_globalsSetVoltageMonitor_C_2
+    962                  } else if ( (CMCR & (BM_CMM2|BM_CMM1|BM_CMM0)) == 0) {  // AVR core running with SRC
+   \                     ??ATA_globalsSetVoltageMonitor_C_1:
+   \   00000014   9110....           LDS     R17, _A_CMCR
+   \   00000018   7017               ANDI    R17, 0x07
+   \   0000001A   F411               BRNE    ??ATA_globalsSetVoltageMonitor_C_3
+    963                      bWaitVmCycles = VOLTAGE_MONITOR_SRC_WAIT_CYCLES;
+   \   0000001C   E011               LDI     R17, 1
+   \   0000001E   C003               RJMP    ??ATA_globalsSetVoltageMonitor_C_2
+    964                  } else {                                                // AVR core running with FRC/EXT
+    965                      bWaitVmCycles = VOLTAGE_MONITOR_FRC_WAIT_CYCLES;
+   \                     ??ATA_globalsSetVoltageMonitor_C_3:
+   \   00000020   E213               LDI     R17, 35
+   \   00000022   C001               RJMP    ??ATA_globalsSetVoltageMonitor_C_2
+    966                  }
+    967              } else {                                                    // AVR core running with MRC
+    968                  bWaitVmCycles = VOLTAGE_MONITOR_MRC_WAIT_CYCLES;
+   \                     ??ATA_globalsSetVoltageMonitor_C_0:
+   \   00000024   E014               LDI     R17, 4
+    969              }
+    970          
+    971              /* LLR-Ref: 020 */
+    972              PRR0 |= BM_PRVM;    /* disable VM anyway */
+   \                     ??ATA_globalsSetVoltageMonitor_C_2:
+   \   00000026   9AD4               SBI     0x1A, 0x04
+    973          
+    974              /* LLR-Ref: 030 */
+    975              if ( (bVmcrVal & (BM_VMLS3|BM_VMLS2|BM_VMLS1|BM_VMLS0)) != 0U) {
+   \   00000028   2F20               MOV     R18, R16
+   \   0000002A   702F               ANDI    R18, 0x0F
+   \   0000002C   F0D9               BREQ    ??ATA_globalsSetVoltageMonitor_C_4
+    976                  /* LLR-Ref: 040 */
+    977                  PRR0 &= (uint8_t)~BM_PRVM;       /* VM enabled */
+   \   0000002E   98D4               CBI     0x1A, 0x04
+    978                  /* LLR-Ref: 050 */
+    979                  VMCR = (bVmcrVal & ~BM_VMIM);    /* Set VMCR   */
+   \   00000030   2F20               MOV     R18, R16
+   \   00000032   7E2F               ANDI    R18, 0xEF
+   \   00000034   9320....           STS     _A_VMCR, R18
+    980                  /* LLR-Ref: 060 */
+    981                  for(uint8_t i = 0U; i < bWaitVmCycles; i++) {
+   \   00000038   E020               LDI     R18, 0
+   \   0000003A   C002               RJMP    ??ATA_globalsSetVoltageMonitor_C_5
+    982                    _NOP;
+   \                     ??ATA_globalsSetVoltageMonitor_C_6:
+   \   0000003C   0000               nop
+    983                  }
+   \   0000003E   9523               INC     R18
+   \                     ??ATA_globalsSetVoltageMonitor_C_5:
+   \   00000040   1721               CP      R18, R17
+   \   00000042   F3E0               BRCS    ??ATA_globalsSetVoltageMonitor_C_6
+    984                  /* LLR-Ref: 070 */
+    985                  VMSCR |= BM_VMF;
+   \   00000044   B52A               IN      R18, 0x2A
+   \   00000046   6021               ORI     R18, 0x01
+   \   00000048   BD2A               OUT     0x2A, R18
+    986                  /* LLR-Ref: 080 */
+    987                  for(uint8_t i = 0U; i < bWaitVmCycles; i++) {
+   \   0000004A   E020               LDI     R18, 0
+   \   0000004C   C002               RJMP    ??ATA_globalsSetVoltageMonitor_C_7
+    988                    _NOP;
+   \                     ??ATA_globalsSetVoltageMonitor_C_8:
+   \   0000004E   0000               nop
+    989                  }
+   \   00000050   9523               INC     R18
+   \                     ??ATA_globalsSetVoltageMonitor_C_7:
+   \   00000052   1721               CP      R18, R17
+   \   00000054   F3E0               BRCS    ??ATA_globalsSetVoltageMonitor_C_8
+    990                  /* LLR-Ref: 090 */
+    991                  if (bVmcrVal & BM_VMIM) {
+   \   00000056   FB04               BST     R16, 4
+   \   00000058   F42E               BRTC    ??ATA_globalsSetVoltageMonitor_C_4
+    992                      VMCR |= BM_VMIM;
+   \   0000005A   910001E6           LDS     R16, 486
+   \   0000005E   6100               ORI     R16, 0x10
+   \   00000060   930001E6           STS     486, R16
+    993                  }
+    994              }
+    995          }
+   \                     ??ATA_globalsSetVoltageMonitor_C_4:
+   \   00000064   9508               RET
+   \   00000066                      REQUIRE _A_CMCR
+   \   00000066                      REQUIRE _A_PRR0
+   \   00000066                      REQUIRE _A_VMCR
+   \   00000066                      REQUIRE _A_VMSCR
+    996          
+    997          /*-----------------------------------------------------------------------------*/
+    998          /** \brief <b>ATA_globalsInitDebug_C</b>
+    999              initializes variable g_sDebug
+   1000          
+   1001              Variable Usage:
+   1002              \li [out] ::g_sDebug Global Debug component data
+   1003          
+   1004              \image html ATA_globalsInitDebug_C.png
+   1005          
+   1006              \internal
+   1007              \li 010: Set ::g_sDebug attributes to default values
+   1008          
+   1009              \Derived{Yes}
+   1010          
+   1011              \Rationale{In order provide a consistent and maintainable error handling
+   1012                         approach, a dedicated DEBUG component has been introduced
+   1013                         during the SW design process}
+   1014          
+   1015              \Traceability   N/A
+   1016              \endinternal
+   1017          \n
+   1018           */
+   1019          /*-----------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+   1020          VOIDFUNC ATA_globalsInitDebug_C(void)
+   \                     ATA_globalsInitDebug_C:
+   1021          {
+   1022              g_sDebug.bErrorCode     = DEBUG_ERROR_CODE_SYSTEM_ERROR_NOT_USED;
+   \   00000000   EF0F               LDI     R16, 255
+   \   00000002   9300....           STS     g_sDebug, R16
+   1023              g_sDebug.bSsmErrorCode  = 0x00U;
+   \   00000006   E000               LDI     R16, 0
+   \   00000008   9300....           STS     (g_sDebug + 1), R16
+   1024          }
+   \   0000000C   9508               RET
+
+   Maximum stack usage in bytes:
+
+   CSTACK RSTACK Function
+   ------ ------ --------
+      1      2   ATA_globalsActivateXTO_C
+        1      2   -> ATA_eepReadBytes_C
+      0      2   ATA_globalsClkSwitchExt_C
+      0      2   ATA_globalsClkSwitchFrcWithDelay_C
+        0      2   -> ATA_globalsClkSwitchFrc_C
+      0      2   ATA_globalsClkSwitchFrc_C
+      0      2   ATA_globalsClkSwitchMrc_C
+      0      2   ATA_globalsClkSwitchSrc_C
+      0      2   ATA_globalsClkSwitchXTO_C
+      0      2   ATA_globalsCopySramSpace_C
+      0      2   ATA_globalsDeActivateXTO_C
+      0      2   ATA_globalsInitDebug_C
+      0      2   ATA_globalsInitSramSpace_C
+      0      2   ATA_globalsSetClk_C
+      0      2   ATA_globalsSetVoltageMonitor_C
+      0      2   ATA_globalsSleep_C
+      0      2   ATA_globalsWdtDisable_C
+      0      2   ATA_globalsWdtEnable_C
+
+
+   Segment part sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       4  ??Subroutine2_0
+       4  ??Subroutine3_0
+       2  ?Subroutine0
+       4  ?Subroutine1
+      84  ATA_globalsActivateXTO_C
+      76  ATA_globalsClkSwitchExt_C
+      18  ATA_globalsClkSwitchFrcWithDelay_C
+      92  ATA_globalsClkSwitchFrc_C
+      40  ATA_globalsClkSwitchMrc_C
+      46  ATA_globalsClkSwitchSrc_C
+      58  ATA_globalsClkSwitchXTO_C
+      22  ATA_globalsCopySramSpace_C
+      26  ATA_globalsDeActivateXTO_C
+      14  ATA_globalsInitDebug_C
+      16  ATA_globalsInitSramSpace_C
+      12  ATA_globalsSetClk_C
+     102  ATA_globalsSetVoltageMonitor_C
+      24  ATA_globalsSleep_C
+      22  ATA_globalsWdtDisable_C
+      24  ATA_globalsWdtEnable_C
+       1  _A_CLPR
+       1  _A_CMCR
+       1  _A_CMIMR
+       1  _A_CMOCR
+       1  _A_CMSR
+       1  _A_FEEN1
+       1  _A_FESR
+       1  _A_FETN4
+       1  _A_MCUSR
+       1  _A_PRR0
+       1  _A_SMCR
+       1  _A_SREG
+       1  _A_SUPCR
+       1  _A_SUPFR
+       1  _A_VMCR
+       1  _A_VMSCR
+       1  _A_WDTCR
+       2  g_sDebug
+       1  romPatchVersion
+       1  romVersion
+
+ 
+   2 bytes in segment .debug
+   1 byte  in segment .rompatchversion
+   1 byte  in segment .romversion
+  17 bytes in segment ABSOLUTE
+ 690 bytes in segment CODE
+ 
+ 692 bytes of CODE memory
+   2 bytes of DATA memory (+ 17 bytes shared)
+
+Errors: none
+Warnings: none

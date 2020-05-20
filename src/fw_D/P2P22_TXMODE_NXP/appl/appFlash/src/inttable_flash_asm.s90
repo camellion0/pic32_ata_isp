@@ -1,0 +1,376 @@
+/* *ASM************************************************************************
+  Use of this software is subject to Atmel's Software License Agreement.
+-------------------------------------------------------------------------------
+  $URL: http://svnservulm.corp.atmel.com/svn/CDB/Apps/SW_Lib/Car_Access/CARS_GEN2/ATAB5702A/Branches/P2P22_TXMODE_NXP/appl/appFlash/src/inttable_flash_asm.s90 $
+  $LastChangedRevision: 586334 $
+  $LastChangedDate: 2020-01-27 13:26:46 -0700 (Mon, 27 Jan 2020) $
+  $LastChangedBy: grueter $
+-------------------------------------------------------------------------------
+  Project:      ATA5700
+  Target MCU:   ATA5700
+  Compiler:     IAR Assembler for AVR 6.12.1
+-------------------------------------------------------------------------------
+ 
+******************************************************************************
+* Copyright 2011, Atmel Automotive GmbH                                       *
+*                                                                             *
+* This software is owned by the Atmel Automotive GmbH                         *
+* and is protected by and subject to worldwide patent protection.             *
+* Atmel hereby grants to licensee a personal,                                 *
+* non-exclusive, non-transferable license to copy, use, modify, create        *
+* derivative works of, and compile the Atmel Source Code and derivative       *
+* works for the sole purpose of creating custom software in support of        *
+* licensee product to be used only in conjunction with a Atmel integrated     *
+* circuit as specified in the applicable agreement. Any reproduction,         *
+* modification, translation, compilation, or representation of this           *
+* software except as specified above is prohibited without the express        *
+* written permission of Atmel.                                                *
+*                                                                             *
+* Disclaimer: ATMEL MAKES NO WARRANTY OF ANY KIND,EXPRESS OR IMPLIED,         *
+* WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED    *
+* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.         *
+* Atmel reserves the right to make changes without further notice to the      *
+* materials described herein. Atmel does not assume any liability arising     *
+* out of the application or use of any product or circuit described herein.   *
+* Atmel does not authorize its products for use as critical components in     *
+* life-support systems where a malfunction or failure may reasonably be       *
+* expected to result in significant injury to the user. The inclusion of      *
+* Atmel products in a life-support systems application implies that the       *
+* manufacturer assumes all risk of such use and in doing so indemnifies       *
+* Atmel against all charges.                                                  *
+*                                                                             *
+* Use may be limited by and subject to the applicable Atmel software          *
+* license agreement.                                                          *
+*******************************************************************************/
+/*  \file inttable_asm.s90
+*/
+    NAME inttable_flash_asm
+
+/* ---------------------------------------------------------------------------*/
+/*   INCLUDES                                                                 */
+/* ---------------------------------------------------------------------------*/
+/* ---------------------------------------------------------------------------*/
+/*   Modul Globals                                                            */
+/* ---------------------------------------------------------------------------*/
+    EXTERN  ATA_interrupt0Handler_ASM
+    ;EXTERN  ATA_pinChangeInterrupt0Handler_ISR_ASM
+    ;EXTERN  ATA_pinChangeInterrupt1Handler_ISR_ASM
+
+    EXTERN  ATA_timer1ComIntHandler_ISR_flash_ASM
+    EXTERN  ATA_timer1OvfIntHandler_ISR_flash_ASM
+    
+    EXTERN  ATA_timer2ComIntHandler_ISR_flash_ASM
+    EXTERN  ATA_timer2OvfIntHandler_ISR_flash_ASM
+    
+    EXTERN  ATA_timer3CapIntHandler_ISR_flash_ASM
+    EXTERN  ATA_timer3ComIntHandler_ISR_flash_ASM
+    EXTERN  ATA_timer3OvfIntHandler_ISR_flash_ASM
+    
+    EXTERN  ATA_timer4CapIntHandler_ISR_flash_ASM
+    EXTERN  ATA_timer4ComIntHandler_ISR_flash_ASM
+    EXTERN  ATA_timer4OvfIntHandler_ISR_flash_ASM
+    
+    EXTERN  ATA_timer5ComIntHandler_ISR_flash_ASM
+    EXTERN  ATA_timer5OvfIntHandler_ISR_flash_ASM
+
+    EXTERN  ATA_spiSerialTransferCompleteHandler_ASM
+    EXTERN  ATA_spiRxBufferHandler_ISR_ASM
+    EXTERN  ATA_spiTxBufferHandler_ISR_ASM
+    
+    ; --P2P--GW-- EXTERN  ATA_dataFifoFillLevelReached_ASM
+    EXTERN  ATA_rfTxDFifoFillLevelReached_ISR_C
+    ; --P2P--GW-- EXTERN  ATA_rssiPreambleFifoFillLevelReached_ASM
+    EXTERN  ATA_rfTxSFifoFillLevelReached_ISR_C
+    
+    ; --P2P--GW-- EXTERN  ATA_dataFifoOverUnderFlowHandler_ASM
+    EXTERN  ATA_rfTxDFifoError_ISR_C
+    ; --P2P--GW-- EXTERN  ATA_rssiPreambleFifoOverUnderFlowHandler_ASM
+    EXTERN  ATA_rfTxSFifoError_ISR_C
+
+    ; --P2P--GW-- EXTERN  ATA_ssmInterrupt_C
+    EXTERN  ATA_rfTxSsmRdy_ISR_C
+    EXTERN  ATA_aesComplete_ISR_C
+    ; --P2P--GW-- EXTERN  ATA_TxModulatorTelegramFinish_ASM
+    EXTERN  ATA_rfTxModulatorTelegramFinish_ISR_C
+    EXTERN  twiByteCompleteHandler_ASM
+    
+    EXTERN  ATA_lfRssiMeasReady_ISR_C
+
+    ; Transponder interrupts
+    EXTERN  ATA_transponderModeHandler_System_Verification_ASM;
+
+    
+/* ---------------------------------------------------------------------------*/
+/*   Macros                                                                   */
+/* ---------------------------------------------------------------------------*/
+/* ---------------------------------------------------------------------------*/
+/*   IMPLEMENTATION                                                           */
+/* ---------------------------------------------------------------------------*/
+    ; INT0_vect       (0x04)  -- External Interrupt Request 0 --
+    ;COMMON INTVEC:CODE:ROOT(1)
+   ; ORG 4
+   ; JMP     ATA_interrupt0Handler_ASM   ; --> extif_asm.s90
+
+    ; INT1_vect       (0x08)  -- External Interrupt Request 1 --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 8
+    RETI    ; --> not used in firmware 
+
+    ; PCINT0_vect     (0x0c)  -- Pin Change Interrupt Request 0 --
+;    COMMON INTVEC:CODE:ROOT(1)
+;    ORG 12
+;    JMP     ATA_pinChangeInterrupt0Handler_ISR_ASM; --> extif_flash_asm.s90
+
+    ; PCINT1_vect     (0x10)  -- Pin Change Interrupt Request 1 --
+  ;;  COMMON INTVEC:CODE:ROOT(1)
+ ;;  ORG 16
+;;    JMP     ATA_pinChangeInterrupt1Handler_ISR_ASM; --> extif_flash_asm.s90
+
+    ; VMON_vect       (0x14)  -- Voltage Monitoring Interrupt --
+    ; defined in system_flash.c __interrupt void ATA_lowBatt_C();
+    ; COMMON INTVEC:CODE:ROOT(1)
+    ; ORG 20
+    ; JMP     ATA_lowBatt_C
+    
+    ; AVCCR_vect      (0x18)  -- AVCC Reset Interrupt --
+    ; defined in system_flash.c __interrupt void ATA_avccReset_C();
+    ; COMMON INTVEC:CODE:ROOT(1)
+    ; ORG 24
+    ; JMP     ATA_avccReset_C
+    
+    ; AVCCL_vect      (0x1c)  -- AVCC Low Interrupt --
+    ; defined in system_flash.c __interrupt void ATA_avccLow_C();
+    ; COMMON INTVEC:CODE:ROOT(1)
+    ; ORG 28
+    ; JMP     ATA_avccLow_C
+    
+    ; T0INT_vect      (0x20)  -- Timer 0 Interval Interrupt --
+    ; defined in globals_flash.c __interrupt void ATA_globalsTimer0Interrupt_ISR_flash_C();
+    ; COMMON INTVEC:CODE:ROOT(1)
+    ; ORG 32
+    ; RETI    ; --> not used in firmware
+
+    ; T1COMP_vect     (0x24)  -- Timer/Counter1 Compare Match Interrupt --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 36
+    JMP     ATA_timer1ComIntHandler_ISR_flash_ASM     ; --> timer1_asm_flash.s90
+    
+    ; T1OVF_vect      (0x28)  -- Timer/Counter1 Overflow Interrupt --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 40
+    JMP     ATA_timer1OvfIntHandler_ISR_flash_ASM     ; --> timer1_asm_flash.s90
+    
+    ; T2COMP_vect     (0x2c)  -- Timer/Counter2 Compare Match Interrupt --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 44
+    JMP     ATA_timer2ComIntHandler_ISR_flash_ASM     ; --> timer2_asm_flash.s90
+
+    ; T2OVF_vect      (0x30)  -- Timer/Counter2 Overflow Interrupt --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 48
+    JMP     ATA_timer2OvfIntHandler_ISR_flash_ASM     ; --> timer2_asm_flash.s90
+    
+    ; T3CAP_vect      (0x34)  -- Timer/Counter3 Capture Event Interrupt --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 52
+    JMP     ATA_timer3CapIntHandler_ISR_flash_ASM     ; --> timer3_asm_flash.s90
+    
+    ; T3COMP_vect     (0x38)  -- Timer/Counter3 Compare Match Interrupt --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 56
+    JMP     ATA_timer3ComIntHandler_ISR_flash_ASM     ; --> timer3_asm_flash.s90
+    
+    ; T3OVF_vect      (0x3c)  -- Timer/Counter3 Overflow Interrupt --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 60
+    JMP     ATA_timer3OvfIntHandler_ISR_flash_ASM     ; --> timer3_asm_flash.s90
+
+    ; T4CAP_vect      (0x40)  -- Timer/Counter4 Capture Event Interrupt --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 64
+    JMP     ATA_timer4CapIntHandler_ISR_flash_ASM     ; --> timer4_asm_flash.s90
+
+   // ; T4COMP_vect     (0x44)  -- Timer/Counter4 Compare Match Interrupt --
+  //  COMMON INTVEC:CODE:ROOT(1)
+   // ORG 68
+  //  JMP     ATA_timer4ComIntHandler_ISR_flash_ASM     ; --> timer4_asm_flash.s90
+
+    ; T4OVF_vect      (0x48)  -- Timer/Counter4 Overflow Interrupt --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 72
+    JMP     ATA_timer4OvfIntHandler_ISR_flash_ASM     ; --> timer4_asm_flash.s90
+    
+   // ; T5COMP_vect     (0x4c)  -- Timer/Counter5 Compare Match Interrupt --
+   // COMMON INTVEC:CODE:ROOT(1)
+   // ORG 76
+  //  JMP     ATA_timer5ComIntHandler_ISR_flash_ASM     ; --> timer5_asm_flash.s90
+
+  //  ; T5OVF_vect      (0x50)  -- Timer/Counter5 Overflow Interrupt --
+ //   COMMON INTVEC:CODE:ROOT(1)
+  //  ORG 80
+  //  JMP     ATA_timer5OvfIntHandler_ISR_flash_ASM     ; --> timer5_asm_flash.s90
+
+    ; SPI_STC_vect    (0x54)  -- SPI Serial Transfer Complete Interrupt --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 84
+    JMP     ATA_spiSerialTransferCompleteHandler_ASM    ; --> ata5700_command_set_asm.s90
+    
+    ; SRX_FIFO_vect   (0x58)  -- SPI Rx Buffer Interrupt --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 88
+    JMP     ATA_spiRxBufferHandler_ISR_ASM  ; --> spi_asm.s90
+
+    ; STX_FIFO_vect   (0x5c)  -- SPI Tx Buffer Interrupt --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 92
+    JMP     ATA_spiTxBufferHandler_ISR_ASM  ; --> spi_asm.s90
+
+    ; SSM_vect        (0x60)  -- Sequencer State Machine Interrupt --
+    ; defined in rf.c __interrupt void ATA_ssmInterrupt_C(void); ->ROM Code
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 96
+    JMP   ATA_rfTxSsmRdy_ISR_C
+    ; JMP   ATA_ssmInterrupt_C
+
+    ; DFFLR_vect      (0x64)  -- Data FIFO fill level reached Interrupt --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 100
+    JMP ATA_rfTxDFifoFillLevelReached_ISR_C
+    ; --P2P--GW-- JMP ATA_dataFifoFillLevelReached_ASM  ; --> rftx_asm.s90
+
+    ; DFOUE_vect      (0x68)  -- Data FIFO overflow or underflow error Interrupt --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 104
+    JMP ATA_rfTxDFifoError_ISR_C
+    ; --P2P--GW-- JMP ATA_dataFifoOverUnderFlowHandler_ASM  ; --> rf_asm.s90
+
+    ; SFFLR_vect      (0x6c)  -- RSSI/Preamble FIFO fill level reached Interrupt --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 108
+    JMP ATA_rfTxSFifoFillLevelReached_ISR_C
+    ; --P2P--GW-- JMP ATA_rssiPreambleFifoFillLevelReached_ASM  ; --> rftx_asm.s90
+    
+    ; SFOUE_vect      (0x70)  -- RSSI/Preamble FIFO overflow or underflow error Interrupt --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 112
+    JMP ATA_rfTxSFifoError_ISR_C
+    ; --P2P--GW-- JMP ATA_rssiPreambleFifoOverUnderFlowHandler_ASM  ; --> rf_asm.s90
+
+    ; TMTCF_vect      (0x74)  -- Tx Modulator Telegram Finish Interrupt --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 116
+    JMP ATA_rfTxModulatorTelegramFinish_ISR_C
+    ; --P2P--GW-- JMP ATA_TxModulatorTelegramFinish_ASM  ; --> rftx_asm.s90
+
+    ; AES_vect        (0x78)  -- AES Krypto Unit Interrupt --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 120
+    JMP ATA_aesComplete_ISR_C    ; --> aes.c
+
+    ; TPINT_vect      (0x7c)  -- Transponder Mode Interrupt --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 124
+    JMP ATA_transponderModeHandler_System_Verification_ASM    ; --> tp_asm_flash.s90
+
+    ; TPTOERR_vect    (0x80)  -- Transponder Timeout Error Interrupt --
+    ; defined in tp_flash.c __interrupt void ATA_tpTimeoutError_flash_ISR_C();
+    ; COMMON INTVEC:CODE:ROOT(1)
+    ; ORG 128
+    ; RETI    ; --> not yet used in firmware
+    
+    ; LFID0INT_vect   (0x84)  -- LF receiver Identifier 0 Interrupt --
+    ; defined in lfrx_flash.c __interrupt void ATA_lfId0MatchInterrupt_C();
+    ; COMMON INTVEC:CODE:ROOT(1)
+    ; ORG 132
+    ; RETI    ; --> not yet used in firmware
+    
+    ; LFID1INT_vect   (0x88)  -- LF receiver Identifier 1 Interrupt --
+    ; defined in lfrx_flash.c __interrupt void ATA_lfId1MatchInterrupt_C();
+    ; COMMON INTVEC:CODE:ROOT(1)
+    ; ORG 136
+    ; RETI    ; --> not yet used in firmware
+    
+    ; LFFEINT_vect    (0x8c)  -- LF receiver Frame End Interrupt --
+    ; defined in lfrx_flash.c __interrupt void ATA_lfIdFrameEndInterrupt_C();
+    ; COMMON INTVEC:CODE:ROOT(1)
+    ; ORG 140
+    ; RETI    ; --> not yet used in firmware
+        
+    ; LFBCR_vect      (0x90)  -- LF receiver Bit Count Reached Interrupt --
+    ; defined in lfrx_flash.c __interrupt void ATA_lfBitCountReachedInterrupt_C();
+    ; COMMON INTVEC:CODE:ROOT(1)
+    ; ORG 144
+    ; RETI ; --> not yet used in firmware
+    
+    ; LFPBD_vect      (0x94)  -- LF receiver PreBurst Detected Interrupt --
+    ; defined in lfrx_flash.c __interrupt void ATA_lfSyncDetectedInterrupt_C();
+    ; COMMON INTVEC:CODE:ROOT(1)
+    ; ORG 148
+    ; RETI ; --> not yet used in firmware
+
+    ; LFDE_vect       (0x98)  -- LF receiver Decoder Error Interrupt --
+    ; defined in lfrx_flash.c __interrupt void ATA_lfDecoderErrorInterrupt_C();
+    ; COMMON INTVEC:CODE:ROOT(1)
+    ; ORG 152
+    ; RETI ; --> not yet used in firmware
+
+    ; LFEOT_vect      (0x9c)  -- LF receiver End of Telegram Interrupt --
+    ; defined in lfrx_flash.c __interrupt void ATA_lfEotInterrupt_C();
+    ; COMMON INTVEC:CODE:ROOT(1)
+    ; ORG 156
+    ; RETI ; --> not yet used in firmware
+    
+    ; ; LFTCOR_vect     (0xa0)  -- LF receiver Timer Compare Match Interrupt --
+    ; defined in lfrx_flash.c __interrupt VOIDFUNC ATA_phTimerCompareInterrupt_C();
+    ; COMMON INTVEC:CODE:ROOT(1)
+    ; ORG 160
+    ; RETI    ; --> not yet used in firmware
+    
+    ; LFRSCO_vect     (0xa4)  -- LF receiver RSsi measurement Interrupt --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 164
+    JMP ATA_lfRssiMeasReady_ISR_C
+    
+    ; PHFFLR_vect     (0xa8)  -- Protocol Handler FIFO Fill Level Reached Interrupt --
+    ; defined in lfrx_flash.c __interrupt void ATA_phFifoFillLevelReachedInterrupt_C();
+    ; COMMON INTVEC:CODE:ROOT(1)
+    ; ORG 168
+    ; RETI ; --> not yet used in firmware
+    
+    ; PHFOUE_vect     (0xac)  -- Protocol Handler FIFO Overflow or Underflow Error Interrupt --
+    ; defined in lfrx_flash.c __interrupt void ATA_phFifoErrorInterrupt_C();
+    ; COMMON INTVEC:CODE:ROOT(1)
+    ; ORG 172
+    ; RETI ; --> not yet used in firmware
+    
+    ; EXCM_vect       (0xb0)  -- External input Clock monitoring Interrupt --
+    ; defined in globals_flash.c __interrupt void ATA_globalsExtClockMonitoringInterrupt_ISR_flash_C();
+    ; COMMON INTVEC:CODE:ROOT(1)
+    ; ORG 176
+    ; RETI ; --> not yet used in firmware
+    
+    ; E2CINT_vect     (0xb4)  -- EEPROM Error Correction Interrupt --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 180
+    RETI    ; --> not used in firmware
+
+    ; ERDY_vect       (0xb8)  -- EEPROM Ready Interrupt --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 184
+    RETI    ; --> not yet used in firmware
+
+    ; SPM_RDY_vect    (0xbc)  -- Store Program Memory Ready --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 188
+    RETI    ; --> not used in firmware
+
+    ; I2C_vect        (0xc0)  -- I2C Interrupt --
+    COMMON INTVEC:CODE:ROOT(1)
+    ORG 192
+;    JMP twiByteCompleteHandler_ASM
+    RETI  ; not used in demo
+
+    END
+
+    
+    

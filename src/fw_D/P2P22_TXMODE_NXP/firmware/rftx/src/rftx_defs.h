@@ -1,0 +1,517 @@
+//lint -e9059
+/******************************************************************************
+  Use of this software is subject to Microchip's Software License Agreement.
+--------------------------------------------------------------------------------
+  $URL: http://svnservulm.corp.atmel.com/svn/CDB/Apps/SW_Lib/Car_Access/CARS_GEN2/ATAB5702A/Branches/P2P22_TXMODE_NXP/firmware/rftx/src/rftx_defs.h $
+  $LastChangedRevision: 458065 $
+  $LastChangedDate: 2017-05-02 04:55:50 -0600 (Tue, 02 May 2017) $
+  $LastChangedBy: krishna.balan $
+-------------------------------------------------------------------------------
+  Project:      ATA5700
+  Target MCU:   ATA5700
+  Compiler:     IAR C/C++ Compiler for AVR 6.30.1
+-------------------------------------------------------------------------------
+
+******************************************************************************
+* Copyright 2017, Microchip Technology Incorporated and its subsidiaries.     *
+*                                                                             *
+* This software is owned by the Microchip Technology Incorporated.            *
+* Microchip hereby grants to licensee a personal                              *
+* non-exclusive, non-transferable license to copy, use, modify, create        *
+* derivative works of, and compile the Microchip Source Code and derivative   *
+* works for the sole and exclusive purpose of creating custom software in     *
+* support of licensee product to be used only in conjunction with a Microchip *
+* integrated circuit as specified in the applicable agreement. Any            *        
+* reproduction, modification, translation, compilation, or representation of  *
+* this software except as specified above is prohibited without the express   *
+* written permission of Microchip.                                            *
+*                                                                             *
+* Disclaimer: MICROCHIP MAKES NO WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,    *
+* WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED    *
+* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.         *
+* Microchip reserves the right to make changes without further notice to the  *
+* materials described herein. Microchip does not assume any liability arising *
+* out of the application or use of any product or circuit described herein.   *
+* Microchip does not authorize its products for use as critical components in *
+* life-support systems where a malfunction or failure may reasonably be       *
+* expected to result in significant injury to the user. The inclusion of      *
+* Microchip products in a life-support systems application implies that the   *
+* manufacturer assumes all risk of such use and in doing so indemnifies       *
+* Microchip against all charges.                                              *
+*                                                                             *
+* Use may be limited by and subject to the applicable Microchip software      *
+* license agreement.                                                          *
+******************************************************************************/
+/** \file rftx_defs.h
+ */
+//lint -restore
+
+#ifndef RFTX_DEFS_H
+#define RFTX_DEFS_H
+
+#ifdef __IAR_SYSTEMS_ICC__
+/*---------------------------------------------------------------------------*/
+/*  INCLUDES                                                                 */
+/*---------------------------------------------------------------------------*/
+#include "../../stdc/src/stdc.h"
+#include "../../globals/src/globals.h"
+/*---------------------------------------------------------------------------*/
+/*  DEFINES                                                                  */
+/*---------------------------------------------------------------------------*/
+// define for PD4/TMDI "Transparent Mode Data Input"
+#define TMDI        PORTD4
+#define BM_TMDI     BITMASK(PORTD4)
+
+
+// state machine defines for RFTX SW state machine if buffered mode is used
+#define RFTX_BUF_STATE_INIT_SSM                     0x00U
+#define RFTX_BUF_STATE_WAIT_AVCC                    RFTX_BUF_STATE_INIT_SSM + 0x01U
+#define RFTX_BUF_STATE_INIT_FE                      RFTX_BUF_STATE_WAIT_AVCC + 0x01U
+#define RFTX_BUF_STATE_WAIT_XTO                     RFTX_BUF_STATE_INIT_FE + 0x01U
+#define RFTX_BUF_STATE_START_SSM                    RFTX_BUF_STATE_WAIT_XTO + 0x01U
+#define RFTX_BUF_STATE_WAIT_SSMRDY                  RFTX_BUF_STATE_START_SSM + 0x01U
+#define RFTX_BUF_STATE_WAIT_FILLLEVEL               RFTX_BUF_STATE_WAIT_SSMRDY + 0x01U
+#define RFTX_BUF_STATE_START_TXMODULATOR            RFTX_BUF_STATE_WAIT_FILLLEVEL + 0x01U
+#define RFTX_BUF_STATE_WAIT_TRANSMISSIONCOMPLETE    RFTX_BUF_STATE_START_TXMODULATOR + 0x01U
+#define RFTX_BUF_STATE_SHUTDOWN                     RFTX_BUF_STATE_WAIT_TRANSMISSIONCOMPLETE + 0x01U
+
+// state machine defines for RFTX SW state machine if transparent mode is used
+#define RFTX_TRANS_STATE_INIT_SSM                     0x00U
+#define RFTX_TRANS_STATE_WAIT_AVCC                    RFTX_TRANS_STATE_INIT_SSM + 0x01U
+#define RFTX_TRANS_STATE_INIT_FE                      RFTX_TRANS_STATE_WAIT_AVCC + 0x01U
+#define RFTX_TRANS_STATE_WAIT_XTO                     RFTX_TRANS_STATE_INIT_FE + 0x01U
+#define RFTX_TRANS_STATE_START_SSM                    RFTX_TRANS_STATE_WAIT_XTO + 0x01U
+#define RFTX_TRANS_STATE_WAIT_SSMRDY                  RFTX_TRANS_STATE_START_SSM + 0x01U
+#define RFTX_TRANS_STATE_TXMODE                       RFTX_TRANS_STATE_WAIT_SSMRDY + 0x01U
+#define RFTX_TRANS_STATE_SHUTDOWN                     RFTX_TRANS_STATE_TXMODE + 0x01U
+
+// state machine defines for RFTX SW state machine if VCO tuning is selected
+#define RFTX_VCO_STATE_INIT_SSM                     0x00U
+#define RFTX_VCO_STATE_WAIT_AVCC                    RFTX_VCO_STATE_INIT_SSM + 0x01U
+#define RFTX_VCO_STATE_INIT_FE                      RFTX_VCO_STATE_WAIT_AVCC + 0x01U
+#define RFTX_VCO_STATE_WAIT_XTO                     RFTX_VCO_STATE_INIT_FE + 0x01U
+#define RFTX_VCO_STATE_START_SSM                    RFTX_VCO_STATE_WAIT_XTO + 0x01U
+#define RFTX_VCO_STATE_WAIT_SSMRDY                  RFTX_VCO_STATE_START_SSM + 0x01U
+#define RFTX_VCO_STATE_SHUTDOWN                     RFTX_VCO_STATE_WAIT_SSMRDY + 0x01U
+
+// state machine defines for RFTX SW state machine if ANTENNA tuning is selected
+#define RFTX_ANT_STATE_INIT_SSM                     0x00U
+#define RFTX_ANT_STATE_WAIT_AVCC                    RFTX_ANT_STATE_INIT_SSM + 0x01U
+#define RFTX_ANT_STATE_INIT_FE                      RFTX_ANT_STATE_WAIT_AVCC + 0x01U
+#define RFTX_ANT_STATE_WAIT_XTO                     RFTX_ANT_STATE_INIT_FE + 0x01U
+#define RFTX_ANT_STATE_START_SSM                    RFTX_ANT_STATE_WAIT_XTO + 0x01U
+#define RFTX_ANT_STATE_WAIT_SSMRDY                  RFTX_ANT_STATE_START_SSM + 0x01U
+#define RFTX_ANT_STATE_SHUTDOWN                     RFTX_ANT_STATE_WAIT_SSMRDY + 0x01U
+
+// sRfTxConfig
+// sRfTxConfig.bFlags
+#define RFTXCONFIG_BFLAGS_EOT             BIT_0
+#define RFTXCONFIG_BFLAGS_SFIFO_FILLLEVEL BIT_1
+#define RFTXCONFIG_BFLAGS_DFIFO_FILLLEVEL BIT_2
+#define RFTXCONFIG_BFLAGS_SFIFO_ERROR     BIT_3
+#define RFTXCONFIG_BFLAGS_DFIFO_ERROR     BIT_4
+#define RFTXCONFIG_BFLAGS_BIT_5           BIT_5
+#define RFTXCONFIG_BFLAGS_RDY4TX          BIT_6
+#define RFTXCONFIG_BFLAGS_ERROR           BIT_7
+
+#define BM_RFTXCONFIG_BFLAGS_EOT              BITMASK(RFTXCONFIG_BFLAGS_EOT)
+#define BM_RFTXCONFIG_BFLAGS_SFIFO_FILLLEVEL  BITMASK(RFTXCONFIG_BFLAGS_SFIFO_FILLLEVEL)
+#define BM_RFTXCONFIG_BFLAGS_DFIFO_FILLLEVEL  BITMASK(RFTXCONFIG_BFLAGS_DFIFO_FILLLEVEL)
+#define BM_RFTXCONFIG_BFLAGS_SFIFO_ERROR      BITMASK(RFTXCONFIG_BFLAGS_SFIFO_ERROR)
+#define BM_RFTXCONFIG_BFLAGS_DFIFO_ERROR      BITMASK(RFTXCONFIG_BFLAGS_DFIFO_ERROR)
+#define BM_RFTXCONFIG_BFLAGS_BIT_5            BITMASK(RFTXCONFIG_BFLAGS_BIT_5)
+#define BM_RFTXCONFIG_BFLAGS_RDY4TX           BITMASK(RFTXCONFIG_BFLAGS_RDY4TX)
+#define BM_RFTXCONFIG_BFLAGS_ERROR            BITMASK(RFTXCONFIG_BFLAGS_ERROR)
+
+// sRfTxConfig.bTuneFlags
+#define RFTXCONFIG_BTUNEFLAGS_VCO_TUNE_RDY    BIT_6
+#define RFTXCONFIG_BTUNEFLAGS_ANT_TUNE_RDY    BIT_7
+
+#define BM_RFTXCONFIG_BTUNEFLAGS_VCO_TUNE_RDY     BITMASK(RFTXCONFIG_BTUNEFLAGS_VCO_TUNE_RDY)
+#define BM_RFTXCONFIG_BTUNEFLAGS_ANT_TUNE_RDY     BITMASK(RFTXCONFIG_BTUNEFLAGS_ANT_TUNE_RDY)
+
+
+// sRfTxConfig.bStatus
+#define RFTXCONFIG_BSTATUS_SWSTATE0              BIT_0
+#define RFTXCONFIG_BSTATUS_SWSTATE1              BIT_1
+#define RFTXCONFIG_BSTATUS_SWSTATE2              BIT_2
+#define RFTXCONFIG_BSTATUS_SWSTATE3              BIT_3
+#define RFTXCONFIG_BSTATUS_ACTIVE                BIT_4
+#define RFTXCONFIG_BSTATUS_TRANSMISSION_COMPLETE BIT_5
+#define RFTXCONFIG_BSTATUS_SSMREADY              BIT_6
+#define RFTXCONFIG_BSTATUS_DIRECT_SWITCH         BIT_7
+
+#define BM_RFTXCONFIG_BSTATUS_SWSTATE0   BITMASK(RFTXCONFIG_BSTATUS_SWSTATE0)
+#define BM_RFTXCONFIG_BSTATUS_SWSTATE1   BITMASK(RFTXCONFIG_BSTATUS_SWSTATE1)
+#define BM_RFTXCONFIG_BSTATUS_SWSTATE2   BITMASK(RFTXCONFIG_BSTATUS_SWSTATE2)
+#define BM_RFTXCONFIG_BSTATUS_SWSTATE3   BITMASK(RFTXCONFIG_BSTATUS_SWSTATE3)
+
+#define BM_RFTXCONFIG_BSTATUS_SWSTATE   ( BM_RFTXCONFIG_BSTATUS_SWSTATE0 | BM_RFTXCONFIG_BSTATUS_SWSTATE1 | BM_RFTXCONFIG_BSTATUS_SWSTATE2 | BM_RFTXCONFIG_BSTATUS_SWSTATE3 )
+
+#define BM_RFTXCONFIG_BSTATUS_ACTIVE                 BITMASK(RFTXCONFIG_BSTATUS_ACTIVE)
+#define BM_RFTXCONFIG_BSTATUS_TRANSMISSION_COMPLETE  BITMASK(RFTXCONFIG_BSTATUS_TRANSMISSION_COMPLETE)
+#define BM_RFTXCONFIG_BSTATUS_SSMREADY               BITMASK(RFTXCONFIG_BSTATUS_SSMREADY)
+#define BM_RFTXCONFIG_BSTATUS_DIRECT_SWITCH          BITMASK(RFTXCONFIG_BSTATUS_DIRECT_SWITCH)
+
+// sRfTxConfig.bConfig
+#define RFTXCONFIG_BCONFIG_CHANNEL0          BIT_0
+#define RFTXCONFIG_BCONFIG_CHANNEL1          BIT_1
+#define RFTXCONFIG_BCONFIG_STAY_TX           BIT_2
+#define RFTXCONFIG_BCONFIG_SVC_LOCATION      BIT_3
+#define RFTXCONFIG_BCONFIG_SHUTDOWN_MODE     BIT_4
+#define RFTXCONFIG_BCONFIG_TRANSPARENT_MODE  BIT_5
+#define RFTXCONFIG_BCONFIG_VCO_TUNING        BIT_6
+#define RFTXCONFIG_BCONFIG_ANT_TUNING        BIT_7
+
+#define BM_RFTXCONFIG_BCONFIG_CHANNEL0          BITMASK(RFTXCONFIG_BCONFIG_CHANNEL0)
+#define BM_RFTXCONFIG_BCONFIG_CHANNEL1          BITMASK(RFTXCONFIG_BCONFIG_CHANNEL1)
+
+#define BM_RFTXCONFIG_BCONFIG_CHANNEL           ( BM_RFTXCONFIG_BCONFIG_CHANNEL0 | BM_RFTXCONFIG_BCONFIG_CHANNEL1 )
+
+#define BM_RFTXCONFIG_BCONFIG_STAY_TX           BITMASK(RFTXCONFIG_BCONFIG_STAY_TX)
+#define BM_RFTXCONFIG_BCONFIG_SVC_LOCATION      BITMASK(RFTXCONFIG_BCONFIG_SVC_LOCATION)
+#define BM_RFTXCONFIG_BCONFIG_SHUTDOWN_MODE     BITMASK(RFTXCONFIG_BCONFIG_SHUTDOWN_MODE)
+#define BM_RFTXCONFIG_BCONFIG_TRANSPARENT_MODE  BITMASK(RFTXCONFIG_BCONFIG_TRANSPARENT_MODE)
+#define BM_RFTXCONFIG_BCONFIG_VCO_TUNING        BITMASK(RFTXCONFIG_BCONFIG_VCO_TUNING)
+#define BM_RFTXCONFIG_BCONFIG_ANT_TUNING        BITMASK(RFTXCONFIG_BCONFIG_ANT_TUNING)
+
+
+/* ------------------------------------------------------------------------- */
+/* sRfTxServicePathConfig.bTxSetPath[0]                                       */
+/* sRfTxServicePathConfig.bTxSetPath[1]                                       */
+/* ------------------------------------------------------------------------- */
+#define RFTXSERVICE_BTXSETPATH_GAUS                  EQU BIT_7
+#define RFTXSERVICE_BTXSETPATH_PREE                  EQU BIT_6
+#define RFTXSERVICE_BTXSETPATH_STARTTXFILLLEVEL5     EQU BIT_5
+#define RFTXSERVICE_BTXSETPATH_STARTTXFILLLEVEL4     EQU BIT_4
+#define RFTXSERVICE_BTXSETPATH_STARTTXFILLLEVEL3     EQU BIT_3
+#define RFTXSERVICE_BTXSETPATH_STARTTXFILLLEVEL2     EQU BIT_2
+#define RFTXSERVICE_BTXSETPATH_STARTTXFILLLEVEL1     EQU BIT_1
+#define RFTXSERVICE_BTXSETPATH_STARTTXFILLLEVEL0     EQU BIT_0
+
+#define BM_RFTXSERVICE_BTXSETPATH_GAUS               BIT_MASK_7
+#define BM_RFTXSERVICE_BTXSETPATH_PREE               BIT_MASK_6
+
+#define BM_RFTXSERVICE_BTXSETPATH_STARTTXFILLLEVEL   (  BIT_MASK_5 | BIT_MASK_4 | BIT_MASK_3 | BIT_MASK_2 | BIT_MASK_1 | BIT_MASK_0 )
+#define BM_RFTXSERVICE_BTXSETPATH_STARTTXFILLLEVEL5  BIT_MASK_5
+#define BM_RFTXSERVICE_BTXSETPATH_STARTTXFILLLEVEL4  BIT_MASK_4
+#define BM_RFTXSERVICE_BTXSETPATH_STARTTXFILLLEVEL3  BIT_MASK_3
+#define BM_RFTXSERVICE_BTXSETPATH_STARTTXFILLLEVEL2  BIT_MASK_2
+#define BM_RFTXSERVICE_BTXSETPATH_STARTTXFILLLEVEL1  BIT_MASK_1
+#define BM_RFTXSERVICE_BTXSETPATH_STARTTXFILLLEVEL0  BIT_MASK_0
+
+#define RFTXSERVICE_BTXSETPATH_MODULATION                BIT_7
+#define RFTXSERVICE_BTXSETPATH_ASK_SHAPING               BIT_6
+#define RFTXSERVICE_BTXSETPATH_STARTPREAMBLEFILLLEVEL4   BIT_4
+#define RFTXSERVICE_BTXSETPATH_STARTPREAMBLEFILLLEVEL3   BIT_3
+#define RFTXSERVICE_BTXSETPATH_STARTPREAMBLEFILLLEVEL2   BIT_2
+#define RFTXSERVICE_BTXSETPATH_STARTPREAMBLEFILLLEVEL1   BIT_1
+#define RFTXSERVICE_BTXSETPATH_STARTPREAMBLEFILLLEVEL0   BIT_0
+
+#define BM_RFTXSERVICE_BTXSETPATH_MODULATION                 BIT_MASK_7
+#define BM_RFTXSERVICE_BTXSETPATH_ASK_SHAPING                BIT_MASK_6
+#define BM_RFTXSERVICE_BTXSETPATH_STARTPREAMBLEFILLLEVEL     ( BIT_MASK_4 | BIT_MASK_3 | BIT_MASK_2 | BIT_MASK_1 | BIT_MASK_0 )
+#define BM_RFTXSERVICE_BTXSETPATH_STARTPREAMBLEFILLLEVEL4    BIT_MASK_4
+#define BM_RFTXSERVICE_BTXSETPATH_STARTPREAMBLEFILLLEVEL3    BIT_MASK_3
+#define BM_RFTXSERVICE_BTXSETPATH_STARTPREAMBLEFILLLEVEL2    BIT_MASK_2
+#define BM_RFTXSERVICE_BTXSETPATH_STARTPREAMBLEFILLLEVEL1    BIT_MASK_1
+#define BM_RFTXSERVICE_BTXSETPATH_STARTPREAMBLEFILLLEVEL0    BIT_MASK_0
+
+
+/*===========================================================================*/
+/*  DEFINES                                                                  */
+/*===========================================================================*/
+/* SSM state definitions */
+
+/** \brief <b>SSM_END_STATE</b> is used as define for end state */
+#define SSM_END_STATE               0U
+
+/** \brief <b>SSM_PLL_EN_STATE</b> is used as define for PLL enable sub state machine */
+#define SSM_PLL_EN_STATE            (SSM_END_STATE           + 1U)
+
+/** \brief <b>SSM_PLL_LOCK_STATE</b> is used as define for PLL lock sub state machine */
+#define SSM_PLL_LOCK_STATE          (SSM_PLL_EN_STATE        + 1U)
+
+/** \brief <b>SSM_TX_DSP_EN_STATE</b> is used as define for TX DSP enable sub state machine */
+#define SSM_TX_DSP_EN_STATE         (SSM_PLL_LOCK_STATE    + 1U)
+
+/** \brief <b>SSM_TX_DSP_DIS_STATE</b> is used as define for TX DSP disable sub state machine */
+#define SSM_TX_DSP_DIS_STATE        (SSM_TX_DSP_EN_STATE     + 1U)
+
+/** \brief <b>SSM_SEND_TELEGRAM_STATE</b> is used as define for send telegram sub state machine */
+#define SSM_SEND_TELEGRAM_STATE     (SSM_TX_DSP_DIS_STATE  + 1U)
+
+/** \brief <b>SSM_SHUTDOWN_STATE</b> is used as define for shut down sub state machine */
+#define SSM_SHUTDOWN_STATE          (SSM_SEND_TELEGRAM_STATE + 1U)
+
+/** \brief <b>SSM_VCO_TUNING_STATE</b> is used as define for vco tuning sub state machine */
+#define SSM_VCO_TUNING_STATE        (SSM_SHUTDOWN_STATE      + 1U)
+
+/** \brief <b>SSM_ANTENNA_TUNING_STATE</b> is used as define for antenna tuning sub state machine */
+#define SSM_ANTENNA_TUNING_STATE    (SSM_VCO_TUNING_STATE    + 1U)
+
+/** \brief <b>BM_DFFLS</b> is used as data fifo fill level bit mask */
+#define BM_DFFLS					(BM_DFFLS0|BM_DFFLS1|BM_DFFLS2|BM_DFFLS3|BM_DFFLS4|BM_DFFLS5)
+
+/** \brief <b>BM_SFFLS</b> is used as support fifo fill level bit mask */
+#define BM_SFFLS					(BM_SFFLS0 |BM_SFFLS1 |BM_SFFLS2 |BM_SFFLS3 |BM_SFFLS4 )
+
+/*---------------------------------------------------------------------------*/
+/*  TYPE DEFINITIONS                                                         */
+/*---------------------------------------------------------------------------*/
+
+#elif defined __IAR_SYSTEMS_ASM__
+/*startSimExtraction*/
+
+// state machine defines for RFTX SW state machine if buffered mode is used
+RFTX_BUF_STATE_INIT_SSM                     EQU 0
+RFTX_BUF_STATE_WAIT_AVCC                    EQU RFTX_BUF_STATE_INIT_SSM + 1
+RFTX_BUF_STATE_INIT_FE                      EQU RFTX_BUF_STATE_WAIT_AVCC + 1
+RFTX_BUF_STATE_WAIT_XTO                     EQU RFTX_BUF_STATE_INIT_FE + 1
+RFTX_BUF_STATE_START_SSM                    EQU RFTX_BUF_STATE_WAIT_XTO + 1
+RFTX_BUF_STATE_WAIT_SSMRDY                  EQU RFTX_BUF_STATE_START_SSM + 1
+RFTX_BUF_STATE_WAIT_FILLLEVEL               EQU RFTX_BUF_STATE_WAIT_SSMRDY + 1
+RFTX_BUF_STATE_START_TXMODULATOR            EQU RFTX_BUF_STATE_WAIT_FILLLEVEL + 1
+RFTX_BUF_STATE_WAIT_TRANSMISSIONCOMPLETE    EQU RFTX_BUF_STATE_START_TXMODULATOR + 1
+RFTX_BUF_STATE_SHUTDOWN                     EQU RFTX_BUF_STATE_WAIT_TRANSMISSIONCOMPLETE + 1
+
+// state machine defines for RFTX SW state machine if transparent mode is used
+RFTX_TRANS_STATE_INIT_SSM       EQU 0
+RFTX_TRANS_STATE_WAIT_AVCC      EQU RFTX_TRANS_STATE_INIT_SSM + 1
+RFTX_TRANS_STATE_INIT_FE        EQU RFTX_TRANS_STATE_WAIT_AVCC + 1
+RFTX_TRANS_STATE_WAIT_XTO       EQU RFTX_TRANS_STATE_INIT_FE + 1
+RFTX_TRANS_STATE_START_SSM      EQU RFTX_TRANS_STATE_WAIT_XTO + 1
+RFTX_TRANS_STATE_WAIT_SSMRDY    EQU RFTX_TRANS_STATE_START_SSM + 1
+RFTX_TRANS_STATE_TXMODE         EQU RFTX_TRANS_STATE_WAIT_SSMRDY + 1
+RFTX_TRANS_STATE_SHUTDOWN       EQU RFTX_TRANS_STATE_TXMODE + 1
+
+// state machine defines for RFTX SW state machine if VCO tuning is selected
+RFTX_VCO_STATE_INIT_SSM     EQU 0
+RFTX_VCO_STATE_WAIT_AVCC    EQU RFTX_VCO_STATE_INIT_SSM + 1
+RFTX_VCO_STATE_INIT_FE      EQU RFTX_VCO_STATE_WAIT_AVCC + 1
+RFTX_VCO_STATE_WAIT_XTO     EQU RFTX_VCO_STATE_INIT_FE + 1
+RFTX_VCO_STATE_START_SSM    EQU RFTX_VCO_STATE_WAIT_XTO + 1
+RFTX_VCO_STATE_WAIT_SSMRDY  EQU RFTX_VCO_STATE_START_SSM + 1
+RFTX_VCO_STATE_SHUTDOWN     EQU RFTX_VCO_STATE_WAIT_SSMRDY + 1
+
+// state machine defines for RFTX SW state machine if ANTENNA tuning is selected
+RFTX_ANT_STATE_INIT_SSM     EQU 0
+RFTX_ANT_STATE_WAIT_AVCC    EQU RFTX_ANT_STATE_INIT_SSM + 1
+RFTX_ANT_STATE_INIT_FE      EQU RFTX_ANT_STATE_WAIT_AVCC + 1
+RFTX_ANT_STATE_WAIT_XTO     EQU RFTX_ANT_STATE_INIT_FE + 1
+RFTX_ANT_STATE_START_SSM    EQU RFTX_ANT_STATE_WAIT_XTO + 1
+RFTX_ANT_STATE_WAIT_SSMRDY  EQU RFTX_ANT_STATE_START_SSM + 1
+RFTX_ANT_STATE_SHUTDOWN     EQU RFTX_ANT_STATE_WAIT_SSMRDY + 1
+
+/* ------------------------------------------------------------------------- */
+/* sSystemFlowCtrl                                                           */
+/* ------------------------------------------------------------------------- */
+SYSFLOWCTRL_INDEX                       EQU 0
+SYSFLOWCTRL_PLUT_LOW_FUNCPTR_ADDR       EQU SYSFLOWCTRL_INDEX + 1
+SYSFLOWCTRL_PLUT_HIGH_FUNCPTR_ADDR      EQU SYSFLOWCTRL_PLUT_LOW_FUNCPTR_ADDR + 1
+
+/* ------------------------------------------------------------------------- */
+/* sRfTxConfig                                                               */
+/* ------------------------------------------------------------------------- */
+RFTXCONFIG_BFLAGS       EQU 0
+RFTXCONFIG_BTUNEFLAGS   EQU RFTXCONFIG_BFLAGS + 1
+RFTXCONFIG_BSTATUS      EQU RFTXCONFIG_BTUNEFLAGS + 1
+RFTXCONFIG_BCONFIG      EQU RFTXCONFIG_BSTATUS + 1
+RFTXCONFIG_PADDRESS     EQU RFTXCONFIG_BCONFIG + 1
+
+// sRfTxConfig.bFlags
+RFTXCONFIG_BFLAGS_EOT             EQU    BIT_0
+RFTXCONFIG_BFLAGS_SFIFO_FILLLEVEL EQU    BIT_1
+RFTXCONFIG_BFLAGS_DFIFO_FILLLEVEL EQU    BIT_2
+RFTXCONFIG_BFLAGS_SFIFO_ERROR     EQU    BIT_3
+RFTXCONFIG_BFLAGS_DFIFO_ERROR     EQU    BIT_4
+RFTXCONFIG_BFLAGS_BIT_5           EQU    BIT_5
+RFTXCONFIG_BFLAGS_RDY4TX          EQU    BIT_6
+RFTXCONFIG_BFLAGS_ERROR           EQU    BIT_7
+
+BM_RFTXCONFIG_BFLAGS_EOT              EQU ( 0x01 << RFTXCONFIG_BFLAGS_EOT )
+BM_RFTXCONFIG_BFLAGS_SFIFO_FILLLEVEL  EQU ( 0x01 << RFTXCONFIG_BFLAGS_SFIFO_FILLLEVEL )
+BM_RFTXCONFIG_BFLAGS_DFIFO_FILLLEVEL  EQU ( 0x01 << RFTXCONFIG_BFLAGS_DFIFO_FILLLEVEL )
+BM_RFTXCONFIG_BFLAGS_SFIFO_ERROR      EQU ( 0x01 << RFTXCONFIG_BFLAGS_SFIFO_ERROR )
+BM_RFTXCONFIG_BFLAGS_DFIFO_ERROR      EQU ( 0x01 << RFTXCONFIG_BFLAGS_DFIFO_ERROR )
+BM_RFTXCONFIG_BFLAGS_BIT_5            EQU ( 0x01 << RFTXCONFIG_BFLAGS_BIT_5 )
+BM_RFTXCONFIG_BFLAGS_RDY4TX           EQU ( 0x01 << RFTXCONFIG_BFLAGS_RDY4TX )
+BM_RFTXCONFIG_BFLAGS_ERROR            EQU ( 0x01 << RFTXCONFIG_BFLAGS_ERROR )
+
+
+// sRfTxConfig.tuneFlags
+RFTXCONFIG_BTUNEFLAGS_VCO_TUNE_RDY        EQU    BIT_6
+RFTXCONFIG_BTUNEFLAGS_ANT_TUNE_RDY        EQU    BIT_7
+
+BM_RFTXCONFIG_BTUNEFLAGS_VCO_TUNE_RDY     EQU ( 0x01 << RFTXCONFIG_BTUNEFLAGS_VCO_TUNE_RDY )
+BM_RFTXCONFIG_BTUNEFLAGS_ANT_TUNE_RDY     EQU ( 0x01 << RFTXCONFIG_BTUNEFLAGS_ANT_TUNE_RDY )
+
+
+// sRfTxConfig.status
+RFTXCONFIG_BSTATUS_SWSTATE0              EQU BIT_0
+RFTXCONFIG_BSTATUS_SWSTATE1              EQU BIT_1
+RFTXCONFIG_BSTATUS_SWSTATE2              EQU BIT_2
+RFTXCONFIG_BSTATUS_SWSTATE3              EQU BIT_3
+RFTXCONFIG_BSTATUS_ACTIVE                EQU BIT_4
+RFTXCONFIG_BSTATUS_TRANSMISSION_COMPLETE EQU BIT_5
+RFTXCONFIG_BSTATUS_SSMREADY              EQU BIT_6
+RFTXCONFIG_BSTATUS_DIRECT_SWITCH         EQU BIT_7
+
+BM_RFTXCONFIG_BSTATUS_SWSTATE0   EQU ( 0x01 << RFTXCONFIG_BSTATUS_SWSTATE0 )
+BM_RFTXCONFIG_BSTATUS_SWSTATE1   EQU ( 0x01 << RFTXCONFIG_BSTATUS_SWSTATE1 )
+BM_RFTXCONFIG_BSTATUS_SWSTATE2   EQU ( 0x01 << RFTXCONFIG_BSTATUS_SWSTATE2 )
+BM_RFTXCONFIG_BSTATUS_SWSTATE3   EQU ( 0x01 << RFTXCONFIG_BSTATUS_SWSTATE3 )
+
+BM_RFTXCONFIG_BSTATUS_SWSTATE    EQU ( BM_RFTXCONFIG_BSTATUS_SWSTATE0 | BM_RFTXCONFIG_BSTATUS_SWSTATE1 | BM_RFTXCONFIG_BSTATUS_SWSTATE2 | BM_RFTXCONFIG_BSTATUS_SWSTATE3 )
+
+BM_RFTXCONFIG_BSTATUS_ACTIVE                 EQU ( 0x01 << RFTXCONFIG_BSTATUS_ACTIVE )
+BM_RFTXCONFIG_BSTATUS_TRANSMISSION_COMPLETE  EQU ( 0x01 << RFTXCONFIG_BSTATUS_TRANSMISSION_COMPLETE )
+BM_RFTXCONFIG_BSTATUS_SSMREADY               EQU ( 0x01 << RFTXCONFIG_BSTATUS_SSMREADY )
+BM_RFTXCONFIG_BSTATUS_DIRECT_SWITCH          EQU ( 0x01 << RFTXCONFIG_BSTATUS_DIRECT_SWITCH )
+
+// sRfTxConfig.config
+RFTXCONFIG_BCONFIG_CHANNEL0          EQU BIT_0
+RFTXCONFIG_BCONFIG_CHANNEL1          EQU BIT_1
+RFTXCONFIG_BCONFIG_STAY_TX           EQU BIT_2
+RFTXCONFIG_BCONFIG_SVC_LOCATION      EQU BIT_3
+RFTXCONFIG_BCONFIG_SHUTDOWN_MODE     EQU BIT_4
+RFTXCONFIG_BCONFIG_TRANSPARENT_MODE  EQU BIT_5
+RFTXCONFIG_BCONFIG_VCO_TUNING        EQU BIT_6
+RFTXCONFIG_BCONFIG_ANT_TUNING        EQU BIT_7
+
+BM_RFTXCONFIG_BCONFIG_CHANNEL0   EQU ( 0x01 << RFTXCONFIG_BCONFIG_CHANNEL0 )
+BM_RFTXCONFIG_BCONFIG_CHANNEL1   EQU ( 0x01 << RFTXCONFIG_BCONFIG_CHANNEL1 )
+
+BM_RFTXCONFIG_BCONFIG_CHANNEL    EQU ( BM_RFTXCONFIG_BCONFIG_CHANNEL0 | BM_RFTXCONFIG_BCONFIG_CHANNEL1 )
+
+BM_RFTXCONFIG_BCONFIG_STAY_TX           EQU ( 0x01 << RFTXCONFIG_BCONFIG_STAY_TX )
+BM_RFTXCONFIG_BCONFIG_SVC_LOCATION      EQU ( 0x01 << RFTXCONFIG_BCONFIG_SVC_LOCATION )
+BM_RFTXCONFIG_BCONFIG_SHUTDOWN_MODE     EQU ( 0x01 << RFTXCONFIG_BCONFIG_SHUTDOWN_MODE )
+BM_RFTXCONFIG_BCONFIG_TRANSPARENT_MODE  EQU ( 0x01 << RFTXCONFIG_BCONFIG_TRANSPARENT_MODE )
+BM_RFTXCONFIG_BCONFIG_VCO_TUNING        EQU ( 0x01 << RFTXCONFIG_BCONFIG_VCO_TUNING )
+BM_RFTXCONFIG_BCONFIG_ANT_TUNING        EQU ( 0x01 << RFTXCONFIG_BCONFIG_ANT_TUNING )
+
+/* ------------------------------------------------------------------------- */
+/* sRfTxServiceSpecificConfig +  sRfTxServicePathConfig                      */
+/* ------------------------------------------------------------------------- */
+RFTXSERVICE_SSMFBR              EQU 0
+RFTXSERVICE_FEALR_FEANT         EQU RFTXSERVICE_SSMFBR + 1
+RFTXSERVICE_FEAT                EQU RFTXSERVICE_FEALR_FEANT + 1
+RFTXSERVICE_FEPAC               EQU RFTXSERVICE_FEAT + 1
+RFTXSERVICE_FEVCO               EQU RFTXSERVICE_FEPAC + 1
+RFTXSERVICE_FEVCT               EQU RFTXSERVICE_FEVCO + 1
+RFTXSERVICE_IF                  EQU RFTXSERVICE_FEVCT + 1
+RFTXSERVICE_TXDEV               EQU RFTXSERVICE_IF + 2
+RFTXSERVICE_GACDIV              EQU RFTXSERVICE_TXDEV + 2
+RFTXSERVICE_FSFCR               EQU RFTXSERVICE_GACDIV + 2
+RFTXSERVICE_TXDR                EQU RFTXSERVICE_FSFCR + 1
+RFTXSERVICE_TXSETPATH           EQU RFTXSERVICE_TXDR + 2
+RFTXSERVICE_TXSYSEVENT          EQU RFTXSERVICE_TXSETPATH + 2
+RFTXSERVICE_TXPREAMBLESYSEVENT  EQU RFTXSERVICE_TXSYSEVENT + 1
+RFTXSERVICE_TMCR2               EQU RFTXSERVICE_TXPREAMBLESYSEVENT + 1
+RFTXSERVICE_TMSSC               EQU RFTXSERVICE_TMCR2 + 1
+RFTXSERVICE_TMTL                EQU RFTXSERVICE_TMSSC + 1
+RFTXSERVICE_TMCP                EQU RFTXSERVICE_TMTL + 2
+RFTXSERVICE_TMCI                EQU RFTXSERVICE_TMCP + 2
+RFTXSERVICE_TMCSB               EQU RFTXSERVICE_TMCI + 2
+RFTXSERVICE_SIZEOF              EQU RFTXSERVICE_TMCSB + 1
+
+/* ------------------------------------------------------------------------- */
+/* sRfTxChannelConfig                                                        */
+/* ------------------------------------------------------------------------- */
+RFTXCHANNEL_FFREQ           EQU 0
+RFTXCHANNEL_FEMS            EQU RFTXCHANNEL_FFREQ + 3
+RFTXCHANNEL_FECR            EQU RFTXCHANNEL_FEMS + 1
+RFTXCHANNEL_SIZEOF          EQU RFTXCHANNEL_FECR + 1
+
+/* ------------------------------------------------------------------------- */
+/* sRfTxServiceChannelConfig                                              */
+/* ------------------------------------------------------------------------- */
+RFTXCURRENTSERVICE_SERVICE_OFFSET EQU 0
+RFTXCURRENTSERVICE_CHANNEL_OFFSET EQU RFTXCURRENTSERVICE_SERVICE_OFFSET + RFTXSERVICE_SIZEOF
+
+/* ------------------------------------------------------------------------- */
+/* sRfTxServicePathConfig.bTxSetPath[0]                                       */
+/* sRfTxServicePathConfig.bTxSetPath[1]                                       */
+/* ------------------------------------------------------------------------- */
+RFTXSERVICE_BTXSETPATH_GAUS                  EQU BIT_7
+RFTXSERVICE_BTXSETPATH_PREE                  EQU BIT_6
+RFTXSERVICE_BTXSETPATH_STARTTXFILLLEVEL5     EQU BIT_5
+RFTXSERVICE_BTXSETPATH_STARTTXFILLLEVEL4     EQU BIT_4
+RFTXSERVICE_BTXSETPATH_STARTTXFILLLEVEL3     EQU BIT_3
+RFTXSERVICE_BTXSETPATH_STARTTXFILLLEVEL2     EQU BIT_2
+RFTXSERVICE_BTXSETPATH_STARTTXFILLLEVEL1     EQU BIT_1
+RFTXSERVICE_BTXSETPATH_STARTTXFILLLEVEL0     EQU BIT_0
+
+BM_RFTXSERVICE_BTXSETPATH_GAUS               EQU BIT_MASK_7
+BM_RFTXSERVICE_BTXSETPATH_PREE               EQU BIT_MASK_6
+
+BM_RFTXSERVICE_BTXSETPATH_STARTTXFILLLEVEL   EQU (  BIT_MASK_5 | BIT_MASK_4 | BIT_MASK_3 | BIT_MASK_2 | BIT_MASK_1 | BIT_MASK_0 )
+BM_RFTXSERVICE_BTXSETPATH_STARTTXFILLLEVEL5  EQU BIT_MASK_5
+BM_RFTXSERVICE_BTXSETPATH_STARTTXFILLLEVEL4  EQU BIT_MASK_4
+BM_RFTXSERVICE_BTXSETPATH_STARTTXFILLLEVEL3  EQU BIT_MASK_3
+BM_RFTXSERVICE_BTXSETPATH_STARTTXFILLLEVEL2  EQU BIT_MASK_2
+BM_RFTXSERVICE_BTXSETPATH_STARTTXFILLLEVEL1  EQU BIT_MASK_1
+BM_RFTXSERVICE_BTXSETPATH_STARTTXFILLLEVEL0  EQU BIT_MASK_0
+
+RFTXSERVICE_BTXSETPATH_MODULATION                EQU BIT_7
+RFTXSERVICE_BTXSETPATH_ASK_SHAPING               EQU BIT_6
+RFTXSERVICE_BTXSETPATH_STARTPREAMBLEFILLLEVEL4   EQU BIT_4
+RFTXSERVICE_BTXSETPATH_STARTPREAMBLEFILLLEVEL3   EQU BIT_3
+RFTXSERVICE_BTXSETPATH_STARTPREAMBLEFILLLEVEL2   EQU BIT_2
+RFTXSERVICE_BTXSETPATH_STARTPREAMBLEFILLLEVEL1   EQU BIT_1
+RFTXSERVICE_BTXSETPATH_STARTPREAMBLEFILLLEVEL0   EQU BIT_0
+
+BM_RFTXSERVICE_BTXSETPATH_MODULATION                 EQU BIT_MASK_7
+BM_RFTXSERVICE_BTXSETPATH_ASK_SHAPING                EQU BIT_MASK_6
+BM_RFTXSERVICE_BTXSETPATH_STARTPREAMBLEFILLLEVEL     EQU ( BIT_MASK_4 | BIT_MASK_3 | BIT_MASK_2 | BIT_MASK_1 | BIT_MASK_0 )
+BM_RFTXSERVICE_BTXSETPATH_STARTPREAMBLEFILLLEVEL4    EQU BIT_MASK_4
+BM_RFTXSERVICE_BTXSETPATH_STARTPREAMBLEFILLLEVEL3    EQU BIT_MASK_3
+BM_RFTXSERVICE_BTXSETPATH_STARTPREAMBLEFILLLEVEL2    EQU BIT_MASK_2
+BM_RFTXSERVICE_BTXSETPATH_STARTPREAMBLEFILLLEVEL1    EQU BIT_MASK_1
+BM_RFTXSERVICE_BTXSETPATH_STARTPREAMBLEFILLLEVEL0    EQU BIT_MASK_0
+
+/* ------------------------------------------------------------------------- */
+/* sRfTxServicePathConfig.bTxSysEvent                                         */
+/* ------------------------------------------------------------------------- */
+RFTXSERVICE_TXSYSEVENT_TX_ENDING            EQU BIT_7
+RFTXSERVICE_TXSYSEVENT_TXBUF_EVENT_MASK     EQU BIT_6
+RFTXSERVICE_TXSYSEVENT_TXBUF5               EQU BIT_5
+RFTXSERVICE_TXSYSEVENT_TXBUF4               EQU BIT_4
+RFTXSERVICE_TXSYSEVENT_TXBUF3               EQU BIT_3
+RFTXSERVICE_TXSYSEVENT_TXBUF2               EQU BIT_2
+RFTXSERVICE_TXSYSEVENT_TXBUF1               EQU BIT_1
+RFTXSERVICE_TXSYSEVENT_TXBUF0               EQU BIT_0
+
+BM_RFTXSERVICE_TXSYSEVENT_TX_ENDING         EQU BIT_MASK_7
+BM_RFTXSERVICE_TXSYSEVENT_TXBUF_EVENT_MASK  EQU BIT_MASK_6
+BM_RFTXSERVICE_TXSYSEVENT_TXBUF             EQU ( BIT_MASK_5 | BIT_MASK_4 | BIT_MASK_3 | BIT_MASK_2 | BIT_MASK_1 | BIT_MASK_0 )
+BM_RFTXSERVICE_TXSYSEVENT_TXBUF5            EQU BIT_MASK_5
+BM_RFTXSERVICE_TXSYSEVENT_TXBUF4            EQU BIT_MASK_4
+BM_RFTXSERVICE_TXSYSEVENT_TXBUF3            EQU BIT_MASK_3
+BM_RFTXSERVICE_TXSYSEVENT_TXBUF2            EQU BIT_MASK_2
+BM_RFTXSERVICE_TXSYSEVENT_TXBUF1            EQU BIT_MASK_1
+BM_RFTXSERVICE_TXSYSEVENT_TXBUF0            EQU BIT_MASK_0
+
+/* ------------------------------------------------------------------------- */
+/* sRfTxServicePathConfig.bTxPreambleSysEvent                                 */
+/* ------------------------------------------------------------------------- */
+RFTXSERVICE_TXPREAMBLESYSEVENT_TXPREAMBLEBUF_EVENT_MASK EQU BIT_5
+RFTXSERVICE_TXPREAMBLESYSEVENT_TXPREAMBLEBUF4           EQU BIT_4
+RFTXSERVICE_TXPREAMBLESYSEVENT_TXPREAMBLEBUF3           EQU BIT_3
+RFTXSERVICE_TXPREAMBLESYSEVENT_TXPREAMBLEBUF2           EQU BIT_2
+RFTXSERVICE_TXPREAMBLESYSEVENT_TXPREAMBLEBUF1           EQU BIT_1
+RFTXSERVICE_TXPREAMBLESYSEVENT_TXPREAMBLEBUF0           EQU BIT_0
+
+BM_RFTXSERVICE_TXPREAMBLESYSEVENT_TXPREAMBLEBUF_EVENT_MASK  EQU BIT_MASK_5
+BM_RFTXSERVICE_TXPREAMBLESYSEVENT_TXPREAMBLEBUF             EQU ( BIT_MASK_4 | BIT_MASK_3 | BIT_MASK_2 | BIT_MASK_1 | BIT_MASK_0 )
+BM_RFTXSERVICE_TXPREAMBLESYSEVENT_TXPREAMBLEBUF4            EQU BIT_MASK_4
+BM_RFTXSERVICE_TXPREAMBLESYSEVENT_TXPREAMBLEBUF3            EQU BIT_MASK_3
+BM_RFTXSERVICE_TXPREAMBLESYSEVENT_TXPREAMBLEBUF2            EQU BIT_MASK_2
+BM_RFTXSERVICE_TXPREAMBLESYSEVENT_TXPREAMBLEBUF1            EQU BIT_MASK_1
+BM_RFTXSERVICE_TXPREAMBLESYSEVENT_TXPREAMBLEBUF0            EQU BIT_MASK_0
+
+/*stopSimExtraction*/
+
+#endif
+#endif /* RFTX_DEFS_H */

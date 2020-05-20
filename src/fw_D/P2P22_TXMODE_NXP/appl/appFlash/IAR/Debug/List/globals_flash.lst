@@ -1,0 +1,389 @@
+###############################################################################
+#
+# IAR C/C++ Compiler V7.10.1.1197 for Atmel AVR           13/May/2020  17:03:21
+# Copyright 1996-2017 IAR Systems AB.
+# Network license: dvriar01.mchp-main.com (STD)
+#
+#    Source file  =  
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\firmware\globals\src\globals_flash.c
+#    Command line =  
+#        -f C:\Users\C41045\AppData\Local\Temp\EW15F5.tmp
+#        (C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\firmware\globals\src\globals_flash.c
+#        -v3 --enhanced_core -ms -o
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\Obj
+#        -lCN
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\List
+#        -lA
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\List
+#        --no_cse --no_inline --no_code_motion --no_cross_call --no_clustering
+#        --no_tbaa --debug --64k_flash -DENABLE_BIT_DEFINITIONS -e
+#        --eeprom_size 2304 --clib -Ohz)
+#    Locale       =  English_USA.1252
+#    List file    =  
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\List\globals_flash.lst
+#    Object file  =  
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\Obj\globals_flash.r90
+#
+###############################################################################
+
+C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\firmware\globals\src\globals_flash.c
+      1          //lint -e9059
+      2          /******************************************************************************
+      3            Use of this software is subject to Microchip's Software License Agreement.
+      4          --------------------------------------------------------------------------------
+      5            $URL: http://svnservulm.corp.atmel.com/svn/CDB/Apps/SW_Lib/Car_Access/CARS_GEN2/ATAB5702A/Branches/P2P22_TXMODE_NXP/firmware/globals/src/globals_flash.c $
+      6            $LastChangedRevision: 458065 $
+      7            $LastChangedDate: 2017-05-02 04:55:50 -0600 (Tue, 02 May 2017) $
+      8            $LastChangedBy: krishna.balan $
+      9          -------------------------------------------------------------------------------
+     10            Project:      ATA5700
+     11            Target MCU:   ATA5700
+     12            Compiler:     IAR C/C++ Compiler for AVR 6.3.18.0
+     13          -------------------------------------------------------------------------------
+     14          
+     15          ******************************************************************************
+     16          * Copyright 2017, Microchip Technology Incorporated and its subsidiaries.     *
+     17          *                                                                             *
+     18          * This software is owned by the Microchip Technology Incorporated.            *
+     19          * Microchip hereby grants to licensee a personal                              *
+     20          * non-exclusive, non-transferable license to copy, use, modify, create        *
+     21          * derivative works of, and compile the Microchip Source Code and derivative   *
+     22          * works for the sole and exclusive purpose of creating custom software in     *
+     23          * support of licensee product to be used only in conjunction with a Microchip *
+     24          * integrated circuit as specified in the applicable agreement. Any            *        
+     25          * reproduction, modification, translation, compilation, or representation of  *
+     26          * this software except as specified above is prohibited without the express   *
+     27          * written permission of Microchip.                                            *
+     28          *                                                                             *
+     29          * Disclaimer: MICROCHIP MAKES NO WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,    *
+     30          * WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED    *
+     31          * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.         *
+     32          * Microchip reserves the right to make changes without further notice to the  *
+     33          * materials described herein. Microchip does not assume any liability arising *
+     34          * out of the application or use of any product or circuit described herein.   *
+     35          * Microchip does not authorize its products for use as critical components in *
+     36          * life-support systems where a malfunction or failure may reasonably be       *
+     37          * expected to result in significant injury to the user. The inclusion of      *
+     38          * Microchip products in a life-support systems application implies that the   *
+     39          * manufacturer assumes all risk of such use and in doing so indemnifies       *
+     40          * Microchip against all charges.                                              *
+     41          *                                                                             *
+     42          * Use may be limited by and subject to the applicable Microchip software      *
+     43          * license agreement.                                                          *
+     44          ******************************************************************************/
+     45          /** \file globals_flash.c
+     46           */
+     47          
+     48          //lint -restore
+     49          
+     50          /*===========================================================================*/
+     51          /*  INCLUDES                                                                 */
+     52          /*===========================================================================*/
+     53          #include "globals_flash.h"
+
+   \                                 In  segment ABSOLUTE, at 0x49
+   \   union <unnamed> volatile __io _A_LDFCKSW
+   \                     _A_LDFCKSW:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0xcc
+   \   union <unnamed> volatile __io _A_SUPCR
+   \                     _A_SUPCR:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x1e3
+   \   union <unnamed> volatile __ext_io _A_CMCR
+   \                     _A_CMCR:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x1e4
+   \   union <unnamed> volatile __ext_io _A_CMIMR
+   \                     _A_CMIMR:
+   \   00000000                      DS8 1
+     54          #include "../../spi/src/ata5700_command_set_flash.h"
+     55          #include "../../init/src/init_flash.h"
+     56          #include "../../system/src/system_flash.h"
+     57          
+     58          /*===========================================================================*/
+     59          /*  DEFINES                                                                  */
+     60          /*===========================================================================*/
+     61          
+     62          /*===========================================================================*/
+     63          /*  Modul Globals                                                            */
+     64          /*===========================================================================*/
+     65          
+     66          /*===========================================================================*/
+     67          /*  IMPLEMENTATION                                                           */
+     68          /*===========================================================================*/
+     69          
+     70          //-----------------------------------------------------------------------------
+     71          /** \brief <b>ATA_globalsSwitchAvrPhClock_flash_C</b>
+     72              Shall handle the clock switch for the PH_CRC and PH_FIFO from the AVR clock
+     73              to PH clock and vice versa.
+     74          
+     75              010: Clocks are switched as defined by 'uSwitchValue' (see register
+     76                   description of LDFCKSW). Afterwards the function waits till the status
+     77                   register has the value of 'uStatusValue'.
+     78          
+     79              \param[in]  uSwitchValue    value for clock switch
+     80          
+     81              \return none
+     82          
+     83              \Derived yes
+     84          
+     85              \Rationale In order to provide access to the Protocol Handler(PH) FIFO for
+     86                         both the AVR and the Protocol Handler itself, a means to switch
+     87                         the clocks is necessary.
+     88          
+     89              \Traceability None
+     90          
+     91              \StackUsage SU_XXX bytes
+     92          
+     93              \image none
+     94              \n
+     95          */
+     96          /*---------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+     97          void ATA_globalsSwitchAvrPhClock_flash_C(uint8_t bSwitchValue)
+   \                     ATA_globalsSwitchAvrPhClock_flash_C:
+     98          {
+     99            /* LLR-Ref: 010 */
+    100            LDFCKSW = bSwitchValue;
+   \   00000000   BD09               OUT     0x29, R16
+    101            while(LDFCKSW != bSwitchValue);
+   \                     ??ATA_globalsSwitchAvrPhClock_flash_C_0:
+   \   00000002   B519               IN      R17, 0x29
+   \   00000004   1710               CP      R17, R16
+   \   00000006   F7E9               BRNE    ??ATA_globalsSwitchAvrPhClock_flash_C_0
+    102          }
+   \   00000008   9508               RET
+   \   0000000A                      REQUIRE _A_LDFCKSW
+    103          
+    104          /*-----------------------------------------------------------------------------*/
+    105          /**  \brief <b>ATA_globalsExtClockMonitoringInterrupt_ISR_C</b>
+    106              this interrupt service routine is triggered to indicate that
+    107              external clock input is lost.
+    108          
+    109              HW considerations:
+    110              Clock monitoring and the corresponding interrupt must be enabled
+    111              Clock is automatically switched to MRC, i.e. CCS bit is set to 0.
+    112          
+    113              \param[out]  g_sCalibConfig     Calibration component data
+    114          
+    115              \return     VOIDFUNC
+    116          
+    117              \Derived    No
+    118          
+    119              \Rationale  N/A
+    120          
+    121              \Traceability   Primus2P-???,
+    122                              Primus2P-???
+    123          
+    124              \StackUsage     SU_XXX bytes
+    125          
+    126              \image html ATA_globalsExtClockMonitoringInterrupt_ISR_C.png
+    127              \image rtf ATA_globalsExtClockMonitoringInterrupt_ISR_C.png
+    128              \n
+    129          
+    130          */
+    131          /*-----------------------------------------------------------------------------*/
+    132          #pragma vector=EXCM_vect
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    133          __interrupt VOIDFUNC ATA_globalsExtClockMonitoringInterrupt_ISR_flash_C(void)
+   \                     ATA_globalsExtClockMonitoringInterrupt_ISR_flash_C:
+    134          {
+   \   00000000   938A               ST      -Y, R24
+   \   00000002   93FA               ST      -Y, R31
+   \   00000004   93EA               ST      -Y, R30
+   \   00000006   923A               ST      -Y, R3
+   \   00000008   922A               ST      -Y, R2
+   \   0000000A   921A               ST      -Y, R1
+   \   0000000C   920A               ST      -Y, R0
+   \   0000000E   937A               ST      -Y, R23
+   \   00000010   936A               ST      -Y, R22
+   \   00000012   935A               ST      -Y, R21
+   \   00000014   934A               ST      -Y, R20
+   \   00000016   933A               ST      -Y, R19
+   \   00000018   932A               ST      -Y, R18
+   \   0000001A   931A               ST      -Y, R17
+   \   0000001C   930A               ST      -Y, R16
+   \   0000001E   B78F               IN      R24, 0x3F
+    135              uint8_t cmcr = CMCR & (~BM_CMONEN);
+   \   00000020   9100....           LDS     R16, _A_CMCR
+    136          
+    137              /* Disable DVCC High Enable */
+    138              SUPCR &= ~BM_DVHEN;
+   \   00000024   911000CC           LDS     R17, 204
+   \   00000028   7D1F               ANDI    R17, 0xDF
+   \   0000002A   931000CC           STS     204, R17
+    139          
+    140              /* Disable Clock monitor, since ext. clock is broken to avoid multiple
+    141                 execution of this interrupt. */
+    142              CMCR = BM_CMCCE;
+   \   0000002E   E810               LDI     R17, 128
+   \   00000030   9310....           STS     _A_CMCR, R17
+    143              CMCR = cmcr;
+   \   00000034   7B0F               ANDI    R16, 0xBF
+   \   00000036   9300....           STS     _A_CMCR, R16
+    144          
+    145              CMIMR &= ~BM_ECIE;
+   \   0000003A   910001E4           LDS     R16, 484
+   \   0000003E   7F0E               ANDI    R16, 0xFE
+   \   00000040   930001E4           STS     484, R16
+    146          
+    147              /* It has to be decided whether switching off MVCC (including the defined
+    148                 EEPROM wait time is to be done */
+    149          
+    150              /* Set event flag */
+    151              g_sAta5700_flash.events_system |= BM_ATA5700_EVENTS_SYSTEM_EXTCLOCK_ERR;
+   \   00000044   ....               LDI     R30, LOW(g_sAta5700_flash)
+   \   00000046   ....               LDI     R31, (g_sAta5700_flash) >> 8
+   \   00000048   8100               LD      R16, Z
+   \   0000004A   6008               ORI     R16, 0x08
+   \   0000004C   8300               ST      Z, R16
+    152          
+    153              /* Do event pin handling */
+    154              if ( g_sEventHandling_flash.bSystem & BM_ATA5700_EVENTS_SYSTEM_EXTCLOCK_ERR )
+   \   0000004E   9100....           LDS     R16, (g_sEventHandling_flash + 1)
+   \   00000052   FF03               SBRS    R16, 3
+   \   00000054   C002               RJMP    ??ATA_globalsExtClockMonitoringInterrupt_ISR_fl_0
+    155              {
+    156                  ATA_systemSetEventPin_flash_ASM();
+   \   00000056   ........           CALL    ATA_systemSetEventPin_flash_ASM
+    157              }
+    158          }
+   \                     ??ATA_globalsExtClockMonitoringInterrupt_ISR_fl_0:
+   \   0000005A                      REQUIRE ?Subroutine0
+   \   0000005A                      REQUIRE _A_CMCR
+   \   0000005A                      REQUIRE _A_SUPCR
+   \   0000005A                      REQUIRE _A_CMIMR
+   \   0000005A                      ;               // Fall through to label ?Subroutine0
+
+   \                                 In  segment CODE, align 2, keep-with-next
+   \                     ?Subroutine0:
+   \   00000000   BF8F               OUT     0x3F, R24
+   \   00000002   9109               LD      R16, Y+
+   \   00000004   9119               LD      R17, Y+
+   \   00000006   9129               LD      R18, Y+
+   \   00000008   9139               LD      R19, Y+
+   \   0000000A   9149               LD      R20, Y+
+   \   0000000C   9159               LD      R21, Y+
+   \   0000000E   9169               LD      R22, Y+
+   \   00000010   9179               LD      R23, Y+
+   \   00000012   9009               LD      R0, Y+
+   \   00000014   9019               LD      R1, Y+
+   \   00000016   9029               LD      R2, Y+
+   \   00000018   9039               LD      R3, Y+
+   \   0000001A   91E9               LD      R30, Y+
+   \   0000001C   91F9               LD      R31, Y+
+   \   0000001E   9189               LD      R24, Y+
+   \   00000020   9518               RETI
+    159          
+    160          /*---------------------------------------------------------------------------*/
+    161          /** \brief <b>ATA_globalsTimer0Interrupt_ISR_flash_C</b>
+    162              shall handle the Timer 0 interrupt.
+    163          
+    164              \return VOIDFUNC
+    165          
+    166              \Derived no
+    167          
+    168              \Rationale none
+    169          
+    170              \Traceability
+    171          
+    172              \StackUsage SU_XXX bytes
+    173          
+    174              \image html ATA_globalsTimer0Interrupt_ISR_flash_C.png
+    175              \image rtf ATA_globalsTimer0Interrupt_ISR_flash_C.png
+    176              \n
+    177          */
+    178          /*---------------------------------------------------------------------------*/
+    179          #pragma vector=T0INT_vect
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    180          __interrupt VOIDFUNC ATA_globalsTimer0Interrupt_ISR_flash_C(void)
+   \                     ATA_globalsTimer0Interrupt_ISR_flash_C:
+    181          {
+   \   00000000   938A               ST      -Y, R24
+   \   00000002   93FA               ST      -Y, R31
+   \   00000004   93EA               ST      -Y, R30
+   \   00000006   923A               ST      -Y, R3
+   \   00000008   922A               ST      -Y, R2
+   \   0000000A   921A               ST      -Y, R1
+   \   0000000C   920A               ST      -Y, R0
+   \   0000000E   937A               ST      -Y, R23
+   \   00000010   936A               ST      -Y, R22
+   \   00000012   935A               ST      -Y, R21
+   \   00000014   934A               ST      -Y, R20
+   \   00000016   933A               ST      -Y, R19
+   \   00000018   932A               ST      -Y, R18
+   \   0000001A   931A               ST      -Y, R17
+   \   0000001C   930A               ST      -Y, R16
+   \   0000001E   B78F               IN      R24, 0x3F
+    182              /* Check if EOT has been detected */
+    183              g_sAta5700_flash.events_system |= BM_ATA5700_EVENTS_SYSTEM_TIMER_0;
+   \   00000020   ....               LDI     R30, LOW(g_sAta5700_flash)
+   \   00000022   ....               LDI     R31, (g_sAta5700_flash) >> 8
+   \   00000024   8100               LD      R16, Z
+   \   00000026   6001               ORI     R16, 0x01
+   \   00000028   8300               ST      Z, R16
+    184          
+    185              /* Do event pin handling */
+    186              if ( g_sEventHandling_flash.bSystem & BM_ATA5700_EVENTS_SYSTEM_TIMER_0 )
+   \   0000002A   9100....           LDS     R16, (g_sEventHandling_flash + 1)
+   \   0000002E   FF00               SBRS    R16, 0
+   \   00000030   C002               RJMP    ??ATA_globalsTimer0Interrupt_ISR_flash_C_0
+    187              {
+    188                  ATA_systemSetEventPin_flash_ASM();
+   \   00000032   ........           CALL    ATA_systemSetEventPin_flash_ASM
+    189              }
+    190          }
+   \                     ??ATA_globalsTimer0Interrupt_ISR_flash_C_0:
+   \   00000036   ....               RJMP    ?Subroutine0
+
+   \                                 In  segment INTVEC, offset 0x20, root
+   \                     `??ATA_globalsTimer0Interrupt_ISR_flash_C::??INT`:
+   \   00000020   ........           JMP     ATA_globalsTimer0Interrupt_ISR_flash_C
+
+   \                                 In  segment INTVEC, offset 0xb0, root
+   \                     ??ATA_globalsExtClockMonitoringInterrupt_ISR_fl_1:
+   \   000000B0   ........           JMP     ATA_globalsExtClockMonitoringInterrupt_ISR_flash_C
+
+   Maximum stack usage in bytes:
+
+   CSTACK RSTACK Function
+   ------ ------ --------
+     15      2   ATA_globalsExtClockMonitoringInterrupt_ISR_flash_C
+       15      2   -> ATA_systemSetEventPin_flash_ASM
+      0      2   ATA_globalsSwitchAvrPhClock_flash_C
+     15      2   ATA_globalsTimer0Interrupt_ISR_flash_C
+       15      2   -> ATA_systemSetEventPin_flash_ASM
+
+
+   Segment part sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+      34  ?Subroutine0
+      90  ATA_globalsExtClockMonitoringInterrupt_ISR_flash_C
+       4  ATA_globalsExtClockMonitoringInterrupt_ISR_flash_C::??INTVEC 176
+      10  ATA_globalsSwitchAvrPhClock_flash_C
+      56  ATA_globalsTimer0Interrupt_ISR_flash_C
+       4  ATA_globalsTimer0Interrupt_ISR_flash_C::??INTVEC 32
+       1  _A_CMCR
+       1  _A_CMIMR
+       1  _A_LDFCKSW
+       1  _A_SUPCR
+
+ 
+   4 bytes in segment ABSOLUTE
+ 190 bytes in segment CODE
+   8 bytes in segment INTVEC
+ 
+ 190 bytes of CODE memory (+ 8 bytes shared)
+   0 bytes of DATA memory (+ 4 bytes shared)
+
+Errors: none
+Warnings: none

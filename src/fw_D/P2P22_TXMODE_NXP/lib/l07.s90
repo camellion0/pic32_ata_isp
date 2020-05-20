@@ -1,0 +1,2599 @@
+;----------------------------------------------------------------------------
+;
+;  Library routines for the ATMEL AT90S processors
+;  Memory to memory copy
+; 
+;  Copyright 1999-2008 IAR Systems AB. All rights reserved.
+; 
+;  $Revision: 328482 $
+;
+;---------------------------------------------------------------------------- 
+
+#include "macros.m90"
+
+    MODULE  ?MOVE_LONG_L07
+
+;----------------------------------------------------------------------------
+;
+;
+;
+;
+#ifdef A90_TINY_INDEX
+    PUBLIC  ?ML_SRAM_SRAM_8_L07
+#else 
+#ifndef A90_EXTENDED_DATA
+    PUBLIC  ?ML_SRAM_SRAM_16_L07
+#else
+    PUBLIC  ?ML_SRAM_SRAM_24_L07
+#endif /* A90_EXTENDED_DATA */
+#endif /* !A90_TINY_INDEX */
+
+#ifdef A90_TINY_INDEX
+    RSEG    CODE:CODE:NOROOT
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_SRAM_SRAM_8_L07:
+    PUSH    X0
+    MOV     X0,P0
+?LOOP1:  
+    LD      T0,Z+
+    ST      X+,T0
+    DEC     Q0
+    BRNE    ?LOOP1
+    POP     X0
+    RET
+#else
+#ifndef A90_EXTENDED_DATA
+    RSEG    CODE:CODE:NOROOT
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_SRAM_SRAM_16_L07:
+    PUSH    X0
+    PUSH    X1
+#ifdef __HAS_ENHANCED_CORE__
+    MOVW    X1:X0,P1:P0
+#else
+    MOV     X1,P1
+    MOV     X0,P0
+#endif
+?LOOP2:  
+    LD      T0,Z+
+    ST      X+,T0
+    SUBI    Q0,1
+    SBCI    Q1,0
+    BRNE    ?LOOP2
+    POP     X1
+    POP     X0
+    RET
+#else
+    RSEG    CODE:CODE:NOROOT
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_SRAM_SRAM_24_L07:
+    PUSH    X0
+    PUSH    X1
+#ifdef __HAS_ENHANCED_CORE__
+    MOVW    X1:X0,P1:P0
+#else
+    MOV     X1,P1
+    MOV     X0,P0
+#endif
+    OUT     RAMPZ,Z2
+    OUT     RAMPX,P2
+?LOOP3:  
+    LD      T0,Z+
+    ST      X+,T0
+    SUBI    Q0,1
+    SBCI    Q1,0
+    SBCI    Q2,0
+    BRNE    ?LOOP3
+    POP     X1
+    POP     X0
+    RET
+#endif /* A90_EXTENDED_DATA */
+#endif /* !A90_TINY_INDEX */
+
+
+;----------------------------------------------------------------------------
+;
+;
+;
+;
+#ifdef A90_TINY_INDEX
+#ifdef __HAS_ENHANCED_CORE__
+    PUBLIC  ?ML_FLASH_SRAM_16EC_8_L07
+#else  /* !__HAS_ENHANCED_CORE__ */
+    PUBLIC  ?ML_FLASH_SRAM_16_8_L07
+#endif
+#else
+#ifndef A90_EXTENDED_DATA
+#ifdef __HAS_ENHANCED_CORE__
+    PUBLIC  ?ML_FLASH_SRAM_16EC_16_L07
+#else  /* !__HAS_ENHANCED_CORE__ */
+    PUBLIC  ?ML_FLASH_SRAM_16_16_L07
+#endif
+#else
+#ifdef __HAS_ENHANCED_CORE__
+    PUBLIC  ?ML_FLASH_SRAM_16EC_24_L07
+#else  /* !__HAS_ENHANCED_CORE__ */
+    PUBLIC  ?ML_FLASH_SRAM_16_24_L07
+#endif
+#endif /* A90_EXTENDED_DATA */
+#endif /* !A90_TINY_INDEX */
+
+#ifdef __HAS_ELPM__
+#ifdef A90_TINY_INDEX
+#ifdef __HAS_ENHANCED_CORE__
+    PUBLIC  ?ML_FLASH_SRAM_24EC_8_L07
+#else  /* !__HAS_ENHANCED_CORE__ */
+    PUBLIC  ?ML_FLASH_SRAM_24_8_L07
+#endif
+#else
+#ifndef A90_EXTENDED_DATA
+#ifdef __HAS_ENHANCED_CORE__
+    PUBLIC  ?ML_FLASH_SRAM_24EC_16_L07
+#else  /* !__HAS_ENHANCED_CORE__ */
+    PUBLIC  ?ML_FLASH_SRAM_24_16_L07
+#endif
+#else
+#ifdef __HAS_ENHANCED_CORE__
+    PUBLIC  ?ML_FLASH_SRAM_24EC_24_L07
+#else  /* !__HAS_ENHANCED_CORE__ */
+    PUBLIC  ?ML_FLASH_SRAM_24_24_L07
+#endif
+#endif /* A90_EXTENDED_DATA */
+#endif /* !A90_TINY_INDEX */
+#endif /* __HAS_ELPM__ */
+
+#ifdef A90_TINY_INDEX
+#ifdef __HAS_ENHANCED_CORE__
+    RSEG    CODE:CODE:NOROOT
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_FLASH_SRAM_16EC_8_L07:
+    PUSH    X0
+    MOV     X0,P0
+?LOOP5:  
+    LPM     T0,Z+
+    ST      X+,T0
+    DEC     Q0
+    BRNE    ?LOOP5
+    POP     X0
+    RET
+#else  /* !__HAS_ENHANCED_CORE__ */
+    RSEG    CODE:CODE:NOROOT
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_FLASH_SRAM_16_8_L07:
+    PUSH    X0
+    MOV     X0,P0
+?LOOP4:  
+    LPM     /* T0,Z */
+    ADIW    R31:R30,1
+    ST      X+,T0
+    DEC     Q0
+    BRNE    ?LOOP4
+    POP     X0
+    RET
+#endif
+#else
+#ifndef A90_EXTENDED_DATA
+#ifdef __HAS_ENHANCED_CORE__
+    RSEG    CODE:CODE:NOROOT
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_FLASH_SRAM_16EC_16_L07:
+    PUSH    X0
+    PUSH    X1
+    MOVW    X1:X0,P1:P0
+?LOOP7:  
+    LPM     T0,Z+
+    ST      X+,T0
+    SUBI    Q0,1
+    SBCI    Q1,0
+    BRNE    ?LOOP7
+    POP     X1
+    POP     X0
+    RET
+#else  /* !__HAS_ENHANCED_CORE__ */
+    RSEG    CODE:CODE:NOROOT
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_FLASH_SRAM_16_16_L07:
+    PUSH    X0
+    PUSH    X1
+    MOV     X1,P1
+    MOV     X0,P0
+?LOOP6:  
+    LPM     /* T0,Z */
+    ADIW    R31:R30,1
+    ST      X+,T0
+    SUBI    Q0,1
+    SBCI    Q1,0
+    BRNE    ?LOOP6
+    POP     X1
+    POP     X0
+    RET
+#endif
+
+#else
+#ifdef __HAS_ENHANCED_CORE__
+    RSEG    CODE:CODE:NOROOT
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_FLASH_SRAM_16EC_24_L07:
+    PUSH    X0
+    PUSH    X1
+    MOVW    X1:X0,P1:P0
+    OUT     RAMPX,P2
+?LOOP9:
+    LPM     T0,Z+
+    ST      X+,T0
+    SUBI    Q0,1
+    SBCI    Q1,0
+    BRNE    ?LOOP9
+    POP     X1
+    POP     X0
+    RET
+#else  /* !__HAS_ENHANCED_CORE__ */
+    RSEG    CODE:CODE:NOROOT
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_FLASH_SRAM_16_24_L07:
+    PUSH    X0
+    PUSH    X1
+    MOV     X1,P1
+    MOV     X0,P0
+    OUT     RAMPX,P2
+?LOOP8:
+    LPM     /* T0,Z */
+    ADIW    R31:R30,1
+    ST      X+,T0
+    SUBI    Q0,1
+    SBCI    Q1,0
+    BRNE    ?LOOP8
+    POP     X1
+    POP     X0
+    RET
+#endif
+
+#endif /* A90_EXTENDED_DATA */
+#endif /* !A90_TINY_INDEX */
+
+#ifdef __HAS_ELPM__
+#ifdef A90_TINY_INDEX
+#ifdef __HAS_ENHANCED_CORE__
+    RSEG    CODE:CODE:NOROOT
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_FLASH_SRAM_24EC_8_L07:
+    PUSH    X0
+    MOV     X0,P0
+    OUT     RAMPZ,Z2
+?LOOP11:
+    ELPM    T0,Z+
+    ST      X+,T0
+    DEC     Q0
+    BRNE    ?LOOP11
+    POP     X0
+    RET
+#else  /* !__HAS_ENHANCED_CORE__ */
+    RSEG    CODE:CODE:NOROOT
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_FLASH_SRAM_24_8_L07:
+    PUSH    X0
+    MOV     X0,P0
+?LOOP10:
+    OUT     RAMPZ,Z2
+    ELPM    /* T0,Z */
+    SUBI    Z0,-1
+    SBCI    Z1,-1
+    SBCI    Z2,-1
+    ST      X+,T0
+    DEC     Q0
+    BRNE    ?LOOP10
+    POP     X0
+    RET
+#endif
+
+#else
+#ifndef A90_EXTENDED_DATA
+#ifdef __HAS_ENHANCED_CORE__
+    RSEG    CODE:CODE:NOROOT
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_FLASH_SRAM_24EC_16_L07:
+    PUSH    X0
+    PUSH    X1
+    MOVW    X1:X0,P1:P0
+    OUT     RAMPZ,Z2
+?LOOP13:     
+    ELPM    T0,Z+
+    ST      X+,T0
+    SUBI    Q0,1
+    SBCI    Q1,0
+    BRNE    ?LOOP13
+    POP     X1
+    POP     X0
+    RET
+#else  /* !__HAS_ENHANCED_CORE__ */
+    RSEG    CODE:CODE:NOROOT
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_FLASH_SRAM_24_16_L07:
+    PUSH    X0
+    PUSH    X1
+    MOV     X1,P1
+    MOV     X0,P0
+?LOOP12:
+    OUT     RAMPZ,Z2
+    ELPM    /* T0,Z */
+    SUBI    Z0,-1
+    SBCI    Z1,-1
+    SBCI    Z2,-1
+    ST      X+,T0
+    SUBI    Q0,1
+    SBCI    Q1,0
+    BRNE    ?LOOP12
+    POP     X1
+    POP     X0
+    RET
+#endif
+
+#else
+#ifdef __HAS_ENHANCED_CORE__
+    RSEG    CODE:CODE:NOROOT
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_FLASH_SRAM_24EC_24_L07:
+    PUSH    X0
+    PUSH    X1
+    MOVW    X1:X0,P1:P0
+    OUT     RAMPX,P2
+    OUT     RAMPZ,Z2
+?LOOP15: 
+    ELPM    T0,Z+
+    ST      X+,T0
+    SUBI    Q0,1
+    SBCI    Q1,0
+    SBCI    Q2,0
+    BRNE    ?LOOP15
+    POP     X1
+    POP     X0
+    RET
+#else  /* !__HAS_ENHANCED_CORE__ */
+    RSEG    CODE:CODE:NOROOT
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_FLASH_SRAM_24_24_L07:
+    PUSH    X0
+    PUSH    X1
+    MOV     X1,P1
+    MOV     X0,P0
+    OUT     RAMPX,P2
+?LOOP14: 
+    OUT     RAMPZ,Z2
+    ELPM    /* T0,Z */
+    SUBI    Z0,-1
+    SBCI    Z1,-1
+    SBCI    Z2,-1
+    ST      X+,T0
+    SUBI    Q0,1
+    SBCI    Q1,0
+    SBCI    Q2,0
+    BRNE    ?LOOP14
+    POP     X1
+    POP     X0
+    RET
+#endif
+
+#endif /* A90_EXTENDED_DATA */
+#endif /* !A90_TINY_INDEX */
+
+#endif /* __HAS_ELPM__ */
+
+;----------------------------------------------------------------------------
+;
+;
+;
+;
+#ifdef A90_16BIT_GENERIC
+    PUBLIC  ?ML_GENERIC16_SRAM_L07
+
+    RSEG    CODE:CODE:NOROOT
+
+?ML_GENERIC16_SRAM_L07:
+    SBRS    Z1,7
+#ifdef A90_TINY_INDEX
+    RJMP    ?ML_SRAM_SRAM_8_L07
+#ifdef __HAS_ENHANCED_CORE__
+    RJMP    ?ML_FLASH_SRAM_16EC_8_L07
+#else
+    RJMP    ?ML_FLASH_SRAM_16_8_L07
+#endif
+#else  /* !A90_TINY_INDEX */
+    RJMP    ?ML_SRAM_SRAM_16_L07
+#ifdef __HAS_ENHANCED_CORE__
+    RJMP    ?ML_FLASH_SRAM_16EC_16_L07
+#else
+    RJMP    ?ML_FLASH_SRAM_16_16_L07
+#endif
+#endif /* A90_TINY_INDEX */
+
+#endif /* A90_16BIT_GENERIC */
+
+;----------------------------------------------------------------------------
+;
+;
+;
+;
+#ifdef A90_24BIT_GENERIC
+    PUBLIC  ?ML_GENERIC24_SRAM_L07
+
+    RSEG    CODE:CODE:NOROOT
+
+?ML_GENERIC24_SRAM_L07:
+    SBRS    Z2,7
+#ifdef A90_EXTENDED_DATA
+    RJMP    ?ML_SRAM_SRAM_24_L07
+#ifdef __HAS_ELPM__
+#ifdef __HAS_ENHANCED_CORE__
+    RJMP    ?ML_FLASH_SRAM_24EC_24_L07
+#else
+    RJMP    ?ML_FLASH_SRAM_24_24_L07
+#endif
+#else
+#ifdef __HAS_ENHANCED_CORE__
+    RJMP    ?ML_FLASH_SRAM_16EC_24_L07
+#else
+    RJMP    ?ML_FLASH_SRAM_16_24_L07
+#endif
+#endif
+
+#else /* !A90_EXTENDED_DATA */
+
+#ifdef A90_TINY_INDEX
+    RJMP    ?ML_SRAM_SRAM_8_L07
+#else
+    RJMP    ?ML_SRAM_SRAM_16_L07
+#endif
+#ifdef A90_TINY_INDEX
+#ifdef __HAS_ELPM__
+#ifdef __HAS_ENHANCED_CORE__
+    RJMP    ?ML_FLASH_SRAM_24EC_8_L07
+#else
+    RJMP    ?ML_FLASH_SRAM_24_8_L07
+#endif
+#else
+#ifdef __HAS_ENHANCED_CORE__
+    RJMP    ?ML_FLASH_SRAM_16EC_8_L07
+#else
+    RJMP    ?ML_FLASH_SRAM_16_8_L07
+#endif
+#endif
+#else
+#ifdef __HAS_ELPM__
+#ifdef __HAS_ENHANCED_CORE__
+    RJMP    ?ML_FLASH_SRAM_24EC_16_L07
+#else
+    RJMP    ?ML_FLASH_SRAM_24_16_L07
+#endif
+#else
+#ifdef __HAS_ENHANCED_CORE__
+    RJMP    ?ML_FLASH_SRAM_16EC_16_L07
+#else
+    RJMP    ?ML_FLASH_SRAM_16_16_L07
+#endif
+#endif
+#endif
+#endif
+#endif /* A90_24BIT_GENERIC */
+
+;----------------------------------------------------------------------------
+;
+;
+;
+;
+#ifdef A90_16BIT_GENERIC
+    PUBLIC  ?ML_SRAM_GENERIC16_L07
+
+    RSEG    CODE:CODE:NOROOT
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_SRAM_GENERIC16_L07:
+    SBRC    P1,7
+    RET
+#ifdef A90_TINY_INDEX
+    RJMP    ?ML_SRAM_SRAM_8_L07
+#else  /* !A90_TINY_INDEX */
+    RJMP    ?ML_SRAM_SRAM_16_L07
+#endif
+#endif /* A90_16BIT_GENERIC */
+
+;----------------------------------------------------------------------------
+;
+;
+;
+;
+#ifdef A90_24BIT_GENERIC
+    PUBLIC  ?ML_SRAM_GENERIC24_L07
+
+    RSEG    CODE:CODE:NOROOT
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_SRAM_GENERIC24_L07:
+    SBRC    P2,7
+    RET
+#ifdef A90_EXTENDED_DATA
+    RJMP    ?ML_SRAM_SRAM_24_L07
+#else  /* !A90_EXTENDED_DATA */
+#ifdef A90_TINY_INDEX
+    RJMP    ?ML_SRAM_SRAM_8_L07
+#else
+    RJMP    ?ML_SRAM_SRAM_16_L07
+#endif
+#endif
+#endif /* A90_24BIT_GENERIC */
+
+;----------------------------------------------------------------------------
+;
+;
+;
+;
+#ifdef A90_16BIT_GENERIC
+    PUBLIC  ?ML_FLASH_GENERIC16_L07
+
+    RSEG    CODE:CODE:NOROOT
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_FLASH_GENERIC16_L07:
+    SBRC    P1,7
+    RET
+#ifdef A90_TINY_INDEX
+#ifdef __HAS_ENHANCED_CORE__
+    RJMP    ?ML_FLASH_SRAM_16EC_8_L07
+#else
+    RJMP    ?ML_FLASH_SRAM_16_8_L07
+#endif
+#else  /* !A90_TINY_INDEX */
+#ifdef __HAS_ENHANCED_CORE__
+    RJMP    ?ML_FLASH_SRAM_16EC_16_L07
+#else
+    RJMP    ?ML_FLASH_SRAM_16_16_L07
+#endif
+#endif
+#endif /* A90_16BIT_GENERIC */
+
+;----------------------------------------------------------------------------
+;
+;
+;
+;
+#ifdef A90_24BIT_GENERIC
+    PUBLIC  ?ML_FLASH_GENERIC24_L07
+
+    RSEG    CODE:CODE:NOROOT
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_FLASH_GENERIC24_L07:
+    SBRC    P2,7
+    RET
+#ifdef A90_EXTENDED_DATA
+#ifdef __HAS_ELPM__
+#ifdef __HAS_ENHANCED_CORE__
+    RJMP    ?ML_FLASH_SRAM_24EC_24_L07
+#else
+    RJMP    ?ML_FLASH_SRAM_24_24_L07
+#endif
+#else  /* !__HAS_ELPM__ */
+#ifdef __HAS_ENHANCED_CORE__
+    RJMP    ?ML_FLASH_SRAM_16EC_24_L07
+#else
+    RJMP    ?ML_FLASH_SRAM_16_24_L07
+#endif
+#endif
+#else  /* !A90_EXTENDED_DATA */
+#ifdef A90_TINY_INDEX
+#ifdef __HAS_ELPM__
+#ifdef __HAS_ENHANCED_CORE__
+    RJMP    ?ML_FLASH_SRAM_24EC_8_L07
+#else
+    RJMP    ?ML_FLASH_SRAM_24_8_L07
+#endif
+#else  /* !__HAS_ELPM__ */
+#ifdef __HAS_ENHANCED_CORE__
+    RJMP    ?ML_FLASH_SRAM_16EC_8_L07
+#else
+    RJMP    ?ML_FLASH_SRAM_16_8_L07
+#endif
+#endif
+#else
+#ifdef __HAS_ELPM__
+#ifdef __HAS_ENHANCED_CORE__
+    RJMP    ?ML_FLASH_SRAM_24EC_16_L07
+#else
+    RJMP    ?ML_FLASH_SRAM_24_16_L07
+#endif
+#else  /* !__HAS_ELPM__ */
+#ifdef __HAS_ENHANCED_CORE__
+    RJMP    ?ML_FLASH_SRAM_16EC_16_L07
+#else
+    RJMP    ?ML_FLASH_SRAM_16_16_L07
+#endif
+#endif
+#endif
+#endif
+#endif /* A90_24BIT_GENERIC */
+
+        
+;----------------------------------------------------------------------------
+;
+;
+;
+;
+#ifdef A90_16BIT_GENERIC
+    PUBLIC  ?ML_GENERIC_GENERIC_16_L07
+
+    RSEG    CODE:CODE:NOROOT
+
+?ML_GENERIC_GENERIC_16_L07:
+    SBRC    P1,7
+    RET     /* Can not write to flash */
+    SBRS    Z1,7
+#ifdef A90_TINY_INDEX
+    RJMP    ?ML_SRAM_SRAM_8_L07
+#ifdef __HAS_ENHANCED_CORE__
+    RJMP    ?ML_FLASH_SRAM_16EC_8_L07
+#else
+    RJMP    ?ML_FLASH_SRAM_16_8_L07
+#endif
+#else  /* !A90_TINY_INDEX */
+    RJMP    ?ML_SRAM_SRAM_16_L07
+#ifdef __HAS_ENHANCED_CORE__
+    RJMP    ?ML_FLASH_SRAM_16EC_16_L07
+#else
+    RJMP    ?ML_FLASH_SRAM_16_16_L07
+#endif
+#endif
+#endif /* A90_16BIT_GENERIC */
+
+;----------------------------------------------------------------------------
+;
+;
+;
+;
+#ifdef A90_24BIT_GENERIC
+    PUBLIC  ?ML_GENERIC_GENERIC_24_L07
+
+    RSEG    CODE:CODE:NOROOT
+
+?ML_GENERIC_GENERIC_24_L07:
+    SBRC    P3,7
+    RET     /* Can not write to flash */
+    SBRS    Z2,7
+#ifdef A90_EXTENDED_DATA
+    RJMP    ?ML_SRAM_SRAM_24_L07
+#else  /* !A90_EXTENDED_DATA */
+#ifdef A90_TINY_INDEX
+    RJMP    ?ML_SRAM_SRAM_8_L07
+#else
+    RJMP    ?ML_SRAM_SRAM_16_L07
+#endif
+#endif
+
+#ifdef A90_EXTENDED_DATA
+#ifdef __HAS_ELPM__
+#ifdef __HAS_ENHANCED_CORE__
+    RJMP    ?ML_FLASH_SRAM_24EC_24_L07
+#else
+    RJMP    ?ML_FLASH_SRAM_24_24_L07
+#endif
+#else  /* !__HAS_ELPM__ */
+#ifdef __HAS_ENHANCED_CORE__
+    RJMP    ?ML_FLASH_SRAM_16EC_24_L07
+#else
+    RJMP    ?ML_FLASH_SRAM_16_24_L07
+#endif
+#endif
+#else  /* !A90_EXTENDED_DATA */
+#ifdef A90_TINY_INDEX
+#ifdef __HAS_ELPM__
+#ifdef __HAS_ENHANCED_CORE__
+    RJMP    ?ML_FLASH_SRAM_24EC_8_L07
+#else
+    RJMP    ?ML_FLASH_SRAM_24_8_L07
+#endif
+#else  /* !__HAS_ELPM__ */
+#ifdef __HAS_ENHANCED_CORE__
+    RJMP    ?ML_FLASH_SRAM_16EC_8_L07
+#else
+    RJMP    ?ML_FLASH_SRAM_16_8_L07
+#endif
+#endif
+#else
+#ifdef __HAS_ELPM__
+#ifdef __HAS_ENHANCED_CORE__
+    RJMP    ?ML_FLASH_SRAM_24EC_16_L07
+#else
+    RJMP    ?ML_FLASH_SRAM_24_16_L07
+#endif
+#else  /* !__HAS_ELPM__ */
+#ifdef __HAS_ENHANCED_CORE__
+    RJMP    ?ML_FLASH_SRAM_16EC_16_L07
+#else
+    RJMP    ?ML_FLASH_SRAM_16_16_L07
+#endif
+#endif
+#endif
+#endif
+
+#endif /* A90_24BIT_GENERIC */
+
+;----------------------------------------------------------------------------
+;
+;
+;
+;
+#ifdef A90_16BIT_GENERIC
+    PUBLIC  ?ML_GENERIC16_FARG_L07
+
+    RSEG    CODE:CODE:NOROOT
+
+?ML_GENERIC16_FARG_L07:
+    SBRS    Z1,7
+#ifdef A90_TINY_INDEX
+    RJMP    ?LONG_FARG_8_L07
+    RJMP    ?FLASH_FARG_16_L07
+#else  /* !A90_TINY_INDEX */
+    RJMP    ?LONG_FARG_16_L07
+    RJMP    ?FLASH_FARG_16_L07
+#endif
+#endif /* A90_16BIT_GENERIC */
+
+;----------------------------------------------------------------------------
+;
+;
+;
+;
+#ifdef A90_24BIT_GENERIC
+    PUBLIC  ?ML_GENERIC24_FARG_L07
+
+    RSEG    CODE:CODE:NOROOT
+
+?ML_GENERIC24_FARG_L07:
+    SBRS    Z2,7
+#ifdef A90_EXTENDED_DATA
+    RJMP    ?LONG_FARG_24_L07
+#else  /* !A90_EXTENDED_DATA */
+#ifdef A90_TINY_INDEX
+    RJMP    ?LONG_FARG_8_L07
+#else
+    RJMP    ?LONG_FARG_16_L07
+#endif
+#endif
+#ifdef __HAS_ELPM__
+    RJMP    ?HUGEFLASH_FARG_L07
+#else  /* !__HAS_ELPM__ */
+    RJMP    ?FLASH_FARG_16_L07
+#endif
+#endif /* A90_24BIT_GENERIC */
+
+;-------------------------------------------------------------------------
+;
+; Function:     ?LONG_FARG_8_L07
+;
+; Created:      07/Jun/96 IANP
+;
+; Inputs:       P0  - size > 0 (or only P0 for some proc options)
+;               Z   - src
+;
+; Returns:      Z   - original src
+;               P0  - 0
+;
+; Size:         12/14 bytes
+;
+; Destroys:     P0 T0 Y0 Y1
+;
+; Description:      
+; Push an object of size > 0 on the data stack
+;
+;-------------------------------------------------------------------------
+    PUBLIC  ?LONG_FARG_8_L07
+    RSEG    CODE:CODE:NOROOT
+
+?LONG_FARG_8_L07:
+    ;; Start from the end of the object
+    ADD     Z0,P0
+#if (A90_POINTER_REG_SIZE > 1)
+    LDI     Z1,0
+#endif
+LOOP28:   
+    LD      T0,-Z
+    ST      -Y,T0
+    SUBI    P0,1
+    BRNE    LOOP28
+    RET 
+    
+;-------------------------------------------------------------------------
+;
+; Function:     ?LONG_FARG_16_L07
+;
+; Created:      07/Jun/96 IANP
+;
+; Inputs:       P1:P0   - size > 0 (or only P0 for some proc options)
+;               Z   - src
+;
+; Returns:      Z   - original src
+;               P1:P0   - 0
+;
+; Size:         16 bytes
+;
+; Destroys:     P0 P1 T0 Y0 Y1
+;
+; Description:      
+; Push an object of size > 0 on the data stack
+;
+;-------------------------------------------------------------------------
+    PUBLIC  ?LONG_FARG_16_L07
+    RSEG    CODE:CODE:NOROOT
+
+?LONG_FARG_16_L07:
+    ;; Start from the end of the object
+    ADD     Z0,P0
+    ADC     Z1,P1
+LOOP29:   
+    LD      T0,-Z
+    ST      -Y,T0
+    SUBI    P0,1
+    SBCI    P1,0
+    BRNE    LOOP29
+    RET 
+    
+;-------------------------------------------------------------------------
+;
+; Function:     ?LONG_FARG_24_L07
+;
+; Created:      97 IPEO
+;
+; Inputs:       P1:P0 - size > 0 
+;               Z24   - src
+;
+; Returns:      Z24   - original src
+;               P1:P0 - 0
+;
+; Size:         26 bytes
+;
+; Destroys:     P0 P1 T0 Y0 Y1 
+;
+; Description:      
+; Push an object of size > 0 on the data stack
+;
+;-------------------------------------------------------------------------
+    PUBLIC  ?LONG_FARG_24_L07
+    RSEG    CODE:CODE:NOROOT
+
+?LONG_FARG_24_L07:
+    ;; Start from the end of the object
+    CLR     T0    
+    ADD     Z0,P0
+    ADC     Z1,P1
+    ADC     Z2,T0
+    OUT     RAMPZ,Z2
+LOOP30:   
+    LD      T0,-Z
+    ST      -Y,T0
+    SUBI    P0,1
+    SBCI    P1,0
+    BRNE    LOOP30
+    RET 
+
+;-------------------------------------------------------------------------
+;
+; Function:     ?FLASH_FARG_8_L07
+;
+; Created:      07/Jun/96 IANP
+;
+; Inputs:       P0  - size > 0 (or only P0 for some proc options)
+;               Z   - src
+;
+; Returns:      Z   - original src
+;               P0  - 0
+;
+; Size:         16 bytes
+;
+; Destroys:     P0 T0 Y0 Y1
+;
+; Description:      
+; Push an object of size > 0 from program address space on the data stack
+;
+;-------------------------------------------------------------------------
+    PUBLIC  ?FLASH_FARG_8_L07
+    RSEG    CODE:CODE:NOROOT
+
+?FLASH_FARG_8_L07:
+    ;; Start from the end of the object
+    ADD     Z0,P0
+    LDI     Z1,0
+LOOP31:   
+    SBIW    Z0,1
+    LPM     /* T0 <-- (Z) */
+    ST      -Y,T0
+    SUBI    P0,1
+    BRNE    LOOP31
+    RET 
+    
+;-------------------------------------------------------------------------
+;
+; Function:     ?FLASH_FARG_16_L07
+;
+; Created:      07/Jun/96 IANP
+;
+; Inputs:       P1:P0   - size > 0 (or only P0 for some proc options)
+;               Z   - src
+;
+; Returns:      Z   - original src
+;               P1:P0   - 0
+;
+; Size:         16 bytes
+;
+; Destroys:     P0 P1 T0 Y0 Y1
+;
+; Description:      
+; Push an object of size > 0 from program address space on the data stack
+;
+;-------------------------------------------------------------------------
+    PUBLIC  ?FLASH_FARG_16_L07
+    RSEG    CODE:CODE:NOROOT
+
+?FLASH_FARG_16_L07:
+    ;; Start from the end of the object
+    ADD     Z0,P0
+    ADC     Z1,P1
+
+LOOP34:   
+    SBIW    Z0,1
+    LPM     /* T0 <-- (Z) */
+    ST      -Y,T0
+    SUBI    P0,1
+    SBCI    P1,0
+    BRNE    LOOP34
+    RET 
+
+;-------------------------------------------------------------------------
+;
+; Function:     ?FLASH_FARG_24_L07
+;
+; Created:      97 IPEO
+;
+; Inputs:       P1:P0   - size > 0 
+;               Z24     - src
+;
+; Returns:      Z24 - original src
+;               P1:P0   - 0
+;
+; Size:         ?? bytes
+;
+; Destroys:     P0 P1 T0 Y0 Y1
+;
+; Description:      
+; Push an object of size > 0 from program address space on the data stack
+;
+;-------------------------------------------------------------------------
+#ifdef __HAS_ELPM__
+    PUBLIC  ?FLASH_FARG_24_L07
+    RSEG    CODE:CODE:NOROOT
+
+?FLASH_FARG_24_L07:
+    ;; Start from the end of the object
+    ADD     Z0,P0
+    ADC     Z1,P1
+    OUT     RAMPZ,Z2
+
+LOOP35:   
+    SBIW    Z0,1
+    ELPM    /* T0 <-- (Z24) */
+    ST      -Y,T0
+    SUBI    P0,1
+    SBCI    P1,0
+    BRNE    LOOP35
+
+    RET 
+#endif
+
+;-------------------------------------------------------------------------
+;
+; Function:     ?HUGEFLASH_FARG_L07
+;
+; Created:      97 IPEO
+;
+; Inputs:       P1:P0   - size > 0 
+;               Z24     - src
+;
+; Returns:      Z24 - original src
+;               P1:P0   - 0
+;
+; Size:         32 bytes
+;
+; Destroys:     P0 P1 T0 Y0 Y1
+;
+; Description:      
+; Push an object of size > 0 from program address space on the data stack
+;
+;-------------------------------------------------------------------------
+#ifdef __HAS_ELPM__
+    PUBLIC  ?HUGEFLASH_FARG_L07
+    RSEG    CODE:CODE:NOROOT
+
+?HUGEFLASH_FARG_L07:
+    ;; Start from the end of the object
+    CLR     T0
+    ADD     Z0,P0
+    ADC     Z1,P1
+    ADC     Z2,T0
+    OUT     RAMPZ,Z2
+
+LOOP36:   
+    SBIW    Z0,1
+    SBCI    Z2,0
+    OUT     RAMPZ,Z2
+    ELPM    /* T0 <-- (Z24) */
+    ST      -Y,T0
+    SUBI    P0,1
+    SBCI    P1,0
+    BRNE    LOOP36
+
+    RET 
+#endif
+        
+;-------------------------------------------------------------------------
+;
+; Function: ?MEMCLR_L07
+;
+; Created:  09/Feb/99 IANP
+;
+; Inputs:   Q1:Q0   - count. Must always be > 0!
+;           Z   - dest (data address space)
+;
+; Returns:  P1:P0   - Original Z
+;
+; Size:     16 bytes
+;
+; Destroys: Q0 Q1 T0 Z0 Z1
+;
+; Description:  Set a memory range to zero in the data address space.
+;
+;-------------------------------------------------------------------------
+    PUBLIC  ?MEMCLR_8_L07
+    PUBLIC  ?MEMCLR_16_L07
+
+    RSEG    CODE:CODE:NOROOT
+?MEMCLR_8_L07:
+#if (A90_POINTER_REG_SIZE > 1)
+    CLR     Q1
+#endif
+    REQUIRE ?MEMCLR_16_L07
+
+    RSEG    CODE:CODE:NOROOT
+?MEMCLR_16_L07:
+    MOV     P0,Z0
+    MOV     P1,Z1
+    CLR     T0
+
+LOOP41:   
+    ST      Z+,T0
+    SUBI    Q0,1
+#if (A90_POINTER_REG_SIZE > 1)
+    SBCI    Q1,1
+#endif
+    BRNE    LOOP41
+
+    RET
+
+    ENDMOD
+
+    MODULE  ?MOVLONG_EEPROM_8_P07
+;----------------------------------------------------------------------------
+;
+;
+;
+;
+#ifdef A90_TINY_INDEX
+    PUBLIC  ?ML_EEPROM_SRAM_8_8_L07
+#else
+#ifndef A90_EXTENDED_DATA
+    PUBLIC  ?ML_EEPROM_SRAM_8_16_L07
+#else
+    PUBLIC  ?ML_EEPROM_SRAM_8_24_L07
+#endif /* A90_EXTENDED_DATA */
+#endif /* !A90_TINY_INDEX */
+
+    EXTERN  __eeget8_8
+
+    RSEG    CODE:CODE:NOROOT
+#ifdef A90_TINY_INDEX
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_EEPROM_SRAM_8_8_L07:
+    XCALL   __eeget8_8
+    INC     Q0
+    ST      Z+,P0
+    DEC     P1
+    BRNE    ?ML_EEPROM_SRAM_8_8_L07
+    RET
+#else
+#ifndef A90_EXTENDED_DATA
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_EEPROM_SRAM_8_16_L07:
+    XCALL   __eeget8_8
+    INC     Q0
+    ST      Z+,P0
+    DEC     P1
+    BRNE    ?ML_EEPROM_SRAM_8_16_L07
+    RET
+#else
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_EEPROM_SRAM_8_24_L07:
+    OUT     RAMPZ,Z2
+?LOOP16: 
+    XCALL   __eeget8_8
+    INC     Q0
+    ST      Z+,P0
+    DEC     P1
+    BRNE    ?LOOP16
+    RET
+
+#endif /* A90_EXTENDED_DATA */
+#endif /* !A90_TINY_INDEX */
+
+;----------------------------------------------------------------------------
+;
+;
+;
+;
+#ifdef A90_TINY_INDEX
+    PUBLIC  ?ML_EEPROM_RF_SRAM_8_8_L07
+#else
+#ifndef A90_EXTENDED_DATA
+    PUBLIC  ?ML_EEPROM_RF_SRAM_8_16_L07
+#else
+    PUBLIC  ?ML_EEPROM_RF_SRAM_8_24_L07
+#endif /* A90_EXTENDED_DATA */
+#endif /* !A90_TINY_INDEX */
+
+    EXTERN  __eeget8_8_AT86RF401
+
+    RSEG    CODE:CODE:NOROOT
+#ifdef A90_TINY_INDEX
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_EEPROM_RF_SRAM_8_8_L07:
+    XCALL   __eeget8_8_AT86RF401
+    INC     Q0
+    ST      Z+,P0
+    DEC     P1
+    BRNE    ?ML_EEPROM_RF_SRAM_8_8_L07
+    RET
+#else
+#ifndef A90_EXTENDED_DATA
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_EEPROM_RF_SRAM_8_16_L07:
+    XCALL   __eeget8_8_AT86RF401
+    INC     Q0
+    ST      Z+,P0
+    DEC     P1
+    BRNE    ?ML_EEPROM_RF_SRAM_8_16_L07
+    RET
+#else
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_EEPROM_RF_SRAM_8_24_L07:
+    OUT     RAMPZ,Z2
+?LOOP17: 
+    XCALL   __eeget8_8_AT86RF401
+    INC     Q0
+    ST      Z+,P0
+    DEC     P1
+    BRNE    ?LOOP17
+    RET
+
+#endif /* A90_EXTENDED_DATA */
+#endif /* !A90_TINY_INDEX */
+
+
+;----------------------------------------------------------------------------
+;
+;
+;
+;
+#ifdef A90_TINY_INDEX
+    PUBLIC  ?ML_SRAM_EEPROM_8_8_L07
+#else
+#ifndef A90_EXTENDED_DATA
+    PUBLIC  ?ML_SRAM_EEPROM_16_8_L07
+#else
+    PUBLIC  ?ML_SRAM_EEPROM_24_8_L07
+#endif /* A90_EXTENDED_DATA */
+#endif /* !A90_TINY_INDEX */
+
+    EXTERN  __eeput8_8
+
+#ifdef A90_TINY_INDEX
+    RSEG    CODE:CODE:NOROOT
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_SRAM_EEPROM_8_8_L07:
+    LD      P0,Z+
+    XCALL   __eeput8_8
+    INC     Q0
+    DEC     P1
+    BRNE    ?ML_SRAM_EEPROM_8_8_L07
+    RET
+
+#else
+#ifndef A90_EXTENDED_DATA
+    RSEG    CODE:CODE:NOROOT
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_SRAM_EEPROM_16_8_L07:
+    LD      P0,Z+
+    XCALL   __eeput8_8
+    INC     Q0
+    DEC     P1
+    BRNE    ?ML_SRAM_EEPROM_16_8_L07
+    RET
+
+#else
+
+    RSEG    CODE:CODE:NOROOT
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_SRAM_EEPROM_24_8_L07:
+    OUT     RAMPZ,Z2
+?LOOP20: 
+    LD      P0,Z+
+    XCALL   __eeput8_8
+    INC     Q0
+    DEC     P1
+    BRNE    ?LOOP20
+    RET
+
+#endif /* A90_EXTENDED_DATA */
+#endif /* !A90_TINY_INDEX */
+
+;----------------------------------------------------------------------------
+;
+;
+;
+;
+#ifdef A90_TINY_INDEX
+    PUBLIC  ?ML_SRAM_EEPROM_RF_8_8_L07
+#else
+#ifndef A90_EXTENDED_DATA
+    PUBLIC  ?ML_SRAM_EEPROM_RF_16_8_L07
+#else
+    PUBLIC  ?ML_SRAM_EEPROM_RF_24_8_L07
+#endif /* A90_EXTENDED_DATA */
+#endif /* !A90_TINY_INDEX */
+
+    EXTERN  __eeput8_8_AT86RF401
+
+#ifdef A90_TINY_INDEX
+    RSEG    CODE:CODE:NOROOT
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_SRAM_EEPROM_RF_8_8_L07:
+    LD      P0,Z+
+    XCALL   __eeput8_8_AT86RF401
+    INC     Q0
+    DEC     P1
+    BRNE    ?ML_SRAM_EEPROM_RF_8_8_L07
+    RET
+#else
+#ifndef A90_EXTENDED_DATA
+
+    RSEG    CODE:CODE:NOROOT
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_SRAM_EEPROM_RF_16_8_L07:
+    LD      P0,Z+
+    XCALL   __eeput8_8_AT86RF401
+    INC     Q0
+    DEC     P1
+    BRNE    ?ML_SRAM_EEPROM_RF_16_8_L07
+    RET
+
+#else
+
+    RSEG    CODE:CODE:NOROOT
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_SRAM_EEPROM_RF_24_8_L07:
+    OUT     RAMPZ,Z2
+?LOOP21:     
+    LD      P0,Z+
+    XCALL   __eeput8_8_AT86RF401
+    INC     Q0
+    DEC     P1
+    BRNE    ?LOOP21
+    RET
+
+#endif /* A90_EXTENDED_DATA */
+#endif /* !A90_TINY_INDEX */
+
+
+;----------------------------------------------------------------------------
+;
+;
+;
+;
+#ifdef __HAS_ENHANCED_CORE__
+    PUBLIC  ?ML_FLASH_EEPROM_16EC_8_L07
+#else  /* !__HAS_ENHANCED_CORE__ */
+    PUBLIC  ?ML_FLASH_EEPROM_16_8_L07
+#endif
+#ifdef __HAS_ELPM__
+#ifdef __HAS_ENHANCED_CORE__
+    PUBLIC  ?ML_FLASH_EEPROM_24EC_8_L07
+#else  /* !__HAS_ENHANCED_CORE__ */
+    PUBLIC  ?ML_FLASH_EEPROM_24_8_L07
+#endif
+#endif /* __HAS_ELPM__ */
+
+    EXTERN  __eeput8_8
+
+#ifdef __HAS_ENHANCED_CORE__
+    RSEG    CODE:CODE:NOROOT
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_FLASH_EEPROM_16EC_8_L07:
+    LPM     P0,Z+
+    XCALL   __eeput8_8
+    INC     Q0
+    DEC     P1
+    BRNE    ?ML_FLASH_EEPROM_16EC_8_L07
+    RET
+#else  /* !__HAS_ENHANCED_CORE__ */
+    RSEG    CODE:CODE:NOROOT
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_FLASH_EEPROM_16_8_L07:
+    LPM     /* R0,Z */
+    MOV     P0,R0
+    ADIW    R31:R30,1
+    XCALL   __eeput8_8
+    INC     Q0
+    DEC     P1
+    BRNE    ?ML_FLASH_EEPROM_16_8_L07
+    RET
+#endif
+
+#ifdef __HAS_ELPM__
+#ifdef __HAS_ENHANCED_CORE__
+    RSEG    CODE:CODE:NOROOT
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_FLASH_EEPROM_24EC_8_L07:
+    OUT     RAMPZ,Z2
+?LOOP24:
+    ELPM    P0,Z+
+    XCALL   __eeput8_8
+    INC     Q0
+    DEC     P1
+    BRNE    ?LOOP24
+    RET
+#else  /* !__HAS_ENHANCED_CORE__ */
+    RSEG    CODE:CODE:NOROOT
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_FLASH_EEPROM_24_8_L07:
+    OUT     RAMPZ,Z2
+    ELPM    /* R0,Z */
+    MOV     P0,R0
+    SUBI    Z0,-1
+    SBCI    Z1,-1
+    SBCI    Z2,-1
+    XCALL   __eeput8_8
+    INC     Q0
+    DEC     P1
+    BRNE    ?ML_FLASH_EEPROM_24_8_L07
+    RET
+#endif
+
+#endif /* __HAS_ELPM__ */
+
+;----------------------------------------------------------------------------
+;
+;
+;
+;
+#ifdef __HAS_ENHANCED_CORE__
+    PUBLIC  ?ML_FLASH_EEPROM_RF_16EC_8_L07
+#else  /* !__HAS_ENHANCED_CORE__ */
+    PUBLIC  ?ML_FLASH_EEPROM_RF_16_8_L07
+#endif
+#ifdef __HAS_ELPM__
+#ifdef __HAS_ENHANCED_CORE__
+    PUBLIC  ?ML_FLASH_EEPROM_RF_24EC_8_L07
+#else  /* !__HAS_ENHANCED_CORE__ */
+    PUBLIC  ?ML_FLASH_EEPROM_RF_24_8_L07
+#endif
+#endif /* __HAS_ELPM__ */
+
+    EXTERN  __eeput8_8_AT86RF401
+
+#ifdef __HAS_ENHANCED_CORE__
+    RSEG    CODE:CODE:NOROOT
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_FLASH_EEPROM_RF_16EC_8_L07:
+    LPM     P0,Z+
+    XCALL   __eeput8_8_AT86RF401
+    INC     Q0
+    DEC     P1
+    BRNE    ?ML_FLASH_EEPROM_RF_16EC_8_L07
+    RET
+#else  /* !__HAS_ENHANCED_CORE__ */
+    RSEG    CODE:CODE:NOROOT
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_FLASH_EEPROM_RF_16_8_L07:
+    LPM     /* R0,Z */
+    MOV     P0,R0
+    ADIW    R31:R30,1
+    XCALL   __eeput8_8_AT86RF401
+    INC     Q0
+    DEC     P1
+    BRNE    ?ML_FLASH_EEPROM_RF_16_8_L07
+    RET
+#endif
+
+#ifdef __HAS_ELPM__
+#ifdef __HAS_ENHANCED_CORE__
+    RSEG    CODE:CODE:NOROOT
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_FLASH_EEPROM_RF_24EC_8_L07:
+    OUT     RAMPZ,Z2
+?LOOP25:
+    ELPM    P0,Z+
+    XCALL   __eeput8_8_AT86RF401
+    INC     Q0
+    DEC     P1
+    BRNE    ?LOOP25
+    RET
+#else  /* !__HAS_ENHANCED_CORE__ */
+    RSEG    CODE:CODE:NOROOT
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_FLASH_EEPROM_RF_24_8_L07:
+    OUT     RAMPZ,Z2
+    ELPM    /* R0,Z */
+    MOV     P0,R0
+    SUBI    Z0,-1
+    SBCI    Z1,-1
+    SBCI    Z2,-1
+    XCALL   __eeput8_8_AT86RF401
+    INC     Q0
+    DEC     P1
+    BRNE    ?ML_FLASH_EEPROM_RF_24_8_L07
+    RET
+#endif
+
+#endif /* __HAS_ELPM__ */
+
+;----------------------------------------------------------------------------
+;
+;
+;
+;
+    PUBLIC  ?ML_EEPROM_EEPROM_8_8_L07
+
+    EXTERN  __eeget8_8
+    EXTERN  __eeput8_8
+
+    RSEG    CODE:CODE:NOROOT
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_EEPROM_EEPROM_8_8_L07:
+    MOV     Q0,Q2
+    XCALL   __eeget8_8
+    INC     Q2
+    MOV     Q0,P2
+    XCALL   __eeput8_8
+    INC     P2
+    DEC     P1
+    BRNE    ?ML_EEPROM_EEPROM_8_8_L07
+    RET
+
+        
+;----------------------------------------------------------------------------
+;
+;
+;
+;
+    PUBLIC  ?ML_EEPROM_RF_EEPROM_RF_8_8_L07
+
+    EXTERN  __eeget8_8_AT86RF401
+    EXTERN  __eeput8_8_AT86RF401
+
+    RSEG    CODE:CODE:NOROOT
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_EEPROM_RF_EEPROM_RF_8_8_L07:
+    MOV     Q0,Q2
+    XCALL   __eeget8_8_AT86RF401
+    INC     Q2
+    MOV     Q0,P2
+    XCALL   __eeput8_8_AT86RF401
+    INC     P2
+    DEC     P1
+    BRNE    ?ML_EEPROM_RF_EEPROM_RF_8_8_L07
+    RET
+
+;----------------------------------------------------------------------------
+;
+;
+;
+;
+#ifdef A90_16BIT_GENERIC
+    PUBLIC  ?ML_EEPROM_GENERIC_8_16_L07
+
+    RSEG    CODE:CODE:NOROOT
+
+?ML_EEPROM_GENERIC_8_16_L07:
+    SBRC    Z1,7
+    RET
+#ifdef A90_TINY_INDEX
+    RJMP    ?ML_EEPROM_SRAM_8_8_L07
+#else  /* !A90_TINY_INDEX */
+    RJMP    ?ML_EEPROM_SRAM_8_16_L07
+#endif
+#endif /* A90_16BIT_GENERIC */
+
+;----------------------------------------------------------------------------
+;
+;
+;
+;
+#ifdef A90_16BIT_GENERIC
+    PUBLIC  ?ML_EEPROM_RF_GENERIC_8_16_L07
+
+    RSEG    CODE:CODE:NOROOT
+
+?ML_EEPROM_RF_GENERIC_8_16_L07:
+    SBRC    Z1,7
+    RET
+#ifdef A90_TINY_INDEX
+    RJMP    ?ML_EEPROM_RF_SRAM_8_8_L07
+#else  /* !A90_TINY_INDEX */
+    RJMP    ?ML_EEPROM_RF_SRAM_8_16_L07
+#endif
+#endif /* A90_16BIT_GENERIC */
+
+        
+;----------------------------------------------------------------------------
+;
+;
+;
+;
+#ifdef A90_24BIT_GENERIC
+    PUBLIC  ?ML_EEPROM_GENERIC_8_24_L07
+
+    RSEG    CODE:CODE:NOROOT
+
+?ML_EEPROM_GENERIC_8_24_L07:
+    SBRC    Z2,7
+    RET
+#ifdef A90_EXTENDED_DATA
+    RJMP    ?ML_EEPROM_SRAM_8_24_L07
+#else  /* !A90_EXTENDED_DATA */
+#ifdef A90_TINY_INDEX
+    RJMP    ?ML_EEPROM_SRAM_8_8_L07
+#else
+    RJMP    ?ML_EEPROM_SRAM_8_16_L07
+#endif
+#endif
+#endif /* A90_24BIT_GENERIC */
+
+;----------------------------------------------------------------------------
+;
+;
+;
+;
+#ifdef A90_24BIT_GENERIC
+    PUBLIC  ?ML_EEPROM_RF_GENERIC_8_24_L07
+
+    RSEG    CODE:CODE:NOROOT
+
+?ML_EEPROM_RF_GENERIC_8_24_L07:
+    SBRC    Z2,7
+    RET
+#ifdef A90_EXTENDED_DATA
+    RJMP    ?ML_EEPROM_RF_SRAM_8_24_L07
+#else  /* !A90_EXTENDED_DATA */
+#ifdef A90_TINY_INDEX
+    RJMP    ?ML_EEPROM_RF_SRAM_8_8_L07
+#else
+    RJMP    ?ML_EEPROM_RF_SRAM_8_16_L07
+#endif
+#endif
+#endif /* A90_24BIT_GENERIC */
+        
+        
+;----------------------------------------------------------------------------
+;
+;
+;
+;
+#ifdef A90_16BIT_GENERIC
+    PUBLIC  ?ML_GENERIC_EEPROM_16_8_L07
+
+    RSEG    CODE:CODE:NOROOT
+
+?ML_GENERIC_EEPROM_16_8_L07:
+    SBRC    Z1,7
+#ifdef __HAS_ENHANCED_CORE__
+    RJMP    ?ML_FLASH_EEPROM_16EC_8_L07
+#else
+    RJMP    ?ML_FLASH_EEPROM_16_8_L07
+#endif
+#ifdef A90_TINY_INDEX
+    RJMP    ?ML_SRAM_EEPROM_8_8_L07
+#else  /* !A90_TINY_INDEX */
+    RJMP    ?ML_SRAM_EEPROM_16_8_L07
+#endif
+#endif /* A90_16BIT_GENERIC */
+
+;----------------------------------------------------------------------------
+;
+;
+;
+;
+#ifdef A90_16BIT_GENERIC
+    PUBLIC  ?ML_GENERIC_EEPROM_RF_16_8_L07
+
+    RSEG    CODE:CODE:NOROOT
+
+?ML_GENERIC_EEPROM_RF_16_8_L07:
+    SBRC    Z1,7
+#ifdef __HAS_ENHANCED_CORE__
+    RJMP    ?ML_FLASH_EEPROM_RF_16EC_8_L07
+#else
+    RJMP    ?ML_FLASH_EEPROM_RF_16_8_L07
+#endif
+#ifdef A90_TINY_INDEX
+    RJMP    ?ML_SRAM_EEPROM_RF_8_8_L07
+#else  /* !A90_TINY_INDEX */
+    RJMP    ?ML_SRAM_EEPROM_RF_16_8_L07
+#endif
+#endif /* A90_16BIT_GENERIC */
+        
+        
+;----------------------------------------------------------------------------
+;
+;
+;
+;
+#ifdef A90_24BIT_GENERIC
+    PUBLIC  ?ML_GENERIC_EEPROM_24_8_L07
+
+    RSEG    CODE:CODE:NOROOT
+
+?ML_GENERIC_EEPROM_24_8_L07:
+    SBRS    Z2,7
+#ifdef A90_EXTENDED_DATA
+    RJMP    ?ML_SRAM_EEPROM_24_8_L07
+#else  /* !A90_EXTENDED_DATA */
+#ifdef A90_TINY_INDEX
+    RJMP    ?ML_SRAM_EEPROM_8_8_L07
+#else
+    RJMP    ?ML_SRAM_EEPROM_16_8_L07
+#endif
+#endif
+#ifdef __HAS_ELPM__
+#ifdef __HAS_ENHANCED_CORE__
+    RJMP    ?ML_FLASH_EEPROM_24EC_8_L07
+#else
+    RJMP    ?ML_FLASH_EEPROM_24_8_L07
+#endif
+#else  /* !__HAS_ELPM__ */
+#ifdef __HAS_ENHANCED_CORE__
+    RJMP    ?ML_FLASH_EEPROM_16EC_8_L07
+#else
+    RJMP    ?ML_FLASH_EEPROM_16_8_L07
+#endif
+#endif
+#endif /* A90_24BIT_GENERIC */
+
+;----------------------------------------------------------------------------
+;
+;
+;
+;
+#ifdef A90_24BIT_GENERIC
+    PUBLIC  ?ML_GENERIC_EEPROM_RF_24_8_L07
+
+    RSEG    CODE:CODE:NOROOT
+
+?ML_GENERIC_EEPROM_RF_24_8_L07:
+    SBRS    Z2,7
+#ifdef A90_EXTENDED_DATA
+    RJMP    ?ML_SRAM_EEPROM_RF_24_8_L07
+#else  /* !A90_EXTENDED_DATA */
+#ifdef A90_TINY_INDEX
+    RJMP    ?ML_SRAM_EEPROM_RF_8_8_L07
+#else
+    RJMP    ?ML_SRAM_EEPROM_RF_16_8_L07
+#endif
+#endif
+#ifdef __HAS_ELPM__
+#ifdef __HAS_ENHANCED_CORE__
+    RJMP    ?ML_FLASH_EEPROM_RF_24EC_8_L07
+#else
+    RJMP    ?ML_FLASH_EEPROM_RF_24_8_L07
+#endif
+#else  /* !__HAS_ELPM__ */
+#ifdef __HAS_ENHANCED_CORE__
+    RJMP    ?ML_FLASH_EEPROM_RF_16EC_8_L07
+#else
+    RJMP    ?ML_FLASH_EEPROM_RF_16_8_L07
+#endif
+#endif
+#endif /* A90_24BIT_GENERIC */
+        
+
+;-------------------------------------------------------------------------
+;
+; Function:     ?EEPROM_FARG_8_L07
+;
+; Created:      17/May/1999 IDAW
+;
+; Inputs:       P0  - count (or only P0 for some processor options)
+;               Z   - dest (data address space)
+;
+; Returns:      P0  - 0
+;
+; Size:         14 bytes
+;
+; Destroys:     P0 T0 Y0 Y1
+;
+; Description:      
+; Set a memory range to zero in the data address space.
+;
+;-------------------------------------------------------------------------
+    EXTERN  __eeget8_8
+    PUBLIC  ?EEPROM_FARG_8_L07
+    RSEG    CODE:CODE:NOROOT
+
+?EEPROM_FARG_8_L07:
+    ADD     Q0,Z0
+LOOP37:   
+    SUBI    Q0,1
+    XCALL   __eeget8_8
+    ST      -Y,P0
+    SUBI    Z0,1
+    BRNE    LOOP37
+    RET
+        
+
+    EXTERN  __eeget8_8_AT86RF401
+    PUBLIC  ?EEPROM_RF_FARG_8_L07
+    RSEG    CODE:CODE:NOROOT
+
+?EEPROM_RF_FARG_8_L07:
+    ADD     Q0,Z0
+LOOP38:   
+    SUBI    Q0,1
+    XCALL   __eeget8_8_AT86RF401
+    ST      -Y,P0
+    SUBI    Z0,1
+    BRNE    LOOP38
+    RET
+        
+
+    ENDMOD
+
+    MODULE  ?MOVLONG_EEPROM_16_P07
+
+;----------------------------------------------------------------------------
+;
+;
+;
+;
+#ifdef A90_TINY_INDEX
+    PUBLIC  ?ML_EEPROM_SRAM_16_8_L07
+#else
+#ifndef A90_EXTENDED_DATA
+    PUBLIC  ?ML_EEPROM_SRAM_16_16_L07
+#else
+    PUBLIC  ?ML_EEPROM_SRAM_16_24_L07
+#endif /* A90_EXTENDED_DATA */
+#endif /* !A90_TINY_INDEX */
+
+    EXTERN  __eeget8_16
+
+#ifdef A90_TINY_INDEX
+    RSEG    CODE:CODE:NOROOT
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_EEPROM_SRAM_16_8_L07:
+    XCALL   __eeget8_16
+    SUBI    Q0,-1
+    SBCI    Q1,-1
+    ST      Z+,P0
+    DEC     P1
+    BRNE    ?ML_EEPROM_SRAM_16_8_L07
+    RET
+#else
+#ifndef A90_EXTENDED_DATA
+    RSEG    CODE:CODE:NOROOT
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_EEPROM_SRAM_16_16_L07:
+    XCALL   __eeget8_16
+    SUBI    Q0,-1
+    SBCI    Q1,-1
+    ST      Z+,P0
+    SUBI    P1,1
+    SBCI    P2,0
+    BRNE    ?ML_EEPROM_SRAM_16_16_L07
+    RET
+#else
+    RSEG    CODE:CODE:NOROOT
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_EEPROM_SRAM_16_24_L07:
+    OUT     RAMPZ,Z2
+?LOOP18: 
+    XCALL   __eeget8_16
+    SUBI    Q0,-1
+    SBCI    Q1,-1
+    ST      Z+,P0
+    SUBI    P1,1
+    SBCI    P2,0
+    BRNE    ?LOOP18
+    RET
+#endif /* A90_EXTENDED_DATA */
+#endif /* !A90_TINY_INDEX */
+
+;----------------------------------------------------------------------------
+;
+;
+;
+;
+#ifdef A90_TINY_INDEX
+    PUBLIC  ?ML_EEPROM_RF_SRAM_16_8_L07
+#else
+#ifndef A90_EXTENDED_DATA
+    PUBLIC  ?ML_EEPROM_RF_SRAM_16_16_L07
+#else
+    PUBLIC  ?ML_EEPROM_RF_SRAM_16_24_L07
+#endif /* A90_EXTENDED_DATA */
+#endif /* !A90_TINY_INDEX */
+
+    EXTERN  __eeget8_16_AT86RF401
+
+#ifdef A90_TINY_INDEX
+    RSEG    CODE:CODE:NOROOT
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_EEPROM_RF_SRAM_16_8_L07:
+    XCALL   __eeget8_16_AT86RF401
+    SUBI    Q0,-1
+    SBCI    Q1,-1
+    ST      Z+,P0
+    DEC     P1
+    BRNE    ?ML_EEPROM_RF_SRAM_16_8_L07
+    RET
+
+#else
+#ifndef A90_EXTENDED_DATA
+    RSEG    CODE:CODE:NOROOT
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_EEPROM_RF_SRAM_16_16_L07:
+    XCALL   __eeget8_16_AT86RF401
+    SUBI    Q0,-1
+    SBCI    Q1,-1
+    ST      Z+,P0
+    SUBI    P1,1
+    SBCI    P2,0
+    BRNE    ?ML_EEPROM_RF_SRAM_16_16_L07
+    RET
+
+#else
+
+    RSEG    CODE:CODE:NOROOT
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_EEPROM_RF_SRAM_16_24_L07:
+    OUT RAMPZ,Z2
+?LOOP19: 
+    XCALL   __eeget8_16_AT86RF401
+    SUBI    Q0,-1
+    SBCI    Q1,-1
+    ST      Z+,P0
+    SUBI    P1,1
+    SBCI    P2,0
+    BRNE    ?LOOP19
+    RET
+
+#endif /* A90_EXTENDED_DATA */
+#endif /* !A90_TINY_INDEX */
+
+;----------------------------------------------------------------------------
+;
+;
+;
+;
+#ifdef A90_TINY_INDEX
+    PUBLIC  ?ML_SRAM_EEPROM_8_16_L07
+#else
+#ifndef A90_EXTENDED_DATA
+    PUBLIC  ?ML_SRAM_EEPROM_16_16_L07
+#else
+    PUBLIC  ?ML_SRAM_EEPROM_24_16_L07
+#endif /* A90_EXTENDED_DATA */
+#endif /* !A90_TINY_INDEX */
+
+    EXTERN  __eeput8_16
+
+#ifdef A90_TINY_INDEX
+    RSEG    CODE:CODE:NOROOT
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_SRAM_EEPROM_8_16_L07:
+    LD      P0,Z+
+    XCALL   __eeput8_16
+    SUBI    Q0,-1
+    SBCI    Q1,-1
+    DEC     P1
+    BRNE    ?ML_SRAM_EEPROM_8_16_L07
+    RET
+
+#else
+#ifndef A90_EXTENDED_DATA
+
+    RSEG    CODE:CODE:NOROOT
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_SRAM_EEPROM_16_16_L07:
+    LD      P0,Z+
+    XCALL   __eeput8_16
+    SUBI    Q0,-1
+    SBCI    Q1,-1
+    SUBI    P1,1
+    SBCI    P2,0
+    BRNE    ?ML_SRAM_EEPROM_16_16_L07
+    RET
+
+#else
+
+    RSEG    CODE:CODE:NOROOT
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_SRAM_EEPROM_24_16_L07:
+    OUT     RAMPZ,Z2
+?LOOP22: 
+    LD      P0,Z+
+    XCALL   __eeput8_16
+    SUBI    Q0,-1
+    SBCI    Q1,-1
+    SUBI    P1,1
+    SBCI    P2,0
+    BRNE    ?LOOP22
+    RET
+
+#endif /* A90_EXTENDED_DATA */
+#endif /* !A90_TINY_INDEX */
+
+;----------------------------------------------------------------------------
+;
+;
+;
+;
+#ifdef A90_TINY_INDEX
+    PUBLIC  ?ML_SRAM_EEPROM_RF_8_16_L07
+#else
+#ifndef A90_EXTENDED_DATA
+    PUBLIC  ?ML_SRAM_EEPROM_RF_16_16_L07
+#else
+    PUBLIC  ?ML_SRAM_EEPROM_RF_24_16_L07
+#endif /* A90_EXTENDED_DATA */
+#endif /* !A90_TINY_INDEX */
+
+    EXTERN  __eeput8_16_AT86RF401
+
+#ifdef A90_TINY_INDEX
+    RSEG    CODE:CODE:NOROOT
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_SRAM_EEPROM_RF_8_16_L07:
+    LD      P0,Z+
+    XCALL   __eeput8_16_AT86RF401
+    SUBI    Q0,-1
+    SBCI    Q1,-1
+    DEC     P1
+    BRNE    ?ML_SRAM_EEPROM_RF_8_16_L07
+    RET
+
+#else
+#ifndef A90_EXTENDED_DATA
+    RSEG    CODE:CODE:NOROOT
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_SRAM_EEPROM_RF_16_16_L07:
+    LD      P0,Z+
+    XCALL   __eeput8_16_AT86RF401
+    SUBI    Q0,-1
+    SBCI    Q1,-1
+    SUBI    P1,1
+    SBCI    P2,0
+    BRNE    ?ML_SRAM_EEPROM_RF_16_16_L07
+    RET
+
+#else
+
+    RSEG    CODE:CODE:NOROOT
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_SRAM_EEPROM_RF_24_16_L07:
+    OUT     RAMPZ,Z2
+?LOOP23: 
+    LD      P0,Z+
+    XCALL   __eeput8_16_AT86RF401
+    SUBI    Q0,-1
+    SBCI    Q1,-1
+    SUBI    P1,1
+    SBCI    P2,0
+    BRNE    ?LOOP23
+    RET
+
+#endif /* A90_EXTENDED_DATA */
+#endif /* !A90_TINY_INDEX */
+
+;----------------------------------------------------------------------------
+;
+;
+;
+;
+#ifdef __HAS_ENHANCED_CORE__
+    PUBLIC  ?ML_FLASH_EEPROM_16EC_16_L07
+#else  /* !__HAS_ENHANCED_CORE__ */
+    PUBLIC  ?ML_FLASH_EEPROM_16_16_L07
+#endif
+#ifdef __HAS_ELPM__
+#ifdef __HAS_ENHANCED_CORE__
+    PUBLIC  ?ML_FLASH_EEPROM_24EC_16_L07
+#else  /* !__HAS_ENHANCED_CORE__ */
+    PUBLIC  ?ML_FLASH_EEPROM_24_16_L07
+#endif
+#endif /* __HAS_ELPM__ */
+
+    EXTERN  __eeput8_16
+
+#ifdef __HAS_ENHANCED_CORE__
+    RSEG    CODE:CODE:NOROOT
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_FLASH_EEPROM_16EC_16_L07:
+    LPM     P0,Z+
+    XCALL   __eeput8_16
+    SUBI    Q0,-1
+    SBCI    Q1,-1
+    SUBI    P1,1
+    SBCI    P2,0
+    BRNE    ?ML_FLASH_EEPROM_16EC_16_L07
+    RET
+#else  /* !__HAS_ENHANCED_CORE__ */
+    RSEG    CODE:CODE:NOROOT
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_FLASH_EEPROM_16_16_L07:
+    LPM     /* R0,Z */
+    MOV     P0,R0
+    ADIW    R31:R30,1
+    XCALL   __eeput8_16
+    SUBI    Q0,-1
+    SBCI    Q1,-1
+    SUBI    P1,1
+    SBCI    P2,0
+    BRNE    ?ML_FLASH_EEPROM_16_16_L07
+    RET
+#endif
+
+#ifdef __HAS_ELPM__
+#ifdef __HAS_ENHANCED_CORE__
+    RSEG    CODE:CODE:NOROOT
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_FLASH_EEPROM_24EC_16_L07:
+    OUT     RAMPZ,Z2
+?LOOP26:
+    ELPM    P0,Z+
+    XCALL   __eeput8_16
+    SUBI    Q0,-1
+    SBCI    Q1,-1
+    SUBI    P1,1
+    SBCI    P2,0
+    BRNE    ?LOOP26
+    RET
+#else  /* !__HAS_ENHANCED_CORE__ */
+    RSEG    CODE:CODE:NOROOT
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_FLASH_EEPROM_24_16_L07:
+    OUT     RAMPZ,Z2
+    ELPM    /* R0,Z */
+    MOV     P0,R0
+    SUBI    Z0,-1
+    SBCI    Z1,-1
+    SBCI    Z2,-1
+    XCALL   __eeput8_16
+    SUBI    Q0,-1
+    SBCI    Q1,-1
+    SUBI    P1,1
+    SBCI    P2,0
+    BRNE    ?ML_FLASH_EEPROM_24_16_L07
+    RET
+#endif
+
+#endif /* __HAS_ELPM__ */
+
+;----------------------------------------------------------------------------
+;
+;
+;
+;
+#ifdef __HAS_ENHANCED_CORE__
+    PUBLIC  ?ML_FLASH_EEPROM_RF_16EC_16_L07
+#else  /* !__HAS_ENHANCED_CORE__ */
+    PUBLIC  ?ML_FLASH_EEPROM_RF_16_16_L07
+#endif
+#ifdef __HAS_ELPM__
+#ifdef __HAS_ENHANCED_CORE__
+    PUBLIC  ?ML_FLASH_EEPROM_RF_24EC_16_L07
+#else  /* !__HAS_ENHANCED_CORE__ */
+    PUBLIC  ?ML_FLASH_EEPROM_RF_24_16_L07
+#endif
+#endif /* __HAS_ELPM__ */
+
+    EXTERN  __eeput8_16_AT86RF401
+
+#ifdef __HAS_ENHANCED_CORE__
+    RSEG    CODE:CODE:NOROOT
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_FLASH_EEPROM_RF_16EC_16_L07:
+    LPM     P0,Z+
+    XCALL   __eeput8_16_AT86RF401
+    SUBI    Q0,-1
+    SBCI    Q1,-1
+    SUBI    P1,1
+    SBCI    P2,0
+    BRNE    ?ML_FLASH_EEPROM_RF_16EC_16_L07
+    RET
+#else  /* !__HAS_ENHANCED_CORE__ */
+    RSEG    CODE:CODE:NOROOT
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_FLASH_EEPROM_RF_16_16_L07:
+    LPM     /* R0,Z */
+    MOV     P0,R0
+    ADIW    R31:R30,1
+    XCALL   __eeput8_16_AT86RF401
+    SUBI    Q0,-1
+    SBCI    Q1,-1
+    SUBI    P1,1
+    SBCI    P2,0
+    BRNE    ?ML_FLASH_EEPROM_RF_16_16_L07
+    RET
+#endif
+
+#ifdef __HAS_ELPM__
+#ifdef __HAS_ENHANCED_CORE__
+    RSEG    CODE:CODE:NOROOT
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_FLASH_EEPROM_RF_24EC_16_L07:
+    OUT     RAMPZ,Z2
+?LOOP27:
+    ELPM    P0,Z+
+    XCALL   __eeput8_16_AT86RF401
+    SUBI    Q0,-1
+    SBCI    Q1,-1
+    SUBI    P1,1
+    SBCI    P2,0
+    BRNE    ?LOOP27
+    RET
+#else  /* !__HAS_ENHANCED_CORE__ */
+    RSEG    CODE:CODE:NOROOT
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_FLASH_EEPROM_RF_24_16_L07:
+    OUT     RAMPZ,Z2
+    ELPM    /* R0,Z */
+    MOV     P0,R0
+    SUBI    Z0,-1
+    SBCI    Z1,-1
+    SBCI    Z2,-1
+    XCALL   __eeput8_16_AT86RF401
+    SUBI    Q0,-1
+    SBCI    Q1,-1
+    SUBI    P1,1
+    SBCI    P2,0
+    BRNE    ?ML_FLASH_EEPROM_RF_24_16_L07
+    RET
+#endif
+
+#endif /* __HAS_ELPM__ */
+
+;----------------------------------------------------------------------------
+;
+;
+;
+;
+#ifdef __HAS_ENHANCED_CORE__
+    PUBLIC  ?ML_EEPROM_EEPROM_16_16EC_L07
+#else  /* !__HAS_ENHANCED_CORE__ */
+    PUBLIC  ?ML_EEPROM_EEPROM_16_16_L07
+#endif
+
+    EXTERN  __eeget8_16
+    EXTERN  __eeput8_16
+
+#ifdef __HAS_ENHANCED_CORE__
+    RSEG    CODE:CODE:NOROOT
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_EEPROM_EEPROM_16_16EC_L07:
+    MOVW    Q1:Q0,Q3:Q2
+    XCALL   __eeget8_16
+    SUBI    Q2,-1
+    SBCI    Q3,-1
+    MOVW    Q1:Q0,P3:P2
+    XCALL   __eeput8_16
+    SUBI    P2,-1
+    SBCI    P3,-1
+    SBIW    R31:R30,1
+    BRNE    ?ML_EEPROM_EEPROM_16_16EC_L07
+    RET
+#else  /* !__HAS_ENHANCED_CORE__ */
+    RSEG    CODE:CODE:NOROOT
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_EEPROM_EEPROM_16_16_L07:
+    MOV     Q0,Q2
+    MOV     Q1,Q3
+    XCALL   __eeget8_16
+    SUBI    Q2,-1
+    SBCI    Q3,-1
+    MOV     Q0,P2
+    MOV     Q1,P3
+    XCALL   __eeput8_16
+    SUBI    P2,-1
+    SBCI    P3,-1
+    SBIW    R31:R30,1
+    BRNE    ?ML_EEPROM_EEPROM_16_16_L07
+    RET
+#endif
+
+
+;----------------------------------------------------------------------------
+;
+;
+;
+;
+#ifdef __HAS_ENHANCED_CORE__
+    PUBLIC  ?ML_EEPROM_RF_EEPROM_RF_16_16EC_L07
+#else  /* !__HAS_ENHANCED_CORE__ */
+    PUBLIC  ?ML_EEPROM_RF_EEPROM_RF_16_16_L07
+#endif
+
+    EXTERN  __eeget8_16_AT86RF401
+    EXTERN  __eeput8_16_AT86RF401
+
+#ifdef __HAS_ENHANCED_CORE__
+    RSEG    CODE:CODE:NOROOT
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_EEPROM_RF_EEPROM_RF_16_16EC_L07:
+    MOVW    Q1:Q0,Q3:Q2
+    XCALL   __eeget8_16_AT86RF401
+    SUBI    Q2,-1
+    SBCI    Q3,-1
+    MOVW    Q1:Q0,P3:P2
+    XCALL   __eeput8_16_AT86RF401
+    SUBI    P2,-1
+    SBCI    P3,-1
+    SBIW    R31:R30,1
+    BRNE    ?ML_EEPROM_RF_EEPROM_RF_16_16EC_L07
+    RET
+#else  /* !__HAS_ENHANCED_CORE__ */
+    RSEG    CODE:CODE:NOROOT
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?ML_EEPROM_RF_EEPROM_RF_16_16_L07:
+    MOV     Q0,Q2
+    MOV     Q1,Q3
+    XCALL   __eeget8_16_AT86RF401
+    SUBI    Q2,-1
+    SBCI    Q3,-1
+    MOV     Q0,P2
+    MOV     Q1,P3
+    XCALL   __eeput8_16_AT86RF401
+    SUBI    P2,-1
+    SBCI    P3,-1
+    SBIW    R31:R30,1
+    BRNE    ?ML_EEPROM_RF_EEPROM_RF_16_16_L07
+    RET
+#endif
+
+                
+;----------------------------------------------------------------------------
+;
+;
+;
+;
+#ifdef A90_16BIT_GENERIC
+    PUBLIC  ?ML_EEPROM_GENERIC_16_16_L07
+
+    RSEG    CODE:CODE:NOROOT
+
+?ML_EEPROM_GENERIC_16_16_L07:
+    SBRC    Z1,7
+    RET
+#ifdef A90_TINY_INDEX
+    RJMP    ?ML_EEPROM_SRAM_16_8_L07
+#else  /* !A90_TINY_INDEX */
+    RJMP    ?ML_EEPROM_SRAM_16_16_L07
+#endif
+#endif /* A90_16BIT_GENERIC */
+
+;----------------------------------------------------------------------------
+;
+;
+;
+;
+#ifdef A90_16BIT_GENERIC
+    PUBLIC  ?ML_EEPROM_RF_GENERIC_16_16_L07
+
+    RSEG    CODE:CODE:NOROOT
+
+?ML_EEPROM_RF_GENERIC_16_16_L07:
+    SBRC    Z1,7
+    RET
+#ifdef A90_TINY_INDEX
+    RJMP    ?ML_EEPROM_RF_SRAM_16_8_L07
+#else  /* !A90_TINY_INDEX */
+    RJMP    ?ML_EEPROM_RF_SRAM_16_16_L07
+#endif
+#endif /* A90_16BIT_GENERIC */
+
+
+;----------------------------------------------------------------------------
+;
+;
+;
+;
+#ifdef A90_24BIT_GENERIC
+    PUBLIC  ?ML_EEPROM_GENERIC_16_24_L07
+
+    RSEG    CODE:CODE:NOROOT
+
+?ML_EEPROM_GENERIC_16_24_L07:
+    SBRC    Z2,7
+    RET
+#ifdef A90_EXTENDED_DATA
+    RJMP    ?ML_EEPROM_SRAM_16_24_L07
+#else  /* !A90_EXTENDED_DATA */
+#ifdef A90_TINY_INDEX
+    RJMP    ?ML_EEPROM_SRAM_16_8_L07
+#else
+    RJMP    ?ML_EEPROM_SRAM_16_16_L07
+#endif
+#endif
+#endif /* A90_24BIT_GENERIC */
+
+
+;----------------------------------------------------------------------------
+;
+;
+;
+;
+#ifdef A90_24BIT_GENERIC
+    PUBLIC  ?ML_EEPROM_RF_GENERIC_16_24_L07
+
+    RSEG    CODE:CODE:NOROOT
+
+?ML_EEPROM_RF_GENERIC_16_24_L07:
+    SBRC    Z2,7
+    RET
+#ifdef A90_EXTENDED_DATA
+    RJMP    ?ML_EEPROM_RF_SRAM_16_24_L07
+#else  /* !A90_EXTENDED_DATA */
+#ifdef A90_TINY_INDEX
+    RJMP    ?ML_EEPROM_RF_SRAM_16_8_L07
+#else
+    RJMP    ?ML_EEPROM_RF_SRAM_16_16_L07
+#endif
+#endif
+#endif /* A90_24BIT_GENERIC */
+        
+        
+;----------------------------------------------------------------------------
+;
+;
+;
+;
+#ifdef A90_16BIT_GENERIC
+    PUBLIC  ?ML_GENERIC_EEPROM_16_16_L07
+
+    RSEG    CODE:CODE:NOROOT
+
+?ML_GENERIC_EEPROM_16_16_L07:
+    SBRC    Z1,7
+#ifdef __HAS_ENHANCED_CORE__
+    RJMP    ?ML_FLASH_EEPROM_16EC_16_L07
+#else
+    RJMP    ?ML_FLASH_EEPROM_16_16_L07
+#endif
+#ifdef A90_TINY_INDEX
+    RJMP    ?ML_SRAM_EEPROM_8_16_L07
+#else  /* !A90_TINY_INDEX */
+    RJMP    ?ML_SRAM_EEPROM_16_16_L07
+#endif
+#endif /* A90_16BIT_GENERIC */
+
+
+;----------------------------------------------------------------------------
+;
+;
+;
+;
+#ifdef A90_16BIT_GENERIC
+    PUBLIC  ?ML_GENERIC_EEPROM_RF_16_16_L07
+
+    RSEG    CODE:CODE:NOROOT
+
+?ML_GENERIC_EEPROM_RF_16_16_L07:
+    SBRC    Z1,7
+#ifdef __HAS_ENHANCED_CORE__
+    RJMP    ?ML_FLASH_EEPROM_RF_16EC_16_L07
+#else
+    RJMP    ?ML_FLASH_EEPROM_RF_16_16_L07
+#endif
+#ifdef A90_TINY_INDEX
+    RJMP    ?ML_SRAM_EEPROM_RF_8_16_L07
+#else  /* !A90_TINY_INDEX */
+    RJMP    ?ML_SRAM_EEPROM_RF_16_16_L07
+#endif
+#endif /* A90_16BIT_GENERIC */
+        
+        
+;----------------------------------------------------------------------------
+;
+;
+;
+;
+#ifdef A90_24BIT_GENERIC
+    PUBLIC  ?ML_GENERIC_EEPROM_24_16_L07
+
+    RSEG    CODE:CODE:NOROOT
+
+?ML_GENERIC_EEPROM_24_16_L07:
+    SBRS    Z2,7
+#ifdef A90_EXTENDED_DATA
+    RJMP    ?ML_SRAM_EEPROM_24_16_L07
+#else  /* !A90_EXTENDED_DATA */
+#ifdef A90_TINY_INDEX
+    RJMP    ?ML_SRAM_EEPROM_8_16_L07
+#else
+    RJMP    ?ML_SRAM_EEPROM_16_16_L07
+#endif
+#endif
+#ifdef __HAS_ELPM__
+#ifdef __HAS_ENHANCED_CORE__
+    RJMP    ?ML_FLASH_EEPROM_24EC_16_L07
+#else
+    RJMP    ?ML_FLASH_EEPROM_24_16_L07
+#endif
+#else  /* !__HAS_ELPM__ */
+#ifdef __HAS_ENHANCED_CORE__
+    RJMP    ?ML_FLASH_EEPROM_16EC_16_L07
+#else
+    RJMP    ?ML_FLASH_EEPROM_16_16_L07
+#endif
+#endif
+#endif /* A90_24BIT_GENERIC */
+
+;----------------------------------------------------------------------------
+;
+;
+;
+;
+#ifdef A90_24BIT_GENERIC
+    PUBLIC  ?ML_GENERIC_EEPROM_RF_24_16_L07
+
+    RSEG    CODE:CODE:NOROOT
+
+?ML_GENERIC_EEPROM_RF_24_16_L07:
+    SBRS    Z2,7
+#ifdef A90_EXTENDED_DATA
+    RJMP    ?ML_SRAM_EEPROM_RF_24_16_L07
+#else  /* !A90_EXTENDED_DATA */
+#ifdef A90_TINY_INDEX
+    RJMP    ?ML_SRAM_EEPROM_RF_8_16_L07
+#else
+    RJMP    ?ML_SRAM_EEPROM_RF_16_16_L07
+#endif
+#endif
+#ifdef __HAS_ELPM__
+#ifdef __HAS_ENHANCED_CORE__
+    RJMP    ?ML_FLASH_EEPROM_RF_24EC_16_L07
+#else
+    RJMP    ?ML_FLASH_EEPROM_RF_24_16_L07
+#endif
+#else  /* !__HAS_ELPM__ */
+#ifdef __HAS_ENHANCED_CORE__
+    RJMP    ?ML_FLASH_EEPROM_RF_16EC_16_L07
+#else
+    RJMP    ?ML_FLASH_EEPROM_RF_16_16_L07
+#endif
+#endif
+#endif /* A90_24BIT_GENERIC */
+        
+        
+;-------------------------------------------------------------------------
+;
+; Function:     ?EEPROM_FARG_16_L07
+;
+; Created:      17/May/1999 IDAW
+;
+; Inputs:       P1:P0   - count (or only P0 for some processor options)
+;               Z   - dest (data address space)
+;
+; Returns:      P1:P0   - 0
+;
+; Size:         12 bytes
+;
+; Destroys:     P0 P1 T0 Y0 Y1
+;
+; Description:      
+; Set a memory range to zero in the data address space.
+;
+;-------------------------------------------------------------------------
+    EXTERN  __eeget8_16
+    PUBLIC  ?EEPROM_FARG_16_L07
+    RSEG    CODE:CODE:NOROOT
+
+?EEPROM_FARG_16_L07:    
+    ADD     Q0,Z0
+    ADC     Q1,Z1
+LOOP39:   
+    SUBI    Q0,1
+    SBCI    Q1,0
+    XCALL   __eeget8_16
+    ST      -Y,P0
+    SBIW    Z0,1
+    BRNE    LOOP39
+    RET
+        
+
+    EXTERN  __eeget8_16_AT86RF401
+    PUBLIC  ?EEPROM_RF_FARG_16_L07
+    RSEG    CODE:CODE:NOROOT
+
+?EEPROM_RF_FARG_16_L07: 
+    ADD     Q0,Z0
+    ADC     Q1,Z1
+LOOP40:   
+    SUBI    Q0,1
+    SBCI    Q1,0
+    XCALL   __eeget8_16_AT86RF401
+    ST      -Y,P0
+    SBIW    Z0,1
+    BRNE    LOOP40
+    RET
+        
+
+    END
+;----------------------------------------------------------------------------
+;  

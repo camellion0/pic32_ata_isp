@@ -1,0 +1,411 @@
+###############################################################################
+#
+# IAR C/C++ Compiler V6.70.1.929 for Atmel AVR            05/Apr/2016  13:30:44
+# Copyright 1996-2015 IAR Systems AB.
+# Network license: DVRIAR01.corpp.atmel.com (STD)
+#
+#    Source file  =  
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\firmware\timer2\src\timer2.c
+#    Command line =  
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\firmware\timer2\src\timer2.c
+#        -v3 --enhanced_core -ms -o
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\Obj
+#        -lC
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\List
+#        -lA
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\List
+#        --initializers_in_flash --no_cse --no_inline --no_code_motion
+#        --no_cross_call --no_clustering --no_tbaa --debug --64k_flash
+#        -DENABLE_BIT_DEFINITIONS -e -I "C:\Program Files (x86)\IAR
+#        Systems\Embedded Workbench 6.0\avr\inc\" --eeprom_size 1152 --clib
+#        -Ohz
+#    List file    =  
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\List\timer2.lst
+#    Object file  =  
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\Obj\timer2.r90
+#
+###############################################################################
+
+C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\firmware\timer2\src\timer2.c
+      1          //lint -e9059
+      2          /* *C**************************************************************************
+      3            Use of this software is subject to Atmel's Software License Agreement.
+      4          -------------------------------------------------------------------------------
+      5            $URL: http://svnservulm.corp.atmel.com/svn/CDB/Apps/SW_Lib/Car_Access/CARS_GEN2/ATAB5702A/Branches/P2_Gen2_Merge/firmware/timer2/src/timer2.c $
+      6            $LastChangedRevision: 328482 $
+      7            $LastChangedDate: 2015-07-22 13:17:23 -0600 (Wed, 22 Jul 2015) $
+      8            $LastChangedBy: grueter $
+      9          -------------------------------------------------------------------------------
+     10            Project:      ATA5700
+     11            Target MCU:   ATA5700
+     12            Compiler:     IAR C/C++ Compiler for AVR 6.30.1
+     13          -------------------------------------------------------------------------------
+     14            
+     15          ******************************************************************************
+     16          * Copyright 2011, Atmel Automotive GmbH                                       *
+     17          *                                                                             *
+     18          * This software is owned by the Atmel Automotive GmbH                         *
+     19          * and is protected by and subject to worldwide patent protection.             *
+     20          * Atmel hereby grants to licensee a personal,                                 *
+     21          * non-exclusive, non-transferable license to copy, use, modify, create        *
+     22          * derivative works of, and compile the Atmel Source Code and derivative       *
+     23          * works for the sole purpose of creating custom software in support of        *
+     24          * licensee product to be used only in conjunction with a Atmel integrated     *
+     25          * circuit as specified in the applicable agreement. Any reproduction,         *
+     26          * modification, translation, compilation, or representation of this           *
+     27          * software except as specified above is prohibited without the express        *
+     28          * written permission of Atmel.                                                *
+     29          *                                                                             *
+     30          * Disclaimer: ATMEL MAKES NO WARRANTY OF ANY KIND,EXPRESS OR IMPLIED,         *
+     31          * WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED    *
+     32          * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.         *
+     33          * Atmel reserves the right to make changes without further notice to the      *
+     34          * materials described herein. Atmel does not assume any liability arising     *
+     35          * out of the application or use of any product or circuit described herein.   *
+     36          * Atmel does not authorize its products for use as critical components in     *
+     37          * life-support systems where a malfunction or failure may reasonably be       *
+     38          * expected to result in significant injury to the user. The inclusion of      *
+     39          * Atmel products in a life-support systems application implies that the       *
+     40          * manufacturer assumes all risk of such use and in doing so indemnifies       *
+     41          * Atmel against all charges.                                                  *
+     42          *                                                                             *
+     43          * Use may be limited by and subject to the applicable Atmel software          *
+     44          * license agreement.                                                          *
+     45          ******************************************************************************/
+     46          /** \file timer2.c
+     47          */
+     48          //lint -restore
+     49          
+     50          /*===========================================================================*/
+     51          /*  INCLUDES                                                                 */
+     52          /*===========================================================================*/
+     53          #include "timer2.h"
+
+   \                                 In  segment ABSOLUTE, at 0x21
+   \   union <unnamed> volatile __io _A_PRR1
+   \                     _A_PRR1:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x32
+   \   union <unnamed> volatile __io _A_T2CR
+   \                     _A_T2CR:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x74
+   \   union <unnamed> volatile __io _A_T2COR
+   \                     _A_T2COR:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x75
+   \   union <unnamed> volatile __io _A_T2MR
+   \                     _A_T2MR:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x76
+   \   union <unnamed> volatile __io _A_T2IMR
+   \                     _A_T2IMR:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x159
+   \   union <unnamed> volatile __ext_io _A_T2IFR
+   \                     _A_T2IFR:
+   \   00000000                      DS8 1
+     54          
+     55          /*===========================================================================*/
+     56          /*  DEFINES                                                                  */
+     57          /*===========================================================================*/
+     58          
+     59          
+     60          /*===========================================================================*/
+     61          /*  Modul Globals                                                            */
+     62          /*===========================================================================*/
+     63          /** \brief <b>g_sTimer2</b>
+     64              contains the configuration settings for Timer2.
+     65          */
+     66          #pragma location = ".tmr2ram"
+
+   \                                 In  segment .tmr2ram, align 1, keep-with-next
+     67          __no_init sTmr2Config g_sTimer2;
+   \                     g_sTimer2:
+   \   00000000                      DS8 5
+     68          
+     69          /*===========================================================================*/
+     70          /*  IMPLEMENTATION                                                           */
+     71          /*===========================================================================*/
+     72          /*---------------------------------------------------------------------------*/
+     73          /** \brief <b>ATA_timer2Init_C</b>
+     74              shall initialize Timer2 data structure sTmr2Config.
+     75          
+     76              Variable Usage:
+     77              \li [out] ::g_sTimer2     Global Timer 2 component data
+     78          
+     79              \image html ATA_timer2Init_C.png
+     80          
+     81              \internal
+     82              \li 010:   Set all ::g_sTimer2 attributes to 0.
+     83          
+     84              \Derived{Yes}
+     85          
+     86              \Rationale{Since the hardware SRAM initialization is turned off, all SRAM
+     87                         variables need initialization prior to its usage}
+     88          
+     89              \Traceability   N/A
+     90              \endinternal
+     91          \n
+     92            */
+     93          /*---------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+     94          VOIDFUNC ATA_timer2Init_C(void)
+   \                     ATA_timer2Init_C:
+     95          {
+     96              /* LLR-Ref: 010 */
+     97              g_sTimer2.bStatus  = 0x00U;
+   \   00000000   E000               LDI     R16, 0
+   \   00000002   9300....           STS     g_sTimer2, R16
+     98              g_sTimer2.fpCompIsr = (timerIRQHandler)0x0000U;
+   \   00000006   9300....           STS     (g_sTimer2 + 1), R16
+   \   0000000A   9300....           STS     (g_sTimer2 + 2), R16
+     99              g_sTimer2.fpOvfIsr  = (timerIRQHandler)0x0000U;
+   \   0000000E   9300....           STS     (g_sTimer2 + 3), R16
+   \   00000012   9300....           STS     (g_sTimer2 + 4), R16
+    100          }
+   \   00000016   9508               RET
+    101          
+    102          /*---------------------------------------------------------------------------*/
+    103          /** \brief <b>ATA_timer2Open_C</b>
+    104              shall open and initialize Timer 2, in case it is not yet locked.
+    105          
+    106              \param[in]      pTimer2Params    asynchronous timer configuration settings
+    107              \return     OK on success, FAIL on failure
+    108          
+    109              Variable Usage:
+    110              \li [in,out] ::g_sTimer2 Global Timer 2 component data
+    111          
+    112              \image html ATA_timer2Open_C.png
+    113          
+    114              \internal
+    115                       Note:
+    116                       Power up of Timer 2 via register PRR1 needs to occur before any 
+    117                       Timer 2 register is accessed in order for the intended action to 
+    118                       take effect.
+    119          
+    120                       IF Timer 2 is not locked, i.e. not already used by another component,
+    121                       THEN
+    122              \li 010:   Lock Timer 2 by setting the lock status in global variable 
+    123                         ::g_sTimer2 in order to synchronize the usage of Timer 2.
+    124          
+    125              \li 020:   Power up Timer 2 by setting bit PRT2 in register PRR1 to 0 to 
+    126                         disable the power reduction feature for Timer 2.
+    127          
+    128              \li 030:   Disable and reset Timer 2 by writing a 1 to the bit T2RES in
+    129                         register T2CR and a 0 to bit T2ENA.
+    130          
+    131              \li 040:   Store the given function pointer parameters "ovf" and "comp" of 
+    132                         parameter "pTimer2Params" within to the global variable ::g_sTimer2
+    133                         in order for those functions to be called when the corresponding
+    134                         interrupt, overflow and compare, is triggered.
+    135          
+    136              \li 050:   Clear Timer 2 interrupt flags in T2IFR. 
+    137          
+    138              \li 060:   Set Timer 2 registers T2COR, T2MR, T2IMR and T2CR to the 
+    139                         given attributes of parameter "pTimer2Params".
+    140          
+    141                       ENDIF
+    142          
+    143              \li 060: Return OK to the calling function if Timer 2 was successfully 
+    144                       configured.
+    145                       Return FAIL if Timer 2 was already locked and therefore could 
+    146                       not be configured.
+    147                  
+    148              \Derived{No}
+    149          
+    150              \Rationale{N/A}
+    151          
+    152              \Traceability{Primus2P-883,Primus2P-1328}
+    153              \endinternal
+    154          \n
+    155          */
+    156          /*---------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    157          UINT8FUNC ATA_timer2Open_C(const sTimerAsyn8BitParams * const pTimer2Params)
+   \                     ATA_timer2Open_C:
+    158          {
+    159              uint8_t fRetVal = FAIL;
+   \   00000000   E021               LDI     R18, 1
+    160              
+    161              if( !(g_sTimer2.bStatus & TMR2LOCK) )
+   \   00000002   ....               LDI     R30, LOW(g_sTimer2)
+   \   00000004   ....               LDI     R31, (g_sTimer2) >> 8
+   \   00000006   8130               LD      R19, Z
+   \   00000008   FD37               SBRC    R19, 7
+   \   0000000A   C024               RJMP    ??ATA_timer2Open_C_0
+    162              {
+    163                  /* LLR-Ref: 010 */
+    164                  g_sTimer2.bStatus |= TMR2LOCK;
+   \   0000000C   6830               ORI     R19, 0x80
+   \   0000000E   8330               ST      Z, R19
+    165              
+    166                  /* LLR-Ref: 020 */
+    167                  ATA_POWERON_C(PRR1, PRT2)
+   \   00000010   9809               CBI     0x01, 0x01
+    168                  
+    169                  /* LLR-Ref: 030 */
+    170                  T2CR &= ~BM_T2ENA;
+   \   00000012   9897               CBI     0x12, 0x07
+    171                  T2CR = BM_T2RES;
+   \   00000014   E220               LDI     R18, 32
+   \   00000016   BB22               OUT     0x12, R18
+    172                  
+    173                  /* LLR-Ref: 040 */
+    174                  g_sTimer2.fpCompIsr = pTimer2Params->compIsr;
+   \   00000018   01F8               MOVW    R31:R30, R17:R16
+   \   0000001A   8126               LDD     R18, Z+6
+   \   0000001C   8137               LDD     R19, Z+7
+   \   0000001E   9320....           STS     (g_sTimer2 + 1), R18
+   \   00000022   9330....           STS     (g_sTimer2 + 2), R19
+    175                  g_sTimer2.fpOvfIsr = pTimer2Params->ovfIsr;
+   \   00000026   8124               LDD     R18, Z+4
+   \   00000028   8135               LDD     R19, Z+5
+   \   0000002A   9320....           STS     (g_sTimer2 + 3), R18
+   \   0000002E   9330....           STS     (g_sTimer2 + 4), R19
+    176                  
+    177                  /* LLR-Ref: 050 */
+    178                  T2IFR |= ((uint8_t)(BM_T2COF|BM_T2OFF));
+   \   00000032   9120....           LDS     R18, _A_T2IFR
+   \   00000036   6023               ORI     R18, 0x03
+   \   00000038   9320....           STS     _A_T2IFR, R18
+    179                  
+    180                  /* LLR-Ref: 060 */
+    181                  T2COR = pTimer2Params->comp;
+   \   0000003C   8122               LDD     R18, Z+2
+   \   0000003E   9320....           STS     _A_T2COR, R18
+    182                  T2MR = pTimer2Params->mode;
+   \   00000042   8121               LDD     R18, Z+1
+   \   00000044   9320....           STS     _A_T2MR, R18
+    183                  T2IMR = pTimer2Params->irqMask;
+   \   00000048   8123               LDD     R18, Z+3
+   \   0000004A   9320....           STS     _A_T2IMR, R18
+    184                  T2CR = pTimer2Params->ctrl;
+   \   0000004E   8100               LD      R16, Z
+   \   00000050   BB02               OUT     0x12, R16
+    185                  
+    186                  fRetVal = OK;
+   \   00000052   E020               LDI     R18, 0
+    187              }
+    188              
+    189              /* LLR-Ref: 070 */
+    190              return fRetVal;
+   \                     ??ATA_timer2Open_C_0:
+   \   00000054   2F02               MOV     R16, R18
+   \   00000056   9508               RET
+   \   00000058                      REQUIRE _A_PRR1
+   \   00000058                      REQUIRE _A_T2CR
+   \   00000058                      REQUIRE _A_T2IFR
+   \   00000058                      REQUIRE _A_T2COR
+   \   00000058                      REQUIRE _A_T2MR
+   \   00000058                      REQUIRE _A_T2IMR
+    191          }
+    192          
+    193          /* ---------------------------------------------------------------------------*/
+    194          /** \brief <b>ATA_timer2Close_C</b>
+    195              shall stop Timer 2 and enable the power reduction feature of Timer 2.
+    196          
+    197              Variable Usage:
+    198              \li [out] ::g_sTimer2 Global Timer 2 component
+    199          
+    200              \image html ATA_timer2Close_C.png
+    201          
+    202              \internal
+    203                       Note:
+    204                       Disabling of the Power Reduction feature of Timer 2 via register PRR1
+    205                       needs to occur before any Timer 2 register is accessed in order for the
+    206                       intended actions to take effect.
+    207                       Enabling of the Power Reduction feature of Timer 2 via register PRR1 
+    208                       needs to occur after any Timer 2 register is accessed in order for the 
+    209                       intended action to take effect.
+    210          
+    211              \li 005: Disable the power reduction feature of Timer 2 by setting bit PRT2 in 
+    212                       register PRR1 to 0.
+    213          
+    214              \li 010: Disable Timer 2 by setting all bits of register T2CR to 0,
+    215                       except bit T2RES which is set to 1 to reset the prescaler and counter
+    216                       value.
+    217          
+    218              \li 020: Unlock Timer 2 by setting the status indication of the global variable
+    219                       ::g_sTimer2 to 0.
+    220          
+    221              \li 030: Enable the power reduction feature of Timer 2 by setting bit PRT2 in 
+    222                       register PRR1 to 1.
+    223          
+    224              \Derived{No}
+    225          
+    226              \Rationale{N/A}
+    227          
+    228              \Traceability{Primus2P-884}
+    229              \endinternal
+    230          \n
+    231          */
+    232          /* ---------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    233          VOIDFUNC ATA_timer2Close_C(void)
+   \                     ATA_timer2Close_C:
+    234          {
+    235              /* LLR-Ref: 005 */
+    236              ATA_POWERON_C(PRR1, PRT2)
+   \   00000000   9809               CBI     0x01, 0x01
+    237                
+    238              /* LLR-Ref: 010 */
+    239              T2CR = BM_T2RES;
+   \   00000002   E200               LDI     R16, 32
+   \   00000004   BB02               OUT     0x12, R16
+    240              
+    241              /* LLR-Ref: 020 */
+    242              g_sTimer2.bStatus = 0x00U;
+   \   00000006   E000               LDI     R16, 0
+   \   00000008   9300....           STS     g_sTimer2, R16
+    243              
+    244              /* LLR-Ref: 030 */
+    245              ATA_POWEROFF_C(PRR1, PRT2);
+   \   0000000C   9A09               SBI     0x01, 0x01
+    246          }
+   \   0000000E   9508               RET
+   \   00000010                      REQUIRE _A_PRR1
+   \   00000010                      REQUIRE _A_T2CR
+
+   Maximum stack usage in bytes:
+
+   RSTACK Function
+   ------ --------
+      2   ATA_timer2Close_C
+      2   ATA_timer2Init_C
+      2   ATA_timer2Open_C
+
+
+   Segment part sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+      16  ATA_timer2Close_C
+      24  ATA_timer2Init_C
+      88  ATA_timer2Open_C
+       1  _A_PRR1
+       1  _A_T2COR
+       1  _A_T2CR
+       1  _A_T2IFR
+       1  _A_T2IMR
+       1  _A_T2MR
+       5  g_sTimer2
+
+ 
+   5 bytes in segment .tmr2ram
+   6 bytes in segment ABSOLUTE
+ 128 bytes in segment CODE
+ 
+ 128 bytes of CODE memory
+   5 bytes of DATA memory (+ 6 bytes shared)
+
+Errors: none
+Warnings: none

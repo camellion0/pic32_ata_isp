@@ -1,0 +1,149 @@
+###############################################################################
+#
+# IAR C/C++ Compiler V7.10.1.1197 for Atmel AVR           13/May/2020  17:03:23
+# Copyright 1996-2017 IAR Systems AB.
+# Network license: dvriar01.mchp-main.com (STD)
+#
+#    Source file  =  
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\firmware\rftx\src\rftx_flash.c
+#    Command line =  
+#        -f C:\Users\C41045\AppData\Local\Temp\EW1E48.tmp
+#        (C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\firmware\rftx\src\rftx_flash.c
+#        -v3 --enhanced_core -ms -o
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\Obj
+#        -lCN
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\List
+#        -lA
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\List
+#        --no_cse --no_inline --no_code_motion --no_cross_call --no_clustering
+#        --no_tbaa --debug --64k_flash -DENABLE_BIT_DEFINITIONS -e
+#        --eeprom_size 2304 --clib -Ohz)
+#    Locale       =  English_USA.1252
+#    List file    =  
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\List\rftx_flash.lst
+#    Object file  =  
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\Obj\rftx_flash.r90
+#
+###############################################################################
+
+C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\firmware\rftx\src\rftx_flash.c
+      1          //lint -e9059
+      2          /******************************************************************************
+      3            Use of this software is subject to Microchip's Software License Agreement.
+      4          --------------------------------------------------------------------------------
+      5            $URL: http://svnservulm.corp.atmel.com/svn/CDB/02_AutoRF/Primus2pSW/Branches/VB_PRIMUS2P_ROM_2.0/firmware/rftx/src/rftx_flash.c $
+      6            $LastChangedRevision: 266519 $
+      7            $LastChangedDate: 2014-06-10 13:48:14 +0200 (Di, 10 Jun 2014) $
+      8            $LastChangedBy: florian.schweidler $
+      9          -------------------------------------------------------------------------------
+     10            Project:      ATA5700
+     11            Target MCU:   ATA5700
+     12            Compiler:     IAR C/C++ Compiler for AVR 6.30.1
+     13          -------------------------------------------------------------------------------
+     14          
+     15          ******************************************************************************
+     16          * Copyright 2017, Microchip Technology Incorporated and its subsidiaries.     *
+     17          *                                                                             *
+     18          * This software is owned by the Microchip Technology Incorporated.            *
+     19          * Microchip hereby grants to licensee a personal                              *
+     20          * non-exclusive, non-transferable license to copy, use, modify, create        *
+     21          * derivative works of, and compile the Microchip Source Code and derivative   *
+     22          * works for the sole and exclusive purpose of creating custom software in     *
+     23          * support of licensee product to be used only in conjunction with a Microchip *
+     24          * integrated circuit as specified in the applicable agreement. Any            *        
+     25          * reproduction, modification, translation, compilation, or representation of  *
+     26          * this software except as specified above is prohibited without the express   *
+     27          * written permission of Microchip.                                            *
+     28          *                                                                             *
+     29          * Disclaimer: MICROCHIP MAKES NO WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,    *
+     30          * WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED    *
+     31          * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.         *
+     32          * Microchip reserves the right to make changes without further notice to the  *
+     33          * materials described herein. Microchip does not assume any liability arising *
+     34          * out of the application or use of any product or circuit described herein.   *
+     35          * Microchip does not authorize its products for use as critical components in *
+     36          * life-support systems where a malfunction or failure may reasonably be       *
+     37          * expected to result in significant injury to the user. The inclusion of      *
+     38          * Microchip products in a life-support systems application implies that the   *
+     39          * manufacturer assumes all risk of such use and in doing so indemnifies       *
+     40          * Microchip against all charges.                                              *
+     41          *                                                                             *
+     42          * Use may be limited by and subject to the applicable Microchip software      *
+     43          * license agreement.                                                          *
+     44          ******************************************************************************/
+     45          /** \file rftx_flash.c
+     46          */
+     47          
+     48          //lint -restore
+     49          
+     50          /*---------------------------------------------------------------------------*/
+     51          /*  INCLUDES                                                                 */
+     52          /*---------------------------------------------------------------------------*/
+     53          #include "../../stdc/src/stdc.h"
+     54          #include "../../eep/src/eep.h"
+     55          #include "rftx.h"
+     56          #include "rftx_flash.h"
+     57          
+     58          /*---------------------------------------------------------------------------*/
+     59          /*  DEFINES                                                                  */
+     60          /*---------------------------------------------------------------------------*/
+     61          /*---------------------------------------------------------------------------*/
+     62          /*  Modul Globals                                                            */
+     63          /*---------------------------------------------------------------------------*/
+     64          /** \brief <b>g_sSramRfTxServiceConfig</b>
+     65              contains the service configuration in the SRAM
+     66          */
+
+   \                                 In  segment NEAR_N, align 1, keep-with-next, root
+     67          __root __no_init sRfTxServiceChannelConfig g_sSramRfTxServiceConfig;
+   \                     g_sSramRfTxServiceConfig:
+   \   00000000                      DS8 43
+     68          
+     69          /*---------------------------------------------------------------------------*/
+     70          /*  IMPLEMENTATION                                                           */
+     71          /*---------------------------------------------------------------------------*/
+     72          
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+     73          UINT16FUNC ATA_rfTxGetIndirectEEPromServiceConfigAddr_flash_C (uint16_t wAddress)
+   \                     ATA_rfTxGetIndirectEEPromServiceConfigAddr_flash_C:
+     74          {
+   \   00000000   9722               SBIW    R29:R28, 2
+     75              /* Get indirect address for given RF Tx EEPROM service configuration address */
+     76              uint8_t ary[2];
+     77              ATA_eepReadBytes_C(&ary[0],wAddress,2U);
+   \   00000002   E042               LDI     R20, 2
+   \   00000004   0198               MOVW    R19:R18, R17:R16
+   \   00000006   018E               MOVW    R17:R16, R29:R28
+   \   00000008   ........           CALL    ATA_eepReadBytes_C
+     78              return (uint16_t)((ary[1]<<8U|ary[0]));
+   \   0000000C   8119               LDD     R17, Y+1
+   \   0000000E   8108               LD      R16, Y
+   \   00000010   9622               ADIW    R29:R28, 2
+   \   00000012   9508               RET
+     79          }
+
+   Maximum stack usage in bytes:
+
+   CSTACK RSTACK Function
+   ------ ------ --------
+      2      2   ATA_rfTxGetIndirectEEPromServiceConfigAddr_flash_C
+        2      2   -> ATA_eepReadBytes_C
+
+
+   Segment part sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+      20  ATA_rfTxGetIndirectEEPromServiceConfigAddr_flash_C
+      43  g_sSramRfTxServiceConfig
+
+ 
+ 20 bytes in segment CODE
+ 43 bytes in segment NEAR_N
+ 
+ 20 bytes of CODE memory
+ 43 bytes of DATA memory
+
+Errors: none
+Warnings: none

@@ -1,0 +1,955 @@
+<?xml version="1.0" standalone="yes"?>
+<FortimmoGuiData xmlns="Command Set Version 1.0">
+  <xs:schema id="FortimmoGuiData" targetNamespace="Command Set Version 1.0" xmlns:mstns="Command Set Version 1.0" xmlns="Command Set Version 1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" attributeFormDefault="qualified" elementFormDefault="qualified">
+    <xs:element name="FortimmoGuiData" msdata:IsDataSet="true" msdata:UseCurrentLocale="true">
+      <xs:complexType>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element name="SPIcmnds">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="CmndStr" type="xs:string" minOccurs="0" />
+                <xs:element name="Cmnd" type="xs:string" minOccurs="0" />
+                <xs:element name="Code" type="xs:unsignedByte" minOccurs="0" />
+                <xs:element name="ArgLen" type="xs:unsignedByte" minOccurs="0" />
+                <xs:element name="CABCmnd" type="xs:string" minOccurs="0" />
+                <xs:element name="Arg" type="xs:base64Binary" minOccurs="0" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="Pepscmndgrid">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="CmndStr" type="xs:string" minOccurs="0" />
+                <xs:element name="Cmnd" type="xs:string" minOccurs="0" />
+                <xs:element name="Code" type="xs:unsignedByte" minOccurs="0" />
+                <xs:element name="ArgLen" type="xs:unsignedByte" minOccurs="0" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="PEPScmnds">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="Cmnd" type="xs:string" minOccurs="0" />
+                <xs:element name="Arg" type="xs:string" minOccurs="0" />
+                <xs:element name="Cnt" type="xs:unsignedByte" minOccurs="0" />
+                <xs:element name="Array" type="xs:base64Binary" minOccurs="0" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="PEPSpattbuff1">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="Cmnd" type="xs:string" minOccurs="0" />
+                <xs:element name="Arg" type="xs:string" minOccurs="0" />
+                <xs:element name="Cnt" type="xs:unsignedByte" minOccurs="0" />
+                <xs:element name="Array" type="xs:base64Binary" minOccurs="0" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="PEPSpattbuff2">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="Cmnd" type="xs:string" minOccurs="0" />
+                <xs:element name="Arg" type="xs:string" minOccurs="0" />
+                <xs:element name="Cnt" type="xs:unsignedByte" minOccurs="0" />
+                <xs:element name="Array" type="xs:base64Binary" minOccurs="0" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="PEPSpattbuff3">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="Cmnd" type="xs:string" minOccurs="0" />
+                <xs:element name="Arg" type="xs:string" minOccurs="0" />
+                <xs:element name="Cnt" type="xs:unsignedByte" minOccurs="0" />
+                <xs:element name="Array" type="xs:base64Binary" minOccurs="0" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="IMMOcmnds">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="Cmnd" type="xs:string" minOccurs="0" />
+                <xs:element name="Arg" type="xs:string" minOccurs="0" />
+                <xs:element name="Cnt" type="xs:unsignedByte" minOccurs="0" />
+                <xs:element name="Array" type="xs:base64Binary" minOccurs="0" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="IMMOrxsymb">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="Cnt" type="xs:unsignedByte" minOccurs="0" />
+                <xs:element name="Data" type="xs:string" minOccurs="0" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="IMMOrxdecode">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="Cnt" type="xs:unsignedByte" minOccurs="0" />
+                <xs:element name="Data" type="xs:string" minOccurs="0" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="SPInow">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="Cmnd" type="xs:string" minOccurs="0" />
+                <xs:element name="Arg" type="xs:int" minOccurs="0" />
+                <xs:element name="Cnt" type="xs:unsignedByte" minOccurs="0" />
+                <xs:element name="Array" type="xs:base64Binary" minOccurs="0" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="ImmoRX">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="ImmoTxField" type="xs:boolean" minOccurs="0" />
+                <xs:element name="ImmoTxDrive" type="xs:int" minOccurs="0" />
+                <xs:element name="SSG_newtime" type="xs:int" minOccurs="0" />
+                <xs:element name="SWG_newtime" type="xs:int" minOccurs="0" />
+                <xs:element name="SCN0_newtime" type="xs:int" minOccurs="0" />
+                <xs:element name="SCN1_newtime" type="xs:int" minOccurs="0" />
+                <xs:element name="ImmoFldState" type="xs:boolean" minOccurs="0" />
+                <xs:element name="ImmoTxTranspState" type="xs:boolean" minOccurs="0" />
+                <xs:element name="ImmoDecodePattern" type="xs:unsignedShort" minOccurs="0" />
+                <xs:element name="ImmomiscRaw" type="xs:unsignedLong" minOccurs="0" />
+                <xs:element name="WWTtable" type="xs:base64Binary" minOccurs="0" />
+                <xs:element name="ImmoRXconfig" msdata:DataType="System.Int32[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" type="xs:anyType" minOccurs="0" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="MISCcmnds">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="CmndStr" type="xs:string" minOccurs="0" />
+                <xs:element name="Cmnd" type="xs:string" minOccurs="0" />
+                <xs:element name="Code" type="xs:unsignedByte" minOccurs="0" />
+                <xs:element name="ArgLen" type="xs:unsignedByte" minOccurs="0" />
+                <xs:element name="CABCmnd" type="xs:string" minOccurs="0" />
+                <xs:element name="Arg" type="xs:base64Binary" minOccurs="0" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="FortGUIsettings">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="CommPort" type="xs:string" minOccurs="0" />
+                <xs:element name="BaudRate" type="xs:int" minOccurs="0" />
+                <xs:element name="RecentFiles" msdata:DataType="System.String[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" type="xs:anyType" minOccurs="0" />
+                <xs:element name="PollSettings" type="xs:int" minOccurs="0" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:choice>
+      </xs:complexType>
+    </xs:element>
+  </xs:schema>
+  <SPIcmnds>
+    <CmndStr>Get Status</CmndStr>
+    <Cmnd>GSI</Cmnd>
+    <Code>96</Code>
+    <ArgLen>0</ArgLen>
+    <CABCmnd>GSII</CABCmnd>
+    <Arg>AAAAAA==</Arg>
+  </SPIcmnds>
+  <SPIcmnds>
+    <CmndStr>Reset Fault</CmndStr>
+    <Cmnd>RFS</Cmnd>
+    <Code>64</Code>
+    <ArgLen>0</ArgLen>
+    <CABCmnd>RFSS</CABCmnd>
+    <Arg>AAAAAA==</Arg>
+  </SPIcmnds>
+  <SPIcmnds>
+    <CmndStr>Set SPI Config</CmndStr>
+    <Cmnd>SSC</Cmnd>
+    <Code>72</Code>
+    <ArgLen>0</ArgLen>
+    <CABCmnd>SSCC</CABCmnd>
+    <Arg>AAAAAA==</Arg>
+  </SPIcmnds>
+  <SPIcmnds>
+    <CmndStr>HALT operation</CmndStr>
+    <Cmnd>HALT</Cmnd>
+    <Code>80</Code>
+    <ArgLen>0</ArgLen>
+    <CABCmnd>HALT</CABCmnd>
+    <Arg>AAAAAA==</Arg>
+  </SPIcmnds>
+  <SPIcmnds>
+    <CmndStr>Goto PEPS TXmode</CmndStr>
+    <Cmnd>GPP</Cmnd>
+    <Code>67</Code>
+    <ArgLen>0</ArgLen>
+    <CABCmnd>GPPP</CABCmnd>
+    <Arg>AAAAAA==</Arg>
+  </SPIcmnds>
+  <SPIcmnds>
+    <CmndStr>Goto PEPS RXmode</CmndStr>
+    <Cmnd>GPR</Cmnd>
+    <Code>68</Code>
+    <ArgLen>0</ArgLen>
+    <CABCmnd>GPRR</CABCmnd>
+    <Arg>AAAAAA==</Arg>
+  </SPIcmnds>
+  <SPIcmnds>
+    <CmndStr>Check Coil Current</CmndStr>
+    <Cmnd>CCC</Cmnd>
+    <Code>62</Code>
+    <ArgLen>0</ArgLen>
+    <CABCmnd>CCCC</CABCmnd>
+    <Arg>AAAAAA==</Arg>
+  </SPIcmnds>
+  <SPIcmnds>
+    <CmndStr>Goto IMMO mode</CmndStr>
+    <Cmnd>GIM</Cmnd>
+    <Code>69</Code>
+    <ArgLen>0</ArgLen>
+    <CABCmnd>GIMM</CABCmnd>
+    <Arg>AAAAAA==</Arg>
+  </SPIcmnds>
+  <SPIcmnds>
+    <CmndStr>Goto IMMO mode</CmndStr>
+    <Cmnd>GIS</Cmnd>
+    <Code>71</Code>
+    <ArgLen>0</ArgLen>
+    <CABCmnd>GISS</CABCmnd>
+    <Arg>AAAAAA==</Arg>
+  </SPIcmnds>
+  <SPIcmnds>
+    <CmndStr>Goto Diag mode</CmndStr>
+    <Cmnd>GDA</Cmnd>
+    <Code>70</Code>
+    <ArgLen>0</ArgLen>
+    <CABCmnd>GDAA</CABCmnd>
+    <Arg>AAAAAA==</Arg>
+  </SPIcmnds>
+  <SPIcmnds>
+    <CmndStr>Goto Idle mode</CmndStr>
+    <Cmnd>GID</Cmnd>
+    <Code>66</Code>
+    <ArgLen>0</ArgLen>
+    <CABCmnd>GIDD</CABCmnd>
+    <Arg>AAAAAA==</Arg>
+  </SPIcmnds>
+  <SPIcmnds>
+    <CmndStr>Block write TX buff</CmndStr>
+    <Cmnd>WBLK</Cmnd>
+    <Code>112</Code>
+    <ArgLen>3</ArgLen>
+    <CABCmnd>WBLK</CABCmnd>
+    <Arg>AAAAAA==</Arg>
+  </SPIcmnds>
+  <SPIcmnds>
+    <CmndStr>Clear TX buff</CmndStr>
+    <Cmnd>CLR</Cmnd>
+    <Code>124</Code>
+    <ArgLen>1</ArgLen>
+    <CABCmnd>CLRR</CABCmnd>
+    <Arg>AAAAAA==</Arg>
+  </SPIcmnds>
+  <SPIcmnds>
+    <CmndStr>Read Reg</CmndStr>
+    <Cmnd>RREG</Cmnd>
+    <Code>108</Code>
+    <ArgLen>2</ArgLen>
+    <CABCmnd>RREG</CABCmnd>
+    <Arg>AAAAAA==</Arg>
+  </SPIcmnds>
+  <SPIcmnds>
+    <CmndStr>Write Reg</CmndStr>
+    <Cmnd>WREG</Cmnd>
+    <Code>109</Code>
+    <ArgLen>2</ArgLen>
+    <CABCmnd>WREG</CABCmnd>
+    <Arg>AAAAAA==</Arg>
+  </SPIcmnds>
+  <SPIcmnds>
+    <CmndStr>Write Reg Bufrd</CmndStr>
+    <Cmnd>WREB</Cmnd>
+    <Code>105</Code>
+    <ArgLen>2</ArgLen>
+    <CABCmnd>WREB</CABCmnd>
+    <Arg>AAAAAA==</Arg>
+  </SPIcmnds>
+  <SPIcmnds>
+    <CmndStr>Set GPIO out</CmndStr>
+    <Cmnd>SGP</Cmnd>
+    <Code>106</Code>
+    <ArgLen>1</ArgLen>
+    <CABCmnd>SGPP</CABCmnd>
+    <Arg>AAAAAA==</Arg>
+  </SPIcmnds>
+  <SPIcmnds>
+    <CmndStr>No oper</CmndStr>
+    <Cmnd>NOP</Cmnd>
+    <Code>111</Code>
+    <ArgLen>0</ArgLen>
+    <CABCmnd>NOPP</CABCmnd>
+    <Arg>AAAAAA==</Arg>
+  </SPIcmnds>
+  <SPIcmnds>
+    <CmndStr>Wait time</CmndStr>
+    <Cmnd>WAIT</Cmnd>
+    <Code>84</Code>
+    <ArgLen>2</ArgLen>
+    <CABCmnd>WAIT</CABCmnd>
+    <Arg>AAAAAA==</Arg>
+  </SPIcmnds>
+  <SPIcmnds>
+    <CmndStr>Wait for GPIO</CmndStr>
+    <Cmnd>WGP</Cmnd>
+    <Code>104</Code>
+    <ArgLen>0</ArgLen>
+    <CABCmnd>WGPP</CABCmnd>
+    <Arg>AAAAAA==</Arg>
+  </SPIcmnds>
+  <SPIcmnds>
+    <CmndStr>Call subrout</CmndStr>
+    <Cmnd>CALL</Cmnd>
+    <Code>120</Code>
+    <ArgLen>1</ArgLen>
+    <CABCmnd>CALL</CABCmnd>
+    <Arg>AAAAAA==</Arg>
+  </SPIcmnds>
+  <SPIcmnds>
+    <CmndStr>Mark begin Loop</CmndStr>
+    <Cmnd>LOOP</Cmnd>
+    <Code>118</Code>
+    <ArgLen>0</ArgLen>
+    <CABCmnd>LOOP</CABCmnd>
+    <Arg>AAAAAA==</Arg>
+  </SPIcmnds>
+  <SPIcmnds>
+    <CmndStr>End of Loop</CmndStr>
+    <Cmnd>EOL</Cmnd>
+    <Code>119</Code>
+    <ArgLen>0</ArgLen>
+    <CABCmnd>EOLL</CABCmnd>
+    <Arg>AAAAAA==</Arg>
+  </SPIcmnds>
+  <SPIcmnds>
+    <CmndStr>PEPS set data rate</CmndStr>
+    <Cmnd>SPR</Cmnd>
+    <Code>92</Code>
+    <ArgLen>1</ArgLen>
+    <CABCmnd>SPRR</CABCmnd>
+    <Arg>AAAAAA==</Arg>
+  </SPIcmnds>
+  <SPIcmnds>
+    <CmndStr>PEPS sel driver</CmndStr>
+    <Cmnd>SDR</Cmnd>
+    <Code>32</Code>
+    <ArgLen>1</ArgLen>
+    <CABCmnd>SDRR</CABCmnd>
+    <Arg>AAAAAA==</Arg>
+  </SPIcmnds>
+  <SPIcmnds>
+    <CmndStr>PEPS set drvr map</CmndStr>
+    <Cmnd>SDM</Cmnd>
+    <Code>40</Code>
+    <ArgLen>2</ArgLen>
+    <CABCmnd>SDMM</CABCmnd>
+    <Arg>AAAAAA==</Arg>
+  </SPIcmnds>
+  <SPIcmnds>
+    <CmndStr>PEPS sel coil curr</CmndStr>
+    <Cmnd>SCC</Cmnd>
+    <Code>160</Code>
+    <ArgLen>1</ArgLen>
+    <CABCmnd>SCCC</CABCmnd>
+    <Arg>AAAAAA==</Arg>
+  </SPIcmnds>
+  <SPIcmnds>
+    <CmndStr>PEPS send data</CmndStr>
+    <Cmnd>SPD</Cmnd>
+    <Code>2</Code>
+    <ArgLen>3</ArgLen>
+    <CABCmnd>SPDD</CABCmnd>
+    <Arg>AAAAAA==</Arg>
+  </SPIcmnds>
+  <SPIcmnds>
+    <CmndStr>PEPS send carrier</CmndStr>
+    <Cmnd>SPC</Cmnd>
+    <Code>128</Code>
+    <ArgLen>1</ArgLen>
+    <CABCmnd>SPCC</CABCmnd>
+    <Arg>AAAAAA==</Arg>
+  </SPIcmnds>
+  <SPIcmnds>
+    <CmndStr>PEPS pause TX</CmndStr>
+    <Cmnd>PPT</Cmnd>
+    <Code>144</Code>
+    <ArgLen>1</ArgLen>
+    <CABCmnd>PPTT</CABCmnd>
+    <Arg>AAAAAA==</Arg>
+  </SPIcmnds>
+  <SPIcmnds>
+    <CmndStr>PEPS wrte Wvtble</CmndStr>
+    <Cmnd>WWT</Cmnd>
+    <Code>110</Code>
+    <ArgLen>1</ArgLen>
+    <CABCmnd>WWTT</CABCmnd>
+    <Arg>AAAAAA==</Arg>
+  </SPIcmnds>
+  <SPIcmnds>
+    <CmndStr>PEPS set waveform</CmndStr>
+    <Cmnd>SWF</Cmnd>
+    <Code>88</Code>
+    <ArgLen>1</ArgLen>
+    <CABCmnd>SWFF</CABCmnd>
+    <Arg>AAAAAA==</Arg>
+  </SPIcmnds>
+  <SPIcmnds>
+    <CmndStr>IMMO Set start gap</CmndStr>
+    <Cmnd>SSG</Cmnd>
+    <Code>16</Code>
+    <ArgLen>1</ArgLen>
+    <CABCmnd>SSGG</CABCmnd>
+    <Arg>AAAAAA==</Arg>
+  </SPIcmnds>
+  <SPIcmnds>
+    <CmndStr>IMMO set write gap</CmndStr>
+    <Cmnd>SWG</Cmnd>
+    <Code>17</Code>
+    <ArgLen>1</ArgLen>
+    <CABCmnd>SWGG</CABCmnd>
+    <Arg>AAAAAA==</Arg>
+  </SPIcmnds>
+  <SPIcmnds>
+    <CmndStr>IMMO Set 0 brst cnt</CmndStr>
+    <Cmnd>CN0</Cmnd>
+    <Code>18</Code>
+    <ArgLen>1</ArgLen>
+    <CABCmnd>CN00</CABCmnd>
+    <Arg>AAAAAA==</Arg>
+  </SPIcmnds>
+  <SPIcmnds>
+    <CmndStr>IMMO Set 1 brst cnt</CmndStr>
+    <Cmnd>CN1</Cmnd>
+    <Code>19</Code>
+    <ArgLen>1</ArgLen>
+    <CABCmnd>CN11</CABCmnd>
+    <Arg>AAAAAA==</Arg>
+  </SPIcmnds>
+  <SPIcmnds>
+    <CmndStr>IMMO send data</CmndStr>
+    <Cmnd>SID</Cmnd>
+    <Code>8</Code>
+    <ArgLen>3</ArgLen>
+    <CABCmnd>SIDD</CABCmnd>
+    <Arg>AAAAAA==</Arg>
+  </SPIcmnds>
+  <SPIcmnds>
+    <CmndStr>IMMO RX O/P cont</CmndStr>
+    <Cmnd>IRO</Cmnd>
+    <Code>60</Code>
+    <ArgLen>1</ArgLen>
+    <CABCmnd>IROO</CABCmnd>
+    <Arg>AAAAAA==</Arg>
+  </SPIcmnds>
+  <SPIcmnds>
+    <CmndStr>IMMO clear RX buff</CmndStr>
+    <Cmnd>CRX</Cmnd>
+    <Code>56</Code>
+    <ArgLen>0</ArgLen>
+    <CABCmnd>CRXX</CABCmnd>
+    <Arg>AAAAAA==</Arg>
+  </SPIcmnds>
+  <SPIcmnds>
+    <CmndStr>Get IMMO RX buff fill</CmndStr>
+    <Cmnd>GRX</Cmnd>
+    <Code>58</Code>
+    <ArgLen>0</ArgLen>
+    <CABCmnd>CRXX</CABCmnd>
+    <Arg>AAAAAA==</Arg>
+  </SPIcmnds>
+  <SPIcmnds>
+    <CmndStr>Get IMMO RX buff</CmndStr>
+    <Cmnd>RRX</Cmnd>
+    <Code>57</Code>
+    <ArgLen>0</ArgLen>
+    <CABCmnd>CRXX</CABCmnd>
+    <Arg>AAAAAA==</Arg>
+  </SPIcmnds>
+  <Pepscmndgrid>
+    <CmndStr>Goto PEPS TXmode</CmndStr>
+    <Cmnd>GPP</Cmnd>
+    <Code>67</Code>
+    <ArgLen>0</ArgLen>
+  </Pepscmndgrid>
+  <Pepscmndgrid>
+    <CmndStr>Goto PEPS RXmode</CmndStr>
+    <Cmnd>GPR</Cmnd>
+    <Code>68</Code>
+    <ArgLen>0</ArgLen>
+  </Pepscmndgrid>
+  <Pepscmndgrid>
+    <CmndStr>Check Coil Current</CmndStr>
+    <Cmnd>CCC</Cmnd>
+    <Code>62</Code>
+    <ArgLen>0</ArgLen>
+  </Pepscmndgrid>
+  <Pepscmndgrid>
+    <CmndStr>Goto Idle mode</CmndStr>
+    <Cmnd>GID</Cmnd>
+    <Code>66</Code>
+    <ArgLen>0</ArgLen>
+  </Pepscmndgrid>
+  <Pepscmndgrid>
+    <CmndStr>Write Reg Bufrd</CmndStr>
+    <Cmnd>WREB</Cmnd>
+    <Code>105</Code>
+    <ArgLen>2</ArgLen>
+  </Pepscmndgrid>
+  <Pepscmndgrid>
+    <CmndStr>Set GPIO out</CmndStr>
+    <Cmnd>SGP</Cmnd>
+    <Code>106</Code>
+    <ArgLen>1</ArgLen>
+  </Pepscmndgrid>
+  <Pepscmndgrid>
+    <CmndStr>Wait time</CmndStr>
+    <Cmnd>WAIT</Cmnd>
+    <Code>84</Code>
+    <ArgLen>2</ArgLen>
+  </Pepscmndgrid>
+  <Pepscmndgrid>
+    <CmndStr>Wait for GPIO</CmndStr>
+    <Cmnd>WGP</Cmnd>
+    <Code>104</Code>
+    <ArgLen>0</ArgLen>
+  </Pepscmndgrid>
+  <Pepscmndgrid>
+    <CmndStr>Call subrout</CmndStr>
+    <Cmnd>CALL</Cmnd>
+    <Code>120</Code>
+    <ArgLen>1</ArgLen>
+  </Pepscmndgrid>
+  <Pepscmndgrid>
+    <CmndStr>Mark begin Loop</CmndStr>
+    <Cmnd>LOOP</Cmnd>
+    <Code>118</Code>
+    <ArgLen>0</ArgLen>
+  </Pepscmndgrid>
+  <Pepscmndgrid>
+    <CmndStr>End of Loop</CmndStr>
+    <Cmnd>EOL</Cmnd>
+    <Code>119</Code>
+    <ArgLen>0</ArgLen>
+  </Pepscmndgrid>
+  <Pepscmndgrid>
+    <CmndStr>PEPS set data rate</CmndStr>
+    <Cmnd>SPR</Cmnd>
+    <Code>92</Code>
+    <ArgLen>1</ArgLen>
+  </Pepscmndgrid>
+  <Pepscmndgrid>
+    <CmndStr>PEPS sel driver</CmndStr>
+    <Cmnd>SDR</Cmnd>
+    <Code>32</Code>
+    <ArgLen>1</ArgLen>
+  </Pepscmndgrid>
+  <Pepscmndgrid>
+    <CmndStr>PEPS set drvr map</CmndStr>
+    <Cmnd>SDM</Cmnd>
+    <Code>40</Code>
+    <ArgLen>2</ArgLen>
+  </Pepscmndgrid>
+  <Pepscmndgrid>
+    <CmndStr>PEPS sel coil curr</CmndStr>
+    <Cmnd>SCC</Cmnd>
+    <Code>160</Code>
+    <ArgLen>1</ArgLen>
+  </Pepscmndgrid>
+  <Pepscmndgrid>
+    <CmndStr>PEPS send data</CmndStr>
+    <Cmnd>SPD</Cmnd>
+    <Code>2</Code>
+    <ArgLen>3</ArgLen>
+  </Pepscmndgrid>
+  <Pepscmndgrid>
+    <CmndStr>PEPS send carrier</CmndStr>
+    <Cmnd>SPC</Cmnd>
+    <Code>128</Code>
+    <ArgLen>1</ArgLen>
+  </Pepscmndgrid>
+  <Pepscmndgrid>
+    <CmndStr>PEPS pause TX</CmndStr>
+    <Cmnd>PPT</Cmnd>
+    <Code>144</Code>
+    <ArgLen>1</ArgLen>
+  </Pepscmndgrid>
+  <Pepscmndgrid>
+    <CmndStr>PEPS set waveform</CmndStr>
+    <Cmnd>SWF</Cmnd>
+    <Code>88</Code>
+    <ArgLen>1</ArgLen>
+  </Pepscmndgrid>
+  <PEPScmnds>
+    <Cmnd>SGP</Cmnd>
+    <Arg>0</Arg>
+    <Cnt>3</Cnt>
+    <Array>AA==</Array>
+  </PEPScmnds>
+  <PEPScmnds>
+    <Cmnd>SCC</Cmnd>
+    <Arg>100</Arg>
+    <Cnt>3</Cnt>
+    <Array>AQ==</Array>
+  </PEPScmnds>
+  <PEPScmnds>
+    <Cmnd>SPR</Cmnd>
+    <Arg>3906</Arg>
+    <Cnt>3</Cnt>
+    <Array>AQ==</Array>
+  </PEPScmnds>
+  <PEPScmnds>
+    <Cmnd>SWF</Cmnd>
+    <Arg>0</Arg>
+    <Cnt>3</Cnt>
+    <Array>AA==</Array>
+  </PEPScmnds>
+  <PEPScmnds>
+    <Cmnd>LOOP</Cmnd>
+    <Arg />
+    <Cnt>0</Cnt>
+  </PEPScmnds>
+  <PEPScmnds>
+    <Cmnd>SGP</Cmnd>
+    <Arg>1</Arg>
+    <Cnt>3</Cnt>
+    <Array>AQ==</Array>
+  </PEPScmnds>
+  <PEPScmnds>
+    <Cmnd>GPP</Cmnd>
+    <Arg />
+    <Cnt>0</Cnt>
+    <Array>AAAAAA==</Array>
+  </PEPScmnds>
+  <PEPScmnds>
+    <Cmnd>SDR</Cmnd>
+    <Arg>0</Arg>
+    <Cnt>3</Cnt>
+    <Array>AA==</Array>
+  </PEPScmnds>
+  <PEPScmnds>
+    <Cmnd>SCC</Cmnd>
+    <Arg>550</Arg>
+    <Cnt>3</Cnt>
+    <Array>Cg==</Array>
+  </PEPScmnds>
+  <PEPScmnds>
+    <Cmnd>CALL</Cmnd>
+    <Arg>1</Arg>
+    <Cnt>3</Cnt>
+    <Array>AQ==</Array>
+  </PEPScmnds>
+  <PEPScmnds>
+    <Cmnd>CALL</Cmnd>
+    <Arg>2</Arg>
+    <Cnt>3</Cnt>
+    <Array>Ag==</Array>
+  </PEPScmnds>
+  <PEPScmnds>
+    <Cmnd>GID</Cmnd>
+    <Arg />
+    <Cnt>0</Cnt>
+    <Array>AAAAAA==</Array>
+  </PEPScmnds>
+  <PEPScmnds>
+    <Cmnd>SGP</Cmnd>
+    <Arg>0</Arg>
+    <Cnt>3</Cnt>
+    <Array>AA==</Array>
+  </PEPScmnds>
+  <PEPScmnds>
+    <Cmnd>WAIT</Cmnd>
+    <Arg>1048.576</Arg>
+    <Cnt>4</Cnt>
+    <Array>Aw8=</Array>
+  </PEPScmnds>
+  <PEPScmnds>
+    <Cmnd>EOL</Cmnd>
+    <Arg />
+    <Cnt>0</Cnt>
+    <Array>AAAAAA==</Array>
+  </PEPScmnds>
+  <PEPSpattbuff1>
+    <Cmnd>SPD</Cmnd>
+    <Arg>136</Arg>
+    <Cnt>20</Cnt>
+    <Array>h6qqqqqqqqqqqqqqqqqqqqqp</Array>
+  </PEPSpattbuff1>
+  <PEPSpattbuff1>
+    <Cmnd>SPD</Cmnd>
+    <Arg>48</Arg>
+    <Cnt>7</Cnt>
+    <Array>L6mlqaapqQ==</Array>
+  </PEPSpattbuff1>
+  <PEPSpattbuff2>
+    <Cmnd>PPT</Cmnd>
+    <Arg>1.024</Arg>
+    <Cnt>3</Cnt>
+    <Array>BA==</Array>
+  </PEPSpattbuff2>
+  <PEPSpattbuff2>
+    <Cmnd>SPC</Cmnd>
+    <Arg>3.84</Arg>
+    <Cnt>3</Cnt>
+    <Array>Dw==</Array>
+  </PEPSpattbuff2>
+  <IMMOcmnds>
+    <Cmnd>WREB</Cmnd>
+    <Arg>63</Arg>
+    <Cnt>4</Cnt>
+    <Array>xgE=</Array>
+  </IMMOcmnds>
+  <IMMOcmnds>
+    <Cmnd>GIS</Cmnd>
+    <Arg>0</Arg>
+    <Cnt>0</Cnt>
+    <Array>AAAAAA==</Array>
+  </IMMOcmnds>
+  <IMMOcmnds>
+    <Cmnd>WAIT</Cmnd>
+    <Arg>51.456</Arg>
+    <Cnt>4</Cnt>
+    <Array>Acg=</Array>
+  </IMMOcmnds>
+  <IMMOcmnds>
+    <Cmnd>SID</Cmnd>
+    <Arg>8</Arg>
+    <Cnt>4</Cnt>
+    <Array>BwA=</Array>
+  </IMMOcmnds>
+  <IMMOcmnds>
+    <Cmnd>WAIT</Cmnd>
+    <Arg>1.448</Arg>
+    <Cnt>4</Cnt>
+    <Array>ALQ=</Array>
+  </IMMOcmnds>
+  <IMMOcmnds>
+    <Cmnd>IRO</Cmnd>
+    <Arg>1</Arg>
+    <Cnt>3</Cnt>
+    <Array>AQ==</Array>
+  </IMMOcmnds>
+  <IMMOcmnds>
+    <Cmnd>WAIT</Cmnd>
+    <Arg>20.736</Arg>
+    <Cnt>4</Cnt>
+    <Array>AVA=</Array>
+  </IMMOcmnds>
+  <IMMOcmnds>
+    <Cmnd>IRO</Cmnd>
+    <Arg>0</Arg>
+    <Cnt>3</Cnt>
+    <Array>AA==</Array>
+  </IMMOcmnds>
+  <IMMOcmnds>
+    <Cmnd>WAIT</Cmnd>
+    <Arg>0.808</Arg>
+    <Cnt>4</Cnt>
+    <Array>AGQ=</Array>
+  </IMMOcmnds>
+  <IMMOcmnds>
+    <Cmnd>GID</Cmnd>
+    <Arg>0</Arg>
+    <Cnt>0</Cnt>
+    <Array>AAAAAA==</Array>
+  </IMMOcmnds>
+  <IMMOrxsymb>
+    <Cnt>0</Cnt>
+    <Data>11101100</Data>
+  </IMMOrxsymb>
+  <IMMOrxsymb>
+    <Cnt>1</Cnt>
+    <Data>00001111</Data>
+  </IMMOrxsymb>
+  <IMMOrxsymb>
+    <Cnt>2</Cnt>
+    <Data>11000101</Data>
+  </IMMOrxsymb>
+  <IMMOrxsymb>
+    <Cnt>3</Cnt>
+    <Data>01010101</Data>
+  </IMMOrxsymb>
+  <IMMOrxsymb>
+    <Cnt>4</Cnt>
+    <Data>01101001</Data>
+  </IMMOrxsymb>
+  <IMMOrxsymb>
+    <Cnt>5</Cnt>
+    <Data>10011001</Data>
+  </IMMOrxsymb>
+  <IMMOrxsymb>
+    <Cnt>6</Cnt>
+    <Data>01010110</Data>
+  </IMMOrxsymb>
+  <IMMOrxsymb>
+    <Cnt>7</Cnt>
+    <Data>10011001</Data>
+  </IMMOrxsymb>
+  <IMMOrxsymb>
+    <Cnt>8</Cnt>
+    <Data>10011010</Data>
+  </IMMOrxsymb>
+  <IMMOrxsymb>
+    <Cnt>9</Cnt>
+    <Data>10101010</Data>
+  </IMMOrxsymb>
+  <IMMOrxsymb>
+    <Cnt>10</Cnt>
+    <Data>10101010</Data>
+  </IMMOrxsymb>
+  <IMMOrxsymb>
+    <Cnt>11</Cnt>
+    <Data>10101010</Data>
+  </IMMOrxsymb>
+  <IMMOrxsymb>
+    <Cnt>12</Cnt>
+    <Data>10011010</Data>
+  </IMMOrxsymb>
+  <IMMOrxsymb>
+    <Cnt>13</Cnt>
+    <Data>10101000</Data>
+  </IMMOrxsymb>
+  <IMMOrxsymb>
+    <Cnt>14</Cnt>
+    <Data>00011111</Data>
+  </IMMOrxsymb>
+  <IMMOrxsymb>
+    <Cnt>15</Cnt>
+    <Data>10000001</Data>
+  </IMMOrxsymb>
+  <IMMOrxsymb>
+    <Cnt>16</Cnt>
+    <Data>10110001</Data>
+  </IMMOrxsymb>
+  <IMMOrxsymb>
+    <Cnt>17</Cnt>
+    <Data>11000100</Data>
+  </IMMOrxsymb>
+  <IMMOrxsymb>
+    <Cnt>18</Cnt>
+    <Data>00111111</Data>
+  </IMMOrxsymb>
+  <IMMOrxsymb>
+    <Cnt>19</Cnt>
+    <Data>01111111</Data>
+  </IMMOrxsymb>
+  <IMMOrxsymb>
+    <Cnt>20</Cnt>
+    <Data>00000000</Data>
+  </IMMOrxsymb>
+  <IMMOrxdecode>
+    <Cnt>1</Cnt>
+    <Data>57</Data>
+  </IMMOrxdecode>
+  <IMMOrxdecode>
+    <Cnt>2</Cnt>
+    <Data>95</Data>
+  </IMMOrxdecode>
+  <IMMOrxdecode>
+    <Cnt>3</Cnt>
+    <Data>00</Data>
+  </IMMOrxdecode>
+  <IMMOrxdecode>
+    <Cnt>4</Cnt>
+    <Data>01</Data>
+  </IMMOrxdecode>
+  <IMMOrxdecode>
+    <Cnt>5</Cnt>
+    <Data>05</Data>
+  </IMMOrxdecode>
+  <ImmoRX>
+    <ImmoTxField>false</ImmoTxField>
+    <ImmoTxDrive>10</ImmoTxDrive>
+    <SSG_newtime>16</SSG_newtime>
+    <SWG_newtime>16</SWG_newtime>
+    <SCN0_newtime>16</SCN0_newtime>
+    <SCN1_newtime>32</SCN1_newtime>
+    <ImmoFldState>true</ImmoFldState>
+    <ImmoTxTranspState>false</ImmoTxTranspState>
+    <ImmoDecodePattern>254</ImmoDecodePattern>
+    <ImmomiscRaw>35793282</ImmomiscRaw>
+    <WWTtable>AAt9ISs2C0lSWmFobnN3e31/</WWTtable>
+    <ImmoRXconfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <int>0</int>
+      <int>0</int>
+      <int>0</int>
+    </ImmoRXconfig>
+  </ImmoRX>
+  <MISCcmnds>
+    <CmndStr>Set GPIO config</CmndStr>
+    <Cmnd>STG</Cmnd>
+    <Code>0</Code>
+    <ArgLen>0</ArgLen>
+    <CABCmnd>STGP</CABCmnd>
+    <Arg>AQAAAA==</Arg>
+  </MISCcmnds>
+  <MISCcmnds>
+    <CmndStr>Get GPIO config</CmndStr>
+    <Cmnd>GTG</Cmnd>
+    <Code>1</Code>
+    <ArgLen>0</ArgLen>
+    <CABCmnd>GTGP</CABCmnd>
+    <Arg>AAAAAA==</Arg>
+  </MISCcmnds>
+  <MISCcmnds>
+    <CmndStr>Get Firmware ver</CmndStr>
+    <Cmnd>FWV</Cmnd>
+    <Code>1</Code>
+    <ArgLen>0</ArgLen>
+    <CABCmnd>FWVR</CABCmnd>
+    <Arg>AAAAAA==</Arg>
+  </MISCcmnds>
+  <MISCcmnds>
+    <CmndStr>Run Diagnostic</CmndStr>
+    <Cmnd>EAD</Cmnd>
+    <Code>1</Code>
+    <ArgLen>0</ArgLen>
+    <CABCmnd>EADC</CABCmnd>
+    <Arg>AAAAAA==</Arg>
+  </MISCcmnds>
+  <MISCcmnds>
+    <CmndStr>IMMO get RX buff fill</CmndStr>
+    <Cmnd>GRX</Cmnd>
+    <Code>58</Code>
+    <ArgLen>1</ArgLen>
+    <CABCmnd>GRXX</CABCmnd>
+    <Arg>AAAAAA==</Arg>
+  </MISCcmnds>
+  <MISCcmnds>
+    <CmndStr>IMMO read buff</CmndStr>
+    <Cmnd>RRX</Cmnd>
+    <Code>57</Code>
+    <ArgLen>0</ArgLen>
+    <CABCmnd>RRXX</CABCmnd>
+    <Arg>AAAAAA==</Arg>
+  </MISCcmnds>
+  <MISCcmnds>
+    <CmndStr>Get Fault Regs</CmndStr>
+    <Cmnd>GFR</Cmnd>
+    <Code>1</Code>
+    <ArgLen>0</ArgLen>
+    <CABCmnd>GFRR</CABCmnd>
+    <Arg>AAAAAA==</Arg>
+  </MISCcmnds>
+  <FortGUIsettings>
+    <CommPort>COM34</CommPort>
+    <BaudRate>38400</BaudRate>
+    <RecentFiles xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <string>C:\Users\grueter\Documents\CDB_\Personal\grueter\SW_inwork_new\P2P_Demo01\ATA5702_Trigger_FortimmoUtil.XML</string>
+      <string>C:\Users\grueter\Documents\CDB_\Personal\grueter\SW_inwork_new\P2P_Demo01\ATA5702_Trigger.XML</string>
+      <string>C:\Users\grueter\Documents\CDB_\Personal\grueter\SW_inwork_new\P2P_Demo01\ATA5702_Trigger_Old.XML</string>
+      <string>C:\Users\grueter\Documents\CDB\Apps\SW_Lib\Car_Access\ATA5291_SWtools\ATA5291_GUI_Basic_Test_GR_06Apr2015_Alt.XML</string>
+      <string>C:\Users\grueter\Documents\CDB\Apps\SW_Lib\Car_Access\ATA5291_SWtools\ATA5291_GUI_Basic_Test_GR_06Apr2015.XML</string>
+      <string>C:\Users\grueter\Documents\CDB\Apps\SW_Lib\Car_Access\Development_Env\FORTIMMO_PC_Application\Default.XML</string>
+    </RecentFiles>
+    <PollSettings>123</PollSettings>
+  </FortGUIsettings>
+</FortimmoGuiData>

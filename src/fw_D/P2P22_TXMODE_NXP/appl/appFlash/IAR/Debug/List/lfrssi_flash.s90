@@ -1,0 +1,1906 @@
+///////////////////////////////////////////////////////////////////////////////
+//
+// IAR C/C++ Compiler V7.10.1.1197 for Atmel AVR          13/May/2020  17:03:22
+// Copyright 1996-2017 IAR Systems AB.
+// Network license: dvriar01.mchp-main.com (STD)
+//
+//    Source file  =  
+//        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\firmware\lfrssi\src\lfrssi_flash.c
+//    Command line =  
+//        -f C:\Users\C41045\AppData\Local\Temp\EW1858.tmp
+//        (C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\firmware\lfrssi\src\lfrssi_flash.c
+//        -v3 --enhanced_core -ms -o
+//        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\Obj
+//        -lCN
+//        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\List
+//        -lA
+//        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\List
+//        --no_cse --no_inline --no_code_motion --no_cross_call --no_clustering
+//        --no_tbaa --debug --64k_flash -DENABLE_BIT_DEFINITIONS -e
+//        --eeprom_size 2304 --clib -Ohz)
+//    Locale       =  English_USA.1252
+//    List file    =  
+//        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\List\lfrssi_flash.s90
+//
+///////////////////////////////////////////////////////////////////////////////
+
+        NAME lfrssi_flash
+
+        RTMODEL "__64bit_doubles", "disabled"
+        RTMODEL "__SystemLibrary", "CLib"
+        RTMODEL "__cpu", "3"
+        RTMODEL "__enhanced_core", "enabled"
+        RTMODEL "__has_elpm", "false"
+        RTMODEL "__memory_model", "2"
+        RTMODEL "__rt_version", "3"
+        RTMODEL "__vtable_memory", "__nearflash"
+
+        RSEG CSTACK:DATA:NOROOT(0)
+        RSEG RSTACK:DATA:NOROOT(0)
+
+        EXTERN ?EPILOGUE_B4_L09
+        EXTERN ?ML_SRAM_SRAM_16_L07
+        EXTERN ?PROLOGUE4_L09
+        EXTERN ?S_EC_MUL_L02
+        EXTERN ?need_segment_init
+
+        PUBWEAK `?<Segment init: NEAR_Z>`
+        PUBLIC ATA_lfRssiMeasClose_flash_C
+        PUBLIC ATA_lfRssiMeasConfigHfm_flash_C
+        PUBLIC ATA_lfRssiMeasConfig_flash_C
+        PUBLIC ATA_lfRssiMeasEnableLfReceiver_flash_C
+        PUBLIC ATA_lfRssiMeasExecCalc_flash_C
+        PUBLIC ATA_lfRssiMeasInit_flash_C
+        PUBLIC ATA_lfRssiMeasOpenHfm_flash_C
+        PUBLIC ATA_lfRssiMeasOpen_flash_C
+        PUBLIC ATA_lfRssiMeasPrepSendResults_flash_C
+        PUBLIC ATA_lfRssiMeasProcessing_flash_C
+        PUBLIC ATA_lfRssiMeasSendResult_flash_C
+        PUBLIC ATA_lfRssiMeasStartExtHfm_flash_C
+        PUBLIC ATA_lfRssiMeasStartExt_flash_C
+        PUBLIC ATA_lfRssiMeasStartIntHfm_flash_C
+        PUBLIC ATA_lfRssiMeasStartInt_flash_C
+        PUBLIC ATA_lfRssiMeasWaitReadyHfm_flash_C
+        PUBLIC ATA_lfRssiMeasWaitReady_flash_C
+        PUBWEAK _A_FEEN1
+        PUBWEAK _A_LFCR1
+        PUBWEAK _A_LTCMR
+        PUBWEAK _A_LTCOR
+        PUBWEAK _A_LTEMR
+        PUBWEAK _A_SUPCR
+        PUBWEAK __?EEARH
+        PUBWEAK __?EEARL
+        PUBWEAK __?EECR
+        PUBWEAK __?EEDR
+        PUBLIC g_pLfRssiMeasStateMachineParallel_flash
+        PUBLIC g_pLfRssiMeasStateMachineSerial_flash
+        PUBLIC g_sLfRssiBmwResult_flash
+        PUBLIC g_sLfRssiCtrl_flash
+        PUBLIC g_sLfRssiCustConfig_flash
+        PUBLIC g_sLfRssiFlowCtrl_flash
+        PUBLIC g_sLfRssiHfmStateMachineLut_flash
+        PUBLIC g_sLfRssiMeasStateMachineLutParallel_flash
+        PUBLIC g_sLfRssiMeasStateMachineLutSerial_flash
+        PUBLIC g_sLfRssiRegConfig_flash
+        PUBLIC m_bDataByteCnt
+        PUBLIC m_bLocDataBuff_FillLevel
+        PUBLIC m_bNumMeasCnt
+        PUBLIC m_bPayloadOffsetTxBuf
+        PUBLIC m_pCurrResult
+        PUBLIC m_pResultExt
+        PUBLIC m_pResultInt
+        PUBLIC m_wBref
+        
+          CFI Names cfiNames0
+          CFI StackFrame CFA_Y Y DATA
+          CFI StackFrame CFA_SP SP DATA
+          CFI VirtualResource ?RetPad:1, ?RetHigh:8, ?RetLow:8, ?Ret:17
+          CFI Resource R0:8, R1:8, R2:8, R3:8, R4:8, R5:8, R6:8, R7:8, R8:8, R9:8
+          CFI Resource R10:8, R11:8, R12:8, R13:8, R14:8, R15:8, R16:8, R17:8
+          CFI Resource R18:8, R19:8, R20:8, R21:8, R22:8, R23:8, R24:8, R25:8
+          CFI Resource R26:8, R27:8, R28:8, R29:8, R30:8, R31:8
+          CFI Resource ?RetHighByteMask:8, SP:16, SPH:8, SPL:8, Y:16
+          CFI ResourceParts ?Ret ?RetHigh, ?RetLow, ?RetPad
+          CFI ResourceParts SP SPH, SPL
+          CFI ResourceParts Y R29, R28
+          CFI EndNames cfiNames0
+        
+          CFI Common cfiCommon0 Using cfiNames0
+          CFI CodeAlign 1
+          CFI DataAlign 1
+          CFI ReturnAddress ?Ret CODE
+          CFI CFA_Y Y+0
+          CFI CFA_SP SP+2
+          CFI ?RetPad 0
+          CFI ?RetHigh and(load(1, DATA, sub(CFA_SP, 1)), ?RetHighByteMask)
+          CFI ?RetLow Frame(CFA_SP, 0)
+          CFI ?Ret Concat
+          CFI R0 Undefined
+          CFI R1 Undefined
+          CFI R2 Undefined
+          CFI R3 Undefined
+          CFI R4 SameValue
+          CFI R5 SameValue
+          CFI R6 SameValue
+          CFI R7 SameValue
+          CFI R8 SameValue
+          CFI R9 SameValue
+          CFI R10 SameValue
+          CFI R11 SameValue
+          CFI R12 SameValue
+          CFI R13 SameValue
+          CFI R14 SameValue
+          CFI R15 SameValue
+          CFI R16 Undefined
+          CFI R17 Undefined
+          CFI R18 Undefined
+          CFI R19 Undefined
+          CFI R20 Undefined
+          CFI R21 Undefined
+          CFI R22 Undefined
+          CFI R23 Undefined
+          CFI R24 SameValue
+          CFI R25 SameValue
+          CFI R26 SameValue
+          CFI R27 SameValue
+          CFI R28 Undefined
+          CFI R29 Undefined
+          CFI R30 Undefined
+          CFI R31 Undefined
+          CFI ?RetHighByteMask SameValue
+          CFI SPH Undefined
+          CFI SPL Undefined
+          CFI EndCommon cfiCommon0
+        
+        EXTERN ATA_eepReadBytes_C
+        EXTERN ATA_globalsActivateXTO_C
+        EXTERN ATA_lfRssiCalc3dVec_C
+        EXTERN ATA_lfRssiCalcBappl_C
+        EXTERN ATA_lfRssiCalcChanCalibVal_C
+        EXTERN ATA_lfRssiCalcChanCorr_C
+        EXTERN ATA_lfRssiCalcLog2Lin_C
+        EXTERN ATA_lfRssiClose_C
+        EXTERN ATA_lfRssiGetAverageResult_C
+        EXTERN ATA_lfRssiMeasStart_C
+        EXTERN ATA_lfRssiOpen_C
+        EXTERN ATA_lfRssiSetEepromConfig_C
+        EXTERN ATA_timer3Close_C
+        EXTERN ATA_timer4Close_C
+        EXTERN ATA_timer4Open_C
+        EXTERN g_bBytesToTransmit
+        EXTERN g_bResponseDelayReached
+        EXTERN g_bTxBuffer
+        EXTERN g_sEepFlashAppLfRssiEndOfLineCalibrationSettings_flash
+        EXTERN g_sLfRssi
+        EXTERN g_sRfTx
+        EXTERN g_sRfTxFlowCtrl
+        EXTERN g_sTimer4
+
+// C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\firmware\lfrssi\src\lfrssi_flash.c
+//    1 //lint -e9059
+//    2 /******************************************************************************
+//    3   Use of this software is subject to Microchip's Software License Agreement.
+//    4 --------------------------------------------------------------------------------
+//    5   $URL: http://svnservulm.corp.atmel.com/svn/CDB/Apps/SW_Lib/Car_Access/CARS_GEN2/ATAB5702A/Branches/P2P22_TXMODE_NXP/firmware/lfrssi/src/lfrssi_flash.c $
+//    6   $LastChangedRevision: 458065 $
+//    7   $LastChangedDate: 2017-05-02 04:55:50 -0600 (Tue, 02 May 2017) $
+//    8   $LastChangedBy: krishna.balan $
+//    9 -------------------------------------------------------------------------------
+//   10   Project:      ATA5700
+//   11   Target MCU:   ATA5700
+//   12   Compiler:     IAR C/C++ Compiler for AVR 6.30.1
+//   13 -------------------------------------------------------------------------------
+//   14 
+//   15 ******************************************************************************
+//   16 * Copyright 2017, Microchip Technology Incorporated and its subsidiaries.     *
+//   17 *                                                                             *
+//   18 * This software is owned by the Microchip Technology Incorporated.            *
+//   19 * Microchip hereby grants to licensee a personal                              *
+//   20 * non-exclusive, non-transferable license to copy, use, modify, create        *
+//   21 * derivative works of, and compile the Microchip Source Code and derivative   *
+//   22 * works for the sole and exclusive purpose of creating custom software in     *
+//   23 * support of licensee product to be used only in conjunction with a Microchip *
+//   24 * integrated circuit as specified in the applicable agreement. Any            *        
+//   25 * reproduction, modification, translation, compilation, or representation of  *
+//   26 * this software except as specified above is prohibited without the express   *
+//   27 * written permission of Microchip.                                            *
+//   28 *                                                                             *
+//   29 * Disclaimer: MICROCHIP MAKES NO WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,    *
+//   30 * WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED    *
+//   31 * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.         *
+//   32 * Microchip reserves the right to make changes without further notice to the  *
+//   33 * materials described herein. Microchip does not assume any liability arising *
+//   34 * out of the application or use of any product or circuit described herein.   *
+//   35 * Microchip does not authorize its products for use as critical components in *
+//   36 * life-support systems where a malfunction or failure may reasonably be       *
+//   37 * expected to result in significant injury to the user. The inclusion of      *
+//   38 * Microchip products in a life-support systems application implies that the   *
+//   39 * manufacturer assumes all risk of such use and in doing so indemnifies       *
+//   40 * Microchip against all charges.                                              *
+//   41 *                                                                             *
+//   42 * Use may be limited by and subject to the applicable Microchip software      *
+//   43 * license agreement.                                                          *
+//   44 ******************************************************************************/
+//   45 /** \file lfrssi_flash.c
+//   46 */
+//   47 
+//   48 //lint -restore
+//   49 
+//   50 /*===========================================================================*/
+//   51 /*  INCLUDES                                                                 */
+//   52 /*===========================================================================*/
+//   53 #include "lfrssi_flash.h"
+
+        ASEGN ABSOLUTE:DATA:NOROOT,035H
+// union <unnamed> volatile __io _A_LTCMR
+_A_LTCMR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,050H
+// union <unnamed> volatile __io _A_LFCR1
+_A_LFCR1:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,0ccH
+// union <unnamed> volatile __io _A_SUPCR
+_A_SUPCR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,0101H
+// union <unnamed> volatile __ext_io _A_FEEN1
+_A_FEEN1:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01a1H
+// union <unnamed> volatile __ext_io _A_LTCOR
+_A_LTCOR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01a6H
+// union <unnamed> volatile __ext_io _A_LTEMR
+_A_LTEMR:
+        DS8 1
+//   54 #include "lfrssi.h"
+//   55 #include "../../../firmware/timer3/src/timer3.h"
+//   56 #include "../../../firmware/timer4/src/timer4.h"
+//   57 
+//   58 #include "../../globals/src/globals.h"
+//   59 #include "../../eep/src/eep.h"
+//   60 #include "../../eep/src/eep_flash.h"
+//   61 
+//   62 /*===========================================================================*/
+//   63 /*  DEFINES                                                                  */
+//   64 /*===========================================================================*/
+//   65 
+//   66 /*===========================================================================*/
+//   67 /*  Modul Globals                                                            */
+//   68 /*===========================================================================*/
+//   69 #pragma location = ".sram_FlashApp_LfRssi"
+
+        RSEG `.sram_FlashApp_LfRssi`:DATA:NOROOT(0)
+//   70 __no_init sLfRssiAppFlowCtrl g_sLfRssiFlowCtrl_flash;
+g_sLfRssiFlowCtrl_flash:
+        DS8 4
+//   71 
+//   72 #pragma location = ".sram_FlashApp_LfRssi"
+
+        RSEG `.sram_FlashApp_LfRssi`:DATA:NOROOT(0)
+//   73 __no_init sLfRssiAppCtrl  g_sLfRssiCtrl_flash;
+g_sLfRssiCtrl_flash:
+        DS8 2
+//   74 
+//   75 #pragma location = ".sram_FlashApp_LfRssi"
+
+        RSEG `.sram_FlashApp_LfRssi`:DATA:NOROOT(0)
+//   76 __no_init sLfRssiAppRegConfig g_sLfRssiRegConfig_flash;
+g_sLfRssiRegConfig_flash:
+        DS8 5
+//   77 
+//   78 #pragma location = ".sram_FlashApp_LfRssi"
+
+        RSEG `.sram_FlashApp_LfRssi`:DATA:ROOT(0)
+//   79 __root __no_init sLfRssiAppCustConfig g_sLfRssiCustConfig_flash;
+g_sLfRssiCustConfig_flash:
+        DS8 4
+//   80 
+//   81 #pragma location = ".sram_FlashApp_LfRssi_BMW"
+
+        RSEG `.sram_FlashApp_LfRssi_BMW`:DATA:ROOT(0)
+//   82 __root __no_init sLfRssiAppResult g_sLfRssiBmwResult_flash[3];
+g_sLfRssiBmwResult_flash:
+        DS8 60
+//   83 
+//   84 #pragma location = ".sram_FlashApp_LfRssi_BMW"
+
+        RSEG `.sram_FlashApp_LfRssi_BMW`:DATA:NOROOT(0)
+//   85 __no_init lfRssiFlowStateMachineFuncLut_t *g_pLfRssiMeasStateMachineSerial_flash;
+g_pLfRssiMeasStateMachineSerial_flash:
+        DS8 2
+//   86 
+
+        RSEG NEAR_F:CODE:NOROOT(0)
+//   87 lfRssiFlowStateMachineFuncLut_t g_sLfRssiMeasStateMachineLutSerial_flash[] = {
+g_sLfRssiMeasStateMachineLutSerial_flash:
+        DC16 ATA_lfRssiMeasOpen_flash_C/2
+        DC16 ATA_lfRssiMeasEnableLfReceiver_flash_C/2
+        DC16 ATA_lfRssiMeasStartExt_flash_C/2
+        DC16 ATA_lfRssiMeasWaitReady_flash_C/2
+        DC16 ATA_lfRssiMeasStartExt_flash_C/2
+        DC16 ATA_lfRssiMeasWaitReady_flash_C/2
+        DC16 ATA_lfRssiMeasExecCalc_flash_C/2
+        DC16 ATA_lfRssiMeasPrepSendResults_flash_C/2
+        DC16 ATA_lfRssiMeasSendResult_flash_C/2, ATA_lfRssiMeasClose_flash_C/2
+//   88     ATA_lfRssiMeasOpen_flash_C,
+//   89     ATA_lfRssiMeasEnableLfReceiver_flash_C,
+//   90     ATA_lfRssiMeasStartExt_flash_C,
+//   91     ATA_lfRssiMeasWaitReady_flash_C,
+//   92     ATA_lfRssiMeasStartExt_flash_C,
+//   93     ATA_lfRssiMeasWaitReady_flash_C,
+//   94     ATA_lfRssiMeasExecCalc_flash_C,
+//   95     ATA_lfRssiMeasPrepSendResults_flash_C,
+//   96     ATA_lfRssiMeasSendResult_flash_C,
+//   97     ATA_lfRssiMeasClose_flash_C
+//   98 };
+//   99 
+//  100 #pragma location = ".sram_FlashApp_LfRssi_BMW"
+
+        RSEG `.sram_FlashApp_LfRssi_BMW`:DATA:NOROOT(0)
+//  101 __no_init lfRssiFlowStateMachineFuncLut_t *g_pLfRssiMeasStateMachineParallel_flash;
+g_pLfRssiMeasStateMachineParallel_flash:
+        DS8 2
+//  102 
+
+        RSEG NEAR_F:CODE:NOROOT(0)
+//  103 lfRssiFlowStateMachineFuncLut_t g_sLfRssiMeasStateMachineLutParallel_flash[] = {
+g_sLfRssiMeasStateMachineLutParallel_flash:
+        DC16 ATA_lfRssiMeasOpen_flash_C/2
+        DC16 ATA_lfRssiMeasEnableLfReceiver_flash_C/2
+        DC16 ATA_lfRssiMeasStartExt_flash_C/2
+        DC16 ATA_lfRssiMeasWaitReady_flash_C/2
+        DC16 ATA_lfRssiMeasStartExt_flash_C/2
+        DC16 ATA_lfRssiMeasWaitReady_flash_C/2
+        DC16 ATA_lfRssiMeasStartInt_flash_C/2
+        DC16 ATA_lfRssiMeasWaitReady_flash_C/2
+        DC16 ATA_lfRssiMeasExecCalc_flash_C/2
+        DC16 ATA_lfRssiMeasPrepSendResults_flash_C/2
+        DC16 ATA_lfRssiMeasSendResult_flash_C/2, ATA_lfRssiMeasClose_flash_C/2
+//  104     ATA_lfRssiMeasOpen_flash_C,
+//  105     ATA_lfRssiMeasEnableLfReceiver_flash_C,
+//  106     ATA_lfRssiMeasStartExt_flash_C,
+//  107     ATA_lfRssiMeasWaitReady_flash_C,
+//  108     ATA_lfRssiMeasStartExt_flash_C,
+//  109     ATA_lfRssiMeasWaitReady_flash_C,
+//  110     ATA_lfRssiMeasStartInt_flash_C,
+//  111     ATA_lfRssiMeasWaitReady_flash_C,
+//  112     ATA_lfRssiMeasExecCalc_flash_C,
+//  113     ATA_lfRssiMeasPrepSendResults_flash_C,
+//  114     ATA_lfRssiMeasSendResult_flash_C,
+//  115     ATA_lfRssiMeasClose_flash_C
+//  116 };
+//  117 
+//  118 
+//  119 //#pragma location = ".sram_FlashApp_LfRssi_HFM"
+//  120 //__root __no_init sLfRssiAppResult g_sLfRssiHfmResult_flash[9];
+//  121 //#pragma location = ".sram_FlashApp_LfRssi_HFM"
+//  122 //__no_init uint16_t g_wLfRssiMeasSamples[48];
+//  123 //#pragma location = ".sram_FlashApp_LfRssi_HFM"
+//  124 //__no_init lfRssiFlowStateMachineFuncLut_t *g_pLfRssiHfmStateMachine_flash;
+//  125 
+
+        RSEG NEAR_F:CODE:NOROOT(0)
+//  126 lfRssiFlowStateMachineFuncLut_t g_sLfRssiHfmStateMachineLut_flash[] = {
+g_sLfRssiHfmStateMachineLut_flash:
+        DC16 ATA_lfRssiMeasOpenHfm_flash_C/2
+        DC16 ATA_lfRssiMeasEnableLfReceiver_flash_C/2
+        DC16 ATA_lfRssiMeasWaitReadyHfm_flash_C/2
+        DC16 ATA_lfRssiMeasExecCalc_flash_C/2, ATA_lfRssiMeasClose_flash_C/2
+//  127     ATA_lfRssiMeasOpenHfm_flash_C,
+//  128     ATA_lfRssiMeasEnableLfReceiver_flash_C,
+//  129     ATA_lfRssiMeasWaitReadyHfm_flash_C,
+//  130     ATA_lfRssiMeasExecCalc_flash_C,
+//  131     ATA_lfRssiMeasClose_flash_C
+//  132 };
+//  133 
+
+        RSEG NEAR_Z:DATA:NOROOT(0)
+        REQUIRE `?<Segment init: NEAR_Z>`
+//  134 uint8_t           m_bDataByteCnt;               // RSSI result counter holds the number of bytes to transmit
+m_bDataByteCnt:
+        DS8 1
+
+        RSEG NEAR_Z:DATA:NOROOT(0)
+        REQUIRE `?<Segment init: NEAR_Z>`
+//  135 uint8_t           m_bLocDataBuff_FillLevel;     // only used for test purposes
+m_bLocDataBuff_FillLevel:
+        DS8 1
+
+        RSEG NEAR_Z:DATA:NOROOT(0)
+        REQUIRE `?<Segment init: NEAR_Z>`
+//  136 uint8_t           m_bNumMeasCnt;                // measurement counter value
+m_bNumMeasCnt:
+        DS8 1
+
+        RSEG NEAR_Z:DATA:NOROOT(0)
+        REQUIRE `?<Segment init: NEAR_Z>`
+//  137 uint8_t           m_bPayloadOffsetTxBuf;        // offset value used to store the measurement result data (payload) in TX buffer
+m_bPayloadOffsetTxBuf:
+        DS8 1
+
+        RSEG NEAR_Z:DATA:NOROOT(0)
+        REQUIRE `?<Segment init: NEAR_Z>`
+//  138 uint16_t          m_wBref;
+m_wBref:
+        DS8 2
+
+        RSEG NEAR_Z:DATA:NOROOT(0)
+        REQUIRE `?<Segment init: NEAR_Z>`
+//  139 sLfRssiAppResult *m_pResultExt;                 // pointer to structure holding the external measurement results
+m_pResultExt:
+        DS8 2
+
+        RSEG NEAR_Z:DATA:NOROOT(0)
+        REQUIRE `?<Segment init: NEAR_Z>`
+//  140 sLfRssiAppResult *m_pResultInt;                 // pointer to structure holding the internal measurement results
+m_pResultInt:
+        DS8 2
+
+        RSEG NEAR_Z:DATA:NOROOT(0)
+        REQUIRE `?<Segment init: NEAR_Z>`
+//  141 sLfRssiAppResult *m_pCurrResult;                // pointer to structure to store the current measurement results
+m_pCurrResult:
+        DS8 2
+//  142 
+//  143 /*===========================================================================*/
+//  144 /*  IMPLEMENTATION                                                           */
+//  145 /*===========================================================================*/
+//  146 /*----------------------------------------------------------------------------- */
+//  147 /*---------------------------------------------------------------------------*/
+//  148 /** \brief <b>ATA_lfRssiMeasInit_flash_C</b>
+//  149 
+//  150     \param none
+//  151 
+//  152     \return none
+//  153 
+//  154     \image html ATA_lfRssiMeasInit_flash_C.png
+//  155     \image rtf ATA_lfRssiMeasInit_flash_C.png
+//  156     \n
+//  157 */
+//  158 /*---------------------------------------------------------------------------*/
+
+        RSEG CODE:CODE:ROOT(1)
+//  159 VOIDFUNC ATA_lfRssiMeasInit_flash_C(void)
+ATA_lfRssiMeasInit_flash_C:
+          CFI Block cfiBlock0 Using cfiCommon0
+          CFI Function ATA_lfRssiMeasInit_flash_C
+//  160 {
+        SBIW    R29:R28, 16
+          CFI CFA_Y Y+16
+//  161     uint8_t tmpBuf[16];
+//  162 
+//  163     g_sLfRssiCtrl_flash.bFlags  = LFRSSICONFIG_FLAGS_RESET;
+        LDI     R16, 0
+        STS     g_sLfRssiCtrl_flash, R16
+//  164     g_sLfRssiCtrl_flash.bStatus = LFRSSICONFIG_STATUS_RESET;
+        STS     (g_sLfRssiCtrl_flash + 1), R16
+//  165 
+//  166     // read LF RSSI End of Line and LF RSSI SRC calibration EEPROM settings
+//  167     if( ATA_eepReadBytes_C( &tmpBuf[0], (uint16_t)&g_sEepFlashAppLfRssiEndOfLineCalibrationSettings_flash, sizeof(sEepFlashAppLfRssiEndOfLineCalibrationSettings) + 1U ) == EEC_NO_ERROR )
+        LDI     R20, 16
+        LDI     R18, LOW(g_sEepFlashAppLfRssiEndOfLineCalibrationSettings_flash)
+        LDI     R19, (g_sEepFlashAppLfRssiEndOfLineCalibrationSettings_flash) >> 8
+        MOVW    R17:R16, R29:R28
+          CFI FunCall ATA_eepReadBytes_C
+        CALL    ATA_eepReadBytes_C
+        TST     R16
+        BRNE    ??ATA_lfRssiMeasInit_flash_C_0
+//  168     {
+//  169         // assign pointers to related state machines
+//  170         g_pLfRssiMeasStateMachineSerial_flash   = g_sLfRssiMeasStateMachineLutSerial_flash;
+        LDI     R16, LOW(g_sLfRssiMeasStateMachineLutSerial_flash)
+        LDI     R17, (g_sLfRssiMeasStateMachineLutSerial_flash) >> 8
+        LDI     R30, LOW(g_pLfRssiMeasStateMachineSerial_flash)
+        LDI     R31, (g_pLfRssiMeasStateMachineSerial_flash) >> 8
+        ST      Z, R16
+        STD     Z+1, R17
+//  171         g_pLfRssiMeasStateMachineParallel_flash = g_sLfRssiMeasStateMachineLutParallel_flash;
+        LDI     R16, LOW(g_sLfRssiMeasStateMachineLutParallel_flash)
+        LDI     R17, (g_sLfRssiMeasStateMachineLutParallel_flash) >> 8
+        LDI     R30, LOW(g_pLfRssiMeasStateMachineParallel_flash)
+        LDI     R31, (g_pLfRssiMeasStateMachineParallel_flash) >> 8
+        ST      Z, R16
+        STD     Z+1, R17
+//  172         //g_pLfRssiHfmStateMachine_flash          = g_sLfRssiHfmStateMachineLut_flash;
+//  173 
+//  174         m_bNumMeasCnt         = 0;
+        LDI     R16, 0
+        STS     m_bNumMeasCnt, R16
+//  175         m_bPayloadOffsetTxBuf = 0; // no payload offset
+        STS     m_bPayloadOffsetTxBuf, R16
+//  176 
+//  177         // build Bref value for final result calculations
+//  178         m_wBref = (uint16_t)((tmpBuf[14]<<SHIFT_LOW_TO_HIGH_BYTE | tmpBuf[13]));
+        LDD     R19, Y+14
+        LDD     R16, Y+13
+        LDI     R30, LOW(m_wBref)
+        LDI     R31, (m_wBref) >> 8
+        ST      Z, R16
+        STD     Z+1, R19
+//  179 
+//  180         // load EEPROM settings to registers, pass the desired SRC calibration value
+//  181         ATA_lfRssiSetEepromConfig_C( tmpBuf[15] );
+        LDD     R16, Y+15
+          CFI FunCall ATA_lfRssiSetEepromConfig_C
+        CALL    ATA_lfRssiSetEepromConfig_C
+//  182 
+//  183         // calculate the LF channel calibration values
+//  184         ATA_lfRssiCalcChanCalibVal_C( tmpBuf[0], (uint16_t*)&tmpBuf[1], (uint16_t*)&tmpBuf[7] );
+        MOVW    R21:R20, R29:R28
+        SUBI    R20, 249
+        SBCI    R21, 255
+        MOVW    R19:R18, R29:R28
+        SUBI    R18, 255
+        SBCI    R19, 255
+        LD      R16, Y
+          CFI FunCall ATA_lfRssiCalcChanCalibVal_C
+        CALL    ATA_lfRssiCalcChanCalibVal_C
+//  185     }
+//  186 }
+??ATA_lfRssiMeasInit_flash_C_0:
+        ADIW    R29:R28, 16
+          CFI CFA_Y Y+0
+        RET
+          CFI EndBlock cfiBlock0
+//  187 
+//  188 
+//  189 /*---------------------------------------------------------------------------*/
+//  190 /** \brief <b>ATA_lfRssiMeasStart_flash_C</b>
+//  191 
+//  192     \param none
+//  193 
+//  194     \return none
+//  195 
+//  196     \image html ATA_lfRssiMeasStart_flash_C.png
+//  197     \image rtf ATA_lfRssiMeasStart_flash_C.png
+//  198     \n
+//  199 */
+//  200 /*---------------------------------------------------------------------------*/
+
+        RSEG CODE:CODE:ROOT(1)
+//  201 VOIDFUNC ATA_lfRssiMeasConfig_flash_C(uint8_t bType)
+ATA_lfRssiMeasConfig_flash_C:
+          CFI Block cfiBlock1 Using cfiCommon0
+          CFI Function ATA_lfRssiMeasConfig_flash_C
+          CFI NoCalls
+//  202 {
+//  203     if( bType & SERIAL_LFRSSI_MEASUREMENT )
+        BST     R16, 1
+        BRTC    ??ATA_lfRssiMeasConfig_flash_C_0
+//  204     {
+//  205         LTCMR &= ~BM_LTCM;  // disable LF timer continuous mode
+        CBI     0x15, 0x05
+//  206 
+//  207         g_sLfRssiCtrl_flash.bStatus   = LFRSSICONFIG_STATUS_BM_MEASUREMENT_SERIAL_FLAG; // LF RSSI measurement after sending TX response
+        LDI     R16, 1
+//  208         g_sLfRssiFlowCtrl_flash.fpLut = g_pLfRssiMeasStateMachineSerial_flash;
+        LDI     R30, LOW(g_pLfRssiMeasStateMachineSerial_flash)
+        LDI     R31, (g_pLfRssiMeasStateMachineSerial_flash) >> 8
+        LD      R18, Z
+        LDD     R19, Z+1
+        LDI     R30, LOW(g_sLfRssiFlowCtrl_flash)
+        LDI     R31, (g_sLfRssiFlowCtrl_flash) >> 8
+        STD     Z+1, R18
+        STD     Z+2, R19
+//  209         m_bLocDataBuff_FillLevel      = 0;
+        LDI     R17, 0
+        RJMP    ??ATA_lfRssiMeasConfig_flash_C_1
+//  210     }
+//  211     else
+//  212     {
+//  213         LTEMR  = 0x00;                                                  // disable LF timer events
+??ATA_lfRssiMeasConfig_flash_C_0:
+        LDI     R16, 0
+        STS     _A_LTEMR, R16
+//  214         LTCOR  = (uint8_t)(g_sLfRssiCustConfig_flash.wCycleTime>>8);    // set next compare match value
+        LDS     R16, (g_sLfRssiCustConfig_flash + 3)
+        STS     _A_LTCOR, R16
+//  215         LTCMR &= ~BM_LTSM;                                              // disable start LF timer on event
+        CBI     0x15, 0x06
+//  216 
+//  217         g_sLfRssiCtrl_flash.bStatus   = LFRSSICONFIG_STATUS_RESET;      // LF RSSI measurement in parallel with sending TX response
+        LDI     R16, 0
+//  218         g_sLfRssiFlowCtrl_flash.fpLut = g_pLfRssiMeasStateMachineParallel_flash;
+        LDI     R30, LOW(g_pLfRssiMeasStateMachineParallel_flash)
+        LDI     R31, (g_pLfRssiMeasStateMachineParallel_flash) >> 8
+        LD      R18, Z
+        LDD     R19, Z+1
+        LDI     R30, LOW(g_sLfRssiFlowCtrl_flash)
+        LDI     R31, (g_sLfRssiFlowCtrl_flash) >> 8
+        STD     Z+1, R18
+        STD     Z+2, R19
+//  219         m_bLocDataBuff_FillLevel      = 4;
+        LDI     R17, 4
+??ATA_lfRssiMeasConfig_flash_C_1:
+        STS     (g_sLfRssiCtrl_flash + 1), R16
+        STS     m_bLocDataBuff_FillLevel, R17
+//  220     }
+//  221 
+//  222     m_pResultExt = &g_sLfRssiBmwResult_flash[0];    // set pointer to structure holding the first external measurement results
+        LDI     R16, LOW(g_sLfRssiBmwResult_flash)
+        LDI     R17, (g_sLfRssiBmwResult_flash) >> 8
+        LDI     R30, LOW(m_pResultExt)
+        LDI     R31, (m_pResultExt) >> 8
+        ST      Z, R16
+        STD     Z+1, R17
+//  223     m_pResultInt = &g_sLfRssiBmwResult_flash[2];    // set pointer to structure holding the internal measurement results
+        LDI     R16, LOW((g_sLfRssiBmwResult_flash + 40))
+        LDI     R17, HIGH((g_sLfRssiBmwResult_flash + 40))
+        LDI     R30, LOW(m_pResultInt)
+        LDI     R31, (m_pResultInt) >> 8
+        ST      Z, R16
+        STD     Z+1, R17
+//  224 
+//  225     g_sLfRssiCustConfig_flash.bNumMeas = 3; // 2x external + 1x internal LF RSSI measurement, NOTE: only dummy internal measurement for serial measurement test
+        LDI     R16, 3
+        STS     g_sLfRssiCustConfig_flash, R16
+//  226     g_sLfRssiCustConfig_flash.bOptions = 2; // internal LF RSSI measurement takes place at the end of the measurement sequence
+        LDI     R16, 2
+        STS     (g_sLfRssiCustConfig_flash + 1), R16
+//  227 
+//  228     g_sLfRssiFlowCtrl_flash.bIndex = 0;
+        LDI     R16, 0
+        STS     g_sLfRssiFlowCtrl_flash, R16
+//  229     g_sLfRssiFlowCtrl_flash.bLastRfTxStateIndex = 0;
+        STS     (g_sLfRssiFlowCtrl_flash + 3), R16
+//  230 
+//  231     m_bDataByteCnt        = 1; // at least one byte to send back via RF TX
+        LDI     R16, 1
+        STS     m_bDataByteCnt, R16
+//  232     m_bPayloadOffsetTxBuf = 1; // one byte offset, used as response identifier
+        STS     m_bPayloadOffsetTxBuf, R16
+//  233     g_sLfRssiCtrl_flash.bFlags = LFRSSICONFIG_FLAGS_BM_MEASUREMENT_ENABLE_FLAG;   // enable LF RSSI measurement
+        STS     g_sLfRssiCtrl_flash, R16
+//  234 }
+        RET
+          CFI EndBlock cfiBlock1
+        REQUIRE _A_LTCMR
+        REQUIRE _A_LTEMR
+        REQUIRE _A_LTCOR
+//  235 
+//  236 
+//  237 /*---------------------------------------------------------------------------*/
+//  238 /** \brief <b>ATA_lfRssiMeasProcessing_flash_C</b>
+//  239     triggers the active sw state of currently running sw state machine. This
+//  240     function should be placed in main loop context or should be run periodically
+//  241     to ensure RFTX functionality
+//  242 
+//  243     010:    set GPIOR0.1 to indicate begin of state machine activity for debug purpose
+//  244     020:    decode and execute currently active sw state
+//  245     030:    reset GPIOR0.1 to indicate end of state machine activity for debug purpose
+//  246 
+//  247     \param none
+//  248 
+//  249     \return none
+//  250 
+//  251     \image html ATA_lfRssiMeasProcessing_flash_C.png
+//  252     \image rtf ATA_lfRssiMeasProcessing_flash_C.png
+//  253     \n
+//  254 */
+//  255 /*---------------------------------------------------------------------------*/
+
+        RSEG CODE:CODE:ROOT(1)
+//  256 VOIDFUNC ATA_lfRssiMeasProcessing_flash_C(void)
+ATA_lfRssiMeasProcessing_flash_C:
+          CFI Block cfiBlock2 Using cfiCommon0
+          CFI Function ATA_lfRssiMeasProcessing_flash_C
+//  257 {
+        ST      -Y, R27
+          CFI R27 Frame(CFA_Y, -1)
+          CFI CFA_Y Y+1
+        ST      -Y, R26
+          CFI R26 Frame(CFA_Y, -2)
+          CFI CFA_Y Y+2
+//  258     /* LLR-Ref: 010 */
+//  259     //GPIOR0 |= BIT_MASK_1;   /* set GPIOR0.1 to indicate begin of state machine activity */
+//  260 
+//  261     /* LLR-Ref: 020 */
+//  262     lfRssiFlowStateMachineFunc_t fpFunc = *(lfRssiFlowStateMachineFunc_t)g_sLfRssiFlowCtrl_flash.fpLut[g_sLfRssiFlowCtrl_flash.bIndex];
+        LDS     R16, g_sLfRssiFlowCtrl_flash
+//  263     fpFunc();
+        LDI     R26, LOW((g_sLfRssiFlowCtrl_flash + 1))
+        LDI     R27, HIGH((g_sLfRssiFlowCtrl_flash + 1))
+        LD      R30, X+
+        LD      R31, X
+        LDI     R17, 2
+        MUL     R16, R17
+        ADD     R30, R0
+        ADC     R31, R1
+        LPM     R16, Z+
+        LPM     R31, Z
+        MOV     R30, R16
+          CFI FunCall
+        ICALL
+//  264 
+//  265     /* LLR-Ref: 030 */
+//  266     //GPIOR0 &= (uint8_t)~BIT_MASK_1;   /* reset GPIOR0.1 to indicate end of state machine activity */
+//  267 }
+        LD      R26, Y+
+          CFI R26 SameValue
+          CFI CFA_Y Y+1
+        LD      R27, Y+
+          CFI R27 SameValue
+          CFI CFA_Y Y+0
+        RET
+          CFI EndBlock cfiBlock2
+//  268 
+//  269 
+//  270 
+//  271 /*----------------------------------------------------------------------------- */
+//  272 /** \brief <b>ATA_lfRssiMeasOpen_flash_C</b>
+//  273     .
+//  274 
+//  275     \param none
+//  276 
+//  277     \return none
+//  278 
+//  279     \image html ATA_lfRssiMeasOpen_flash_C.png
+//  280     \image rtf ATA_lfRssiMeasOpen_flash_C.png
+//  281     \n
+//  282 */
+//  283 /*----------------------------------------------------------------------------- */
+
+        RSEG CODE:CODE:ROOT(1)
+//  284 VOIDFUNC ATA_lfRssiMeasOpen_flash_C(void)
+ATA_lfRssiMeasOpen_flash_C:
+          CFI Block cfiBlock3 Using cfiCommon0
+          CFI Function ATA_lfRssiMeasOpen_flash_C
+//  285 {
+//  286     /* NOTE AJ: index changed from 0 to 1 by state 0 itself, so state 1 has to be invoked at least one time */
+//  287     /* do the LF RSSI initialization in dependency of certain TX state machine state */
+//  288     if( ( g_sRfTxFlowCtrl.bIndex == RFTX_BUF_STATE_WAIT_AVCC ) ||
+//  289         ( g_sRfTxFlowCtrl.bIndex == RFTX_BUF_STATE_WAIT_XTO ) ||
+//  290         ( g_sRfTxFlowCtrl.bIndex == RFTX_BUF_STATE_WAIT_FILLLEVEL ) )
+        LDS     R16, g_sRfTxFlowCtrl
+        CPI     R16, 1
+        BREQ    ??ATA_lfRssiMeasOpen_flash_C_0
+        LDS     R16, g_sRfTxFlowCtrl
+        CPI     R16, 3
+        BREQ    ??ATA_lfRssiMeasOpen_flash_C_0
+        LDS     R16, g_sRfTxFlowCtrl
+        CPI     R16, 6
+        BRNE    ??ATA_lfRssiMeasOpen_flash_C_1
+//  291     {
+//  292         /* compare last state and current state, if unequal, set flag and store current state */
+//  293         if( g_sLfRssiFlowCtrl_flash.bLastRfTxStateIndex != g_sRfTxFlowCtrl.bIndex )
+??ATA_lfRssiMeasOpen_flash_C_0:
+        LDS     R16, (g_sLfRssiFlowCtrl_flash + 3)
+        LDS     R17, g_sRfTxFlowCtrl
+        CP      R16, R17
+        BREQ    ??ATA_lfRssiMeasOpen_flash_C_2
+//  294         {
+//  295             g_sLfRssiCtrl_flash.bStatus |= LFRSSICONFIG_STATUS_BM_LASTSTATECHANGE_FLAG;
+        LDI     R30, LOW(g_sLfRssiCtrl_flash)
+        LDI     R31, (g_sLfRssiCtrl_flash) >> 8
+        LDD     R16, Z+1
+        ORI     R16, 0x02
+        STD     Z+1, R16
+//  296             g_sLfRssiFlowCtrl_flash.bLastRfTxStateIndex = g_sRfTxFlowCtrl.bIndex;
+        LDS     R16, g_sRfTxFlowCtrl
+        RJMP    ?Subroutine1
+//  297         }
+//  298         else
+//  299         {
+//  300             /* invoke open routine only if both states matching */
+//  301             if( g_sLfRssiCtrl_flash.bStatus & LFRSSICONFIG_STATUS_BM_LASTSTATECHANGE_FLAG )
+??ATA_lfRssiMeasOpen_flash_C_2:
+        LDS     R16, (g_sLfRssiCtrl_flash + 1)
+        SBRS    R16, 1
+        RJMP    ??ATA_lfRssiMeasOpen_flash_C_3
+//  302             {
+//  303                 ATA_lfRssiOpen_C();
+          CFI FunCall ATA_lfRssiOpen_C
+        CALL    ATA_lfRssiOpen_C
+//  304                 g_sLfRssiFlowCtrl_flash.bIndex++;
+        LDS     R16, g_sLfRssiFlowCtrl_flash
+        INC     R16
+        STS     g_sLfRssiFlowCtrl_flash, R16
+//  305                 g_sLfRssiCtrl_flash.bStatus &= ~LFRSSICONFIG_STATUS_BM_LASTSTATECHANGE_FLAG;
+        LDI     R30, LOW(g_sLfRssiCtrl_flash)
+        LDI     R31, (g_sLfRssiCtrl_flash) >> 8
+        LDD     R16, Z+1
+        ANDI    R16, 0xFD
+        STD     Z+1, R16
+        RET
+//  306 
+//  307                 /* TODO AJ: implement error handling */
+//  308             }
+//  309         }
+//  310     }
+//  311     else
+//  312     {
+//  313         g_sLfRssiCtrl_flash.bStatus &= ~LFRSSICONFIG_STATUS_BM_LASTSTATECHANGE_FLAG;
+??ATA_lfRssiMeasOpen_flash_C_1:
+        LDI     R30, LOW(g_sLfRssiCtrl_flash)
+        LDI     R31, (g_sLfRssiCtrl_flash) >> 8
+        LDD     R16, Z+1
+        ANDI    R16, 0xFD
+        STD     Z+1, R16
+//  314     }
+//  315 
+//  316 }
+??ATA_lfRssiMeasOpen_flash_C_3:
+        RET
+          CFI EndBlock cfiBlock3
+//  317 
+//  318 
+//  319 /*----------------------------------------------------------------------------- */
+//  320 /** \brief <b>ATA_lfRssiMeasEnableLfReceiver_flash_C</b>
+//  321     enables the LF receiver and increment the state number.
+//  322 
+//  323     \param none
+//  324 
+//  325     \return none
+//  326 
+//  327     \image html ATA_lfRssiMeasEnableLfReceiver_flash_C.png
+//  328     \image rtf ATA_lfRssiMeasEnableLfReceiver_flash_C.png
+//  329     \n
+//  330 */
+//  331 /*----------------------------------------------------------------------------- */
+
+        RSEG CODE:CODE:ROOT(1)
+//  332 VOIDFUNC ATA_lfRssiMeasEnableLfReceiver_flash_C(void)
+ATA_lfRssiMeasEnableLfReceiver_flash_C:
+          CFI Block cfiBlock4 Using cfiCommon0
+          CFI Function ATA_lfRssiMeasEnableLfReceiver_flash_C
+          CFI NoCalls
+//  333 {
+//  334     LFCR1 |= BM_LFRE;
+        IN      R16, 0x30
+        ORI     R16, 0x80
+        OUT     0x30, R16
+//  335     g_sLfRssiFlowCtrl_flash.bIndex++;
+        LDS     R16, g_sLfRssiFlowCtrl_flash
+        INC     R16
+        STS     g_sLfRssiFlowCtrl_flash, R16
+//  336 }
+        RET
+          CFI EndBlock cfiBlock4
+        REQUIRE _A_LFCR1
+//  337 
+//  338 
+//  339 /*----------------------------------------------------------------------------- */
+//  340 /** \brief <b>ATA_lfRssiMeasStartInt_flash_C</b>
+//  341     .
+//  342 
+//  343     \param none
+//  344 
+//  345     \return none
+//  346 
+//  347     \image html ATA_lfRssiMeasStartInt_flash_C.png
+//  348     \image rtf ATA_lfRssiMeasStartInt_flash_C.png
+//  349     \n
+//  350 */
+//  351 /*----------------------------------------------------------------------------- */
+
+        RSEG CODE:CODE:ROOT(1)
+//  352 VOIDFUNC ATA_lfRssiMeasStartInt_flash_C(void)
+ATA_lfRssiMeasStartInt_flash_C:
+          CFI Block cfiBlock5 Using cfiCommon0
+          CFI Function ATA_lfRssiMeasStartInt_flash_C
+//  353 {
+//  354     /* NOTE AJ: index changed from 0 to 1 by state 0 itself, so state 1 has to be invoked at least one time */
+//  355     /* start the internal LF RSSI measurement after LF timer has expired */
+//  356     if( g_bResponseDelayReached && !g_bBytesToTransmit )
+        LDS     R16, g_bResponseDelayReached
+        TST     R16
+        BREQ    ??ATA_lfRssiMeasStartInt_flash_C_0
+        LDS     R16, g_bBytesToTransmit
+        TST     R16
+        BRNE    ??ATA_lfRssiMeasStartInt_flash_C_0
+//  357     {
+//  358         g_bResponseDelayReached = FALSE;
+        LDI     R16, 0
+        STS     g_bResponseDelayReached, R16
+//  359 
+//  360         /* close Timer3 to synchronize TX modulator and Timer3 clocks when re-opening by TX state machine */
+//  361         ATA_timer3Close_C();
+          CFI FunCall ATA_timer3Close_C
+        CALL    ATA_timer3Close_C
+//  362 
+//  363         ATA_lfRssiMeasStart_C( &g_sLfRssiRegConfig_flash, 1U, 0U );
+        LDI     R19, 0
+        LDI     R18, 1
+        LDI     R16, LOW(g_sLfRssiRegConfig_flash)
+        LDI     R17, (g_sLfRssiRegConfig_flash) >> 8
+          CFI FunCall ATA_lfRssiMeasStart_C
+        CALL    ATA_lfRssiMeasStart_C
+//  364 
+//  365         /* reconfigure LF timer, 3ms (serial measurement), 4ms (parallel measurement) */
+//  366         LTCOR = (uint8_t)g_sLfRssiCustConfig_flash.wCycleTime;
+        LDS     R16, (g_sLfRssiCustConfig_flash + 2)
+        STS     _A_LTCOR, R16
+//  367         /* NOTE AJ: LF timer still running as configured */
+//  368 
+//  369         g_sLfRssiFlowCtrl_flash.bIndex++;
+        LDS     R16, g_sLfRssiFlowCtrl_flash
+        INC     R16
+        STS     g_sLfRssiFlowCtrl_flash, R16
+//  370     }
+//  371 }
+??ATA_lfRssiMeasStartInt_flash_C_0:
+        RET
+          CFI EndBlock cfiBlock5
+        REQUIRE _A_LTCOR
+//  372 
+//  373 
+//  374 /*----------------------------------------------------------------------------- */
+//  375 /** \brief <b>ATA_lfRssiMeasStartExt_flash_C</b>
+//  376     .
+//  377 
+//  378     \param none
+//  379 
+//  380     \return none
+//  381 
+//  382     \image html ATA_lfRssiMeasStartExt_flash_C.png
+//  383     \image rtf ATA_lfRssiMeasStartExt_flash_C.png
+//  384     \n
+//  385 */
+//  386 /*----------------------------------------------------------------------------- */
+
+        RSEG CODE:CODE:ROOT(1)
+//  387 VOIDFUNC ATA_lfRssiMeasStartExt_flash_C(void)
+ATA_lfRssiMeasStartExt_flash_C:
+          CFI Block cfiBlock6 Using cfiCommon0
+          CFI Function ATA_lfRssiMeasStartExt_flash_C
+//  388 {
+//  389     /* NOTE AJ: index changed from 0 to 1 by state 0 itself, so state 1 has to be invoked at least one time */
+//  390     /* start the external LF RSSI measurement after LF timer has expired */
+//  391     if( g_bResponseDelayReached && !g_bBytesToTransmit )
+        LDS     R16, g_bResponseDelayReached
+        TST     R16
+        BREQ    ??ATA_lfRssiMeasStartExt_flash_C_0
+        LDS     R16, g_bBytesToTransmit
+        TST     R16
+        BRNE    ??ATA_lfRssiMeasStartExt_flash_C_0
+//  392     {
+//  393         g_bResponseDelayReached = FALSE;
+        LDI     R16, 0
+        STS     g_bResponseDelayReached, R16
+//  394 
+//  395         /* close Timer3 to synchronize TX modulator and Timer3 clocks when re-opening by TX state machine */
+//  396         ATA_timer3Close_C();
+          CFI FunCall ATA_timer3Close_C
+        CALL    ATA_timer3Close_C
+//  397 
+//  398         ATA_lfRssiMeasStart_C( &g_sLfRssiRegConfig_flash, 0U, 0U );
+        LDI     R19, 0
+        LDI     R18, 0
+        LDI     R16, LOW(g_sLfRssiRegConfig_flash)
+        LDI     R17, (g_sLfRssiRegConfig_flash) >> 8
+          CFI FunCall ATA_lfRssiMeasStart_C
+        CALL    ATA_lfRssiMeasStart_C
+//  399 
+//  400         /* no LF timer reconfiguration needed, still running, re-use of counter value */
+//  401         /* NOTE AJ: LF timer still running as configured */
+//  402 
+//  403         g_bBytesToTransmit       = m_bLocDataBuff_FillLevel;
+        LDS     R16, m_bLocDataBuff_FillLevel
+        STS     g_bBytesToTransmit, R16
+//  404         m_bLocDataBuff_FillLevel = 0;
+        LDI     R16, 0
+        STS     m_bLocDataBuff_FillLevel, R16
+//  405 
+//  406         /* increment number of data bytes to send and state machine index */
+//  407         m_bDataByteCnt += 2;
+        LDS     R16, m_bDataByteCnt
+        SUBI    R16, 254
+        STS     m_bDataByteCnt, R16
+//  408 
+//  409         g_sLfRssiFlowCtrl_flash.bIndex++;
+        LDS     R16, g_sLfRssiFlowCtrl_flash
+        INC     R16
+        STS     g_sLfRssiFlowCtrl_flash, R16
+//  410     }
+//  411 }
+??ATA_lfRssiMeasStartExt_flash_C_0:
+        RET
+          CFI EndBlock cfiBlock6
+//  412 
+//  413 
+//  414 /*----------------------------------------------------------------------------- */
+//  415 /** \brief <b>ATA_lfRssiMeasWaitReady_flash_C</b>
+//  416     .
+//  417 
+//  418     \param none
+//  419 
+//  420     \return none
+//  421 
+//  422     \image html ATA_lfRssiMeasWaitReady_flash_C.png
+//  423     \image rtf ATA_lfRssiMeasWaitReady_flash_C.png
+//  424     \n
+//  425 */
+//  426 /*----------------------------------------------------------------------------- */
+
+        RSEG CODE:CODE:ROOT(1)
+//  427 VOIDFUNC ATA_lfRssiMeasWaitReady_flash_C(void)
+ATA_lfRssiMeasWaitReady_flash_C:
+          CFI Block cfiBlock7 Using cfiCommon0
+          CFI Function ATA_lfRssiMeasWaitReady_flash_C
+//  428 {
+//  429     /* wait until LF RSSI measurement signalizes readiness */
+//  430     if( g_sLfRssi.bStatus & LFRSSI_STATUS_BM_MEAS_DATA_AVAILABLE_FLAG )
+        LDS     R16, (g_sLfRssi + 1)
+        SBRS    R16, 7
+        RJMP    ??ATA_lfRssiMeasWaitReady_flash_C_0
+//  431     {
+//  432         /* gather measurement results */
+//  433         ATA_lfRssiGetAverageResult_C((uint8_t*)&g_sLfRssiBmwResult_flash[m_bNumMeasCnt].wRawLfRssi[0], (uint8_t*)0x0000);
+        LDI     R18, 0
+        LDI     R19, 0
+        LDS     R16, m_bNumMeasCnt
+        LDI     R17, 0
+        LDI     R20, 20
+        LDI     R21, 0
+          CFI FunCall ?S_EC_MUL_L02
+        CALL    ?S_EC_MUL_L02
+        MOVW    R21:R20, R17:R16
+        LDI     R16, LOW(g_sLfRssiBmwResult_flash)
+        LDI     R17, (g_sLfRssiBmwResult_flash) >> 8
+        ADD     R16, R20
+        ADC     R17, R21
+          CFI FunCall ATA_lfRssiGetAverageResult_C
+        CALL    ATA_lfRssiGetAverageResult_C
+//  434 
+//  435         /* increment number of measurements */
+//  436         m_bNumMeasCnt++;
+        LDS     R16, m_bNumMeasCnt
+        INC     R16
+        STS     m_bNumMeasCnt, R16
+//  437 
+//  438         /* clear flag due to data have been processed */
+//  439         g_sLfRssi.bStatus &= ~LFRSSI_STATUS_BM_MEAS_DATA_AVAILABLE_FLAG;
+        LDI     R30, LOW(g_sLfRssi)
+        LDI     R31, (g_sLfRssi) >> 8
+        LDD     R16, Z+1
+        ANDI    R16, 0x7F
+        STD     Z+1, R16
+//  440 
+//  441         /* reconfigure LF timer in case serial measurement is taking place */
+//  442         if( (g_sLfRssiCtrl_flash.bStatus & LFRSSICONFIG_STATUS_BM_MEASUREMENT_SERIAL_FLAG) && (m_bNumMeasCnt == 2) )
+        LDS     R16, (g_sLfRssiCtrl_flash + 1)
+        SBRS    R16, 0
+        RJMP    ??ATA_lfRssiMeasWaitReady_flash_C_1
+        LDS     R16, m_bNumMeasCnt
+        CPI     R16, 2
+        BRNE    ??ATA_lfRssiMeasWaitReady_flash_C_1
+//  443         {
+//  444             LTCOR = (uint8_t)g_sLfRssiCustConfig_flash.wCycleTime;       /* 62 * 32ms = 1984ms */
+        LDS     R16, (g_sLfRssiCustConfig_flash + 2)
+        STS     _A_LTCOR, R16
+//  445         }
+//  446         /* NOTE AJ: LF timer still running as configured */
+//  447 
+//  448         g_sLfRssiFlowCtrl_flash.bIndex++;
+??ATA_lfRssiMeasWaitReady_flash_C_1:
+        LDS     R16, g_sLfRssiFlowCtrl_flash
+        INC     R16
+        STS     g_sLfRssiFlowCtrl_flash, R16
+//  449     }
+//  450 }
+??ATA_lfRssiMeasWaitReady_flash_C_0:
+        RET
+          CFI EndBlock cfiBlock7
+        REQUIRE _A_LTCOR
+//  451 
+//  452 
+//  453 /*----------------------------------------------------------------------------- */
+//  454 /** \brief <b>ATA_lfRssiMeasPrepSendResults_flash_C</b>
+//  455     .
+//  456 
+//  457     \param none
+//  458 
+//  459     \return none
+//  460 
+//  461     \image html ATA_lfRssiMeasPrepSendResults_flash_C.png
+//  462     \image rtf ATA_lfRssiMeasPrepSendResults_flash_C.png
+//  463     \n
+//  464 */
+//  465 /*----------------------------------------------------------------------------- */
+
+        RSEG CODE:CODE:ROOT(1)
+//  466 VOIDFUNC ATA_lfRssiMeasPrepSendResults_flash_C(void)
+ATA_lfRssiMeasPrepSendResults_flash_C:
+          CFI Block cfiBlock8 Using cfiCommon0
+          CFI Function ATA_lfRssiMeasPrepSendResults_flash_C
+          CFI NoCalls
+//  467 {
+//  468     /* wait until LF timer has expired */
+//  469     if( g_bResponseDelayReached )
+        LDS     R16, g_bResponseDelayReached
+        TST     R16
+        BREQ    ??ATA_lfRssiMeasPrepSendResults_flash_C_0
+//  470     {
+//  471         g_bResponseDelayReached = FALSE;
+        LDI     R16, 0
+        STS     g_bResponseDelayReached, R16
+//  472 
+//  473         /* reconfigure LF timer, 2ms due to sending LF RSSI results */
+//  474         //LTCOR  = (uint8_t)g_sLfRssiCustConfig_flash.wCycleTime;       /* 62 * 32ms = 1984ms */
+//  475         /* NOTE AJ: LF timer still running as configured */
+//  476 
+//  477         /* after transmitting LF RSSI results, TX statemachine ends in IDLE mode */
+//  478         g_sRfTx.bConfig &= ~BM_RFTXCONFIG_BCONFIG_STAY_TX;
+        LDI     R30, LOW(g_sRfTx)
+        LDI     R31, (g_sRfTx) >> 8
+        LDD     R16, Z+3
+        ANDI    R16, 0xFB
+        STD     Z+3, R16
+//  479 
+//  480         g_sLfRssiFlowCtrl_flash.bIndex++;
+        LDS     R16, g_sLfRssiFlowCtrl_flash
+        INC     R16
+        STS     g_sLfRssiFlowCtrl_flash, R16
+//  481     }
+//  482 }
+??ATA_lfRssiMeasPrepSendResults_flash_C_0:
+        RET
+          CFI EndBlock cfiBlock8
+//  483 
+//  484 
+//  485 /*----------------------------------------------------------------------------- */
+//  486 /** \brief <b>ATA_lfRssiMeasSendResult_flash_C</b>
+//  487     .
+//  488 
+//  489     \param none
+//  490 
+//  491     \return none
+//  492 
+//  493     \image html ATA_lfRssiMeasSendResult_flash_C.png
+//  494     \image rtf ATA_lfRssiMeasSendResult_flash_C.png
+//  495     \n
+//  496 */
+//  497 /*----------------------------------------------------------------------------- */
+
+        RSEG CODE:CODE:ROOT(1)
+//  498 VOIDFUNC ATA_lfRssiMeasSendResult_flash_C(void)
+ATA_lfRssiMeasSendResult_flash_C:
+          CFI Block cfiBlock9 Using cfiCommon0
+          CFI Function ATA_lfRssiMeasSendResult_flash_C
+          CFI NoCalls
+//  499 {
+//  500     /* wait until LF timer has expired */
+//  501     if( g_bResponseDelayReached )
+        LDS     R16, g_bResponseDelayReached
+        TST     R16
+        BREQ    ??ATA_lfRssiMeasSendResult_flash_C_0
+//  502     {
+//  503         /* disable running LF timer */
+//  504         LTCMR &= ~BM_LTENA;
+        CBI     0x15, 0x07
+//  505         g_bBytesToTransmit = m_bDataByteCnt;
+        LDS     R16, m_bDataByteCnt
+        STS     g_bBytesToTransmit, R16
+//  506 
+//  507         g_sLfRssiFlowCtrl_flash.bIndex++;
+        LDS     R16, g_sLfRssiFlowCtrl_flash
+        INC     R16
+        STS     g_sLfRssiFlowCtrl_flash, R16
+//  508     }
+//  509 }
+??ATA_lfRssiMeasSendResult_flash_C_0:
+        RET
+          CFI EndBlock cfiBlock9
+        REQUIRE _A_LTCMR
+//  510 
+//  511 
+//  512 /*---------------------------------------------------------------------------*/
+//  513 /** \brief <b>ATA_lfRssiMeasClose_flash_C</b>
+//  514     .
+//  515 
+//  516     \param none
+//  517 
+//  518     \return none
+//  519 
+//  520     \image html ATA_lfRssiMeasClose_flash_C.png
+//  521     \image rtf ATA_lfRssiMeasClose_flash_C.png
+//  522     \n
+//  523 */
+//  524 /*---------------------------------------------------------------------------*/
+
+        RSEG CODE:CODE:ROOT(1)
+//  525 VOIDFUNC ATA_lfRssiMeasClose_flash_C(void)
+ATA_lfRssiMeasClose_flash_C:
+          CFI Block cfiBlock10 Using cfiCommon0
+          CFI Function ATA_lfRssiMeasClose_flash_C
+//  526 {
+//  527     ATA_lfRssiClose_C();
+          CFI FunCall ATA_lfRssiClose_C
+        CALL    ATA_lfRssiClose_C
+//  528 
+//  529     g_sLfRssiCtrl_flash.bFlags     = LFRSSICONFIG_FLAGS_RESET;
+        LDI     R16, 0
+        STS     g_sLfRssiCtrl_flash, R16
+//  530     g_sLfRssiCtrl_flash.bStatus    = LFRSSICONFIG_STATUS_RESET;
+        STS     (g_sLfRssiCtrl_flash + 1), R16
+//  531     g_sLfRssiFlowCtrl_flash.bIndex = 0;
+        STS     g_sLfRssiFlowCtrl_flash, R16
+//  532     g_sLfRssiFlowCtrl_flash.bLastRfTxStateIndex = 0;
+          CFI EndBlock cfiBlock10
+        REQUIRE ?Subroutine1
+        ;               // Fall through to label ?Subroutine1
+//  533 }
+
+        RSEG CODE:CODE:NOROOT(1)
+?Subroutine1:
+          CFI Block cfiBlock11 Using cfiCommon0
+          CFI NoFunction
+        STS     (g_sLfRssiFlowCtrl_flash + 3), R16
+        RET
+          CFI EndBlock cfiBlock11
+//  534 
+//  535 
+//  536 
+//  537 
+//  538 /*---------------------------------------------------------------------------*/
+//  539 /** \brief <b>ATA_lfRssiMeasConfigHfm_flash_C</b>
+//  540 
+//  541     \param none
+//  542 
+//  543     \return none
+//  544 
+//  545     \image html ATA_lfRssiMeasConfigHfm_flash_C.png
+//  546     \image rtf ATA_lfRssiMeasConfigHfm_flash_C.png
+//  547     \n
+//  548 */
+//  549 /*---------------------------------------------------------------------------*/
+
+        RSEG CODE:CODE:ROOT(1)
+//  550 VOIDFUNC ATA_lfRssiMeasConfigHfm_flash_C(uint8_t bType)
+ATA_lfRssiMeasConfigHfm_flash_C:
+          CFI Block cfiBlock12 Using cfiCommon0
+          CFI Function ATA_lfRssiMeasConfigHfm_flash_C
+//  551 {
+        ST      -Y, R25
+          CFI R25 Frame(CFA_Y, -1)
+          CFI CFA_Y Y+1
+        ST      -Y, R24
+          CFI R24 Frame(CFA_Y, -2)
+          CFI CFA_Y Y+2
+        SBIW    R29:R28, 12
+          CFI CFA_Y Y+14
+//  552     timerIRQHandler t4IrqHandler = (timerIRQHandler)ATA_lfRssiMeasStartExtHfm_flash_C;
+        LDI     R24, LOW(ATA_lfRssiMeasStartExtHfm_flash_C/2)
+        LDI     R25, (ATA_lfRssiMeasStartExtHfm_flash_C/2) >> 8
+//  553 
+//  554     g_sLfRssiCtrl_flash.bFlags  = LFRSSICONFIG_FLAGS_RESET;   // LF RSSI measurement disabled
+        LDI     R16, 0
+        STS     g_sLfRssiCtrl_flash, R16
+//  555     g_sLfRssiCtrl_flash.bStatus = LFRSSICONFIG_STATUS_RESET;
+        STS     (g_sLfRssiCtrl_flash + 1), R16
+//  556 
+//  557     // check if XTO is running, if not activate AVCC and XTO
+//  558     if( !(SUPCR & BM_AVEN) || !(FEEN1 & BM_XTOEN) )
+        LDS     R16, _A_SUPCR
+        SBRS    R16, 4
+        RJMP    ??ATA_lfRssiMeasConfigHfm_flash_C_0
+        LDS     R16, _A_FEEN1
+        SBRC    R16, 2
+        RJMP    ??ATA_lfRssiMeasConfigHfm_flash_C_1
+//  559     {
+//  560         ATA_globalsActivateXTO_C(); // activate XTO, used as input clock source (CLKT) for Timer 4
+??ATA_lfRssiMeasConfigHfm_flash_C_0:
+          CFI FunCall ATA_globalsActivateXTO_C
+        CALL    ATA_globalsActivateXTO_C
+//  561     }
+//  562 
+//  563     //g_sLfRssiFlowCtrl_flash.fpLut = g_pLfRssiHfmStateMachine_flash;
+//  564     //g_sLfRssiFlowCtrl_flash.fpLut = g_sLfRssiHfmStateMachineLut_flash;
+//  565 
+//  566     // 8 HFM pulses a 2,8ms, 0,2ms idle between pulses
+//  567     if( (bType & 0x03) == 0x01)
+//  568     {
+//  569     }
+//  570     // 8 HFM pulses a 1ms, 1ms idle between pulses
+//  571     else if((bType & 0x03) == 0x02)
+//  572     {
+//  573     }
+//  574     // 6 HFM pulses a 600us, 400us idle between pulses
+//  575     else if( (bType & 0x03) == 0x03)
+//  576     {
+//  577     }
+//  578     else
+//  579     {}
+//  580 
+//  581     // check for internal LF RSSI measurement first
+//  582     if( (g_sLfRssiCustConfig_flash.bOptions & 0x03) == 0x01 )
+??ATA_lfRssiMeasConfigHfm_flash_C_1:
+        LDS     R16, (g_sLfRssiCustConfig_flash + 1)
+        ANDI    R16, 0x03
+        CPI     R16, 1
+        BRNE    ??ATA_lfRssiMeasConfigHfm_flash_C_2
+//  583     {
+//  584         // replace function pointer
+//  585         t4IrqHandler = (timerIRQHandler)ATA_lfRssiMeasStartIntHfm_flash_C;
+        LDI     R24, LOW(ATA_lfRssiMeasStartIntHfm_flash_C/2)
+        LDI     R25, (ATA_lfRssiMeasStartIntHfm_flash_C/2) >> 8
+//  586     }
+//  587 
+//  588     sTimerAsyn16BitParams sTimer4Params = {
+//  589         (BM_T4ENA|BM_T4CRM),                                // T4CR
+//  590         (BM_T4CS0),                                         // T4MRA  -> CLKT as input clock source
+//  591         (BM_T4ICS1| BM_T4CE0),                              // T4MRB
+//  592         (uint8_t)g_sLfRssiCustConfig_flash.wCycleTime,      // T4CORL
+//  593         (uint8_t)(g_sLfRssiCustConfig_flash.wCycleTime>>8), // T4CORH
+//  594         (BM_T4CIM),                                         // T4IMR
+//  595         (timerIRQHandler)0x0000,                            // g_sTimer4.fpOvfIsr
+//  596         t4IrqHandler,                                       // g_sTimer4.fpCompIsr
+//  597         (timerIRQHandler)0x0000                             // g_sTimer4.fpCapIsr
+//  598     };
+??ATA_lfRssiMeasConfigHfm_flash_C_2:
+        MOVW    R17:R16, R29:R28
+        LDI     R30, LOW(`?<Constant {132, 1, 72, 0, 0, 2, (void (*)(voi`)
+        LDI     R31, (`?<Constant {132, 1, 72, 0, 0, 2, (void (*)(voi`) >> 8
+        LDI     R20, 12
+        LDI     R21, 0
+          CFI FunCall ?ML_SRAM_SRAM_16_L07
+        CALL    ?ML_SRAM_SRAM_16_L07
+        LDI     R30, LOW(g_sLfRssiCustConfig_flash)
+        LDI     R31, (g_sLfRssiCustConfig_flash) >> 8
+        LDD     R16, Z+2
+        STD     Y+3, R16
+        LDD     R16, Z+3
+        STD     Y+4, R16
+        STD     Y+8, R24
+        STD     Y+9, R25
+//  599 
+//  600     m_bNumMeasCnt = 0;   //
+        STS     m_bNumMeasCnt, R20
+//  601 
+//  602     /* LLR-Ref: 040 */
+//  603     if(  ATA_timer4Open_C(&sTimer4Params) == OK )
+        MOV     R16, R28
+          CFI FunCall ATA_timer4Open_C
+        CALL    ATA_timer4Open_C
+        TST     R16
+        BRNE    ??ATA_lfRssiMeasConfigHfm_flash_C_3
+//  604     {
+//  605         // possibility to open here LF RSSI module and enable LF receiver (LFRE) in next state???
+//  606         // ATA_lfRssiOpen_C();
+//  607 
+//  608         g_sLfRssiFlowCtrl_flash.bIndex = 0;
+        LDI     R16, 0
+        STS     g_sLfRssiFlowCtrl_flash, R16
+//  609 
+//  610         g_sLfRssiCtrl_flash.bFlags = LFRSSICONFIG_FLAGS_BM_MEASUREMENT_ENABLE_FLAG;   // enable LF RSSI measurement
+        LDI     R16, 1
+        STS     g_sLfRssiCtrl_flash, R16
+//  611 
+//  612         // check if internal LF RSSI measurement is part of the measurement sequence
+//  613         if( g_sLfRssiCustConfig_flash.bOptions & 0x03 )
+        LDS     R16, (g_sLfRssiCustConfig_flash + 1)
+        ANDI    R16, 0x03
+        BREQ    ??ATA_lfRssiMeasConfigHfm_flash_C_3
+//  614         {
+//  615             g_sLfRssiCtrl_flash.bStatus |= LFRSSICONFIG_STATUS_BM_INTERNAL_MEASUREMENT_FLAG;
+        LDI     R30, LOW(g_sLfRssiCtrl_flash)
+        LDI     R31, (g_sLfRssiCtrl_flash) >> 8
+        LDD     R16, Z+1
+        ORI     R16, 0x04
+        STD     Z+1, R16
+//  616         }
+//  617     }
+//  618 }
+??ATA_lfRssiMeasConfigHfm_flash_C_3:
+        ADIW    R29:R28, 12
+          CFI CFA_Y Y+2
+        LD      R24, Y+
+          CFI R24 SameValue
+          CFI CFA_Y Y+1
+        LD      R25, Y+
+          CFI R25 SameValue
+          CFI CFA_Y Y+0
+        RET
+          CFI EndBlock cfiBlock12
+        REQUIRE _A_SUPCR
+        REQUIRE _A_FEEN1
+
+        RSEG NEAR_C:CONST:NOROOT(0)
+`?<Constant {132, 1, 72, 0, 0, 2, (void (*)(voi`:
+        DC8 132, 1, 72, 0, 0, 2
+        DC16 0H, 0H, 0H
+//  619 
+//  620 
+//  621 /*----------------------------------------------------------------------------- */
+//  622 /** \brief <b>ATA_lfRssiMeasOpenHfm_flash_C</b>
+//  623     .
+//  624 
+//  625     \param none
+//  626 
+//  627     \return none
+//  628 
+//  629     \image html ATA_lfRssiMeasOpenHfm_flash_C.png
+//  630     \image rtf ATA_lfRssiMeasOpenHfm_flash_C.png
+//  631     \n
+//  632 */
+//  633 /*----------------------------------------------------------------------------- */
+
+        RSEG CODE:CODE:ROOT(1)
+//  634 VOIDFUNC ATA_lfRssiMeasOpenHfm_flash_C(void)
+ATA_lfRssiMeasOpenHfm_flash_C:
+          CFI Block cfiBlock13 Using cfiCommon0
+          CFI Function ATA_lfRssiMeasOpenHfm_flash_C
+//  635 {
+//  636     //if( do the SRC calibration manually if desired )
+//  637     {
+//  638     //ATA_calibInit_C();
+//  639     //ATA_calibStartCalibration_C(BM_CALIB_CONFIG_SRC_FRC_CALIBRATION_ENABLE_SRC);
+//  640     }
+//  641 
+//  642 
+//  643     if( g_sLfRssi.bFlags & LFRSSI_FLAGS_BM_ERROR_FLAG )
+        LDS     R16, g_sLfRssi
+        SBRC    R16, 7
+        RJMP    ??ATA_lfRssiMeasOpenHfm_flash_C_0
+//  644     {
+//  645         /* TODO AJ: implement error handling */
+//  646     }
+//  647     else
+//  648     {
+//  649         ATA_lfRssiOpen_C();
+          CFI FunCall ATA_lfRssiOpen_C
+        CALL    ATA_lfRssiOpen_C
+//  650 
+//  651         g_sLfRssiFlowCtrl_flash.bIndex++;
+        LDS     R16, g_sLfRssiFlowCtrl_flash
+        INC     R16
+        STS     g_sLfRssiFlowCtrl_flash, R16
+//  652         g_sLfRssiCtrl_flash.bStatus &= ~LFRSSICONFIG_STATUS_BM_LASTSTATECHANGE_FLAG;
+        LDI     R30, LOW(g_sLfRssiCtrl_flash)
+        LDI     R31, (g_sLfRssiCtrl_flash) >> 8
+        LDD     R16, Z+1
+        ANDI    R16, 0xFD
+        STD     Z+1, R16
+//  653 
+//  654         // set trigger signal for test case
+//  655         g_sLfRssiCtrl_flash.bFlags |= 0x02;
+        LD      R16, Z
+        ORI     R16, 0x02
+        ST      Z, R16
+//  656     }
+//  657 }
+??ATA_lfRssiMeasOpenHfm_flash_C_0:
+        RET
+          CFI EndBlock cfiBlock13
+//  658 
+//  659 
+//  660 /*----------------------------------------------------------------------------- */
+//  661 /** \brief <b>ATA_lfRssiMeasStartIntHfm_flash_C</b>
+//  662     .
+//  663 
+//  664     \param none
+//  665 
+//  666     \return none
+//  667 
+//  668     \image html ATA_lfRssiMeasStartIntHfm_flash_C.png
+//  669     \image rtf ATA_lfRssiMeasStartIntHfm_flash_C.png
+//  670     \n
+//  671 */
+//  672 /*----------------------------------------------------------------------------- */
+
+        RSEG CODE:CODE:ROOT(1)
+//  673 VOIDFUNC ATA_lfRssiMeasStartIntHfm_flash_C(void)
+ATA_lfRssiMeasStartIntHfm_flash_C:
+          CFI Block cfiBlock14 Using cfiCommon0
+          CFI Function ATA_lfRssiMeasStartIntHfm_flash_C
+          CFI NoCalls
+//  674 {
+//  675     /* start an internal LF RSSI measurement on occurrence of Timer4 compare match interrupt */
+//  676     ATA_lfRssiMeasStart_C( &g_sLfRssiRegConfig_flash, 1U, 0U );
+        LDI     R19, 0
+        LDI     R18, 1
+          CFI EndBlock cfiBlock14
+        REQUIRE ?Subroutine0
+        ;               // Fall through to label ?Subroutine0
+//  677 
+//  678     //m_pCurrResult = &g_sLfRssiHfmResult_flash[8];
+//  679 
+//  680     // close Timer4 in case last measurement was started
+//  681     if( m_bNumMeasCnt == (g_sLfRssiCustConfig_flash.bNumMeas-1) )
+//  682     {
+//  683         ATA_timer4Close_C();
+//  684     }
+//  685 }
+
+        RSEG CODE:CODE:NOROOT(1)
+?Subroutine0:
+          CFI Block cfiBlock15 Using cfiCommon0
+          CFI NoFunction
+        LDI     R16, LOW(g_sLfRssiRegConfig_flash)
+        LDI     R17, (g_sLfRssiRegConfig_flash) >> 8
+          CFI FunCall ATA_lfRssiMeasStartIntHfm_flash_C ATA_lfRssiMeasStart_C
+          CFI FunCall ATA_lfRssiMeasStartExtHfm_flash_C ATA_lfRssiMeasStart_C
+        CALL    ATA_lfRssiMeasStart_C
+        LDS     R16, m_bNumMeasCnt
+        LDI     R17, 0
+        LDS     R30, g_sLfRssiCustConfig_flash
+        LDI     R31, 0
+        SBIW    R31:R30, 1
+        CP      R16, R30
+        CPC     R17, R31
+        BRNE    ??Subroutine0_0
+          CFI FunCall ATA_lfRssiMeasStartIntHfm_flash_C ATA_timer4Close_C
+          CFI FunCall ATA_lfRssiMeasStartExtHfm_flash_C ATA_timer4Close_C
+        CALL    ATA_timer4Close_C
+??Subroutine0_0:
+        RET
+          CFI EndBlock cfiBlock15
+//  686 
+//  687 
+//  688 /*----------------------------------------------------------------------------- */
+//  689 /** \brief <b>ATA_lfRssiMeasStartExtHfm_flash_C</b>
+//  690     .
+//  691 
+//  692     \param none
+//  693 
+//  694     \return none
+//  695 
+//  696     \image html ATA_lfRssiMeasStartExtHfm_flash_C.png
+//  697     \image rtf ATA_lfRssiMeasStartExtHfm_flash_C.png
+//  698     \n
+//  699 */
+//  700 /*----------------------------------------------------------------------------- */
+
+        RSEG CODE:CODE:ROOT(1)
+//  701 VOIDFUNC ATA_lfRssiMeasStartExtHfm_flash_C(void)
+ATA_lfRssiMeasStartExtHfm_flash_C:
+          CFI Block cfiBlock16 Using cfiCommon0
+          CFI Function ATA_lfRssiMeasStartExtHfm_flash_C
+          CFI NoCalls
+//  702 {
+//  703     uint8_t idx = m_bNumMeasCnt;
+//  704 
+//  705     /* start an external LF RSSI measurement on occurrence of Timer4 compare match interrupt */
+//  706     ATA_lfRssiMeasStart_C( &g_sLfRssiRegConfig_flash, 0U, 0U );
+        LDI     R19, 0
+        LDI     R18, 0
+        RJMP    ?Subroutine0
+//  707 
+//  708     // check if internal LF RSSI measurement has been already done
+//  709     if( (g_sLfRssiCustConfig_flash.bOptions & 0x03 )
+//  710         &&
+//  711         !(g_sLfRssiCtrl_flash.bStatus & LFRSSICONFIG_STATUS_BM_INTERNAL_MEASUREMENT_FLAG) )
+//  712     {
+//  713         idx--;
+//  714     }
+//  715 
+//  716     //m_pCurrResult = &g_sLfRssiHfmResult_flash[idx];
+//  717 
+//  718     if( m_bNumMeasCnt == (g_sLfRssiCustConfig_flash.bNumMeas-1) )
+//  719     {
+//  720         ATA_timer4Close_C();
+//  721     }
+//  722 }
+          CFI EndBlock cfiBlock16
+//  723 
+//  724 
+//  725 /*----------------------------------------------------------------------------- */
+//  726 /** \brief <b>ATA_lfRssiMeasWaitReadyHfm_flash_C</b>
+//  727     .
+//  728 
+//  729     \param none
+//  730 
+//  731     \return none
+//  732 
+//  733     \image html ATA_lfRssiMeasWaitReadyHfm_flash_C.png
+//  734     \image rtf ATA_lfRssiMeasWaitReadyHfm_flash_C.png
+//  735     \n
+//  736 */
+//  737 /*----------------------------------------------------------------------------- */
+
+        RSEG CODE:CODE:ROOT(1)
+//  738 VOIDFUNC ATA_lfRssiMeasWaitReadyHfm_flash_C(void)
+ATA_lfRssiMeasWaitReadyHfm_flash_C:
+          CFI Block cfiBlock17 Using cfiCommon0
+          CFI Function ATA_lfRssiMeasWaitReadyHfm_flash_C
+//  739 {
+//  740     /* wait until LF RSSI measurement signalizes readiness */
+//  741     if( g_sLfRssi.bStatus & LFRSSI_STATUS_BM_MEAS_DATA_AVAILABLE_FLAG )
+        LDS     R16, (g_sLfRssi + 1)
+        SBRS    R16, 7
+        RJMP    ??ATA_lfRssiMeasWaitReadyHfm_flash_C_0
+//  742     {
+//  743         /* gather measurement results */
+//  744         //ATA_lfRssiGetAverageResult_C((uint8_t*)&g_sLfRssiHfmResult_flash[m_bNumMeasCnt].wRawLfRssi[0], &g_sLfRssiHfmResult_flash[m_bNumMeasCnt].bSignDetect[0]);
+//  745         ATA_lfRssiGetAverageResult_C((uint8_t*)&m_pCurrResult->wRawLfRssi[0], &m_pCurrResult->bSignDetect[0]);
+        LDI     R30, LOW(m_pCurrResult)
+        LDI     R31, (m_pCurrResult) >> 8
+        LD      R18, Z
+        LDD     R19, Z+1
+        SUBI    R18, 250
+        SBCI    R19, 255
+        LD      R16, Z
+        LDD     R17, Z+1
+          CFI FunCall ATA_lfRssiGetAverageResult_C
+        CALL    ATA_lfRssiGetAverageResult_C
+//  746         //ATA_lfRssiGetSamplesResult_C((uint8_t*)&g_wLfRssiMeasSamples[0], 16U, 0U);
+//  747 
+//  748         // increment number of measurements
+//  749         m_bNumMeasCnt++;
+        LDS     R16, m_bNumMeasCnt
+        INC     R16
+        STS     m_bNumMeasCnt, R16
+//  750 
+//  751         // check for internal LF RSSI measurement
+//  752         if( g_sLfRssiCtrl_flash.bStatus & LFRSSICONFIG_STATUS_BM_INTERNAL_MEASUREMENT_FLAG )
+        LDS     R18, (g_sLfRssiCtrl_flash + 1)
+        SBRS    R18, 2
+        RJMP    ??ATA_lfRssiMeasWaitReadyHfm_flash_C_1
+//  753         {
+//  754             // check if first measurement was an internal LF RSSI measurement
+//  755             if( (g_sLfRssiCustConfig_flash.bOptions & 0x03) == 1 )
+        LDS     R16, (g_sLfRssiCustConfig_flash + 1)
+        ANDI    R16, 0x03
+        CPI     R16, 1
+        BRNE    ??ATA_lfRssiMeasWaitReadyHfm_flash_C_2
+//  756             {
+//  757                 g_sTimer4.fpCompIsr = (timerIRQHandler)ATA_lfRssiMeasStartExtHfm_flash_C;
+        LDI     R16, LOW(ATA_lfRssiMeasStartExtHfm_flash_C/2)
+        LDI     R17, (ATA_lfRssiMeasStartExtHfm_flash_C/2) >> 8
+        RJMP    ??ATA_lfRssiMeasWaitReadyHfm_flash_C_3
+//  758                 g_sLfRssiCtrl_flash.bStatus &= ~LFRSSICONFIG_STATUS_BM_INTERNAL_MEASUREMENT_FLAG;
+//  759             }
+//  760             // check if next/last measurement is an internal LF RSSI measurement
+//  761             else if( (m_bNumMeasCnt+1) == g_sLfRssiCustConfig_flash.bNumMeas )
+??ATA_lfRssiMeasWaitReadyHfm_flash_C_2:
+        LDS     R30, m_bNumMeasCnt
+        LDI     R31, 0
+        ADIW    R31:R30, 1
+        LDS     R16, g_sLfRssiCustConfig_flash
+        CP      R30, R16
+        SBCI    R31, 0
+        BRNE    ??ATA_lfRssiMeasWaitReadyHfm_flash_C_1
+//  762             {
+//  763                 g_sTimer4.fpCompIsr = (timerIRQHandler)ATA_lfRssiMeasStartIntHfm_flash_C;
+        LDI     R16, LOW(ATA_lfRssiMeasStartIntHfm_flash_C/2)
+        LDI     R17, (ATA_lfRssiMeasStartIntHfm_flash_C/2) >> 8
+??ATA_lfRssiMeasWaitReadyHfm_flash_C_3:
+        LDI     R30, LOW(g_sTimer4)
+        LDI     R31, (g_sTimer4) >> 8
+        STD     Z+1, R16
+        STD     Z+2, R17
+//  764                 g_sLfRssiCtrl_flash.bStatus &= ~LFRSSICONFIG_STATUS_BM_INTERNAL_MEASUREMENT_FLAG;
+        ANDI    R18, 0xFB
+??ATA_lfRssiMeasWaitReadyHfm_flash_C_1:
+        STS     (g_sLfRssiCtrl_flash + 1), R18
+//  765             }
+//  766             else{}
+//  767         }
+//  768 
+//  769         // clear flag due to data have been copied
+//  770         g_sLfRssi.bStatus &= ~LFRSSI_STATUS_BM_MEAS_DATA_AVAILABLE_FLAG;
+        LDI     R30, LOW(g_sLfRssi)
+        LDI     R31, (g_sLfRssi) >> 8
+        LDD     R16, Z+1
+        ANDI    R16, 0x7F
+        STD     Z+1, R16
+//  771 
+//  772         if( m_bNumMeasCnt >= g_sLfRssiCustConfig_flash.bNumMeas )
+        LDS     R16, m_bNumMeasCnt
+        LDS     R17, g_sLfRssiCustConfig_flash
+        CP      R16, R17
+        BRCS    ??ATA_lfRssiMeasWaitReadyHfm_flash_C_0
+//  773         {
+//  774             // reset to first structure holding the external measurement results
+//  775             //m_pResultExt = &g_sLfRssiHfmResult_flash[0];
+//  776            // m_pResultInt = &g_sLfRssiHfmResult_flash[8];
+//  777 
+//  778             g_sLfRssiFlowCtrl_flash.bIndex++;
+        LDS     R16, g_sLfRssiFlowCtrl_flash
+        INC     R16
+        STS     g_sLfRssiFlowCtrl_flash, R16
+//  779         }
+//  780     }
+//  781 }
+??ATA_lfRssiMeasWaitReadyHfm_flash_C_0:
+        RET
+          CFI EndBlock cfiBlock17
+//  782 
+//  783 
+//  784 /*---------------------------------------------------------------------------*/
+//  785 /** \brief <b>ATA_lfRssiMeasExecCalc_flash_C</b>
+//  786     executes all required calculations.
+//  787 
+//  788     \param none
+//  789 
+//  790     \return none
+//  791 
+//  792     \image html ATA_lfRssiMeasExecCalc_flash_C.png
+//  793     \image rtf ATA_lfRssiMeasExecCalc_flash_C.png
+//  794     \n
+//  795 */
+//  796 /*---------------------------------------------------------------------------*/
+
+        RSEG CODE:CODE:ROOT(1)
+//  797 VOIDFUNC ATA_lfRssiMeasExecCalc_flash_C(void)
+ATA_lfRssiMeasExecCalc_flash_C:
+          CFI Block cfiBlock18 Using cfiCommon0
+          CFI Function ATA_lfRssiMeasExecCalc_flash_C
+//  798 {
+        CALL    ?PROLOGUE4_L09
+          CFI R27 Frame(CFA_Y, -1)
+          CFI R26 Frame(CFA_Y, -2)
+          CFI R25 Frame(CFA_Y, -3)
+          CFI R24 Frame(CFA_Y, -4)
+          CFI CFA_Y Y+4
+//  799     uint8_t  i, j;
+//  800     uint8_t  numCalcs = g_sLfRssiCustConfig_flash.bNumMeas & 0x0F;
+//  801     uint16_t val;
+//  802 
+//  803     /* do calculations only if internal measurement data are available */
+//  804     if( g_sLfRssiCustConfig_flash.bOptions & 0x03 )
+        LDS     R16, (g_sLfRssiCustConfig_flash + 1)
+        ANDI    R16, 0x03
+        BRNE    $+2+2
+        RJMP    ??ATA_lfRssiMeasExecCalc_flash_C_0
+//  805     {
+//  806         numCalcs--;
+        LDS     R25, g_sLfRssiCustConfig_flash
+        ANDI    R25, 0x0F
+        DEC     R25
+//  807 
+//  808         for( i=0, j=0; i<numCalcs; i++, j+=2 )
+        LDI     R24, 0
+        LDI     R26, 0
+        RJMP    ??ATA_lfRssiMeasExecCalc_flash_C_1
+//  809         {
+//  810             // calculate the channel correction values
+//  811             ATA_lfRssiCalcChanCorr_C( (uint8_t*)&m_pResultExt->wRawLfRssi[0], (uint8_t*)&m_pResultInt->wRawLfRssi[0], (uint8_t*)&m_pResultExt->wCorrLfRssi[0] );
+??ATA_lfRssiMeasExecCalc_flash_C_2:
+        LDI     R30, LOW(m_pResultExt)
+        LDI     R31, (m_pResultExt) >> 8
+        LD      R20, Z
+        LDD     R21, Z+1
+        SUBI    R20, 246
+        SBCI    R21, 255
+        LDI     R30, LOW(m_pResultInt)
+        LDI     R31, (m_pResultInt) >> 8
+        LD      R18, Z
+        LDD     R19, Z+1
+        LDI     R30, LOW(m_pResultExt)
+        LDI     R31, (m_pResultExt) >> 8
+        LD      R16, Z
+        LDD     R17, Z+1
+          CFI FunCall ATA_lfRssiCalcChanCorr_C
+        CALL    ATA_lfRssiCalcChanCorr_C
+//  812 
+//  813             // calculate the 3D vector
+//  814             ATA_lfRssiCalc3dVec_C( (uint8_t*)&m_pResultExt->wCorrLfRssi[0], (uint8_t*)&m_pResultExt->w3dVecVal );
+        LDI     R30, LOW(m_pResultExt)
+        LDI     R31, (m_pResultExt) >> 8
+        LD      R18, Z
+        LDD     R19, Z+1
+        SUBI    R18, 240
+        SBCI    R19, 255
+        LD      R16, Z
+        LDD     R17, Z+1
+        SUBI    R16, 246
+        SBCI    R17, 255
+          CFI FunCall ATA_lfRssiCalc3dVec_C
+        CALL    ATA_lfRssiCalc3dVec_C
+//  815 
+//  816             // calculate the linear voltage representation
+//  817             ATA_lfRssiCalcLog2Lin_C( (uint8_t*)&m_pResultExt->w3dVecVal, (uint8_t*)&m_pResultExt->wLinearVal );
+        LDI     R30, LOW(m_pResultExt)
+        LDI     R31, (m_pResultExt) >> 8
+        LD      R18, Z
+        LDD     R19, Z+1
+        SUBI    R18, 238
+        SBCI    R19, 255
+        LD      R16, Z
+        LDD     R17, Z+1
+        SUBI    R16, 240
+        SBCI    R17, 255
+          CFI FunCall ATA_lfRssiCalcLog2Lin_C
+        CALL    ATA_lfRssiCalcLog2Lin_C
+//  818 
+//  819             // calculate the Bappl value
+//  820             val = ATA_lfRssiCalcBappl_C( m_wBref, m_pResultExt->wLinearVal );
+        LDI     R30, LOW(m_pResultExt)
+        LDI     R31, (m_pResultExt) >> 8
+        LD      R16, Z
+        LDD     R31, Z+1
+        MOV     R30, R16
+        LDD     R18, Z+18
+        LDD     R19, Z+19
+        LDI     R30, LOW(m_wBref)
+        LDI     R31, (m_wBref) >> 8
+        LD      R16, Z
+        LDD     R17, Z+1
+          CFI FunCall ATA_lfRssiCalcBappl_C
+        CALL    ATA_lfRssiCalcBappl_C
+//  821 
+//  822             // store Bappl results to local buffer
+//  823             g_bTxBuffer[m_bPayloadOffsetTxBuf+j]   = val;
+        LDS     R18, m_bPayloadOffsetTxBuf
+        LDI     R19, 0
+        LDI     R27, 0
+        ADD     R18, R26
+        ADC     R19, R19
+        MOVW    R31:R30, R19:R18
+        SUBI    R30, LOW((-(g_bTxBuffer) & 0xFFFF))
+        SBCI    R31, (-(g_bTxBuffer) & 0xFFFF) >> 8
+        ST      Z, R16
+//  824             g_bTxBuffer[m_bPayloadOffsetTxBuf+j+1] = val>>8;
+        LDS     R18, m_bPayloadOffsetTxBuf
+        ADD     R18, R26
+        ADC     R27, R27
+        MOV     R30, R18
+        MOV     R31, R27
+        SUBI    R30, LOW((-(g_bTxBuffer) & 0xFFFF))
+        SBCI    R31, (-(g_bTxBuffer) & 0xFFFF) >> 8
+        STD     Z+1, R17
+//  825 
+//  826             m_pResultExt++;
+        LDI     R30, LOW(m_pResultExt)
+        LDI     R31, (m_pResultExt) >> 8
+        LD      R16, Z
+        LDD     R17, Z+1
+        SUBI    R16, 236
+        SBCI    R17, 255
+        ST      Z, R16
+        STD     Z+1, R17
+//  827         }
+        INC     R24
+        SUBI    R26, 254
+??ATA_lfRssiMeasExecCalc_flash_C_1:
+        CP      R24, R25
+        BRCC    $+2+2
+        RJMP    ??ATA_lfRssiMeasExecCalc_flash_C_2
+//  828     }
+//  829 
+//  830     g_sLfRssiFlowCtrl_flash.bIndex++;
+??ATA_lfRssiMeasExecCalc_flash_C_0:
+        LDS     R16, g_sLfRssiFlowCtrl_flash
+        INC     R16
+        STS     g_sLfRssiFlowCtrl_flash, R16
+//  831 }
+        LDI     R30, 4
+        JMP     ?EPILOGUE_B4_L09
+          CFI EndBlock cfiBlock18
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01cH
+__?EECR:
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01dH
+__?EEDR:
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01eH
+__?EEARL:
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01fH
+__?EEARH:
+
+        RSEG INITTAB:CODE:NOROOT(0)
+`?<Segment init: NEAR_Z>`:
+        DC16    SFE(NEAR_Z) - SFB(NEAR_Z)
+        DC16    SFB(NEAR_Z)
+        DC16    0
+        REQUIRE ?need_segment_init
+
+        END
+//  832 
+// 
+//    15 bytes in segment .sram_FlashApp_LfRssi
+//    64 bytes in segment .sram_FlashApp_LfRssi_BMW
+//     6 bytes in segment ABSOLUTE
+// 1 274 bytes in segment CODE
+//     6 bytes in segment INITTAB
+//    12 bytes in segment NEAR_C
+//    54 bytes in segment NEAR_F
+//    12 bytes in segment NEAR_Z
+// 
+// 1 328 bytes of CODE  memory (+ 6 bytes shared)
+//    12 bytes of CONST memory
+//    91 bytes of DATA  memory (+ 6 bytes shared)
+//
+//Errors: none
+//Warnings: none

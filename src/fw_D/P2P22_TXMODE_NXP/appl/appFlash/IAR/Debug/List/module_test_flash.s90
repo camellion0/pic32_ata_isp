@@ -1,0 +1,3833 @@
+///////////////////////////////////////////////////////////////////////////////
+//                                                                            /
+// IAR C/C++ Compiler V6.21.1.50603 for Atmel AVR       15/Jun/2015  14:34:22 /
+// Copyright 1996-2013 IAR Systems AB.                                        /
+//                                                                            /
+//    Source file  =  C:\Daten\P2P_Demo01V2_0\appl\appFlash_simTest\src\modul /
+//                    eTest\src\module_test_flash.c                           /
+//    Command line =  C:\Daten\P2P_Demo01V2_0\appl\appFlash_simTest\src\modul /
+//                    eTest\src\module_test_flash.c -v3 --enhanced_core -ms   /
+//                    -o C:\Daten\P2P_Demo01V2_0\appl\appFlash\IAR\Debug\Obj\ /
+//                     -lCN C:\Daten\P2P_Demo01V2_0\appl\appFlash\IAR\Debug\L /
+//                    ist\ -lA C:\Daten\P2P_Demo01V2_0\appl\appFlash\IAR\Debu /
+//                    g\List\ --no_cse --no_inline --no_code_motion           /
+//                    --no_cross_call --no_clustering --no_tbaa --debug       /
+//                    --64k_flash -DENABLE_BIT_DEFINITIONS -e --eeprom_size   /
+//                    2304 --clib -Ohz                                        /
+//    List file    =  C:\Daten\P2P_Demo01V2_0\appl\appFlash\IAR\Debug\List\mo /
+//                    dule_test_flash.s90                                     /
+//                                                                            /
+//                                                                            /
+///////////////////////////////////////////////////////////////////////////////
+
+        NAME module_test_flash
+
+        RTMODEL "__64bit_doubles", "disabled"
+        RTMODEL "__SystemLibrary", "CLib"
+        RTMODEL "__cpu", "3"
+        RTMODEL "__enhanced_core", "enabled"
+        RTMODEL "__has_elpm", "false"
+        RTMODEL "__memory_model", "2"
+        RTMODEL "__rt_version", "3"
+
+        RSEG CSTACK:DATA:NOROOT(0)
+        RSEG RSTACK:DATA:NOROOT(0)
+
+        EXTERN ?CV_SWITCH_L06
+
+        FUNCTION ATA_moduleTestAes_flash_C,0a1203H
+        ARGFRAME RSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        FUNCTION ATA_moduleTestClkExtClockHandling_flash_C,0a1203H
+        ARGFRAME RSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        FUNCTION ATA_moduleTestClkMrcFrcHandling_flash_C,0a1203H
+        ARGFRAME RSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        FUNCTION ATA_moduleTestEep_flash_C,0a1203H
+        ARGFRAME RSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        FUNCTION ATA_moduleTestIicIRQ_flash_C,021203H
+        ARGFRAME RSTACK, 0, STACK
+        LOCFRAME CSTACK, 2, STACK
+        LOCFRAME RSTACK, 2, STACK
+        FUNCTION ATA_moduleTestIicPOL_flash_C,0203H
+        ARGFRAME RSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        PUBLIC ATA_moduleTestInit_flash_C
+        FUNCTION ATA_moduleTestInit_flash_C,0203H
+        ARGFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        FUNCTION ATA_moduleTestLfRssiCalc12q4_flash_C,021203H
+        ARGFRAME RSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        FUNCTION ATA_moduleTestLfRssiHandling_flash_C,0a1203H
+        ARGFRAME RSTACK, 0, STACK
+        LOCFRAME CSTACK, 13, STACK
+        LOCFRAME RSTACK, 2, STACK
+        FUNCTION ATA_moduleTestLfTx_flash_C,021203H
+        ARGFRAME RSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        FUNCTION ATA_moduleTestRfrcc_flash_C,0a1203H
+        ARGFRAME RSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        PUBLIC ATA_moduleTestSoftware_flash_C
+        FUNCTION ATA_moduleTestSoftware_flash_C,0a1203H
+        ARGFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        FUNCTION ATA_moduleTestTimer1Handling_flash_C,0a1203H
+        ARGFRAME RSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        FUNCTION ATA_moduleTestTimer2Handling_flash_C,0a1203H
+        ARGFRAME RSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        FUNCTION ATA_moduleTestTimer3Handling_flash_C,0a1203H
+        ARGFRAME RSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        FUNCTION ATA_moduleTestTimer4Handling_flash_C,0a1203H
+        ARGFRAME RSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        FUNCTION ATA_moduleTestTimer5Handling_flash_C,0a1203H
+        ARGFRAME RSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        FUNCTION ATA_moduleTestTimerMultipleOpen_flash_C,0a1203H
+        ARGFRAME RSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        FUNCTION ATA_moduleTestWatchdog_flash_C,021203H
+        ARGFRAME RSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        PUBWEAK _A_AESCR
+        PUBWEAK _A_EECR
+        PUBWEAK __?EEARH
+        PUBWEAK __?EEARL
+        PUBWEAK __?EECR
+        PUBWEAK __?EEDR
+        PUBLIC g_bModuleTestBuffer_flash
+        PUBLIC g_bModuleTestIicBuffer1_flash
+        PUBLIC g_bModuleTestIicBuffer2_flash
+        PUBLIC g_bTimerModuleTestStatus_flash
+        PUBLIC g_sModuleTest_flash
+        
+          CFI Names cfiNames0
+          CFI StackFrame CFA_Y Y DATA
+          CFI StackFrame CFA_SP SP DATA
+          CFI VirtualResource ?RetPad:1, ?RetHigh:8, ?RetLow:8, ?Ret:17
+          CFI Resource R0:8, R1:8, R2:8, R3:8, R4:8, R5:8, R6:8, R7:8, R8:8, R9:8
+          CFI Resource R10:8, R11:8, R12:8, R13:8, R14:8, R15:8, R16:8, R17:8
+          CFI Resource R18:8, R19:8, R20:8, R21:8, R22:8, R23:8, R24:8, R25:8
+          CFI Resource R26:8, R27:8, R28:8, R29:8, R30:8, R31:8
+          CFI Resource ?RetHighByteMask:8, SP:16, SPH:8, SPL:8, Y:16
+          CFI ResourceParts ?Ret ?RetHigh, ?RetLow, ?RetPad
+          CFI ResourceParts SP SPH, SPL
+          CFI ResourceParts Y R29, R28
+          CFI EndNames cfiNames0
+        
+          CFI Common cfiCommon0 Using cfiNames0
+          CFI CodeAlign 1
+          CFI DataAlign 1
+          CFI ReturnAddress ?Ret CODE
+          CFI CFA_Y Y+0
+          CFI CFA_SP SP+2
+          CFI ?RetPad 0
+          CFI ?RetHigh and(load(1, DATA, sub(CFA_SP, 1)), ?RetHighByteMask)
+          CFI ?RetLow Frame(CFA_SP, 0)
+          CFI ?Ret Concat
+          CFI R0 Undefined
+          CFI R1 Undefined
+          CFI R2 Undefined
+          CFI R3 Undefined
+          CFI R4 SameValue
+          CFI R5 SameValue
+          CFI R6 SameValue
+          CFI R7 SameValue
+          CFI R8 SameValue
+          CFI R9 SameValue
+          CFI R10 SameValue
+          CFI R11 SameValue
+          CFI R12 SameValue
+          CFI R13 SameValue
+          CFI R14 SameValue
+          CFI R15 SameValue
+          CFI R16 Undefined
+          CFI R17 Undefined
+          CFI R18 Undefined
+          CFI R19 Undefined
+          CFI R20 Undefined
+          CFI R21 Undefined
+          CFI R22 Undefined
+          CFI R23 Undefined
+          CFI R24 SameValue
+          CFI R25 SameValue
+          CFI R26 SameValue
+          CFI R27 SameValue
+          CFI R28 Undefined
+          CFI R29 Undefined
+          CFI R30 Undefined
+          CFI R31 Undefined
+          CFI ?RetHighByteMask SameValue
+          CFI SPH Undefined
+          CFI SPL Undefined
+          CFI EndCommon cfiCommon0
+        
+        EXTERN ATA_aesDecryptData_C
+        FUNCTION ATA_aesDecryptData_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_aesEncryptData_C
+        FUNCTION ATA_aesEncryptData_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_aesSetConfig_C
+        FUNCTION ATA_aesSetConfig_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_eepEEPaccessRightsChange_C
+        FUNCTION ATA_eepEEPaccessRightsChange_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_eepFusesFix_C
+        FUNCTION ATA_eepFusesFix_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_eepReadBytes_C
+        FUNCTION ATA_eepReadBytes_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_eepWriteBytes_C
+        FUNCTION ATA_eepWriteBytes_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_globalsActivateXTO_C
+        FUNCTION ATA_globalsActivateXTO_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_globalsClkSwitchExt_C
+        FUNCTION ATA_globalsClkSwitchExt_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_globalsClkSwitchFrcWithDelay_C
+        FUNCTION ATA_globalsClkSwitchFrcWithDelay_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_globalsClkSwitchFrc_C
+        FUNCTION ATA_globalsClkSwitchFrc_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_globalsClkSwitchMrc_C
+        FUNCTION ATA_globalsClkSwitchMrc_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_globalsClkSwitchSrc_C
+        FUNCTION ATA_globalsClkSwitchSrc_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_globalsClkSwitchXTO_C
+        FUNCTION ATA_globalsClkSwitchXTO_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_globalsDeActivateXTO_C
+        FUNCTION ATA_globalsDeActivateXTO_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_globalsSleep_C
+        FUNCTION ATA_globalsSleep_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_globalsWdtDisable_C
+        FUNCTION ATA_globalsWdtDisable_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_globalsWdtEnable_C
+        FUNCTION ATA_globalsWdtEnable_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_lfRssiCalc3dVec_C
+        FUNCTION ATA_lfRssiCalc3dVec_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_lfRssiCalcBappl_C
+        FUNCTION ATA_lfRssiCalcBappl_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_lfRssiCalcChanCalibVal_C
+        FUNCTION ATA_lfRssiCalcChanCalibVal_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_lfRssiCalcChanCorr_C
+        FUNCTION ATA_lfRssiCalcChanCorr_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_lfRssiCalcLog2Lin_C
+        FUNCTION ATA_lfRssiCalcLog2Lin_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_lfRssiClose_C
+        FUNCTION ATA_lfRssiClose_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_lfRssiGetAverageResult_C
+        FUNCTION ATA_lfRssiGetAverageResult_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_lfRssiGetSamplesResult_C
+        FUNCTION ATA_lfRssiGetSamplesResult_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_lfRssiInit_C
+        FUNCTION ATA_lfRssiInit_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_lfRssiMeasStart_C
+        FUNCTION ATA_lfRssiMeasStart_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_lfRssiMeasStop_C
+        FUNCTION ATA_lfRssiMeasStop_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_lfRssiOpen_C
+        FUNCTION ATA_lfRssiOpen_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_lfRssiSetEepromConfig_C
+        FUNCTION ATA_lfRssiSetEepromConfig_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_lfRxInit_C
+        FUNCTION ATA_lfRxInit_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_moduleTestCalib_flash_C
+        FUNCTION ATA_moduleTestCalib_flash_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_moduleTestGlobals_flash_C
+        FUNCTION ATA_moduleTestGlobals_flash_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_moduleTestRfTx_flash_C
+        FUNCTION ATA_moduleTestRfTx_flash_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_moduleTestSpiBasicFunctions_flash_C
+        FUNCTION ATA_moduleTestSpiBasicFunctions_flash_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_moduleTestSpi_flash_C
+        FUNCTION ATA_moduleTestSpi_flash_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_rfrccGenRollCntMsg_C
+        FUNCTION ATA_rfrccGenRollCntMsg_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_timer1Close_C
+        FUNCTION ATA_timer1Close_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_timer1Init_C
+        FUNCTION ATA_timer1Init_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_timer1Open_C
+        FUNCTION ATA_timer1Open_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_timer2Close_C
+        FUNCTION ATA_timer2Close_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_timer2Init_C
+        FUNCTION ATA_timer2Init_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_timer2Open_C
+        FUNCTION ATA_timer2Open_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_timer3Close_C
+        FUNCTION ATA_timer3Close_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_timer3Init_C
+        FUNCTION ATA_timer3Init_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_timer3Open_C
+        FUNCTION ATA_timer3Open_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_timer4Close_C
+        FUNCTION ATA_timer4Close_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_timer4Init_C
+        FUNCTION ATA_timer4Init_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_timer4Open_C
+        FUNCTION ATA_timer4Open_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_timer5Close_C
+        FUNCTION ATA_timer5Close_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_timer5Init_C
+        FUNCTION ATA_timer5Init_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_timer5Open_C
+        FUNCTION ATA_timer5Open_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_twiBufferSetup_C
+        FUNCTION ATA_twiBufferSetup_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_twiClrError_C
+        FUNCTION ATA_twiClrError_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_twiClrRxDataPend_C
+        FUNCTION ATA_twiClrRxDataPend_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_twiGetBuffer_C
+        FUNCTION ATA_twiGetBuffer_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_twiGetData_C
+        FUNCTION ATA_twiGetData_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_twiHwSetup_C
+        FUNCTION ATA_twiHwSetup_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_twiMasterTrigger_C
+        FUNCTION ATA_twiMasterTrigger_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_twiOpen_C
+        FUNCTION ATA_twiOpen_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_twiReset_C
+        FUNCTION ATA_twiReset_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_twiServeIsr_C
+        FUNCTION ATA_twiServeIsr_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_twiSetBuffer_C
+        FUNCTION ATA_twiSetBuffer_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_twiSetData_C
+        FUNCTION ATA_twiSetData_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN ATA_twiUse_C
+        FUNCTION ATA_twiUse_C,0202H
+        ARGFRAME RSTACK, 0, STACK
+        EXTERN g_bEepFlashAppLfRssiSrcCalibrationSetting_flash
+        EXTERN g_sEepFlashAppLfRssiEndOfLineCalibrationSettings_flash
+        EXTERN g_sLfRssi
+        EXTERN twiCtrlBlock
+
+// C:\Daten\P2P_Demo01V2_0\appl\appFlash_simTest\src\moduleTest\src\module_test_flash.c
+//    1 //lint -e9059
+//    2 /* *C**************************************************************************
+//    3   Use of this software is subject to Atmel's Software License Agreement.
+//    4 -------------------------------------------------------------------------------
+//    5   $URL: http://svnservulm.corp.atmel.com/svn/CDB/Apps/SW_Lib/Car_Access/CARS_GEN2/ATAB5702A/Branches/P2P22_TXMODE_NXP/appl/appFlash/IAR/Debug/List/module_test_flash.s90 $
+//    6   $LastChangedRevision: 328482 $
+//    7   $LastChangedDate: 2015-07-22 13:17:23 -0600 (Wed, 22 Jul 2015) $
+//    8   $LastChangedBy: grueter $
+//    9 -------------------------------------------------------------------------------
+//   10   Project:      ATA5700
+//   11   Target MCU:   ATA5700
+//   12   Compiler:     IAR C/C++ Compiler for AVR 6.30.1
+//   13 -------------------------------------------------------------------------------
+//   14 
+//   15 ******************************************************************************
+//   16 * Copyright 2011, Atmel Automotive GmbH                                       *
+//   17 *                                                                             *
+//   18 * This software is owned by the Atmel Automotive GmbH                         *
+//   19 * and is protected by and subject to worldwide patent protection.             *
+//   20 * Atmel hereby grants to licensee a personal,                                 *
+//   21 * non-exclusive, non-transferable license to copy, use, modify, create        *
+//   22 * derivative works of, and compile the Atmel Source Code and derivative       *
+//   23 * works for the sole purpose of creating custom software in support of        *
+//   24 * licensee product to be used only in conjunction with a Atmel integrated     *
+//   25 * circuit as specified in the applicable agreement. Any reproduction,         *
+//   26 * modification, translation, compilation, or representation of this           *
+//   27 * software except as specified above is prohibited without the express        *
+//   28 * written permission of Atmel.                                                *
+//   29 *                                                                             *
+//   30 * Disclaimer: ATMEL MAKES NO WARRANTY OF ANY KIND,EXPRESS OR IMPLIED,         *
+//   31 * WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED    *
+//   32 * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.         *
+//   33 * Atmel reserves the right to make changes without further notice to the      *
+//   34 * materials described herein. Atmel does not assume any liability arising     *
+//   35 * out of the application or use of any product or circuit described herein.   *
+//   36 * Atmel does not authorize its products for use as critical components in     *
+//   37 * life-support systems where a malfunction or failure may reasonably be       *
+//   38 * expected to result in significant injury to the user. The inclusion of      *
+//   39 * Atmel products in a life-support systems application implies that the       *
+//   40 * manufacturer assumes all risk of such use and in doing so indemnifies       *
+//   41 * Atmel against all charges.                                                  *
+//   42 *                                                                             *
+//   43 * Use may be limited by and subject to the applicable Atmel software          *
+//   44 * license agreement.                                                          *
+//   45 ******************************************************************************/
+//   46 /** \file module_test_flash.c
+//   47 */
+//   48 
+//   49 //lint -restore
+//   50 
+//   51 /*===========================================================================*/
+//   52 /*  INCLUDES (Flash Application)                                             */
+//   53 /*===========================================================================*/
+//   54 #include "module_test_flash.h"
+
+        ASEGN ABSOLUTE:DATA:NOROOT,03dH
+// union <unnamed> volatile __io _A_AESCR
+_A_AESCR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,03fH
+// union <unnamed> volatile __io _A_EECR
+_A_EECR:
+        DS8 1
+//   55 #include "../../../../../firmware/eep/src/eep_flash.h"
+//   56 #include "../../../../../firmware/lfrssi/src/lfrssi_flash.h"
+//   57 #include "../../../../../firmware/system/src/system_flash.h"
+//   58 
+//   59 /*===========================================================================*/
+//   60 /*  INCLUDES (ROM firmware)                                                  */
+//   61 /*===========================================================================*/
+//   62 #include "../../../../../firmware/spi/src/spi.h"
+//   63 #include "../../../../../firmware/spi/src/ata5831_command_set.h"
+//   64 #include "../../../../../firmware/timer1/src/timer1.h"
+//   65 #include "../../../../../firmware/timer2/src/timer2.h"
+//   66 #include "../../../../../firmware/timer3/src/timer3.h"
+//   67 #include "../../../../../firmware/timer4/src/timer4.h"
+//   68 #include "../../../../../firmware/timer5/src/timer5.h"
+//   69 #include "../../../../../firmware/lfrssi/src/lfrssi.h"
+//   70 #include "../../../../../firmware/calib/src/calib.h"
+//   71 #include "../../../../../firmware/lfrx/src/lfrx.h"
+//   72 
+//   73 /*===========================================================================*/
+//   74 /*  INCLUDES (Flash Module Deliverable)                                      */
+//   75 /*===========================================================================*/
+//   76 #include "../../twi/src/twi_flash.h"
+//   77 #include "../../rfrcc/src/rfrcc_flash.h"
+//   78 
+//   79 /*===========================================================================*/
+//   80 /*  DEFINES                                                                  */
+//   81 /*===========================================================================*/
+//   82 #define IIC_SLAVE_ADDR  0x2A
+//   83 #define IIC_BUFFER_SIZE 16
+//   84 
+//   85 #define ATA_RFRCC_USER_CMND  0x44U
+//   86 #define ATA_RFRCC_SELEC_KEY  0
+//   87 
+//   88 /*===========================================================================*/
+//   89 /*  Modul Globals (Variables)                                                */
+//   90 /*===========================================================================*/
+
+        RSEG NEAR_N:DATA:ROOT(0)
+//   91 __root __no_init sModuleTest g_sModuleTest_flash;
+g_sModuleTest_flash:
+        DS8 2
+
+        RSEG NEAR_N:DATA:ROOT(0)
+//   92 __root __no_init uint8_t g_bModuleTestBuffer_flash[MODULE_TEST_BUFFER_SIZE];
+g_bModuleTestBuffer_flash:
+        DS8 32
+//   93 
+//   94 /* Data structures to be set by the dedicated I2Ccomponent test cases. */
+
+        RSEG NEAR_N:DATA:ROOT(0)
+//   95 __root __no_init  uint8_t g_bModuleTestIicBuffer1_flash[IIC_BUFFER_SIZE];
+g_bModuleTestIicBuffer1_flash:
+        DS8 16
+
+        RSEG NEAR_N:DATA:ROOT(0)
+//   96 __root __no_init  uint8_t g_bModuleTestIicBuffer2_flash[IIC_BUFFER_SIZE];
+g_bModuleTestIicBuffer2_flash:
+        DS8 16
+//   97 
+//   98 /* Data structures to be set by the dedicated EEPROM component test cases. */
+
+        RSEG NEAR_N:DATA:ROOT(0)
+//   99 __root __no_init static sEepModuleTest g_sEepModuleTest_flash;
+g_sEepModuleTest_flash:
+        DS8 22
+//  100 
+//  101 /* Data structures to be set by the dedicated Timer component test cases. */
+
+        RSEG NEAR_N:DATA:ROOT(0)
+//  102 __root __no_init uint8_t g_bTimerModuleTestStatus_flash;
+g_bTimerModuleTestStatus_flash:
+        DS8 1
+
+        RSEG NEAR_N:DATA:ROOT(0)
+//  103 __root __no_init static uint8_t g_bTimerModuleReturnValue_flash;
+g_bTimerModuleReturnValue_flash:
+        DS8 1
+
+        RSEG NEAR_N:DATA:ROOT(0)
+//  104 __root __no_init static sTimerAsyn8BitParams g_sTimer8BitParams_flash;
+g_sTimer8BitParams_flash:
+        DS8 8
+
+        RSEG NEAR_N:DATA:ROOT(0)
+//  105 __root __no_init static sTimerAsyn16BitParams g_sTimer16BitParams_flash;
+g_sTimer16BitParams_flash:
+        DS8 12
+
+        RSEG NEAR_N:DATA:ROOT(0)
+//  106 __root __no_init static sTimerSyn16BitParams g_sTimer16BitSynParams_flash;
+g_sTimer16BitSynParams_flash:
+        DS8 10
+//  107 
+//  108 /* Data structures to be set by the dedicated LF RSSI component test cases. */
+
+        RSEG NEAR_N:DATA:NOROOT(0)
+//  109 __no_init sModuleTestLfRssi       static g_sModuleTestLfRssi_flash;
+g_sModuleTestLfRssi_flash:
+        DS8 7
+
+        RSEG NEAR_N:DATA:NOROOT(0)
+//  110 __no_init sModuleTestLfRssiRegs   static g_sModuleTestLfRssiRegs_flash;
+g_sModuleTestLfRssiRegs_flash:
+        DS8 5
+
+        RSEG NEAR_N:DATA:NOROOT(0)
+//  111 __no_init sModuleTestLfRssiResult static g_sModuleTestLfRssiResult_flash;
+g_sModuleTestLfRssiResult_flash:
+        DS8 22
+
+        RSEG NEAR_N:DATA:NOROOT(0)
+//  112 __no_init static uint16_t g_wLfRssiResultIntMeas[3];
+g_wLfRssiResultIntMeas:
+        DS8 6
+
+        RSEG NEAR_N:DATA:NOROOT(0)
+//  113 __no_init static uint16_t g_wLfRssiSamplesResult[6];
+g_wLfRssiSamplesResult:
+        DS8 12
+
+        RSEG NEAR_N:DATA:NOROOT(0)
+//  114 __no_init static uint16_t g_wLfRssiSamplesResultCorrCalc[6];
+g_wLfRssiSamplesResultCorrCalc:
+        DS8 12
+
+        RSEG NEAR_N:DATA:NOROOT(0)
+//  115 __no_init static uint16_t g_wLfRssiSamplesResult3dVec[2];
+g_wLfRssiSamplesResult3dVec:
+        DS8 4
+
+        RSEG NEAR_N:DATA:NOROOT(0)
+//  116 __no_init static uint16_t g_wLfRssiSamplesResultLin[2];
+g_wLfRssiSamplesResultLin:
+        DS8 4
+//  117 
+//  118 /* Data structures to be set by the dedicated Watchdog component test case. */
+
+        RSEG NEAR_N:DATA:ROOT(0)
+//  119 __root __no_init static  uint8_t g_bModuleTestWdtcr_flash;
+g_bModuleTestWdtcr_flash:
+        DS8 1
+//  120 
+//  121 /*===========================================================================*/
+//  122 /*  Modul Globals (Functions)                                                */
+//  123 /*===========================================================================*/
+//  124 static VOIDFUNC ATA_moduleTestWatchdog_flash_C(void);
+//  125 static VOIDFUNC ATA_moduleTestEep_flash_C(void);
+//  126 static VOIDFUNC ATA_moduleTestAes_flash_C(void);
+//  127 static VOIDFUNC ATA_moduleTestIicIRQ_flash_C(void);
+//  128 static VOIDFUNC ATA_moduleTestIicPOL_flash_C(void);
+//  129 static VOIDFUNC ATA_moduleTestTimer1Handling_flash_C(void);
+//  130 static VOIDFUNC ATA_moduleTestTimer2Handling_flash_C(void);
+//  131 static VOIDFUNC ATA_moduleTestTimer3Handling_flash_C(void);
+//  132 static VOIDFUNC ATA_moduleTestTimer4Handling_flash_C(void);
+//  133 static VOIDFUNC ATA_moduleTestTimer5Handling_flash_C(void);
+//  134 static VOIDFUNC ATA_moduleTestTimerMultipleOpen_flash_C(void);
+//  135 static VOIDFUNC ATA_moduleTestClkMrcFrcHandling_flash_C(void);
+//  136 static VOIDFUNC ATA_moduleTestClkExtClockHandling_flash_C(void);
+//  137 static VOIDFUNC ATA_moduleTestRfrcc_flash_C(void);
+//  138 static VOIDFUNC ATA_moduleTestLfRssiHandling_flash_C(void);
+//  139 static VOIDFUNC ATA_moduleTestLfTx_flash_C(void);
+//  140 static VOIDFUNC ATA_moduleTestLfRssiCalc12q4_flash_C(void);
+//  141 /*===========================================================================*/
+//  142 /*  IMPLEMENTATION                                                           */
+//  143 /*===========================================================================*/
+//  144 /*---------------------------------------------------------------------------*/
+//  145 /** \brief <b>ATA_moduleTestInit_flash_C</b>
+//  146     shall initialize the data structures used in package moduleTest.
+//  147 
+//  148     \Derived no
+//  149 
+//  150     \Rationale none
+//  151 
+//  152     \Traceability Primus2P-xxx
+//  153 
+//  154     \StackUsage SU_XXX bytes
+//  155 
+//  156     \image html ATA_moduleTestInit_flash_C.png
+//  157     \image rtf ATA_moduleTestInit_flash_C.png
+//  158     \n
+//  159 */
+//  160 /*---------------------------------------------------------------------------*/
+
+        RSEG CODE:CODE:ROOT(1)
+//  161 VOIDFUNC ATA_moduleTestInit_flash_C(void)
+ATA_moduleTestInit_flash_C:
+          CFI Block cfiBlock0 Using cfiCommon0
+          CFI Function ATA_moduleTestInit_flash_C
+//  162 {
+//  163     g_sModuleTest_flash.bId = 0U;
+        LDI     R16, 0
+        STS     g_sModuleTest_flash, R16
+//  164     g_sModuleTest_flash.bSubId = 0U;
+        STS     (g_sModuleTest_flash + 1), R16
+//  165     g_bTimerModuleTestStatus_flash = 0U;
+        STS     g_bTimerModuleTestStatus_flash, R16
+          CFI EndBlock cfiBlock0
+//  166     g_bTimerModuleReturnValue_flash = 0U;
+        REQUIRE ?Subroutine0
+        ;               // Fall through to label ?Subroutine0
+//  167 }
+
+        RSEG CODE:CODE:NOROOT(1)
+?Subroutine0:
+          CFI Block cfiBlock1 Using cfiCommon0
+          CFI NoFunction
+        STS     g_bTimerModuleReturnValue_flash, R16
+        RET
+          CFI EndBlock cfiBlock1
+//  168 
+//  169 /*---------------------------------------------------------------------------*/
+//  170 /** \brief <b>ATA_moduleTestSoftware_flash_C</b>
+//  171     shall manage the module tests for each package.
+//  172 
+//  173     \Derived no
+//  174 
+//  175     \Rationale none
+//  176 
+//  177     \Traceability Primus2P-xxx
+//  178 
+//  179     \StackUsage SU_XXX bytes
+//  180 
+//  181     \image html ATA_moduleTestSoftware_flash_C.png
+//  182     \image rtf ATA_moduleTestSoftware_flash_C.png
+//  183     \n
+//  184 */
+//  185 /*---------------------------------------------------------------------------*/
+
+        RSEG CODE:CODE:ROOT(1)
+//  186 VOIDFUNC ATA_moduleTestSoftware_flash_C()
+ATA_moduleTestSoftware_flash_C:
+          CFI Block cfiBlock2 Using cfiCommon0
+          CFI Function ATA_moduleTestSoftware_flash_C
+//  187 {
+//  188     switch(g_sModuleTest_flash.bId)
+        FUNCALL ATA_moduleTestSoftware_flash_C, ATA_moduleTestSpi_flash_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestSoftware_flash_C, ATA_moduleTestIicIRQ_flash_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestSoftware_flash_C, ATA_moduleTestIicPOL_flash_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestSoftware_flash_C, ATA_moduleTestWatchdog_flash_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestSoftware_flash_C, ATA_moduleTestEep_flash_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestSoftware_flash_C, ATA_moduleTestTimer1Handling_flash_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestSoftware_flash_C, ATA_moduleTestTimer2Handling_flash_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestSoftware_flash_C, ATA_moduleTestTimer3Handling_flash_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestSoftware_flash_C, ATA_moduleTestTimer4Handling_flash_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestSoftware_flash_C, ATA_moduleTestTimer5Handling_flash_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestSoftware_flash_C, ATA_moduleTestTimerMultipleOpen_flash_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestSoftware_flash_C, ATA_moduleTestAes_flash_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestSoftware_flash_C, ATA_moduleTestClkMrcFrcHandling_flash_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestSoftware_flash_C, ATA_moduleTestRfrcc_flash_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestSoftware_flash_C, ATA_moduleTestClkExtClockHandling_flash_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestSoftware_flash_C, ATA_moduleTestLfRssiHandling_flash_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestSoftware_flash_C, ATA_moduleTestCalib_flash_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestSoftware_flash_C, ATA_moduleTestSpiBasicFunctions_flash_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestSoftware_flash_C, ATA_moduleTestRfTx_flash_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestSoftware_flash_C, ATA_moduleTestLfTx_flash_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestSoftware_flash_C, ATA_moduleTestGlobals_flash_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        LDS     R16, g_sModuleTest_flash
+        LDI     R30, LOW(`?<Jumptable for ATA_moduleTestSoftware_flash_C_0`)
+        LDI     R31, (`?<Jumptable for ATA_moduleTestSoftware_flash_C_0`) >> 8
+        JMP     ?CV_SWITCH_L06
+//  189     {
+//  190         case MODULE_TEST_ID_SPI_WITH_INTERRUPTS:      /* MODULE SPI (normal mode)   */
+//  191         case MODULE_TEST_ID_SPI_NO_INTERRUPTS:        /* MODULE SPI (checksum mode) */
+//  192             ATA_moduleTestSpi_flash_C();
+??ATA_moduleTestSoftware_flash_C_0:
+        CALL    ATA_moduleTestSpi_flash_C
+//  193             break;
+        RJMP    ??ATA_moduleTestSoftware_flash_C_1
+//  194 
+//  195         case MODULE_TEST_ID_IIC_WITH_INTERRUPTS:
+//  196             ATA_moduleTestIicIRQ_flash_C();
+??ATA_moduleTestSoftware_flash_C_2:
+        RCALL   ATA_moduleTestIicIRQ_flash_C
+//  197             break;
+        RJMP    ??ATA_moduleTestSoftware_flash_C_1
+//  198         case MODULE_TEST_ID_IIC_NO_INTERRUPTS:
+//  199             ATA_moduleTestIicPOL_flash_C();
+??ATA_moduleTestSoftware_flash_C_3:
+        RCALL   ATA_moduleTestIicPOL_flash_C
+//  200             break;
+        RJMP    ??ATA_moduleTestSoftware_flash_C_1
+//  201 
+//  202 
+//  203         case MODULE_TEST_ID_WDT:           /* Module Watchdog */
+//  204             ATA_moduleTestWatchdog_flash_C();
+??ATA_moduleTestSoftware_flash_C_4:
+        RCALL   ATA_moduleTestWatchdog_flash_C
+//  205             break;
+        RJMP    ??ATA_moduleTestSoftware_flash_C_1
+//  206 
+//  207         case MODULE_TEST_ID_EEP:         /* MODULE EEP */
+//  208             ATA_moduleTestEep_flash_C();
+??ATA_moduleTestSoftware_flash_C_5:
+        RCALL   ATA_moduleTestEep_flash_C
+//  209             break;
+        RJMP    ??ATA_moduleTestSoftware_flash_C_1
+//  210 
+//  211         case MODULE_TEST_ID_TIMER1:      /* MODULE Timer1 */
+//  212             ATA_moduleTestTimer1Handling_flash_C();
+??ATA_moduleTestSoftware_flash_C_6:
+        RCALL   ATA_moduleTestTimer1Handling_flash_C
+//  213             break;
+        RJMP    ??ATA_moduleTestSoftware_flash_C_1
+//  214 
+//  215         case MODULE_TEST_ID_TIMER2:      /* MODULE Timer2 */
+//  216             ATA_moduleTestTimer2Handling_flash_C();
+??ATA_moduleTestSoftware_flash_C_7:
+        RCALL   ATA_moduleTestTimer2Handling_flash_C
+//  217             break;
+        RJMP    ??ATA_moduleTestSoftware_flash_C_1
+//  218 
+//  219         case MODULE_TEST_ID_TIMER3:      /* MODULE Timer3 */
+//  220             ATA_moduleTestTimer3Handling_flash_C();
+??ATA_moduleTestSoftware_flash_C_8:
+        RCALL   ATA_moduleTestTimer3Handling_flash_C
+//  221             break;
+        RJMP    ??ATA_moduleTestSoftware_flash_C_1
+//  222 
+//  223         case MODULE_TEST_ID_TIMER4:      /* MODULE Timer4 */
+//  224             ATA_moduleTestTimer4Handling_flash_C();
+??ATA_moduleTestSoftware_flash_C_9:
+        RCALL   ATA_moduleTestTimer4Handling_flash_C
+//  225             break;
+        RJMP    ??ATA_moduleTestSoftware_flash_C_1
+//  226 
+//  227         case MODULE_TEST_ID_TIMER5:      /* MODULE Timer5 */
+//  228             ATA_moduleTestTimer5Handling_flash_C();
+??ATA_moduleTestSoftware_flash_C_10:
+        RCALL   ATA_moduleTestTimer5Handling_flash_C
+//  229             break;
+        RJMP    ??ATA_moduleTestSoftware_flash_C_1
+//  230 
+//  231         case MODULE_TEST_ID_TIMER_FAIL:  /* MODULE Timer Multiple Opening */
+//  232             ATA_moduleTestTimerMultipleOpen_flash_C();
+??ATA_moduleTestSoftware_flash_C_11:
+        RCALL   ATA_moduleTestTimerMultipleOpen_flash_C
+//  233             break;
+        RJMP    ??ATA_moduleTestSoftware_flash_C_1
+//  234 
+//  235         case MODULE_TEST_ID_AES:         /* MODULE AES */
+//  236             ATA_moduleTestAes_flash_C();
+??ATA_moduleTestSoftware_flash_C_12:
+        RCALL   ATA_moduleTestAes_flash_C
+//  237             break;
+        RJMP    ??ATA_moduleTestSoftware_flash_C_1
+//  238 
+//  239         case MODULE_TEST_ID_CLK_MRC_FRC:    /* MODULE CLOCK MRC_FRC */
+//  240             ATA_moduleTestClkMrcFrcHandling_flash_C();
+??ATA_moduleTestSoftware_flash_C_13:
+        RCALL   ATA_moduleTestClkMrcFrcHandling_flash_C
+//  241             break;
+        RJMP    ??ATA_moduleTestSoftware_flash_C_1
+//  242 
+//  243         case MODULE_TEST_ID_ROLL_CODE_CTR:
+//  244             ATA_moduleTestRfrcc_flash_C();
+??ATA_moduleTestSoftware_flash_C_14:
+        RCALL   ATA_moduleTestRfrcc_flash_C
+//  245           break;
+        RJMP    ??ATA_moduleTestSoftware_flash_C_1
+//  246 
+//  247         case MODULE_TEST_ID_CLK_EXT_CLOCK:
+//  248             ATA_moduleTestClkExtClockHandling_flash_C();
+??ATA_moduleTestSoftware_flash_C_15:
+        RCALL   ATA_moduleTestClkExtClockHandling_flash_C
+//  249           break;
+        RJMP    ??ATA_moduleTestSoftware_flash_C_1
+//  250 
+//  251         case MODULE_TEST_ID_LF_RSSI:        /* MODULE LF RSSI Measurement */
+//  252             ATA_moduleTestLfRssiHandling_flash_C();
+??ATA_moduleTestSoftware_flash_C_16:
+        RCALL   ATA_moduleTestLfRssiHandling_flash_C
+//  253             break;
+        RJMP    ??ATA_moduleTestSoftware_flash_C_1
+//  254 
+//  255         case MODULE_TEST_ID_CALIB:          /* SRC and FRC Calibration */
+//  256             ATA_moduleTestCalib_flash_C();
+??ATA_moduleTestSoftware_flash_C_17:
+        CALL    ATA_moduleTestCalib_flash_C
+//  257             break;
+        RJMP    ??ATA_moduleTestSoftware_flash_C_1
+//  258 
+//  259         case MODULE_TEST_ID_SPI_BASIC_FUNCTIONS: /* low level functions of module SPI */
+//  260             ATA_moduleTestSpiBasicFunctions_flash_C();
+??ATA_moduleTestSoftware_flash_C_18:
+        CALL    ATA_moduleTestSpiBasicFunctions_flash_C
+//  261             break;
+        RJMP    ??ATA_moduleTestSoftware_flash_C_1
+//  262         case MODULE_TEST_ID_RFTX:   /* MODULE RF TX module tests */
+//  263             ATA_moduleTestRfTx_flash_C();
+??ATA_moduleTestSoftware_flash_C_19:
+        CALL    ATA_moduleTestRfTx_flash_C
+//  264             break;
+        RJMP    ??ATA_moduleTestSoftware_flash_C_1
+//  265         case MODULE_TEST_ID_LFTX:   /* MODULE LF TX module tests */
+//  266             ATA_moduleTestLfTx_flash_C();
+??ATA_moduleTestSoftware_flash_C_20:
+        RCALL   ATA_moduleTestLfTx_flash_C
+//  267             break;
+        RJMP    ??ATA_moduleTestSoftware_flash_C_1
+//  268         case MODULE_TEST_ID_GLOBALS:
+//  269             ATA_moduleTestGlobals_flash_C();
+??ATA_moduleTestSoftware_flash_C_21:
+        CALL    ATA_moduleTestGlobals_flash_C
+//  270         case MODULE_TEST_DISABLED:      /* no module test selected */
+//  271         default:
+//  272             _NOP;
+??ATA_moduleTestSoftware_flash_C_22:
+        nop
+//  273             break;
+//  274     }
+//  275 
+//  276     g_sModuleTest_flash.bId = 0U;
+??ATA_moduleTestSoftware_flash_C_1:
+        LDI     R16, 0
+        STS     g_sModuleTest_flash, R16
+//  277 }
+        RET
+          CFI EndBlock cfiBlock2
+//  278 
+//  279 
+
+        RSEG CODE:CODE:ROOT(1)
+//  280 VOIDFUNC ATA_moduleTestIicPOL_flash_C(void){
+ATA_moduleTestIicPOL_flash_C:
+          CFI Block cfiBlock3 Using cfiCommon0
+          CFI Function ATA_moduleTestIicPOL_flash_C
+//  281 
+//  282 
+//  283   }
+        RET
+          CFI EndBlock cfiBlock3
+//  284 
+//  285 
+
+        RSEG CODE:CODE:ROOT(1)
+//  286 VOIDFUNC ATA_moduleTestIicIRQ_flash_C(void){
+ATA_moduleTestIicIRQ_flash_C:
+          CFI Block cfiBlock4 Using cfiCommon0
+          CFI Function ATA_moduleTestIicIRQ_flash_C
+//  287     uint8_t tmp;
+//  288   switch(g_sModuleTest_flash.bSubId)
+        FUNCALL ATA_moduleTestIicIRQ_flash_C, ATA_twiSetBuffer_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestIicIRQ_flash_C, ATA_twiSetBuffer_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestIicIRQ_flash_C, ATA_twiGetBuffer_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestIicIRQ_flash_C, ATA_twiGetBuffer_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestIicIRQ_flash_C, ATA_twiSetData_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestIicIRQ_flash_C, ATA_twiSetData_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestIicIRQ_flash_C, ATA_twiSetData_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestIicIRQ_flash_C, ATA_twiGetData_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestIicIRQ_flash_C, ATA_twiGetData_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestIicIRQ_flash_C, ATA_twiGetData_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestIicIRQ_flash_C, ATA_twiSetData_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestIicIRQ_flash_C, ATA_twiGetData_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestIicIRQ_flash_C, ATA_twiSetBuffer_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestIicIRQ_flash_C, ATA_twiGetBuffer_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestIicIRQ_flash_C, ATA_twiReset_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestIicIRQ_flash_C, ATA_twiHwSetup_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestIicIRQ_flash_C, ATA_twiBufferSetup_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestIicIRQ_flash_C, ATA_twiBufferSetup_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestIicIRQ_flash_C, ATA_twiOpen_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestIicIRQ_flash_C, ATA_twiUse_C
+        LOCFRAME CSTACK, 2, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestIicIRQ_flash_C, ATA_twiUse_C
+        LOCFRAME CSTACK, 2, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestIicIRQ_flash_C, ATA_twiUse_C
+        LOCFRAME CSTACK, 2, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestIicIRQ_flash_C, ATA_twiUse_C
+        LOCFRAME CSTACK, 2, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestIicIRQ_flash_C, ATA_twiMasterTrigger_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestIicIRQ_flash_C, ATA_twiReset_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestIicIRQ_flash_C, ATA_twiUse_C
+        LOCFRAME CSTACK, 2, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestIicIRQ_flash_C, ATA_twiMasterTrigger_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestIicIRQ_flash_C, ATA_twiMasterTrigger_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestIicIRQ_flash_C, ATA_twiMasterTrigger_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestIicIRQ_flash_C, ATA_twiMasterTrigger_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestIicIRQ_flash_C, ATA_twiMasterTrigger_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestIicIRQ_flash_C, ATA_twiReset_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestIicIRQ_flash_C, ATA_twiUse_C
+        LOCFRAME CSTACK, 2, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestIicIRQ_flash_C, ATA_twiMasterTrigger_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestIicIRQ_flash_C, ATA_twiMasterTrigger_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestIicIRQ_flash_C, ATA_twiClrError_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestIicIRQ_flash_C, ATA_twiClrRxDataPend_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestIicIRQ_flash_C, ATA_twiUse_C
+        LOCFRAME CSTACK, 2, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestIicIRQ_flash_C, ATA_twiUse_C
+        LOCFRAME CSTACK, 2, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestIicIRQ_flash_C, ATA_twiReset_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestIicIRQ_flash_C, ATA_twiUse_C
+        LOCFRAME CSTACK, 2, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestIicIRQ_flash_C, ATA_twiMasterTrigger_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestIicIRQ_flash_C, ATA_twiReset_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestIicIRQ_flash_C, ATA_twiUse_C
+        LOCFRAME CSTACK, 2, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestIicIRQ_flash_C, ATA_twiReset_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestIicIRQ_flash_C, ATA_twiUse_C
+        LOCFRAME CSTACK, 2, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestIicIRQ_flash_C, ATA_twiMasterTrigger_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestIicIRQ_flash_C, ATA_twiServeIsr_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        LDS     R16, (g_sModuleTest_flash + 1)
+        LDI     R30, LOW(`?<Jumptable for ATA_moduleTestIicIRQ_flash_C>_0`)
+        LDI     R31, (`?<Jumptable for ATA_moduleTestIicIRQ_flash_C>_0`) >> 8
+        JMP     ?CV_SWITCH_L06
+//  289   {
+//  290 
+//  291         case MODULE_TEST_IIC_FILL_BUFFER1:
+//  292           for(tmp=0;tmp<IIC_BUFFER_SIZE;tmp++){
+??ATA_moduleTestIicIRQ_flash_C_0:
+        LDI     R16, 0
+//  293             g_bModuleTestIicBuffer1_flash[tmp] = tmp;
+??ATA_moduleTestIicIRQ_flash_C_1:
+        LDI     R31, 0
+        MOV     R30, R16
+        SUBI    R30, LOW((-(g_bModuleTestIicBuffer1_flash) & 0xFFFF))
+        SBCI    R31, (-(g_bModuleTestIicBuffer1_flash) & 0xFFFF) >> 8
+        ST      Z, R16
+//  294           }
+        INC     R16
+        CPI     R16, 16
+        BRCS    $+2+2
+        RJMP    ??ATA_moduleTestIicIRQ_flash_C_2
+        RJMP    ??ATA_moduleTestIicIRQ_flash_C_1
+//  295     break;
+//  296 
+//  297         case MODULE_TEST_IIC_FILL_BUFFER2:
+//  298           for(tmp=0;tmp<IIC_BUFFER_SIZE;tmp++){
+??ATA_moduleTestIicIRQ_flash_C_3:
+        LDI     R16, 0
+//  299             g_bModuleTestIicBuffer2_flash[tmp] = tmp;
+??ATA_moduleTestIicIRQ_flash_C_4:
+        LDI     R31, 0
+        MOV     R30, R16
+        SUBI    R30, LOW((-(g_bModuleTestIicBuffer2_flash) & 0xFFFF))
+        SBCI    R31, (-(g_bModuleTestIicBuffer2_flash) & 0xFFFF) >> 8
+        ST      Z, R16
+//  300           }
+        INC     R16
+        CPI     R16, 16
+        BRCS    $+2+2
+        RJMP    ??ATA_moduleTestIicIRQ_flash_C_2
+        RJMP    ??ATA_moduleTestIicIRQ_flash_C_4
+//  301     break;
+//  302         case MODULE_TEST_IIC_CLR_BUFFER1:
+//  303           for(tmp=0;tmp<IIC_BUFFER_SIZE;tmp++){
+??ATA_moduleTestIicIRQ_flash_C_5:
+        LDI     R16, 0
+        LDI     R18, 0
+//  304             g_bModuleTestIicBuffer1_flash[tmp] = 0x00U;
+??ATA_moduleTestIicIRQ_flash_C_6:
+        LDI     R31, 0
+        MOV     R30, R16
+        SUBI    R30, LOW((-(g_bModuleTestIicBuffer1_flash) & 0xFFFF))
+        SBCI    R31, (-(g_bModuleTestIicBuffer1_flash) & 0xFFFF) >> 8
+        ST      Z, R18
+//  305           }
+        INC     R16
+        CPI     R16, 16
+        BRCS    $+2+2
+        RJMP    ??ATA_moduleTestIicIRQ_flash_C_2
+        RJMP    ??ATA_moduleTestIicIRQ_flash_C_6
+//  306       break;
+//  307         case MODULE_TEST_IIC_CLR_BUFFER2:
+//  308           for(tmp=0;tmp<IIC_BUFFER_SIZE;tmp++){
+??ATA_moduleTestIicIRQ_flash_C_7:
+        LDI     R16, 0
+        LDI     R18, 0
+//  309             g_bModuleTestIicBuffer2_flash[tmp] = 0x00U;
+??ATA_moduleTestIicIRQ_flash_C_8:
+        LDI     R31, 0
+        MOV     R30, R16
+        SUBI    R30, LOW((-(g_bModuleTestIicBuffer2_flash) & 0xFFFF))
+        SBCI    R31, (-(g_bModuleTestIicBuffer2_flash) & 0xFFFF) >> 8
+        ST      Z, R18
+//  310   }
+        INC     R16
+        CPI     R16, 16
+        BRCS    $+2+2
+        RJMP    ??ATA_moduleTestIicIRQ_flash_C_2
+        RJMP    ??ATA_moduleTestIicIRQ_flash_C_8
+//  311           break;
+//  312 
+//  313         case MODULE_TEST_IIC_SET_BUFFER1:
+//  314           ATA_twiSetBuffer_C(&twiCtrlBlock,&g_bModuleTestIicBuffer1_flash[0],IIC_BUFFER_SIZE);
+??ATA_moduleTestIicIRQ_flash_C_9:
+        LDI     R20, 16
+        LDI     R18, LOW(g_bModuleTestIicBuffer1_flash)
+        LDI     R19, (g_bModuleTestIicBuffer1_flash) >> 8
+        RJMP    ??ATA_moduleTestIicIRQ_flash_C_10
+//  315           break;
+//  316         case MODULE_TEST_IIC_SET_BUFFER2:
+//  317           ATA_twiSetBuffer_C(&twiCtrlBlock,&g_bModuleTestIicBuffer2_flash[0],IIC_BUFFER_SIZE);
+??ATA_moduleTestIicIRQ_flash_C_11:
+        LDI     R20, 16
+        RJMP    ??ATA_moduleTestIicIRQ_flash_C_12
+//  318           break;
+//  319 
+//  320         case MODULE_TEST_IIC_GET_BUFFER1:
+//  321           ATA_twiGetBuffer_C(&twiCtrlBlock,&g_bModuleTestIicBuffer1_flash[0],IIC_BUFFER_SIZE);
+??ATA_moduleTestIicIRQ_flash_C_13:
+        LDI     R20, 16
+        RJMP    ??ATA_moduleTestIicIRQ_flash_C_14
+//  322           break;
+//  323         case MODULE_TEST_IIC_GET_BUFFER2:
+//  324           ATA_twiGetBuffer_C(&twiCtrlBlock,&g_bModuleTestIicBuffer2_flash[0],IIC_BUFFER_SIZE);
+??ATA_moduleTestIicIRQ_flash_C_15:
+        LDI     R20, 16
+        LDI     R18, LOW(g_bModuleTestIicBuffer2_flash)
+        LDI     R19, (g_bModuleTestIicBuffer2_flash) >> 8
+        RJMP    ??ATA_moduleTestIicIRQ_flash_C_16
+//  325           break;
+//  326         case MODULE_TEST_IIC_SET_DATA_0:
+//  327           ATA_twiSetData_C(&twiCtrlBlock,0x00U,0xAA,0x0FU);
+??ATA_moduleTestIicIRQ_flash_C_17:
+        LDI     R20, 15
+        LDI     R19, 170
+        LDI     R18, 0
+        RJMP    ??ATA_moduleTestIicIRQ_flash_C_18
+//  328           break;
+//  329         case MODULE_TEST_IIC_SET_DATA_1:
+//  330           ATA_twiSetData_C(&twiCtrlBlock,0x01U,0xBB,0x0FU);
+??ATA_moduleTestIicIRQ_flash_C_19:
+        LDI     R20, 15
+        LDI     R19, 187
+        LDI     R18, 1
+??ATA_moduleTestIicIRQ_flash_C_18:
+        LDI     R16, LOW(twiCtrlBlock)
+        LDI     R17, (twiCtrlBlock) >> 8
+        JMP     ATA_twiSetData_C
+//  331           break;
+//  332         case MODULE_TEST_IIC_SET_DATA_15:
+//  333           ATA_twiSetData_C(&twiCtrlBlock,0x0FU,0xCC,0x0FU);
+??ATA_moduleTestIicIRQ_flash_C_20:
+        LDI     R20, 15
+        LDI     R19, 204
+        LDI     R18, 15
+        RJMP    ??ATA_moduleTestIicIRQ_flash_C_18
+//  334           break;
+//  335         case MODULE_TEST_IIC_GET_DATA_0:
+//  336           ATA_twiGetData_C(&twiCtrlBlock,0x00U,&g_bModuleTestIicBuffer2_flash[0]);
+??ATA_moduleTestIicIRQ_flash_C_21:
+        LDI     R20, LOW(g_bModuleTestIicBuffer2_flash)
+        LDI     R21, (g_bModuleTestIicBuffer2_flash) >> 8
+        LDI     R18, 0
+        RJMP    ??ATA_moduleTestIicIRQ_flash_C_22
+//  337           break;
+//  338         case MODULE_TEST_IIC_GET_DATA_1:
+//  339           ATA_twiGetData_C(&twiCtrlBlock,0x01U,&g_bModuleTestIicBuffer2_flash[0]);
+??ATA_moduleTestIicIRQ_flash_C_23:
+        LDI     R20, LOW(g_bModuleTestIicBuffer2_flash)
+        LDI     R21, (g_bModuleTestIicBuffer2_flash) >> 8
+        LDI     R18, 1
+??ATA_moduleTestIicIRQ_flash_C_22:
+        LDI     R16, LOW(twiCtrlBlock)
+        LDI     R17, (twiCtrlBlock) >> 8
+        JMP     ATA_twiGetData_C
+//  340           break;
+//  341         case MODULE_TEST_IIC_GET_DATA_15:
+//  342           ATA_twiGetData_C(&twiCtrlBlock,0x0FU,&g_bModuleTestIicBuffer2_flash[0]);
+??ATA_moduleTestIicIRQ_flash_C_24:
+        LDI     R20, LOW(g_bModuleTestIicBuffer2_flash)
+        LDI     R21, (g_bModuleTestIicBuffer2_flash) >> 8
+        LDI     R18, 15
+        RJMP    ??ATA_moduleTestIicIRQ_flash_C_22
+//  343     break;
+//  344         case MODULE_TEST_IIC_SET_DATA_OUTOFBOUNDS:
+//  345           ATA_twiSetData_C(&twiCtrlBlock,IIC_BUFFER_SIZE,0xAA,0x0FU);
+??ATA_moduleTestIicIRQ_flash_C_25:
+        LDI     R20, 15
+        LDI     R19, 170
+        LDI     R18, 16
+        RJMP    ??ATA_moduleTestIicIRQ_flash_C_18
+//  346     break;
+//  347         case MODULE_TEST_IIC_GET_DATA_OUTOFBOUNDS:
+//  348           ATA_twiGetData_C(&twiCtrlBlock,IIC_BUFFER_SIZE,&g_bModuleTestIicBuffer2_flash[0]);
+??ATA_moduleTestIicIRQ_flash_C_26:
+        LDI     R20, LOW(g_bModuleTestIicBuffer2_flash)
+        LDI     R21, (g_bModuleTestIicBuffer2_flash) >> 8
+        LDI     R18, 16
+        RJMP    ??ATA_moduleTestIicIRQ_flash_C_22
+//  349     break;
+//  350         case MODULE_TEST_IIC_SET_BUFFER_OUTOFBOUNDS:
+//  351           ATA_twiSetBuffer_C(&twiCtrlBlock,&g_bModuleTestIicBuffer2_flash[0],(IIC_BUFFER_SIZE+1));
+??ATA_moduleTestIicIRQ_flash_C_27:
+        LDI     R20, 17
+??ATA_moduleTestIicIRQ_flash_C_12:
+        LDI     R18, LOW(g_bModuleTestIicBuffer2_flash)
+        LDI     R19, (g_bModuleTestIicBuffer2_flash) >> 8
+??ATA_moduleTestIicIRQ_flash_C_10:
+        LDI     R16, LOW(twiCtrlBlock)
+        LDI     R17, (twiCtrlBlock) >> 8
+        JMP     ATA_twiSetBuffer_C
+//  352       break;
+//  353         case MODULE_TEST_IIC_GET_BUFFER_OUTOFBOUNDS:
+//  354           ATA_twiGetBuffer_C(&twiCtrlBlock,&g_bModuleTestIicBuffer1_flash[0],(IIC_BUFFER_SIZE+1));
+??ATA_moduleTestIicIRQ_flash_C_28:
+        LDI     R20, 17
+??ATA_moduleTestIicIRQ_flash_C_14:
+        LDI     R18, LOW(g_bModuleTestIicBuffer1_flash)
+        LDI     R19, (g_bModuleTestIicBuffer1_flash) >> 8
+??ATA_moduleTestIicIRQ_flash_C_16:
+        LDI     R16, LOW(twiCtrlBlock)
+        LDI     R17, (twiCtrlBlock) >> 8
+        JMP     ATA_twiGetBuffer_C
+//  355       break;
+//  356         case MODULE_TEST_IIC_RESET:
+//  357           ATA_twiReset_C(&twiCtrlBlock);
+??ATA_moduleTestIicIRQ_flash_C_29:
+        LDI     R16, LOW(twiCtrlBlock)
+        LDI     R17, (twiCtrlBlock) >> 8
+        JMP     ATA_twiReset_C
+//  358     break;
+//  359         case MODULE_TEST_IIC_HW_SETUP:
+//  360           ATA_twiHwSetup_C(&twiCtrlBlock,IIC_SLAVE_ADDR,0x00U,0x0AU,0x00U);
+??ATA_moduleTestIicIRQ_flash_C_30:
+        LDI     R21, 0
+        LDI     R20, 10
+        LDI     R19, 0
+        LDI     R18, 42
+        LDI     R16, LOW(twiCtrlBlock)
+        LDI     R17, (twiCtrlBlock) >> 8
+        JMP     ATA_twiHwSetup_C
+//  361     break;
+//  362         case MODULE_TEST_IIC_BUFFER_SETUP1:
+//  363           ATA_twiBufferSetup_C(&twiCtrlBlock,IIC_BUFFER_SIZE,&g_bModuleTestIicBuffer1_flash[0]);
+??ATA_moduleTestIicIRQ_flash_C_31:
+        LDI     R20, LOW(g_bModuleTestIicBuffer1_flash)
+        LDI     R21, (g_bModuleTestIicBuffer1_flash) >> 8
+        RJMP    ??ATA_moduleTestIicIRQ_flash_C_32
+//  364           break;
+//  365         case MODULE_TEST_IIC_BUFFER_SETUP2:
+//  366           ATA_twiBufferSetup_C(&twiCtrlBlock,IIC_BUFFER_SIZE,&g_bModuleTestIicBuffer2_flash[0]);
+??ATA_moduleTestIicIRQ_flash_C_33:
+        LDI     R20, LOW(g_bModuleTestIicBuffer2_flash)
+        LDI     R21, (g_bModuleTestIicBuffer2_flash) >> 8
+??ATA_moduleTestIicIRQ_flash_C_32:
+        LDI     R18, 16
+        LDI     R16, LOW(twiCtrlBlock)
+        LDI     R17, (twiCtrlBlock) >> 8
+        JMP     ATA_twiBufferSetup_C
+//  367     break;
+//  368         case MODULE_TEST_IIC_SET_BUFFER_ENABLEFLAG:
+//  369           twiCtrlBlock.twiConfig |= BM_PTRVALID;
+??ATA_moduleTestIicIRQ_flash_C_34:
+        LDI     R30, LOW(twiCtrlBlock)
+        LDI     R31, (twiCtrlBlock) >> 8
+        LDD     R16, Z+4
+        ORI     R16, 0x80
+        STD     Z+4, R16
+//  370     break;
+        RET
+//  371         case MODULE_TEST_IIC_OPEN:
+//  372           ATA_twiOpen_C(&twiCtrlBlock);
+??ATA_moduleTestIicIRQ_flash_C_35:
+        LDI     R16, LOW(twiCtrlBlock)
+        LDI     R17, (twiCtrlBlock) >> 8
+        JMP     ATA_twiOpen_C
+//  373       break;
+//  374         case MODULE_TEST_IIC_USE_CONFIG1:
+//  375           ATA_twiUse_C(&twiCtrlBlock,IIC_SLAVE_ADDR,0x00U,0x0AU,0x00U,IIC_BUFFER_SIZE,&g_bModuleTestIicBuffer1_flash[0],0xC0U);
+??ATA_moduleTestIicIRQ_flash_C_36:
+        LDI     R16, LOW(g_bModuleTestIicBuffer1_flash)
+        LDI     R17, (g_bModuleTestIicBuffer1_flash) >> 8
+        RJMP    ??ATA_moduleTestIicIRQ_flash_C_37
+//  376           break;
+//  377         case MODULE_TEST_IIC_USE_CONFIG2:
+//  378           ATA_twiUse_C(&twiCtrlBlock,IIC_SLAVE_ADDR,0x00U,0x0AU,0x00U,IIC_BUFFER_SIZE,&g_bModuleTestIicBuffer2_flash[0],0xC0U);
+??ATA_moduleTestIicIRQ_flash_C_38:
+        LDI     R16, LOW(g_bModuleTestIicBuffer2_flash)
+        LDI     R17, (g_bModuleTestIicBuffer2_flash) >> 8
+??ATA_moduleTestIicIRQ_flash_C_37:
+        ST      -Y, R17
+          CFI CFA_Y Y+1
+        ST      -Y, R16
+          CFI CFA_Y Y+2
+        LDI     R23, 192
+        LDI     R22, 16
+        LDI     R21, 0
+        LDI     R20, 10
+??ATA_moduleTestIicIRQ_flash_C_39:
+        LDI     R19, 0
+        LDI     R18, 42
+??ATA_moduleTestIicIRQ_flash_C_40:
+        LDI     R16, LOW(twiCtrlBlock)
+        LDI     R17, (twiCtrlBlock) >> 8
+        JMP     ATA_twiUse_C
+          CFI CFA_Y Y+0
+//  379     break;
+//  380         case MODULE_TEST_IIC_USE_CONFIG3:
+//  381           ATA_twiUse_C(&twiCtrlBlock,IIC_SLAVE_ADDR,0x00U,0x0BU,0x00U,IIC_BUFFER_SIZE,&g_bModuleTestIicBuffer1_flash[0],0xC0U);
+??ATA_moduleTestIicIRQ_flash_C_41:
+        LDI     R16, LOW(g_bModuleTestIicBuffer1_flash)
+        LDI     R17, (g_bModuleTestIicBuffer1_flash) >> 8
+        ST      -Y, R17
+          CFI CFA_Y Y+1
+        ST      -Y, R16
+          CFI CFA_Y Y+2
+        LDI     R23, 192
+        LDI     R22, 16
+        LDI     R21, 0
+        LDI     R20, 11
+        RJMP    ??ATA_moduleTestIicIRQ_flash_C_39
+          CFI CFA_Y Y+0
+//  382           break;
+//  383         case MODULE_TEST_IIC_USE_CONFIG4:
+//  384           ATA_twiUse_C(&twiCtrlBlock,0x01U,0x00U,0x0AU,0x00U,IIC_BUFFER_SIZE,&g_bModuleTestIicBuffer1_flash[0],0xC0U);
+??ATA_moduleTestIicIRQ_flash_C_42:
+        LDI     R16, LOW(g_bModuleTestIicBuffer1_flash)
+        LDI     R17, (g_bModuleTestIicBuffer1_flash) >> 8
+        ST      -Y, R17
+          CFI CFA_Y Y+1
+        ST      -Y, R16
+          CFI CFA_Y Y+2
+        LDI     R23, 192
+        LDI     R22, 16
+        LDI     R21, 0
+        LDI     R20, 10
+        LDI     R19, 0
+        LDI     R18, 1
+        RJMP    ??ATA_moduleTestIicIRQ_flash_C_40
+          CFI CFA_Y Y+0
+//  385     break;
+//  386         case MODULE_TEST_IIC_SRAM_RESET:
+//  387           twiCtrlBlock.twiAddr = 0x00U;
+??ATA_moduleTestIicIRQ_flash_C_43:
+        LDI     R16, 0
+        STS     twiCtrlBlock, R16
+//  388           twiCtrlBlock.twiAddrMsk = 0x00U;
+        STS     (twiCtrlBlock + 1), R16
+//  389           twiCtrlBlock.twiBaudRate = 0x00U;
+        STS     (twiCtrlBlock + 2), R16
+//  390           twiCtrlBlock.twiPrescaler = 0x00U;
+        STS     (twiCtrlBlock + 3), R16
+//  391           twiCtrlBlock.twiConfig = 0x00U;
+        STS     (twiCtrlBlock + 4), R16
+//  392           twiCtrlBlock.twiStatus = 0x00U;
+        STS     (twiCtrlBlock + 5), R16
+//  393           twiCtrlBlock.twiByteCount = 0x00U;
+        STS     (twiCtrlBlock + 6), R16
+//  394           twiCtrlBlock.twiDataTx = 0x00U;
+        STS     (twiCtrlBlock + 7), R16
+//  395           twiCtrlBlock.twiBufLen = 0x00U;
+        STS     (twiCtrlBlock + 8), R16
+//  396           twiCtrlBlock.twiBuffer = (uint8_t *)0x0000;
+        STS     (twiCtrlBlock + 9), R16
+        STS     (twiCtrlBlock + 10), R16
+//  397           break;
+        RET
+//  398         case MODULE_TEST_IIC_TRIGGER_MASTERTX:
+//  399           *twiCtrlBlock.twiBuffer = 0xF0U;//address is 1111000 , Master-TX
+//  400           twiCtrlBlock.twiDataTx = 0x10U;
+//  401           ATA_twiMasterTrigger_C(&twiCtrlBlock);
+//  402           break;
+//  403         case MODULE_TEST_IIC_ERROR_RESET1:
+//  404         case MODULE_TEST_IIC_ERROR_RESET2:
+//  405         case MODULE_TEST_IIC_ERROR_RESET3:
+//  406         case MODULE_TEST_IIC_ERROR_RESET4:
+//  407         case MODULE_TEST_IIC_ERROR_RESET5:
+//  408         case MODULE_TEST_IIC_ERROR_RESET6:
+//  409         case MODULE_TEST_IIC_ERROR_RESET7:
+//  410           twiCtrlBlock.twiStatus &= ~(BM_CONFERRORTWI|BM_TWITRXERROR);
+??ATA_moduleTestIicIRQ_flash_C_44:
+        LDS     R16, (twiCtrlBlock + 5)
+        ANDI    R16, 0xDB
+        STS     (twiCtrlBlock + 5), R16
+//  411     break;
+        RET
+//  412         case MODULE_TEST_IIC_DO_MASTER_TX:
+//  413           ATA_twiReset_C(&twiCtrlBlock);
+??ATA_moduleTestIicIRQ_flash_C_45:
+        LDI     R16, LOW(twiCtrlBlock)
+        LDI     R17, (twiCtrlBlock) >> 8
+        CALL    ATA_twiReset_C
+//  414           ATA_twiUse_C(&twiCtrlBlock,IIC_SLAVE_ADDR,0x00U,0x0AU,0x00U,IIC_BUFFER_SIZE,&g_bModuleTestIicBuffer1_flash[0],0xC0U);
+        LDI     R16, LOW(g_bModuleTestIicBuffer1_flash)
+        LDI     R17, (g_bModuleTestIicBuffer1_flash) >> 8
+        ST      -Y, R17
+          CFI CFA_Y Y+1
+        ST      -Y, R16
+          CFI CFA_Y Y+2
+        LDI     R23, 192
+        LDI     R22, 16
+        LDI     R21, 0
+        LDI     R20, 10
+        LDI     R19, 0
+        LDI     R18, 42
+        LDI     R16, LOW(twiCtrlBlock)
+        LDI     R17, (twiCtrlBlock) >> 8
+        CALL    ATA_twiUse_C
+          CFI CFA_Y Y+0
+//  415           for(tmp=0;tmp<IIC_BUFFER_SIZE;tmp++){
+        LDI     R16, 0
+//  416             g_bModuleTestIicBuffer1_flash[tmp] = tmp;
+??ATA_moduleTestIicIRQ_flash_C_46:
+        LDI     R31, 0
+        MOV     R30, R16
+        SUBI    R30, LOW((-(g_bModuleTestIicBuffer1_flash) & 0xFFFF))
+        SBCI    R31, (-(g_bModuleTestIicBuffer1_flash) & 0xFFFF) >> 8
+        ST      Z, R16
+//  417   }
+        INC     R16
+        CPI     R16, 16
+        BRCS    ??ATA_moduleTestIicIRQ_flash_C_46
+//  418           *twiCtrlBlock.twiBuffer = 0xF0U;//address is 1111000 , Master-TX
+??ATA_moduleTestIicIRQ_flash_C_47:
+        LDI     R16, 240
+        LDS     R30, (twiCtrlBlock + 9)
+        LDS     R31, (twiCtrlBlock + 10)
+        ST      Z, R16
+//  419           twiCtrlBlock.twiDataTx = 0x10U;
+        LDI     R16, 16
+??ATA_moduleTestIicIRQ_flash_C_48:
+        STS     (twiCtrlBlock + 7), R16
+//  420           ATA_twiMasterTrigger_C(&twiCtrlBlock);
+??ATA_moduleTestIicIRQ_flash_C_49:
+        LDI     R16, LOW(twiCtrlBlock)
+        LDI     R17, (twiCtrlBlock) >> 8
+        JMP     ATA_twiMasterTrigger_C
+//  421           break;
+//  422         case MODULE_TEST_IIC_TRIGGER_MASTERTX_NODATA:
+//  423           *twiCtrlBlock.twiBuffer = 0xF0U;//address is 1111000 , Master-TX
+??ATA_moduleTestIicIRQ_flash_C_50:
+        LDI     R16, 240
+??ATA_moduleTestIicIRQ_flash_C_51:
+        LDS     R30, (twiCtrlBlock + 9)
+        LDS     R31, (twiCtrlBlock + 10)
+        ST      Z, R16
+//  424           twiCtrlBlock.twiDataTx = 0x00U;
+        LDI     R16, 0
+        RJMP    ??ATA_moduleTestIicIRQ_flash_C_48
+//  425           ATA_twiMasterTrigger_C(&twiCtrlBlock);
+//  426           break;
+//  427         case MODULE_TEST_IIC_RETRIGGER_MASTERTX:
+//  428           ATA_twiMasterTrigger_C(&twiCtrlBlock);
+//  429     break;
+//  430         case MODULE_TEST_IIC_TRIGGER_MASTERRX_NODATA:
+//  431           *twiCtrlBlock.twiBuffer = 0xF1U;//address is 1111000 , Master-RX
+??ATA_moduleTestIicIRQ_flash_C_52:
+        LDI     R16, 241
+        RJMP    ??ATA_moduleTestIicIRQ_flash_C_51
+//  432           twiCtrlBlock.twiDataTx = 0x00U;
+//  433           ATA_twiMasterTrigger_C(&twiCtrlBlock);
+//  434     break;
+//  435         case MODULE_TEST_IIC_TRIGGER_MASTERRX:
+//  436           *twiCtrlBlock.twiBuffer = 0xF1U;//address is 1111000 , Master-RX
+??ATA_moduleTestIicIRQ_flash_C_53:
+        LDI     R16, 241
+        LDS     R30, (twiCtrlBlock + 9)
+        LDS     R31, (twiCtrlBlock + 10)
+        ST      Z, R16
+//  437           twiCtrlBlock.twiDataTx = 0x02U;
+        LDI     R16, 2
+        RJMP    ??ATA_moduleTestIicIRQ_flash_C_48
+//  438           ATA_twiMasterTrigger_C(&twiCtrlBlock);
+//  439     break;
+//  440         case MODULE_TEST_IIC_DO_MASTER_RX:
+//  441           ATA_twiReset_C(&twiCtrlBlock);
+??ATA_moduleTestIicIRQ_flash_C_54:
+        LDI     R16, LOW(twiCtrlBlock)
+        LDI     R17, (twiCtrlBlock) >> 8
+        CALL    ATA_twiReset_C
+//  442           ATA_twiUse_C(&twiCtrlBlock,IIC_SLAVE_ADDR,0x00U,0x0AU,0x00U,IIC_BUFFER_SIZE,&g_bModuleTestIicBuffer1_flash[0],0xC0U);
+        LDI     R16, LOW(g_bModuleTestIicBuffer1_flash)
+        LDI     R17, (g_bModuleTestIicBuffer1_flash) >> 8
+        ST      -Y, R17
+          CFI CFA_Y Y+1
+        ST      -Y, R16
+          CFI CFA_Y Y+2
+        LDI     R23, 192
+        LDI     R22, 16
+        LDI     R21, 0
+        LDI     R20, 10
+        LDI     R19, 0
+        LDI     R18, 42
+        LDI     R16, LOW(twiCtrlBlock)
+        LDI     R17, (twiCtrlBlock) >> 8
+        CALL    ATA_twiUse_C
+          CFI CFA_Y Y+0
+//  443           for(tmp=0;tmp<IIC_BUFFER_SIZE;tmp++){
+        LDI     R16, 0
+        LDI     R18, 0
+//  444             g_bModuleTestIicBuffer1_flash[tmp] = 0x00U;
+??ATA_moduleTestIicIRQ_flash_C_55:
+        LDI     R31, 0
+        MOV     R30, R16
+        SUBI    R30, LOW((-(g_bModuleTestIicBuffer1_flash) & 0xFFFF))
+        SBCI    R31, (-(g_bModuleTestIicBuffer1_flash) & 0xFFFF) >> 8
+        ST      Z, R18
+//  445   }
+        INC     R16
+        CPI     R16, 16
+        BRCS    ??ATA_moduleTestIicIRQ_flash_C_55
+//  446           *twiCtrlBlock.twiBuffer = 0xF1U;//address is 1111000 , Master-RX
+??ATA_moduleTestIicIRQ_flash_C_56:
+        LDI     R16, 241
+??ATA_moduleTestIicIRQ_flash_C_57:
+        LDS     R30, (twiCtrlBlock + 9)
+        LDS     R31, (twiCtrlBlock + 10)
+        ST      Z, R16
+//  447           twiCtrlBlock.twiDataTx = 0x08U;
+        LDI     R16, 8
+        RJMP    ??ATA_moduleTestIicIRQ_flash_C_48
+//  448           ATA_twiMasterTrigger_C(&twiCtrlBlock);
+//  449           break;
+//  450         case MODULE_TEST_IIC_RETRIGGER_MASTERRX:
+//  451           *twiCtrlBlock.twiBuffer = 0xF1U;//address is 1111000 , Master-RX
+//  452           twiCtrlBlock.twiDataTx = 0x08U;
+//  453           ATA_twiMasterTrigger_C(&twiCtrlBlock);
+//  454           break;
+//  455         case MODULE_TEST_IIC_CLR_ERROR_ENA_EA:
+//  456           ATA_twiClrError_C(&twiCtrlBlock);
+??ATA_moduleTestIicIRQ_flash_C_58:
+        LDI     R16, LOW(twiCtrlBlock)
+        LDI     R17, (twiCtrlBlock) >> 8
+        CALL    ATA_twiClrError_C
+//  457           ATA_twiClrRxDataPend_C(&twiCtrlBlock);
+        LDI     R16, LOW(twiCtrlBlock)
+        LDI     R17, (twiCtrlBlock) >> 8
+        JMP     ATA_twiClrRxDataPend_C
+//  458           break;
+//  459         case MODULE_TEST_IIC_SETDATATX_LEN:
+//  460           ATA_twiUse_C(&twiCtrlBlock,0xF0U,0x00U,0x0AU,0x00U,IIC_BUFFER_SIZE,&g_bModuleTestIicBuffer1_flash[0],0xC0U);
+??ATA_moduleTestIicIRQ_flash_C_59:
+        LDI     R16, LOW(g_bModuleTestIicBuffer1_flash)
+        LDI     R17, (g_bModuleTestIicBuffer1_flash) >> 8
+        ST      -Y, R17
+          CFI CFA_Y Y+1
+        ST      -Y, R16
+          CFI CFA_Y Y+2
+        LDI     R23, 192
+        LDI     R22, 16
+        LDI     R21, 0
+        LDI     R20, 10
+        LDI     R19, 0
+        LDI     R18, 240
+        LDI     R16, LOW(twiCtrlBlock)
+        LDI     R17, (twiCtrlBlock) >> 8
+        CALL    ATA_twiUse_C
+          CFI CFA_Y Y+0
+//  461           twiCtrlBlock.twiDataTx = 0x08U;
+        LDI     R16, 8
+        RJMP    ??ATA_moduleTestIicIRQ_flash_C_60
+//  462     break;
+//  463         case MODULE_TEST_IIC_CLRDATATX_LEN:
+//  464           ATA_twiUse_C(&twiCtrlBlock,0xF0U,0x00U,0x0AU,0x00U,IIC_BUFFER_SIZE,&g_bModuleTestIicBuffer1_flash[0],0xC0U);
+??ATA_moduleTestIicIRQ_flash_C_61:
+        LDI     R16, LOW(g_bModuleTestIicBuffer1_flash)
+        LDI     R17, (g_bModuleTestIicBuffer1_flash) >> 8
+        ST      -Y, R17
+          CFI CFA_Y Y+1
+        ST      -Y, R16
+          CFI CFA_Y Y+2
+        LDI     R23, 192
+        LDI     R22, 16
+        LDI     R21, 0
+        LDI     R20, 10
+        LDI     R19, 0
+        LDI     R18, 240
+        LDI     R16, LOW(twiCtrlBlock)
+        LDI     R17, (twiCtrlBlock) >> 8
+        CALL    ATA_twiUse_C
+          CFI CFA_Y Y+0
+//  465           twiCtrlBlock.twiDataTx = 0x00U;
+        LDI     R16, 0
+??ATA_moduleTestIicIRQ_flash_C_60:
+        STS     (twiCtrlBlock + 7), R16
+//  466     break;
+        RET
+//  467     case MODULE_TEST_IIC_TRIGGER_MASTERRX_BADLEN:
+//  468           ATA_twiReset_C(&twiCtrlBlock);
+??ATA_moduleTestIicIRQ_flash_C_62:
+        LDI     R16, LOW(twiCtrlBlock)
+        LDI     R17, (twiCtrlBlock) >> 8
+        CALL    ATA_twiReset_C
+//  469           ATA_twiUse_C(&twiCtrlBlock,IIC_SLAVE_ADDR,0x00U,0x0AU,0x00U,IIC_BUFFER_SIZE,&g_bModuleTestIicBuffer1_flash[0],0xC0U);
+        LDI     R16, LOW(g_bModuleTestIicBuffer1_flash)
+        LDI     R17, (g_bModuleTestIicBuffer1_flash) >> 8
+        ST      -Y, R17
+          CFI CFA_Y Y+1
+        ST      -Y, R16
+          CFI CFA_Y Y+2
+        LDI     R23, 192
+        LDI     R22, 16
+        LDI     R21, 0
+        LDI     R20, 10
+        LDI     R19, 0
+        LDI     R18, 42
+        LDI     R16, LOW(twiCtrlBlock)
+        LDI     R17, (twiCtrlBlock) >> 8
+        CALL    ATA_twiUse_C
+          CFI CFA_Y Y+0
+//  470           *twiCtrlBlock.twiBuffer = 0xF1U;//address is 1111000 , Master-RX
+        LDI     R16, 241
+        LDS     R30, (twiCtrlBlock + 9)
+        LDS     R31, (twiCtrlBlock + 10)
+        ST      Z, R16
+//  471           twiCtrlBlock.twiDataTx = 0x01U;
+        LDI     R16, 1
+        RJMP    ??ATA_moduleTestIicIRQ_flash_C_48
+//  472           ATA_twiMasterTrigger_C(&twiCtrlBlock);
+//  473     break;
+//  474     case MODULE_TEST_IIC_DO_MASTER_TX8:
+//  475           ATA_twiReset_C(&twiCtrlBlock);
+??ATA_moduleTestIicIRQ_flash_C_63:
+        LDI     R16, LOW(twiCtrlBlock)
+        LDI     R17, (twiCtrlBlock) >> 8
+        CALL    ATA_twiReset_C
+//  476           ATA_twiUse_C(&twiCtrlBlock,IIC_SLAVE_ADDR,0x00U,0x0AU,0x00U,IIC_BUFFER_SIZE,&g_bModuleTestIicBuffer1_flash[0],0xC0U);
+        LDI     R16, LOW(g_bModuleTestIicBuffer1_flash)
+        LDI     R17, (g_bModuleTestIicBuffer1_flash) >> 8
+        ST      -Y, R17
+          CFI CFA_Y Y+1
+        ST      -Y, R16
+          CFI CFA_Y Y+2
+        LDI     R23, 192
+        LDI     R22, 16
+        LDI     R21, 0
+        LDI     R20, 10
+        LDI     R19, 0
+        LDI     R18, 42
+        LDI     R16, LOW(twiCtrlBlock)
+        LDI     R17, (twiCtrlBlock) >> 8
+        CALL    ATA_twiUse_C
+          CFI CFA_Y Y+0
+//  477           for(tmp=0;tmp<0x08U;tmp++){
+        LDI     R16, 0
+        LDI     R18, 85
+//  478             g_bModuleTestIicBuffer1_flash[tmp] = 0x55;
+??ATA_moduleTestIicIRQ_flash_C_64:
+        LDI     R31, 0
+        MOV     R30, R16
+        SUBI    R30, LOW((-(g_bModuleTestIicBuffer1_flash) & 0xFFFF))
+        SBCI    R31, (-(g_bModuleTestIicBuffer1_flash) & 0xFFFF) >> 8
+        ST      Z, R18
+//  479           }
+        INC     R16
+        CPI     R16, 8
+        BRCC    ??ATA_moduleTestIicIRQ_flash_C_65
+        RJMP    ??ATA_moduleTestIicIRQ_flash_C_64
+//  480           *twiCtrlBlock.twiBuffer = 0xF0U;//address is 1111000 , Master-TX
+//  481           twiCtrlBlock.twiDataTx = 0x08U;
+//  482           ATA_twiMasterTrigger_C(&twiCtrlBlock);
+//  483     break;
+//  484     case MODULE_TEST_IIC_DO_MASTER_TX_POLL:
+//  485           ATA_twiReset_C(&twiCtrlBlock);
+??ATA_moduleTestIicIRQ_flash_C_66:
+        LDI     R16, LOW(twiCtrlBlock)
+        LDI     R17, (twiCtrlBlock) >> 8
+        CALL    ATA_twiReset_C
+//  486           ATA_twiUse_C(&twiCtrlBlock,IIC_SLAVE_ADDR,0x00U,0x0AU,0x00U,IIC_BUFFER_SIZE,&g_bModuleTestIicBuffer1_flash[0],0x80U);
+        LDI     R16, LOW(g_bModuleTestIicBuffer1_flash)
+        LDI     R17, (g_bModuleTestIicBuffer1_flash) >> 8
+        ST      -Y, R17
+          CFI CFA_Y Y+1
+        ST      -Y, R16
+          CFI CFA_Y Y+2
+        LDI     R23, 128
+        LDI     R22, 16
+        LDI     R21, 0
+        LDI     R20, 10
+        LDI     R19, 0
+        LDI     R18, 42
+        LDI     R16, LOW(twiCtrlBlock)
+        LDI     R17, (twiCtrlBlock) >> 8
+        CALL    ATA_twiUse_C
+          CFI CFA_Y Y+0
+//  487           for(tmp=0;tmp<0x08;tmp++){
+        LDI     R16, 0
+        LDI     R18, 170
+//  488             g_bModuleTestIicBuffer1_flash[tmp] = 0xAA;
+??ATA_moduleTestIicIRQ_flash_C_67:
+        LDI     R31, 0
+        MOV     R30, R16
+        SUBI    R30, LOW((-(g_bModuleTestIicBuffer1_flash) & 0xFFFF))
+        SBCI    R31, (-(g_bModuleTestIicBuffer1_flash) & 0xFFFF) >> 8
+        ST      Z, R18
+//  489           }
+        INC     R16
+        CPI     R16, 8
+        BRCS    ??ATA_moduleTestIicIRQ_flash_C_67
+//  490           *twiCtrlBlock.twiBuffer = 0xF0U;//address is 1111000 , Master-TX
+??ATA_moduleTestIicIRQ_flash_C_65:
+        LDI     R16, 240
+        RJMP    ??ATA_moduleTestIicIRQ_flash_C_57
+//  491           twiCtrlBlock.twiDataTx = 0x08U;
+//  492           ATA_twiMasterTrigger_C(&twiCtrlBlock);
+//  493     break;
+//  494     case MODULE_TEST_IIC_POLL_I2CR:
+//  495         ATA_twiServeIsr_C();
+??ATA_moduleTestIicIRQ_flash_C_68:
+        CALL    ATA_twiServeIsr_C
+//  496     break;
+//  497 
+//  498     default:
+//  499       break;
+//  500   }
+//  501 }
+??ATA_moduleTestIicIRQ_flash_C_2:
+        RET
+          CFI EndBlock cfiBlock4
+//  502 
+//  503 
+//  504 
+
+        RSEG CODE:CODE:ROOT(1)
+//  505 VOIDFUNC ATA_moduleTestWatchdog_flash_C(void) /* Primus2P - 1319 */
+ATA_moduleTestWatchdog_flash_C:
+          CFI Block cfiBlock5 Using cfiCommon0
+          CFI Function ATA_moduleTestWatchdog_flash_C
+//  506 {
+//  507     switch (g_sModuleTest_flash.bSubId)
+        FUNCALL ATA_moduleTestWatchdog_flash_C, ATA_globalsWdtEnable_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestWatchdog_flash_C, ATA_globalsWdtDisable_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestWatchdog_flash_C, ATA_globalsSleep_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        LDS     R16, (g_sModuleTest_flash + 1)
+        TST     R16
+        BREQ    ??ATA_moduleTestWatchdog_flash_C_0
+        DEC     R16
+        BREQ    ??ATA_moduleTestWatchdog_flash_C_1
+        DEC     R16
+        BREQ    ??ATA_moduleTestWatchdog_flash_C_2
+        RET
+//  508     {
+//  509         case ATA_WATCHDOG_ENABLE:
+//  510           /* Enable watchdog with the given settings. */
+//  511           ATA_globalsWdtEnable_C(g_bModuleTestWdtcr_flash);
+??ATA_moduleTestWatchdog_flash_C_0:
+        LDS     R16, g_bModuleTestWdtcr_flash
+        CALL    ATA_globalsWdtEnable_C
+//  512           while(1);
+??ATA_moduleTestWatchdog_flash_C_3:
+        RJMP    ??ATA_moduleTestWatchdog_flash_C_3
+//  513           break;
+//  514 
+//  515         case ATA_WATCHDOG_DISABLE:
+//  516           ATA_globalsWdtDisable_C();
+??ATA_moduleTestWatchdog_flash_C_1:
+        JMP     ATA_globalsWdtDisable_C
+//  517           break;
+//  518 
+//  519         /* Test POWER_DOWN sleep mode */
+//  520         case ATA_SLEEP_ENABLE:
+//  521           ATA_globalsSleep_C(0x00U);
+??ATA_moduleTestWatchdog_flash_C_2:
+        LDI     R16, 0
+        JMP     ATA_globalsSleep_C
+          CFI EndBlock cfiBlock5
+//  522           break;
+//  523     }
+//  524 }
+//  525 
+//  526 /* EEPROM test function */
+
+        RSEG CODE:CODE:ROOT(1)
+//  527 VOIDFUNC ATA_moduleTestEep_flash_C(void)
+ATA_moduleTestEep_flash_C:
+          CFI Block cfiBlock6 Using cfiCommon0
+          CFI Function ATA_moduleTestEep_flash_C
+//  528 {
+//  529     switch (g_sModuleTest_flash.bSubId)
+        FUNCALL ATA_moduleTestEep_flash_C, ATA_eepWriteBytes_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestEep_flash_C, ATA_eepReadBytes_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestEep_flash_C, ATA_eepWriteBytes_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestEep_flash_C, ATA_eepReadBytes_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestEep_flash_C, ATA_eepEEPaccessRightsChange_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestEep_flash_C, ATA_eepEEPaccessRightsChange_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestEep_flash_C, ATA_eepEEPaccessRightsChange_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestEep_flash_C, ATA_eepEEPaccessRightsChange_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestEep_flash_C, ATA_eepEEPaccessRightsChange_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestEep_flash_C, ATA_eepEEPaccessRightsChange_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestEep_flash_C, ATA_eepEEPaccessRightsChange_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestEep_flash_C, ATA_eepEEPaccessRightsChange_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestEep_flash_C, ATA_eepEEPaccessRightsChange_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestEep_flash_C, ATA_eepEEPaccessRightsChange_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestEep_flash_C, ATA_eepEEPaccessRightsChange_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestEep_flash_C, ATA_eepEEPaccessRightsChange_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestEep_flash_C, ATA_eepEEPaccessRightsChange_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestEep_flash_C, ATA_eepEEPaccessRightsChange_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestEep_flash_C, ATA_eepEEPaccessRightsChange_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestEep_flash_C, ATA_eepEEPaccessRightsChange_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestEep_flash_C, ATA_eepEEPaccessRightsChange_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestEep_flash_C, ATA_eepFusesFix_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        LDS     R16, (g_sModuleTest_flash + 1)
+        LDI     R30, LOW(`?<Jumptable for ATA_moduleTestEep_flash_C>_0`)
+        LDI     R31, (`?<Jumptable for ATA_moduleTestEep_flash_C>_0`) >> 8
+        JMP     ?CV_SWITCH_L06
+//  530     {
+//  531         /* Clear EEPROM module test handler parameter. */
+//  532         case ATA_EEP_CLEAR_MODULE_HANDLER_PARAMETERS:
+//  533           g_sEepModuleTest_flash.eepErrorCode = EEC_NOT_USED;
+??ATA_moduleTestEep_flash_C_0:
+        LDI     R16, 7
+        STS     g_sEepModuleTest_flash, R16
+//  534           g_sEepModuleTest_flash.eepAddress = 0x0000U;
+        LDI     R16, 0
+        STS     (g_sEepModuleTest_flash + 1), R16
+        STS     (g_sEepModuleTest_flash + 2), R16
+//  535           g_sEepModuleTest_flash.eepData[0] = 0x00U;
+        STS     (g_sEepModuleTest_flash + 3), R16
+//  536           g_sEepModuleTest_flash.eepData[1] = 0x00U;
+        STS     (g_sEepModuleTest_flash + 4), R16
+//  537           g_sEepModuleTest_flash.eepData[2] = 0x00U;
+        STS     (g_sEepModuleTest_flash + 5), R16
+//  538           g_sEepModuleTest_flash.eepData[3] = 0x00U;
+        STS     (g_sEepModuleTest_flash + 6), R16
+//  539           g_sEepModuleTest_flash.eepData[4] = 0x00U;
+        STS     (g_sEepModuleTest_flash + 7), R16
+//  540           g_sEepModuleTest_flash.eepData[5] = 0x00U;
+        STS     (g_sEepModuleTest_flash + 8), R16
+//  541           g_sEepModuleTest_flash.eepData[6] = 0x00U;
+        STS     (g_sEepModuleTest_flash + 9), R16
+//  542           g_sEepModuleTest_flash.eepData[7] = 0x00U;
+        STS     (g_sEepModuleTest_flash + 10), R16
+//  543           g_sEepModuleTest_flash.eepData[8] = 0x00U;
+        STS     (g_sEepModuleTest_flash + 11), R16
+//  544           g_sEepModuleTest_flash.eepData[9] = 0x00U;
+        STS     (g_sEepModuleTest_flash + 12), R16
+//  545           g_sEepModuleTest_flash.eepData[10] = 0x00U;
+        STS     (g_sEepModuleTest_flash + 13), R16
+//  546           g_sEepModuleTest_flash.eepData[11] = 0x00U;
+        STS     (g_sEepModuleTest_flash + 14), R16
+//  547           g_sEepModuleTest_flash.eepData[12] = 0x00U;
+        STS     (g_sEepModuleTest_flash + 15), R16
+//  548           g_sEepModuleTest_flash.eepData[13] = 0x00U;
+        STS     (g_sEepModuleTest_flash + 16), R16
+//  549           g_sEepModuleTest_flash.eepData[14] = 0x00U;
+        STS     (g_sEepModuleTest_flash + 17), R16
+//  550           g_sEepModuleTest_flash.eepData[15] = 0x00U;
+        STS     (g_sEepModuleTest_flash + 18), R16
+//  551           g_sEepModuleTest_flash.eepDataLength = 0x00U;
+        STS     (g_sEepModuleTest_flash + 19), R16
+//  552           g_sEepModuleTest_flash.eepAccessRightValue = 0x00U;
+        STS     (g_sEepModuleTest_flash + 20), R16
+//  553           g_sEepModuleTest_flash.eepAccessRightMask = 0x00U;
+        STS     (g_sEepModuleTest_flash + 21), R16
+//  554           break;
+        RET
+//  555 
+//  556         /* Single Byte Write Access */
+//  557         case ATA_EEP_SINGLE_BYTE_WRITE_ACCESS:
+//  558           g_sEepModuleTest_flash.eepErrorCode = ATA_eepWriteBytes_C(&g_sEepModuleTest_flash.eepData[0], (uint16_t)g_sEepModuleTest_flash.eepAddress,1U);
+??ATA_moduleTestEep_flash_C_1:
+        LDI     R20, 1
+        LDS     R18, (g_sEepModuleTest_flash + 1)
+        LDS     R19, (g_sEepModuleTest_flash + 2)
+        LDI     R16, LOW((g_sEepModuleTest_flash + 3))
+        LDI     R17, HIGH((g_sEepModuleTest_flash + 3))
+        CALL    ATA_eepWriteBytes_C
+        STS     g_sEepModuleTest_flash, R16
+//  559 
+//  560           /* Wait until EEPROM write operation is finished */
+//  561           while(EECR & BM_NVMBSY){}
+??ATA_moduleTestEep_flash_C_2:
+        SBIC    0x1F, 0x07
+        RJMP    ??ATA_moduleTestEep_flash_C_2
+        RET
+//  562           break;
+//  563 
+//  564         /* Single Byte Read Access */
+//  565         case ATA_EEP_SINGLE_BYTE_READ_ACCESS:
+//  566           g_sEepModuleTest_flash.eepErrorCode = ATA_eepReadBytes_C(&g_sEepModuleTest_flash.eepData[0], g_sEepModuleTest_flash.eepAddress, 1U);
+??ATA_moduleTestEep_flash_C_3:
+        LDI     R20, 1
+        RJMP    ??ATA_moduleTestEep_flash_C_4
+//  567           break;
+//  568 
+//  569         /* Multi Byte Write Access */
+//  570         case ATA_EEP_MULTI_BYTE_WRITE_ACCESS:
+//  571           g_sEepModuleTest_flash.eepErrorCode = ATA_eepWriteBytes_C(&g_sEepModuleTest_flash.eepData[0], (uint16_t)g_sEepModuleTest_flash.eepAddress, g_sEepModuleTest_flash.eepDataLength);
+??ATA_moduleTestEep_flash_C_5:
+        LDS     R20, (g_sEepModuleTest_flash + 19)
+        LDS     R18, (g_sEepModuleTest_flash + 1)
+        LDS     R19, (g_sEepModuleTest_flash + 2)
+        LDI     R16, LOW((g_sEepModuleTest_flash + 3))
+        LDI     R17, HIGH((g_sEepModuleTest_flash + 3))
+        CALL    ATA_eepWriteBytes_C
+        STS     g_sEepModuleTest_flash, R16
+//  572 
+//  573           /* Wait until EEPROM write operation is finished */
+//  574           while(EECR & BM_NVMBSY){}
+??ATA_moduleTestEep_flash_C_6:
+        SBIC    0x1F, 0x07
+        RJMP    ??ATA_moduleTestEep_flash_C_6
+        RET
+//  575           break;
+//  576 
+//  577         /* Multi Byte Write Access */
+//  578         case ATA_EEP_MULTI_BYTE_READ_ACCESS:
+//  579           g_sEepModuleTest_flash.eepErrorCode = ATA_eepReadBytes_C(&g_sEepModuleTest_flash.eepData[0], (uint16_t)g_sEepModuleTest_flash.eepAddress, g_sEepModuleTest_flash.eepDataLength);
+??ATA_moduleTestEep_flash_C_7:
+        LDS     R20, (g_sEepModuleTest_flash + 19)
+??ATA_moduleTestEep_flash_C_4:
+        LDS     R18, (g_sEepModuleTest_flash + 1)
+        LDS     R19, (g_sEepModuleTest_flash + 2)
+        LDI     R16, LOW((g_sEepModuleTest_flash + 3))
+        LDI     R17, HIGH((g_sEepModuleTest_flash + 3))
+        CALL    ATA_eepReadBytes_C
+        STS     g_sEepModuleTest_flash, R16
+//  580           break;
+        RET
+//  581 
+//  582         /* Change Access Rights via FUSE */
+//  583         case ATA_EEP_CHANGE_ACCESS_RIGHTS_FUSE:
+//  584           g_sEepModuleTest_flash.eepErrorCode = ATA_eepEEPaccessRightsChange_C(5U, 0x83U);
+??ATA_moduleTestEep_flash_C_8:
+        LDI     R17, 131
+        LDI     R16, 5
+        CALL    ATA_eepEEPaccessRightsChange_C
+        STS     g_sEepModuleTest_flash, R16
+//  585           g_sEepModuleTest_flash.eepErrorCode = ATA_eepEEPaccessRightsChange_C(6U, 0x82U);
+        LDI     R17, 130
+        LDI     R16, 6
+        CALL    ATA_eepEEPaccessRightsChange_C
+        STS     g_sEepModuleTest_flash, R16
+//  586           g_sEepModuleTest_flash.eepErrorCode = ATA_eepEEPaccessRightsChange_C(7U, 0x81U);
+        LDI     R17, 129
+        LDI     R16, 7
+        CALL    ATA_eepEEPaccessRightsChange_C
+        STS     g_sEepModuleTest_flash, R16
+//  587           g_sEepModuleTest_flash.eepErrorCode = ATA_eepEEPaccessRightsChange_C(8U, 0x80U);
+        LDI     R17, 128
+        LDI     R16, 8
+        CALL    ATA_eepEEPaccessRightsChange_C
+        STS     g_sEepModuleTest_flash, R16
+//  588           g_sEepModuleTest_flash.eepErrorCode = ATA_eepEEPaccessRightsChange_C(9U, 0x83U);
+        LDI     R17, 131
+        LDI     R16, 9
+        CALL    ATA_eepEEPaccessRightsChange_C
+        STS     g_sEepModuleTest_flash, R16
+//  589           g_sEepModuleTest_flash.eepErrorCode = ATA_eepEEPaccessRightsChange_C(10U, 0x82U);
+        LDI     R17, 130
+        LDI     R16, 10
+        CALL    ATA_eepEEPaccessRightsChange_C
+        STS     g_sEepModuleTest_flash, R16
+//  590           g_sEepModuleTest_flash.eepErrorCode = ATA_eepEEPaccessRightsChange_C(11U, 0x81U);
+        LDI     R17, 129
+        LDI     R16, 11
+        CALL    ATA_eepEEPaccessRightsChange_C
+        STS     g_sEepModuleTest_flash, R16
+//  591           g_sEepModuleTest_flash.eepErrorCode = ATA_eepEEPaccessRightsChange_C(12U, 0x80U);
+        LDI     R17, 128
+        LDI     R16, 12
+        CALL    ATA_eepEEPaccessRightsChange_C
+        STS     g_sEepModuleTest_flash, R16
+//  592 
+//  593           /* Wait until EEPROM write operation is finished */
+//  594           while(EECR & BM_NVMBSY){}
+??ATA_moduleTestEep_flash_C_9:
+        SBIC    0x1F, 0x07
+        RJMP    ??ATA_moduleTestEep_flash_C_9
+        RET
+//  595           break;
+//  596 
+//  597         /* Change Access Rights via FUSE (invalid) */
+//  598         case ATA_EEP_CHANGE_ACCESS_RIGHTS_FUSE_FAIL:
+//  599           g_sEepModuleTest_flash.eepErrorCode = ATA_eepEEPaccessRightsChange_C(5U, 0x80U);
+??ATA_moduleTestEep_flash_C_10:
+        LDI     R17, 128
+        LDI     R16, 5
+        CALL    ATA_eepEEPaccessRightsChange_C
+        STS     g_sEepModuleTest_flash, R16
+//  600           g_sEepModuleTest_flash.eepErrorCode = ATA_eepEEPaccessRightsChange_C(6U, 0x81U);
+        LDI     R17, 129
+        LDI     R16, 6
+        CALL    ATA_eepEEPaccessRightsChange_C
+        STS     g_sEepModuleTest_flash, R16
+//  601           g_sEepModuleTest_flash.eepErrorCode = ATA_eepEEPaccessRightsChange_C(7U, 0x82U);
+        LDI     R17, 130
+        LDI     R16, 7
+        CALL    ATA_eepEEPaccessRightsChange_C
+        STS     g_sEepModuleTest_flash, R16
+//  602           g_sEepModuleTest_flash.eepErrorCode = ATA_eepEEPaccessRightsChange_C(8U, 0x83U);
+        LDI     R17, 131
+        LDI     R16, 8
+        CALL    ATA_eepEEPaccessRightsChange_C
+        STS     g_sEepModuleTest_flash, R16
+//  603           g_sEepModuleTest_flash.eepErrorCode = ATA_eepEEPaccessRightsChange_C(9U, 0x80U);
+        LDI     R17, 128
+        LDI     R16, 9
+        CALL    ATA_eepEEPaccessRightsChange_C
+        STS     g_sEepModuleTest_flash, R16
+//  604           g_sEepModuleTest_flash.eepErrorCode = ATA_eepEEPaccessRightsChange_C(10U, 0x81U);
+        LDI     R17, 129
+        LDI     R16, 10
+        CALL    ATA_eepEEPaccessRightsChange_C
+        STS     g_sEepModuleTest_flash, R16
+//  605           g_sEepModuleTest_flash.eepErrorCode = ATA_eepEEPaccessRightsChange_C(11U, 0x82U);
+        LDI     R17, 130
+        LDI     R16, 11
+        CALL    ATA_eepEEPaccessRightsChange_C
+        STS     g_sEepModuleTest_flash, R16
+//  606           g_sEepModuleTest_flash.eepErrorCode = ATA_eepEEPaccessRightsChange_C(12U, 0x83U);
+        LDI     R17, 131
+        LDI     R16, 12
+        CALL    ATA_eepEEPaccessRightsChange_C
+        STS     g_sEepModuleTest_flash, R16
+//  607 
+//  608           /* Wait until EEPROM write operation is finished */
+//  609           while(EECR & BM_NVMBSY){}
+??ATA_moduleTestEep_flash_C_11:
+        SBIC    0x1F, 0x07
+        RJMP    ??ATA_moduleTestEep_flash_C_11
+        RET
+//  610           break;
+//  611 
+//  612         /* Change Access Rights via Register */
+//  613         case ATA_EEP_CHANGE_ACCESS_RIGHTS_REGISTER:
+//  614           g_sEepModuleTest_flash.eepErrorCode = ATA_eepEEPaccessRightsChange_C(g_sEepModuleTest_flash.eepData[0], g_sEepModuleTest_flash.eepData[1]);
+??ATA_moduleTestEep_flash_C_12:
+        LDS     R17, (g_sEepModuleTest_flash + 4)
+        LDS     R16, (g_sEepModuleTest_flash + 3)
+        CALL    ATA_eepEEPaccessRightsChange_C
+        STS     g_sEepModuleTest_flash, R16
+//  615 
+//  616           /* Wait until EEPROM write operation is finished */
+//  617           while(EECR & BM_NVMBSY){}
+??ATA_moduleTestEep_flash_C_13:
+        SBIC    0x1F, 0x07
+        RJMP    ??ATA_moduleTestEep_flash_C_13
+        RET
+//  618           break;
+//  619 
+//  620         case ATA_EEP_FUSE_WRITE_TEST:
+//  621             ATA_eepFusesFix_C(0x55U);
+??ATA_moduleTestEep_flash_C_14:
+        LDI     R16, 85
+        CALL    ATA_eepFusesFix_C
+//  622             while(EECR&(BITMASK(NVMBSY)));
+??ATA_moduleTestEep_flash_C_15:
+        SBIC    0x1F, 0x07
+        RJMP    ??ATA_moduleTestEep_flash_C_15
+        RET
+//  623             break;
+//  624         /* Wrong sub id loaded by test case. */
+//  625         default:
+//  626            _NOP;
+??ATA_moduleTestEep_flash_C_16:
+        nop
+//  627     }
+//  628 }
+        RET
+          CFI EndBlock cfiBlock6
+        REQUIRE _A_EECR
+//  629 
+//  630 
+//  631 /* AES test function */
+
+        RSEG CODE:CODE:ROOT(1)
+//  632 VOIDFUNC ATA_moduleTestAes_flash_C(void)
+ATA_moduleTestAes_flash_C:
+          CFI Block cfiBlock7 Using cfiCommon0
+          CFI Function ATA_moduleTestAes_flash_C
+//  633 {
+//  634     switch (g_sModuleTest_flash.bSubId)
+        FUNCALL ATA_moduleTestAes_flash_C, ATA_aesSetConfig_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestAes_flash_C, ATA_aesSetConfig_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestAes_flash_C, ATA_aesSetConfig_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestAes_flash_C, ATA_aesEncryptData_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestAes_flash_C, ATA_aesEncryptData_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestAes_flash_C, ATA_aesDecryptData_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestAes_flash_C, ATA_aesDecryptData_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        LDS     R16, (g_sModuleTest_flash + 1)
+        LDI     R30, LOW(`?<Jumptable for ATA_moduleTestAes_flash_C>_0`)
+        LDI     R31, (`?<Jumptable for ATA_moduleTestAes_flash_C>_0`) >> 8
+        JMP     ?CV_SWITCH_L06
+//  635     {
+//  636         /* Initialize AES component data. */
+//  637         case ATA_AES_INIT_SECR_KEY1:
+//  638           ATA_aesSetConfig_C(AES_USE_SECRET_KEY_A, 0u, 0xF0U);
+??ATA_moduleTestAes_flash_C_0:
+        LDI     R18, 240
+        LDI     R17, 0
+        LDI     R16, 0
+        RJMP    ??ATA_moduleTestAes_flash_C_1
+//  639           break;
+//  640 
+//  641         case ATA_AES_INIT_SECR_KEY2:
+//  642           ATA_aesSetConfig_C(AES_USE_SECRET_KEY_B, 0u, 0x4FU);
+??ATA_moduleTestAes_flash_C_2:
+        LDI     R18, 79
+        LDI     R17, 0
+        LDI     R16, 1
+??ATA_moduleTestAes_flash_C_1:
+        JMP     ATA_aesSetConfig_C
+//  643           break;
+//  644 
+//  645         case ATA_AES_INIT_COMM_KEY2:
+//  646           ATA_aesSetConfig_C(AES_USE_COMMON_KEY_2, 0x20U, 0u);
+??ATA_moduleTestAes_flash_C_3:
+        LDI     R18, 0
+        LDI     R17, 32
+        LDI     R16, 128
+        RJMP    ??ATA_moduleTestAes_flash_C_1
+//  647           break;
+//  648 
+//  649         /* AES encryption */
+//  650         case ATA_AES_ENCRYPTION:
+//  651             ATA_aesEncryptData_C();
+//  652             break;
+//  653 
+//  654         /* AES decryption */
+//  655         case ATA_AES_DECRYPTION:
+//  656             ATA_aesDecryptData_C();
+//  657             break;
+//  658 
+//  659         /* AES run error during encryption with interrupt mode configured */
+//  660         case ATA_AES_RUN_ERROR_ENCRYPTION_INT_MODE:
+//  661             ATA_aesEncryptData_C();
+??ATA_moduleTestAes_flash_C_4:
+        CALL    ATA_aesEncryptData_C
+//  662             while ((AESCR & BM_AESE)== 0)
+??ATA_moduleTestAes_flash_C_5:
+        SBIC    0x1D, 0x07
+        RJMP    ??ATA_moduleTestAes_flash_C_6
+        RJMP    ??ATA_moduleTestAes_flash_C_5
+//  663             {;}
+//  664             break;
+//  665 
+//  666         /* AES run error during encryption with polling mode configured */
+//  667         case ATA_AES_RUN_ERROR_ENCRYPTION_POLL_MODE:
+//  668             ATA_aesEncryptData_C();
+??ATA_moduleTestAes_flash_C_7:
+        JMP     ATA_aesEncryptData_C
+//  669             break;
+//  670 
+//  671          /* AES run error during decryption with interrupt mode configured.
+//  672             Reading from register AESCR already creates an AES error ?!*/
+//  673         case ATA_AES_RUN_ERROR_DECRYPTION_INT_MODE:
+//  674             ATA_aesDecryptData_C();
+??ATA_moduleTestAes_flash_C_8:
+        CALL    ATA_aesDecryptData_C
+//  675             while ((AESCR & BM_AESE)== 0)
+??ATA_moduleTestAes_flash_C_9:
+        SBIC    0x1D, 0x07
+        RJMP    ??ATA_moduleTestAes_flash_C_6
+        RJMP    ??ATA_moduleTestAes_flash_C_9
+//  676             {;}
+//  677             break;
+//  678 
+//  679          /* AES run error during decryption with polling mode configured */
+//  680         case ATA_AES_RUN_ERROR_DECRYPTION_POLL_MODE:
+//  681             ATA_aesDecryptData_C();
+??ATA_moduleTestAes_flash_C_10:
+        JMP     ATA_aesDecryptData_C
+//  682             break;
+//  683 
+//  684         /* Wrong sub id loaded by test case. */
+//  685         default:
+//  686            _NOP;
+??ATA_moduleTestAes_flash_C_11:
+        nop
+//  687     }
+//  688 }
+??ATA_moduleTestAes_flash_C_6:
+        RET
+          CFI EndBlock cfiBlock7
+        REQUIRE _A_AESCR
+//  689 
+//  690 
+//  691 /* Timer1 handling */
+
+        RSEG CODE:CODE:ROOT(1)
+//  692 VOIDFUNC ATA_moduleTestTimer1Handling_flash_C(void)
+ATA_moduleTestTimer1Handling_flash_C:
+          CFI Block cfiBlock8 Using cfiCommon0
+          CFI Function ATA_moduleTestTimer1Handling_flash_C
+//  693 {
+//  694     switch (g_sModuleTest_flash.bSubId)
+        FUNCALL ATA_moduleTestTimer1Handling_flash_C, ATA_timer1Init_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestTimer1Handling_flash_C, ATA_timer1Open_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestTimer1Handling_flash_C, ATA_timer1Close_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestTimer1Handling_flash_C, ATA_timer1Init_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestTimer1Handling_flash_C, ATA_timer1Open_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestTimer1Handling_flash_C, ATA_timer1Init_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestTimer1Handling_flash_C, ATA_timer1Open_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        LDS     R16, (g_sModuleTest_flash + 1)
+        TST     R16
+        BREQ    ??ATA_moduleTestTimer1Handling_flash_C_0
+        DEC     R16
+        BREQ    ??ATA_moduleTestTimer1Handling_flash_C_1
+        DEC     R16
+        BREQ    ??ATA_moduleTestTimer1Handling_flash_C_2
+        SUBI    R16, 2
+        BREQ    ??ATA_moduleTestTimer1Handling_flash_C_3
+        DEC     R16
+        BREQ    ??ATA_moduleTestTimer1Handling_flash_C_3
+        RJMP    ??ATA_moduleTestTimer1Handling_flash_C_4
+//  695     {
+//  696         /* Timer1 Initialization */
+//  697         case ATA_TIMER_INIT:
+//  698           ATA_timer1Init_C();
+??ATA_moduleTestTimer1Handling_flash_C_0:
+        RJMP    ?Subroutine1
+//  699           break;
+//  700 
+//  701         /* Timer1 open in C code */
+//  702         case ATA_TIMER_OPEN_C:
+//  703           g_bTimerModuleReturnValue_flash = ATA_timer1Open_C(&g_sTimer8BitParams_flash);
+//  704           break;
+//  705 
+//  706         /* Timer1 close in C code */
+//  707         case ATA_TIMER_CLOSE_C:
+//  708           ATA_timer1Close_C();
+??ATA_moduleTestTimer1Handling_flash_C_2:
+        JMP     ATA_timer1Close_C
+//  709           break;
+//  710 
+//  711         /* Timer1 Compare Match Interrupt Handling */
+//  712         case ATA_TIMER_COM_INTHANDLER_ASM:
+//  713           ATA_timer1Init_C();
+//  714           g_bTimerModuleReturnValue_flash = ATA_timer1Open_C(&g_sTimer8BitParams_flash);
+//  715           break;
+//  716 
+//  717         /* Timer1 Counter Overflow Interrupt Handling */
+//  718         case ATA_TIMER_OVF_INTHANDLER_ASM:
+//  719           ATA_timer1Init_C();
+??ATA_moduleTestTimer1Handling_flash_C_3:
+        CALL    ATA_timer1Init_C
+//  720           g_bTimerModuleReturnValue_flash = ATA_timer1Open_C(&g_sTimer8BitParams_flash);
+??ATA_moduleTestTimer1Handling_flash_C_1:
+        LDI     R16, LOW(g_sTimer8BitParams_flash)
+        LDI     R17, (g_sTimer8BitParams_flash) >> 8
+        CALL    ATA_timer1Open_C
+        RJMP    ?Subroutine0
+//  721           break;
+//  722 
+//  723         /* Wrong sub id loaded by test case. */
+//  724         default:
+//  725            _NOP;
+??ATA_moduleTestTimer1Handling_flash_C_4:
+        nop
+//  726     }
+//  727 }
+        RET
+          CFI EndBlock cfiBlock8
+
+        RSEG CODE:CODE:NOROOT(1)
+?Subroutine1:
+          CFI Block cfiBlock9 Using cfiCommon0
+          CFI NoFunction
+        JMP     ATA_timer1Init_C
+          CFI EndBlock cfiBlock9
+//  728 
+//  729 /* Timer2 handling */
+
+        RSEG CODE:CODE:ROOT(1)
+//  730 VOIDFUNC ATA_moduleTestTimer2Handling_flash_C(void)
+ATA_moduleTestTimer2Handling_flash_C:
+          CFI Block cfiBlock10 Using cfiCommon0
+          CFI Function ATA_moduleTestTimer2Handling_flash_C
+//  731 {
+//  732     switch (g_sModuleTest_flash.bSubId)
+        FUNCALL ATA_moduleTestTimer2Handling_flash_C, ATA_timer2Init_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestTimer2Handling_flash_C, ATA_timer2Open_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestTimer2Handling_flash_C, ATA_timer2Close_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestTimer2Handling_flash_C, ATA_timer2Init_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestTimer2Handling_flash_C, ATA_timer2Open_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestTimer2Handling_flash_C, ATA_timer2Init_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestTimer2Handling_flash_C, ATA_timer2Open_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        LDS     R16, (g_sModuleTest_flash + 1)
+        TST     R16
+        BREQ    ??ATA_moduleTestTimer2Handling_flash_C_0
+        DEC     R16
+        BREQ    ??ATA_moduleTestTimer2Handling_flash_C_1
+        DEC     R16
+        BREQ    ??ATA_moduleTestTimer2Handling_flash_C_2
+        SUBI    R16, 2
+        BREQ    ??ATA_moduleTestTimer2Handling_flash_C_3
+        DEC     R16
+        BREQ    ??ATA_moduleTestTimer2Handling_flash_C_3
+        RJMP    ??ATA_moduleTestTimer2Handling_flash_C_4
+//  733     {
+//  734         /* Timer2 Initialization */
+//  735         case ATA_TIMER_INIT:
+//  736           ATA_timer2Init_C();
+??ATA_moduleTestTimer2Handling_flash_C_0:
+        JMP     ATA_timer2Init_C
+//  737           break;
+//  738 
+//  739         /* Timer2 open in C code */
+//  740         case ATA_TIMER_OPEN_C:
+//  741           g_bTimerModuleReturnValue_flash = ATA_timer2Open_C(&g_sTimer8BitParams_flash);
+//  742           break;
+//  743 
+//  744         /* Timer2 close in C code */
+//  745         case ATA_TIMER_CLOSE_C:
+//  746           ATA_timer2Close_C();
+??ATA_moduleTestTimer2Handling_flash_C_2:
+        JMP     ATA_timer2Close_C
+//  747           break;
+//  748 
+//  749         /* Timer2 Compare Match Interrupt Handling */
+//  750         case ATA_TIMER_COM_INTHANDLER_ASM:
+//  751           ATA_timer2Init_C();
+//  752           g_bTimerModuleReturnValue_flash = ATA_timer2Open_C(&g_sTimer8BitParams_flash);
+//  753           break;
+//  754 
+//  755         /* Timer2 Counter Overflow Interrupt Handling */
+//  756         case ATA_TIMER_OVF_INTHANDLER_ASM:
+//  757           ATA_timer2Init_C();
+??ATA_moduleTestTimer2Handling_flash_C_3:
+        CALL    ATA_timer2Init_C
+//  758           g_bTimerModuleReturnValue_flash = ATA_timer2Open_C(&g_sTimer8BitParams_flash);
+??ATA_moduleTestTimer2Handling_flash_C_1:
+        LDI     R16, LOW(g_sTimer8BitParams_flash)
+        LDI     R17, (g_sTimer8BitParams_flash) >> 8
+        CALL    ATA_timer2Open_C
+        RJMP    ?Subroutine0
+//  759           break;
+//  760 
+//  761         /* Wrong sub id loaded by test case. */
+//  762         default:
+//  763            _NOP;
+??ATA_moduleTestTimer2Handling_flash_C_4:
+        nop
+//  764     }
+//  765 }
+        RET
+          CFI EndBlock cfiBlock10
+//  766 
+//  767 /* Timer3 handling */
+
+        RSEG CODE:CODE:ROOT(1)
+//  768 VOIDFUNC ATA_moduleTestTimer3Handling_flash_C(void)
+ATA_moduleTestTimer3Handling_flash_C:
+          CFI Block cfiBlock11 Using cfiCommon0
+          CFI Function ATA_moduleTestTimer3Handling_flash_C
+//  769 {
+//  770     switch (g_sModuleTest_flash.bSubId)
+        FUNCALL ATA_moduleTestTimer3Handling_flash_C, ATA_timer3Init_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestTimer3Handling_flash_C, ATA_timer3Open_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestTimer3Handling_flash_C, ATA_timer3Close_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestTimer3Handling_flash_C, ATA_timer3Init_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestTimer3Handling_flash_C, ATA_timer3Open_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestTimer3Handling_flash_C, ATA_timer3Init_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestTimer3Handling_flash_C, ATA_timer3Open_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestTimer3Handling_flash_C, ATA_timer3Init_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestTimer3Handling_flash_C, ATA_timer3Open_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        LDS     R16, (g_sModuleTest_flash + 1)
+        TST     R16
+        BREQ    ??ATA_moduleTestTimer3Handling_flash_C_0
+        DEC     R16
+        BREQ    ??ATA_moduleTestTimer3Handling_flash_C_1
+        DEC     R16
+        BREQ    ??ATA_moduleTestTimer3Handling_flash_C_2
+        SUBI    R16, 2
+        BREQ    ??ATA_moduleTestTimer3Handling_flash_C_3
+        DEC     R16
+        BREQ    ??ATA_moduleTestTimer3Handling_flash_C_3
+        DEC     R16
+        BREQ    ??ATA_moduleTestTimer3Handling_flash_C_3
+        RJMP    ??ATA_moduleTestTimer3Handling_flash_C_4
+//  771     {
+//  772         /* Timer3 Initialization */
+//  773         case ATA_TIMER_INIT:
+//  774           ATA_timer3Init_C();
+??ATA_moduleTestTimer3Handling_flash_C_0:
+        JMP     ATA_timer3Init_C
+//  775           break;
+//  776 
+//  777         /* Timer3 open in C code */
+//  778         case ATA_TIMER_OPEN_C:
+//  779           g_bTimerModuleReturnValue_flash = ATA_timer3Open_C(&g_sTimer16BitParams_flash);
+//  780           break;
+//  781 
+//  782         /* Timer3 close in C code */
+//  783         case ATA_TIMER_CLOSE_C:
+//  784           ATA_timer3Close_C();
+??ATA_moduleTestTimer3Handling_flash_C_2:
+        JMP     ATA_timer3Close_C
+//  785           break;
+//  786 
+//  787         /* Timer3 Compare Match Interrupt Handling */
+//  788         case ATA_TIMER_COM_INTHANDLER_ASM:
+//  789           ATA_timer3Init_C();
+//  790           g_bTimerModuleReturnValue_flash = ATA_timer3Open_C(&g_sTimer16BitParams_flash);
+//  791           break;
+//  792 
+//  793         /* Timer3 Counter Overflow Interrupt Handling */
+//  794         case ATA_TIMER_OVF_INTHANDLER_ASM:
+//  795           ATA_timer3Init_C();
+??ATA_moduleTestTimer3Handling_flash_C_3:
+        CALL    ATA_timer3Init_C
+//  796           g_bTimerModuleReturnValue_flash = ATA_timer3Open_C(&g_sTimer16BitParams_flash);
+??ATA_moduleTestTimer3Handling_flash_C_1:
+        LDI     R16, LOW(g_sTimer16BitParams_flash)
+        LDI     R17, (g_sTimer16BitParams_flash) >> 8
+        CALL    ATA_timer3Open_C
+        RJMP    ?Subroutine0
+//  797           break;
+//  798 
+//  799         /* Timer3 Capture Interrupt Handling */
+//  800         case ATA_TIMER_CAP_INTHANDLER_ASM:
+//  801           ATA_timer3Init_C();
+//  802           g_bTimerModuleReturnValue_flash = ATA_timer3Open_C(&g_sTimer16BitParams_flash);
+//  803           break;
+//  804 
+//  805         /* Wrong sub id loaded by test case. */
+//  806         default:
+//  807            _NOP;
+??ATA_moduleTestTimer3Handling_flash_C_4:
+        nop
+//  808     }
+//  809 }
+        RET
+          CFI EndBlock cfiBlock11
+//  810 
+//  811 /* Timer4 handling */
+
+        RSEG CODE:CODE:ROOT(1)
+//  812 VOIDFUNC ATA_moduleTestTimer4Handling_flash_C(void)
+ATA_moduleTestTimer4Handling_flash_C:
+          CFI Block cfiBlock12 Using cfiCommon0
+          CFI Function ATA_moduleTestTimer4Handling_flash_C
+//  813 {
+//  814     switch (g_sModuleTest_flash.bSubId)
+        FUNCALL ATA_moduleTestTimer4Handling_flash_C, ATA_timer4Init_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestTimer4Handling_flash_C, ATA_timer4Open_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestTimer4Handling_flash_C, ATA_timer4Close_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestTimer4Handling_flash_C, ATA_timer4Init_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestTimer4Handling_flash_C, ATA_timer4Open_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestTimer4Handling_flash_C, ATA_timer4Init_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestTimer4Handling_flash_C, ATA_timer4Open_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestTimer4Handling_flash_C, ATA_timer4Init_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestTimer4Handling_flash_C, ATA_timer4Open_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        LDS     R16, (g_sModuleTest_flash + 1)
+        TST     R16
+        BREQ    ??ATA_moduleTestTimer4Handling_flash_C_0
+        DEC     R16
+        BREQ    ??ATA_moduleTestTimer4Handling_flash_C_1
+        DEC     R16
+        BREQ    ??ATA_moduleTestTimer4Handling_flash_C_2
+        SUBI    R16, 2
+        BREQ    ??ATA_moduleTestTimer4Handling_flash_C_3
+        DEC     R16
+        BREQ    ??ATA_moduleTestTimer4Handling_flash_C_3
+        DEC     R16
+        BREQ    ??ATA_moduleTestTimer4Handling_flash_C_3
+        RJMP    ??ATA_moduleTestTimer4Handling_flash_C_4
+//  815     {
+//  816         /* Timer4 Initialization */
+//  817         case ATA_TIMER_INIT:
+//  818           ATA_timer4Init_C();
+??ATA_moduleTestTimer4Handling_flash_C_0:
+        JMP     ATA_timer4Init_C
+//  819           break;
+//  820 
+//  821         /* Timer4 open in C code */
+//  822         case ATA_TIMER_OPEN_C:
+//  823           g_bTimerModuleReturnValue_flash = ATA_timer4Open_C(&g_sTimer16BitParams_flash);
+//  824           break;
+//  825 
+//  826         /* Timer4 close in C code */
+//  827         case ATA_TIMER_CLOSE_C:
+//  828           ATA_timer4Close_C();
+??ATA_moduleTestTimer4Handling_flash_C_2:
+        JMP     ATA_timer4Close_C
+//  829           break;
+//  830 
+//  831         /* Timer4 Compare Match Interrupt Handling */
+//  832         case ATA_TIMER_COM_INTHANDLER_ASM:
+//  833           ATA_timer4Init_C();
+//  834           g_bTimerModuleReturnValue_flash = ATA_timer4Open_C(&g_sTimer16BitParams_flash);
+//  835           break;
+//  836 
+//  837         /* Timer3 Counter Overflow Interrupt Handling */
+//  838         case ATA_TIMER_OVF_INTHANDLER_ASM:
+//  839           ATA_timer4Init_C();
+??ATA_moduleTestTimer4Handling_flash_C_3:
+        CALL    ATA_timer4Init_C
+//  840           g_bTimerModuleReturnValue_flash = ATA_timer4Open_C(&g_sTimer16BitParams_flash);
+??ATA_moduleTestTimer4Handling_flash_C_1:
+        LDI     R16, LOW(g_sTimer16BitParams_flash)
+        LDI     R17, (g_sTimer16BitParams_flash) >> 8
+        CALL    ATA_timer4Open_C
+        RJMP    ?Subroutine0
+//  841           break;
+//  842 
+//  843         /* Timer4 Capture Interrupt Handling */
+//  844         case ATA_TIMER_CAP_INTHANDLER_ASM:
+//  845           ATA_timer4Init_C();
+//  846           g_bTimerModuleReturnValue_flash = ATA_timer4Open_C(&g_sTimer16BitParams_flash);
+//  847           break;
+//  848 
+//  849         /* Wrong sub id loaded by test case. */
+//  850         default:
+//  851            _NOP;
+??ATA_moduleTestTimer4Handling_flash_C_4:
+        nop
+//  852     }
+//  853 }
+        RET
+          CFI EndBlock cfiBlock12
+//  854 
+//  855 /* Timer5 handling */
+
+        RSEG CODE:CODE:ROOT(1)
+//  856 VOIDFUNC ATA_moduleTestTimer5Handling_flash_C(void)
+ATA_moduleTestTimer5Handling_flash_C:
+          CFI Block cfiBlock13 Using cfiCommon0
+          CFI Function ATA_moduleTestTimer5Handling_flash_C
+//  857 {
+//  858     switch (g_sModuleTest_flash.bSubId)
+        FUNCALL ATA_moduleTestTimer5Handling_flash_C, ATA_timer5Init_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestTimer5Handling_flash_C, ATA_timer5Open_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestTimer5Handling_flash_C, ATA_timer5Close_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestTimer5Handling_flash_C, ATA_timer5Init_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestTimer5Handling_flash_C, ATA_timer5Open_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestTimer5Handling_flash_C, ATA_timer5Init_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestTimer5Handling_flash_C, ATA_timer5Open_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        LDS     R16, (g_sModuleTest_flash + 1)
+        TST     R16
+        BREQ    ??ATA_moduleTestTimer5Handling_flash_C_0
+        DEC     R16
+        BREQ    ??ATA_moduleTestTimer5Handling_flash_C_1
+        DEC     R16
+        BREQ    ??ATA_moduleTestTimer5Handling_flash_C_2
+        SUBI    R16, 2
+        BREQ    ??ATA_moduleTestTimer5Handling_flash_C_3
+        DEC     R16
+        BREQ    ??ATA_moduleTestTimer5Handling_flash_C_3
+        RJMP    ??ATA_moduleTestTimer5Handling_flash_C_4
+//  859     {
+//  860         /* Timer5 Initialization */
+//  861         case ATA_TIMER_INIT:
+//  862           ATA_timer5Init_C();
+??ATA_moduleTestTimer5Handling_flash_C_0:
+        JMP     ATA_timer5Init_C
+//  863           break;
+//  864 
+//  865         /* Timer5 open in C code */
+//  866         case ATA_TIMER_OPEN_C:
+//  867           g_bTimerModuleReturnValue_flash = ATA_timer5Open_C(&g_sTimer16BitSynParams_flash);
+//  868           break;
+//  869 
+//  870         /* Timer5 close in C code */
+//  871         case ATA_TIMER_CLOSE_C:
+//  872           ATA_timer5Close_C();
+??ATA_moduleTestTimer5Handling_flash_C_2:
+        JMP     ATA_timer5Close_C
+//  873           break;
+//  874 
+//  875         /* Timer5 Compare Match Interrupt Handling */
+//  876         case ATA_TIMER_COM_INTHANDLER_ASM:
+//  877           ATA_timer5Init_C();
+//  878           g_bTimerModuleReturnValue_flash = ATA_timer5Open_C(&g_sTimer16BitSynParams_flash);
+//  879           break;
+//  880 
+//  881         /* Timer5 Counter Overflow Interrupt Handling */
+//  882         case ATA_TIMER_OVF_INTHANDLER_ASM:
+//  883           ATA_timer5Init_C();
+??ATA_moduleTestTimer5Handling_flash_C_3:
+        CALL    ATA_timer5Init_C
+//  884           g_bTimerModuleReturnValue_flash = ATA_timer5Open_C(&g_sTimer16BitSynParams_flash);
+??ATA_moduleTestTimer5Handling_flash_C_1:
+        LDI     R16, LOW(g_sTimer16BitSynParams_flash)
+        LDI     R17, (g_sTimer16BitSynParams_flash) >> 8
+        CALL    ATA_timer5Open_C
+        RJMP    ?Subroutine0
+//  885           break;
+//  886 
+//  887         /* Wrong sub id loaded by test case. */
+//  888         default:
+//  889            _NOP;
+??ATA_moduleTestTimer5Handling_flash_C_4:
+        nop
+//  890     }
+//  891 }
+        RET
+          CFI EndBlock cfiBlock13
+//  892 
+//  893 /* Timer Multiple Opening */
+
+        RSEG CODE:CODE:ROOT(1)
+//  894 VOIDFUNC ATA_moduleTestTimerMultipleOpen_flash_C(void)
+ATA_moduleTestTimerMultipleOpen_flash_C:
+          CFI Block cfiBlock14 Using cfiCommon0
+          CFI Function ATA_moduleTestTimerMultipleOpen_flash_C
+//  895 {
+//  896     switch (g_sModuleTest_flash.bSubId)
+        FUNCALL ATA_moduleTestTimerMultipleOpen_flash_C, ATA_timer1Init_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestTimerMultipleOpen_flash_C, ATA_timer1Open_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestTimerMultipleOpen_flash_C, ATA_timer2Open_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestTimerMultipleOpen_flash_C, ATA_timer3Open_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestTimerMultipleOpen_flash_C, ATA_timer4Open_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestTimerMultipleOpen_flash_C, ATA_timer5Open_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        LDS     R16, (g_sModuleTest_flash + 1)
+        TST     R16
+        BREQ    ??ATA_moduleTestTimerMultipleOpen_flash_C_0
+        SUBI    R16, 7
+        BREQ    ??ATA_moduleTestTimerMultipleOpen_flash_C_1
+        DEC     R16
+        BREQ    ??ATA_moduleTestTimerMultipleOpen_flash_C_2
+        DEC     R16
+        BREQ    ??ATA_moduleTestTimerMultipleOpen_flash_C_3
+        DEC     R16
+        BREQ    ??ATA_moduleTestTimerMultipleOpen_flash_C_4
+        DEC     R16
+        BREQ    ??ATA_moduleTestTimerMultipleOpen_flash_C_5
+        RJMP    ??ATA_moduleTestTimerMultipleOpen_flash_C_6
+//  897     {
+//  898         /* Timer1 Initialization */
+//  899         case ATA_TIMER_INIT:
+//  900           ATA_timer1Init_C();
+??ATA_moduleTestTimerMultipleOpen_flash_C_0:
+        RJMP    ?Subroutine1
+//  901           break;
+//  902 
+//  903         /* Timer 1 open in C code */
+//  904         case ATA_TIMER_1_OPEN_FAIL_C:
+//  905           g_bTimerModuleReturnValue_flash = ATA_timer1Open_C(&g_sTimer8BitParams_flash);
+??ATA_moduleTestTimerMultipleOpen_flash_C_1:
+        LDI     R16, LOW(g_sTimer8BitParams_flash)
+        LDI     R17, (g_sTimer8BitParams_flash) >> 8
+        CALL    ATA_timer1Open_C
+        RJMP    ??ATA_moduleTestTimerMultipleOpen_flash_C_7
+//  906           break;
+//  907 
+//  908         /* Timer 2 open in C code */
+//  909         case ATA_TIMER_2_OPEN_FAIL_C:
+//  910           g_bTimerModuleReturnValue_flash = ATA_timer2Open_C(&g_sTimer8BitParams_flash);
+??ATA_moduleTestTimerMultipleOpen_flash_C_2:
+        LDI     R16, LOW(g_sTimer8BitParams_flash)
+        LDI     R17, (g_sTimer8BitParams_flash) >> 8
+        CALL    ATA_timer2Open_C
+??ATA_moduleTestTimerMultipleOpen_flash_C_7:
+        RJMP    ?Subroutine0
+//  911           break;
+//  912 
+//  913         /* Timer 3 open in C code */
+//  914         case ATA_TIMER_3_OPEN_FAIL_C:
+//  915           g_bTimerModuleReturnValue_flash = ATA_timer3Open_C(&g_sTimer16BitParams_flash);
+??ATA_moduleTestTimerMultipleOpen_flash_C_3:
+        LDI     R16, LOW(g_sTimer16BitParams_flash)
+        LDI     R17, (g_sTimer16BitParams_flash) >> 8
+        CALL    ATA_timer3Open_C
+        RJMP    ??ATA_moduleTestTimerMultipleOpen_flash_C_7
+//  916           break;
+//  917 
+//  918         /* Timer 4 open in C code */
+//  919         case ATA_TIMER_4_OPEN_FAIL_C:
+//  920           g_bTimerModuleReturnValue_flash = ATA_timer4Open_C(&g_sTimer16BitParams_flash);
+??ATA_moduleTestTimerMultipleOpen_flash_C_4:
+        LDI     R16, LOW(g_sTimer16BitParams_flash)
+        LDI     R17, (g_sTimer16BitParams_flash) >> 8
+        CALL    ATA_timer4Open_C
+        RJMP    ??ATA_moduleTestTimerMultipleOpen_flash_C_7
+//  921           break;
+//  922 
+//  923         /* Timer 5 open in C code */
+//  924         case ATA_TIMER_5_OPEN_FAIL_C:
+//  925           g_bTimerModuleReturnValue_flash = ATA_timer5Open_C(&g_sTimer16BitSynParams_flash);
+??ATA_moduleTestTimerMultipleOpen_flash_C_5:
+        LDI     R16, LOW(g_sTimer16BitSynParams_flash)
+        LDI     R17, (g_sTimer16BitSynParams_flash) >> 8
+        CALL    ATA_timer5Open_C
+        RJMP    ??ATA_moduleTestTimerMultipleOpen_flash_C_7
+//  926           break;
+//  927 
+//  928         /* Wrong sub id loaded by test case. */
+//  929         default:
+//  930            _NOP;
+??ATA_moduleTestTimerMultipleOpen_flash_C_6:
+        nop
+//  931     }
+//  932 }
+        RET
+          CFI EndBlock cfiBlock14
+//  933 
+//  934 /* Clock MRC_FRC Handling */
+
+        RSEG CODE:CODE:ROOT(1)
+//  935 VOIDFUNC ATA_moduleTestClkMrcFrcHandling_flash_C(void)  /* Primus2P - 1565 */
+ATA_moduleTestClkMrcFrcHandling_flash_C:
+          CFI Block cfiBlock15 Using cfiCommon0
+          CFI Function ATA_moduleTestClkMrcFrcHandling_flash_C
+//  936 {
+//  937     switch (g_sModuleTest_flash.bSubId)
+        FUNCALL ATA_moduleTestClkMrcFrcHandling_flash_C, ATA_globalsClkSwitchMrc_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestClkMrcFrcHandling_flash_C, ATA_globalsClkSwitchFrc_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestClkMrcFrcHandling_flash_C, ATA_globalsClkSwitchSrc_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestClkMrcFrcHandling_flash_C, ATA_globalsActivateXTO_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestClkMrcFrcHandling_flash_C, ATA_globalsClkSwitchXTO_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestClkMrcFrcHandling_flash_C, ATA_globalsDeActivateXTO_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestClkMrcFrcHandling_flash_C, ATA_globalsClkSwitchFrcWithDelay_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        LDS     R16, (g_sModuleTest_flash + 1)
+        TST     R16
+        BREQ    ??ATA_moduleTestClkMrcFrcHandling_flash_C_0
+        DEC     R16
+        BREQ    ??ATA_moduleTestClkMrcFrcHandling_flash_C_1
+        SUBI    R16, 3
+        BREQ    ??ATA_moduleTestClkMrcFrcHandling_flash_C_2
+        DEC     R16
+        BREQ    ??ATA_moduleTestClkMrcFrcHandling_flash_C_3
+        DEC     R16
+        BREQ    ??ATA_moduleTestClkMrcFrcHandling_flash_C_4
+        DEC     R16
+        BREQ    ??ATA_moduleTestClkMrcFrcHandling_flash_C_5
+        RJMP    ??ATA_moduleTestClkMrcFrcHandling_flash_C_6
+//  938     {
+//  939         /* Switch clock MRC on */
+//  940         case ATA_CLOCK_MRC_ON:
+//  941           ATA_globalsClkSwitchMrc_C();
+??ATA_moduleTestClkMrcFrcHandling_flash_C_0:
+        RJMP    ?Subroutine3
+//  942           break;
+//  943 
+//  944         /* Switch clock FRC on */
+//  945         case ATA_CLOCK_FRC_ON:
+//  946           ATA_globalsClkSwitchFrc_C();
+??ATA_moduleTestClkMrcFrcHandling_flash_C_1:
+        RJMP    ?Subroutine2
+//  947           break;
+//  948 
+//  949         /* Switch clock SRC on */
+//  950         case ATA_CLOCK_SRC_ON:
+//  951           ATA_globalsClkSwitchSrc_C();
+??ATA_moduleTestClkMrcFrcHandling_flash_C_2:
+        JMP     ATA_globalsClkSwitchSrc_C
+//  952           break;
+//  953 
+//  954         /* Switch clock XTO on */
+//  955         case ATA_CLOCK_XTO_ON:
+//  956           ATA_globalsActivateXTO_C();
+??ATA_moduleTestClkMrcFrcHandling_flash_C_3:
+        CALL    ATA_globalsActivateXTO_C
+//  957           ATA_globalsClkSwitchXTO_C(0x07U);
+        LDI     R16, 7
+        JMP     ATA_globalsClkSwitchXTO_C
+//  958           break;
+//  959 
+//  960         /* XTO off (XTO must not be set as system clock */
+//  961         case ATA_CLOCK_XTO_OFF:
+//  962           ATA_globalsDeActivateXTO_C();
+??ATA_moduleTestClkMrcFrcHandling_flash_C_4:
+        JMP     ATA_globalsDeActivateXTO_C
+//  963           break;
+//  964 
+//  965         // --P2P-3750--
+//  966         /* Switch clock FRC with Delay on */
+//  967         case ATA_CLOCK_FRC_DELAY_ON:
+//  968             ATA_globalsClkSwitchFrcWithDelay_C(g_bModuleTestBuffer_flash[0]);
+??ATA_moduleTestClkMrcFrcHandling_flash_C_5:
+        LDS     R16, g_bModuleTestBuffer_flash
+        JMP     ATA_globalsClkSwitchFrcWithDelay_C
+//  969             break;
+//  970         // --P2P-3750--
+//  971 
+//  972         /* Wrong sub id loaded by test case. */
+//  973         default:
+//  974            _NOP;
+??ATA_moduleTestClkMrcFrcHandling_flash_C_6:
+        nop
+//  975     }
+//  976 }
+        RET
+          CFI EndBlock cfiBlock15
+
+        RSEG CODE:CODE:NOROOT(1)
+?Subroutine3:
+          CFI Block cfiBlock16 Using cfiCommon0
+          CFI NoFunction
+        JMP     ATA_globalsClkSwitchMrc_C
+          CFI EndBlock cfiBlock16
+
+        RSEG CODE:CODE:NOROOT(1)
+?Subroutine2:
+          CFI Block cfiBlock17 Using cfiCommon0
+          CFI NoFunction
+        JMP     ATA_globalsClkSwitchFrc_C
+          CFI EndBlock cfiBlock17
+//  977 
+//  978 
+//  979 /* External Clock Handling */
+
+        RSEG CODE:CODE:ROOT(1)
+//  980 VOIDFUNC ATA_moduleTestClkExtClockHandling_flash_C(void)
+ATA_moduleTestClkExtClockHandling_flash_C:
+          CFI Block cfiBlock18 Using cfiCommon0
+          CFI Function ATA_moduleTestClkExtClockHandling_flash_C
+//  981 {
+//  982     switch (g_sModuleTest_flash.bSubId)
+        FUNCALL ATA_moduleTestClkExtClockHandling_flash_C, ATA_globalsClkSwitchMrc_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestClkExtClockHandling_flash_C, ATA_globalsClkSwitchFrc_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestClkExtClockHandling_flash_C, ATA_globalsClkSwitchExt_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestClkExtClockHandling_flash_C, ATA_globalsClkSwitchExt_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        LDS     R16, (g_sModuleTest_flash + 1)
+        TST     R16
+        BREQ    ??ATA_moduleTestClkExtClockHandling_flash_C_0
+        DEC     R16
+        BREQ    ??ATA_moduleTestClkExtClockHandling_flash_C_1
+        DEC     R16
+        BREQ    ??ATA_moduleTestClkExtClockHandling_flash_C_2
+        DEC     R16
+        BREQ    ??ATA_moduleTestClkExtClockHandling_flash_C_3
+        RJMP    ??ATA_moduleTestClkExtClockHandling_flash_C_4
+//  983     {
+//  984         /* Switch clock MRC on */
+//  985         case ATA_CLOCK_MRC_ON:
+//  986           ATA_globalsClkSwitchMrc_C();
+??ATA_moduleTestClkExtClockHandling_flash_C_0:
+        RJMP    ?Subroutine3
+//  987           break;
+//  988 
+//  989         /* Switch clock FRC on */
+//  990         case ATA_CLOCK_FRC_ON:
+//  991           ATA_globalsClkSwitchFrc_C();
+??ATA_moduleTestClkExtClockHandling_flash_C_1:
+        RJMP    ?Subroutine2
+//  992           break;
+//  993 
+//  994         /* Select external clock greater than 1 MHZ as system clock */
+//  995         case ATA_CLOCK_EXT_HIGH:
+//  996           ATA_globalsClkSwitchExt_C(TRUE);
+??ATA_moduleTestClkExtClockHandling_flash_C_2:
+        LDI     R16, 1
+        RJMP    ??ATA_moduleTestClkExtClockHandling_flash_C_5
+//  997           break;
+//  998 
+//  999         /* Select external clock smaller than 1 MHZ as system clock */
+// 1000         case ATA_CLOCK_EXT_LOW:
+// 1001           ATA_globalsClkSwitchExt_C(FALSE);
+??ATA_moduleTestClkExtClockHandling_flash_C_3:
+        LDI     R16, 0
+??ATA_moduleTestClkExtClockHandling_flash_C_5:
+        JMP     ATA_globalsClkSwitchExt_C
+// 1002           break;
+// 1003 
+// 1004         /* Wrong sub id loaded by test case. */
+// 1005         default:
+// 1006            _NOP;
+??ATA_moduleTestClkExtClockHandling_flash_C_4:
+        nop
+// 1007     }
+// 1008 }
+        RET
+          CFI EndBlock cfiBlock18
+// 1009 
+// 1010 
+
+        RSEG CODE:CODE:ROOT(1)
+// 1011 VOIDFUNC ATA_moduleTestRfrcc_flash_C(void)
+ATA_moduleTestRfrcc_flash_C:
+          CFI Block cfiBlock19 Using cfiCommon0
+          CFI Function ATA_moduleTestRfrcc_flash_C
+// 1012 {
+// 1013   switch (g_sModuleTest_flash.bSubId)
+        FUNCALL ATA_moduleTestRfrcc_flash_C, ATA_rfrccGenRollCntMsg_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        LDS     R16, (g_sModuleTest_flash + 1)
+        TST     R16
+        BRNE    ??ATA_moduleTestRfrcc_flash_C_0
+// 1014   {
+// 1015     case ATA_RFRCC_TRANSMIT_RCC:
+// 1016       ATA_rfrccGenRollCntMsg_C(0x0000U, AES_USE_SECRET_KEY_A, ATA_RFRCC_USER_CMND, 0x00U);
+        LDI     R20, 0
+        LDI     R19, 68
+        LDI     R18, 0
+        LDI     R16, 0
+        LDI     R17, 0
+        JMP     ATA_rfrccGenRollCntMsg_C
+// 1017     break;
+// 1018 
+// 1019    default:
+// 1020      _NOP;
+??ATA_moduleTestRfrcc_flash_C_0:
+        nop
+// 1021   }
+// 1022 }
+        RET
+          CFI EndBlock cfiBlock19
+// 1023 /* LF RSSI measurement Handling */
+
+        RSEG CODE:CODE:ROOT(1)
+// 1024 VOIDFUNC ATA_moduleTestLfRssiHandling_flash_C(void)
+ATA_moduleTestLfRssiHandling_flash_C:
+          CFI Block cfiBlock20 Using cfiCommon0
+          CFI Function ATA_moduleTestLfRssiHandling_flash_C
+// 1025 {
+        FUNCALL ATA_moduleTestLfRssiHandling_flash_C, ATA_lfRssiOpen_C
+        LOCFRAME CSTACK, 13, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestLfRssiHandling_flash_C, ATA_lfRssiInit_C
+        LOCFRAME CSTACK, 13, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestLfRssiHandling_flash_C, ATA_eepReadBytes_C
+        LOCFRAME CSTACK, 13, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestLfRssiHandling_flash_C, ATA_lfRssiSetEepromConfig_C
+        LOCFRAME CSTACK, 13, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestLfRssiHandling_flash_C, ATA_lfRssiMeasStart_C
+        LOCFRAME CSTACK, 13, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestLfRssiHandling_flash_C, ATA_lfRssiMeasStart_C
+        LOCFRAME CSTACK, 13, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestLfRssiHandling_flash_C, ATA_lfRssiMeasStop_C
+        LOCFRAME CSTACK, 13, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestLfRssiHandling_flash_C, ATA_lfRssiClose_C
+        LOCFRAME CSTACK, 13, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestLfRssiHandling_flash_C, ATA_lfRssiGetAverageResult_C
+        LOCFRAME CSTACK, 13, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestLfRssiHandling_flash_C, ATA_lfRssiGetAverageResult_C
+        LOCFRAME CSTACK, 13, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestLfRssiHandling_flash_C, ATA_lfRssiGetSamplesResult_C
+        LOCFRAME CSTACK, 13, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestLfRssiHandling_flash_C, ATA_lfRssiCalcChanCorr_C
+        LOCFRAME CSTACK, 13, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestLfRssiHandling_flash_C, ATA_lfRssiCalcChanCorr_C
+        LOCFRAME CSTACK, 13, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestLfRssiHandling_flash_C, ATA_lfRssiCalc3dVec_C
+        LOCFRAME CSTACK, 13, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestLfRssiHandling_flash_C, ATA_lfRssiCalc3dVec_C
+        LOCFRAME CSTACK, 13, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestLfRssiHandling_flash_C, ATA_lfRssiCalcLog2Lin_C
+        LOCFRAME CSTACK, 13, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestLfRssiHandling_flash_C, ATA_lfRssiCalcLog2Lin_C
+        LOCFRAME CSTACK, 13, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestLfRssiHandling_flash_C, ATA_eepReadBytes_C
+        LOCFRAME CSTACK, 13, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestLfRssiHandling_flash_C, ATA_lfRssiCalcChanCalibVal_C
+        LOCFRAME CSTACK, 13, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        FUNCALL ATA_moduleTestLfRssiHandling_flash_C, ATA_moduleTestLfRssiCalc12q4_flash_C
+        LOCFRAME CSTACK, 13, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        SBIW    R29:R28, 13
+          CFI CFA_Y Y+13
+// 1026     uint8_t tmpBuf[13];
+// 1027     switch (g_sModuleTest_flash.bSubId)
+        LDS     R16, (g_sModuleTest_flash + 1)
+        LDI     R30, LOW(`?<Jumptable for ATA_moduleTestLfRssiHandling_f_0`)
+        LDI     R31, (`?<Jumptable for ATA_moduleTestLfRssiHandling_f_0`) >> 8
+        JMP     ?CV_SWITCH_L06
+// 1028     {
+// 1029         /* Power-up the LF RSSI block */
+// 1030         case ATA_LFRSSI_OPEN:
+// 1031             // insert controlled SRC calibration by software
+// 1032             //if(g_sModuleTestLfRssi_flash.srcCal)
+// 1033             {
+// 1034             //ATA_calibInit_C();
+// 1035             //srccalib();
+// 1036             }
+// 1037             ATA_lfRssiOpen_C();
+??ATA_moduleTestLfRssiHandling_flash_C_0:
+        CALL    ATA_lfRssiOpen_C
+// 1038             break;
+        RJMP    ??ATA_moduleTestLfRssiHandling_flash_C_1
+// 1039         /* Initialize the working RSSI registers */
+// 1040         case ATA_LFRSSI_SET_CONFIG:
+// 1041             ATA_lfRssiInit_C();
+??ATA_moduleTestLfRssiHandling_flash_C_2:
+        CALL    ATA_lfRssiInit_C
+// 1042             ATA_eepReadBytes_C( &tmpBuf[0], (uint16_t)&g_bEepFlashAppLfRssiSrcCalibrationSetting_flash, 1U );
+        LDI     R20, 1
+        LDI     R18, LOW(g_bEepFlashAppLfRssiSrcCalibrationSetting_flash)
+        LDI     R19, (g_bEepFlashAppLfRssiSrcCalibrationSetting_flash) >> 8
+        MOVW    R17:R16, R29:R28
+        CALL    ATA_eepReadBytes_C
+// 1043             ATA_lfRssiSetEepromConfig_C(tmpBuf[0]);
+        LD      R16, Y
+        CALL    ATA_lfRssiSetEepromConfig_C
+// 1044             break;
+        RJMP    ??ATA_moduleTestLfRssiHandling_flash_C_1
+// 1045         /* Start internal RSSI measurement */
+// 1046         case ATA_LFRSSI_START_INTERN:
+// 1047             g_sLfRssi.bOutOfRangeMask = 0xFF;
+??ATA_moduleTestLfRssiHandling_flash_C_3:
+        LDI     R16, 255
+        STS     (g_sLfRssi + 12), R16
+// 1048             ATA_lfRssiMeasStart_C(&g_sModuleTestLfRssiRegs_flash, 1, g_sModuleTestLfRssi_flash.signEna);
+        LDS     R19, (g_sModuleTestLfRssi_flash + 4)
+        LDI     R18, 1
+        LDI     R16, LOW(g_sModuleTestLfRssiRegs_flash)
+        LDI     R17, (g_sModuleTestLfRssiRegs_flash) >> 8
+        CALL    ATA_lfRssiMeasStart_C
+// 1049             g_sModuleTestLfRssi_flash.pData = (uint8_t *)&g_wLfRssiResultIntMeas[0];
+        LDI     R16, LOW(g_wLfRssiResultIntMeas)
+        LDI     R17, (g_wLfRssiResultIntMeas) >> 8
+        RJMP    ??ATA_moduleTestLfRssiHandling_flash_C_4
+// 1050             break;
+// 1051         /* Start external RSSI measurement */
+// 1052         case ATA_LFRSSI_START_EXTERN:
+// 1053             g_sLfRssi.bOutOfRangeMask = 0xFF;
+??ATA_moduleTestLfRssiHandling_flash_C_5:
+        LDI     R16, 255
+        STS     (g_sLfRssi + 12), R16
+// 1054             ATA_lfRssiMeasStart_C(&g_sModuleTestLfRssiRegs_flash, 0, g_sModuleTestLfRssi_flash.signEna);
+        LDS     R19, (g_sModuleTestLfRssi_flash + 4)
+        LDI     R18, 0
+        LDI     R16, LOW(g_sModuleTestLfRssiRegs_flash)
+        LDI     R17, (g_sModuleTestLfRssiRegs_flash) >> 8
+        CALL    ATA_lfRssiMeasStart_C
+// 1055             g_sModuleTestLfRssi_flash.pData = (uint8_t *)&g_sModuleTestLfRssiResult_flash.rawRssi[0];
+        LDI     R16, LOW(g_sModuleTestLfRssiResult_flash)
+        LDI     R17, (g_sModuleTestLfRssiResult_flash) >> 8
+??ATA_moduleTestLfRssiHandling_flash_C_4:
+        STS     (g_sModuleTestLfRssi_flash + 5), R16
+        STS     (g_sModuleTestLfRssi_flash + 6), R17
+// 1056             break;
+        RJMP    ??ATA_moduleTestLfRssiHandling_flash_C_1
+// 1057         /* Stop the RSSI measurement */
+// 1058         case ATA_LFRSSI_STOP:
+// 1059             ATA_lfRssiMeasStop_C();
+??ATA_moduleTestLfRssiHandling_flash_C_6:
+        CALL    ATA_lfRssiMeasStop_C
+// 1060             break;
+        RJMP    ??ATA_moduleTestLfRssiHandling_flash_C_1
+// 1061         /* Power-down the LF RSSI block */
+// 1062         case ATA_LFRSSI_CLOSE:
+// 1063             ATA_lfRssiClose_C();
+??ATA_moduleTestLfRssiHandling_flash_C_7:
+        CALL    ATA_lfRssiClose_C
+// 1064             break;
+        RJMP    ??ATA_moduleTestLfRssiHandling_flash_C_1
+// 1065         /* Get the results of measurement */
+// 1066         case ATA_LFRSSI_GET_RESULT_AVG:
+// 1067             //g_sModuleTestLfRssiResult_flash.flags[0] = 0x00;    // mark result structure as invalid, to be discussed if necessary
+// 1068             if( g_sModuleTestLfRssi_flash.signEna )
+??ATA_moduleTestLfRssiHandling_flash_C_8:
+        LDS     R16, (g_sModuleTestLfRssi_flash + 4)
+        TST     R16
+        BREQ    ??ATA_moduleTestLfRssiHandling_flash_C_9
+// 1069             {
+// 1070                 ATA_lfRssiGetAverageResult_C(g_sModuleTestLfRssi_flash.pData, &g_sModuleTestLfRssiResult_flash.numPulses[0]);
+        LDI     R18, LOW((g_sModuleTestLfRssiResult_flash + 8))
+        LDI     R19, HIGH((g_sModuleTestLfRssiResult_flash + 8))
+        RJMP    ??ATA_moduleTestLfRssiHandling_flash_C_10
+// 1071             }
+// 1072             else
+// 1073             {
+// 1074                 ATA_lfRssiGetAverageResult_C(g_sModuleTestLfRssi_flash.pData, (uint8_t *)0);
+??ATA_moduleTestLfRssiHandling_flash_C_9:
+        LDI     R18, 0
+        LDI     R19, 0
+??ATA_moduleTestLfRssiHandling_flash_C_10:
+        LDS     R16, (g_sModuleTestLfRssi_flash + 5)
+        LDS     R17, (g_sModuleTestLfRssi_flash + 6)
+        CALL    ATA_lfRssiGetAverageResult_C
+        RJMP    ??ATA_moduleTestLfRssiHandling_flash_C_1
+// 1075             }
+// 1076             break;
+// 1077         /* Get the results of measurement */
+// 1078         case ATA_LFRSSI_GET_RESULT_SAMPLE:
+// 1079             ATA_lfRssiGetSamplesResult_C((uint8_t *)&g_wLfRssiSamplesResult[0], g_sModuleTestLfRssi_flash.numSamp, g_sModuleTestLfRssi_flash.startIdx);
+??ATA_moduleTestLfRssiHandling_flash_C_11:
+        LDS     R19, (g_sModuleTestLfRssi_flash + 2)
+        LDS     R18, (g_sModuleTestLfRssi_flash + 1)
+        LDI     R16, LOW(g_wLfRssiSamplesResult)
+        LDI     R17, (g_wLfRssiSamplesResult) >> 8
+        CALL    ATA_lfRssiGetSamplesResult_C
+// 1080             break;
+        RJMP    ??ATA_moduleTestLfRssiHandling_flash_C_1
+// 1081         /* Correct average RSSI channel values */
+// 1082         case ATA_LFRSSI_CORRCALC_AVG:
+// 1083             ATA_lfRssiCalcChanCorr_C((uint8_t *)&g_sModuleTestLfRssiResult_flash.rawRssi[0], (uint8_t *)&g_wLfRssiResultIntMeas[0], (uint8_t *)&g_sModuleTestLfRssiResult_flash.corrRssi[0]);
+??ATA_moduleTestLfRssiHandling_flash_C_12:
+        LDI     R20, LOW((g_sModuleTestLfRssiResult_flash + 12))
+        LDI     R21, HIGH((g_sModuleTestLfRssiResult_flash + 12))
+        LDI     R18, LOW(g_wLfRssiResultIntMeas)
+        LDI     R19, (g_wLfRssiResultIntMeas) >> 8
+        LDI     R16, LOW(g_sModuleTestLfRssiResult_flash)
+        LDI     R17, (g_sModuleTestLfRssiResult_flash) >> 8
+        RJMP    ??ATA_moduleTestLfRssiHandling_flash_C_13
+// 1084             break;
+// 1085         /* Correct sample RSSI channel values */
+// 1086         case ATA_LFRSSI_CORRCALC_SAMPLE:
+// 1087             ATA_lfRssiCalcChanCorr_C((uint8_t *)&g_wLfRssiSamplesResult[0], (uint8_t *)&g_wLfRssiResultIntMeas[0], (uint8_t *)&g_wLfRssiSamplesResultCorrCalc[0]);
+??ATA_moduleTestLfRssiHandling_flash_C_14:
+        LDI     R20, LOW(g_wLfRssiSamplesResultCorrCalc)
+        LDI     R21, (g_wLfRssiSamplesResultCorrCalc) >> 8
+        LDI     R18, LOW(g_wLfRssiResultIntMeas)
+        LDI     R19, (g_wLfRssiResultIntMeas) >> 8
+        LDI     R16, LOW(g_wLfRssiSamplesResult)
+        LDI     R17, (g_wLfRssiSamplesResult) >> 8
+??ATA_moduleTestLfRssiHandling_flash_C_13:
+        CALL    ATA_lfRssiCalcChanCorr_C
+// 1088             break;
+        RJMP    ??ATA_moduleTestLfRssiHandling_flash_C_1
+// 1089         /* Calculate the (logarithmic) 3D vector based on RSSI average values */
+// 1090         case ATA_LFRSSI_3DVEC_AVG:
+// 1091             ATA_lfRssiCalc3dVec_C((uint8_t *)&g_sModuleTestLfRssiResult_flash.corrRssi[0], (uint8_t *)&g_sModuleTestLfRssiResult_flash.logResult);
+??ATA_moduleTestLfRssiHandling_flash_C_15:
+        LDI     R18, LOW((g_sModuleTestLfRssiResult_flash + 18))
+        LDI     R19, HIGH((g_sModuleTestLfRssiResult_flash + 18))
+        LDI     R16, LOW((g_sModuleTestLfRssiResult_flash + 12))
+        LDI     R17, HIGH((g_sModuleTestLfRssiResult_flash + 12))
+        RJMP    ??ATA_moduleTestLfRssiHandling_flash_C_16
+// 1092             break;
+// 1093         /* Calculate the (logarithmic) 3D vector based on RSSI sample values */
+// 1094         case ATA_LFRSSI_3DVEC_SAMPLE:
+// 1095             ATA_lfRssiCalc3dVec_C((uint8_t *)&g_wLfRssiSamplesResultCorrCalc[0], (uint8_t *)&g_wLfRssiSamplesResult3dVec[0]);
+??ATA_moduleTestLfRssiHandling_flash_C_17:
+        LDI     R18, LOW(g_wLfRssiSamplesResult3dVec)
+        LDI     R19, (g_wLfRssiSamplesResult3dVec) >> 8
+        LDI     R16, LOW(g_wLfRssiSamplesResultCorrCalc)
+        LDI     R17, (g_wLfRssiSamplesResultCorrCalc) >> 8
+??ATA_moduleTestLfRssiHandling_flash_C_16:
+        CALL    ATA_lfRssiCalc3dVec_C
+// 1096             break;
+        RJMP    ??ATA_moduleTestLfRssiHandling_flash_C_1
+// 1097         /* Convert average value based logarithmic RSSI 3D vector to corresponding induced voltage value */
+// 1098         case ATA_LFRSSI_LOG2LIN_AVG:
+// 1099             ATA_lfRssiCalcLog2Lin_C((uint8_t *)&g_sModuleTestLfRssiResult_flash.logResult, (uint8_t *)&g_sModuleTestLfRssiResult_flash.linResult);
+??ATA_moduleTestLfRssiHandling_flash_C_18:
+        LDI     R18, LOW((g_sModuleTestLfRssiResult_flash + 20))
+        LDI     R19, HIGH((g_sModuleTestLfRssiResult_flash + 20))
+        LDI     R16, LOW((g_sModuleTestLfRssiResult_flash + 18))
+        LDI     R17, HIGH((g_sModuleTestLfRssiResult_flash + 18))
+        RJMP    ??ATA_moduleTestLfRssiHandling_flash_C_19
+// 1100             break;
+// 1101         /* Convert sample value based logarithmic RSSI 3D vector to corresponding induced voltage value */
+// 1102         case ATA_LFRSSI_LOG2LIN_SAMPLE:
+// 1103             ATA_lfRssiCalcLog2Lin_C((uint8_t *)&g_wLfRssiSamplesResult3dVec[0], (uint8_t *)&g_wLfRssiSamplesResultLin[0]);
+??ATA_moduleTestLfRssiHandling_flash_C_20:
+        LDI     R18, LOW(g_wLfRssiSamplesResultLin)
+        LDI     R19, (g_wLfRssiSamplesResultLin) >> 8
+        LDI     R16, LOW(g_wLfRssiSamplesResult3dVec)
+        LDI     R17, (g_wLfRssiSamplesResult3dVec) >> 8
+??ATA_moduleTestLfRssiHandling_flash_C_19:
+        CALL    ATA_lfRssiCalcLog2Lin_C
+// 1104             break;
+        RJMP    ??ATA_moduleTestLfRssiHandling_flash_C_1
+// 1105         /* Calculate the channel calibration values, needed for channel correction calculation */
+// 1106         case ATA_LFRSSI_CALC_CALIBVAL:
+// 1107             ATA_eepReadBytes_C( &tmpBuf[0], (uint16_t)&g_sEepFlashAppLfRssiEndOfLineCalibrationSettings_flash, 13U );
+??ATA_moduleTestLfRssiHandling_flash_C_21:
+        LDI     R20, 13
+        LDI     R18, LOW(g_sEepFlashAppLfRssiEndOfLineCalibrationSettings_flash)
+        LDI     R19, (g_sEepFlashAppLfRssiEndOfLineCalibrationSettings_flash) >> 8
+        MOVW    R17:R16, R29:R28
+        CALL    ATA_eepReadBytes_C
+// 1108             ATA_lfRssiCalcChanCalibVal_C( tmpBuf[0], (uint16_t*)&tmpBuf[1], (uint16_t*)&tmpBuf[7] );
+        MOVW    R21:R20, R29:R28
+        SUBI    R20, 249
+        SBCI    R21, 255
+        MOVW    R19:R18, R29:R28
+        SUBI    R18, 255
+        SBCI    R19, 255
+        LD      R16, Y
+        CALL    ATA_lfRssiCalcChanCalibVal_C
+// 1109             break;
+        RJMP    ??ATA_moduleTestLfRssiHandling_flash_C_1
+// 1110         case ATA_LFRSSI_12Q4:
+// 1111             ATA_moduleTestLfRssiCalc12q4_flash_C();
+??ATA_moduleTestLfRssiHandling_flash_C_22:
+        RCALL   ATA_moduleTestLfRssiCalc12q4_flash_C
+// 1112             break;
+        RJMP    ??ATA_moduleTestLfRssiHandling_flash_C_1
+// 1113         /* Wrong sub id loaded by test case. */
+// 1114         default:
+// 1115             _NOP;
+??ATA_moduleTestLfRssiHandling_flash_C_23:
+        nop
+// 1116     }
+// 1117 }
+??ATA_moduleTestLfRssiHandling_flash_C_1:
+        ADIW    R29:R28, 13
+          CFI CFA_Y Y+0
+        RET
+          CFI EndBlock cfiBlock20
+// 1118 
+// 1119 /**/
+
+        RSEG CODE:CODE:ROOT(1)
+// 1120 VOIDFUNC ATA_moduleTestLfTx_flash_C(void)
+ATA_moduleTestLfTx_flash_C:
+          CFI Block cfiBlock21 Using cfiCommon0
+          CFI Function ATA_moduleTestLfTx_flash_C
+// 1121 {
+// 1122     /* Only call function ATA_lfRxInit_C. It does not matter that the LF
+// 1123        registers are already locked via register LFCPR. */
+// 1124     switch (g_sModuleTest_flash.bSubId)
+        FUNCALL ATA_moduleTestLfTx_flash_C, ATA_lfRxInit_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        LDS     R16, (g_sModuleTest_flash + 1)
+        CPI     R16, 1
+        BRNE    ??ATA_moduleTestLfTx_flash_C_0
+// 1125     {
+// 1126     case MODULE_TEST_LFTX_SUBID_INIT:
+// 1127       ATA_lfRxInit_C();
+        CALL    ATA_lfRxInit_C
+// 1128       break;
+// 1129 
+// 1130     default:
+// 1131       break;
+// 1132     }
+// 1133 
+// 1134 }
+??ATA_moduleTestLfTx_flash_C_0:
+        RET
+          CFI EndBlock cfiBlock21
+// 1135 
+// 1136 /** \brief <b>ATA_moduleTestLfRssiCalc12q4_flash_C</b>
+// 1137     module for multiplication of 2 variables in Atmels 12q4 floating point
+// 1138     format
+// 1139  */
+
+        RSEG CODE:CODE:ROOT(1)
+// 1140 VOIDFUNC ATA_moduleTestLfRssiCalc12q4_flash_C(void)
+ATA_moduleTestLfRssiCalc12q4_flash_C:
+          CFI Block cfiBlock22 Using cfiCommon0
+          CFI Function ATA_moduleTestLfRssiCalc12q4_flash_C
+// 1141 {
+// 1142     uint16_t wBref           = *(uint16_t *)(g_bModuleTestBuffer_flash + 0);
+// 1143     uint16_t wRssiValue      = *(uint16_t *)(g_bModuleTestBuffer_flash + 2);
+// 1144 
+// 1145     uint16_t wResult = ATA_lfRssiCalcBappl_C(wBref, wRssiValue);
+// 1146     *(uint16_t *)(g_bModuleTestBuffer_flash + 4)  = wResult;
+        FUNCALL ATA_moduleTestLfRssiCalc12q4_flash_C, ATA_lfRssiCalcBappl_C
+        LOCFRAME CSTACK, 0, STACK
+        LOCFRAME RSTACK, 2, STACK
+        ARGFRAME RSTACK, 0, STACK
+        LDS     R18, (g_bModuleTestBuffer_flash + 2)
+        LDS     R19, (g_bModuleTestBuffer_flash + 3)
+        LDS     R16, g_bModuleTestBuffer_flash
+        LDS     R17, (g_bModuleTestBuffer_flash + 1)
+        CALL    ATA_lfRssiCalcBappl_C
+        STS     (g_bModuleTestBuffer_flash + 4), R16
+        STS     (g_bModuleTestBuffer_flash + 5), R17
+// 1147 
+// 1148 }
+        RET
+          CFI EndBlock cfiBlock22
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01cH
+__?EECR:
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01dH
+__?EEDR:
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01eH
+__?EEARL:
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01fH
+__?EEARH:
+
+        RSEG SWITCH:CODE:NOROOT(1)
+`?<Jumptable for ATA_moduleTestSoftware_flash_C_0`:
+        DB      1
+        DB      0
+        DW      (??ATA_moduleTestSoftware_flash_C_22) /2
+        DW      28
+        DW      (??ATA_moduleTestSoftware_flash_C_0) /2
+        DW      (??ATA_moduleTestSoftware_flash_C_0) /2
+        DW      (??ATA_moduleTestSoftware_flash_C_2) /2
+        DW      (??ATA_moduleTestSoftware_flash_C_3) /2
+        DW      (??ATA_moduleTestSoftware_flash_C_22) /2
+        DW      (??ATA_moduleTestSoftware_flash_C_22) /2
+        DW      (??ATA_moduleTestSoftware_flash_C_22) /2
+        DW      (??ATA_moduleTestSoftware_flash_C_22) /2
+        DW      (??ATA_moduleTestSoftware_flash_C_22) /2
+        DW      (??ATA_moduleTestSoftware_flash_C_22) /2
+        DW      (??ATA_moduleTestSoftware_flash_C_4) /2
+        DW      (??ATA_moduleTestSoftware_flash_C_5) /2
+        DW      (??ATA_moduleTestSoftware_flash_C_6) /2
+        DW      (??ATA_moduleTestSoftware_flash_C_7) /2
+        DW      (??ATA_moduleTestSoftware_flash_C_8) /2
+        DW      (??ATA_moduleTestSoftware_flash_C_9) /2
+        DW      (??ATA_moduleTestSoftware_flash_C_10) /2
+        DW      (??ATA_moduleTestSoftware_flash_C_11) /2
+        DW      (??ATA_moduleTestSoftware_flash_C_12) /2
+        DW      (??ATA_moduleTestSoftware_flash_C_13) /2
+        DW      (??ATA_moduleTestSoftware_flash_C_14) /2
+        DW      (??ATA_moduleTestSoftware_flash_C_15) /2
+        DW      (??ATA_moduleTestSoftware_flash_C_16) /2
+        DW      (??ATA_moduleTestSoftware_flash_C_17) /2
+        DW      (??ATA_moduleTestSoftware_flash_C_18) /2
+        DW      (??ATA_moduleTestSoftware_flash_C_19) /2
+        DW      (??ATA_moduleTestSoftware_flash_C_20) /2
+        DW      (??ATA_moduleTestSoftware_flash_C_21) /2
+
+        RSEG SWITCH:CODE:NOROOT(1)
+`?<Jumptable for ATA_moduleTestIicIRQ_flash_C>_0`:
+        DB      0
+        DB      0
+        DW      (??ATA_moduleTestIicIRQ_flash_C_2) /2
+        DW      51
+        DW      (??ATA_moduleTestIicIRQ_flash_C_0) /2
+        DW      (??ATA_moduleTestIicIRQ_flash_C_3) /2
+        DW      (??ATA_moduleTestIicIRQ_flash_C_5) /2
+        DW      (??ATA_moduleTestIicIRQ_flash_C_7) /2
+        DW      (??ATA_moduleTestIicIRQ_flash_C_9) /2
+        DW      (??ATA_moduleTestIicIRQ_flash_C_11) /2
+        DW      (??ATA_moduleTestIicIRQ_flash_C_13) /2
+        DW      (??ATA_moduleTestIicIRQ_flash_C_15) /2
+        DW      (??ATA_moduleTestIicIRQ_flash_C_17) /2
+        DW      (??ATA_moduleTestIicIRQ_flash_C_19) /2
+        DW      (??ATA_moduleTestIicIRQ_flash_C_20) /2
+        DW      (??ATA_moduleTestIicIRQ_flash_C_21) /2
+        DW      (??ATA_moduleTestIicIRQ_flash_C_23) /2
+        DW      (??ATA_moduleTestIicIRQ_flash_C_24) /2
+        DW      (??ATA_moduleTestIicIRQ_flash_C_25) /2
+        DW      (??ATA_moduleTestIicIRQ_flash_C_26) /2
+        DW      (??ATA_moduleTestIicIRQ_flash_C_27) /2
+        DW      (??ATA_moduleTestIicIRQ_flash_C_28) /2
+        DW      (??ATA_moduleTestIicIRQ_flash_C_29) /2
+        DW      (??ATA_moduleTestIicIRQ_flash_C_30) /2
+        DW      (??ATA_moduleTestIicIRQ_flash_C_31) /2
+        DW      (??ATA_moduleTestIicIRQ_flash_C_33) /2
+        DW      (??ATA_moduleTestIicIRQ_flash_C_34) /2
+        DW      (??ATA_moduleTestIicIRQ_flash_C_35) /2
+        DW      (??ATA_moduleTestIicIRQ_flash_C_36) /2
+        DW      (??ATA_moduleTestIicIRQ_flash_C_38) /2
+        DW      (??ATA_moduleTestIicIRQ_flash_C_41) /2
+        DW      (??ATA_moduleTestIicIRQ_flash_C_43) /2
+        DW      (??ATA_moduleTestIicIRQ_flash_C_47) /2
+        DW      (??ATA_moduleTestIicIRQ_flash_C_44) /2
+        DW      (??ATA_moduleTestIicIRQ_flash_C_44) /2
+        DW      (??ATA_moduleTestIicIRQ_flash_C_44) /2
+        DW      (??ATA_moduleTestIicIRQ_flash_C_44) /2
+        DW      (??ATA_moduleTestIicIRQ_flash_C_44) /2
+        DW      (??ATA_moduleTestIicIRQ_flash_C_44) /2
+        DW      (??ATA_moduleTestIicIRQ_flash_C_44) /2
+        DW      (??ATA_moduleTestIicIRQ_flash_C_45) /2
+        DW      (??ATA_moduleTestIicIRQ_flash_C_50) /2
+        DW      (??ATA_moduleTestIicIRQ_flash_C_49) /2
+        DW      (??ATA_moduleTestIicIRQ_flash_C_52) /2
+        DW      (??ATA_moduleTestIicIRQ_flash_C_53) /2
+        DW      (??ATA_moduleTestIicIRQ_flash_C_54) /2
+        DW      (??ATA_moduleTestIicIRQ_flash_C_56) /2
+        DW      (??ATA_moduleTestIicIRQ_flash_C_58) /2
+        DW      (??ATA_moduleTestIicIRQ_flash_C_42) /2
+        DW      (??ATA_moduleTestIicIRQ_flash_C_59) /2
+        DW      (??ATA_moduleTestIicIRQ_flash_C_61) /2
+        DW      (??ATA_moduleTestIicIRQ_flash_C_62) /2
+        DW      (??ATA_moduleTestIicIRQ_flash_C_63) /2
+        DW      (??ATA_moduleTestIicIRQ_flash_C_66) /2
+        DW      (??ATA_moduleTestIicIRQ_flash_C_68) /2
+
+        RSEG SWITCH:CODE:NOROOT(1)
+`?<Jumptable for ATA_moduleTestEep_flash_C>_0`:
+        DB      0
+        DB      0
+        DW      (??ATA_moduleTestEep_flash_C_16) /2
+        DW      9
+        DW      (??ATA_moduleTestEep_flash_C_0) /2
+        DW      (??ATA_moduleTestEep_flash_C_1) /2
+        DW      (??ATA_moduleTestEep_flash_C_3) /2
+        DW      (??ATA_moduleTestEep_flash_C_5) /2
+        DW      (??ATA_moduleTestEep_flash_C_7) /2
+        DW      (??ATA_moduleTestEep_flash_C_8) /2
+        DW      (??ATA_moduleTestEep_flash_C_10) /2
+        DW      (??ATA_moduleTestEep_flash_C_12) /2
+        DW      (??ATA_moduleTestEep_flash_C_14) /2
+
+        RSEG SWITCH:CODE:NOROOT(1)
+`?<Jumptable for ATA_moduleTestAes_flash_C>_0`:
+        DB      0
+        DB      0
+        DW      (??ATA_moduleTestAes_flash_C_11) /2
+        DW      9
+        DW      (??ATA_moduleTestAes_flash_C_0) /2
+        DW      (??ATA_moduleTestAes_flash_C_2) /2
+        DW      (??ATA_moduleTestAes_flash_C_3) /2
+        DW      (??ATA_moduleTestAes_flash_C_7) /2
+        DW      (??ATA_moduleTestAes_flash_C_10) /2
+        DW      (??ATA_moduleTestAes_flash_C_4) /2
+        DW      (??ATA_moduleTestAes_flash_C_7) /2
+        DW      (??ATA_moduleTestAes_flash_C_8) /2
+        DW      (??ATA_moduleTestAes_flash_C_10) /2
+
+        RSEG SWITCH:CODE:NOROOT(1)
+`?<Jumptable for ATA_moduleTestLfRssiHandling_f_0`:
+        DB      0
+        DB      0
+        DW      (??ATA_moduleTestLfRssiHandling_flash_C_23) /2
+        DW      16
+        DW      (??ATA_moduleTestLfRssiHandling_flash_C_0) /2
+        DW      (??ATA_moduleTestLfRssiHandling_flash_C_2) /2
+        DW      (??ATA_moduleTestLfRssiHandling_flash_C_3) /2
+        DW      (??ATA_moduleTestLfRssiHandling_flash_C_5) /2
+        DW      (??ATA_moduleTestLfRssiHandling_flash_C_6) /2
+        DW      (??ATA_moduleTestLfRssiHandling_flash_C_7) /2
+        DW      (??ATA_moduleTestLfRssiHandling_flash_C_8) /2
+        DW      (??ATA_moduleTestLfRssiHandling_flash_C_12) /2
+        DW      (??ATA_moduleTestLfRssiHandling_flash_C_15) /2
+        DW      (??ATA_moduleTestLfRssiHandling_flash_C_18) /2
+        DW      (??ATA_moduleTestLfRssiHandling_flash_C_11) /2
+        DW      (??ATA_moduleTestLfRssiHandling_flash_C_14) /2
+        DW      (??ATA_moduleTestLfRssiHandling_flash_C_17) /2
+        DW      (??ATA_moduleTestLfRssiHandling_flash_C_20) /2
+        DW      (??ATA_moduleTestLfRssiHandling_flash_C_21) /2
+        DW      (??ATA_moduleTestLfRssiHandling_flash_C_22) /2
+
+        END
+// 
+//     2 bytes in segment ABSOLUTE
+// 2 384 bytes in segment CODE
+//   193 bytes in segment NEAR_N
+//   256 bytes in segment SWITCH
+// 
+// 2 640 bytes of CODE memory
+//   193 bytes of DATA memory (+ 2 bytes shared)
+//
+//Errors: none
+//Warnings: none

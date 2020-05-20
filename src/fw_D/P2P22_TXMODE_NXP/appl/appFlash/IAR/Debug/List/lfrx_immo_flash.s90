@@ -1,0 +1,1481 @@
+///////////////////////////////////////////////////////////////////////////////
+//
+// IAR C/C++ Compiler V7.10.1.1197 for Atmel AVR          13/May/2020  17:03:23
+// Copyright 1996-2017 IAR Systems AB.
+// Network license: dvriar01.mchp-main.com (STD)
+//
+//    Source file  =  
+//        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\firmware\lfrx\src\lfrx_immo_flash.c
+//    Command line =  
+//        -f C:\Users\C41045\AppData\Local\Temp\EW1B58.tmp
+//        (C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\firmware\lfrx\src\lfrx_immo_flash.c
+//        -v3 --enhanced_core -ms -o
+//        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\Obj
+//        -lCN
+//        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\List
+//        -lA
+//        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\List
+//        --no_cse --no_inline --no_code_motion --no_cross_call --no_clustering
+//        --no_tbaa --debug --64k_flash -DENABLE_BIT_DEFINITIONS -e
+//        --eeprom_size 2304 --clib -Ohz)
+//    Locale       =  English_USA.1252
+//    List file    =  
+//        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\List\lfrx_immo_flash.s90
+//
+///////////////////////////////////////////////////////////////////////////////
+
+        NAME lfrx_immo_flash
+
+        RTMODEL "__64bit_doubles", "disabled"
+        RTMODEL "__SystemLibrary", "CLib"
+        RTMODEL "__cpu", "3"
+        RTMODEL "__enhanced_core", "enabled"
+        RTMODEL "__has_elpm", "false"
+        RTMODEL "__memory_model", "2"
+        RTMODEL "__rt_version", "3"
+        RTMODEL "__vtable_memory", "__nearflash"
+
+        RSEG CSTACK:DATA:NOROOT(0)
+        RSEG RSTACK:DATA:NOROOT(0)
+
+        PUBLIC ATA_lfRxBitCntReachedImmo_flash_C
+        PUBLIC ATA_lfRxReinitImmo_flash_C
+        PUBLIC ATA_lfRxRfTxProcessImmo_flash_C
+        PUBWEAK _A_LDFC
+        PUBWEAK _A_LDFD
+        PUBWEAK _A_LDFFL
+        PUBWEAK _A_LFCPR
+        PUBWEAK _A_LFCR1
+        PUBWEAK _A_LTCMR
+        PUBWEAK _A_LTCOR
+        PUBWEAK _A_LTEMR
+        PUBWEAK _A_PHCRCR
+        PUBWEAK _A_PHCRPH
+        PUBWEAK _A_PHCRPL
+        PUBWEAK _A_PHCSTH
+        PUBWEAK _A_PHCSTL
+        PUBWEAK _A_PHDFR
+        PUBWEAK _A_PHFR
+        PUBWEAK _A_PHID0L
+        PUBWEAK _A_PHID1L
+        PUBWEAK _A_PHIDFR
+        PUBWEAK _A_PHIMR
+        PUBWEAK _A_PHTBLR
+        PUBWEAK _A_PHTCR
+        PUBWEAK _A_PRR0
+        PUBWEAK _A_PRR1
+        PUBWEAK _A_SMCR
+        PUBWEAK __?EEARH
+        PUBWEAK __?EEARL
+        PUBWEAK __?EECR
+        PUBWEAK __?EEDR
+        
+          CFI Names cfiNames0
+          CFI StackFrame CFA_Y Y DATA
+          CFI StackFrame CFA_SP SP DATA
+          CFI VirtualResource ?RetPad:1, ?RetHigh:8, ?RetLow:8, ?Ret:17
+          CFI Resource R0:8, R1:8, R2:8, R3:8, R4:8, R5:8, R6:8, R7:8, R8:8, R9:8
+          CFI Resource R10:8, R11:8, R12:8, R13:8, R14:8, R15:8, R16:8, R17:8
+          CFI Resource R18:8, R19:8, R20:8, R21:8, R22:8, R23:8, R24:8, R25:8
+          CFI Resource R26:8, R27:8, R28:8, R29:8, R30:8, R31:8
+          CFI Resource ?RetHighByteMask:8, SP:16, SPH:8, SPL:8, Y:16
+          CFI ResourceParts ?Ret ?RetHigh, ?RetLow, ?RetPad
+          CFI ResourceParts SP SPH, SPL
+          CFI ResourceParts Y R29, R28
+          CFI EndNames cfiNames0
+        
+          CFI Common cfiCommon0 Using cfiNames0
+          CFI CodeAlign 1
+          CFI DataAlign 1
+          CFI ReturnAddress ?Ret CODE
+          CFI CFA_Y Y+0
+          CFI CFA_SP SP+2
+          CFI ?RetPad 0
+          CFI ?RetHigh and(load(1, DATA, sub(CFA_SP, 1)), ?RetHighByteMask)
+          CFI ?RetLow Frame(CFA_SP, 0)
+          CFI ?Ret Concat
+          CFI R0 Undefined
+          CFI R1 Undefined
+          CFI R2 Undefined
+          CFI R3 Undefined
+          CFI R4 SameValue
+          CFI R5 SameValue
+          CFI R6 SameValue
+          CFI R7 SameValue
+          CFI R8 SameValue
+          CFI R9 SameValue
+          CFI R10 SameValue
+          CFI R11 SameValue
+          CFI R12 SameValue
+          CFI R13 SameValue
+          CFI R14 SameValue
+          CFI R15 SameValue
+          CFI R16 Undefined
+          CFI R17 Undefined
+          CFI R18 Undefined
+          CFI R19 Undefined
+          CFI R20 Undefined
+          CFI R21 Undefined
+          CFI R22 Undefined
+          CFI R23 Undefined
+          CFI R24 SameValue
+          CFI R25 SameValue
+          CFI R26 SameValue
+          CFI R27 SameValue
+          CFI R28 Undefined
+          CFI R29 Undefined
+          CFI R30 Undefined
+          CFI R31 Undefined
+          CFI ?RetHighByteMask SameValue
+          CFI SPH Undefined
+          CFI SPL Undefined
+          CFI EndCommon cfiCommon0
+        
+        EXTERN ATA_aesEncryptData_C
+        EXTERN ATA_aesSetConfig_C
+        EXTERN ATA_eepReadBytes_C
+        EXTERN ATA_globalsSwitchAvrPhClock_flash_C
+        EXTERN ATA_lfRssiMeasConfig_flash_C
+        EXTERN ATA_rfTxGetIndirectEEPromServiceConfigAddr_flash_C
+        EXTERN ATA_rfTxStartTx_C
+        EXTERN extReq
+        EXTERN g_bBitsToReceive
+        EXTERN g_bBytesToTransmit
+        EXTERN g_bReceiveState
+        EXTERN g_bResponseDelayReached
+        EXTERN g_bRxBuffer
+        EXTERN g_bRxBufferIndex
+        EXTERN g_bTpStatusByte
+        EXTERN g_bTxBuffer
+        EXTERN g_sAesComponentData
+        EXTERN g_sAtmelEEPromSection
+        EXTERN g_sCustomerEEPromSection
+        EXTERN g_uTpConfig
+
+// C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\firmware\lfrx\src\lfrx_immo_flash.c
+//    1 //lint -e9059
+//    2 /******************************************************************************
+//    3   Use of this software is subject to Microchip's Software License Agreement.
+//    4 --------------------------------------------------------------------------------
+//    5   $URL: http://svnservulm.corp.atmel.com/svn/CDB/02_AutoRF/Primus2pSW/Branches/VB_PRIMUS2P_ROM_2.0/firmware/lfrx/src/lfrx_immo_flash.c $
+//    6   $LastChangedRevision: 303954 $
+//    7   $LastChangedDate: 2015-03-11 12:58:46 +0100 (Mi, 11 Mrz 2015) $
+//    8   $LastChangedBy: gwillbol $
+//    9 -------------------------------------------------------------------------------
+//   10   Project:      ATA5700
+//   11   Target MCU:   ATA5700
+//   12   Compiler:     IAR C/C++ Compiler for AVR 6.3.18.0
+//   13 -------------------------------------------------------------------------------
+//   14 
+//   15 ******************************************************************************
+//   16 * Copyright 2017, Microchip Technology Incorporated and its subsidiaries.     *
+//   17 *                                                                             *
+//   18 * This software is owned by the Microchip Technology Incorporated.            *
+//   19 * Microchip hereby grants to licensee a personal                              *
+//   20 * non-exclusive, non-transferable license to copy, use, modify, create        *
+//   21 * derivative works of, and compile the Microchip Source Code and derivative   *
+//   22 * works for the sole and exclusive purpose of creating custom software in     *
+//   23 * support of licensee product to be used only in conjunction with a Microchip *
+//   24 * integrated circuit as specified in the applicable agreement. Any            *        
+//   25 * reproduction, modification, translation, compilation, or representation of  *
+//   26 * this software except as specified above is prohibited without the express   *
+//   27 * written permission of Microchip.                                            *
+//   28 *                                                                             *
+//   29 * Disclaimer: MICROCHIP MAKES NO WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,    *
+//   30 * WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED    *
+//   31 * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.         *
+//   32 * Microchip reserves the right to make changes without further notice to the  *
+//   33 * materials described herein. Microchip does not assume any liability arising *
+//   34 * out of the application or use of any product or circuit described herein.   *
+//   35 * Microchip does not authorize its products for use as critical components in *
+//   36 * life-support systems where a malfunction or failure may reasonably be       *
+//   37 * expected to result in significant injury to the user. The inclusion of      *
+//   38 * Microchip products in a life-support systems application implies that the   *
+//   39 * manufacturer assumes all risk of such use and in doing so indemnifies       *
+//   40 * Microchip against all charges.                                              *
+//   41 *                                                                             *
+//   42 * Use may be limited by and subject to the applicable Microchip software      *
+//   43 * license agreement.                                                          *
+//   44 ******************************************************************************/
+//   45 /** \file lfrx_immo.c
+//   46 */
+//   47 
+//   48 //lint -restore
+//   49 
+//   50 /*===========================================================================*/
+//   51 /*  INCLUDES                                                                 */
+//   52 /*===========================================================================*/
+//   53 #include "lfrx_immo_flash.h"
+
+        ASEGN ABSOLUTE:DATA:NOROOT,021H
+// union <unnamed> volatile __io _A_PRR1
+_A_PRR1:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,035H
+// union <unnamed> volatile __io _A_LTCMR
+_A_LTCMR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,037H
+// union <unnamed> volatile __io _A_PHTCR
+_A_PHTCR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,038H
+// union <unnamed> volatile __io _A_LDFFL
+_A_LDFFL:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,039H
+// union <unnamed> volatile __io _A_LDFD
+_A_LDFD:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,03aH
+// union <unnamed> volatile __io _A_PRR0
+_A_PRR0:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,03bH
+// union <unnamed> volatile __io _A_PHFR
+_A_PHFR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,050H
+// union <unnamed> volatile __io _A_LFCR1
+_A_LFCR1:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,058H
+// union <unnamed> volatile __io _A_SMCR
+_A_SMCR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,018eH
+// union <unnamed> volatile __ext_io _A_LFCPR
+_A_LFCPR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,0194H
+// union <unnamed> volatile __ext_io _A_PHID0L
+_A_PHID0L:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,0199H
+// union <unnamed> volatile __ext_io _A_PHID1L
+_A_PHID1L:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,019aH
+// union <unnamed> volatile __ext_io _A_PHIDFR
+_A_PHIDFR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01a1H
+// union <unnamed> volatile __ext_io _A_LTCOR
+_A_LTCOR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01a4H
+// union <unnamed> volatile __ext_io _A_PHTBLR
+_A_PHTBLR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01a5H
+// union <unnamed> volatile __ext_io _A_PHDFR
+_A_PHDFR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01a6H
+// union <unnamed> volatile __ext_io _A_LTEMR
+_A_LTEMR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01d7H
+// union <unnamed> volatile __ext_io _A_LDFC
+_A_LDFC:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01d8H
+// union <unnamed> volatile __ext_io _A_PHIMR
+_A_PHIMR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01d9H
+// union <unnamed> volatile __ext_io _A_PHCRCR
+_A_PHCRCR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01daH
+// union <unnamed> volatile __ext_io _A_PHCSTL
+_A_PHCSTL:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01dbH
+// union <unnamed> volatile __ext_io _A_PHCSTH
+_A_PHCSTH:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01dcH
+// union <unnamed> volatile __ext_io _A_PHCRPL
+_A_PHCRPL:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01ddH
+// union <unnamed> volatile __ext_io _A_PHCRPH
+_A_PHCRPH:
+        DS8 1
+//   54 #include "../../lfrx/src/lfrx_flash.h"
+//   55 #include "../../rftx/src/rftx.h"
+//   56 #include "../../spi/src/ata5700_command_set_flash.h"
+//   57 #include "../../eep/src/eep.h"
+//   58 #include "../../aes/src/aes.h"
+//   59 #include "../../globals/src/globals_flash.h"
+//   60 #include "../../lfrssi/src/lfrssi_flash.h"
+//   61 #include "../../rftx/src/rftx_flash.h"
+//   62 
+//   63 /*===========================================================================*/
+//   64 /*  DEFINES                                                                  */
+//   65 /*===========================================================================*/
+//   66 
+//   67 /*===========================================================================*/
+//   68 /*  Modul Globals                                                            */
+//   69 /*===========================================================================*/
+
+        RSEG NEAR_N:DATA:NOROOT(0)
+//   70 __no_init static uint8_t m_bTempArray[40];
+m_bTempArray:
+        DS8 40
+
+        RSEG NEAR_N:DATA:NOROOT(0)
+//   71 __no_init static uint8_t m_bChallengeLengthBits_flash;
+m_bChallengeLengthBits_flash:
+        DS8 1
+
+        RSEG NEAR_N:DATA:NOROOT(0)
+//   72 __no_init static uint8_t m_bResponseLengthBits_flash;
+m_bResponseLengthBits_flash:
+        DS8 1
+
+        RSEG CODE:CODE:NOROOT(1)
+ATA_lfRxAuthenticateImmo_flash_C:
+          CFI Block cfiBlock0 Using cfiCommon0
+          CFI Function ATA_lfRxAuthenticateImmo_flash_C
+        ST      -Y, R25
+          CFI R25 Frame(CFA_Y, -1)
+          CFI CFA_Y Y+1
+        ST      -Y, R24
+          CFI R24 Frame(CFA_Y, -2)
+          CFI CFA_Y Y+2
+        LDI     R16, 0
+        LDS     R17, g_uTpConfig
+        SBRC    R17, 5
+        LDI     R16, 1
+??ATA_lfRxAuthenticateImmo_flash_C_0:
+        LDI     R18, 0
+        LDI     R17, 2
+          CFI FunCall ATA_aesSetConfig_C
+        CALL    ATA_aesSetConfig_C
+        LDS     R25, m_bChallengeLengthBits_flash
+        LSR     R25
+        LSR     R25
+        LSR     R25
+        LDI     R16, 0
+        RJMP    ??ATA_lfRxAuthenticateImmo_flash_C_1
+??ATA_lfRxAuthenticateImmo_flash_C_2:
+        MOV     R30, R16
+        LDI     R31, 0
+        SUBI    R30, LOW((-(g_bRxBuffer) & 0xFFFF))
+        SBCI    R31, (-(g_bRxBuffer) & 0xFFFF) >> 8
+        LDD     R18, Z+1
+        MOV     R30, R16
+        LDI     R31, 0
+        SUBI    R30, LOW((-(g_sAesComponentData) & 0xFFFF))
+        SBCI    R31, (-(g_sAesComponentData) & 0xFFFF) >> 8
+        STD     Z+4, R18
+        INC     R16
+??ATA_lfRxAuthenticateImmo_flash_C_1:
+        CP      R16, R25
+        BRCS    ??ATA_lfRxAuthenticateImmo_flash_C_2
+        LDI     R17, 128
+        STS     (g_sAesComponentData + 20), R17
+        LDI     R17, 18
+        STS     m_bTempArray, R17
+        LDI     R17, 52
+        STS     (m_bTempArray + 1), R17
+        LDI     R17, 86
+        STS     (m_bTempArray + 2), R17
+        LDI     R17, 120
+        STS     (m_bTempArray + 3), R17
+        LDI     R17, 0
+        STS     (m_bTempArray + 4), R17
+        STS     (m_bTempArray + 5), R17
+        STS     (m_bTempArray + 6), R17
+        STS     (m_bTempArray + 7), R17
+        STS     (m_bTempArray + 8), R17
+        STS     (m_bTempArray + 9), R17
+        STS     (m_bTempArray + 10), R17
+        STS     (m_bTempArray + 11), R17
+        LDI     R18, 0
+        RJMP    ??ATA_lfRxAuthenticateImmo_flash_C_3
+??ATA_lfRxAuthenticateImmo_flash_C_4:
+        LDI     R31, 0
+        MOV     R30, R18
+        SUBI    R30, LOW((-(m_bTempArray) & 0xFFFF))
+        SBCI    R31, (-(m_bTempArray) & 0xFFFF) >> 8
+        LD      R19, Z
+        MOVW    R31:R30, R17:R16
+        SUBI    R30, LOW((-(g_sAesComponentData) & 0xFFFF))
+        SBCI    R31, (-(g_sAesComponentData) & 0xFFFF) >> 8
+        STD     Z+4, R19
+        INC     R16
+        INC     R18
+??ATA_lfRxAuthenticateImmo_flash_C_3:
+        CPI     R16, 16
+        BRCS    ??ATA_lfRxAuthenticateImmo_flash_C_4
+          CFI FunCall ATA_aesEncryptData_C
+        CALL    ATA_aesEncryptData_C
+        LDS     R24, m_bResponseLengthBits_flash
+        LSR     R24
+        LSR     R24
+        LSR     R24
+        LDS     R16, g_uTpConfig
+        SBRS    R16, 2
+        RJMP    ??ATA_lfRxAuthenticateImmo_flash_C_5
+        INC     R25
+        MOV     R18, R25
+        LDI     R16, 0
+        RJMP    ??ATA_lfRxAuthenticateImmo_flash_C_6
+??ATA_lfRxAuthenticateImmo_flash_C_7:
+        LDI     R31, 0
+        MOV     R30, R18
+        SUBI    R30, LOW((-(g_bRxBuffer) & 0xFFFF))
+        SBCI    R31, (-(g_bRxBuffer) & 0xFFFF) >> 8
+        LD      R19, Z
+        LDI     R31, 0
+        MOV     R30, R16
+        SUBI    R30, LOW((-(g_sAesComponentData) & 0xFFFF))
+        SBCI    R31, (-(g_sAesComponentData) & 0xFFFF) >> 8
+        LDD     R17, Z+4
+        CP      R19, R17
+        BREQ    ??ATA_lfRxAuthenticateImmo_flash_C_8
+        LDI     R17, 246
+        STS     g_bTpStatusByte, R17
+??ATA_lfRxAuthenticateImmo_flash_C_8:
+        INC     R16
+        INC     R18
+??ATA_lfRxAuthenticateImmo_flash_C_6:
+        CP      R16, R24
+        BRCS    ??ATA_lfRxAuthenticateImmo_flash_C_7
+        LDS     R16, g_bTpStatusByte
+        CPI     R16, 240
+        BRNE    ??ATA_lfRxAuthenticateImmo_flash_C_5
+        LDI     R18, 0
+        LDI     R17, 2
+        LDS     R16, g_uTpConfig
+        BST     R16, 5
+        LDI     R16, 0
+        BLD     R16, 0
+        LDI     R19, 1
+        EOR     R16, R19
+          CFI FunCall ATA_aesSetConfig_C
+        CALL    ATA_aesSetConfig_C
+          CFI FunCall ATA_aesEncryptData_C
+        CALL    ATA_aesEncryptData_C
+??ATA_lfRxAuthenticateImmo_flash_C_5:
+        LDI     R16, 0
+        RJMP    ??ATA_lfRxAuthenticateImmo_flash_C_9
+??ATA_lfRxAuthenticateImmo_flash_C_10:
+        MOV     R30, R16
+        LDI     R31, 0
+        SUBI    R30, LOW((-(g_sAesComponentData) & 0xFFFF))
+        SBCI    R31, (-(g_sAesComponentData) & 0xFFFF) >> 8
+        LDD     R18, Z+4
+        MOV     R30, R16
+        LDI     R31, 0
+        SUBI    R30, LOW((-(g_bTxBuffer) & 0xFFFF))
+        SBCI    R31, (-(g_bTxBuffer) & 0xFFFF) >> 8
+        STD     Z+1, R18
+        INC     R16
+??ATA_lfRxAuthenticateImmo_flash_C_9:
+        CP      R16, R24
+        BRCS    ??ATA_lfRxAuthenticateImmo_flash_C_10
+        LD      R24, Y+
+          CFI R24 SameValue
+          CFI CFA_Y Y+1
+        LD      R25, Y+
+          CFI R25 SameValue
+          CFI CFA_Y Y+0
+        RET
+          CFI EndBlock cfiBlock0
+
+        RSEG CODE:CODE:NOROOT(1)
+ATA_lfRxParseCmdImmo_flash_C:
+          CFI Block cfiBlock1 Using cfiCommon0
+          CFI Function ATA_lfRxParseCmdImmo_flash_C
+        ST      -Y, R24
+          CFI R24 Frame(CFA_Y, -1)
+          CFI CFA_Y Y+1
+        LDI     R16, 1
+        LDS     R17, g_bRxBuffer
+        SWAP    R17
+        ANDI    R17, 0x0F
+        STS     g_bRxBuffer, R17
+        LDS     R24, g_bRxBuffer
+        LDS     R17, g_bTpStatusByte
+        CPI     R17, 240
+        BRNE    ??ATA_lfRxParseCmdImmo_flash_C_0
+        LDI     R16, 254
+        STS     g_bTxBuffer, R16
+        TST     R24
+        BRNE    ??ATA_lfRxParseCmdImmo_flash_C_1
+        LDI     R20, 4
+        LDI     R18, LOW((g_sAtmelEEPromSection + 48))
+        LDI     R19, HIGH((g_sAtmelEEPromSection + 48))
+        LDI     R16, LOW((g_bTxBuffer + 1))
+        LDI     R17, HIGH((g_bTxBuffer + 1))
+          CFI FunCall ATA_eepReadBytes_C
+        CALL    ATA_eepReadBytes_C
+        LDI     R16, 5
+??ATA_lfRxParseCmdImmo_flash_C_0:
+        LDS     R17, g_bTpStatusByte
+        CPI     R17, 240
+        BREQ    ??ATA_lfRxParseCmdImmo_flash_C_2
+??ATA_lfRxParseCmdImmo_flash_C_3:
+        LDI     R16, 0
+??ATA_lfRxParseCmdImmo_flash_C_2:
+        MOV     R17, R24
+        SWAP    R17
+        ORI     R17, 0x0F
+        LDS     R18, g_bTpStatusByte
+        AND     R18, R17
+        STS     g_bTpStatusByte, R18
+        SUBI    R24, 3
+        CPI     R24, 11
+        BRCC    ??ATA_lfRxParseCmdImmo_flash_C_4
+        STS     g_bTxBuffer, R18
+??ATA_lfRxParseCmdImmo_flash_C_4:
+        RJMP    ?Subroutine0
+??ATA_lfRxParseCmdImmo_flash_C_1:
+        CPI     R24, 1
+        BRNE    ??ATA_lfRxParseCmdImmo_flash_C_5
+          CFI FunCall ATA_lfRxAuthenticateImmo_flash_C
+        RCALL   ATA_lfRxAuthenticateImmo_flash_C
+        LDS     R16, m_bResponseLengthBits_flash
+        LSR     R16
+        LSR     R16
+        LSR     R16
+        INC     R16
+        RJMP    ??ATA_lfRxParseCmdImmo_flash_C_0
+??ATA_lfRxParseCmdImmo_flash_C_5:
+        LDI     R16, 243
+        STS     g_bTpStatusByte, R16
+        RJMP    ??ATA_lfRxParseCmdImmo_flash_C_3
+          CFI EndBlock cfiBlock1
+
+        RSEG CODE:CODE:NOROOT(1)
+ATA_lfRxInitImmo_flash_C:
+          CFI Block cfiBlock2 Using cfiCommon0
+          CFI Function ATA_lfRxInitImmo_flash_C
+        CBI     0x1A, 0x05
+        IN      R16, 0x01
+        ANDI    R16, 0x5F
+        OUT     0x01, R16
+        LDI     R16, 3
+        STS     m_bTempArray, R16
+        LDI     R16, 128
+        STS     _A_LFCPR, R16
+        LDI     R16, 3
+        STS     _A_LFCPR, R16
+          CFI FunCall ATA_globalsSwitchAvrPhClock_flash_C
+        CALL    ATA_globalsSwitchAvrPhClock_flash_C
+        LDI     R16, 64
+        STS     _A_LDFC, R16
+        LDI     R16, 128
+        OUT     0x18, R16
+        LDI     R16, 3
+        OUT     0x1B, R16
+        LDI     R16, 0
+          CFI FunCall ATA_globalsSwitchAvrPhClock_flash_C
+        CALL    ATA_globalsSwitchAvrPhClock_flash_C
+        LDI     R16, 0
+        STS     g_bRxBufferIndex, R16
+        LDI     R16, 8
+        STS     g_bBitsToReceive, R16
+        LDI     R16, 0
+        STS     g_bReceiveState, R16
+        LDI     R16, 58
+        STS     _A_LTCOR, R16
+        LDI     R16, 16
+        STS     _A_LTEMR, R16
+        LDI     R16, 122
+        OUT     0x15, R16
+        LDI     R16, 0
+        STS     g_bResponseDelayReached, R16
+        SBI     0x15, 0x07
+        IN      R16, 0x30
+        ORI     R16, 0x80
+        OUT     0x30, R16
+        RET
+          CFI EndBlock cfiBlock2
+        REQUIRE _A_PRR0
+        REQUIRE _A_PRR1
+        REQUIRE _A_LFCPR
+        REQUIRE _A_LDFC
+        REQUIRE _A_LDFFL
+        REQUIRE _A_PHFR
+        REQUIRE _A_LTCOR
+        REQUIRE _A_LTEMR
+        REQUIRE _A_LTCMR
+        REQUIRE _A_LFCR1
+//   73 
+//   74 
+//   75 /*===========================================================================*/
+//   76 /*  LOCAL PROTOTYPES                                                         */
+//   77 /*===========================================================================*/
+//   78 static void ATA_lfRxInitImmo_flash_C(void);
+//   79 static uint8_t ATA_lfRxParseCmdImmo_flash_C(void);
+//   80 static void ATA_lfRxAuthenticateImmo_flash_C(void);
+//   81 
+//   82 /*===========================================================================*/
+//   83 /*  IMPLEMENTATION                                                           */
+//   84 /*===========================================================================*/
+//   85 
+//   86 //-----------------------------------------------------------------------------
+//   87 /** \brief <b>ATA_lfRxRfTxProcessImmo_flash_C</b>
+//   88     does the process of one command reception via LF, command processing via AOI
+//   89     protocol and response via RF
+//   90 
+//   91     010:
+//   92 
+//   93     020:
+//   94 
+//   95     030:
+//   96 
+//   97 
+//   98     \param none
+//   99 
+//  100     \return none
+//  101 
+//  102     \Derived no
+//  103 
+//  104     \Rationale none
+//  105 
+//  106     \Traceability none
+//  107 
+//  108     \StackUsage SU_XXX bytes
+//  109 
+//  110     \image none
+//  111     \n
+//  112 */
+//  113 //-----------------------------------------------------------------------------
+
+        RSEG CODE:CODE:NOROOT(1)
+//  114 void ATA_lfRxRfTxProcessImmo_flash_C(void)
+ATA_lfRxRfTxProcessImmo_flash_C:
+          CFI Block cfiBlock3 Using cfiCommon0
+          CFI Function ATA_lfRxRfTxProcessImmo_flash_C
+//  115 //-----------------------------------------------------------------------------
+//  116 {
+        ST      -Y, R24
+          CFI R24 Frame(CFA_Y, -1)
+          CFI CFA_Y Y+1
+//  117   uint8_t bRftxConfig = 0x48;
+        LDI     R24, 72
+//  118 
+//  119   /* Read the configuration byte present in EEPROM.
+//  120      Only used to distinguish between unilateral and bilateral authentication
+//  121      and CRC enabled/disabled configuration */
+//  122   ATA_eepReadBytes_C(&g_uTpConfig.bConfigbyte, 0x0800U, 0x01U);
+        LDI     R20, 1
+        LDI     R18, 0
+        LDI     R19, 8
+        LDI     R16, LOW(g_uTpConfig)
+        LDI     R17, (g_uTpConfig) >> 8
+          CFI FunCall ATA_eepReadBytes_C
+        CALL    ATA_eepReadBytes_C
+//  123 
+//  124   /* initialize for LF reception */
+//  125   ATA_lfRxInitImmo_flash_C();
+          CFI FunCall ATA_lfRxInitImmo_flash_C
+        RCALL   ATA_lfRxInitImmo_flash_C
+//  126   /* configure sleep mode power down */
+//  127   SMCR = 0x05;
+        LDI     R16, 5
+        OUT     0x38, R16
+        RJMP    ??ATA_lfRxRfTxProcessImmo_flash_C_0
+//  128 
+//  129   /* sleep till complete frame is received */
+//  130   while(TRUE) {
+//  131     __disable_interrupt();
+//  132     if(g_bReceiveState > 2) {
+//  133       break;
+//  134     }
+//  135     __enable_interrupt();
+??ATA_lfRxRfTxProcessImmo_flash_C_1:
+        SEI
+//  136     __sleep();
+        SLEEP
+??ATA_lfRxRfTxProcessImmo_flash_C_0:
+        CLI
+        LDS     R16, g_bReceiveState
+        CPI     R16, 3
+        BRCS    ??ATA_lfRxRfTxProcessImmo_flash_C_1
+//  137   }
+//  138 
+//  139   g_bReceiveState = 0;
+        LDI     R16, 0
+        STS     g_bReceiveState, R16
+//  140   __enable_interrupt();
+        SEI
+//  141 
+//  142   g_bBytesToTransmit = ATA_lfRxParseCmdImmo_flash_C();
+          CFI FunCall ATA_lfRxParseCmdImmo_flash_C
+        RCALL   ATA_lfRxParseCmdImmo_flash_C
+        STS     g_bBytesToTransmit, R16
+//  143 
+//  144   if(g_bBytesToTransmit > 0) {
+        TST     R16
+        BREQ    ??ATA_lfRxRfTxProcessImmo_flash_C_2
+//  145 
+//  146     /* check if LF RSSI measurement has been done */
+//  147     if( extReq.lfrxRftxConfig & 0x06 )
+        LDS     R16, (extReq + 5)
+        ANDI    R16, 0x06
+        BREQ    ??ATA_lfRxRfTxProcessImmo_flash_C_3
+//  148     {
+//  149         ATA_lfRssiMeasConfig_flash_C( extReq.lfrxRftxConfig & 0x06 );
+        LDS     R16, (extReq + 5)
+        ANDI    R16, 0x06
+          CFI FunCall ATA_lfRssiMeasConfig_flash_C
+        CALL    ATA_lfRssiMeasConfig_flash_C
+//  150         bRftxConfig |= 0x04;  /* stay in TX after transmission */
+        LDI     R24, 76
+//  151     }
+//  152 
+//  153     /* start RF TX statemachine */
+//  154     uint16_t eepService = ATA_rfTxGetIndirectEEPromServiceConfigAddr_flash_C((uint16_t)&g_sCustomerEEPromSection.eepRfTxSer0Ptr_l);
+??ATA_lfRxRfTxProcessImmo_flash_C_3:
+        LDI     R16, LOW((g_sCustomerEEPromSection + 108))
+        LDI     R17, HIGH((g_sCustomerEEPromSection + 108))
+          CFI FunCall ATA_rfTxGetIndirectEEPromServiceConfigAddr_flash_C
+        CALL    ATA_rfTxGetIndirectEEPromServiceConfigAddr_flash_C
+        MOVW    R19:R18, R17:R16
+//  155     ATA_rfTxStartTx_C(bRftxConfig, (uint8_t*)eepService);
+        MOV     R16, R24
+          CFI FunCall ATA_rfTxStartTx_C
+        CALL    ATA_rfTxStartTx_C
+//  156   }
+//  157   /* delete external request flag */
+//  158   extReq.lfrxRftxConfig &= ~BIT_MASK_0;
+??ATA_lfRxRfTxProcessImmo_flash_C_2:
+        LDI     R30, LOW(extReq)
+        LDI     R31, (extReq) >> 8
+        LDD     R16, Z+5
+        ANDI    R16, 0xFE
+        STD     Z+5, R16
+//  159 }
+          CFI EndBlock cfiBlock3
+        REQUIRE ?Subroutine0
+        REQUIRE _A_SMCR
+        ;               // Fall through to label ?Subroutine0
+
+        RSEG CODE:CODE:NOROOT(1)
+?Subroutine0:
+          CFI Block cfiBlock4 Using cfiCommon0
+          CFI NoFunction
+          CFI CFA_Y Y+1
+          CFI R24 Frame(CFA_Y, -1)
+        LD      R24, Y+
+          CFI CFA_Y Y+0
+          CFI R24 SameValue
+        RET
+          CFI EndBlock cfiBlock4
+//  160 
+//  161 //-----------------------------------------------------------------------------
+//  162 /** \brief <b>ATA_lfRxInitImmo_flash_C</b>
+//  163     shall configure the transponder for AOIP command reception
+//  164 
+//  165     010:
+//  166 
+//  167     020:
+//  168 
+//  169     030:
+//  170 
+//  171 
+//  172     \param none
+//  173 
+//  174     \return none
+//  175 
+//  176     \Derived no
+//  177 
+//  178     \Rationale none
+//  179 
+//  180     \Traceability Primus2P-916, Primus2P-917, Primus2P-1226
+//  181 
+//  182     \StackUsage SU_XXX bytes
+//  183 
+//  184     \image none
+//  185     \n
+//  186 */
+//  187 //-----------------------------------------------------------------------------
+//  188 static void ATA_lfRxInitImmo_flash_C(void)
+//  189 //-----------------------------------------------------------------------------
+//  190 {
+//  191   /* LLR-Ref: Disable power reduction to serial peripheral interface. */
+//  192   PRR0 &= ~BM_PRCO;
+//  193 
+//  194   /* LLR-Ref: Disable power reduction to LF receiver. */
+//  195   PRR1 &= ~(BM_PRLFR|BM_PRLFPH);
+//  196 
+//  197   /* LF synchronization stop bit */
+//  198   // LFSTOP = 0x4F; // symbols length = 4, symbols = b1111
+//  199 
+//  200   /* LF calibration protect */
+//  201   m_bTempArray[0] = 0x03;
+//  202   LFCPR = BM_LFCPCE;    // change enable
+//  203   LFCPR = m_bTempArray[0]; // calibration ready, calibration protect
+//  204 
+//  205   /* LLR-Ref: Switch FIFO and CRC clock to AVR clock to do configuration. */
+//  206   ATA_globalsSwitchAvrPhClock_flash_C((uint8_t)(BM_LDFSCKS | BM_LDFSCSW));
+//  207 
+//  208   /* LLR-Ref: CRC settings. */
+//  209   // PHCRCR = 0x00;
+//  210   // PHCSTH = 0x00;
+//  211   // PHCSTL = 0x00;
+//  212   // PHCRPH = 0x00;
+//  213   // PHCRPL = 0x02;
+//  214   // PHCRCR = 0xC8;      /* CRC enable, strobe enable, CRC4, MSB, ID frame excluded */
+//  215 
+//  216   /* LLR-Ref: FIFO settings. */
+//  217   LDFC = 0x00|BM_LDFMSB;   /* Set fill level configuration to 0 */
+//  218   LDFFL = BM_LDFCLR;        /* clear RdPtr, WrPtr, fill-level, status and bit length */
+//  219   PHFR = 0x03;            /* clear bit length and CRC error flags */
+//  220 
+//  221   /* LLR-Ref: Switch clocks back to protocol handler clock. */
+//  222   ATA_globalsSwitchAvrPhClock_flash_C((uint8_t)0x00);
+//  223 
+//  224   /* LLR-Ref: Interrupt settings. */
+//  225   // LFIMR = 0x00;       /* disable LF Interrupts */
+//  226   // PHIMR = BM_PHDFIM;  /* enable data frame interrupt (LFBCR_vect) */
+//  227   // LDFIM  = 0x00;       /* disable FIFO interrupts */
+//  228 
+//  229   /* LLR-Ref: Clear the reception buffer index for LF reception. */
+//  230   g_bRxBufferIndex = 0x00;
+//  231 
+//  232   /* LLR-Ref: Update the number of bits to be received. */
+//  233   g_bBitsToReceive = 0x08;
+//  234 
+//  235   /* LLR-Ref: Initialize receive state */
+//  236   g_bReceiveState = 0;
+//  237 
+//  238   /* LLR-Ref: Enable response delay timer. */
+//  239   LTCOR = 58;        /* 62 * 32ms = 1984ms */
+//  240   LTEMR = BM_TBLEM;  /* bit length reached triggers PH-timer event */
+//  241   LTCMR = 0x7A;      /* start timer on event, enable continuous mode, enable
+//  242                          interrupt, compare reset, prescaler value = 4 */
+//  243   g_bResponseDelayReached = FALSE; /* Reset response delay flag. */
+//  244   LTCMR |= BM_LTENA;
+//  245 
+//  246   /* LLR-Ref: Start reception. */
+//  247   LFCR1 |= BM_LFRE;
+//  248 }
+//  249 
+//  250 //-----------------------------------------------------------------------------
+//  251 /** \brief <b>ATA_lfRxReinitImmo_flash_C</b>
+//  252     Function is called to reconfigure the LF receiver while receiving data.
+//  253     The reconfiguration is needed for commands which includes additional data
+//  254     after the command byte.
+//  255 
+//  256     010: Parse commands for reconfiguration.
+//  257 
+//  258     020: Reconfiguration of CRC (no clock switch has to be done cause data is
+//  259          stored in shadow registers).
+//  260 
+//  261 
+//  262     \param none
+//  263 
+//  264     \return none
+//  265 
+//  266     \Derived no
+//  267 
+//  268     \Rationale none
+//  269 
+//  270     \Traceability Primus2P-1222
+//  271 
+//  272     \StackUsage SU_XXX bytes
+//  273 
+//  274     \image none
+//  275     \n
+//  276 */
+//  277 //-----------------------------------------------------------------------------
+
+        RSEG CODE:CODE:NOROOT(1)
+//  278 void ATA_lfRxReinitImmo_flash_C(uint8_t bCmd4Bit)
+ATA_lfRxReinitImmo_flash_C:
+          CFI Block cfiBlock5 Using cfiCommon0
+          CFI Function ATA_lfRxReinitImmo_flash_C
+//  279 //-----------------------------------------------------------------------------
+//  280 {
+//  281   /* LLR-Ref: 010 */
+//  282   if(bCmd4Bit == START_AUTH) {
+        CPI     R16, 1
+        BRNE    ??ATA_lfRxReinitImmo_flash_C_0
+//  283     /* read out challenge and response length from EEPROM */
+//  284     ATA_eepReadBytes_C(&m_bTempArray[0], (uint16_t)&g_sCustomerEEPromSection.eepCalLen, 0x02);
+        LDI     R20, 2
+        LDI     R18, LOW((g_sCustomerEEPromSection + 4))
+        LDI     R19, HIGH((g_sCustomerEEPromSection + 4))
+        LDI     R16, LOW(m_bTempArray)
+        LDI     R17, (m_bTempArray) >> 8
+          CFI FunCall ATA_eepReadBytes_C
+        CALL    ATA_eepReadBytes_C
+//  285     m_bChallengeLengthBits_flash = m_bTempArray[0];
+        LDS     R16, m_bTempArray
+        STS     m_bChallengeLengthBits_flash, R16
+//  286     m_bResponseLengthBits_flash = m_bTempArray[1];
+        LDS     R16, (m_bTempArray + 1)
+        STS     m_bResponseLengthBits_flash, R16
+//  287 
+//  288     if(g_uTpConfig.sConfigbits.CM == UNILATERAL) {
+        LDS     R16, g_uTpConfig
+        SBRC    R16, 2
+        RJMP    ??ATA_lfRxReinitImmo_flash_C_1
+//  289       g_bBitsToReceive = m_bChallengeLengthBits_flash;
+        LDS     R16, m_bChallengeLengthBits_flash
+        RJMP    ??ATA_lfRxReinitImmo_flash_C_2
+//  290     }
+//  291     else {
+//  292       g_bBitsToReceive = m_bChallengeLengthBits_flash + m_bResponseLengthBits_flash;
+??ATA_lfRxReinitImmo_flash_C_1:
+        LDS     R16, m_bChallengeLengthBits_flash
+        LDS     R17, m_bResponseLengthBits_flash
+        ADD     R16, R17
+??ATA_lfRxReinitImmo_flash_C_2:
+        STS     g_bBitsToReceive, R16
+//  293     }
+//  294   }
+//  295 
+//  296   PHID0L = 0;               /* disable ID0 */
+??ATA_lfRxReinitImmo_flash_C_0:
+        LDI     R16, 0
+        STS     _A_PHID0L, R16
+//  297   PHID1L = 0;               /* disable ID1 */
+        STS     _A_PHID1L, R16
+//  298   PHIDFR = 0;               /* disable ID frame length */
+        STS     _A_PHIDFR, R16
+//  299   PHTCR |= BM_CSM;          /* enable continue receive mode to transfer shadow register after telegram bit length reached */
+        SBI     0x17, 0x07
+//  300   PHDFR = g_bBitsToReceive; /* data frame length */
+        LDS     R16, g_bBitsToReceive
+        STS     _A_PHDFR, R16
+//  301   PHIMR = BM_PHTBLIM;       /* enable telegram bit length reached interrupt (LFBCR_vect) */
+        LDI     R16, 2
+        STS     _A_PHIMR, R16
+//  302 
+//  303   /* LLR-Ref: 020 */
+//  304   if(g_uTpConfig.sConfigbits.DCD == 0) {  /* CRC enabled */
+        LDS     R16, g_uTpConfig
+        SBRC    R16, 0
+        RJMP    ??ATA_lfRxReinitImmo_flash_C_3
+//  305     PHCRPH = 0;                   /* CRC polynomial */
+        LDI     R16, 0
+        STS     _A_PHCRPH, R16
+//  306     PHCRPL = 0xCA;
+        LDI     R16, 202
+        STS     _A_PHCRPL, R16
+//  307     PHCSTH = 0;
+        LDI     R16, 0
+        STS     _A_PHCSTH, R16
+//  308     PHCSTL = 0x00;
+        STS     _A_PHCSTL, R16
+//  309     PHCRCR = 0xD8;                 /* CRC enable, strobe enable, CRC8, MSB, ID frame excluded */
+        LDI     R16, 216
+        STS     _A_PHCRCR, R16
+//  310     PHTBLR = g_bBitsToReceive + 8; /* telegram bit length (+8 bit CRC) */
+        LDS     R16, g_bBitsToReceive
+        SUBI    R16, 248
+        STS     _A_PHTBLR, R16
+        RET
+//  311   }
+//  312   else {                                /* CRC disabled */
+//  313     PHTBLR = g_bBitsToReceive;     /* telegram bit length */
+??ATA_lfRxReinitImmo_flash_C_3:
+        LDS     R16, g_bBitsToReceive
+        STS     _A_PHTBLR, R16
+//  314     PHCRCR = 0;                    /* disable CRC */
+        LDI     R16, 0
+        STS     _A_PHCRCR, R16
+//  315   }
+//  316 }
+        RET
+          CFI EndBlock cfiBlock5
+        REQUIRE _A_PHID0L
+        REQUIRE _A_PHID1L
+        REQUIRE _A_PHIDFR
+        REQUIRE _A_PHTCR
+        REQUIRE _A_PHDFR
+        REQUIRE _A_PHIMR
+        REQUIRE _A_PHCRPH
+        REQUIRE _A_PHCRPL
+        REQUIRE _A_PHCSTH
+        REQUIRE _A_PHCSTL
+        REQUIRE _A_PHCRCR
+        REQUIRE _A_PHTBLR
+//  317 
+//  318 //-----------------------------------------------------------------------------
+//  319 /** \brief <b>ATA_lfRxParseCmdImmo_flash_C</b>
+//  320     Function checks received command and prepares data for transmission.
+//  321 
+//  322     010:
+//  323 
+//  324     020:
+//  325 
+//  326     030:
+//  327 
+//  328 
+//  329     \param none
+//  330 
+//  331     \return [out] bBytesToTransmit  number of bytes to be send out
+//  332 
+//  333     \Derived no
+//  334 
+//  335     \Rationale none
+//  336 
+//  337     \Traceability Primus2P-922, Primus2P-924, Primus2P-925, Primus2P-927,
+//  338                   Primus2P-929, Primus2P-930, Primus2P-932, Primus2P-933,
+//  339                   Primus2P-934, Primus2P-936, Primus2P-938, Primus2P-939,
+//  340                   Primus2P-942, Primus2P-943, Primus2P-946, Primus2P-950,
+//  341                   Primus2P-952, Primus2P-956, Primus2P-957
+//  342 
+//  343     \StackUsage SU_XXX bytes
+//  344 
+//  345     \image none
+//  346     \n
+//  347 */
+//  348 //-----------------------------------------------------------------------------
+//  349 static uint8_t ATA_lfRxParseCmdImmo_flash_C(void)
+//  350 //-----------------------------------------------------------------------------
+//  351 {
+//  352   /* variable to hold the command without CRC4 */
+//  353   uint8_t bCmd4Bit;
+//  354   /* variable to hold the byte count to be transmitted */
+//  355   uint8_t bBytesToTransmit = 1;
+//  356 
+//  357   /* extract the commmand from the received frame */
+//  358   g_bRxBuffer[0] >>= 4;
+//  359   bCmd4Bit = g_bRxBuffer[0];
+//  360 
+//  361   if(g_bTpStatusByte == STATUS_SUCCESS) {
+//  362     g_bTxBuffer[0] = 0xFE;
+//  363 
+//  364     /* if the command is to read the UID */
+//  365     if(bCmd4Bit == READ_UID) {
+//  366       /* load the transmission buffer with UID present in EEPROM */
+//  367       ATA_eepReadBytes_C( &g_bTxBuffer[1], (uint16_t)&g_sAtmelEEPromSection.eepUID[0], 0x04U);
+//  368       /* update the number of bytes to be transmitted */
+//  369       bBytesToTransmit = 5; // UID_SIZE + 1;
+//  370     }
+//  371 
+//  372     /* if the command is to start the authentication process */
+//  373     else if(bCmd4Bit == START_AUTH) {
+//  374 
+//  375       /* call the authentication processing function */
+//  376       ATA_lfRxAuthenticateImmo_flash_C();
+//  377 
+//  378       /* update the number of bytes to be transmitted */
+//  379       bBytesToTransmit = (m_bResponseLengthBits_flash >> 3) + 1;
+//  380     }
+//  381 
+//  382     else {
+//  383       /* any other cases nothing to be transmitted */
+//  384       g_bTpStatusByte = STATUS_COMMAND_NOT_SUPPORTED;
+//  385     }
+//  386   }
+//  387 
+//  388   if(g_bTpStatusByte != STATUS_SUCCESS) {
+//  389     bBytesToTransmit = 0;
+//  390   }
+//  391 
+//  392   /* update the status byte with the command */
+//  393   g_bTpStatusByte = ((bCmd4Bit << 4) | MASK_HIGH_NIBBLE) & g_bTpStatusByte;
+//  394 
+//  395   if(   (bCmd4Bit > TP_ERR_STS)
+//  396      && (bCmd4Bit < RPT_LST_RES)) {
+//  397     /* update the transmission buffer with existing status byte */
+//  398     g_bTxBuffer[0] = g_bTpStatusByte;
+//  399   }
+//  400 
+//  401   return bBytesToTransmit;
+//  402 }
+//  403 
+//  404 //-----------------------------------------------------------------------------
+//  405 /** \brief <b>ATA_lfRxAuthenticateImmo_flash_C</b>
+//  406     Function handles the authentication process using the EEPROM data and the
+//  407     AES block whether unilateral or bilateral authentication is configured.
+//  408 
+//  409     010:
+//  410 
+//  411     020:
+//  412 
+//  413     030:
+//  414 
+//  415 
+//  416     \param none
+//  417 
+//  418     \return none
+//  419 
+//  420     \Derived no
+//  421 
+//  422     \Rationale none
+//  423 
+//  424     \Traceability Primus2P-924, Primus2P-925, Primus2P-956, Primus2P-1372,
+//  425                   Primus2P-1406
+//  426 
+//  427     \StackUsage SU_XXX bytes
+//  428 
+//  429     \image none
+//  430     \n
+//  431 */
+//  432 //-----------------------------------------------------------------------------
+//  433 static void ATA_lfRxAuthenticateImmo_flash_C(void)
+//  434 //-----------------------------------------------------------------------------
+//  435 {
+//  436     /* local value for calculation */
+//  437     uint8_t bIndex, i;
+//  438     /* value to hold the number of the actual secret key */
+//  439     uint8_t bKeySelect = 0;
+//  440     /* value to hold the number of challenge bytes */
+//  441     uint8_t bChallengeLengthBytes;
+//  442     /* value to hold the number of response bytes */
+//  443     uint8_t bResponseLengthBytes;
+//  444 
+//  445     /* check configuration which key schould be used first */
+//  446     if(g_uTpConfig.sConfigbits.KS == 1) {
+//  447         bKeySelect = 1;
+//  448     }
+//  449 
+//  450     ATA_aesSetConfig_C(bKeySelect, 0x02, 0x00U);
+//  451 
+//  452     bChallengeLengthBytes = m_bChallengeLengthBits_flash >> 3;
+//  453     for(bIndex = 0; bIndex < bChallengeLengthBytes; bIndex++) {
+//  454         g_sAesComponentData.bDataBuffer[bIndex] = g_bRxBuffer[1 + bIndex];
+//  455     }
+//  456     /* Padding done manually cause different to ROM library */
+//  457     g_sAesComponentData.bDataLength = 128;
+//  458     m_bTempArray[ 0] = 0x12;
+//  459     m_bTempArray[ 1] = 0x34;
+//  460     m_bTempArray[ 2] = 0x56;
+//  461     m_bTempArray[ 3] = 0x78;
+//  462     m_bTempArray[ 4] = 0x00;
+//  463     m_bTempArray[ 5] = 0x00;
+//  464     m_bTempArray[ 6] = 0x00;
+//  465     m_bTempArray[ 7] = 0x00;
+//  466     m_bTempArray[ 8] = 0x00;
+//  467     m_bTempArray[ 9] = 0x00;
+//  468     m_bTempArray[10] = 0x00;
+//  469     m_bTempArray[11] = 0x00;
+//  470     for(i = 0; bIndex < 16; bIndex++, i++) {
+//  471         g_sAesComponentData.bDataBuffer[bIndex] = m_bTempArray[i];
+//  472     }
+//  473 
+//  474     ATA_aesEncryptData_C();
+//  475 
+//  476     bResponseLengthBytes = m_bResponseLengthBits_flash >> 3;
+//  477 
+//  478     if(g_uTpConfig.sConfigbits.CM == BILATERAL) {
+//  479         /* check if encrypted challenge correlate with received MAC */
+//  480         i = bChallengeLengthBytes + 1;
+//  481         for(bIndex = 0; bIndex < bResponseLengthBytes; bIndex++, i++) {
+//  482             if(g_bRxBuffer[i] != g_sAesComponentData.bDataBuffer[bIndex]) {
+//  483             g_bTpStatusByte = STATUS_BILATERAL_AUTHEN_FAILED;
+//  484             }
+//  485         }
+//  486         if(g_bTpStatusByte == STATUS_SUCCESS) {
+//  487             /* check configuration which key schould be used second */
+//  488             if(g_uTpConfig.sConfigbits.KS == 1) {
+//  489                 bKeySelect = 0;
+//  490             }
+//  491             else {
+//  492                 bKeySelect = 1;
+//  493             }
+//  494             ATA_aesSetConfig_C(bKeySelect, 0x02, 0x00);
+//  495 
+//  496             ATA_aesEncryptData_C();
+//  497         }
+//  498     }
+//  499 
+//  500     /* copy encrypted data to TX buffer */
+//  501     for(bIndex = 0; bIndex < bResponseLengthBytes; bIndex++) {
+//  502         g_bTxBuffer[1 + bIndex] = g_sAesComponentData.bDataBuffer[bIndex];
+//  503     }
+//  504 }
+//  505 
+//  506 //-----------------------------------------------------------------------------
+//  507 /** \brief <b>ATA_lfRxBitCntReachedImmo_flash_C</b>
+//  508     This function is serviced in after/while reception if the defined bit count
+//  509     is reached to reconfigure or stop the ongoing reception.
+//  510 
+//  511     010:
+//  512 
+//  513     020:
+//  514 
+//  515     030:
+//  516 
+//  517 
+//  518     \param none
+//  519 
+//  520     \return none
+//  521 
+//  522     \Derived no
+//  523 
+//  524     \Rationale none
+//  525 
+//  526     \Traceability none
+//  527 
+//  528     \StackUsage SU_XXX bytes
+//  529 
+//  530     \image none
+//  531     \n
+//  532 */
+//  533 //-----------------------------------------------------------------------------
+
+        RSEG CODE:CODE:NOROOT(1)
+//  534 void ATA_lfRxBitCntReachedImmo_flash_C(void)
+ATA_lfRxBitCntReachedImmo_flash_C:
+          CFI Block cfiBlock6 Using cfiCommon0
+          CFI Function ATA_lfRxBitCntReachedImmo_flash_C
+//  535 //-----------------------------------------------------------------------------
+//  536 {
+//  537   /* variable to hold the command without CRC4 */
+//  538   uint8_t bCmd4Bit;
+//  539   /* variable to hold count of bytes to be received */
+//  540   uint8_t bBytesToReceive;
+//  541 
+//  542   /* LLR-Ref: 040 */
+//  543   g_bReceiveState++;
+//  544 
+//  545   /* LLR-Ref: 045 */
+//  546   PHFR = (BM_PHTBLF | BM_PHDFF);
+        LDI     R16, 6
+        OUT     0x1B, R16
+//  547 
+//  548   /* LLR-Ref: 050 */
+//  549   if(g_bReceiveState > 1) {
+        LDS     R16, g_bReceiveState
+        INC     R16
+        STS     g_bReceiveState, R16
+        CPI     R16, 2
+        BRCS    ??ATA_lfRxBitCntReachedImmo_flash_C_0
+//  550     PHTCR &= ~BM_CSM;               /* disable continue receive mode */
+        CBI     0x17, 0x07
+//  551     if(PHFR & BM_CRCEF) {
+        SBIS    0x1B, 0x00
+        RJMP    ??ATA_lfRxBitCntReachedImmo_flash_C_1
+//  552       g_bTpStatusByte = STATUS_CRC_INCORRECT;
+        LDI     R16, 244
+        STS     g_bTpStatusByte, R16
+//  553       PHFR = BM_CRCEF;
+        LDI     R16, 1
+        OUT     0x1B, R16
+??ATA_lfRxBitCntReachedImmo_flash_C_2:
+        LDS     R16, g_bReceiveState
+        CPI     R16, 3
+        BRNE    ??ATA_lfRxBitCntReachedImmo_flash_C_3
+//  554     }
+//  555     else {
+//  556       g_bTpStatusByte = STATUS_SUCCESS;
+//  557     }
+//  558   }
+//  559 
+//  560   /* LLR-Ref: 060 */
+//  561   if(   (g_bReceiveState == 1)
+//  562      || (g_bReceiveState == 3))
+//  563   {
+//  564     ATA_globalsSwitchAvrPhClock_flash_C((uint8_t)(BM_LDFSCKS | BM_LDFSCSW));
+??ATA_lfRxBitCntReachedImmo_flash_C_4:
+        LDI     R16, 3
+          CFI FunCall ATA_globalsSwitchAvrPhClock_flash_C
+        CALL    ATA_globalsSwitchAvrPhClock_flash_C
+//  565 
+//  566     bBytesToReceive = g_bBitsToReceive >> 3;
+        LDS     R16, g_bBitsToReceive
+        LSR     R16
+        LSR     R16
+        LSR     R16
+        RJMP    ??ATA_lfRxBitCntReachedImmo_flash_C_5
+??ATA_lfRxBitCntReachedImmo_flash_C_1:
+        LDI     R16, 240
+        STS     g_bTpStatusByte, R16
+        RJMP    ??ATA_lfRxBitCntReachedImmo_flash_C_2
+??ATA_lfRxBitCntReachedImmo_flash_C_0:
+        CPI     R16, 1
+        BRNE    ??ATA_lfRxBitCntReachedImmo_flash_C_3
+        RJMP    ??ATA_lfRxBitCntReachedImmo_flash_C_4
+//  567     while(bBytesToReceive > 0) {
+//  568       /* read data from protocol handler FIFO data register */
+//  569       g_bRxBuffer[g_bRxBufferIndex] = LDFD;
+??ATA_lfRxBitCntReachedImmo_flash_C_6:
+        IN      R17, 0x19
+        LDS     R30, g_bRxBufferIndex
+        LDI     R31, 0
+        SUBI    R30, LOW((-(g_bRxBuffer) & 0xFFFF))
+        SBCI    R31, (-(g_bRxBuffer) & 0xFFFF) >> 8
+        ST      Z, R17
+//  570       g_bRxBufferIndex += 1;
+        LDS     R17, g_bRxBufferIndex
+        INC     R17
+        STS     g_bRxBufferIndex, R17
+//  571       bBytesToReceive--;
+        DEC     R16
+//  572     }
+??ATA_lfRxBitCntReachedImmo_flash_C_5:
+        TST     R16
+        BRNE    ??ATA_lfRxBitCntReachedImmo_flash_C_6
+//  573 
+//  574     LDFFL = 0x80;            /* clear RdPtr, WrPtr, fill-level, status and bit length */
+        LDI     R16, 128
+        OUT     0x18, R16
+//  575 
+//  576     ATA_globalsSwitchAvrPhClock_flash_C((uint8_t)0x00);
+        LDI     R16, 0
+          CFI FunCall ATA_globalsSwitchAvrPhClock_flash_C
+        CALL    ATA_globalsSwitchAvrPhClock_flash_C
+//  577   }
+//  578 
+//  579   /* LLR-Ref: 070 */
+//  580   bCmd4Bit = g_bRxBuffer[0];
+//  581   bCmd4Bit >>= 4;
+??ATA_lfRxBitCntReachedImmo_flash_C_3:
+        LDS     R16, g_bRxBuffer
+        SWAP    R16
+        ANDI    R16, 0x0F
+//  582 
+//  583   /* LLR-Ref: 080 */
+//  584   if(   (g_bReceiveState == 1)
+//  585      && (   (bCmd4Bit == START_AUTH)
+//  586          || ((bCmd4Bit >= READ_USR_MEM) && (bCmd4Bit <= LRN_SKT_K2)) ) ) {
+        LDS     R17, g_bReceiveState
+        CPI     R17, 1
+        BRNE    ??ATA_lfRxBitCntReachedImmo_flash_C_7
+        CPI     R16, 1
+        BREQ    ??ATA_lfRxBitCntReachedImmo_flash_C_8
+        MOV     R17, R16
+        SUBI    R17, 4
+        CPI     R17, 5
+        BRCC    ??ATA_lfRxBitCntReachedImmo_flash_C_9
+//  587     ATA_lfRxReinitImmo_flash_C(bCmd4Bit);
+??ATA_lfRxBitCntReachedImmo_flash_C_8:
+          CFI FunCall ATA_lfRxReinitImmo_flash_C
+        RJMP    ATA_lfRxReinitImmo_flash_C
+//  588   }
+//  589   /* LLR-Ref: 090 */
+//  590   else if(g_bReceiveState == 1) {
+//  591     /* enable telegram bit length reached interrupt (LFBCR_vect) */
+//  592     PHIMR = BM_PHTBLIM;
+//  593     g_bReceiveState++;
+//  594   }
+//  595   /* LLR-Ref: 100 */
+//  596   else if(   (g_bReceiveState == 2)
+//  597           && (g_bTpStatusByte == STATUS_SUCCESS)) {
+??ATA_lfRxBitCntReachedImmo_flash_C_7:
+        CPI     R17, 2
+        BRNE    ??ATA_lfRxBitCntReachedImmo_flash_C_10
+        LDS     R17, g_bTpStatusByte
+        CPI     R17, 240
+        BRNE    ??ATA_lfRxBitCntReachedImmo_flash_C_11
+//  598     if(bCmd4Bit == WRT_USR_MEM) {
+        CPI     R16, 5
+        BRNE    ??ATA_lfRxBitCntReachedImmo_flash_C_12
+//  599       PHIMR = 0;          /* disable bit count reached interrupt (LFBCR_vect) */
+        LDI     R16, 0
+        STS     _A_PHIMR, R16
+//  600     }
+//  601     if(LTEMR & BM_TBLEM) {
+??ATA_lfRxBitCntReachedImmo_flash_C_12:
+        LDS     R16, _A_LTEMR
+        SBRS    R16, 4
+        RJMP    ??ATA_lfRxBitCntReachedImmo_flash_C_13
+//  602       LTCMR &= ~BM_LTENA;
+        CBI     0x15, 0x07
+//  603       g_bResponseDelayReached = FALSE; /* Reset response delay flag. */
+        LDI     R16, 0
+        STS     g_bResponseDelayReached, R16
+//  604       LTCMR |= BM_LTENA;
+        SBI     0x15, 0x07
+        RET
+//  605     }
+//  606   }
+??ATA_lfRxBitCntReachedImmo_flash_C_9:
+        LDI     R16, 2
+        STS     _A_PHIMR, R16
+        RJMP    ??ATA_lfRxBitCntReachedImmo_flash_C_14
+//  607   /* LLR-Ref: 105 */
+//  608   else if(   (g_bReceiveState > 1)
+//  609           && (g_bTpStatusByte != STATUS_SUCCESS)) {
+??ATA_lfRxBitCntReachedImmo_flash_C_10:
+        BRCS    ??ATA_lfRxBitCntReachedImmo_flash_C_15
+??ATA_lfRxBitCntReachedImmo_flash_C_11:
+        LDS     R16, g_bTpStatusByte
+        CPI     R16, 240
+        BREQ    ??ATA_lfRxBitCntReachedImmo_flash_C_15
+//  610     /* disable protocol handler interrupts */
+//  611     PHIMR = 0;
+        LDI     R16, 0
+        STS     _A_PHIMR, R16
+//  612     /* set receive state to value '2' to hold sleep in main function till
+//  613        field timeout is detected */
+//  614     g_bReceiveState = 2;
+        LDI     R16, 2
+??ATA_lfRxBitCntReachedImmo_flash_C_14:
+        STS     g_bReceiveState, R16
+        RET
+//  615   }
+//  616   /* LLR-Ref: 110 */
+//  617   else {
+//  618     /* LLR-Ref: 120 */
+//  619     PHIMR = 0;
+??ATA_lfRxBitCntReachedImmo_flash_C_15:
+        LDI     R16, 0
+        STS     _A_PHIMR, R16
+//  620     /* LLR-Ref: 140 */
+//  621     PHCRCR = 0x00;
+        STS     _A_PHCRCR, R16
+//  622   }
+//  623 }
+??ATA_lfRxBitCntReachedImmo_flash_C_13:
+        RET
+          CFI EndBlock cfiBlock6
+        REQUIRE _A_PHFR
+        REQUIRE _A_PHTCR
+        REQUIRE _A_LDFD
+        REQUIRE _A_LDFFL
+        REQUIRE _A_PHIMR
+        REQUIRE _A_LTEMR
+        REQUIRE _A_LTCMR
+        REQUIRE _A_PHCRCR
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01cH
+__?EECR:
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01dH
+__?EEDR:
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01eH
+__?EEARL:
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01fH
+__?EEARH:
+
+        END
+// 
+//    24 bytes in segment ABSOLUTE
+// 1 008 bytes in segment CODE
+//    42 bytes in segment NEAR_N
+// 
+// 1 008 bytes of CODE memory
+//    42 bytes of DATA memory (+ 24 bytes shared)
+//
+//Errors: none
+//Warnings: none

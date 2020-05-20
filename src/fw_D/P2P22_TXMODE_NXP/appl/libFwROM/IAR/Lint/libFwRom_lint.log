@@ -1,0 +1,78 @@
+
+--- Module:   ..\..\firmware\aes\src\aes.c (C)
+
+--- Module:   ..\..\firmware\calib\src\calib.c (C)
+
+--- Module:   ..\..\firmware\eep\src\eep.c (C)
+
+--- Module:   ..\..\firmware\globals\src\globals.c (C)
+
+--- Module:   ..\..\firmware\iic\src\iic.c (C)
+
+--- Module:   ..\..\firmware\init\src\init.c (C)
+
+--- Module:   ..\..\firmware\lfrssi\src\lfrssi.c (C)
+
+--- Module:   ..\..\firmware\lfrx\src\lfrx.c (C)
+
+--- Module:   ..\..\firmware\rfrcc\src\rfrcc.c (C)
+
+--- Module:   ..\..\firmware\rftx\src\rftx.c (C)
+
+--- Module:   ..\..\firmware\rftx\src\rftx_ant.c (C)
+
+--- Module:   ..\..\firmware\rftx\src\rftx_vco.c (C)
+
+--- Module:   ..\..\firmware\spi\src\ata5831_command_set.c (C)
+
+--- Module:   ..\..\firmware\spi\src\spi.c (C)
+
+--- Module:   ..\..\firmware\timer1\src\timer1.c (C)
+
+--- Module:   ..\..\firmware\timer2\src\timer2.c (C)
+
+--- Module:   ..\..\firmware\timer3\src\timer3.c (C)
+
+--- Module:   ..\..\firmware\timer4\src\timer4.c (C)
+
+--- Module:   ..\..\firmware\timer5\src\timer5.c (C)
+
+/// Start of Pass 2 ///
+
+--- Module:   ..\..\firmware\aes\src\aes.c (C)
+
+--- Module:   ..\..\firmware\calib\src\calib.c (C)
+
+--- Module:   ..\..\firmware\eep\src\eep.c (C)
+
+--- Module:   ..\..\firmware\globals\src\globals.c (C)
+
+--- Module:   ..\..\firmware\iic\src\iic.c (C)
+
+--- Module:   ..\..\firmware\init\src\init.c (C)
+
+--- Module:   ..\..\firmware\lfrssi\src\lfrssi.c (C)
+
+--- Module:   ..\..\firmware\lfrx\src\lfrx.c (C)
+
+--- Module:   ..\..\firmware\rfrcc\src\rfrcc.c (C)
+
+--- Module:   ..\..\firmware\rftx\src\rftx.c (C)
+
+--- Module:   ..\..\firmware\rftx\src\rftx_ant.c (C)
+
+--- Module:   ..\..\firmware\rftx\src\rftx_vco.c (C)
+
+--- Module:   ..\..\firmware\spi\src\ata5831_command_set.c (C)
+
+--- Module:   ..\..\firmware\spi\src\spi.c (C)
+
+--- Module:   ..\..\firmware\timer1\src\timer1.c (C)
+
+--- Module:   ..\..\firmware\timer2\src\timer2.c (C)
+
+--- Module:   ..\..\firmware\timer3\src\timer3.c (C)
+
+--- Module:   ..\..\firmware\timer4\src\timer4.c (C)
+
+--- Module:   ..\..\firmware\timer5\src\timer5.c (C)

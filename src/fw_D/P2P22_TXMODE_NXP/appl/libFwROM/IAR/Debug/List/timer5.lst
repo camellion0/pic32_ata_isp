@@ -1,0 +1,440 @@
+###############################################################################
+#
+# IAR C/C++ Compiler V6.70.1.929 for Atmel AVR            05/Apr/2016  13:30:44
+# Copyright 1996-2015 IAR Systems AB.
+# Network license: DVRIAR01.corpp.atmel.com (STD)
+#
+#    Source file  =  
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\firmware\timer5\src\timer5.c
+#    Command line =  
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\firmware\timer5\src\timer5.c
+#        -v3 --enhanced_core -ms -o
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\Obj
+#        -lC
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\List
+#        -lA
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\List
+#        --initializers_in_flash --no_cse --no_inline --no_code_motion
+#        --no_cross_call --no_clustering --no_tbaa --debug --64k_flash
+#        -DENABLE_BIT_DEFINITIONS -e -I "C:\Program Files (x86)\IAR
+#        Systems\Embedded Workbench 6.0\avr\inc\" --eeprom_size 1152 --clib
+#        -Ohz
+#    List file    =  
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\List\timer5.lst
+#    Object file  =  
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\Obj\timer5.r90
+#
+###############################################################################
+
+C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\firmware\timer5\src\timer5.c
+      1          //lint -e9059
+      2          /* *C**************************************************************************
+      3            Use of this software is subject to Atmel's Software License Agreement.
+      4          -------------------------------------------------------------------------------
+      5            $URL: http://svnservulm.corp.atmel.com/svn/CDB/Apps/SW_Lib/Car_Access/CARS_GEN2/ATAB5702A/Branches/P2_Gen2_Merge/firmware/timer5/src/timer5.c $
+      6            $LastChangedRevision: 328482 $
+      7            $LastChangedDate: 2015-07-22 13:17:23 -0600 (Wed, 22 Jul 2015) $
+      8            $LastChangedBy: grueter $
+      9          -------------------------------------------------------------------------------
+     10            Project:      ATA5700
+     11            Target MCU:   ATA5700
+     12            Compiler:     IAR C/C++ Compiler for AVR 6.30.1
+     13          -------------------------------------------------------------------------------
+     14            
+     15          ******************************************************************************
+     16          * Copyright 2011, Atmel Automotive GmbH                                       *
+     17          *                                                                             *
+     18          * This software is owned by the Atmel Automotive GmbH                         *
+     19          * and is protected by and subject to worldwide patent protection.             *
+     20          * Atmel hereby grants to licensee a personal,                                 *
+     21          * non-exclusive, non-transferable license to copy, use, modify, create        *
+     22          * derivative works of, and compile the Atmel Source Code and derivative       *
+     23          * works for the sole purpose of creating custom software in support of        *
+     24          * licensee product to be used only in conjunction with a Atmel integrated     *
+     25          * circuit as specified in the applicable agreement. Any reproduction,         *
+     26          * modification, translation, compilation, or representation of this           *
+     27          * software except as specified above is prohibited without the express        *
+     28          * written permission of Atmel.                                                *
+     29          *                                                                             *
+     30          * Disclaimer: ATMEL MAKES NO WARRANTY OF ANY KIND,EXPRESS OR IMPLIED,         *
+     31          * WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED    *
+     32          * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.         *
+     33          * Atmel reserves the right to make changes without further notice to the      *
+     34          * materials described herein. Atmel does not assume any liability arising     *
+     35          * out of the application or use of any product or circuit described herein.   *
+     36          * Atmel does not authorize its products for use as critical components in     *
+     37          * life-support systems where a malfunction or failure may reasonably be       *
+     38          * expected to result in significant injury to the user. The inclusion of      *
+     39          * Atmel products in a life-support systems application implies that the       *
+     40          * manufacturer assumes all risk of such use and in doing so indemnifies       *
+     41          * Atmel against all charges.                                                  *
+     42          *                                                                             *
+     43          * Use may be limited by and subject to the applicable Atmel software          *
+     44          * license agreement.                                                          *
+     45          ******************************************************************************/
+     46          /** \file timer5.c
+     47          */
+     48          //lint -restore
+     49          
+     50          /*---------------------------------------------------------------------------*/
+     51          /*  INCLUDES                                                                 */
+     52          /*---------------------------------------------------------------------------*/
+     53          #include "timer5.h"
+
+   \                                 In  segment ABSOLUTE, at 0x21
+   \   union <unnamed> volatile __io _A_PRR1
+   \                     _A_PRR1:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x8a
+   \   union <unnamed> volatile __io _A_T5OCRL
+   \                     _A_T5OCRL:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x8b
+   \   union <unnamed> volatile __io _A_T5OCRH
+   \                     _A_T5OCRH:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x8c
+   \   union <unnamed> volatile __io _A_T5CCR
+   \                     _A_T5CCR:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x8d
+   \   union <unnamed> volatile __io _A_T5CNTL
+   \                     _A_T5CNTL:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x8e
+   \   union <unnamed> volatile __io _A_T5CNTH
+   \                     _A_T5CNTH:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x8f
+   \   union <unnamed> volatile __io _A_T5IMR
+   \                     _A_T5IMR:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x1d5
+   \   union <unnamed> volatile __ext_io _A_T5IFR
+   \                     _A_T5IFR:
+   \   00000000                      DS8 1
+     54          
+     55          /*---------------------------------------------------------------------------*/
+     56          /*  DEFINES                                                                  */
+     57          /*---------------------------------------------------------------------------*/
+     58          
+     59          
+     60          /*---------------------------------------------------------------------------*/
+     61          /*  Modul Globals                                                            */
+     62          /*---------------------------------------------------------------------------*/
+     63          /** \brief <b>g_sTimer5</b>
+     64              contains the configuration settings for Timer5.
+     65          */
+     66          #pragma location = ".tmr5ram"
+
+   \                                 In  segment .tmr5ram, align 1, keep-with-next
+     67          __no_init sTmr5Config g_sTimer5;
+   \                     g_sTimer5:
+   \   00000000                      DS8 5
+     68          
+     69          /*---------------------------------------------------------------------------*/
+     70          /*  IMPLEMENTATION                                                           */
+     71          /*---------------------------------------------------------------------------*/
+     72          /*---------------------------------------------------------------------------*/
+     73          /** \brief <b>ATA_timer5Init_C</b>
+     74              shall initialize Timer5 data structure sTmr5Config.
+     75          
+     76              Variable Usage:
+     77              \li [out] ::g_sTimer5  global Timer 5 configuration
+     78          
+     79              \image html ATA_timer5Init_C.png
+     80          
+     81              \internal
+     82                  \li 010:   Set all ::g_sTimer5 attributes to 0.
+     83          
+     84                  \Derived{Yes}
+     85          
+     86                  \Rationale{Since the hardware SRAM initialization is turned off, all SRAM
+     87                         variables need initialization prior to its usage}
+     88          
+     89                  \Traceability   N/A
+     90              \endinternal
+     91              \n
+     92          */
+     93          /*---------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+     94          VOIDFUNC ATA_timer5Init_C(void)
+   \                     ATA_timer5Init_C:
+     95          {
+     96              /* LLR-Ref: 010 */
+     97              g_sTimer5.bStatus  = 0x00U;
+   \   00000000   E000               LDI     R16, 0
+   \   00000002   9300....           STS     g_sTimer5, R16
+     98              g_sTimer5.fpCompIsr = (timerIRQHandler)0x0000U;
+   \   00000006   9300....           STS     (g_sTimer5 + 1), R16
+   \   0000000A   9300....           STS     (g_sTimer5 + 2), R16
+     99              g_sTimer5.fpOvfIsr  = (timerIRQHandler)0x0000U;
+   \   0000000E   9300....           STS     (g_sTimer5 + 3), R16
+   \   00000012   9300....           STS     (g_sTimer5 + 4), R16
+    100          }
+   \   00000016   9508               RET
+    101          
+    102          /*---------------------------------------------------------------------------*/
+    103          /** \brief <b>ATA_timer5Open_C</b>
+    104              shall open and initialize Timer 5, in case it is not yet locked.
+    105          
+    106              \param[in]      pTimer5Params    synchronous timer configuration settings
+    107              \return OK on success, FAIL on failure
+    108          
+    109              Variable Usage:
+    110              \li [in,out] ::g_sTimer5      Global Timer 5 component data
+    111          
+    112              \image html ATA_timer5Open_C.png
+    113          
+    114          
+    115              \internal
+    116                       Note:
+    117                       Power up of Timer 5 via register PRR1 needs to occur before any 
+    118                       Timer 5 register is accessed in order for the intended action to 
+    119                       take effect.
+    120          
+    121                       IF Timer 5 is not locked, i.e. not already used by another component,
+    122                       THEN
+    123              \li 010:   Lock Timer 5 by setting the lock status in global variable 
+    124                         ::g_sTimer5 in order to synchronize the usage of Timer 5.
+    125          
+    126              \li 020:   Power up Timer 5 by setting bit PRT5 in register PRR1 to 0 to 
+    127                         disable the power reduction feature for Timer 5.
+    128          
+    129              \li 030:   Stop Timer 5 by setting control register T5CCR to 0x00 in order to 
+    130                         securely configure Timer 5.
+    131          
+    132              \li 040:   Reset Timer 5 compare and overflow flags by writing a 1 to the
+    133                         bits T5COF and T5OFF of register T5IFR.
+    134          
+    135              \li 050:   Store the given function pointer parameters "ovf" and "comp" of
+    136                         parameter "pTimer5Params" within to
+    137                         the global variable ::g_sTimer5 in order for those functions to be 
+    138                         called when the corresponding interrupt, overflow and compare, is
+    139                         triggered.
+    140          
+    141              \li 060:   Set Timer 5 registers T5CNTH, T5CNTL, T5OCRH, T5OCRL T5IMR and T5CCR 
+    142                         to the given attributes of parameter "pTimer5Params".
+    143          
+    144                       ENDIF
+    145          
+    146              \li 070: Return OK to the calling function if Timer 5 was successfully 
+    147                       configured.
+    148                       Return FAIL, since Timer 5 was already locked and therefore could 
+    149                       not be configured.
+    150          
+    151              \Derived{No}
+    152          
+    153              \Rationale{N/A}
+    154          
+    155              \Traceability{Primus2P-889,Primus2P-1328}
+    156              \endinternal
+    157              \n
+    158          */
+    159          /*---------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    160          UINT8FUNC ATA_timer5Open_C(const sTimerSyn16BitParams * const pTimer5Params)
+   \                     ATA_timer5Open_C:
+    161          {
+    162              uint8_t fRetVal = FAIL;
+   \   00000000   E021               LDI     R18, 1
+    163              
+    164              if( !(g_sTimer5.bStatus & TMR5LOCK) )
+   \   00000002   ....               LDI     R30, LOW(g_sTimer5)
+   \   00000004   ....               LDI     R31, (g_sTimer5) >> 8
+   \   00000006   8130               LD      R19, Z
+   \   00000008   FD37               SBRC    R19, 7
+   \   0000000A   C02F               RJMP    ??ATA_timer5Open_C_0
+    165              {
+    166                  /* LLR-Ref: 010 */
+    167                  g_sTimer5.bStatus |= TMR5LOCK;
+   \   0000000C   6830               ORI     R19, 0x80
+   \   0000000E   8330               ST      Z, R19
+    168                  
+    169                  /* LLR-Ref: 020 */
+    170                  ATA_POWERON_C(PRR1, PRT5)
+   \   00000010   980C               CBI     0x01, 0x04
+    171          
+    172                  /* LLR-Ref: 030 */
+    173                  T5CCR = 0x00U;
+   \   00000012   E020               LDI     R18, 0
+   \   00000014   9320....           STS     _A_T5CCR, R18
+    174          
+    175                  /* LLR-Ref: 040 */
+    176                  g_sTimer5.fpCompIsr = pTimer5Params->compIsr;
+   \   00000018   01F8               MOVW    R31:R30, R17:R16
+   \   0000001A   8520               LDD     R18, Z+8
+   \   0000001C   8531               LDD     R19, Z+9
+   \   0000001E   9320....           STS     (g_sTimer5 + 1), R18
+   \   00000022   9330....           STS     (g_sTimer5 + 2), R19
+    177                  g_sTimer5.fpOvfIsr = pTimer5Params->ovfIsr;
+   \   00000026   8126               LDD     R18, Z+6
+   \   00000028   8137               LDD     R19, Z+7
+   \   0000002A   9320....           STS     (g_sTimer5 + 3), R18
+   \   0000002E   9330....           STS     (g_sTimer5 + 4), R19
+    178          
+    179                  /* LLR-Ref: 050 */
+    180                  T5IFR |= ((uint8_t)(BM_T5COF|BM_T5OFF));
+   \   00000032   9120....           LDS     R18, _A_T5IFR
+   \   00000036   6023               ORI     R18, 0x03
+   \   00000038   9320....           STS     _A_T5IFR, R18
+    181                  
+    182                  /* LLR-Ref: 060 */
+    183                  _CLI;
+   \   0000003C   94F8               cli
+    184                  T5CNTH = pTimer5Params->countH;
+   \   0000003E   8124               LDD     R18, Z+4
+   \   00000040   9320....           STS     _A_T5CNTH, R18
+    185                  T5CNTL = pTimer5Params->countL;
+   \   00000044   8123               LDD     R18, Z+3
+   \   00000046   9320....           STS     _A_T5CNTL, R18
+    186                  _SEI;
+   \   0000004A   9478               sei
+    187                  
+    188                  _CLI;
+   \   0000004C   94F8               cli
+    189                  T5OCRH = pTimer5Params->compH;
+   \   0000004E   8122               LDD     R18, Z+2
+   \   00000050   9320....           STS     _A_T5OCRH, R18
+    190                  T5OCRL = pTimer5Params->compL;
+   \   00000054   8121               LDD     R18, Z+1
+   \   00000056   9320....           STS     _A_T5OCRL, R18
+    191                  _SEI;
+   \   0000005A   9478               sei
+    192          
+    193                  T5IMR = pTimer5Params->irqMask;
+   \   0000005C   8125               LDD     R18, Z+5
+   \   0000005E   9320....           STS     _A_T5IMR, R18
+    194                  T5CCR = pTimer5Params->ctrl;
+   \   00000062   8100               LD      R16, Z
+   \   00000064   9300....           STS     _A_T5CCR, R16
+    195                  
+    196                  fRetVal = OK;
+   \   00000068   E020               LDI     R18, 0
+    197              }
+    198              
+    199              /* LLR-Ref: 070 */
+    200              return fRetVal;
+   \                     ??ATA_timer5Open_C_0:
+   \   0000006A   2F02               MOV     R16, R18
+   \   0000006C   9508               RET
+   \   0000006E                      REQUIRE _A_PRR1
+   \   0000006E                      REQUIRE _A_T5CCR
+   \   0000006E                      REQUIRE _A_T5IFR
+   \   0000006E                      REQUIRE _A_T5CNTH
+   \   0000006E                      REQUIRE _A_T5CNTL
+   \   0000006E                      REQUIRE _A_T5OCRH
+   \   0000006E                      REQUIRE _A_T5OCRL
+   \   0000006E                      REQUIRE _A_T5IMR
+    201          }
+    202          
+    203          /* ---------------------------------------------------------------------------*/
+    204          /** \brief <b>ATA_timer5Close_C</b>
+    205              shall stop Timer 5 and enable the power reduction feature of Timer 5.
+    206          
+    207              Variable Usage:
+    208              \li [out] ::g_sTimer5  Global Timer 5 component data
+    209          
+    210              \image html ATA_timer5Close_C.png
+    211          
+    212              \internal
+    213                       Note:
+    214                       Disabling of the Power Reduction feature of Timer 5 via register PRR1
+    215                       needs to occur before any Timer 5 register is accessed in order for the
+    216                       intended actions to take effect.
+    217                       Enabling of the Power Reduction feature of Timer 5 via register PRR1 
+    218                       needs to occur after any Timer 5 register is accessed in order for the 
+    219                       intended action to take effect.
+    220          
+    221              \li 005: Disable the power reduction feature of Timer 5 by setting bit PRT5 in 
+    222                       register PRR1 to 0.
+    223          
+    224              \li 010: Disable Timer 5 by setting all bits of register T5CCR to 0.
+    225          
+    226              \li 020: Unlock Timer 5 by setting the status indication of the global variable
+    227                       ::g_sTimer5 to 0.
+    228          
+    229              \li 030: Enable the power reduction feature of Timer 5 by setting bit PRT5 in 
+    230                       register PRR1 to 1.
+    231          
+    232              \Derived{No}
+    233          
+    234              \Rationale{N/A}
+    235          
+    236              \Traceability{Primus2P-890}
+    237              \endinternal
+    238              \n
+    239          */
+    240          /* ---------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    241          VOIDFUNC ATA_timer5Close_C(void)
+   \                     ATA_timer5Close_C:
+    242          {
+    243              /* LLR-Ref: 005 */
+    244              ATA_POWERON_C(PRR1, PRT5)
+   \   00000000   980C               CBI     0x01, 0x04
+    245            
+    246              /* LLR-Ref: 010 */
+    247              T5CCR = 0x00U;
+   \   00000002   E000               LDI     R16, 0
+   \   00000004   9300....           STS     _A_T5CCR, R16
+    248              
+    249              /* LLR-Ref: 020 */
+    250              g_sTimer5.bStatus = 0x00U;
+   \   00000008   9300....           STS     g_sTimer5, R16
+    251              
+    252              /* LLR-Ref: 030 */
+    253              ATA_POWEROFF_C(PRR1, PRT5);
+   \   0000000C   9A0C               SBI     0x01, 0x04
+    254          }
+   \   0000000E   9508               RET
+   \   00000010                      REQUIRE _A_PRR1
+   \   00000010                      REQUIRE _A_T5CCR
+    255          
+
+   Maximum stack usage in bytes:
+
+   RSTACK Function
+   ------ --------
+      2   ATA_timer5Close_C
+      2   ATA_timer5Init_C
+      2   ATA_timer5Open_C
+
+
+   Segment part sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+      16  ATA_timer5Close_C
+      24  ATA_timer5Init_C
+     110  ATA_timer5Open_C
+       1  _A_PRR1
+       1  _A_T5CCR
+       1  _A_T5CNTH
+       1  _A_T5CNTL
+       1  _A_T5IFR
+       1  _A_T5IMR
+       1  _A_T5OCRH
+       1  _A_T5OCRL
+       5  g_sTimer5
+
+ 
+   5 bytes in segment .tmr5ram
+   8 bytes in segment ABSOLUTE
+ 150 bytes in segment CODE
+ 
+ 150 bytes of CODE memory
+   5 bytes of DATA memory (+ 8 bytes shared)
+
+Errors: none
+Warnings: none

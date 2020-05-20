@@ -1,0 +1,1585 @@
+/* *ASM************************************************************************
+  Use of this software is subject to Atmel's Software License Agreement.
+-------------------------------------------------------------------------------
+  $URL: http://svnservulm.corp.atmel.com/svn/CDB/Apps/SW_Lib/Car_Access/CARS_GEN2/ATAB5702A/Branches/P2P22_TXMODE_NXP/firmware/signatureTest/src/signatureTest_asm.s90 $
+  $LastChangedRevision: 328482 $
+  $LastChangedDate: 2015-07-22 13:17:23 -0600 (Wed, 22 Jul 2015) $
+  $LastChangedBy: grueter $
+-------------------------------------------------------------------------------
+  Project:      ATA5700
+  Target MCU:   ATA5700
+  Compiler:     IAR Assembler for AVR 5.51.0
+-------------------------------------------------------------------------------
+  Purpose:
+******************************************************************************
+* Copyright 2011, Atmel Automotive GmbH                                       *
+*                                                                             *
+* This software is owned by the Atmel Automotive GmbH                         *
+* and is protected by and subject to worldwide patent protection.             *
+* Atmel hereby grants to licensee a personal,                                 *
+* non-exclusive, non-transferable license to copy, use, modify, create        *
+* derivative works of, and compile the Atmel Source Code and derivative       *
+* works for the sole purpose of creating custom software in support of        *
+* licensee product to be used only in conjunction with a Atmel integrated     *
+* circuit as specified in the applicable agreement. Any reproduction,         *
+* modification, translation, compilation, or representation of this           *
+* software except as specified above is prohibited without the express        *
+* written permission of Atmel.                                                *
+*                                                                             *
+* Disclaimer: ATMEL MAKES NO WARRANTY OF ANY KIND,EXPRESS OR IMPLIED,         *
+* WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED    *
+* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.         *
+* Atmel reserves the right to make changes without further notice to the      *
+* materials described herein. Atmel does not assume any liability arising     *
+* out of the application or use of any product or circuit described herein.   *
+* Atmel does not authorize its products for use as critical components in     *
+* life-support systems where a malfunction or failure may reasonably be       *
+* expected to result in significant injury to the user. The inclusion of      *
+* Atmel products in a life-support systems application implies that the       *
+* manufacturer assumes all risk of such use and in doing so indemnifies       *
+* Atmel against all charges.                                                  *
+*                                                                             *
+* Use may be limited by and subject to the applicable Atmel software          *
+* license agreement.                                                          *
+*******************************************************************************/
+
+/*------------------------------------------------------------------------------------------
+* | Test                                      Input Sign. PB [7:0] | Dez |   Bin   |  Hex  |
+* ------------------------------------------------------------------------------------------
+* | Reserved (do not use)                                          |  0  | 000 0000 | 0x00 |
+* | Set Group 1 as Input, Set Group 2 as Output                    |  1  | 000 0001 | 0x01 |
+* | Set Group 2 as Input, Set Group 1 as Output                    |  2  | 000 0010 | 0x02 |
+* | Set Group 3 as Input, Set Group 4 as Output                    |  3  | 000 0011 | 0x03 |
+* | Set Group 4 as Input, Set Group 3 as Output                    |  4  | 000 0100 | 0x04 |
+* | Enable Pull Ups                                                |  5  | 000 0101 | 0x05 |
+* | activate LED Amplifier PDSC[4:0]                               |  6  | 000 0110 | 0x06 |
+* | CLKXTO/2                                                       |  7  | 000 0111 | 0x07 |
+* | RAM March LR Algorithm                                         |  8  | 000 1000 | 0x08 |
+* | Clock Generator All (Executes Signatures 11,12,13,14,15,16,17) |  9  | 000 1001 | 0x09 |
+* | Clock Generator (System Clock and CLT Prescaler)               | 10  | 000 1010 | 0x0A |
+* | Clock Generator (System Clock MUX and CLOCKOUT MUX)            | 11  | 000 1011 | 0x0B |
+* | Clock Generator (Timer1-5 Prescaler, Timer1-5 MUX with CLKT)   | 12  | 000 1100 | 0x0C |
+* | Clock Generator (Timer1-5 MUX, all clocks selected except CLKT)| 13  | 000 1101 | 0x0D |
+* | Clock Generator (CLOCKOUT Prescaler)                           | 14  | 000 1110 | 0x0E |
+* | Clock Generator (IP Power Reduction)                           | 15  | 000 1111 | 0x0F |
+* | Clock Generator (Debounce Clock Switch)                        | 16  | 001 0000 | 0x10 |
+* | Trace Unit clk_ext                                             | 17  | 001 0001 | 0x11 |
+* | Watchdog Timer Reset                                           | 18  | 001 0010 | 0x12 |
+* ----------------------------------------------------------------------------------------/*
+
+    NAME SignatureTest_asm
+
+    PUBLIC ATA_SignatureTestAsmSubFunc
+    EXTERN ATA_SignatureTestAsm      
+/*************************************************************************************************/
+/*                                            INCLUDES                                           */
+/*************************************************************************************************/
+    #include "regs.inc"                                                                             
+    
+;*************************************************************************************************
+;*                                             MACROS                                            *
+;*************************************************************************************************
+IOST MACRO Address, Register
+     sts	Address+0x20*(Address<0x40), Register	; SRAM address
+     ENDM
+
+IOLD MACRO Register, Address
+     lds	Register, Address+0x20*(Address<0x40)	; SRAM address
+     ENDM    
+    
+    
+    
+;*************************************************************************************************
+;*                                  INTERRUPT VECTOR TABLE                                       *
+;*************************************************************************************************
+COMMON TESTCODE:CODE:ROOT(1)
+    ORG 0
+    JMP ATA_SignatureTestAsm
+
+    ORG 4
+    JMP     INT0H_irq
+
+    ORG 16
+    JMP     PCINT1_irq
+    
+;*************************************************************************************************
+;*                                        INITIALIZATION                                         *
+;*************************************************************************************************
+ATA_SignatureTestAsm:
+
+    CLI
+                                                                                                
+    ; Init Stack Pointer                                                                   
+    ; =====================	  
+    LDI	    R17,HIGH(RAMEND)    ; Load high byte
+	  LDI 	  R16,LOW(RAMEND)	    ; Load low byte
+	  OUT	    SPH,R17		          ; SPH - Ignored by parts with small SRAM
+    OUT	    SPL,R16		          ; SPL
+    
+    ; Enable Port Settings and set Interrupt vector table                                                                   
+    ; ====================================================
+    LDI     R16, (1<<IVCE)    
+    IN      R17, MCUCR
+    ORI     R17, (1<<IVSEL | 1<<ENPS) 
+    OUT     MCUCR, R16
+    OUT     MCUCR, R17
+
+                                                                                                  
+;*************************************************************************************************
+;*                                      SELECT TEST SIGNATURE                                    *
+;*************************************************************************************************
+                                                                                                  
+READ_INPUT_SIGNATURE:               ; read input-Signature                                        
+                                                                                                  
+    IN      R18,PINB                                                                              
+                                                                                                  
+    ; if # of signatures changes, adapt constant for he following instruction                     
+                                                                                                  
+    CPI     R18,0x14                ; check for signature greater than max                         
+    BRLT    CALCJMP                 ; go to default if signature ok                                
+    RJMP    READ_INPUT_SIGNATURE    ; read again input-Signature  
+                                                                                                  
+;*************************************************************************************************
+;*                                           JUMP TABLE                                          *
+;*************************************************************************************************
+
+CALCJMP:                                                                                          
+
+    LDI     R31,high(TESTJMPTABLE/2); load jump table base address                                
+    LDI     R30,low(TESTJMPTABLE/2) ; load jump table base address                                
+    ADD     R30,R18                 ; ADD signature (R23) as offset                               
+    LDI     R18,0x00                                                                             
+    ADC     R31,R18                 ; propagates carry up to R31 in case R30 + R23 is > 255       
+    IJMP                            ; indirect jump to specified signature                        
+                                                                                                  
+TESTJMPTABLE:  
+    RJMP    READ_INPUT_SIGNATURE                                                                                       
+    RJMP    SIGN01                                                                                   
+    RJMP    SIGN02                                                                                   
+    RJMP    SIGN03                                                                                   
+    RJMP    SIGN04                                                                                   
+    RJMP    SIGN05                                                                                   
+    RJMP    SIGN06                                                                                   
+    RJMP    SIGN07                                                                                   
+    RJMP    SIGN08                                                                                   
+    RJMP    SIGN09                                                                                   
+    RJMP    SIGN10                                                                                   
+    RJMP    SIGN11                                                                                   
+    RJMP    SIGN12                                                                                   
+    RJMP    SIGN13                                                                                   
+    RJMP    SIGN14                                                                                   
+    RJMP    SIGN15                                                                                   
+    RJMP    SIGN16
+    RJMP    SIGN17
+    RJMP    SIGN18
+    RJMP    SIGN19
+    
+;*************************************************************************************************
+;*                                            SIGNATURES                                         *
+;*************************************************************************************************
+                                                                                                  
+                                                                                                  
+;*************************************************************************************************
+                                                                                                  
+SIGN01:     ; set I/O Pin Group 1 (PB[7:0]) as input, set I/O Pin Group 2 (PD[7:0]) as output                         
+                                                                                                  
+    SER     R16
+    OUT     DDRD,R16                   ; set PORTD as output                                
+    PBIN_PDOUT:                                                                                   
+    IN      R16,PINB                   ; read from PinB                                           
+    OUT     PORTD,R16                  ; output on PORTD                                     
+    RJMP    PBIN_PDOUT                 ; jump to label                                                         
+                                                                                                 
+;*************************************************************************************************
+                                                                                                  
+SIGN02:     ; set I/O Pin Group 2 (PD[7:0]) as input, set I/O Pin Group 1 (PB[7:0]) as output                         
+
+    SER     R16
+    OUT     DDRB,R16                   ; set PORTD as output                                
+    PDIN_PBOUT:                                                                                   
+    IN      R16,PIND                   ; read from PinB                                           
+    OUT     PORTB,R16                  ; set Bit 7 of Port B                                      
+    RJMP    PDIN_PBOUT                 ; jump to label                                                         
+
+;*************************************************************************************************
+                                                                                                  
+SIGN03:     ; set I/O Pin Group 3 (PD[2:0]) as input, set I/O Pin Group 4 (PC[2:0]) as output                         
+
+    SER     R16
+    OUT     DDRC,R16                   ; set PORTD as output                                
+    PDIN_PCOUT:                                                                                   
+    IN      R16,PIND                   ; read from PinB                                           
+    OUT     PORTC,R16                  ; set Bit 7 of Port B                                      
+    RJMP    PDIN_PCOUT                 ; jump to label                                                         
+                                                                                                  
+;*************************************************************************************************
+                                                                                                  
+SIGN04:     ; set I/O Pin Group 4 (PC[2:0]) as input, set I/O Pin Group 3 (PD[2:0]) as output                         
+
+    SER     R16
+    OUT     DDRD,R16                   ; set PORTD as output                                
+    PCIN_PDOUT:                                                                                   
+    IN      R16,PINC                   ; read from PinB                                           
+    OUT     PORTD,R16                  ; set Bit 7 of Port B                                      
+    RJMP    PCIN_PDOUT                 ; jump to label                                                         
+                                                                                                  
+;*************************************************************************************************
+                                                                                                  
+SIGN05:     ; enable all PullUps for resistor measurements                                        
+                                                                                                  
+    SER     R16                                       
+    OUT     PORTB,R16                  ; enable PullUps PB[7:0]                                   
+    OUT     PORTC,R16                  ; enable PullUps PC[2:0]                                   
+    OUT     PORTD,R16                  ; enable PullUps PC[7:0]                                   
+    PU_EN:                                                                                        
+    RJMP    PU_EN          
+    
+;*************************************************************************************************
+                                                                                                  
+SIGN06:     ; activate LED Amplifier PDSC[4:0]        
+                                                                                                  
+    SER     R16                                       
+    OUT     DDRD,R16                  ; set to output
+    LDI     R17,(1<<PDSC4|1<<PDSC3|1<<PDSC2|1<<PDSC1|1<<PDSC0)                      
+    IOST    PDSCR,R17                                                               
+      
+    LO_SIDELO:                                                                                    
+    RJMP     LO_SIDELO                                                                             
+                                                                                                  
+;*************************************************************************************************
+                                                                                                  
+SIGN07:     ; CLKXTO/4                                                                            
+    CALL    TEST_INIT_SIG1X
+
+    LDI     R16, (1<<T2PS1|1<<T2CS1|1<<T2CS0)    ; Configure Timer 3
+    IOST    T2MR, R16
+    LDI     R16, 0x05 ;Compare Value
+    IOST    T2COR, R16
+    LDI     R16, (1<<T2CRM|1<<T2CTM)
+    IOST    T2CR, R16
+    SBI     T2CR, T2ENA
+    
+    LDI     R16, (1<<TO2PIS1)    ; Configure Timer Modulator
+    IOST    TMOCR , R16
+
+                                                                                                  
+    ; measure the clock at Pin C3                                                                 
+    MeasureCLKXTO:
+    RJMP    MeasureCLKXTO 
+    
+;*************************************************************************************************
+                                                                                                  
+SIGN08: ; RAM March LR Algorithm    
+
+    CLI
+    SBI     DDRD,3
+    SBI     DDRD,4
+    CBI     PORTD,3                    ; Initialization of PD3: output '0' (will only be set to '1' if test passes)
+    CBI     PORTD,4                    ; Initialization of PD4: output '0' (will only be set to '1' if test fails)
+    
+    LDI     R16, 0x80       ; set system clock source 
+    LDI     R17, 0x0A
+    IOST    CMCR, R16       ; according R17
+    IOST    CMCR, R17
+
+
+    ; Load March Pattern for Test 1 (pattern0=0x55  and pattern1 = 0xAA)
+    LDI     R24,0x55
+    LDI     R25,0xAA
+
+    START_MARCH_ALGORITHM:
+    ; March LR Test 1: W0(up)      
+    LDI     R31,high(SRAM_START)
+    LDI     R30,low(SRAM_START) 
+    
+    MARCH1_W0:
+    ST      Z+,R24
+    CPI     R31,high(RAMEND + 1)
+    BRNE    MARCH1_W0
+
+    LD      R16,-Z
+        
+    ; March LR Test 2/3: R0, W1 (down)   
+    MARCH1_R0_W1:   
+    LD      R16,Z 
+    CPSE    R24,R16
+    RJMP    MARCH_ERROR ; Check if error so far
+    
+    ST      Z,R25
+    LD      R16,-Z 
+    CPI     R31,high(SRAM_START-1)  ;only works if SRAM_START is 0x100 or 0x200 or ox300 ... 
+    BRNE    MARCH1_R0_W1
+    
+    LD      R16,Z+
+    
+    ; March LR Test 4/5/6/7: R1, W0,R0.W1 (up)  
+    MARCH1_R1_W0_R0_W1: 
+    LD      R16,Z 
+    CPSE    R25,R16
+    RJMP    MARCH_ERROR ; Check if error so far
+    
+    ST      Z,R24
+    LD      R16,Z 
+    CPSE    R24,R16
+    RJMP    MARCH_ERROR ; Check if error so far
+    ST      Z+,R25
+    
+    CPI     R31,high(RAMEND + 1)
+    BRNE    MARCH1_R1_W0_R0_W1
+    
+    LDI     R31,high(SRAM_START)
+
+    ; March LR Test 8/9: R1, W0 (up)    
+    MARCH1_R1_W0:   
+    LD      R16,Z 
+    CPSE    R25,R16
+    RJMP    MARCH_ERROR ; Check if error so far
+    
+    ST      Z+,R24
+    CPI     R31,high(RAMEND + 1)
+    BRNE    MARCH1_R1_W0
+    
+    LDI     R31,high(SRAM_START)
+
+    ; March LR Test 10/11/12/13: R0, W1,R1.W0 (up)      
+    MARCH1_R0_W1_R1_W0: 
+    LD      R16,Z 
+    CPSE    R24,R16
+    RJMP    MARCH_ERROR ; Check if error so far
+    
+    ST      Z,R25
+    LD      R16,Z 
+    CPSE    R25,R16
+    RJMP    MARCH_ERROR ; Check if error so far
+    ST      Z+,R24
+    
+    CPI     R31,high(RAMEND + 1)
+    BRNE    MARCH1_R0_W1_R1_W0
+    
+    LDI     R31,high(SRAM_START)
+
+    ; March LR Test 14: R0 (up)     
+    MARCH1_R0:  
+    LD      R16,Z+ 
+    CPSE    R24,R16
+    RJMP    MARCH_ERROR ; Check if error so far
+    
+    CPI     R31,high(RAMEND + 1)
+    BRNE    MARCH1_R0
+    
+    CPI     R24,0x55
+    BRNE    MARCH_OK
+    
+    ; Load March Pattern for Test 2 (pattern0=0x55  and pattern1 = 0xAA)
+    LDI     R24,0x00
+    LDI     R25,0xFF
+    RJMP    START_MARCH_ALGORITHM
+    ; Load March Pattern for Test 1 (pattern0=0x55  and pattern1 = 0xAA)
+    
+    MARCH_OK:
+    
+    SBI     PORTD,3 ; Signalize PASS (PC3 set to '1')
+    MARCH_LOOP:
+    RJMP    MARCH_LOOP
+    
+    MARCH_ERROR:
+    SBI     PORTD,4 ; Signalize FAIL (PC4 set to '1')
+    MARCH_ERROR_LOOP:
+    RJMP    MARCH_ERROR_LOOP
+                                           
+;*************************************************************************************************
+
+SIGN09:
+    CALL    TEST_INIT_SIG1X
+    CALL    TEST_SIG10
+    CALL    TEST_SIG11
+    CALL    TEST_SIG12
+    CALL    TEST_SIG13
+    CALL    TEST_SIG14
+    CALL    TEST_SIG15
+    CALL    TEST_SIG16
+    CALL    TEST_SIG17
+    CALL    TEST_SIG18
+    RJMP    TEST_SIG1X_OK
+
+ SIGN10:
+    CALL    TEST_INIT_SIG1X
+    CALL    TEST_SIG10
+    RJMP    TEST_SIG1X_OK
+
+SIGN11:
+    CALL    TEST_INIT_SIG1X
+    CALL    TEST_SIG11
+    RJMP    TEST_SIG1X_OK
+
+SIGN12:
+    CALL    TEST_INIT_SIG1X
+    CALL    TEST_SIG12
+    RJMP    TEST_SIG1X_OK
+
+SIGN13:
+    CALL    TEST_INIT_SIG1X
+    CALL    TEST_SIG13
+    RJMP    TEST_SIG1X_OK
+
+SIGN14:
+    CALL    TEST_INIT_SIG1X
+    CALL    TEST_SIG14
+    RJMP    TEST_SIG1X_OK
+
+SIGN15:
+    CALL    TEST_INIT_SIG1X
+    CALL    TEST_SIG15
+    RJMP    TEST_SIG1X_OK
+
+SIGN16:
+    CALL    TEST_INIT_SIG1X
+    CALL    TEST_SIG16
+    RJMP    TEST_SIG1X_OK
+
+SIGN17:
+    CALL    TEST_INIT_SIG1X
+    CALL    TEST_SIG17
+    RJMP    TEST_SIG1X_OK
+
+SIGN18:
+    CALL    TEST_INIT_SIG1X
+    CALL    TEST_SIG18
+    RJMP    TEST_SIG1X_OK
+
+;***** SIGN19 - *****************************************************
+; Watchdog Reset
+;********************************************************************
+SIGN19:
+    
+    SBI     DDRD, 3
+    SBI     DDRD, 4
+    CBI     PORTD,3                    ; Initialization of PC3: output '0' (will only be set to '1' if test passes)
+    CBI     PORTD,4                    ; Initialization of PC4: output '0' (will only be set to '1' if test fails)
+    LDI     R17, 0x18
+    IOST    WDTCR, R17
+    IOST    WDTCR, R17
+
+SIGN19_WAIT_LOOP    
+    IOLD    R16, MCUSR
+    SBRS    R16, WDRF
+    RJMP    SIGN19_WAIT_LOOP
+
+SIGN19_END_LOOP:
+    SBI     PORTD, 3
+    WDR
+    RJMP    SIGN19_END_LOOP
+
+                                                                                               
+; ***** EN_XTO *********************************************
+; pass control message to fec to enable the XTO
+;***********************************************************
+
+TEST_EN_XTO:
+    PUSH    R16
+
+    IOLD    R16, SUPCR     ;read supply control register
+    ORI     R16, (1<<AVEN) ;enable AVCC
+    IOST    SUPCR, R16     ;write supply control register
+
+    LDI     R16, (1<<AVCCRF)
+    TEST_EN_XTO_AVCC_WAIT:
+    IOST    SUPFR, R16     ;reset AVCCLF flag
+    IOLD    R16, SUPFR     ;reread SUPFR register
+    ANDI    R16, (1<<AVCCRF) ;check if flag is still set
+    BRNE    TEST_EN_XTO_AVCC_WAIT
+
+    IOLD    R16, FEEN1
+    ORI     R16, (1<<XTOEN) ;set bit XTOEN
+    IOST    FEEN1, R16      ;write XTOEN bit in FEEN1
+
+    TEST_EN_XTO_WAIT1:
+    IOLD    R16, FESR
+    SBRS    R16, XRDY       ;check XRDY bit
+    RJMP    TEST_EN_XTO_WAIT1
+
+    POP     R16
+    RET
+    
+; ***** TEST_EN_PLL ****************************************
+; pass control message to fec to enable the PLL
+;***********************************************************
+TEST_EN_PLL:
+    PUSH    R16
+
+    IOLD    R16, SUPCR     ;read supply control register
+    ORI     R16, (1<<AVEN) ;enable AVCC
+    IOST    SUPCR, R16     ;write supply control register
+
+    LDI     R16, (1<<AVCCRF)
+    TEST_EN_PLL_AVCC_WAIT:
+    IOST    SUPFR, R16     ;reset AVCCLF flag
+    IOLD    R16, SUPFR     ;reread SUPFR register
+    ANDI    R16, (1<<AVCCRF) ;check if flag is still set
+    BRNE    TEST_EN_PLL_AVCC_WAIT
+
+    ;PLL lockdetect Gate
+    ;*******************
+    IOLD    R16, FECR
+    ORI     R16, (1<<PLCKG) ;set bit PLCKG
+    IOST    FECR, R16
+
+    ;write FEMS config value (433MHz config)
+    ;***************************************
+    LDI     R16, (0x8<<4)|(0x5) ;config for 433,92MHz
+    IOST    FEMS, R16           ;write config in FEMS
+
+    ;write FEVCT config value
+    ;***************************************
+    LDI     R16, 0x07           ;config for 433,92MHz
+    IOST    FEVCT, R16          ;write config in FEVCT
+
+    ;write FEVCO config value)
+    ;***************************************
+    LDI     R16, 0x77           ;config for 433,92MHz
+    IOST    FEVCO, R16          ;write config in FEVCO
+
+    ;enable PLL
+    ;**********
+    IOLD    R16, FEEN1
+    ORI     R16, (1<<PLEN) ;set bit PLEN
+    IOST    FEEN1, R16     ;write PLEN bit in FEEN1
+
+    IOLD    R16, FEEN2
+    ORI     R16, (1<<PLPEN) ;set bit PLPEN
+    IOST    FEEN2, R16     ;write PLPEN bit in FEEN2
+
+    POP     R16
+    RET    
+
+
+
+;***** TEST_INIT_SIG1X - *************************************************
+; enables XTO, PLL and ADC 
+; clear all power reduction bits
+;*************************************************************************
+TEST_INIT_SIG1X: 
+    SBI     DDRD, 3
+    SBI     DDRD, 4
+    CBI     PORTD,3                    ; Initialization of PC3: output '0' (will only be set to '1' if test passes)
+    CBI     PORTD,4                    ; Initialization of PC4: output '0' (will only be set to '1' if test fails)
+
+    ;enable XTO
+    CALL    TEST_EN_XTO
+    ;enable PLL
+    CALL    TEST_EN_PLL
+   
+    CLR     R16         ; disable Power Reduction for Timers
+    IOST    PRR0, R16   ; disable Power Reduction for Timers
+    IOST    PRR1, R16   ; disable Power Reduction for Timers
+    LDI     R16, 0x40
+    IOST    PRR2, R16   ; disable Power Reduction for Timers
+    RET
+
+;***** TEST_SIG10 - *************************************************
+; Tests System Clock Prescaler and CLT Prescaler
+;********************************************************************************
+TEST_SIG10:
+    LDI     R16, (1<<CMCCE) ; set system clock source to frc
+    LDI     R17, (1<<CCS | 1<<CMM0)
+    IOST    CMCR, R16       ; according R17
+    IOST    CMCR, R17
+
+    CBI     T3CR, T3ENA     ; disable timer3
+    CBI     T4CR, T3ENA     ; disable timer3
+ 
+    CLR     R16             ; set timer3 input clock to FRC
+    IOST    T3MRA, R16      ; set timer3 input clock to FRC
+ 
+    LDI     R16, (1<<T4CS0) ; set timer4 input clock to clk_t
+    IOST    T4MRA, R16      ; set timer4 input clock to clk_t
+
+    LDI     R16, 0x06       ; compare value timer 3 low byte
+    LDI     R17, 0x06       ; compare value timer 4 low byte
+    LDI     R19, 0x80       ; Clock Prescaler Change Enable
+    LDI     R20, 0x08       ; System Clock Prescaler Value
+    LDI     R21, 0x09       ; Increment Value for the Prescaler
+    CLR     R22
+    
+    SYSCLK_PRESCALER_TEST_LOOP:
+    SBI     T3CR, T3RES     ; reset timer3
+    SBI     T4CR, T4RES     ; reset timer4
+
+    IOST    CLPR, R19      ; set system clock prescaler
+    IOST    CLPR, R20      ; set system clock prescaler
+
+    SBI     T4CR, T4ENA     ; enable timer4
+    SBI     T3CR, T3ENA     ; enable timer3
+    NOP    
+    NOP
+    CBI     T4CR, T4ENA     ; disable timer4
+    CBI     T3CR, T3ENA     ; disable timer3
+
+    IOLD    R18, T4CNTL     ; read timer4 Count Low Register
+    SBRC    R20, 6          ; change expected (R18) value if CLTPS=0x0
+    CLR     R17             ; from 0x06 to 0x00
+    CPSE    R18, R17        ; compare with expected value
+    RJMP    TEST_SIG1X_ERROR
+
+    IOLD    R18, T3CNTL     ; read timer3 Count Low Register
+    CPSE    R18, R16        ; compare with expected value
+    RJMP    TEST_SIG1X_ERROR
+
+    LSL     R16             ; calculate new expected value for Timer 3
+
+    ADD     R20, R21        ; increase system clock prescaler values
+    CPI     R20, 0x50
+    BRNE    SYSCLK_PRESCALER_TEST_LOOP 
+
+    IOST    CLPR, R19      ; set system clock prescaler
+    IOST    CLPR, R22      ; set system clock prescaler
+    RET    
+
+    
+    
+;***** TEST_SIG11 - *************************************************
+; Tests System Clock MUX and Clockout MUX Test
+;********************************************************************
+TEST_SIG11:
+    CLI 
+    
+    LDI     R16, (1<<PCIE1)       ; enable Pin Change Interrupt 1
+    IOST    PCICR, R16      ; 
+    LDI     R16, (1<<PCINT11)     ;
+    IOST    PCMSK1, R16     ;
+
+    CLR     R16             ; Clear R16, used in SIG10_SET_CLKOUT_SYSCLOCK
+    
+    LDI     R17, 0x01        ;CLKOCR   ;-------------------------
+    LDI     R18, 0x09        ;CMCR     ; FRC Test
+    LDI     R20, 0x0B                  ;
+    LDI     R21, 0x20        ;CLKOD    ;
+    CALL    TEST_SET_CLKOUT_SYSCLOCK   ;-------------------------
+
+    LDI     R17, 0x00                  ;-------------------------
+    LDI     R18, 0x08                  ; SRC Test
+    ;LDI     R20, 0x0B                 ; 
+    ;LDI     R21, 0x20                 ; 
+    CALL    TEST_SET_CLKOUT_SYSCLOCK  ;-------------------------
+
+    LDI     R17, 0x02                  ;-------------------------
+    LDI     R18, 0x00                  ; MRC Test
+    ;LDI     R20, 0x0B                 ; 
+    ;LDI     R21, 0x20                 ; 
+    CALL    TEST_SET_CLKOUT_SYSCLOCK  ;-------------------------
+
+    LDI     R17, 0x03                  ;-------------------------
+    LDI     R18, 0x0B                  ; CLK_XTO / CLK_XTO6 Test
+    ;LDI     R20, 0x0B                 ; 
+    LDI     R21, 0xC0                  ; 
+    CALL    TEST_SET_CLKOUT_SYSCLOCK  ;-------------------------
+
+    LDI     R17, 0x03                 ;-------------------------
+    LDI     R18, 0x0C                  ; CLK_XTO / CLK_XTO4 Test
+    ;LDI     R20, 0x0B                 ; 
+    LDI     R21, 0x80                  ; 
+    CALL    TEST_SET_CLKOUT_SYSCLOCK  ;-------------------------
+
+    LDI     R16, 0x00       ; disable Pin Change Interrupt 0
+    IOST    PCICR, R16      ; 
+    IOST    PCMSK1, R16     ;
+   
+    IOST    CLKOCR, R16     ; disbale CLKOUT
+    
+    RET    
+
+    
+;***** TEST_SIG12 - *************************************************
+; Tests Timer Prescaler
+;********************************************************************
+TEST_SIG12:
+    LDI     R16, 0x80       ; set system clock source 
+    LDI     R19, 0x0C       ; to XTO/4
+    IOST    CMCR, R16 
+    IOST    CMCR, R19 
+
+    ;CALL TEST3_DISABLE_CLKT
+    LDI     R16, 0x80
+    LDI     R17, 0x00
+    IOST    CLPR, R16       ; set system clock prescaler
+    IOST    CLPR, R17       ; set system clock prescaler
+
+    LDI     R22, 0x3E       ; Value for TxMR Register (Timer 1,2 and 5)
+    LDI     R23, 0x00       ; Initial value for wait loop in TEST3_WAIT
+    LDI     R24, 0x20       ; Initial value for wait loop in TEST3_WAIT
+    LDI     R29, 0x06       ; Compare value for TxCNTL (Timer 3 and 4)
+    LDI     R30, 0x80       ; Compare value for TxCNTH (Timer 3 and 4)
+    LDI     R31, 0x01       ; Compare value for TxCNT (Timer 1, 2 and 5)
+    CALL    TEST_TIMER_PRESCALER_CHECK
+
+    LDI     R22, 0x3A       ; Value for TxMR Register (Timer 1,2 and 5)
+    ;LDI    R23, 0x00       ; Initial value for wait loop in TEST3_WAIT
+    LDI     R24, 0x10       ; Initial value for wait loop in TEST3_WAIT
+    LDI     R29, 0x00       ; Compare value for TxCNTL (Timer 3 and 4)
+    LDI     R30, 0x01       ; Compare value for TxCNTH (Timer 3 and 4)
+    ;LDI    R31, 0x01       ; Compare value for TxCNT (Timer 1, 2 and 5)
+    CALL    TEST_TIMER_PRESCALER_CHECK
+
+    LDI     R22, 0x36       ; Value for TxMR Register (Timer 1,2 and 5)
+    ;LDI    R23, 0x00       ; Initial value for wait loop in TEST3_WAIT
+    LDI     R24, 0x08       ; Initial value for wait loop in TEST3_WAIT
+    ;LDI    R29, 0x00       ; Compare value for TxCNTL (Timer 3 and 4)
+    ;LDI    R30, 0x01       ; Compare value for TxCNTH (Timer 3 and 4)
+    ;LDI    R31, 0x01       ; Compare value for TxCNT (Timer 1, 2 and 5)
+    CALL    TEST_TIMER_PRESCALER_CHECK
+
+    LDI     R22, 0x32       ; Value for TxMR Register (Timer 1,2 and 5)
+    ;LDI    R23, 0x00       ; Initial value for wait loop in TEST3_WAIT
+    LDI     R24, 0x04       ; Initial value for wait loop in TEST3_WAIT
+    ;LDI    R29, 0x00       ; Compare value for TxCNTL (Timer 3 and 4)
+    ;LDI    R30, 0x01       ; Compare value for TxCNTH (Timer 3 and 4)
+    ;LDI    R31, 0x01       ; Compare value for TxCNT (Timer 1, 2 and 5)
+    CALL    TEST_TIMER_PRESCALER_CHECK
+
+    LDI     R22, 0x2E       ; Value for TxMR Register (Timer 1,2 and 5)
+    ;LDI    R23, 0x00       ; Initial value for wait loop in TEST3_WAIT
+    LDI     R24, 0x02       ; Initial value for wait loop in TEST3_WAIT
+    ;LDI    R29, 0x00       ; Compare value for TxCNTL (Timer 3 and 4)
+    ;LDI    R30, 0x01       ; Compare value for TxCNTH (Timer 3 and 4)
+    ;LDI    R31, 0x01       ; Compare value for TxCNT (Timer 1, 2 and 5)
+    CALL    TEST_TIMER_PRESCALER_CHECK
+
+    LDI     R22, 0x2A       ; Value for TxMR Register (Timer 1,2 and 5)
+    ;LDI    R23, 0x00       ; Initial value for wait loop in TEST3_WAIT
+    LDI     R24, 0x01       ; Initial value for wait loop in TEST3_WAIT
+    LDI     R29, 0x01       ; Compare value for TxCNTL (Timer 3 and 4)
+    ;LDI    R30, 0x01       ; Compare value for TxCNTH (Timer 3 and 4)
+    ;LDI    R31, 0x01       ; Compare value for TxCNT (Timer 1, 2 and 5)
+    CALL    TEST_TIMER_PRESCALER_CHECK
+
+    LDI     R22, 0x26       ; Value for TxMR Register (Timer 1,2 and 5)
+    LDI     R23, 0x80       ; Initial value for wait loop in TEST3_WAIT
+    ;LDI    R24, 0x01       ; Initial value for wait loop in TEST3_WAIT
+    LDI     R29, 0x03       ; Compare value for TxCNTL (Timer 3 and 4)
+    ;LDI    R30, 0x01       ; Compare value for TxCNTH (Timer 3 and 4)
+    ;LDI    R31, 0x01       ; Compare value for TxCNT (Timer 1, 2 and 5)
+    CALL    TEST_TIMER_PRESCALER_CHECK
+
+    LDI     R22, 0x22       ; Value for TxMR Register (Timer 1,2 and 5)
+    LDI     R23, 0x40       ; Initial value for wait loop in TEST3_WAIT
+    ;LDI    R24, 0x01       ; Initial value for wait loop in TEST3_WAIT
+    LDI     R29, 0x06       ; Compare value for TxCNTL (Timer 3 and 4)
+    LDI     R30, 0x01       ; Compare value for TxCNTH (Timer 3 and 4)
+    LDI     R31, 0x01       ; Compare value for TxCNT (Timer 1, 2 and 5)
+    CALL    TEST_TIMER_PRESCALER_CHECK
+  
+    LDI     R22, 0x1E       ; Value for TxMR Register (Timer 1,2 and 5)
+    LDI     R23, 0x20       ; Initial value for wait loop in TEST3_WAIT
+    ;LDI    R24, 0x01       ; Initial value for wait loop in TEST3_WAIT
+    LDI     R29, 0x86       ; Compare value for TxCNTL (Timer 3 and 4)
+    LDI     R30, 0x00       ; Compare value for TxCNTH (Timer 3 and 4)
+    ;LDI    R31, 0x01       ; Compare value for TxCNT (Timer 1, 2 and 5)
+    CALL    TEST_TIMER_PRESCALER_CHECK
+  
+    LDI     R22, 0x1A       ; Value for TxMR Register (Timer 1,2 and 5)
+    LDI     R23, 0x10       ; Initial value for wait loop in TEST3_WAIT
+    ;LDI    R24, 0x01       ; Initial value for wait loop in TEST3_WAIT
+    LDI     R29, 0x01       ; Compare value for TxCNTL (Timer 3 and 4)
+    LDI     R30, 0x00       ; Compare value for TxCNTH (Timer 3 and 4)
+    ;LDI    R31, 0x01       ; Compare value for TxCNT (Timer 1, 2 and 5)
+    CALL    TEST_TIMER_PRESCALER_CHECK
+      
+    LDI     R22, 0x16       ; Value for TxMR Register (Timer 1,2 and 5)
+    LDI     R23, 0x08       ; Initial value for wait loop in TEST3_WAIT
+    ;LDI    R24, 0x01       ; Initial value for wait loop in TEST3_WAIT
+    ;LDI    R29, 0x01       ; Compare value for TxCNTL (Timer 3 and 4)
+    ;LDI    R30, 0x00       ; Compare value for TxCNTH (Timer 3 and 4)
+    ;LDI    R31, 0x01       ; Compare value for TxCNT (Timer 1, 2 and 5)
+    CALL    TEST_TIMER_PRESCALER_CHECK
+  
+    LDI     R22, 0x12       ; Value for TxMR Register (Timer 1,2 and 5)
+    LDI     R23, 0x04       ; Initial value for wait loop in TEST3_WAIT
+    ;LDI    R24, 0x01       ; Initial value for wait loop in TEST3_WAIT
+    ;LDI    R29, 0x01       ; Compare value for TxCNTL (Timer 3 and 4)
+    ;LDI    R30, 0x00       ; Compare value for TxCNTH (Timer 3 and 4)
+    ;LDI    R31, 0x01       ; Compare value for TxCNT (Timer 1, 2 and 5)
+    CALL    TEST_TIMER_PRESCALER_CHECK
+  
+    LDI     R22, 0x0E       ; Value for TxMR Register (Timer 1,2 and 5)
+    LDI     R23, 0x04       ; Initial value for wait loop in TEST3_WAIT
+    LDI     R24, 0x01       ; Initial value for wait loop in TEST3_WAIT
+    LDI     R29, 0x02       ; Compare value for TxCNTL (Timer 3 and 4)
+    ;LDI    R30, 0x00       ; Compare value for TxCNTH (Timer 3 and 4)
+    LDI     R31, 0x02       ; Compare value for TxCNT (Timer 1, 2 and 5)
+    CALL    TEST_TIMER_PRESCALER_CHECK
+    
+    LDI     R22, 0x0A       ; Value for TxMR Register (Timer 1,2 and 5)
+    LDI     R23, 0x04       ; Initial value for wait loop in TEST3_WAIT
+    ;LDI    R24, 0x01       ; Initial value for wait loop in TEST3_WAIT
+    LDI     R29, 0x05       ; Compare value for TxCNTL (Timer 3 and 4)
+    ;LDI    R30, 0x00       ; Compare value for TxCNTH (Timer 3 and 4)
+    LDI     R31, 0x05       ; Compare value for TxCNT (Timer 1, 2 and 5)
+    CALL    TEST_TIMER_PRESCALER_CHECK
+  
+    LDI     R22, 0x06       ; Value for TxMR Register (Timer 1,2 and 5)
+    LDI     R23, 0x04       ; Initial value for wait loop in TEST3_WAIT
+    ;LDI    R24, 0x01       ; Initial value for wait loop in TEST3_WAIT
+    LDI     R29, 0x0B       ; Compare value for TxCNTL (Timer 3 and 4)
+    ;LDI    R30, 0x00       ; Compare value for TxCNTH (Timer 3 and 4)
+    LDI     R31, 0x0B       ; Compare value for TxCNT (Timer 1, 2 and 5)
+    CALL    TEST_TIMER_PRESCALER_CHECK
+  
+    LDI     R22, 0x02       ; Value for TxMR Register (Timer 1,2 and 5)
+    LDI     R23, 0x04       ; Initial value for wait loop in TEST3_WAIT
+    ;LDI    R24, 0x01       ; Initial value for wait loop in TEST3_WAIT
+    LDI     R29, 0x16       ; Compare value for TxCNTL (Timer 3 and 4)
+    ;LDI    R30, 0x00       ; Compare value for TxCNTH (Timer 3 and 4)
+    LDI     R31, 0x16       ; Compare value for TxCNT (Timer 1, 2 and 5)
+    CALL    TEST_TIMER_PRESCALER_CHECK
+    RET    
+    
+;***** TEST_SIG13 - *************************************************
+; Tests Clock sources for Timers
+;********************************************************************
+TEST_SIG13:
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;  TEST13.1 Timer MUX (XTO Clock Source)
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;   
+    LDI     R16, 0x80       ; set system clock source 
+    LDI     R19, 0x0C       ; to XTO/4
+    IOST    CMCR, R16 
+    IOST    CMCR, R19     
+    CALL    TEST_DISABLE_TIMERS  
+    CALL    TEST_RESET_TIMERS
+
+    LDI     R16, 0x03
+    IOST    T2MR, R16       ; set prescaler value
+    LDI     R16, 0x02
+    IOST    T3MRA, R16      ; set prescaler value
+
+    CALL    TEST_ENABLE_TIMERS
+
+    LDI     R23, 0x07
+    SIG13_TEST1_WAIT_LOOP1:     ; WAIT LOOP
+    NOP
+    DEC     R23
+    BRNE    SIG13_TEST1_WAIT_LOOP1 ;32 CPU Cycles loop
+    NOP
+    NOP
+    
+    CALL    TEST_DISABLE_TIMERS
+
+    SBI     T1CR, 5      ; reset timers
+    SBI     T4CR, 5      ; reset timers
+    
+    LDI     R16, 0x80     ; set system clock source 
+    LDI     R19, 0x00     ; to MRC
+    IOST    CMCR, R16 
+    IOST    CMCR, R19
+
+    LDI     R25, 0x00     ; Check Counter Values
+    LDI     R26, 0x2E
+    LDI     R27, 0x2E
+    LDI     R28, 0x00
+    LDI     R29, 0x00
+    LDI     R30, 0x00
+    CALL    TEST_CHECK_TIMER_VALUE
+    CALL    TEST_RESET_TIMERS
+
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;  TEST13.2 Timer MUX (FRC Clock Source)
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    
+    LDI     R16, 0x80     ; set system clock source 
+    LDI     R19, 0x09     ; to FRC
+    IOST    CMCR, R16 
+    IOST    CMCR, R19
+
+    LDI     R16, 0x01
+    IOST    T1MR, R16       ; set prescaler value
+    LDI     R16, 0x00
+    IOST    T3MRA, R16      ; set prescaler value
+    LDI     R16, 0x03
+    IOST    T4MRA, R16      ; set prescaler value
+
+    CALL    TEST_ENABLE_TIMERS
+
+    LDI     R23, 0x07
+    SIG13_TEST2_WAIT_LOOP1:     ; WAIT LOOP
+    NOP
+    DEC     R23
+    BRNE    SIG13_TEST2_WAIT_LOOP1 ;32 CPU Cycles loop
+    NOP
+    NOP   
+    
+    CALL    TEST_DISABLE_TIMERS
+    
+    LDI     R16, 0x80     ; set system clock source 
+    LDI     R19, 0x00     ; to MRC
+    IOST    CMCR, R16 
+    IOST    CMCR, R19
+    
+    SBI     T2CR, T2RES      ; reset timers
+
+    LDI     R25, 0x2E
+    LDI     R26, 0x00
+    LDI     R27, 0x2E
+    ;LDI    R28, 0x00
+    LDI     R29, 0x2E
+    ;LDI    R30, 0x00
+    CALL    TEST_CHECK_TIMER_VALUE
+    CALL    TEST_RESET_TIMERS
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;  TEST13.3 Timer MUX (MRC Clock Source)
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    
+
+    LDI     R16, 0x03
+    IOST    T1MR, R16        ; set prescaler value
+    LDI     R16, 0x01
+    IOST    T2MR, R16        ; set prescaler value
+    ;IOST   T3MRA, R16       ; set prescaler value
+    LDI     R16, 0x02
+    IOST    T4MRA, R16       ; set prescaler value
+
+    CALL    TEST_ENABLE_TIMERS
+
+    LDI     R23, 0x07
+    SIG13_TEST3_WAIT_LOOP1:     ; WAIT LOOP
+    NOP
+    DEC     R23
+    BRNE    SIG13_TEST3_WAIT_LOOP1 ;32 CPU Cycles loop
+    NOP
+    NOP
+  
+    CALL    TEST_DISABLE_TIMERS
+
+    SBI     T3CR, T3RES       ; reset timers because no src clock source available
+
+    ;LDI    R25, 0x2E
+    LDI     R26, 0x2E
+    LDI     R27, 0x00
+    ;LDI    R28, 0x00
+    LDI     R29, 0x2E
+    ;LDI    R30, 0x00
+    CALL    TEST_CHECK_TIMER_VALUE
+    CALL    TEST_RESET_TIMERS
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;  TEST13.4 Timer MUX (SRC Clock Source)
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    
+    LDI     R16, 0x80       ; set system clock source 
+    LDI     R19, 0x08       ; to SRC
+    IOST    CMCR, R16 
+    IOST    CMCR, R19
+
+
+    LDI     R16, 0x00
+    IOST    T1MR, R16        ; set prescaler value
+    IOST    T2MR, R16        ; set prescaler value
+    ;IOST   T3MRA, R16       ; set prescaler value
+    IOST    T4MRA, R16       ; set prescaler value
+
+    CALL    TEST_ENABLE_TIMERS
+
+    LDI     R23, 0x07
+    SIG13_TEST4_WAIT_LOOP1:     ; WAIT LOOP
+    NOP
+    DEC     R23
+    BRNE    SIG13_TEST4_WAIT_LOOP1 ;32 CPU Cycles loop
+    NOP
+    NOP
+  
+    CALL    TEST_DISABLE_TIMERS
+
+    LDI     R16, 0x80     ; set system clock source 
+    LDI     R19, 0x00     ; to MRC
+    IOST    CMCR, R16 
+    IOST    CMCR, R19
+
+    SBI     T3CR, T3RES   ; reset timers because no src clock source available
+
+    ;LDI     R25, 0x2E
+    ;LDI     R26, 0x2E
+    ;LDI     R27, 0x00
+    ;LDI     R28, 0x00
+    ;LDI     R29, 0x2E
+    ;LDI     R30, 0x00
+    CALL    TEST_CHECK_TIMER_VALUE
+    CALL    TEST_RESET_TIMERS
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;  TEST13.5 Timer MUX (CLKTEI)
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    
+
+    SBI     DDRD, 0
+    CBI     PORTD, 0
+    
+    LDI     R16, (1<<T3CS1) | (1<<T3CS0)
+    IOST    T3MRA, R16          ; set prescaler value
+    SBI     T3CR, T3ENA         ; enable timer
+   
+    LDI     R23, 0x10
+    SIG13_TEST5_WAIT_LOOP1:     ; WAIT LOOP
+    SBI     PORTD, 0
+    CBI     PORTD, 0
+    DEC     R23
+    BRNE    SIG13_TEST5_WAIT_LOOP1 ;32 CPU Cycles loop
+
+    CBI     T3CR, T3ENA         ; disable timers
+  
+    IOLD    R19, T3CNTL         ; compare Timer 3 Count Low Register 
+    LDI     R25, 0x0E
+    CPSE    R25, R19            ; with expected value
+    RJMP    TEST_SIG1X_ERROR
+
+    SBI     T3CR, T3RES         ; reset timers
+    RET     
+    
+
+;***** TEST_SIG14 - *************************************************
+; Tests CLKOUT Prescaler
+;********************************************************************
+TEST_SIG14:
+    CLI                       ; disable global interrupt
+ 
+    LDI     R16, (1<<PCIE1)   ; enable Pin Change Interrupt 1
+    IOST    PCICR, R16        ; 
+    LDI     R16, (1<<PCINT11) ;
+    IOST    PCMSK1, R16       ;
+
+ 
+    LDI     R17, (1<<CLKOS1)
+    IOST    CLKOCR, R17     ; disable clkout according to R17
+
+    IOLD    R22, PCIFR      ; clear pin change interrupt flags
+    IOST    PCIFR, R22      ;
+    SEI    
+
+    LDI     R17, 0xFF            ; CLKOUT Divider Setting
+    LDI     R20, 0x7B            ; Expected Value after Reset
+    CALL TEST_CLKOUT_PRESCALER
+
+    LDI     R17, 0xAA            ; CLKOUT Divider Setting
+    LDI     R20, 0x50            ; Expected Value after Reset
+    CALL TEST_CLKOUT_PRESCALER
+
+    LDI     R17, 0x55            ; CLKOUT Divider Setting
+    LDI     R20, 0x26            ; Expected Value after Reset
+    CALL TEST_CLKOUT_PRESCALER
+    RET
+
+;***** TEST_SIG15 - *************************************************
+; Power Reduction Test
+;********************************************************************
+TEST_SIG15:
+    CLI
+
+    LDI     R16, 0x00        ; Compare Value for IP Registers
+    LDI     R18, 0x00        ; Compare Value for IP Registers
+    LDI     R20, 0x00        ; Compare Value for IP Registers
+    CALL    TEST_PR_WRITE_IP_REGS
+    CALL    TEST_PR_CHECK_IP_REGS
+    
+    LDI     R16, 0x01        ; Value which is stored in IP registers  
+    LDI     R18, 0x04        ; Value which is stored in IP registers  
+    LDI     R20, 0x00        ; Value which is stored in IP registers  
+    CALL    TEST_PR_WRITE_IP_REGS
+    CALL    TEST_PR_CHECK_IP_REGS
+
+    LDI     R16, 0x00        ; Compare Value for IP Registers
+    LDI     R18, 0x00        ; Compare Value for IP Registers
+    LDI     R20, 0x00        ; Compare Value for IP Registers
+    CALL    TEST_PR_WRITE_IP_REGS
+    CALL    TEST_PR_CHECK_IP_REGS
+ 
+    SER     R16
+    IOST    PRR0, R16
+    IOST    PRR1, R16
+    LDI     R16, 0xBC
+    IOST    PRR2, R16
+ 
+    LDI     R16, 0x01        ; Value which is stored in IP registers  
+    LDI     R18, 0x04        ; Value which is stored in IP registers  
+    CALL    TEST_PR_WRITE_IP_REGS
+    LDI     R16, 0x00        ; Compare Value for IP Registers
+    LDI     R18, 0x00        ; Compare Value for IP Registers
+    LDI     R20, 0x73        ; Compare Value for IP Registers
+    CALL    TEST_PR_CHECK_IP_REGS
+    
+    RET
+
+TEST_PR_WRITE_IP_REGS:
+    ; PRR0 Test
+    IOST    SPCR  , R16      ; Write Access to SPI Control Register
+    IOST    FSCR  , R16      ; Write Access to TxDSP_Ctrl Control Register
+    IOST    CRCCR  , R18     ; Write Access to TxDSP_Ctrl Control Register
+    IOST    VMCR , R16       ; Write Access to Voltage Monitor Control
+    IOST    CLKOCR, R16      ; Write Access to CLOCKOUT Control Register
+    IOST    AESCR, R16       ; Write Access to AES Key Register   
+    IOST    I2BR, R16        ; Write Access to I2C Bit Rate Register   
+
+    ; PRR1 Test
+    IOST    T1MR , R16       ; Write Access to Timer 1 Compare Register
+    IOST    T2MR , R16       ; Write Access to Timer 2 Compare Register
+    IOST    T3MRA, R16       ; Write Access to Timer 3 Compare Low Register
+    IOST    T4MRA, R16       ; Write Access to Timer 4 Compare Low Register
+    IOST    T5CCR , R16      ; Write Access to Timer 5 Compare Register
+    IOST    LFRSMR , R16     ; Write Access to LF RSSI Mode Register
+    
+    ; PRR2 Test
+    IOST    SFWP , R16       ; Write Access to RSSI Fifo Write Pointer Register
+    IOST    DFWP , R16       ; Write Access to Data Fifo Write Pointer Register
+    IOST    SSMCR , R18      ; Write Access to SSM Control Register
+    
+    RET
+
+    TEST_PR_CHECK_IP_REGS:
+    ; PRR0 Test
+    IOLD    R19, SPCR
+    CPSE    R19, R16
+    RJMP    TEST_SIG1X_ERROR
+    IOLD    R19, FSCR
+    CPSE    R19, R16
+    RJMP    TEST_SIG1X_ERROR
+    IOLD    R19, CRCCR
+    CPSE    R19, R18
+    RJMP    TEST_SIG1X_ERROR
+    IOLD    R19, VMCR
+    CPSE    R19, R16
+    RJMP    TEST_SIG1X_ERROR
+    IOLD    R19, CLKOCR
+    CPSE    R19, R16
+    RJMP    TEST_SIG1X_ERROR
+    IOLD    R19, AESCR
+    CPSE    R19, R16
+    RJMP    TEST_SIG1X_ERROR
+    IOLD    R19, I2BR
+    CPSE    R19, R16
+    RJMP    TEST_SIG1X_ERROR
+
+    ; PRR1 Test
+    IOLD    R19, T1MR
+    CPSE    R19, R16
+    RJMP    TEST_SIG1X_ERROR
+    IOLD    R19, T2MR
+    CPSE    R19, R16
+    RJMP    TEST_SIG1X_ERROR
+    IOLD    R19, T3MRA
+    CPSE    R19, R16
+    RJMP    TEST_SIG1X_ERROR
+    IOLD    R19, T4MRA
+    CPSE    R19, R16
+    RJMP    TEST_SIG1X_ERROR
+    IOLD    R19, T5CCR
+    CPSE    R19, R16
+    RJMP    TEST_SIG1X_ERROR
+    
+    ; PRR2 Test
+    IOLD    R19, SFWP
+    CPSE    R19, R16
+    RJMP    TEST_SIG1X_ERROR
+    IOLD    R19, DFWP
+    CPSE    R19, R16
+    RJMP    TEST_SIG1X_ERROR
+
+    IOLD    R19, TMFSM
+    CPSE    R19, R20
+    RJMP    TEST_SIG1X_ERROR
+
+    IOLD    R19, SSMCR
+    CPSE    R19, R18
+    RJMP    TEST_SIG1X_ERROR
+    RET    
+    
+   
+;***** TEST_SET_CLKOUT_SYSCLOCK - **********************************************
+; sets CLOKOUT and SYSCLK to the same clock source
+; waits on PIN Change Interrupt wich is caused by CLKOUT
+; check if counter which is incremented in the wait loop has the expected value
+;********************************************************************************
+TEST_SET_CLKOUT_SYSCLOCK:
+    IOST    CLKOCR, R16     ; disable clkout
+
+    IOLD    R22, PCIFR      ; clear pin change interrupt flags
+    IOST    PCIFR, R22      ;
+
+    SEI                     ; enable global interrupt
+
+    IOST    CLKOCR, R17     ; set clkout according to R17
+    IOST    CLKOD, R21      ; 
+
+    LDI     R22, 0x80       ; set system clock source 
+    IOST    CMCR, R22       ; according R18
+    IOST    CMCR, R18
+
+    CLR     R23             ; initialize count registers
+    CLR     R24             ; 
+
+    ORI     R17, (1<<CLKOEN)
+    IOST    CLKOCR, R17     ; enable clockout according to R19
+
+    SIG12_SCS_WAIT_LOOP1:
+    SBRS    R24, 2
+    RJMP    SIG12_SCS_WAIT_LOOP1
+    SIG12_SCS_WAIT_LOOP2:
+    INC     R23
+    SBRS    R24, 1
+    RJMP    SIG12_SCS_WAIT_LOOP2
+    CLI
+
+    IOST    CMCR, R22       ; set system clock source (R22 = 0x80)
+    IOST    CMCR, R16       ; to FRC                  (R16 = 0x00)
+
+    CPSE    R20, R23
+    RJMP    TEST_SIG1X_ERROR
+    RET
+
+;***** TEST_TIMER_PRESCALER_CHECK - ********************************************
+; set all timers to clkt and set prescaler value
+; enable timers
+; wait a defined time (WAIT_LOOP)
+; disable timers
+; check if Timer Count Registers have the expected value
+;********************************************************************************
+TEST_TIMER_PRESCALER_CHECK:
+    CALL    TEST_DISABLE_TIMERS    
+    CALL    TEST_RESET_TIMERS
+ 
+    IOST    T1MR, R22       ; set prescaler value
+    IOST    T2MR, R22       ; set prescaler value
+    DEC     R22             ; set prescaler value
+    IOST    T3MRA, R22      ; set prescaler value
+    IOST    T4MRA, R22      ; set prescaler value
+
+    CALL    TEST_ENABLE_TIMERS
+
+    LDI     R16, 0x80       ; enable clkt
+    LDI     R17, 0x08       ; enable clkt
+    LDI     R18, 0x00       ; enable clkt
+    IOST    CLPR, R16      ; enable clkt
+    IOST    CLPR, R17      ; enable clkt
+
+    SIG12_TEST3_WAIT_LOOP1:         ; WAIT LOOP
+    NOP
+    DEC     R23
+    BRNE    SIG12_TEST3_WAIT_LOOP1  ;1024 clock cycles loop
+    DEC     R23
+    DEC     R24
+    NOP
+    BRNE    SIG12_TEST3_WAIT_LOOP1  ;r24-1 * 1024 clock cycles
+ 
+    IOST    CLPR, R16      ; disable clkt
+    IOST    CLPR, R18      ; disable clkt
+
+    INC     R23
+    INC     R24
+
+    MOV     R25, R31
+    MOV     R26, R31
+    MOV     R27, R29
+    MOV     R28, R30
+    CALL    TEST_CHECK_TIMER_VALUE
+    RET
+
+;***** TEST_DISABLE_TIMERS - *****************************************************
+; disable all timers
+;********************************************************************************
+TEST_DISABLE_TIMERS:  
+    CBI     T1CR, 7         ; disable timers
+    CBI     T2CR, 7         ; disable timers
+    CBI     T3CR, 7         ; disable timers
+    CBI     T4CR, 7         ; disable timers
+    RET
+
+;***** TEST_RESET_TIMERS - *****************************************************
+; reset all timers
+;********************************************************************************
+TEST_RESET_TIMERS:  
+    SBI     T1CR, 5         ; reset timers
+    SBI     T2CR, 5         ; reset timers
+    SBI     T3CR, 5         ; reset timers
+    SBI     T4CR, 5         ; reset timers
+    RET
+
+;***** TEST_ENABLE_TIMERS - *****************************************************
+; enable all timers
+;********************************************************************************
+TEST_ENABLE_TIMERS:  
+    SBI     T1CR, 7         ; enable timers
+    SBI     T2CR, 7         ; enable timers
+    SBI     T3CR, 7         ; enable timers
+    SBI     T4CR, 7         ; enable timers
+    RET
+
+;***** TEST_CHECK_TIMER_VALUE - *************************************************
+; check all timer count values with the expected values 
+;********************************************************************************
+TEST_CHECK_TIMER_VALUE:
+    IOLD    R19, T1CNT      ; compare Timer 1 Count Register 
+    CPSE    R25, R19        ; with expected value
+    INC     R19   
+    CPSE    R25, R19        ; with expected value
+    RJMP    TEST_SIG1X_ERROR
+    IOLD    R19, T2CNT      ; compare Timer 2 Count Register 
+    CPSE    R26, R19        ; with expected value
+    INC     R19   
+    CPSE    R26, R19        ; with expected value
+    RJMP    TEST_SIG1X_ERROR
+    IOLD    R19, T3CNTL     ; compare Timer 3 Count Low Register 
+    CPSE    R27, R19        ; with expected value
+    INC     R19   
+    CPSE    R27, R19        ; with expected value
+    RJMP    TEST_SIG1X_ERROR
+    IOLD    R19, T3CNTH     ; compare Timer 3 Count High Register 
+    CPSE    R28, R19        ; with expected value
+    RJMP    TEST_SIG1X_ERROR
+    IOLD    R19, T4CNTL     ; compare Timer 4 Count Low Register 
+    CPSE    R29, R19        ; with expected value
+    INC     R19   
+    CPSE    R29, R19        ; with expected value
+    RJMP    TEST_SIG1X_ERROR
+    IOLD    R19, T4CNTH     ; compare Timer 4 Count High Register 
+    CPSE    R30, R19        ; with expected value
+    RJMP    TEST_SIG1X_ERROR
+    RET
+
+
+;***** TEST_CLKOUT_PRESCALER - **************************************
+; Tests Clockout Prescaler 
+;********************************************************************
+TEST_CLKOUT_PRESCALER:    
+    LDI     R16, (1<<CLKOS1)
+    IOST    CLKOCR, R16     ; disable clkout
+
+    IOLD    R22, PCIFR      ; clear pin change interrupt flags
+    IOST    PCIFR, R22      ;
+  
+    SEI                     ; enable global interrupt
+
+    IOST    CLKOD, R17      ; set output divider according to R17
+
+    CLR     R23             ; initialize count registers
+    CLR     R24             ; 
+
+    LDI	  R16, (1<<CLKOEN) | (1<<CLKOS1)
+    IOST    CLKOCR, R16     ; enable clockout according to R19
+
+    SIG15_SCS_WAIT_LOOP1:
+    SBRS    R24, 2
+    RJMP    SIG15_SCS_WAIT_LOOP1
+    SIG15_SCS_WAIT_LOOP2:
+    INC     R23
+    SBRS    R24, 1
+    RJMP    SIG15_SCS_WAIT_LOOP2
+
+    CLI
+
+    DEC     R20
+    CPSE    R20, R23
+    INC     R20
+    CPSE    R20, R23
+    INC     R20
+    CPSE    R20, R23
+    RJMP    TEST_SIG1X_ERROR
+
+    LDI     R16, (1<<CLKOS1)
+    IOST    CLKOCR, R16     ; disable clkout 
+    RET
+
+
+    
+TEST_SIG1X_OK:
+    SBI     PORTD,3                    ; PC3 indicates Pass to tester
+    RJMP    TEST_SIG1X_OK
+
+TEST_SIG1X_ERROR:
+    SBI     PORTD,4                    ; PC4 indicates Fail to tester
+    RJMP    TEST_SIG1X_ERROR
+    
+ 
+
+
+;***** TEST_SIG16 - *************************************************
+; Debounce clock switch
+;********************************************************************
+
+TEST_SIG16:                     
+    
+    SBI     DDRD, 5
+    SBI     PORTD, 5
+    
+    LDI     R16, 0x06
+    IOST    DBCR, R16
+    LDI     R16, 0x20
+    IOST    DBTC, R16
+    LDI     R16, 0x20
+    IOST    DBEND, R16
+
+    LDI     R16, 0x5
+    SIGN16_WAIT_LOOP1:
+    DEC     R16
+    BRNE    SIGN16_WAIT_LOOP1
+ 
+    CBI     PORTD, 5
+    
+    SIGN16_PIND5_SET1:
+    SBIS    PIND, 5
+    JMP     SIGN16_PIND5_CLEARED1    
+    INC     R16
+    NOP
+    NOP
+    NOP
+    NOP
+    JMP     SIGN16_PIND5_SET1
+
+    SIGN16_PIND5_CLEARED1:
+    CPI     R16, 0x04
+    BRNE    SIGN16_ERROR_LOOP
+
+
+    CLR     R16
+    IOST    DBEND, R16
+    LDI     R16, 0x04
+    IOST    DBCR, R16
+    LDI     R16, 0x20
+    IOST    DBEND, R16
+
+    SBI     PORTD, 5
+
+    LDI     R16, 0x80       ; set system clock source 
+    LDI     R19, 0x08       ; to SRC
+    IOST    CMCR, R16 
+    IOST    CMCR, R19
+    
+   
+    LDI     R16, 0x5
+    SIGN16_WAIT_LOOP2:
+    DEC     R16
+    BRNE    SIGN16_WAIT_LOOP2
+
+    CBI     PORTD, 5
+  
+    SIGN16_PIND5_SET2:
+    SBIS    PIND, 5
+    JMP     SIGN16_PIND5_CLEARED2    
+    INC     R16
+    NOP
+    NOP
+    NOP
+    NOP
+    JMP     SIGN16_PIND5_SET2
+                                                                                                  
+    SIGN16_PIND5_CLEARED2:
+    CPI     R16, 0x04
+    BREQ    SIGN16_OK
+    
+    SIGN16_ERROR_LOOP:
+    SBI     PORTD,4                    ; PC3 indicates Pass to tester
+    RJMP    SIGN16_ERROR_LOOP
+     
+    SIGN16_OK:
+    RET
+
+;***** TEST_SIG17 - *************************************************
+; Trace Unit clk_ext
+;********************************************************************
+TEST_SIG17:
+
+   SBI      DDRD, 0 ; Set Port D to Output
+   
+   IOLD     R16, MCUCR ; Enable Trace Unit
+   ORI      R16, (1<<TRCEN) | (1<<TRCCE)
+   IOST     MCUCR,R16 
+   IOST     MCUCR,R16 
+   
+   LDI      R16, 0xAA
+   IOST     TRCDR , R16
+   IOST     TRCIDL, R16
+   IOST     TRCIDH, R16
+   LDI      R17, 0x55
+   IOST     TRCDR , R17
+   IOST     TRCIDL, R17
+   IOST     TRCIDH, R17
+   
+   IOLD     R18, TRCDR
+   CPSE     R18, R16
+   JMP      TEST_SIG1X_ERROR  
+   
+   LDI      R18, 0x30
+SIGN17_WAIT_LOOP:
+   SBI      PORTD, 0
+   CBI      PORTD, 0   
+   DEC      R18
+   BRNE SIGN17_WAIT_LOOP
+    
+   IOLD     R18, TRCDR
+   CPSE     R18, R16
+   JMP      TEST_SIG1X_ERROR  
+
+   LDI      R17, 0x55
+   IOST     TRCDR , R17
+   IOST     TRCIDL, R17
+   IOST     TRCIDH, R17
+   
+   IOLD     R18, TRCDR
+   CPSE     R18, R17
+   JMP      TEST_SIG1X_ERROR 
+   RET   
+
+;***** TEST_SIG18 - *************************************************
+; clk_src_sc test
+;********************************************************************
+TEST_SIG18:
+   LDI      R16, 0x80     ; set system clock source 
+   LDI      R19, 0x09     ; to FRC
+   IOST     CMCR, R16 
+   IOST     CMCR, R19
+
+   CBI      PRR1, PRT3
+   
+   LDI      R16, (1<<T3ICS2)|(1<<T3ICS0)|(1<<T3CE0)
+   IOST     T3MRB, R16
+   
+   SER      R16           ;clear interrupt Flags
+   IOST     T3IFR, R16
+   
+   LDI      R17, (1<<T3ENA)
+   IOST     T3CR, R17
+   
+SIGN18_WAIT_LOOP1:
+   SBIS     T3IFR, T3ICF
+   RJMP     SIGN18_WAIT_LOOP1
+
+   IOST     T3IFR, R16     ;clear interrupt Flags
+   LDI      R17, (0<<T3ENA)
+   IOST     T3CR, R17
+   LDI      R17, (1<<T3RES)
+   IOST     T3CR, R17
+   LDI      R17, (1<<T3ENA)
+   IOST     T3CR, R17
+       
+   LDI      R19, 0x10
+SIGN18_WAIT_LOOP2:
+   SBIS     T3IFR, T3ICF
+   RJMP     SIGN18_WAIT_LOOP2
+   IOST     T3IFR, R16     ;clear interrupt Flags
+   DEC      R19
+   BRNE     SIGN18_WAIT_LOOP2
+   
+   RET
+ 
+;***************************************************************************
+; External Interrupt Routine
+;***************************************************************************
+INT0H_irq:
+   IOLD     R17,SREG
+   INC      R21
+   ADD      R22,R17
+   IOST     SREG,R17
+   RETI
+    
+;***************************************************************************
+; Pin Change 0 Interrupt Routine
+;***************************************************************************
+PCINT1_irq:
+   INC     R24
+   RETI    
+
+END
+

@@ -1,0 +1,1356 @@
+;----------------------------------------------------------------------------
+;
+;  Library routines for the ATMEL AT90S processors
+;  Float arithmetics
+;
+;  Copyright 1996-2008 IAR Systems AB. All rights reserved.
+;
+;  $Revision: 328482 $
+;
+;----------------------------------------------------------------------------
+;
+; Zeroes can either be positive ($00_00_00_00) or negative ($80_00_00_00).
+; NaNs are represented by $FF_FF_xx_xx Infinitives are either positive
+; ($7F_80_00_00) or negative ($FF_80_00_00).
+;
+; Rules for infinity follow the normal mathematical rules. NaNs are
+; generated when a correct number cannot be generated, e.g.
+;
+;   Inf - Inf --> NaN (When the signs of the infinitives agree)
+;   0.0 * Inf --> NaN
+;       0.0 / 0.0 --> NaN
+;   Inf / Inf --> NaN
+;   xxx % 0.0 --> NaN
+;   Inf / xxx --> NaN
+;
+; Also, all operations on NaN will result in another NaN.
+
+#include "macros.m90"
+
+    MODULE  ?FLOATS_L04
+
+    EXTERN  ?L_NEG_L03
+    EXTERN  ?UL_SHR_L03
+
+    PUBLIC  ?SL2F_L04
+    PUBLIC  ?UL2F_L04
+    PUBLIC  ?F2UL_L04
+    PUBLIC  ?F2SL_L04
+
+    PUBLIC  ?F_ADD_L04
+    PUBLIC  ?F_SUB_L04
+    PUBLIC  ?F_MUL_L04
+#if defined(__HAS_ENHANCED_CORE__) && !defined(__HAS_MUL__)
+    /* Not used any more */
+    PUBLIC  ?F_EC_MUL_NO_MUL_L04
+#endif
+    PUBLIC  ?F_DIV_L04
+    PUBLIC  ?F_CMP_EQ_L04
+    PUBLIC  ?F_CMP_GE_L04
+    PUBLIC  ?F_CMP_LT_L04
+
+; Things used by ?DOUBLES_L11
+    PUBLIC  ?TEST_P_L04
+    PUBLIC  ?F_INFINITE_L04
+    PUBLIC  ?F_ZERO_L04
+    PUBLIC  ?F_NAN_L04
+    PUBLIC  ?F_ROUND_L04
+
+;----------------------------------------------------------------------------
+; Subroutine F_UNPACK_L04 is used internally by the float routines.
+;
+; It has two entry points, F_UNPACK_L04 and F_UNPACK_1_L04.
+; F_UNPACK_1_L04 is used if only one unpack operation is to be performed.
+;
+; F_UNPACK_1_L04 takes a float variable (in 'IEEE single precision format')
+; in PL and stores extracted data in an internal unpacked format as:
+;
+;   Sign bit in bit 7 in T0 (i.e. 1 if negative number)
+;   Exponent in P3 (8 bits, excess 127 notation)
+;   Mantissa (24 bits extended with a trailing 'all 0's byte'
+;         to 32 bits) in P2,P1,P0,Z0. The highest
+;         bit (bit 31, i.e. bit 7 of P2 ) corresponds to the
+;         'implied bit' in the IEEE format and is set for
+;         all normalized number and cleared for all denormalized
+;         numbers.
+;
+; UNPACK behaves identically but in addition it also takes input in
+; QL and returns these unpacked data in T1, Q3 and Q2,Q1,Q0,Z1
+; respectively.
+;
+; Destroys: P2 P3 Q2 Q3 T0 T1 Z0 Z1
+;
+; SIZE: 42 bytes
+
+        RSEG    CODE:CODE:NOROOT
+
+; Destroys: Q2 Q3 T1 Z1
+;
+?F_UNPACK_L04:
+; Extract sign bit and exponent. (Bit 7 of Q3 is sign bit
+; and bit 7 of Q2 is LSB of exponent).
+;
+        CLR     Z1      ; Clear the lowest 8 bits
+        CLR     T1      ; Clear sign byte
+
+        BST     Q3,7    ; Store sign bit in T
+        LSL     Q2      ; Extract low bit of exponent --> C
+        ROL     Q3      ; Insert low bit of exponent to exponent byte
+        SEC
+        BRNE    ?SKIP1  ;
+        ROL     Q3      ; denormal numbers has an implied 1 in the exponent
+?SKIP1:
+        ROR     Q2
+        BLD     T1,7    ; T --> sign bit of sign byte
+
+; Destroys: P2 P3 T0 Z0
+;
+?F_UNPACK_1_L04:
+        CLR     Z0      ; Clear the lowest 8 bits
+        CLR     T0      ; Clear sign byte
+
+        BST     P3,7    ; Store sign bit in T
+        LSL     P2      ; Extract low bit of exponent --> C
+        ROL     P3      ; Insert low bit of exponent to exponent byte
+        SEC
+        BRNE    ?SKIP2  ;
+        ROL     P3      ; denormal numbers has an implied 1 in the exponent
+?SKIP2:
+        ROR     P2
+        BLD     T0,7    ; T --> sign bit of sign byte
+
+        RET             ; A real 0 is destryed
+
+;----------------------------------------------------------------------------
+; F_NORMALIZE_L04
+; F_ROUND_L04
+; F_PACK_L04    are used internally by the float routines.
+;
+; They operate on the 'float accumulator' that is used in all float
+; operations in this library and where data are stored as:
+;
+; Exponent in P3
+; Mantissa in P2,P1,P0,Z0
+; Sign bit in T0 (T0=$80 if negative number, else T0=$00)
+;
+; (This is identical to how F_UNPACK_1_L04 stores the data, but after
+; an operation the mantissa is not necessarily normalized and Z0
+; may have non-zero contents that have to be considered.)
+;
+; F_NORMALIZE_L04 normalizes the data (i.e. shifts the mantissa left
+; and decrements the exponent until a shift out of the 'implied 1
+; bit' occurs.
+; F_ROUND_L04 inspects the trailing extra byte and rounds the 3
+; significant bytes of the mantissa accordingly. In rare cases
+; even the exponent may be affected.
+; F_PACK_L04 finally packs the data according to the IEEE format.
+;
+; Destroys: P0 P1 P2 P3 Z0
+;
+; SIZE:
+
+        RSEG    CODE:CODE:NOROOT
+
+?LOOP1:
+        SBRC    P2,7        ; Test if the MSB of the mantissa is set;
+        RJMP    ?F_ROUND_L04    ; if so, then we're ready for rounding.
+        LSL     Z0          ; Otherwise we shift
+        ROL     P0          ; the mantissa leftwards
+        ROL     P1          ; to get the MSB to become
+        ROL     P2          ; one.
+        DEC     P3          ; Each shift reduces the exponent by one
+
+?F_NORMALIZE_L04:
+        CPI     P3,2        ; Test for exponent > 1
+        BRCC    ?LOOP1      ; Loop while exponent > 1 (unsigned)
+        TST     P3
+        BRNE    ?F_NORMALIZE_L04_1
+        SBRC    P2,7
+        LDI     P3,1
+        RJMP    ?F_ROUND_L04
+
+?F_NORMALIZE_L04_1:
+        SBRS    P2,7        ; if exponent == 1 && MSB of mantissa == 0
+        LDI     P3,0        ; then set exponent = 0
+
+?F_ROUND_L04:
+        CPI Z0,$80      ; Test LSB of mantissa
+                        ;  < $80 --> C=1, Z=0, No rounding
+                        ; == $80 --> C=0, Z=1, Perhaps rounding
+                        ;  > $80 --> C=0, Z=0, Rounding
+        BRNE    ?SKIP3
+        SBRS    P0,0        ; If P0:0 (mantissa bit 0) is set:
+        SEC                 ; don't skip rounding.
+        BRTC    ?SKIP3      ; Don't forget the sticky bit
+        CLC                 ; Enable rounding
+?SKIP3:
+        SBCI    P0,$FF      ; Add one to mantissa if C=0
+        SBCI    P1,$FF
+        SBCI    P2,$FF
+        SBCI    P3,$FF      ; Exponent may be affected too.
+
+?DENORMALIZE:
+        CPI     P3,2
+        BRCC    ?F_PACK
+        TST     P3
+        BRNE    ?DENORMALIZE_1
+        SBRC    P2,7
+        LDI     P3,1
+        RJMP    ?F_PACK
+
+?DENORMALIZE_1:
+        SBRS    P2,7
+        LDI     P3,0
+
+?F_PACK:
+        CPI     P3,$FF
+        BREQ    ?F_PACK_INF
+        LSL     P2          ; Make room for LSB of exponent
+        LSL     T0          ; Put sign bit in C
+        ROR     P3          ; Add sign bit and place LSB of exponent in C
+        ROR     P2          ; Shuffle LSB of exponent into place
+        RET
+
+        RSEG    CODE:CODE:NOROOT
+?F_PACK_ZERO:
+        RJMP    ?F_ZERO_L04     ; No subnormal numbers
+        
+        RSEG    CODE:CODE:NOROOT
+?F_PACK_INF:
+        RJMP    ?F_INFINITE_L04 ; Return a proper and signed infinity
+
+;----------------------------------------------------------------------------
+; F_SL2F_L04
+; 'signed long' to 'float' conversion
+; On call PL contains the signed long number
+; On return PL contains the float number
+;
+; Builds a representation in 'internal float format' and then
+; applies F_NORMALIZE_L04.
+;
+; Calls subroutine F_NORMALIZE_L04 and returns there.
+;
+; Observe that label '?SL2F_2_L04:' is referred via an RJMP from subroutine
+; F_UL2F_L04.
+;
+; Destroys: P0 P1 P2 P3 T0 Z0
+;
+; SIZE: 20/22 bytes
+;
+
+        RSEG    CODE:CODE:NOROOT
+
+?SL2F_L04:
+        MOV     T0,P3
+        TST     T0          ; Establish sign
+        BRPL    ?SL2F_2_L04 ; Number was positive
+        XCALL   ?L_NEG_L03  ; Negate number
+        REQUIRE ?SL2F_2_L04
+        
+        RSEG    CODE:CODE:NOROOT
+        
+?SL2F_2_L04:
+        MOV     Z0,P0       ; Set up mantissa
+        MOV     P0,P1
+        MOV     P1,P2
+        MOV     P2,P3
+        LDI     P3,$1F+$7F  ; Initial exponent
+        RJMP    ?F_NORMALIZE_L04
+
+;----------------------------------------------------------------------------
+; F_UL2F_L04
+; 'unsigned long' to 'float' conversion
+; On call PL contains the unsigned long number
+; On return PL contains the float number
+;
+; NOTE: Jumps into subroutine F_SL2F_L04 and returns there.
+;
+; Destroys: P0 P1 P2 P3 Q3 T0 Z0
+;
+; SIZE: 4 bytes
+
+        RSEG    CODE:CODE:NOROOT
+
+?UL2F_L04:
+        CLR     T0          ; Mark positive
+        RJMP    ?SL2F_2_L04 ; That's all
+
+;----------------------------------------------------------------------------
+; F2SL_L04
+; F2UL_L04
+; Float to long conversions
+; PL contains float value (IEEE format) to be converted
+; On return PL contains the converted value (long int)
+;
+; NOTE: Calls UNPACK_1, UL_SHR_L03 and L_NEG_L03
+;
+; Destroys: P0 P1 P2 P3 Q0 T0 Z0
+;
+; SIZE: 54/56 bytes
+;
+
+        RSEG    CODE:CODE:NOROOT
+?F2UL_L04:
+        TST     P3              ; If negative return 0
+        BRMI    ?SKIP6
+        RCALL   ?F_UNPACK_1_L04 ; Unpack one number only
+        MOV     Q0,P3           ; Exponent
+        SUBI    Q0,$7F
+        BRCS    ?SKIP6          ; Branch taken if exponent < 0
+        CPI     Q0,$20
+        BRCS    ?SKIP7          ; Branch taken if exponent is <= 32
+                                ; (Else number can not be represented)
+        LDI     P3,$FF          ; We return $FF_FF_FF_FF
+        RJMP    ?SKIP8
+        
+        RSEG    CODE:CODE:NOROOT
+    
+?F2SL_L04:
+        RCALL   ?F_UNPACK_1_L04 ; Unpack one number only
+        MOV     Q0,P3           ; Exponent
+        SUBI    Q0,$7F
+        BRCS    ?SKIP6          ; Branch taken if exponent < 0
+        CPI     Q0,$1F
+        BRCS    ?SKIP7          ; Branch taken if exponent is <= 31
+                                ; (Else number can not be represented)
+        SBRC    T0,7
+        RJMP    ?F_ZERO_L04     ; Return $80_00_00_00
+        LDI     P3,$7F
+        REQUIRE ?SKIP8
+
+        RSEG    CODE:CODE:NOROOT        
+?SKIP8:                         ; IEEE 754 says conversion
+        LDI     P2,$FF          ; must be monotone, i.e.
+        LDI     P1,$FF          ; we must return $7F_FF_FF_FF
+        LDI     P0,$FF          ; or $80_00_00_00
+        RET
+
+; Here if number is 0 or -0. In both cases 0 is returned.
+?SKIP6:
+        CLR     P3              ; Integers does not have -0
+        RJMP    PY              ; Set all 0's and return there
+;
+; Shift number in mantissa rightwards and negate if the
+; float number was negative.
+;
+?SKIP7:
+        MOV     P3,P2
+        MOV     P2,P1
+        MOV     P1,P0
+        MOV     P0,Z0
+        SUBI    Q0,$1F
+        NEG     Q0              ; Shift count
+        XCALL   ?UL_SHR_L03     ; Shift right
+        SBRS    T0,7            ; Skip return if negative
+        RET
+        XJMP    ?L_NEG_L03      ; Negate and return there
+
+
+;----------------------------------------------------------------------------
+; ?TEST_P_L04 tests PL for Inf, Zero and NaN
+; If PL = Inf   V is set
+; If PL = NaN   C is set
+; If PL = Zero  Z is set
+; Z1 contains the exponent on return.
+; If PL is a negative number, T is set
+; ?TEST_Q tests in the same way QL
+; Destroys: Z0 Z1
+;
+; SIZE:
+;
+    RSEG    CODE:CODE:NOROOT
+
+?TEST_P_L04:
+#ifdef __HAS_ENHANCED_CORE__
+        MOVW    Z1:Z0,P3:P2
+#else
+        MOV     Z1,P3
+        MOV     Z0,P2
+#endif
+        LSL     Z0
+        ROL     Z1              ; Exponent in Z1
+        BST     P3,7            ; Save sign bit
+        CPI     Z1,$FF
+        BREQ    ?TEST_P_INF_OR_NAN  ; Inf or NaN?
+        OR      Z0,Z1           ; Normal and Zero?
+        OR      Z0,P1
+        OR      Z0,P0
+        CLC
+        CLV
+        RET
+?TEST_P_INF_OR_NAN:
+        OR      Z0,P0
+        OR      Z0,P1
+        BREQ    ?TEST_P_INF ; Inf?
+?TEST_P_NAN:
+        SEC                     ; NaN
+        CLZ
+        CLV
+        RET
+?TEST_P_INF:
+        CLZ                     ; Inf
+        CLC
+        SEV
+        RET
+
+        RSEG    CODE:CODE:NOROOT
+
+?TEST_Q:
+#ifdef __HAS_ENHANCED_CORE__
+        MOVW    Z1:Z0,Q3:Q2
+#else
+        MOV     Z1,Q3
+        MOV     Z0,Q2
+#endif
+        LSL     Z0
+        ROL     Z1
+        BST     Q3,7            ; Save sign bit
+        CPI     Z1,$FF
+        BREQ    ?TEST_Q_INF_OR_NAN  ; Inf or NaN?
+        OR      Z0,Z1           ; Normal and Zero?
+        OR      Z0,Q1
+        OR      Z0,Q0
+        CLC
+        CLV
+        RET
+?TEST_Q_INF_OR_NAN:
+        OR      Z0,Q0
+        OR      Z0,Q1
+        BREQ    ?TEST_P_INF ; Inf?
+        RJMP    ?TEST_P_NAN ; NaN
+
+;----------------------------------------------------------------------------
+; F_ADD_L04
+; 'float' addition
+; On call PL and QL contains the numbers to be added (in IEEE
+; single precision format).
+; On return PL contains result of addition.
+;
+; NOTE: On call - If possible, put number with largest magniude in PL !
+;
+; Destroys: P0 P1 P2 P3 Q0 Q1 Q2 Q3 T0 T1 T3 Z0 Z1
+;
+; SIZE: 102 bytes
+
+        RSEG    CODE:CODE:NOROOT
+
+?ADD_P_ZERO:
+        RCALL   ?TEST_Q
+        BRCS    ?ADD_NAN
+        BRNE    ?ADD_Q_INF
+        AND     P3,Q3           ; Add or Zeroes --> And signs...
+?ADD_P_ZERO_1:
+        MOV     P2,Q2
+#ifdef __HAS_ENHANCED_CORE__
+        MOVW    P1:P0,Q1:Q0
+#else
+        MOV     P1,Q1
+        MOV     P0,Q0
+#endif
+        RET
+
+?ADD_Q_INF:
+        MOV     P3,Q3
+        RJMP    ?ADD_P_ZERO_1
+
+?ADD_P_INF:
+        RCALL   ?TEST_Q
+        BRCS    ?ADD_NAN
+        BRVS    ?ADD_P_AND_Q_INF
+?ADD_Q_ZERO:
+        RET
+
+?ADD_P_AND_Q_INF:
+        EOR     Q3,P3
+        BRPL    ?ADD_Q_ZERO
+?ADD_NAN:
+        RJMP    ?F_NAN_L04
+
+?F_ADD_L04:
+; Unpack both numbers and then ensure that number with greatest
+; magnitude is in PL.
+        RCALL   ?TEST_P_L04
+        BRCS    ?ADD_NAN
+        BRVS    ?ADD_P_INF
+        BREQ    ?ADD_P_ZERO
+
+        RCALL   ?TEST_Q
+        BRCS    ?ADD_NAN
+        BRVS    ?ADD_Q_INF
+        BREQ    ?ADD_Q_ZERO
+
+        RCALL   ?F_UNPACK_L04   ; Unpack both numbers
+
+        CP      Q0,P0           ; Compare mantissas
+        CPC     Q1,P1
+        CPC     Q2,P2
+        CPC     Q3,P3           ; Compare exponents
+
+        BRNE    H44             ; Equal numbers do not need swaping
+        CP      T0,T1
+        BREQ    I44             ; Equal signs, just add them.
+        CLR     T0              ; Unequal signs and equal numbers, results in +0
+        CLT
+        CLC                
+        RJMP    F44             ; Subtract them
+H44:
+        BRCS    A44             ; Order is already correct
+;
+; Here if swap needed. Both Z0 and Z1 are 0, so no swap needed
+; for them. T3 is used for temporary storage.
+; Admittedly, this code sequence is painfully long !
+
+        MOV     T3,P3           ; Swap P3/Q3 (exponent)
+        MOV     P3,Q3
+        MOV     Q3,T3
+
+        MOV     T3,P2           ; Swap P2/Q2 (mantissa)
+        MOV     P2,Q2
+        MOV     Q2,T3
+
+        MOV     T3,P1           ; Swap P1/Q1 (mantissa)
+        MOV     P1,Q1
+        MOV     Q1,T3
+
+        MOV     T3,P0           ; Swap P0/Q0 (mantissa)
+        MOV     P0,Q0
+        MOV     Q0,T3
+
+        MOV     T3,T0           ; Swap sign indicators
+        MOV     T0,T1
+        MOV     T1,T3
+
+A44:
+; Align mantissas by decrementing exp. of nb_2 and shifting QL
+; rightwards until exponents are equal.
+; No check for exponent difference > 24 here, so some excessive
+; shifting could take place but no other harm is done.
+;
+B44:
+        CP      P3,Q3           ; Are exponents equal now ?
+        BREQ    C44             ; Yes
+        LSR     Q2
+        ROR     Q1
+        ROR     Q0
+        ROR     Z1
+        SBCI    Z0,0            ; Count (negative) number of discarded '1' bits.
+        INC     Q3
+        RJMP    B44
+;
+; Different treatment now depending on whether the terms
+; have the same sign or not.
+C44:
+        BST     Z0,7            ; Save the sticky bit in T-flag
+        LSL     Z0              ; Either Z0 is 0 or it's negative
+                                ; If it was negative then we have discarded bits.
+        LDI     Z0,0            ; Clear Z0.
+        EOR     T1,T0
+        BRMI    F44             ; Signs were different
+;
+; Here if signs were equal, add mantissas
+I44:
+        ADD     Z0,Z1
+        ADC     P0,Q0
+        ADC     P1,Q1
+        ADC     P2,Q2
+        BRCC    G44
+        ROR     P2              ; If carry out, rotate back
+        ROR     P1
+        ROR     P0
+        ROR     Z0
+        BRCC    J44             ; Did we lose a bit?
+        SET                     ; Save the sticky
+J44:
+        INC     P3              ; and increment exponent
+        RJMP    ?F_NORMALIZE_L04 ; Normalize and return there
+;
+; Here if signs were unequal, subtract nb_2 from nb_1
+;
+F44:
+        SBC     Z0,Z1
+        SBC     P0,Q0
+        SBC     P1,Q1
+        SBC     P2,Q2
+G44:
+        RJMP    ?F_NORMALIZE_L04 ; Normalize and return there
+
+;----------------------------------------------------------------------------
+; F_SUB_L04
+; 'float' subtraction
+; On call PL and QL contains two 'IEEE float numbers' where QL
+; contains the number to be subtracted from the contents of PL.
+; On return PL contains the result of the subtraction.
+;
+; TBD check that -0 can never be returned
+;
+; NOTE: Invokes F_ADD_L04 and is simply implemented
+;   as F_ADD_L04 (PL,(-QL)).
+;
+; NOTE: On call - If possible, put number with largest magniude in PL !
+;
+; Destroys: P0 P1 P2 P3 Q0 Q1 Q2 Q3 T0 T1 T3 Z0 Z1
+;
+; SIZE: 6 bytes
+;
+
+        RSEG    CODE:CODE:NOROOT
+
+?F_SUB_L04:
+        LDI     Z0,$80          ;
+        EOR     Q3,Z0           ; Invert sign bit
+        RJMP    ?F_ADD_L04      ; Make return there
+
+;-----------------------------------------------------------------------------
+; F_INFINITE_L04 and F_ZERO_L04 are internal functions that return
+; float representations (cf. comments in header) of
+;
+; 'positive infinity',
+; 'negative infinity'
+; 'signed zero',
+;
+; Sign bit for infinities is expected in T0, cf. C_UNPACK above.
+;
+; Destroys: P0 P1 P2 P3
+;
+; SIZE: 20 bytes
+;
+
+        RSEG    CODE:CODE:NOROOT
+
+?F_ZERO_L04:
+        MOV     P3,T0
+        ANDI    P3,$80
+PY: 
+        CLR     P2
+PX: 
+        CLR     P1
+        CLR     P0
+        RET
+
+        RSEG    CODE:CODE:NOROOT
+
+; Destroys: P0 P1 P2 P3
+?F_INFINITE_L04:
+        LDI     P3,$7F
+        OR      P3,T0
+        LDI     P2,$80
+        RJMP    PX
+
+        RSEG    CODE:CODE:NOROOT
+
+?F_NAN_L04:
+        LDI     P3,$FF          ; Sign does not matter if NaN
+        LDI     P2,$FF          ; Value of mantissa only has to be Non Zero
+        RJMP    PX
+
+;----------------------------------------------------------------------------
+; F_MUL_L04
+; 'float' multiplication
+; On call PL and QL contains the numbers to be multiplied
+; On return PL contains the product.
+;
+; NOTE: Calls UNPACK and always exits via a jump to F_NORMALIZE_L04
+;
+; Destroys: All scratch registers.
+;
+; Destroys: P0 P1 P2 P3 Q0 Q1 Q2 Q3 T0 T1 T2 T3 Z0 Z1
+; In addition it uses (and later
+; restores) 3 bytes of SRAM data stack for temporary register saves.
+;
+; SIZE: 178/190 bytes
+;
+
+        RSEG    CODE:CODE:NOROOT
+?MUL_P_INF:
+        RCALL   ?TEST_Q
+        BRCS    ?F_NAN_L04
+        BREQ    ?F_NAN_L04
+?MUL_INF_INF:
+        ANDI    Q3,$80
+        EOR     P3,Q3
+        RET
+
+;?MUL_NAN:
+;    RJMP    ?F_NAN_L04
+
+?MUL_P_ZERO:
+        RCALL   ?TEST_Q
+        BRCS    ?F_NAN_L04
+        BRVS    ?F_NAN_L04
+        RJMP    ?MUL_INF_INF
+
+?MUL_Q_ZERO:
+?MUL_Q_INF:
+        ANDI    P3,$80          ; Return the contents of Q, except sign
+        EOR     P3,Q3
+        RJMP    ?ADD_P_ZERO_1
+
+        RSEG    CODE:CODE:NOROOT
+#if defined(__HAS_ENHANCED_CORE__) && defined(__HAS_MUL__)
+
+?F_MUL_L04:
+        RCALL   ?TEST_P_L04
+        BRCS    ?F_NAN_L04
+        BRVS    ?MUL_P_INF
+        BREQ    ?MUL_P_ZERO
+
+        RCALL   ?TEST_Q
+        BRCS    ?F_NAN_L04
+        BRVS    ?MUL_Q_INF
+        BREQ    ?MUL_Q_ZERO
+        ;This must be solved.
+
+        ; Unpack both numbers and determine the final sign bit.
+        ;
+        RCALL   ?F_UNPACK_L04
+        EOR     T0,T1
+        ;; Establish exponent.
+        CLT
+        SUBI    P3,$7F
+        SBCI    Z0,0
+        ADD     P3,Q3
+        ADC     Z0,Z1           ; Z1 is 0
+        BRMI    A88             ; Z0 is $FF, $01 or $00
+        BRNE    ?F_INFINITE_L04
+        RJMP    B88             ; Something that can be handled later
+A88:
+        CPI     P3,$EA
+        BRCS    ?F_ZERO_L04     ; Negate values
+        SET                     ; Negative exponent, but larger than -22
+B88:
+        LDI     Z0,$00
+        ST      -Y,T0           ; Save sign bit to make T0 available later
+        ST      -Y,X0           ; Needed as working register
+        ST      -Y,P3           ; Save exponent
+
+; Multiplication started here.
+;
+; Form 48-bit product of unpacked mantissa for PL and QL.
+; Multiplicand (48 bits) is in Z1,Z0,Q3,Q2,Q1,Q0
+; Multiplier is P2,P1,P0
+; Product accumulator (48 bits) is in Msb X0:T3:T2:Q3:Z1:Z0 Lsb
+;
+;       +P0Q0 (1)
+;     +P0Q1xx (2a)
+;   +P0Q2xxxx (3a)
+;     +P1Q0xx (2b)
+;   +P1Q1xxxx (3b)
+; +P1Q2xxxxxx (4a)
+;     +P2Q0xx (3c)
+;   +P2Q1xxxx (4a)
+; +P2Q2xxxxxx (5)
+;
+#define Acc0    R30
+#define Acc1    R31
+#define Acc2    R23
+#define Acc3    R2
+#define Acc4    R3
+#define Acc5    R26
+#define Zero    R19
+
+        CLR     Acc5              ; Clear accumulator
+        CLR     Acc4
+        CLR     Acc3
+        CLR     Zero              ; The Zero register
+
+        MUL     P0,Q0           ; (1)
+        MOVW    Acc1:Acc0,R1:R0
+        MUL     P0,Q1           ; (2a)
+        ADD     Acc1,R0
+        MOV     Acc2,R1
+        ADC     Acc2,Zero
+        MUL     P1,Q0           ; (2b)
+        ADD     Acc1,R0
+        ADC     Acc2,R1
+        ROL     Acc3
+        MUL     P0,Q2           ; (3a)
+        ADD     Acc2,R0
+        ADC     Acc3,R1
+        ROL     Acc4
+        MUL     P1,Q1           ; (3b)
+        ADD     Acc2,R0
+        ADC     Acc3,R1
+        ADC     Acc4,Zero
+        MUL     P2,Q0           ; (3c)
+        ADD     Acc2,R0
+        ADC     Acc3,R1
+        ADC     Acc4,Zero
+        MUL     P1,Q2           ; (4a)
+        ADD     Acc3,R0
+        ADC     Acc4,R1
+        ROL     Acc5
+        MUL     P2,Q1           ; (4b)
+        ADD     Acc3,R0
+        ADC     Acc4,R1
+        ADC     Acc5,Zero
+        MUL     P2,Q2           ; (5)
+        ADD     Acc4,R0
+        ADC     Acc5,R1
+
+; Multiplication completed here.
+;
+        LD      P3,Y+           ; Restore exponent
+        BRTC    K88             ; Negative exponent?
+        INC     P3              ; Skip one left shift later for negative exponents
+I88_3:
+        LSR     Acc5            ; A negative exponent is not ok.
+        ROR     Acc4            ; Shift the mantissa one step to the right
+        ROR     Acc3            ; and increment the exponent
+        ROR     Acc2            ; until the exponent is one.
+        ROR     Acc1            ;
+        ROR     Acc0
+        INC     P3
+        CPI     P3,$01
+        BRLT    I88_3           ; (signed)
+        RJMP    O88             ; Go and check sticky
+K88:
+        TST     Acc5            ; Is highest bit in product set ?
+        BRMI    L88             ; Yes
+        TST     P3              ; A normal number?
+        BRNE    M88             ; Yes
+        INC     P3              ; Skip one left shift for denormal numbers
+        RJMP    O88             ; Go and check sticky
+L88:
+        INC     P3              ; Increment exponent
+        BRNE    O88             ; Go and check sticky
+        LD      X0,Y+           ; Restore X0
+        LD      T0,Y+           ; Restore sign bit
+        RJMP    ?F_INFINITE_L04
+
+N88:
+        SBRC    X0,7            ; Test if the MSB of the mantissa is set;
+        RJMP    O88             ; if so, then we're ready.
+        DEC     P3              ; Each shift reduces the exponent by one
+M88:                            ; Always do one shift extra
+        LSL     Acc0            ; Shift product one step left
+        ROL     Acc1            ; Otherwise we shift
+        ROL     Acc2            ; the mantissa leftwards
+        ROL     Acc3            ; to get the MSB to become
+        ROL     Acc4            ; one.
+        ROL     Acc5
+        CPI     P3,2            ; Test for exponent > 1
+        BRCC    N88             ; Loop while exponent > 1 (unsigned)
+O88:
+        ;
+        ; If the last 16 bits of product is non-zero, $80 in byte 3
+        ; shall be turned into $81 later on in the rounding.
+        ;
+        CLT                     ; Clear Sticky
+        OR      Acc1,Acc0
+        BREQ    P88             ; Both registers were 0
+        SET                     ; Set Sticky
+        ;
+        ; Restore X0 and arrange data for F_ROUND_L04
+        ;
+P88:
+        MOV     P2,Acc5         ; Insert mantissa
+        MOVW    P1:P0,Acc4:Acc3
+        MOV     Z0,Acc2
+        LD      X0,Y+           ; Restore X0
+        LD      T0,Y+           ; Restore sign bit
+        RJMP    ?F_ROUND_L04    ; And take return there.
+
+#else /*Not (defined(__HAS_ENHANCED_CORE__) && defined(__HAS_MUL__)) */
+
+#ifdef __HAS_ENHANCED_CORE__
+?F_EC_MUL_NO_MUL_L04:
+#endif
+
+?F_MUL_L04:
+        RCALL   ?TEST_P_L04
+        BRCS    ?F_NAN_L04
+        BRVS    ?MUL_P_INF
+        BREQ    ?MUL_P_ZERO
+        RCALL   ?TEST_Q
+        BRCS    ?F_NAN_L04
+        BRVS    ?MUL_Q_INF
+        BREQ    ?MUL_Q_ZERO
+
+; Unpack both numbers and determine the final sign bit.
+;
+        RCALL   ?F_UNPACK_L04
+        EOR     T0,T1
+        ;; Establish exponent.
+        CLT
+        SUBI    P3,$7F
+        SBCI    Z0,0
+        ADD     P3,Q3
+        ADC     Z0,Z1           ; Z1 is 0
+        BRMI    A45             ; Z0 is $FF, $01 or $00
+        BRNE    ?F_INFINITE_L04
+        RJMP    B45             ; Something that can be handled later
+A45:
+        CPI     P3,$EA
+        BRCS    ?F_ZERO_L04     ; Negate values
+        SET                     ; Negative exponent, but larger than -22
+B45:
+        LDI     Z0,$00
+        ST      -Y,T0           ; Save sign bit to make T0 available later
+        ST      -Y,X0           ; Needed as working register
+        ST      -Y,P3           ; Save exponent
+
+; Form 48-bit product of unpacked mantissa for PL and QL.
+; Multiplicand (48 bits) is in Z1,Z0,Q3,Q2,Q1,Q0
+; Multiplier is P2,P1,P0
+; Product accumulator (48 bits) is in T3,T2,T1,P3,X0,T0
+;
+; Note that the multiplicand is rotated left through 48 bits
+; (6 registers) and then added through all 6 registers for the
+; algorithm to work.
+;
+; TBD: Can this be done smarter ? Max. 4 of the 6 registers that
+; are shifted left can contain non-zero values at the same time
+; so we are doing a lot of shifts and adds on zero-bytes !
+
+        CLR     T3              ; Clear accumulator
+        CLR     T2
+#ifdef __HAS_ENHANCED_CORE__
+        MOVW    T1:T0,T3:T2
+#else
+        CLR     T1
+        CLR     T0
+#endif    
+        CLR     P3
+        CLR     X0
+
+        CLR     Q3              ; Clear high part of multiplicand
+                                ; (Z1 and Z0 are 0 already)
+
+
+; ***** This is the start of the heavy loop
+
+G45:
+        CPI     P2,$00          ; Test multiplier for 0,
+        CPC     P1,P2           ; this is the only way to exit the loop
+        CPC     P0,P1           ; (Minimum 24 iterations will be done,
+        BREQ    I45             ; however, because of implied 1)
+H45:
+        LSR     P2              ; Shift multiplier rightwards
+        ROR     P1
+        ROR     P0
+        BRCC    J45             ; Branch if that bit in multiplier was 0
+        ADD     T0,Q0           ; Add multiplicand to accumulator.
+        ADC     X0,Q1
+        ADC     P3,Q2
+        ADC     T1,Q3
+        ADC     T2,Z0
+        ADC     T3,Z1
+J45:
+        LSL     Q0              ; Shift multiplicand leftwards
+        ROL     Q1
+        ROL     Q2
+        ROL     Q3
+        ROL     Z0
+        ROL     Z1
+        RJMP    G45
+
+; ******** This is the end of the heavy loop
+
+
+; Multiplication completed here.
+;
+I45:
+        MOV     Q3,P3           ; Make a copy, it's needed later
+        LD      P3,Y+           ; Restore exponent
+        BRTC    K45             ; Negative exponent?
+        INC     P3              ; Skip one left shift later for negative exponents
+I45_3:
+        LSR     T3              ; A negative exponent is not ok.
+        ROR     T2              ; Shift the mantissa one step to the right
+        ROR     T1              ; and increment the exponent
+        ROR     Q3              ; until the exponent is one.
+        ROR     X0              ;
+        ROR     T0
+        INC     P3
+        CPI     P3,$01
+        BRLT    I45_3           ; (signed)
+        RJMP    O45             ; Go and check sticky
+K45:
+        TST     T3              ; Is highest bit in product set ?
+        BRMI    L45             ; Yes
+        TST     P3              ; A normal number?
+        BRNE    M45             ; Yes
+        INC     P3              ; Skip one left shift for denormal numbers
+        RJMP    O45             ; Go and check sticky
+L45:
+        INC     P3              ; Increment exponent
+        BRNE    O45             ; Go and check sticky
+        LD      X0,Y+           ; Restore X0
+        LD      T0,Y+           ; Restore sign bit
+        RJMP    ?F_INFINITE_L04
+N45:
+        SBRC    T3,7            ; Test if the MSB of the mantissa is set;
+        RJMP    O45             ; if so, then we're ready.
+        DEC     P3              ; Each shift reduces the exponent by one
+M45:                        ; Always do one shift extra
+        LSL     T0              ; Shift product one step left
+        ROL     X0              ; Otherwise we shift
+        ROL     Q3              ; the mantissa leftwards
+        ROL     T1              ; to get the MSB to become
+        ROL     T2              ; one.
+        ROL     T3
+        CPI     P3,2            ; Test for exponent > 1
+        BRCC    N45             ; Loop while exponent > 1 (unsigned)
+O45:
+
+;
+; If the last 16 bits of product is non-zero, $80 in byte 3
+; shall be turned into $81 later on in the rounding.
+;
+        CLT                     ; Clear Sticky
+        OR      X0,T0
+        BREQ    P45             ; Both registers were 0
+        SET                     ; Set Sticky
+;
+; Restore X0 and arrange data for F_ROUND_L04
+;
+P45:
+        LD      X0,Y+           ; Restore X0
+        MOV     P2,T3           ; Insert mantissa
+        MOV     P1,T2
+        MOV     P0,T1
+        MOV     Z0,Q3
+        LD      T0,Y+           ; Restore sign bit
+        RJMP    ?F_ROUND_L04    ; And take return there.
+#endif
+
+;----------------------------------------------------------------------------
+; F_DIV_L04
+; 'float' division
+; On call PL contains the dividend (i.e.number to be divided by
+;     divisor).
+;     QL contains the divisor.
+; On return PL contains the quotient.
+;
+;
+; Destroys: P0 P1 P2 P3 Q2 Q3 T0 T1 T2 T3 Z0 Z1
+;
+; SIZE:
+;
+        RSEG    CODE:CODE:NOROOT
+
+?DIV_P_INF:
+        RCALL   ?TEST_Q
+        BRCS    ?DIV_NAN
+        BRVS    ?DIV_NAN
+        RJMP    ?MUL_INF_INF    ; Return Inf with correct sign
+?DIV_NAN:
+        RJMP    ?F_NAN_L04
+?DIV_P_ZERO:
+        RCALL   ?TEST_Q
+        BREQ    ?DIV_NAN
+        BRCS    ?DIV_NAN
+?DIV_Q_INF:
+        MOV     T0,P3           ; Return zero with correct sign
+        EOR     T0,Q3
+?DIV_ZERO:
+        RJMP    ?F_ZERO_L04
+?DIV_Q_ZERO:
+        MOV     T0,P3
+        EOR     T0,Q3
+?DIV_INF:
+        RJMP    ?F_INFINITE_L04
+
+?F_DIV_L04:
+        RCALL   ?TEST_P_L04
+        BRCS    ?DIV_NAN
+        BRVS    ?DIV_P_INF
+        BREQ    ?DIV_P_ZERO
+        RCALL   ?TEST_Q
+        BRCS    ?DIV_NAN
+        BRVS    ?DIV_Q_INF
+        BREQ    ?DIV_Q_ZERO
+
+        ;; Unpack both numbers, save sign bit in T-bit of SREG and check
+        ;; for extreme values.
+        ;;
+        RCALL   ?F_UNPACK_L04
+        EOR     T0,T1           ; Sign is always XOR of signs, except for 0
+        ;; Normalize denormal numbers.
+        ;; Z0 is 0 at entry and the P-mantissa is not zero
+        ;; Z1 is 0 at entry and the Q-mantissa is not zero
+A46:
+        SBRC    P2,7
+        RJMP    B46
+        LSL     P0
+        ROL     P1
+        ROL     P2
+        SUBI    P3,$01
+        SBCI    Z0,$00
+        RJMP    A46
+B46:
+        SBRC    Q2,7
+        RJMP    C46
+        LSL     Q0
+        ROL     Q1
+        ROL     Q2
+        SUBI    Q3,$01
+        SBCI    Z1,$00
+        RJMP    B46
+
+        ;; Establish exponent.
+C46:
+        CLT
+        SUB     P3,Q3
+        SBC     Z0,Z1
+        SUBI    P3,$81          ; Same as ADDI Z0:P3,7F
+        SBCI    Z0,$FF
+        BRMI    D46             ; Z0 is $FF, $01 or $00
+        TST     Z0
+        BRNE    ?DIV_INF
+        CPI     P3,$FF
+        BREQ    ?DIV_INF
+        RJMP    E46
+D46:                        ; A negative exponent!
+        CPI     P3,$EA
+        BRCS    ?DIV_ZERO       ; Negate values
+        SET                     ; Negative exponent, but larger than -22
+E46:
+        LDI     Z0,$00
+        LDI     Z1,$00
+
+        ;; Divide mantissas.
+        ;;
+        ;; The quotient is formed in T3,T2,T1 ,in that order
+        ;; The remainder is in      Z0,P2,P1,P0 (= dividend at start)
+        ;; The divisor is in        Z1,Q2,Q1,Q0 (present from start, never altered)
+
+        CLR     T1
+        INC     T1              ; Set 'implied 1' bit in quotient
+                                ; (All other bits in quotient are later shifted
+                                ; out and replaced)
+        CP      Q0,P0           ; Is divisor > denominator ?
+                                ; (can never be more than a factor of 2)
+        CPC     Q1,P1
+        CPC     Q2,P2
+        BRCS    H46             ; No
+
+        ;; Here if divisor > denominator
+
+F46:
+        SUBI    P3,1            ; Decrement exponent
+        BRCC    G46
+        SET                     ; It turned negative, remember that.
+G46:
+        LSL     P0              ; Shift remainder one step
+        ROL     P1
+        ROL     P2
+        ROL     Z0
+
+        ;; Make a first subtraction and shift
+
+H46:
+        SUB     P0,Q0           ; Subtract divisor from remainder
+        SBC     P1,Q1
+        SBC     P2,Q2
+        SBC     Z0,Z1
+        LSL     P0              ; Shift remainder one step
+        ROL     P1
+        ROL     P2
+        ROL     Z0
+
+        ;; ************ This is the start of the heavy loop which always
+        ;;         is executed 25 times.
+        ST      -Y,T0
+        LDI     Q3,25           ; Loop counter
+I46:
+        DEC     Q3
+        BRMI    M46             ; All done
+        CP      P0,Q0           ; Is remainder >= divisor ?
+        CPC     P1,Q1
+        CPC     P2,Q2
+        CPC     Z0,Z1
+        BRCS    K46             ; No
+
+        ;; If remainder >= divisor then subtract divisor.
+
+J46:
+        SUB     P0,Q0           ; Subtract divisor from remainder
+        SBC     P1,Q1
+        SBC     P2,Q2
+        SBC     Z0,Z1
+        SEC                     ; Set carry bit
+        RJMP    L46
+K46:
+        CLC
+
+        ;; Rotate carry into quotient and shift remainder left
+
+L46:
+        ROL     T1              ; Rotate carry into quotient
+        ROL     T2
+        ROL     T3
+        ROL     T0
+        LSL     P0              ; Shift remainder left one step
+        ROL     P1
+        ROL     P2
+        ROL     Z0
+        RJMP    I46
+
+        ;; ************ This is the end of the heavy loop.
+
+        ;; If remainder > divisor set $FF in Z0 (the 'trailing' byte)
+        ;; if remainder = divisor set $80 in Z0
+        ;; else set Z0 0.
+
+M46:
+        ;; Arrange for F_ROUND_L04, i.e. move quotient into P2, P1, P0
+        ;; and normalize denormal numbers.
+
+        BLD     Z1,0            ; Save the negative exponent flag
+        CLT                     ; Clear the sticky bit.
+        OR      Z0,P2
+        OR      Z0,P1
+        OR      Z0,P0
+        BREQ    U46
+        SET
+U46:                        ; Loop 2 laps, Q3 starts at 0xFF
+        LSR     T0              ;
+        ROR     T3
+        ROR     T2              ;
+        ROR     T1              ;
+        ROR     Z0              ;
+        BRCC    T46             ; loosing some bits?
+        SET                     ; Remember lost bits in the sticky bit.
+T46:
+        INC     Q3
+        BREQ    U46
+        LD      T0,Y+
+P46:
+        TST     P3              ; A denormal exponent?
+        BREQ    Q46
+        SBRS    Z1,0            ; Is the exponent positive?
+        RJMP    S46
+Q46:
+        LSR     T3              ; A negative or zero exponent is not ok.
+        ROR     T2              ; Shift the mantissa one step to the right
+        ROR     T1              ; and increment the exponent
+        ROR     Z0              ; until the exponent is one.
+        BRCC    R46             ; loosing some bits?
+        SET                     ; Remember lost bits in the sticky bit.
+R46:
+        INC     P3
+        CPI     P3,$01
+        BRLT    Q46             ; (signed)
+S46:
+        MOV     P0,T1
+        MOV     P1,T2
+        MOV     P2,T3
+        RJMP    ?F_ROUND_L04    ; Return there
+
+;----------------------------------------------------------------------------
+; F_CMP_EQ_L04
+; 'float' compare
+; On call PL and QL contains float values (in IEEE format)
+; to be compared if equal.
+;
+; On return:  If PL=QL            then Z=1
+;             If PL<>QL           then Z=0
+;             If PL or QL is NaN, then Z=0
+;             If PL=+0 and QL=-0  then Z=1  (or PL=+0 and QL=-0)
+;
+; NOTE: No unpacking of the numbers is performed in this case.
+;   It is assumed that 'plain zero' is always represented
+;   by $00_00_00_00.
+;
+; Destroys: Z0 Z1
+;
+; SIZE: (Much for such a simple operation !)
+;
+
+        RSEG    CODE:CODE:NOROOT
+
+?CMP_P_ZERO:
+        RJMP   ?TEST_Q          ;If both P and Q Zero, Zero flag is set
+
+?CMP_NEQ:
+        CLZ
+        RET
+?CMP_EQ:
+        SEZ
+        RET
+
+?F_CMP_EQ_L04:
+        RCALL   ?TEST_P_L04
+        BRCS    ?CMP_NEQ
+        BREQ    ?CMP_P_ZERO
+        RCALL   ?TEST_Q
+        BRCS    ?CMP_NEQ
+        CP      P0,Q0
+        CPC     P1,Q1
+        CPC     P2,Q2
+        CPC     P3,Q3
+        RET
+
+;----------------------------------------------------------------------------
+; ?F_CMP_LT_L04
+; compare between two float values PL and QL
+;
+; On return:   If PL<QL            then C=1
+;              If PL>=QL           then C=0
+;              If PL or QL is NaN, then C=0
+;
+; Destroys: Z1 Z0. PL and QL are left unchanged.
+
+        RSEG    CODE:CODE:NOROOT(1)
+
+?F_CMP_LT_L04:
+        RCALL   ?TEST_Q
+        BRCS    ?NOT_LT         ; QL = NaN?
+        RCALL   ?TEST_P_L04
+        BRCS    ?NOT_LT         ; PL = NaN?
+        REQUIRE ?F_CMP_LT
+        RSEG    CODE:CODE:NOROOT        
+?F_CMP_LT:
+        BREQ    ?LT_ZERO        ; PL = 0
+        MOV     Z0,P3
+        EOR     Z0,Q3           ; Start with comparing signs
+        BRPL    ?LT_SIGN_EQ     ; Signs were equal, continue comparing
+        CP      Q3,P3           ; PL<QL true if PL neg. QL pos.
+        RET
+?LT_ZERO:
+        RCALL   ?TEST_Q
+        BREQ    ?NOT_LT         ; 0 < 0 false
+        BRTS    ?NOT_LT         ; 0 < QL false if QL neg.
+?LT_SEC:
+        SEC                     ; 0 < QL true if QL pos.
+        RET
+        
+?LT_SIGN_EQ:
+        CP      P0,Q0
+        CPC     P1,Q1
+        CPC     P2,Q2
+        CPC     P3,Q3           ; If PL>QL then C=0
+        BREQ    ?LT_RET         ; PL = QL (Z=1, C=0)
+        BRTC    ?LT_RET         ; Yes, settings are already correct
+        BRCC    ?LT_SEC         ; If negative, then invert carry
+?NOT_LT:
+        CLC
+?LT_RET:
+        RET
+
+;----------------------------------------------------------------------------
+; ?F_CMP_GE_L04
+; compare between two float values PL and QL
+;
+; On return:   If PL >= QL          then C=1
+;              If PL <  QL          then C=0
+;              If PL or QL is NaN,  then C=0
+;
+; Destroys: Z1 Z0. PL and QL are left unchanged.
+        RSEG    CODE:CODE:NOROOT(1)
+
+?F_CMP_GE_L04:
+        RCALL     ?TEST_Q
+        BRCS      ?NOT_LT       ; QL = NaN?
+        RCALL     ?TEST_P_L04
+        BRCS      ?NOT_LT       ; PL = NaN?
+        RCALL     ?F_CMP_LT     ; Use ?F_CMP_LT and then just invert Carry
+        BRCS      ?NOT_LT
+        SEC
+        RET
+
+        END
+
+;----------------------------------------------------------------------------
+;  

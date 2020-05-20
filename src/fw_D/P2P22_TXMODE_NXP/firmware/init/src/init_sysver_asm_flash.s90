@@ -1,0 +1,515 @@
+/* *ASM************************************************************************
+  Use of this software is subject to Atmel's Software License Agreement.
+-------------------------------------------------------------------------------
+  $URL: http://svnservulm.corp.atmel.com/svn/CDB/02_AutoRF/Primus2pSW/Branches/VB_PRIMUS2P_ROM_2.0/firmware/init/src/init_sysver_asm_flash.s90 $
+  $LastChangedRevision: 288090 $
+  $LastChangedDate: 2014-11-25 16:05:30 +0100 (Di, 25 Nov 2014) $
+  $LastChangedBy: florian.schweidler $
+-------------------------------------------------------------------------------
+  Project:      ATA5700
+  Target MCU:   ATA5700
+  Compiler:     IAR C/C++ Compiler for AVR 6.30.1
+-------------------------------------------------------------------------------
+
+******************************************************************************
+* Copyright 2011, Atmel Automotive GmbH                                       *
+*                                                                             *
+* This software is owned by the Atmel Automotive GmbH                         *
+* and is protected by and subject to worldwide patent protection.             *
+* Atmel hereby grants to licensee a personal,                                 *
+* non-exclusive, non-transferable license to copy, use, modify, create        *
+* derivative works of, and compile the Atmel Source Code and derivative       *
+* works for the sole purpose of creating custom software in support of        *
+* licensee product to be used only in conjunction with a Atmel integrated     *
+* circuit as specified in the applicable agreement. Any reproduction,         *
+* modification, translation, compilation, or representation of this           *
+* software except as specified above is prohibited without the express        *
+* written permission of Atmel.                                                *
+*                                                                             *
+* Disclaimer: ATMEL MAKES NO WARRANTY OF ANY KIND,EXPRESS OR IMPLIED,         *
+* WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED    *
+* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.         *
+* Atmel reserves the right to make changes without further notice to the      *
+* materials described herein. Atmel does not assume any liability arising     *
+* out of the application or use of any product or circuit described herein.   *
+* Atmel does not authorize its products for use as critical components in     *
+* life-support systems where a malfunction or failure may reasonably be       *
+* expected to result in significant injury to the user. The inclusion of      *
+* Atmel products in a life-support systems application implies that the       *
+* manufacturer assumes all risk of such use and in doing so indemnifies       *
+* Atmel against all charges.                                                  *
+*                                                                             *
+* Use may be limited by and subject to the applicable Atmel software          *
+* license agreement.                                                          *
+*******************************************************************************/
+/* \file init_asm.s90
+    This file contains assembler optimized functions for handling the Transponder
+    mode in the Flash customer application software
+*/
+    NAME init_asm
+
+    PUBLIC  ATA_lfTpInit_flash_ASM
+
+    ; LF variables (Flash)
+    EXTERN g_sLfRxIdShadowValues_flash
+    EXTERN g_sLfRxEotShadowValues_flash
+    EXTERN g_bLfRxEotShadowIndex_flash
+    EXTERN g_bLfRxEmTransponderModeEnabled_flash
+
+    ; Timer 3 (Flash)
+    EXTERN g_bTimer3CaptureIndex_flash
+    EXTERN ATA_timer3CaptureEvents_flash_ASM
+    
+    ; Timer 3 (ROM)
+    EXTERN g_sTimer3
+
+    ; Timer 4 (Flash)
+    EXTERN g_bTimer4CaptureIndex_flash
+    EXTERN ATA_timer4CaptureEvents_flash_ASM
+
+    ; Timer 4 (ROM)
+    EXTERN g_sTimer4
+
+
+/* ===========================================================================*/
+/*   INCLUDES                                                                 */
+/* ===========================================================================*/
+#include "regs.inc"
+#include "globals_defs.h"
+#include "../../../firmware/timer3/src/timer3.h"
+#include "../../../firmware/timer4/src/timer4.h"
+
+/* ===========================================================================*/
+/*   DEFINES                                                                  */
+/* ===========================================================================*/
+
+SYSVER_EEP_START_ADDR           EQU 0x0280
+SYSVER_EEP_LF_CONT_START_ADDR   EQU 0x0340
+
+/* ===========================================================================*/
+/*   Modul Globals                                                            */
+/* ===========================================================================*/
+/* ===========================================================================*/
+/*   IMPLEMENTATION                                                           */
+/* ===========================================================================*/
+
+/* ----------------------------------------------------------------------------- */
+/** \brief <b>ATA_lfTpInit_ASM</b>
+    Carries out the LF TP initialization required during System Verification.
+    
+    \return none
+
+    \image html 
+    \image rtf 
+    \n
+*/
+/* ----------------------------------------------------------------------------- */
+RSEG CODE:CODE:ROOT(1)
+ATA_lfTpInit_flash_ASM:
+    PUSH    R31
+    PUSH    R30
+    PUSH    R27
+    PUSH    R26
+    PUSH    R25     ; PRR0
+    PUSH    R24     ; PRR1
+    PUSH    R23     ; PRR2
+
+    ; Start EEPROM burst read access
+    ; Read PRR0 to PRR2 to temporary location
+    ; Set all PRR0 to PRR2 bits to 0 (active)
+    ; Write temporary PRR0 to PRR2 to corresponding registers
+    
+    LDI     R31 , low(SYSVER_EEP_START_ADDR)    
+    OUT     EEARL , R31                         ; set low byte address
+    LDI     R31 , high(SYSVER_EEP_START_ADDR)
+    OUT     EEARH , R31                         ; set high byte address
+    SBI     EECR2 , EEBRE
+    
+    ; Registers as laid out in document 
+    ; "http://svnservulm.corp.atmel.com/svn/CDB/02_AutoRF/Primus2P/Trunk/Dev/04_test_verification/system_verification/01_Verification_testbench_concept/sw_eeprom_initialize.xlsx"
+    ; Disable all Power Reduction domains in order to be able to initialize all registers
+    CLR     R31
+    IN      R25 , EEDR      ; EEPROM address 0x280
+    OUT     PRR0 , R31
+    IN      R24 , EEDR      ; EEPROM address 0x281
+    OUT     PRR1 , R31
+    IN      R23 , EEDR      ; EEPROM address 0x282
+    OUT     PRR2 , R31
+
+    ; Continue will configured initialization values
+    IN      R31 , EEDR      ; EEPROM address 0x283
+    OUT     LFCR0 , R31
+    IN      R31 , EEDR      ; EEPROM address 0x284
+    OUT     LFCR1 , R31
+    IN      R31 , EEDR      ; EEPROM address 0x285
+    OUT     LFCR2 , R31
+    IN      R31 , EEDR      ; EEPROM address 0x286
+    OUT     LFCR3 , R31
+    IN      R31 , EEDR      ; EEPROM address 0x287
+    STS     LFIMR , R31
+    IN      R31 , EEDR      ; EEPROM address 0x288
+    STS     LFDSR1 , R31
+    IN      R31 , EEDR      ; EEPROM address 0x289
+    STS     LFDSR2 , R31
+    IN      R31 , EEDR      ; EEPROM address 0x28A
+    STS     LFDSR3 , R31
+    IN      R31 , EEDR      ; EEPROM address 0x28B
+    STS     LFDSR4 , R31
+    IN      R31 , EEDR      ; EEPROM address 0x28C
+    STS     LFDSR5 , R31
+    IN      R31 , EEDR      ; EEPROM address 0x28D
+    STS     LFDSR6 , R31
+    IN      R31 , EEDR      ; EEPROM address 0x28E
+    STS     LFDSR7 , R31
+    IN      R31 , EEDR      ; EEPROM address 0x28F
+    STS     LFDSR8 , R31
+    IN      R31 , EEDR      ; EEPROM address 0x290
+    STS     LFDSR9 , R31
+    IN      R31 , EEDR      ; EEPROM address 0x291
+    STS     LFDSR10 , R31
+    IN      R31 , EEDR      ; EEPROM address 0x292
+    STS     LFDSR11 , R31
+    IN      R31 , EEDR      ; EEPROM address 0x293 (Reserved)
+    ; STS     LFDSRR , R31
+    IN      R31 , EEDR      ; EEPROM address 0x294
+    STS     LFSYSY3 , R31
+    IN      R31 , EEDR      ; EEPROM address 0x295
+    STS     LFSYSY2 , R31
+    IN      R31 , EEDR      ; EEPROM address 0x296
+    STS     LFSYSY1 , R31
+    IN      R31 , EEDR      ; EEPROM address 0x297
+    STS     LFSYSY0 , R31
+    IN      R31 , EEDR      ; EEPROM address 0x298
+    STS     LFSYLE , R31
+    IN      R31 , EEDR      ; EEPROM address 0x299
+    STS     LFSTOP , R31
+    IN      R31 , EEDR      ; EEPROM address 0x29A
+    STS     LFQC1 , R31
+    IN      R31 , EEDR      ; EEPROM address 0x29B
+    STS     LFQC2 , R31
+    IN      R31 , EEDR      ; EEPROM address 0x29C
+    STS     LFQC3 , R31
+    IN      R31 , EEDR      ; EEPROM address 0x29D (Reserved)
+    ; LDI     R30 , 0x80
+    ; STS     LFCPR , R30
+    ; STS     LFCPR , R31
+    
+    ; LF RSSI Control
+    IN      R31, EEDR       ; EEPROM address 0x29E
+    STS     RSCR , R31
+    
+    ; LF RSSI Control
+    IN      R31, EEDR       ; EEPROM address 0x29F
+    STS     RSMS1R , R31
+    
+    ; LF RSSI Mode
+    IN      R31, EEDR       ; EEPROM address 0x2A0
+    STS     RSMS2R, R31
+    
+    ; LF RSSI Setting_1
+    IN      R31, EEDR       ; EEPROM address 0x2A1
+    STS     RSFR , R31
+    
+    ; LF RSSI Setting_2
+    IN      R31, EEDR       ; EEPROM address 0x2A2
+    ; STS     RSPDSW, R31
+    
+    ; LF RSSI Setting_3
+    IN      R31, EEDR       ; EEPROM address 0x2A3 (Reserved)
+    
+    ; LF RSSI Setting_4
+    IN      R31, EEDR       ; EEPROM address 0x2A4
+    STS     RSDLYR , R31
+    
+    ; LF RSSI
+    IN      R31, EEDR       ; EEPROM address 0x2A5
+    STS     RSRES1L , R31
+    
+    ; LF RSSI
+    IN      R31, EEDR       ; EEPROM address 0x2A6
+    STS     RSRES1H , R31
+    
+    ; LF RSSI
+    IN      R31, EEDR       ; EEPROM address 0x2A7
+    STS     RSRES2L , R31
+    
+    ; Reset LF RSSI internal port address
+    IN      R31, EEDR       ; EEPROM address 0x2A8
+    STS     RSRES2H , R31
+    
+    ; Write eight values from 
+    IN      R31 , EEDR      ; EEPROM address 0x2A9
+    STS     RSRES3L , R31
+    
+    IN      R31 , EEDR      ; EEPROM address 0x2AA
+    STS     RSRES3H , R31
+    
+    IN      R31 , EEDR      ; EEPROM address 0x2AB
+    STS     RSRES4L , R31
+    
+    IN      R31 , EEDR      ; EEPROM address 0x2AC
+    STS     RSRES4H , R31
+    
+    IN      R31 , EEDR      ; EEPROM address 0x2AD
+    STS     RSSRCR , R31
+    
+    IN      R31 , EEDR      ; EEPROM address 0x2AE
+    STS     RSDBGR , R31
+    
+    IN      R31 , EEDR      ; EEPROM address 0x2AF (Reserved)
+
+    IN      R31 , EEDR      ; EEPROM address 0x2B0 (Reserved)
+
+    IN      R31 , EEDR      ; EEPROM address 0x2B1 (Reserved)
+
+    IN      R31 , EEDR      ; EEPROM address 0x2B2 (Reserved)
+
+
+    ; Switch clock from PH clock to AVR clock
+    LDI     R31 , BM_LDFSCSW
+    OUT     LDFCKSW , R31
+
+SYSVER_SPI_LF_TP_INIT_LOOP_CLOCK_SWITCH_PH_TO_AVR:
+    IN      R31 , LDFCKSW
+    SBRS    R31 , LDFSCKS
+    RJMP    SYSVER_SPI_LF_TP_INIT_LOOP_CLOCK_SWITCH_PH_TO_AVR
+
+    ; CRC Init
+    IN      R31 , EEDR      ; EEPROM address 0x2B3
+    STS     PHCRPH , R31
+    IN      R31 , EEDR      ; EEPROM address 0x2B4
+    STS     PHCRPL , R31
+    IN      R31 , EEDR      ; EEPROM address 0x2B5
+    STS     PHCSTH , R31
+    IN      R31 , EEDR      ; EEPROM address 0x2B6
+    STS     PHCSTL , R31
+    IN      R31 , EEDR      ; EEPROM address 0x2B7
+    STS     PHCRCR , R31
+    
+    ; FIFO Init
+    IN      R31 , EEDR      ; EEPROM address 0x2B8
+    STS     LDFC , R31
+    IN      R31 , EEDR      ; EEPROM address 0x2B9
+    STS     LDFIM , R31
+    IN      R31 , EEDR      ; EEPROM address 0x2BA
+    ; STS     LDFFL , R31
+    
+    ; LF init
+    IN      R31 , EEDR      ; EEPROM address 0x2BB
+    STS     PHID03 , R31
+    IN      R31 , EEDR      ; EEPROM address 0x2BC
+    STS     PHID02 , R31
+    IN      R31 , EEDR      ; EEPROM address 0x2BD
+    STS     PHID01 , R31
+    IN      R31 , EEDR      ; EEPROM address 0x2BE
+    STS     PHID00 , R31
+    IN      R31 , EEDR      ; EEPROM address 0x2BF
+    STS     PHID0L , R31
+    IN      R31 , EEDR      ; EEPROM address 0x2C0
+    STS     PHID13 , R31
+    IN      R31 , EEDR      ; EEPROM address 0x2C1
+    STS     PHID12 , R31
+    IN      R31 , EEDR      ; EEPROM address 0x2C2
+    STS     PHID11 , R31
+    IN      R31 , EEDR      ; EEPROM address 0x2C3
+    STS     PHID10 , R31
+    IN      R31 , EEDR      ; EEPROM address 0x2C4
+    STS     PHID1L , R31
+    IN      R31 , EEDR      ; EEPROM address 0x2C5
+    STS     PHIDFR , R31
+    IN      R31 , EEDR      ; EEPROM address 0x2C6
+    STS     PHTBLR , R31
+    IN      R31 , EEDR      ; EEPROM address 0x2C7
+    STS     PHDFR , R31
+    IN      R31 , EEDR      ; EEPROM address 0x2C8
+    ; STS     PHBCRR , R31
+    IN      R31 , EEDR      ; EEPROM address 0x2C9
+    ; STS     PHFR , R31
+    IN      R31 , EEDR      ; EEPROM address 0x2CA
+    STS     PHIMR , R31
+    IN      R31 , EEDR      ; EEPROM address 0x2CB
+    OUT     LTCMR , R31
+    IN      R31 , EEDR      ; EEPROM address 0x2CC
+    STS     LTCOR , R31
+    IN      R31 , EEDR      ; EEPROM address 0x2CD
+    STS     LTEMR , R31
+    
+    ; TP init
+    IN      R31 , EEDR      ; EEPROM address 0x2CE
+    STS     TPIMR , R31
+    IN      R31 , EEDR      ; EEPROM address 0x2CF
+    STS     TPCR1, R31
+    IN      R31 , EEDR      ; EEPROM address 0x2D0
+    OUT     TPCR2, R31
+    IN      R31 , EEDR      ; EEPROM address 0x2D1
+    STS     TPCR3, R31
+    IN      R31 , EEDR      ; EEPROM address 0x2D2
+    STS     TPCR4, R31
+    IN      R31 , EEDR      ; EEPROM address 0x2D3
+    STS     TPCR5, R31
+    IN      R31 , EEDR      ; EEPROM address 0x2D4
+    STS     TPDCR1, R31
+    IN      R31 , EEDR      ; EEPROM address 0x2D5
+    STS     TPDCR2, R31
+    IN      R31 , EEDR      ; EEPROM address 0x2D6
+    STS     TPDCR3, R31
+    IN      R31 , EEDR      ; EEPROM address 0x2D7
+    STS     TPDCR4, R31
+    IN      R31 , EEDR      ; EEPROM address 0x2D8
+    STS     TPDCR5, R31
+    IN      R31 , EEDR      ; EEPROM address 0x2D9
+    STS     TPECMR, R31
+    IN      R31 , EEDR      ; EEPROM address 0x2DA
+    STS     TPECR1, R31
+    IN      R31 , EEDR      ; EEPROM address 0x2DB
+    STS     TPECR2, R31
+    IN      R31 , EEDR      ; EEPROM address 0x2DC
+    STS     TPECR3, R31
+    IN      R31 , EEDR      ; EEPROM address 0x2DD
+    STS     TPECR4, R31
+    
+    ;
+    ; Timer 0 configuration
+    ;
+    IN      R31 , EEDR      ; EEPROM address 0x2DE
+    STS     T0CR, R31
+    
+    ;
+    ; Timer 1 configuration
+    ;
+    IN      R31 , EEDR      ; EEPROM address 0x2DF
+    OUT     T1CR, R31
+    IN      R31 , EEDR      ; EEPROM address 0x2E0
+    STS     T1COR, R31
+    IN      R31 , EEDR      ; EEPROM address 0x2E1
+    STS     T1IMR, R31
+    IN      R31 , EEDR      ; EEPROM address 0x2E2
+    STS     T1MR, R31
+
+    ;
+    ; Timer 2 configuration
+    ;
+    IN      R31 , EEDR      ; EEPROM address 0x2E3
+    OUT     T2CR, R31
+    IN      R31 , EEDR      ; EEPROM address 0x2E4
+    STS     T2COR, R31
+    IN      R31 , EEDR      ; EEPROM address 0x2E5
+    STS     T2IMR, R31
+    IN      R31 , EEDR      ; EEPROM address 0x2E6
+    STS     T2MR, R31
+    
+    ;
+    ; Timer 3 configuration
+    ;
+    IN      R31 , EEDR      ; EEPROM address 0x2E7
+    OUT     T3CR, R31
+    IN      R31 , EEDR      ; EEPROM address 0x2E8
+    STS     T3CORL, R31
+    IN      R31 , EEDR      ; EEPROM address 0x2E9
+    STS     T3CORH, R31
+    IN      R31 , EEDR      ; EEPROM address 0x2EA
+    STS     T3IMR, R31
+    IN      R31 , EEDR      ; EEPROM address 0x2EB
+    STS     T3MRA, R31
+    IN      R31 , EEDR      ; EEPROM address 0x2EC
+    STS     T3MRB, R31
+
+    ;
+    ; Init Timer 3 variable (capture interrupt)
+    ;
+    LDI     R31 , low(ATA_timer3CaptureEvents_flash_ASM/2)
+    STS     g_sTimer3 + TMR3CONFIG_CAPISR, R31
+    
+    LDI     R31 , high(ATA_timer3CaptureEvents_flash_ASM/2)
+    STS     g_sTimer3 + TMR3CONFIG_CAPISR + 1, R31
+
+    ;
+    ; Timer 4 configuration
+    ;
+    IN      R31 , EEDR      ; EEPROM address 0x2ED
+    OUT     T4CR, R31
+    IN      R31 , EEDR      ; EEPROM address 0x2EE
+    STS     T4CORL, R31
+    IN      R31 , EEDR      ; EEPROM address 0x2EF
+    STS     T4CORH, R31
+    IN      R31 , EEDR      ; EEPROM address 0x2F0
+    STS     T4IMR, R31
+    IN      R31 , EEDR      ; EEPROM address 0x2F1
+    STS     T4MRA, R31
+    IN      R31 , EEDR      ; EEPROM address 0x2F2
+    STS     T4MRB, R31
+
+    ;
+    ; Init Timer 4 variable (capture interrupt)
+    ;
+    LDI     R31 , low(ATA_timer4CaptureEvents_flash_ASM/2)
+    STS     g_sTimer4 + TMR4CONFIG_CAPISR, R31
+    
+    LDI     R31 , high(ATA_timer4CaptureEvents_flash_ASM/2)
+    STS     g_sTimer4 + TMR4CONFIG_CAPISR + 1, R31
+
+    ; Switch clock from AVR clock back to PH clock
+    CLR     R31
+    OUT     LDFCKSW , R31
+
+SYSVER_SPI_LF_TP_INIT_LOOP_CLOCK_SWITCH_AVR_TO_PH:
+    ; Wait until clock switch has been completed    
+    IN      R31 , LDFCKSW
+    SBRC    R31 , LDFSCKS
+    RJMP    SYSVER_SPI_LF_TP_INIT_LOOP_CLOCK_SWITCH_AVR_TO_PH
+    
+    
+    ; Configure EEPROM address to point to LF continuous receive data
+    LDI     R31 , low(SYSVER_EEP_LF_CONT_START_ADDR)    
+    OUT     EEARL , R31                         ; set low byte address
+    LDI     R31 , high(SYSVER_EEP_LF_CONT_START_ADDR)
+    OUT     EEARH , R31                         ; set high byte address
+    ; SBI     EECR2 , EEBRE
+
+
+    ; Load ID0 shadow register values for future use
+    LDI     R30, 0x10
+    LDI     R26 , low(g_sLfRxIdShadowValues_flash)
+    LDI     R27 , high(g_sLfRxIdShadowValues_flash)
+    
+ID0_SHADOW_LOOP_START:
+    IN      R31 , EEDR      ; EEPROM address 0x340
+    ST      X+ , R31
+    DEC     R30
+    BRNE    ID0_SHADOW_LOOP_START
+
+    ; Load ID0 shadow register values for future use (0x04 * 0x10)
+    LDI     R30, 0x40
+    LDI     R26 , low(g_sLfRxEotShadowValues_flash)
+    LDI     R27 , high(g_sLfRxEotShadowValues_flash)
+    
+EOT_SHADOW_LOOP_START:
+    IN      R31 , EEDR      ; EEPROM address 0x350
+    ST      X+ , R31
+    DEC     R30
+    BRNE    EOT_SHADOW_LOOP_START
+    
+    ; Reset continuous LF receive mode status variables
+    CLR     R31
+    STS     g_bLfRxEotShadowIndex_flash, R31
+
+    ; Disable EEPROM burst read mode (due to higher current consumption)
+    CLR     R31
+    OUT     EECR2 , R31
+
+    ; Set all Power Reduction Registers to configured values
+    OUT     PRR0 , R25
+    OUT     PRR1 , R24
+    OUT     PRR2 , R23
+
+    POP     R23
+    POP     R24
+    POP     R25
+    POP     R26
+    POP     R27
+    POP     R30
+    POP     R31
+
+    RET
+
+    END

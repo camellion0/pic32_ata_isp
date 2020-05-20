@@ -1,0 +1,716 @@
+///////////////////////////////////////////////////////////////////////////////
+//
+// IAR C/C++ Compiler V6.70.1.929 for Atmel AVR           05/Apr/2016  13:30:42
+// Copyright 1996-2015 IAR Systems AB.
+// Network license: DVRIAR01.corpp.atmel.com (STD)
+//
+//    Source file  =  
+//        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\firmware\rftx\src\rftx_ant.c
+//    Command line =  
+//        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\firmware\rftx\src\rftx_ant.c
+//        -v3 --enhanced_core -ms -o
+//        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\Obj
+//        -lC
+//        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\List
+//        -lA
+//        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\List
+//        --initializers_in_flash --no_cse --no_inline --no_code_motion
+//        --no_cross_call --no_clustering --no_tbaa --debug --64k_flash
+//        -DENABLE_BIT_DEFINITIONS -e -I "C:\Program Files (x86)\IAR
+//        Systems\Embedded Workbench 6.0\avr\inc\" --eeprom_size 1152 --clib
+//        -Ohz
+//    List file    =  
+//        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\List\rftx_ant.s90
+//
+///////////////////////////////////////////////////////////////////////////////
+
+        NAME rftx_ant
+
+        RTMODEL "__64bit_doubles", "disabled"
+        RTMODEL "__SystemLibrary", "CLib"
+        RTMODEL "__cpu", "3"
+        RTMODEL "__enhanced_core", "enabled"
+        RTMODEL "__has_elpm", "false"
+        RTMODEL "__memory_model", "2"
+        RTMODEL "__rt_version", "3"
+
+        RSEG CSTACK:DATA:NOROOT(0)
+        RSEG RSTACK:DATA:NOROOT(0)
+
+        PUBLIC ATA_rfTxGetAntennaTuningResult_C
+        PUBLIC ATA_rfTxStartAntSSM_C
+        PUBLIC ATA_rfTxStartAnt_C
+        PUBLIC ATA_rfTxStopAnt_C
+        PUBLIC ATA_rfTxWait4AntSSMrdy_C
+        PUBWEAK _A_FEAT
+        PUBWEAK _A_SREG
+        PUBWEAK _A_SSMRR
+        PUBWEAK _A_SSMSR
+        PUBWEAK _A_T2IFR
+        PUBWEAK _A_TRCDR
+        PUBWEAK _A_TRCIDH
+        PUBWEAK _A_TRCIDL
+        PUBWEAK __?EEARH
+        PUBWEAK __?EEARL
+        PUBWEAK __?EECR
+        PUBWEAK __?EEDR
+        PUBLIC g_bAntennaTuningResult
+        PUBLIC g_pRfTxAntTuneStateMachine
+        PUBLIC g_sRfTxAntTuneStateMachineLut
+        
+          CFI Names cfiNames0
+          CFI StackFrame CFA_Y Y DATA
+          CFI StackFrame CFA_SP SP DATA
+          CFI VirtualResource ?RetPad:1, ?RetHigh:8, ?RetLow:8, ?Ret:17
+          CFI Resource R0:8, R1:8, R2:8, R3:8, R4:8, R5:8, R6:8, R7:8, R8:8, R9:8
+          CFI Resource R10:8, R11:8, R12:8, R13:8, R14:8, R15:8, R16:8, R17:8
+          CFI Resource R18:8, R19:8, R20:8, R21:8, R22:8, R23:8, R24:8, R25:8
+          CFI Resource R26:8, R27:8, R28:8, R29:8, R30:8, R31:8
+          CFI Resource ?RetHighByteMask:8, SP:16, SPH:8, SPL:8, Y:16
+          CFI ResourceParts ?Ret ?RetHigh, ?RetLow, ?RetPad
+          CFI ResourceParts SP SPH, SPL
+          CFI ResourceParts Y R29, R28
+          CFI EndNames cfiNames0
+        
+          CFI Common cfiCommon0 Using cfiNames0
+          CFI CodeAlign 1
+          CFI DataAlign 1
+          CFI ReturnAddress ?Ret CODE
+          CFI CFA_Y Y+0
+          CFI CFA_SP SP+2
+          CFI ?RetPad 0
+          CFI ?RetHigh and(load(1, DATA, sub(CFA_SP, 1)), ?RetHighByteMask)
+          CFI ?RetLow Frame(CFA_SP, 0)
+          CFI ?Ret Concat
+          CFI R0 Undefined
+          CFI R1 Undefined
+          CFI R2 Undefined
+          CFI R3 Undefined
+          CFI R4 SameValue
+          CFI R5 SameValue
+          CFI R6 SameValue
+          CFI R7 SameValue
+          CFI R8 SameValue
+          CFI R9 SameValue
+          CFI R10 SameValue
+          CFI R11 SameValue
+          CFI R12 SameValue
+          CFI R13 SameValue
+          CFI R14 SameValue
+          CFI R15 SameValue
+          CFI R16 Undefined
+          CFI R17 Undefined
+          CFI R18 Undefined
+          CFI R19 Undefined
+          CFI R20 Undefined
+          CFI R21 Undefined
+          CFI R22 Undefined
+          CFI R23 Undefined
+          CFI R24 SameValue
+          CFI R25 SameValue
+          CFI R26 SameValue
+          CFI R27 SameValue
+          CFI R28 Undefined
+          CFI R29 Undefined
+          CFI R30 Undefined
+          CFI R31 Undefined
+          CFI ?RetHighByteMask SameValue
+          CFI SPH Undefined
+          CFI SPL Undefined
+          CFI EndCommon cfiCommon0
+        
+        EXTERN ATA_rfTxInitFrontEnd_C
+        EXTERN ATA_rfTxInitTxSSM_C
+        EXTERN ATA_rfTxShutdown_C
+        EXTERN ATA_rfTxStartSSM_C
+        EXTERN ATA_rfTxStartTx_C
+        EXTERN ATA_rfTxStopSsmWatchdog_C
+        EXTERN ATA_rfTxWait4AVCC_C
+        EXTERN ATA_rfTxWait4XTO_C
+        EXTERN g_sDebug
+        EXTERN g_sRfTx
+        EXTERN g_sRfTxCurrentService
+        EXTERN g_sRfTxFlowCtrl
+
+// C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\firmware\rftx\src\rftx_ant.c
+//    1 //lint -e9059
+//    2 /* *C**************************************************************************
+//    3   Use of this software is subject to Atmel's Software License Agreement.
+//    4 -------------------------------------------------------------------------------
+//    5   $URL: http://svnservulm.corp.atmel.com/svn/CDB/Apps/SW_Lib/Car_Access/CARS_GEN2/ATAB5702A/Branches/P2_Gen2_Merge/firmware/rftx/src/rftx_ant.c $
+//    6   $LastChangedRevision: 328482 $
+//    7   $LastChangedDate: 2015-07-22 13:17:23 -0600 (Wed, 22 Jul 2015) $
+//    8   $LastChangedBy: grueter $
+//    9 -------------------------------------------------------------------------------
+//   10   Project:      ATA5700
+//   11   Target MCU:   ATA5700
+//   12   Compiler:     IAR C/C++ Compiler for AVR 6.30.1
+//   13 -------------------------------------------------------------------------------
+//   14 
+//   15 ******************************************************************************
+//   16 * Copyright 2011, Atmel Automotive GmbH                                       *
+//   17 *                                                                             *
+//   18 * This software is owned by the Atmel Automotive GmbH                         *
+//   19 * and is protected by and subject to worldwide patent protection.             *
+//   20 * Atmel hereby grants to licensee a personal,                                 *
+//   21 * non-exclusive, non-transferable license to copy, use, modify, create        *
+//   22 * derivative works of, and compile the Atmel Source Code and derivative       *
+//   23 * works for the sole purpose of creating custom software in support of        *
+//   24 * licensee product to be used only in conjunction with a Atmel integrated     *
+//   25 * circuit as specified in the applicable agreement. Any reproduction,         *
+//   26 * modification, translation, compilation, or representation of this           *
+//   27 * software except as specified above is prohibited without the express        *
+//   28 * written permission of Atmel.                                                *
+//   29 *                                                                             *
+//   30 * Disclaimer: ATMEL MAKES NO WARRANTY OF ANY KIND,EXPRESS OR IMPLIED,         *
+//   31 * WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED    *
+//   32 * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.         *
+//   33 * Atmel reserves the right to make changes without further notice to the      *
+//   34 * materials described herein. Atmel does not assume any liability arising     *
+//   35 * out of the application or use of any product or circuit described herein.   *
+//   36 * Atmel does not authorize its products for use as critical components in     *
+//   37 * life-support systems where a malfunction or failure may reasonably be       *
+//   38 * expected to result in significant injury to the user. The inclusion of      *
+//   39 * Atmel products in a life-support systems application implies that the       *
+//   40 * manufacturer assumes all risk of such use and in doing so indemnifies       *
+//   41 * Atmel against all charges.                                                  *
+//   42 *                                                                             *
+//   43 * Use may be limited by and subject to the applicable Atmel software          *
+//   44 * license agreement.                                                          *
+//   45 ******************************************************************************/
+//   46 /** \file rftx_ant.c
+//   47 */
+//   48 //lint -restore
+//   49 
+//   50 /*---------------------------------------------------------------------------*/
+//   51 /*  INCLUDES                                                                 */
+//   52 /*---------------------------------------------------------------------------*/
+//   53 #include "../../stdc/src/stdc.h"
+
+        ASEGN ABSOLUTE:DATA:NOROOT,05fH
+// union <unnamed> volatile __io _A_SREG
+_A_SREG:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,0e5H
+// union <unnamed> volatile __io _A_SSMRR
+_A_SSMRR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,0e6H
+// union <unnamed> volatile __io _A_SSMSR
+_A_SSMSR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,0fcH
+// union <unnamed> volatile __io _A_TRCIDL
+_A_TRCIDL:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,0fdH
+// union <unnamed> volatile __io _A_TRCIDH
+_A_TRCIDH:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,0ffH
+// union <unnamed> volatile __io _A_TRCDR
+_A_TRCDR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,0104H
+// union <unnamed> volatile __ext_io _A_FEAT
+_A_FEAT:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,0159H
+// union <unnamed> volatile __ext_io _A_T2IFR
+_A_T2IFR:
+        DS8 1
+//   54 #include "rftx_ant.h"
+//   55 #include "rftx.h"
+//   56 
+//   57 #include "..\..\eep\src\eep.h"
+//   58 #include "..\..\timer2\src\timer2.h"
+//   59 #include "..\..\timer3\src\timer3.h"
+//   60 #include "..\..\globals\src\globals.h"
+//   61 /*---------------------------------------------------------------------------*/
+//   62 /*  DEFINES                                                                  */
+//   63 /*---------------------------------------------------------------------------*/
+//   64 
+//   65 
+//   66 /*---------------------------------------------------------------------------*/
+//   67 /*  Modul Globals                                                            */
+//   68 /*---------------------------------------------------------------------------*/
+//   69 /** \brief <b>g_bAntennaTuningResult</b>
+//   70     contains the last antenna tuning result
+//   71  */
+//   72 #pragma location = ".rftx"
+
+        RSEG `.rftx`:DATA:ROOT(0)
+//   73 __root __no_init uint8_t g_bAntennaTuningResult;
+g_bAntennaTuningResult:
+        DS8 1
+//   74 
+//   75 /** \brief <b>g_pRfTxAntTuneStateMachine</b>
+//   76     points to look up table of the SW state machine used for
+//   77     antenna tuning.
+//   78 */
+//   79 #pragma location = ".flowctrl"
+
+        RSEG `.flowctrl`:DATA:ROOT(0)
+//   80 __root __no_init sysFlowStateMachineFuncLut_t *g_pRfTxAntTuneStateMachine;
+g_pRfTxAntTuneStateMachine:
+        DS8 2
+//   81 
+//   82 //lint -esym(9003, g_sRfTxAntTuneStateMachineLut) FlSc (26.05.2014)
+//   83 /* disable lint note 9003 - could define variable 'g_sRfTxAntTuneStateMachineLut' at block scope
+//   84  * variable shall be accessible from outside via flash software or other library
+//   85  * modules
+//   86  */
+//   87 /** <b>g_sRfTxAntTuneStateMachineLut</b>
+//   88     look up table of the SW state machine used for antenna tuning.
+//   89     \details
+//   90     \li ATA_rfTxInitTxSSM_C:
+//   91         this sw state does the register initialization according to the selected 
+//   92         service channel configuration. Note: FE register are initialized after AVCC 
+//   93         is stable in sw state ::ATA_rfTxInitFrontEnd_C
+//   94     \li ATA_rfTxWait4AVCC_C:
+//   95         waits until AVCC is stable and switches to next sw state if AVCC is stable.
+//   96     \li ATA_rfTxInitFrontEnd_C:
+//   97         initializes the frontend registers according to the selected service channel
+//   98         configuration
+//   99     \li ATA_rfTxWait4XTO_C:
+//  100         waits until XTO is ready. If AVR is not running with CLKXTO4 the
+//  101         core clock is switched to CLKXTO4
+//  102     \li ATA_rfTxStartAntSSM_C:
+//  103         starts the sequencer state machine
+//  104     \li ATA_rfTxWait4AntSSMrdy_C:
+//  105         waits until the sequencer state machine is ready
+//  106     \li ATA_rfTxShutdown_C:
+//  107         shut down the RFTX module related state machine for TXMode(buffered and transparent),
+//  108         VCO tuning and antenna tuning.
+//  109 
+//  110  */
+
+        RSEG NEAR_F:CODE:ROOT(0)
+//  111 __root sysFlowStateMachineFuncLut_t g_sRfTxAntTuneStateMachineLut[] = {
+g_sRfTxAntTuneStateMachineLut:
+        DC16 ATA_rfTxInitTxSSM_C/2, ATA_rfTxWait4AVCC_C/2
+        DC16 ATA_rfTxInitFrontEnd_C/2, ATA_rfTxWait4XTO_C/2
+        DC16 ATA_rfTxStartAntSSM_C/2, ATA_rfTxWait4AntSSMrdy_C/2
+        DC16 ATA_rfTxShutdown_C/2
+//  112     ATA_rfTxInitTxSSM_C,
+//  113     ATA_rfTxWait4AVCC_C,
+//  114     ATA_rfTxInitFrontEnd_C,
+//  115     ATA_rfTxWait4XTO_C,
+//  116     ATA_rfTxStartAntSSM_C,
+//  117     ATA_rfTxWait4AntSSMrdy_C,
+//  118     ATA_rfTxShutdown_C
+//  119 };
+//  120 
+//  121 /*---------------------------------------------------------------------------*/
+//  122 /*  IMPLEMENTATION                                                           */
+//  123 /*---------------------------------------------------------------------------*/
+//  124 /*---------------------------------------------------------------------------*/
+//  125 /** \brief <b>ATA_rfTxStartAnt_C</b>
+//  126     starts an antenna tuning sequence
+//  127 
+//  128     \param[in]      bConfig         Configuration of selected RFTXMode. For details see ::g_sRfTx .bConfig
+//  129     \param[in]      pAddress        Pointer to Service/Channel configuration
+//  130 
+//  131     Variable Usage:
+//  132     \li [in,out] ::g_sRfTx Global RF Tx component data
+//  133     \li [out] ::g_sRfTxFlowCtrl Global RF Tx statemachine data
+//  134     \li [out] ::g_bAntennaTuningResult Global RF Tx Antenna tuning component data
+//  135 
+//  136     \image html ATA_rfTxStartAnt_C.png
+//  137 
+//  138     \internal
+//  139     \li 005: Set HW trace point for this function
+//  140 
+//  141     \li 010: Initialize ::g_bAntennaTuningResult
+//  142 
+//  143     \li 020: Initialize RF Tx module by calling function ::ATA_rfTxStartTx_C
+//  144 
+//  145     \li 030: Patch RF Tx module configuration ::g_sRfTx .bConfig by setting 
+//  146              VCO and Antenna tuning explicitly
+//  147 
+//  148     \li 040: IF no error occured during startup of the RF Tx state machine 
+//  149               indicated by ::g_sRfTx .bFlags,
+//  150              THEN
+//  151                Patch SW state machine pointer ::g_sRfTxFlowCtrl .bfpLutwith with 
+//  152                the Antenna tuning SW state machine
+//  153              ENDIF
+//  154 
+//  155     \Derived{No}
+//  156 
+//  157     \Rationale{N/A}
+//  158 
+//  159     \Traceability{Primus2P-869}
+//  160     \endinternal
+//  161 \n
+//  162 */
+//  163 /*---------------------------------------------------------------------------*/
+
+        RSEG CODE:CODE:ROOT(1)
+//  164 VOIDFUNC ATA_rfTxStartAnt_C(uint8_t bConfig, uint8_t *pAddress)
+ATA_rfTxStartAnt_C:
+          CFI Block cfiBlock0 Using cfiCommon0
+          CFI Function ATA_rfTxStartAnt_C
+//  165 {
+//  166     /* LLR-Ref: 005*/
+//  167     ATA_SET_FUNCTION_TRACE_POINT_C(ATA_rfTxStartAnt_C, bConfig);
+        IN      R17, 0x3F
+        CLI
+        STS     _A_TRCDR, R16
+        LDI     R20, LOW(ATA_rfTxStartAnt_C/2)
+        STS     _A_TRCIDL, R20
+        LDI     R20, (ATA_rfTxStartAnt_C/2) >> 8
+        STS     _A_TRCIDH, R20
+        OUT     0x3F, R17
+//  168     
+//  169     /* LLR-Ref: 010*/
+//  170     g_bAntennaTuningResult = 0U;
+        LDI     R17, 0
+        STS     g_bAntennaTuningResult, R17
+//  171     
+//  172     /* LLR-Ref: 020*/
+//  173     ATA_rfTxStartTx_C(bConfig, pAddress);
+          CFI FunCall ATA_rfTxStartTx_C
+        CALL    ATA_rfTxStartTx_C
+//  174     
+//  175     /* LLR-Ref: 030*/
+//  176     ATA_SETBITMASK_C(g_sRfTx.bConfig,(BM_RFTXCONFIG_BCONFIG_VCO_TUNING
+//  177                                       | BM_RFTXCONFIG_BCONFIG_ANT_TUNING))
+        LDS     R16, (g_sRfTx + 3)
+        ORI     R16, 0xC0
+        STS     (g_sRfTx + 3), R16
+//  178     
+//  179     /* LLR-Ref: 040*/
+//  180     if ((g_sRfTx.bFlags & BM_RFTXCONFIG_BFLAGS_ERROR) == 0x00U)
+        LDS     R16, g_sRfTx
+        SBRC    R16, 7
+        RJMP    ??ATA_rfTxStartAnt_C_0
+//  181     {
+//  182         g_sRfTxFlowCtrl.fpLut = g_pRfTxAntTuneStateMachine;
+        LDS     R16, g_pRfTxAntTuneStateMachine
+        LDS     R17, (g_pRfTxAntTuneStateMachine + 1)
+        STS     (g_sRfTxFlowCtrl + 1), R16
+        STS     (g_sRfTxFlowCtrl + 2), R17
+//  183     }
+//  184 }
+??ATA_rfTxStartAnt_C_0:
+        RET
+          CFI EndBlock cfiBlock0
+        REQUIRE _A_SREG
+        REQUIRE _A_TRCDR
+        REQUIRE _A_TRCIDL
+        REQUIRE _A_TRCIDH
+//  185 
+//  186 
+//  187 /*---------------------------------------------------------------------------*/
+//  188 /** \brief <b>ATA_rfTxStopAnt_C</b>
+//  189     shuts down a currently running antenna tuning sequence
+//  190     
+//  191     \image html ATA_rfTxStopAnt_C.png
+//  192 
+//  193     \internal
+//  194     \li 010: Shutdown currently running antenna tuning by calling function 
+//  195             ::ATA_rfTxShutdown_C
+//  196 
+//  197     \Derived{No}
+//  198 
+//  199     \Rationale{N/A}
+//  200 
+//  201     \Traceability{Primus2P-869}
+//  202     \endinternal
+//  203 \n
+//  204 */
+//  205 /*---------------------------------------------------------------------------*/
+
+        RSEG CODE:CODE:ROOT(1)
+//  206 VOIDFUNC ATA_rfTxStopAnt_C(void)
+ATA_rfTxStopAnt_C:
+          CFI Block cfiBlock1 Using cfiCommon0
+          CFI Function ATA_rfTxStopAnt_C
+//  207 {
+//  208     ATA_SET_FUNCTION_TRACE_POINT_C(ATA_rfTxStopAnt_C, 0x00);
+        IN      R18, 0x3F
+        CLI
+        LDI     R16, 0
+        STS     _A_TRCDR, R16
+        LDI     R16, LOW(ATA_rfTxStopAnt_C/2)
+        STS     _A_TRCIDL, R16
+        LDI     R16, (ATA_rfTxStopAnt_C/2) >> 8
+        STS     _A_TRCIDH, R16
+        OUT     0x3F, R18
+//  209     
+//  210     /* LLR-Ref: 010 */
+//  211     ATA_rfTxShutdown_C();
+          CFI FunCall ATA_rfTxShutdown_C
+        JMP     ATA_rfTxShutdown_C
+          CFI EndBlock cfiBlock1
+        REQUIRE _A_SREG
+        REQUIRE _A_TRCDR
+        REQUIRE _A_TRCIDL
+        REQUIRE _A_TRCIDH
+//  212 }
+//  213 
+//  214 /*---------------------------------------------------------------------------*/
+//  215 /** \brief <b>ATA_rfTxGetAntennaTuningResult_C</b>
+//  216     returns last antenna tuning result
+//  217 
+//  218     Variable Usage:
+//  219     \li [out] ::g_bAntennaTuningResult Global RF Tx Antenna tuning component data
+//  220 
+//  221     \image html ATA_rfTxGetAntennaTuningResult_C.png
+//  222 
+//  223     \internal
+//  224     \li 010: Return ::g_bAntennaTuningResult
+//  225 
+//  226     \Derived{No}
+//  227 
+//  228     \Rationale{N/A}
+//  229 
+//  230     \Traceability{Primus2P-869}
+//  231     \endinternal
+//  232 \n
+//  233 */
+//  234 /*---------------------------------------------------------------------------*/
+
+        RSEG CODE:CODE:ROOT(1)
+//  235 UINT8FUNC ATA_rfTxGetAntennaTuningResult_C(void)
+ATA_rfTxGetAntennaTuningResult_C:
+          CFI Block cfiBlock2 Using cfiCommon0
+          CFI Function ATA_rfTxGetAntennaTuningResult_C
+          CFI NoCalls
+//  236 {
+//  237     /* LLR-Ref: 010*/
+//  238     return g_bAntennaTuningResult;
+        LDS     R16, g_bAntennaTuningResult
+        RET
+//  239 }
+          CFI EndBlock cfiBlock2
+//  240 
+//  241 /*---------------------------------------------------------------------------*/
+//  242 /** \brief <b>ATA_rfTxStartAntSSM_C</b>
+//  243     starts the sequencer state machine for antenna tuning
+//  244 
+//  245     \image html ATA_rfTxStartVcoSSM_C.png
+//  246 
+//  247     \internal
+//  248     \li 010: Call function ::ATA_rfTxStartSSM_C to configure the RF Tx statemachine
+//  249              to execute the Antenna tuning shutdown sequence
+//  250 
+//  251     \Derived{No}
+//  252 
+//  253     \Rationale{N/A}
+//  254 
+//  255     \Traceability{Primus2P-869}
+//  256     \endinternal
+//  257 \n
+//  258 */
+//  259 /*---------------------------------------------------------------------------*/
+
+        RSEG CODE:CODE:ROOT(1)
+//  260 VOIDFUNC ATA_rfTxStartAntSSM_C(void)
+ATA_rfTxStartAntSSM_C:
+          CFI Block cfiBlock3 Using cfiCommon0
+          CFI Function ATA_rfTxStartAntSSM_C
+//  261 {
+//  262     /* LLR-Ref: 010*/
+//  263     ATA_rfTxStartSSM_C(RFTX_ANT_STATE_SHUTDOWN);
+        LDI     R16, 6
+          CFI FunCall ATA_rfTxStartSSM_C
+        JMP     ATA_rfTxStartSSM_C
+//  264 }
+          CFI EndBlock cfiBlock3
+//  265 
+//  266 /*---------------------------------------------------------------------------*/
+//  267 /** \brief <b>ATA_rfTxWait4AntSSMrdy_C</b>
+//  268     waits until the sequencer state machine is ready
+//  269 
+//  270     Variable Usage:
+//  271     \li [in,out] ::g_sRfTx Global RF Tx component data
+//  272     \li [out] ::g_sRfTxFlowCtrl Global RF Tx statemachine data
+//  273     \li [out] ::g_bAntennaTuningResult Global RF Tx VCO tuning component data
+//  274     \li [out] ::g_sRfTxCurrentService Global RF Tx current service data
+//  275     \li [out] ::g_sDebug Global Debug component data
+//  276 
+//  277     \image html ATA_rfTxWait4AntSSMrdy_C.png
+//  278 
+//  279     \internal
+//  280     \li 010: Check if SSM has finished with success via variable g_sRfTx.bStatus[6]
+//  281              and SSM status register SSMSR\n
+//  282              IF SSM has finished with success
+//  283     \li 020:     Stop SSM Watchdog
+//  284     \li 030:     Clear RF Tx SSM ready in ::g_sRfTx .bStatus[6]
+//  285     \li 040:     Store antenna tuning result in ::g_bAntennaTuningResult
+//  286                  and update Service/Channel configuration ::g_sRfTxCurrentService 
+//  287                  .sService.bFEAT
+//  288     \li 045:     Set ANT_TUNE_RDY flag in ::g_sRfTx .bTuneFlags to indicate the end 
+//  289                  of an antenna tuning sequence
+//  290     \li 050:     Switch to next sw state by incrementing ::g_sRfTxFlowCtrl .bIndex\n
+//  291              ELSE (SSM has not finished)
+//  292     \li 060:     Check for 
+//  293                   - SSM Watchdog timeout via flag T2IFR.T2COF
+//  294                   - SSM Error via register SSMSR\n
+//  295                   IF Watchdog timeout or SSM Error has occured
+//  296     \li 070:        Reset current running sequencer state machine
+//  297     \li 080:        Stop SSM Watchdog
+//  298     \li 090:        Signal error via flag ::g_sRfTx .bFlags[7]
+//  299     \li 100:        Write error code to ::g_sDebug .bErrorCode and ::g_sDebug 
+//  300                     .bSsmErrorCode
+//  301     \li 110:        Switch to shutdown sw state by setting ::g_sRfTxFlowCtrl
+//  302                     .bIndex to RFTX_ANT_STATE_SHUTDOWN
+//  303 
+//  304     \Derived{No}
+//  305 
+//  306     \Rationale{N/A}
+//  307 
+//  308     \Traceability{Primus2P-869}
+//  309     \endinternal
+//  310 \n
+//  311 */
+//  312 /*---------------------------------------------------------------------------*/
+
+        RSEG CODE:CODE:ROOT(1)
+//  313 VOIDFUNC ATA_rfTxWait4AntSSMrdy_C(void)
+ATA_rfTxWait4AntSSMrdy_C:
+          CFI Block cfiBlock4 Using cfiCommon0
+          CFI Function ATA_rfTxWait4AntSSMrdy_C
+//  314 {
+//  315     /* LLR-Ref: 010*/
+//  316     if( (g_sRfTx.bStatus & BM_RFTXCONFIG_BSTATUS_SSMREADY) && (SSMSR == 0x00U) ) {
+        LDS     R16, (g_sRfTx + 2)
+        SBRS    R16, 6
+        RJMP    ??ATA_rfTxWait4AntSSMrdy_C_0
+        LDS     R16, _A_SSMSR
+        TST     R16
+        BRNE    ??ATA_rfTxWait4AntSSMrdy_C_0
+//  317         
+//  318         ATA_SET_FUNCTION_TRACE_POINT_C(ATA_rfTxWait4AntSSMrdy_C, 0x00);
+        IN      R18, 0x3F
+        CLI
+        LDI     R16, 0
+        STS     _A_TRCDR, R16
+        LDI     R16, LOW(ATA_rfTxWait4AntSSMrdy_C/2)
+        STS     _A_TRCIDL, R16
+        LDI     R16, (ATA_rfTxWait4AntSSMrdy_C/2) >> 8
+        STS     _A_TRCIDH, R16
+        OUT     0x3F, R18
+//  319         
+//  320         /* LLR-Ref: 020*/
+//  321         ATA_rfTxStopSsmWatchdog_C();
+          CFI FunCall ATA_rfTxStopSsmWatchdog_C
+        CALL    ATA_rfTxStopSsmWatchdog_C
+//  322         
+//  323         /* LLR-Ref: 030*/
+//  324         ATA_CLEARBITMASK_C(g_sRfTx.bStatus,BM_RFTXCONFIG_BSTATUS_SSMREADY)
+        LDI     R30, LOW(g_sRfTx)
+        LDI     R31, (g_sRfTx) >> 8
+        LDD     R16, Z+2
+        ANDI    R16, 0xBF
+        STD     Z+2, R16
+//  325         
+//  326         /* LLR-Ref: 040*/
+//  327         g_sRfTxCurrentService.sService.bFEAT = FEAT;
+        LDS     R16, _A_FEAT
+        STS     (g_sRfTxCurrentService + 2), R16
+//  328         g_bAntennaTuningResult = g_sRfTxCurrentService.sService.bFEAT;
+        STS     g_bAntennaTuningResult, R16
+//  329         
+//  330         /* LLR-Ref: 045*/
+//  331         ATA_SETBITMASK_C(g_sRfTx.bTuneFlags,BM_RFTXCONFIG_BTUNEFLAGS_ANT_TUNE_RDY)
+        LDD     R16, Z+1
+        ORI     R16, 0x80
+        STD     Z+1, R16
+//  332         
+//  333         /* LLR-Ref: 050*/
+//  334         g_sRfTxFlowCtrl.bIndex++;
+        LDS     R16, g_sRfTxFlowCtrl
+        INC     R16
+        STS     g_sRfTxFlowCtrl, R16
+        RET
+//  335     }
+//  336     else {
+//  337         /* LLR-Ref: 060*/
+//  338         if( (T2IFR & BM_T2COF) || SSMSR ) {
+??ATA_rfTxWait4AntSSMrdy_C_0:
+        LDS     R16, _A_T2IFR
+        SBRC    R16, 1
+        RJMP    ??ATA_rfTxWait4AntSSMrdy_C_1
+        LDS     R16, _A_SSMSR
+        TST     R16
+        BREQ    ??ATA_rfTxWait4AntSSMrdy_C_2
+//  339             /* LLR-Ref: 070*/
+//  340             SSMRR = BM_SSMST;
+??ATA_rfTxWait4AntSSMrdy_C_1:
+        LDI     R16, 2
+        STS     _A_SSMRR, R16
+//  341 
+//  342             /* LLR-Ref: 080*/
+//  343             ATA_rfTxStopSsmWatchdog_C();
+          CFI FunCall ATA_rfTxStopSsmWatchdog_C
+        CALL    ATA_rfTxStopSsmWatchdog_C
+//  344 
+//  345             /* LLR-Ref: 090*/
+//  346             ATA_SETBITMASK_C(g_sRfTx.bFlags,BM_RFTXCONFIG_BFLAGS_ERROR)
+        LDI     R30, LOW(g_sRfTx)
+        LDI     R31, (g_sRfTx) >> 8
+        LD      R16, Z
+        ORI     R16, 0x80
+        ST      Z, R16
+//  347 
+//  348             /* LLR-Ref: 100*/
+//  349             g_sDebug.bErrorCode    = DEBUG_ERROR_CODE_RFTX_WAIT4ANTSSMRDY_TIMEOUT;
+        LDI     R16, 40
+        STS     g_sDebug, R16
+//  350             g_sDebug.bSsmErrorCode = SSMSR;
+        LDS     R16, _A_SSMSR
+        STS     (g_sDebug + 1), R16
+//  351 
+//  352             /* LLR-Ref: 110*/
+//  353             g_sRfTxFlowCtrl.bIndex = RFTX_ANT_STATE_SHUTDOWN;
+        LDI     R16, 6
+        STS     g_sRfTxFlowCtrl, R16
+//  354         }
+//  355     }
+//  356 }
+??ATA_rfTxWait4AntSSMrdy_C_2:
+        RET
+          CFI EndBlock cfiBlock4
+        REQUIRE _A_SSMSR
+        REQUIRE _A_SREG
+        REQUIRE _A_TRCDR
+        REQUIRE _A_TRCIDL
+        REQUIRE _A_TRCIDH
+        REQUIRE _A_FEAT
+        REQUIRE _A_T2IFR
+        REQUIRE _A_SSMRR
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01cH
+__?EECR:
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01dH
+__?EEDR:
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01eH
+__?EEARL:
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01fH
+__?EEARH:
+
+        END
+// 
+//   2 bytes in segment .flowctrl
+//   1 byte  in segment .rftx
+//   8 bytes in segment ABSOLUTE
+// 250 bytes in segment CODE
+//  14 bytes in segment NEAR_F
+// 
+// 264 bytes of CODE memory
+//   3 bytes of DATA memory (+ 8 bytes shared)
+//
+//Errors: none
+//Warnings: none

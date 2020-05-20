@@ -1,0 +1,180 @@
+//lint -e9059
+/* *ASM************************************************************************
+  Use of this software is subject to Atmel's Software License Agreement.
+-------------------------------------------------------------------------------
+  $URL: http://svnservulm.corp.atmel.com/svn/CDB/Apps/SW_Lib/Car_Access/CARS_GEN2/ATAB5702A/Branches/P2P22_TXMODE_NXP/firmware/spi/src/spi_asm.s90 $
+  $LastChangedRevision: 328482 $
+  $LastChangedDate: 2015-07-22 13:17:23 -0600 (Wed, 22 Jul 2015) $
+  $LastChangedBy: grueter $
+-------------------------------------------------------------------------------
+  Project:      ATA5700
+  Target MCU:   ATA5700
+  Compiler:     IAR Assembler for AVR 6.30.1
+-------------------------------------------------------------------------------
+
+******************************************************************************
+* Copyright 2011, Atmel Automotive GmbH                                       *
+*                                                                             *
+* This software is owned by the Atmel Automotive GmbH                         *
+* and is protected by and subject to worldwide patent protection.             *
+* Atmel hereby grants to licensee a personal,                                 *
+* non-exclusive, non-transferable license to copy, use, modify, create        *
+* derivative works of, and compile the Atmel Source Code and derivative       *
+* works for the sole purpose of creating custom software in support of        *
+* licensee product to be used only in conjunction with a Atmel integrated     *
+* circuit as specified in the applicable agreement. Any reproduction,         *
+* modification, translation, compilation, or representation of this           *
+* software except as specified above is prohibited without the express        *
+* written permission of Atmel.                                                *
+*                                                                             *
+* Disclaimer: ATMEL MAKES NO WARRANTY OF ANY KIND,EXPRESS OR IMPLIED,         *
+* WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED    *
+* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.         *
+* Atmel reserves the right to make changes without further notice to the      *
+* materials described herein. Atmel does not assume any liability arising     *
+* out of the application or use of any product or circuit described herein.   *
+* Atmel does not authorize its products for use as critical components in     *
+* life-support systems where a malfunction or failure may reasonably be       *
+* expected to result in significant injury to the user. The inclusion of      *
+* Atmel products in a life-support systems application implies that the       *
+* manufacturer assumes all risk of such use and in doing so indemnifies       *
+* Atmel against all charges.                                                  *
+*                                                                             *
+* Use may be limited by and subject to the applicable Atmel software          *
+* license agreement.                                                          *
+*******************************************************************************/
+/* \file spi_asm.s90
+*/
+//lint -restore
+
+    NAME spi_asm
+
+    PUBLIC ATA_spiRxBufferHandler_ISR_ASM
+    PUBLIC ATA_spiRxBufferDisableInt_ASM
+    PUBLIC ATA_spiRxBufferEnd_ASM
+    
+    PUBLIC ATA_spiTxBufferHandler_ISR_ASM
+    PUBLIC ATA_spiTxBufferDisableInt_ASM
+    PUBLIC ATA_spiTxBufferEnd_ASM    
+
+
+    EXTERN g_sSpiConfig
+
+/* ===========================================================================*/
+/*   INCLUDES                                                                 */
+/* ===========================================================================*/
+#include "regs.inc"
+#include "globals.h"
+#include "spi.h"
+
+/* ===========================================================================*/
+/*   Modul Globals                                                            */
+/* ===========================================================================*/
+/* ===========================================================================*/
+/*   Macros                                                                   */
+/* ===========================================================================*/
+/* ===========================================================================*/
+/*   IMPLEMENTATION                                                           */
+/* ===========================================================================*/
+
+/* ---------------------------------------------------------------------------*/
+/** \brief <b>ATA_spiRxBufferHandler_ISR_ASM</b>
+    is the SPI Rx FIFO IRQ.
+
+    Variable Usage:
+    \li[in]  ::g_sSpiConfig is global SPI component data
+
+    \image html ATA_spiRxBufferHandler_ISR_ASM.png
+
+    \internal
+    \Derived{Yes}
+
+    \Rationale{This function is a helper function in order to implement the SPI
+               specific data handling}
+
+    \Traceability   N/A
+    \endinternal
+\n
+*/
+/* ---------------------------------------------------------------------------*/
+#pragma vector=SRX_FIFO_vect
+RSEG CODE:CODE:ROOT(1)
+ATA_spiRxBufferHandler_ISR_ASM:
+    PUSH    R30
+    PUSH    R31
+
+    IN      R31 , SREG
+    PUSH    R31
+
+    ; ------------------------------------------
+    LDS     R30 , g_sSpiConfig + SPICONFIG_PTMP
+    LDS     R31 , g_sSpiConfig + SPICONFIG_PTMP + 1
+    IJMP
+    ; ------------------------------------------
+
+ATA_spiRxBufferDisableInt_ASM:
+    ; SFIR = BM_SRIE -> disable rx buffer interrupt
+    LDS     R30 , SFIR
+    ANDI    R30 , ~(BM_SRIE)
+    STS     SFIR , R30
+
+ATA_spiRxBufferEnd_ASM:
+    POP     R31
+    OUT     SREG , R31
+
+    POP     R31
+    POP     R30
+
+    RETI
+
+/* ---------------------------------------------------------------------------*/
+/**  \brief <b>ATA_spiTxBufferHandler_ISR_ASM</b>
+    is the SPI Tx FIFO IRQ.
+
+    Used Variables
+    \li[in]  ::g_sSpiConfig is global SPI component data
+
+    \image html ATA_spiTxBufferHandler_ISR_ASM.png
+
+    \internal
+    \Derived{Yes}
+
+    \Rationale{This function is a helper function in order to implement the SPI
+               specific data handling}
+
+    \Traceability   N/A
+    \endinternal
+\n
+*/
+/* ---------------------------------------------------------------------------*/
+#pragma vector=STX_FIFO_vect
+RSEG CODE:CODE:ROOT(1)
+ATA_spiTxBufferHandler_ISR_ASM:
+    PUSH    R30
+    PUSH    R31
+
+    IN      R31 , SREG
+    PUSH    R31
+
+    ; ------------------------------------------
+    LDS     R30 , g_sSpiConfig + SPICONFIG_PTMP
+    LDS     R31 , g_sSpiConfig + SPICONFIG_PTMP + 1
+    IJMP
+    ; ------------------------------------------
+ATA_spiTxBufferDisableInt_ASM:
+    ; SFIR = BM_STIE -> disable tx buffer interrupt
+    LDS     R30 , SFIR
+    ANDI    R30 , ~(BM_STIE)
+    STS     SFIR , R30
+
+ATA_spiTxBufferEnd_ASM:
+
+    POP     R31
+    OUT     SREG , R31
+
+    POP     R31
+    POP     R30
+
+    RETI
+
+    END

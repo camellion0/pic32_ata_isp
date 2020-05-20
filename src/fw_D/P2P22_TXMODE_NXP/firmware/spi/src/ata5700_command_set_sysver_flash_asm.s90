@@ -1,0 +1,2114 @@
+/* *ASM************************************************************************
+  Use of this software is subject to Atmel's Software License Agreement.
+-------------------------------------------------------------------------------
+  $URL: http://svnservulm.corp.atmel.com/svn/CDB/02_AutoRF/Primus2pSW/Branches/VB_PRIMUS2P_ROM_2.0/firmware/spi/src/ata5700_command_set_sysver_flash_asm.s90 $
+  $LastChangedRevision: 313807 $
+  $LastChangedDate: 2015-05-08 09:53:52 +0200 (Fr, 08 Mai 2015) $
+  $LastChangedBy: gwillbol $
+-------------------------------------------------------------------------------
+  Project:      ATA5700
+  Target MCU:   ATA5700
+  Compiler:     IAR Assembler for AVR 6.30.1
+-------------------------------------------------------------------------------
+
+******************************************************************************
+* Copyright 2011, Atmel Automotive GmbH                                       *
+*                                                                             *
+* This software is owned by the Atmel Automotive GmbH                         *
+* and is protected by and subject to worldwide patent protection.             *
+* Atmel hereby grants to licensee a personal,                                 *
+* non-exclusive, non-transferable license to copy, use, modify, create        *
+* derivative works of, and compile the Atmel Source Code and derivative       *
+* works for the sole purpose of creating custom software in support of        *
+* licensee product to be used only in conjunction with a Atmel integrated     *
+* circuit as specified in the applicable agreement. Any reproduction,         *
+* modification, translation, compilation, or representation of this           *
+* software except as specified above is prohibited without the express        *
+* written permission of Atmel.                                                *
+*                                                                             *
+* Disclaimer: ATMEL MAKES NO WARRANTY OF ANY KIND,EXPRESS OR IMPLIED,         *
+* WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED    *
+* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.         *
+* Atmel reserves the right to make changes without further notice to the      *
+* materials described herein. Atmel does not assume any liability arising     *
+* out of the application or use of any product or circuit described herein.   *
+* Atmel does not authorize its products for use as critical components in     *
+* life-support systems where a malfunction or failure may reasonably be       *
+* expected to result in significant injury to the user. The inclusion of      *
+* Atmel products in a life-support systems application implies that the       *
+* manufacturer assumes all risk of such use and in doing so indemnifies       *
+* Atmel against all charges.                                                  *
+*                                                                             *
+* Use may be limited by and subject to the applicable Atmel software          *
+* license agreement.                                                          *
+*******************************************************************************/
+/* \file ata5700_command_set_asm.s90
+*/
+    NAME ata5700_command_set_asm
+
+    PUBLIC ATA_interrupt0Handler_ASM
+    PUBLIC ATA_spiSerialTransferCompleteHandler_ASM
+
+    EXTERN g_sAta5700_flash
+    EXTERN extReq
+    EXTERN g_sEventHandling_flash
+
+    EXTERN romVersion
+
+    EXTERN ATA_spiRxBufferDisableInt_ASM
+    EXTERN ATA_spiRxBufferEnd_ASM
+
+    EXTERN ATA_spiTxBufferDisableInt_ASM
+    EXTERN ATA_spiTxBufferEnd_ASM
+
+    EXTERN g_sSpiConfig
+    
+    ; LF variables (Flash)
+    EXTERN g_bLfRxEotShadowIndex_flash
+    
+    ; Timer 3 (Flash)
+    EXTERN g_bTimer3CaptureIndex_flash
+    
+    ; Timer 4 (Flash)
+    EXTERN g_bTimer4CaptureIndex_flash
+    
+    EXTERN g_bTpEmTransponderStateIndex_flash 
+    
+    ; TWI application test
+    EXTERN g_TwiConfiguration_flash
+    
+/* ===========================================================================*/
+/*   INCLUDES                                                                 */
+/* ===========================================================================*/
+#include "regs.inc"
+#include "globals.h"
+#include "spi.h"
+#include "ata5700_command_set_sysver_flash.h"
+#include "../../../firmware/timer3/src/timer3.h"
+#include "../../../firmware/timer3/src/timer3_flash.h"
+#include "../../../firmware/timer4/src/timer4.h"
+#include "../../../firmware/timer4/src/timer4_flash.h"
+#include "../../../firmware/tp/src/tp_flash.h"
+#include "../../../firmware/tp/src/tp_flash.h"
+#include "../../../appl/appFlash_simTest/src/twi/src/twi_flash.h"
+
+/* ===========================================================================*/
+/*  DEFINES                                                                   */
+/* ===========================================================================*/
+MAXCOMMANDS             EQU 0x34
+
+TX_DIR                  EQU 1
+RX_DIR                  EQU 0
+/* ===========================================================================*/
+/*   Modul Globals                                                            */
+/* ===========================================================================*/
+/* ===========================================================================*/
+/*   Macros                                                                   */
+/* ===========================================================================*/
+
+/* startDoxyExclude */
+/* ----------------------------------------------------------------------------- */
+/** \brief <b>SET_RXTX_DFC_DIR</b>
+    This macro stores the actual access direction of the DFC to the T-Bit and sets
+    the desired access direction (via dir parameter).
+
+    \param address: Direction of access. (TX_DIR or RX_DIR)
+
+    \return none
+*/
+/* ----------------------------------------------------------------------------- */
+SET_RXTX_DFC_DIR MACRO     dir
+    LDI     R31 , dir
+    LDS     R30 , DFC
+    BST     R30 , DFDRA        ; Store the actual direction of the D FIFO in the T-bit
+
+    CBR     R30 , BM_DFDRA     ; DFC.DRA = 0
+
+    SBRC    R31 , BIT_0        ; if (dir == RX_DIR)
+                               ; else
+    SBR     R30 , BM_DFDRA     ;     DFC.DRA = 1
+
+    STS     DFC , R30
+    ENDM
+/* stopDoxyExclude */
+
+/* startDoxyExclude */
+/* ----------------------------------------------------------------------------- */
+/** \brief <b>RESTORE_RXTX_DFC_DIR</b>
+    This macro restores the former (stored in the T-Bit) access direction of the D Fifo.
+
+    \param address: none
+
+    \return none
+*/
+/* ----------------------------------------------------------------------------- */
+RESTORE_RXTX_DFC_DIR MACRO
+    LDS     R30 , DFC
+    BLD     R30 , DFDRA        ; restore the former direction of the D FIFO
+    STS     DFC , R30
+    ENDM
+/* stopDoxyExclude */
+
+/* startDoxyExclude */
+/* ----------------------------------------------------------------------------- */
+/** \brief <b>SET_RXTX_SFC_DIR</b>
+    This macro stores the actual access direction of the SFC to the T-Bit and sets
+    the desired access direction (via dir parameter).
+
+    \param address: Direction of access. (TX_DIR or RX_DIR)
+
+    \return none
+*/
+/* ----------------------------------------------------------------------------- */
+SET_RXTX_SFC_DIR MACRO     dir
+    LDI     R31 , dir
+    LDS     R30 , SFC
+    BST     R30 , SFDRA        ; Store the actual direction of the S FIFO in the T-bit
+
+    CBR     R30 , BM_SFDRA     ; SFC.DRA = 0
+
+    SBRC    R31 , BIT_0         ; if (dir == RX_DIR)
+                                ; else
+    SBR     R30 , BM_SFDRA     ;    SFC.DRA = 1
+
+    STS     SFC , R30
+    ENDM
+/* stopDoxyExclude */
+
+/* startDoxyExclude */
+/* ----------------------------------------------------------------------------- */
+/** \brief <b>RESTORE_RXTX_DFC_DIR</b>
+    This macro restores the former (stored in the T-Bit) access direction of the S Fifo.
+
+    \param address: none
+
+    \return none
+*/
+/* ----------------------------------------------------------------------------- */
+RESTORE_RXTX_SFC_DIR MACRO
+    LDS     R30 , SFC
+    BLD     R30 , SFDRA        ; restore the former direction of the S FIFO
+    STS     SFC , R30
+    ENDM
+/* stopDoxyExclude */
+
+
+/* startDoxyExclude */
+/* ----------------------------------------------------------------------------- */
+/** \brief <b>SET_RXTX_LDFC_DIR</b>
+    This macro stores the actual access direction of the LDFD to the T-Bit and sets
+    the desired access direction (via dir parameter).
+
+    \param address: Direction of access. (TX_DIR or RX_DIR)
+
+    \return none
+*/
+/* ----------------------------------------------------------------------------- */
+SET_RXTX_LDFC_DIR MACRO     dir
+
+    ; Switch clock from PH clock to AVR clock
+    LDI     R31 , BM_LDFSCSW    
+    OUT     LDFCKSW , R31
+
+SET_RXTX_LDFC_DIR_LOOP_CLOCK_SWITCH_PH_TO_AVR:
+    IN      R31 , LDFCKSW
+    SBRS    R31 , LDFSCKS   
+    RJMP    SET_RXTX_LDFC_DIR_LOOP_CLOCK_SWITCH_PH_TO_AVR
+
+    ENDM
+/* stopDoxyExclude */
+
+/* startDoxyExclude */
+/* ----------------------------------------------------------------------------- */
+/** \brief <b>RESTORE_RXTX_LDFC_DIR</b>
+    This macro restores the former (stored in the T-Bit) access direction of the
+    PH Fifo.
+
+    \param address: none
+
+    \return none
+*/
+/* ----------------------------------------------------------------------------- */
+RESTORE_RXTX_LDFC_DIR MACRO        
+    
+    ; Switch clock from AVR clock back to PH clock
+    CLR     R31
+    OUT     LDFCKSW , R31
+
+RESTORE_RXTX_LDFC_DIR_LOOP_CLOCK_SWITCH_AVR_TO_PH:
+    ; Wait until clock switch has been completed    
+    IN      R31 , LDFCKSW   
+    SBRC    R31 , FIFO_SW
+    RJMP    RESTORE_RXTX_LDFC_DIR_LOOP_CLOCK_SWITCH_AVR_TO_PH
+
+    ENDM
+/* stopDoxyExclude */
+
+/* ===========================================================================*/
+/*   IMPLEMENTATION                                                           */
+/* ===========================================================================*/
+/* startDoxyExclude */
+/* ----------------------------------------------------------------------------- */
+/**  \brief <b>JMPTABLE</b>
+    used for SPI commands. Backward compatibility to SigmaX is ensured by inserting
+    wholes ("INVALIDCMD") for SPI commands not used for Primus2P.
+
+    \return none
+*/
+/* ----------------------------------------------------------------------------- */
+RSEG CODE:CODE:ROOT(7)
+; ****************
+; *  JMP  Table  *
+; ****************
+JMPTABLE:                                       ; Must be aligned to 0xXX00-0xXXXX
+    RJMP    SPI_READY                           ; in order to be able to not include
+    RJMP    INVALIDCMD                          ; the carry into the calculation of
+    RJMP    READ_FILL_LEVEL_TX_BUFFER           ; ijmp to the jump table.
+    RJMP    READ_FILL_LEVEL_RSSI_BUFFER         ; 0x03
+    RJMP    INVALIDCMD                          ; 0x04
+    RJMP    READ_RSSI_BUFFER                    ; 0x05
+    RJMP    READ_RX_BUFFER                      ; 0x06
+    RJMP    WRITE_REGISTER_SRAM                 ; 0x07
+    RJMP    READ_REGISTER_SRAM                  ; 0x08
+    RJMP    WRITE_EEPROM                        ; 0x09
+    RJMP    READ_EEPROM                         ; 0x0A
+    RJMP    WRITE_TX_BUFFER                     ; 0x0B
+    RJMP    WRITE_TX_PREAMBLE_BUFFER            ; 0x0C
+    RJMP    SET_SYSTEM_MODE                     ; 0x0D
+    RJMP    CALIBRATE_AND_CHECK                 ; 0x0E
+    RJMP    PATCH_SPI                           ; 0x0F
+    RJMP    INVALIDCMD                          ; 0x10
+    RJMP    INVALIDCMD                          ; 0x11
+    RJMP    GET_ROM_VERSION                     ; 0x12
+    RJMP    GET_FLASH_VERSION                   ; 0x13
+    RJMP    INVALIDCMD                          ; 0x14
+    RJMP    SYSTEM_RESET                        ; 0x15
+    RJMP    INVALIDCMD                          ; 0x16
+    RJMP    SET_VOLTAGE_MONITOR                 ; 0x17
+    RJMP    OFF_COMMAND                         ; 0x18
+    RJMP    INVALIDCMD                          ; 0x19
+    RJMP    INIT_SRAM_SERVICE                   ; 0x1A
+    RJMP    INVALIDCMD                          ; 0x1B
+    RJMP    INVALIDCMD                          ; 0x1C
+    RJMP    INVALIDCMD                          ; 0x1D
+    RJMP    INVALIDCMD                          ; 0x1E
+    RJMP    INVALIDCMD                          ; 0x1F
+    RJMP    SYSVER_SPI_LF_TP_INIT               ; 0x20    
+    RJMP    SYSVER_SPI_LF_ENABLE                ; 0x21
+    RJMP    SYSVER_SPI_TP_START_RX              ; 0x22
+    RJMP    SYSVER_SPI_TP_START_TX              ; 0x23
+    RJMP    SYSVER_SPI_PH_FIFO_READ_FL          ; 0x24
+    RJMP    SYSVER_SPI_PH_FIFO_READ_DATA        ; 0x25
+    RJMP    SYSVER_SPI_PH_FIFO_WRITE_DATA       ; 0x26
+    RJMP    SYSVER_SPI_LF_ENABLE_CONT           ; 0x27
+    RJMP    SYSVER_SPI_LF_RSSI_MEAS             ; 0x28
+    RJMP    SYSVER_SPI_LF_TRANSP_ENABLE         ; 0x29
+    RJMP    SYSVER_SPI_SWITCH_AVR_TO_MRC        ; 0x2A
+    RJMP    SYSVER_SPI_LFRX_RFTX_TP             ; 0x2B
+    RJMP    SYSVER_SPI_START_EM_MODE            ; 0x2C
+    RJMP    SYSVER_SPI_REMOTE_KEYLESS_ENTRY     ; 0x2D
+    RJMP    MODIFY_VAR_REGISTER_SRAM            ; 0x2E
+    RJMP    MODIFY_VAR_EEPROM                   ; 0x2F
+    RJMP    INVALIDCMD                          ; 0x30 (CUR_CON_EXECUTE_MODE for ATE)
+    RJMP    INVALIDCMD                          ; 0x31 (ENTER_SIGNATURE_TEST_MODE for ATE)
+    RJMP    SYSVER_SPI_ACT_TWI_SLAVE            ; 0x32
+    RJMP    MODIFY_CHANGE_ENABLE_REGISTER       ; 0x33
+    RJMP    INVALIDCMD                          ; 0x34 must be value of MAXCOMMANDS!! (last command in JMP table)
+
+/* stopDoxyExclude */
+
+
+/* ----------------------------------------------------------------------------- */
+/**  \brief <b>ATA_spiSerialTransferCompleteHandler_ASM</b>
+    triggers each complete Byte transmission/reception
+
+    \return none
+*/
+/* ----------------------------------------------------------------------------- */
+#pragma vector=SPI_STC_vect
+RSEG CODE:CODE:ROOT(1)
+ATA_spiSerialTransferCompleteHandler_ASM:
+    PUSH    R25
+    PUSH    R30
+    PUSH    R31
+
+    IN      R31 , SREG
+    PUSH    R31
+
+    ; ------------------------------------------
+    IN      R25 , SPDR
+
+    CPI     R25 , MAXCOMMANDS
+    BRLO    VALIDSPICMD
+    RJMP    INVALIDCMD
+
+VALIDSPICMD:
+    LDI     R30 , low(JMPTABLE/2)
+    ADD     R30 , R25
+    LDI     R31 , high(JMPTABLE/2)
+    IJMP
+    ; ------------------------------------------
+
+SPI_READY:
+    IN      R25 , SPCR  ; disable SPI interrupt
+    ANDI    R25 , ~(BM_SPIE)
+    OUT     SPCR , R25
+
+    POP     R31
+    OUT     SREG , R31
+
+    POP     R31
+    POP     R30
+    POP     R25
+    RETI
+
+
+/* startDoxyExclude */
+
+/* ---------------------------------------------------------------------------*/
+/**  \brief SPI Command <b>READ_FILL_LEVEL_TX_BUFFER</b>
+    This spi command returns the fill level of the Tx buffer (D-Fifo).
+
+    \return none
+*/
+/* ---------------------------------------------------------------------------*/
+READ_FILL_LEVEL_TX_BUFFER:        ; ID= 0x02
+; ------------------------------------------------------------------------------
+
+    LDS     R31 , DFL       ;   SPDR = DFL
+    OUT     SPDR , R31
+
+    RJMP    SPI_READY
+
+/* ---------------------------------------------------------------------------*/
+/**  \brief SPI Command <b>READ_FILL_LEVEL_RSSI_BUFFER</b>
+    The command ReadFillLevelRssiBuffer returns the fill level of the Rssi Buffer
+    of the S-Fifo (Rx-Direction).
+
+   \return none
+*/
+/* ---------------------------------------------------------------------------*/
+READ_FILL_LEVEL_RSSI_BUFFER:      ; ID= 0x03
+; ------------------------------------------------------------------------------
+
+    LDS     R31 , SFL       ;   SPDR = SFL
+    OUT     SPDR , R31
+
+    RJMP    SPI_READY
+
+/* ----------------------------------------------------------------------------- */
+/**  \brief SPI Command <b>READ_RSSI_BUFFER</b>
+    The command ReadRssiBuffer returns the content of the Rssi buffer which is
+    implemented in the S-Fifo on Rx side.
+
+    \return none
+*/
+; /* ----------------------------------------------------------------------------- */
+
+READ_RSSI_BUFFER:                 ; ID= 0x05
+; ------------------------------------------------------------------------------
+    CLR     R31
+    OUT     SPDR , R31
+    ENABLE_SPIRXBUFFER READ_RSSI_BUFFER_LEN , 1
+
+    RJMP    SPI_READY
+
+; ------------------------------------------------------------------------------
+READ_RSSI_BUFFER_LEN:
+; ------------------------------------------------------------------------------
+    ; write first BYTE to spi
+    SET_RXTX_SFC_DIR RX_DIR
+    LDS     R31 , SFD
+    OUT     SPDR , R31
+    RESTORE_RXTX_SFC_DIR
+
+    ; read length BYTE
+    IN      R30 , SPDR
+    DEC     R30         ; first byte is already written
+    STS     g_sSpiConfig + SPICONFIG_LENGTH , R30
+    ENABLE_SPITXBUFFER READ_RSSI_BUFFER_DATA , 0
+    JMP     ATA_spiRxBufferDisableInt_ASM
+
+; ------------------------------------------------------------------------------
+READ_RSSI_BUFFER_DATA:
+; ------------------------------------------------------------------------------
+
+    SET_RXTX_SFC_DIR RX_DIR
+
+    LDS     R30 , g_sSpiConfig + SPICONFIG_LENGTH
+
+    CPI     R30 , 0
+    BREQ    BREAK_READ_RSSI_BUFFER_DATA
+
+LOOP_READ_RSSI_BUFFER_DATA:                 ; do{
+
+    LDS     R31 , SFD                       ;   Load Data from SFD
+    OUT     SPDR , R31
+
+    DEC     R30                             ;   DataToWrite(R30)--;
+    BREQ    BREAK_READ_RSSI_BUFFER_DATA     ;   if( DataToWrite(R30) == 0 ) break;
+
+    LDS     R31 , SFFR
+    SBRS    R31 , TFL2                      ; }
+    BRNE    LOOP_READ_RSSI_BUFFER_DATA      ; while( TxFifoLevel < 4 )
+
+    STS     g_sSpiConfig + SPICONFIG_LENGTH , R30     ; Store remaining DataToWrite(R30)
+    LDI     R30 , (BM_STIE)                 ; Set next IRQ when FillLevel = 0
+                                            ; & EnableIRQ
+
+BREAK_READ_RSSI_BUFFER_DATA:
+    STS     SFIR , R30
+
+    RESTORE_RXTX_SFC_DIR
+
+    JMP     ATA_spiTxBufferEnd_ASM
+
+/* ----------------------------------------------------------------------------- */
+/** \brief SPI Command <b>READ_RX_BUFFER</b>
+    The command ReadRxBuffer returns the content of the Rx buffer which is
+    implemented in the D-Fifo.
+
+  \return none
+*/
+/* ----------------------------------------------------------------------------- */
+READ_RX_BUFFER:                   ; ID= 0x06
+; ------------------------------------------------------------------------------
+    CLR     R31
+    OUT     SPDR , R31
+    ENABLE_SPIRXBUFFER READ_RX_BUFFER_LEN, 1
+
+    RJMP    SPI_READY
+
+; ------------------------------------------------------------------------------
+READ_RX_BUFFER_LEN:
+; ------------------------------------------------------------------------------
+    SET_RXTX_DFC_DIR RX_DIR
+    ; write first BYTE to spi
+    LDS     R31 , DFD
+    OUT     SPDR , R31
+
+    RESTORE_RXTX_DFC_DIR
+
+    ; read length BYTE
+    IN      R30 , SPDR
+    DEC     R30             ; first byte is already written
+    STS     g_sSpiConfig + SPICONFIG_LENGTH , R30
+    ENABLE_SPITXBUFFER READ_RX_BUFFER_DATA , 0
+    JMP     ATA_spiRxBufferDisableInt_ASM
+
+; ------------------------------------------------------------------------------
+READ_RX_BUFFER_DATA:
+; ------------------------------------------------------------------------------
+    SET_RXTX_DFC_DIR RX_DIR
+
+    LDS     R30 , g_sSpiConfig + SPICONFIG_LENGTH
+
+    CPI     R30 , 0
+    BREQ    BREAK_READ_RX_BUFFER_DATA
+
+LOOP_READ_RX_BUFFER_DATA:                   ; do{
+    LDS     R31 , DFD                       ;   Load Data from DFD
+    OUT     SPDR , R31
+
+    DEC     R30                             ;   DataToWrite(R30)--;
+    BREQ    BREAK_READ_RX_BUFFER_DATA       ;   if( DataToWrite(R30) == 0 ) break;
+
+    LDS     R31 , SFFR
+    SBRS    R31 , TFL2                      ; }
+    BRNE    LOOP_READ_RX_BUFFER_DATA        ; while( TxFifoLevel < 4 )
+
+    STS     g_sSpiConfig + SPICONFIG_LENGTH , R30     ; Store remaining DataToWrite(R30)
+
+    LDI     R30 , (BM_STIE)                 ; Set next IRQ when FillLevel = 0
+                                            ; & EnableIRQ
+BREAK_READ_RX_BUFFER_DATA:
+    STS     SFIR , R30
+
+    RESTORE_RXTX_DFC_DIR
+
+    JMP     ATA_spiTxBufferEnd_ASM
+
+/* ----------------------------------------------------------------------------- */
+/** \brief SPI Command <b>WRITE_REGISTER_SRAM</b>
+    The spi command WriteSramRegister writtes x data bytes to the given sram /
+    register address.
+
+   \return none
+*/
+/* ----------------------------------------------------------------------------- */
+WRITE_REGISTER_SRAM:              ; ID= 0x07
+; ------------------------------------------------------------------------------
+    CLR     R31
+    OUT     SPDR , R31
+    OUT     SPDR , R31
+    ENABLE_SPIRXBUFFER WRITE_REGISTER_SRAM_LENGTH , 3
+
+    RJMP    SPI_READY
+
+; ------------------------------------------------------------------------------
+WRITE_REGISTER_SRAM_LENGTH:
+; ------------------------------------------------------------------------------
+    IN      R30 , SPDR              ; length
+    STS     g_sSpiConfig + SPICONFIG_LENGTH, R30
+    IN      R31 , SPDR              ; addr_high
+    STS     g_sSpiConfig + SPICONFIG_PADDRESS + 1, R31
+    IN      R31 , SPDR              ; addr_low
+    STS     g_sSpiConfig + SPICONFIG_PADDRESS, R31
+
+
+    ; --> The following functionality is normally called in ENABLE_SPIRXBUFFER MACRO    address, num_bytes
+    ; SFIR = BM_SRIE | num_bytes -> generate interrupt if num_bytes bytes in rx fifo
+    CPI     R30 , RX_BUFFER_FIFO_SIZE       ; how many bytes are to receive?
+    BRLO    SKIP_WRITE_REGISTER_SRAM_LENGTH
+    LDI     R30 , RX_BUFFER_FIFO_SIZE
+
+SKIP_WRITE_REGISTER_SRAM_LENGTH:
+    ORI     R30 , (BM_SRIE)
+
+    STS     SFIR , R30
+
+    LDI     R30 , low(WRITE_REGISTER_SRAM_DATA/2)
+    STS     g_sSpiConfig + SPICONFIG_PTMP , R30
+
+    LDI     R30 , high(WRITE_REGISTER_SRAM_DATA/2)
+    STS     g_sSpiConfig + SPICONFIG_PTMP + 1 , R30
+    ; <-- normally end of macro
+
+    JMP     ATA_spiRxBufferEnd_ASM
+
+; ------------------------------------------------------------------------------
+WRITE_REGISTER_SRAM_DATA:
+; ------------------------------------------------------------------------------
+    PUSH    R25
+    PUSH    R24
+
+    LDS     R24 , g_sSpiConfig + SPICONFIG_LENGTH
+    LDS     R31 , g_sSpiConfig + SPICONFIG_PADDRESS + 1
+    LDS     R30 , g_sSpiConfig + SPICONFIG_PADDRESS
+
+LOOP_WRITE_REGISTER_SRAM_DATA:                  ; do{
+    IN      R25 , SPDR                          ;   Load Data from SPI
+    ST      Z+ , R25
+
+    DEC     R24                                 ;   DataToWrite(R24)--;
+    BREQ    BREAK_WRITE_REGISTER_SRAM_DATA      ; if( DataToWrite(R24) == 0 ) break;
+
+    LDS     R25 , SFFR
+    ANDI    R25 , (BM_RFL2|BM_RFL1|BM_RFL0)     ; }
+    BRNE    LOOP_WRITE_REGISTER_SRAM_DATA       ; while( RxFifoLevel > 0 )
+
+    STS     g_sSpiConfig + SPICONFIG_LENGTH , R24         ; Store remaing DataToWrite(R24)
+    STS     g_sSpiConfig + SPICONFIG_PADDRESS + 1 , R31    ; Store actual address pointer
+    STS     g_sSpiConfig + SPICONFIG_PADDRESS , R30
+
+    CPI     R24 , RX_BUFFER_FIFO_SIZE           ; if( DataToWrite(R24) > RX_BUFFER_FIFO_SIZE )
+    BRLO    SKIP_WRITE_REGISTER_SRAM_DATA       ;    SFIR = RX_BUFFER_FIFO_SIZE
+    LDI     R24 , RX_BUFFER_FIFO_SIZE           ; else
+SKIP_WRITE_REGISTER_SRAM_DATA:                  ;    SFIR = DataToWrite(R24)
+    ORI     R24 , (BM_SRIE)                     ; SFIR |= BM_SRIE -> Enable IRQ
+
+BREAK_WRITE_REGISTER_SRAM_DATA:
+    STS     SFIR , R24
+
+    POP     R24
+    POP     R25
+    JMP     ATA_spiRxBufferEnd_ASM
+
+
+/* ----------------------------------------------------------------------------- */
+/** \brief SPI Command <b>READ_REGISTER_SRAM</b>
+    The spi command ReadRegisterSram reads x data bytes from the given sram /
+    register address.
+
+     \return none
+*/
+/* ----------------------------------------------------------------------------- */
+READ_REGISTER_SRAM:               ; ID= 0x08
+; ------------------------------------------------------------------------------
+    CLR     R31
+    OUT     SPDR , R31
+    OUT     SPDR , R31
+    OUT     SPDR , R31
+    ENABLE_SPIRXBUFFER READ_REGISTER_SRAM_LENGTH, 3
+
+    RJMP    SPI_READY
+
+; ------------------------------------------------------------------------------
+READ_REGISTER_SRAM_LENGTH:
+; ------------------------------------------------------------------------------
+    PUSH    R25
+
+    IN      R30 , SPDR              ; length
+    DEC     R30                            ; the first byte is written to the spi direct in this routine!
+    STS     g_sSpiConfig + SPICONFIG_LENGTH , R30
+
+    IN      R31, SPDR              ; addr_high
+    IN      R30 , SPDR              ; addr_low
+
+    LD      R25 , Z+                            ;   Write Data to SPI and increment write address
+    OUT     SPDR , R25
+
+    STS     g_sSpiConfig + SPICONFIG_PADDRESS + 1 , R31
+    STS     g_sSpiConfig + SPICONFIG_PADDRESS + 0 , R30
+
+
+    ENABLE_SPITXBUFFER READ_REGISTER_SRAM_DATA , 0
+
+    POP     R25
+
+    JMP     ATA_spiRxBufferEnd_ASM
+
+; ------------------------------------------------------------------------------
+READ_REGISTER_SRAM_DATA:
+; ------------------------------------------------------------------------------
+    PUSH    R25
+    PUSH    R24
+
+    LDS     R24 , g_sSpiConfig + SPICONFIG_LENGTH
+    LDS     R30 , g_sSpiConfig + SPICONFIG_PADDRESS
+    LDS     R31 , g_sSpiConfig + SPICONFIG_PADDRESS + 1
+
+    CPI     R24 , 0
+    BREQ    BREAK_READ_REGISTER_SRAM_DATA
+
+
+LOOP_READ_REGISTER_SRAM_DATA:                   ; do{
+    LD      R25 , Z+                            ;   Write Data to SPI
+    OUT     SPDR , R25
+
+    DEC     R24                                 ;   DataToWrite(R24)--;
+    BREQ    BREAK_READ_REGISTER_SRAM_DATA       ;   if( DataToWrite(R24) == 0 ) break;
+
+    LDS     R25 , SFFR
+    SBRS    R25 , TFL2                          ; }
+    BRNE    LOOP_READ_REGISTER_SRAM_DATA        ; while( TxFifoLevel < 4 )
+
+    STS     g_sSpiConfig + SPICONFIG_LENGTH , R24         ; Store remaining DataToWrite(R24)
+    STS     g_sSpiConfig + SPICONFIG_PADDRESS , R30    ; Store actual address pointer
+    STS     g_sSpiConfig + SPICONFIG_PADDRESS + 1 , R31
+
+    LDI     R24 , (BM_STIE)                     ; Enable IRQ -> No attention to the data amount, always set the fifo level to 0.
+                                                ; A next IRQ is only necessary if there are more Bytes to be written as sizeof Fifo.
+                                                ; If there less Bytes to be written, the filling process will be stopped when the count
+                                                ; of DataToWrite == 0.
+
+BREAK_READ_REGISTER_SRAM_DATA:
+    STS     SFIR , R24
+
+    POP     R24
+    POP     R25
+    JMP     ATA_spiTxBufferEnd_ASM
+
+
+
+/* ----------------------------------------------------------------------------- */
+/** \brief SPI Command <b>WRITE_EEPROM</b>
+    The spi command WriteEeprom writtes one data byte to the given eeprom address.
+
+    \return none
+*/
+/* ----------------------------------------------------------------------------- */
+WRITE_EEPROM:                     ; ID= 0x09
+; ------------------------------------------------------------------------------
+    CLR     R31
+    OUT     SPDR , R31
+    OUT     SPDR , R31
+    ENABLE_SPIRXBUFFER WRITE_EEPROM_DATA , 3
+    RJMP    SPI_READY
+
+; ------------------------------------------------------------------------------
+WRITE_EEPROM_DATA:
+; ------------------------------------------------------------------------------
+    IN      R30 , SPDR      ; addr_high
+    OUT     EEARH ,R30      ; write EEPRom addrH
+
+    IN      R30 , SPDR      ; addr_low
+    OUT     EEARL ,R30      ; write EEPRom addrL
+
+    IN      R30 , SPDR      ; EEProm data
+    OUT     EEDR ,R30       ; write EEProm data register
+
+    SBI     EECR , EEMWE
+    SBI     EECR , EEWE
+    JMP     ATA_spiRxBufferDisableInt_ASM
+
+/* ----------------------------------------------------------------------------- */
+/** \brief SPI Command <b>READ_EEPROM</b>
+    The spi command ReadEeprom reads one data byte to the given eeprom address.
+    \return none
+*/
+/* ----------------------------------------------------------------------------- */
+READ_EEPROM:                      ; ID= 0x0A
+; ------------------------------------------------------------------------------
+    CLR     R31
+    OUT     SPDR , R31
+    OUT     SPDR , R31
+    ENABLE_SPIRXBUFFER READ_EEPROM_DATA , 2
+    RJMP    SPI_READY
+
+; ------------------------------------------------------------------------------
+EEPROM_BUSY:                   ; eep is busy
+; ------------------------------------------------------------------------------
+    JMP     ATA_spiRxBufferDisableInt_ASM
+
+; ------------------------------------------------------------------------------
+READ_EEPROM_DATA:
+; ------------------------------------------------------------------------------
+    SBIC    EECR , EEWE         ; check if busy
+    RJMP    EEPROM_BUSY
+
+    IN      R30 , SPDR          ; addr_high
+    OUT     EEARH , R30         ; read EEPRom addrH
+
+    IN      R30 , SPDR          ; addr_low
+    OUT     EEARL , R30         ; write EEProm addrL
+
+    SBI     EECR , EERE
+    IN      R30 , EEDR          ; read EEProm content
+
+    OUT     SPDR , R30
+
+    JMP     ATA_spiRxBufferDisableInt_ASM
+
+/* ----------------------------------------------------------------------------- */
+/** \brief SPI Command <b>WRITE_TX_BUFFER</b>
+    The spi command WriteTxBuffer writes n data bytes into the Tx Buffer of the D-Fifo.
+    The count of data bytes is given in the length parameter. Access direction is switched
+    automatically and restored to the origin value at the end of the command (direction
+    temporarily stored in the T-Bit).
+
+    \return none
+*/
+/* ----------------------------------------------------------------------------- */
+WRITE_TX_BUFFER:                  ; ID= 0x0B
+; ------------------------------------------------------------------------------
+    CLR     R31
+    OUT     SPDR , R31
+    ENABLE_SPIRXBUFFER WRITE_TX_BUFFER_LENGTH , 1
+    RJMP    SPI_READY
+
+; ------------------------------------------------------------------------------
+WRITE_TX_BUFFER_LENGTH:
+; ------------------------------------------------------------------------------
+    ; read length BYTE
+    IN      R30 , SPDR
+    STS     g_sSpiConfig + SPICONFIG_LENGTH , R30
+
+    ; --> The follwoing functionality is normally called in ENABLE_SPIRXBUFFER MACRO    address, num_bytes
+    CPI     R30 , TX_BUFFER_FIFO_SIZE       ; how many bytes are to receive?
+    BRLO    SKIP_WRITE_TX_BUFFER_LENGTH
+    LDI     R30 , TX_BUFFER_FIFO_SIZE
+
+SKIP_WRITE_TX_BUFFER_LENGTH:
+    ORI     R30 , (BM_SRIE)
+    STS     SFIR , R30
+
+    LDI     R30 , low(WRITE_TX_BUFFER_DATA/2)
+    STS     g_sSpiConfig + SPICONFIG_PTMP , R30
+
+    LDI     R30 , high(WRITE_TX_BUFFER_DATA/2)
+    STS     g_sSpiConfig + SPICONFIG_PTMP + 1 , R30
+    ; <-- normally end of macro
+
+    JMP     ATA_spiRxBufferEnd_ASM
+
+; ------------------------------------------------------------------------------
+WRITE_TX_BUFFER_DATA:
+; ------------------------------------------------------------------------------
+
+    SET_RXTX_DFC_DIR TX_DIR
+
+    LDS     R30 , g_sSpiConfig + SPICONFIG_LENGTH
+
+LOOP_WRITE_TX_BUFFER_DATA:                      ; do{
+    IN      R31 , SPDR                          ;   Load Data to DFD
+    STS     DFD , R31
+
+    DEC     R30                                 ;   DataToWrite(R30)--;
+    BREQ    BREAK_WRITE_TX_BUFFER_DATA          ;   if( DataToWrite(R30) == 0 ) break;
+
+    LDS     R31 , SFFR
+    ANDI    R31 , (BM_RFL2|BM_RFL1|BM_RFL0)     ; }
+    BRNE    LOOP_WRITE_TX_BUFFER_DATA           ; while( RxFifoLevel > 0 )
+
+    STS     g_sSpiConfig + SPICONFIG_LENGTH , R30         ; Store remaining DataToWrite(R30)
+
+    CPI     R30 , TX_BUFFER_FIFO_SIZE           ; if( DataToWrite(R30) > TX_BUFFER_FIFO_SIZE )
+    BRLT    SKIP_WRITE_TX_BUFFER_DATA           ;   SFIR = TX_BUFFER_FIFO_SIZE;
+    LDI     R30 , TX_BUFFER_FIFO_SIZE           ; else
+                                                ;   SFIR = DataToWrite(R30);
+SKIP_WRITE_TX_BUFFER_DATA:
+    ORI     R30 , (BM_SRIE)                     ; SFIR |= BM_SIRE -> Enable IRQ
+
+BREAK_WRITE_TX_BUFFER_DATA:
+    STS     SFIR , R30
+
+    RESTORE_RXTX_DFC_DIR
+
+    JMP     ATA_spiRxBufferEnd_ASM
+
+
+/* ---------------------------------------------------------------------------*/
+/** \brief SPI Command <b>WRITE_TX_PREAMBLE_BUFFER</b>
+    The spi command WriteTxPreambleBuffer writes n data bytes into the Tx Buffer of the S-Fifo.
+    The count of data bytes is given in the length parameter. Access direction is switched
+    automatically and restored to the origin value at the end of the command (direction
+    temporarily stored in the T-Bit).
+
+    \return none
+*/
+/* ---------------------------------------------------------------------------*/
+WRITE_TX_PREAMBLE_BUFFER:         ; ID= 0x0C
+; ------------------------------------------------------------------------------
+    CLR     R31
+    OUT     SPDR , R31
+    ENABLE_SPIRXBUFFER WRITE_TX_PREAMBLE_BUFFER_LENGTH , 1
+    RJMP    SPI_READY
+
+; ------------------------------------------------------------------------------
+WRITE_TX_PREAMBLE_BUFFER_LENGTH:
+; ------------------------------------------------------------------------------
+    ; read length BYTE
+    IN      R30 , SPDR
+    STS     g_sSpiConfig + SPICONFIG_LENGTH , R30
+
+    ; --> The follwoing functionality is normally called in ENABLE_SPIRXBUFFER MACRO    address, num_bytes
+    CPI     R30 , TX_BUFFER_FIFO_SIZE       ; how many bytes are to receive?
+    BRLO    SKIP_WRITE_TX_PREAMBLE_BUFFER_LENGTH
+    LDI     R30 , TX_BUFFER_FIFO_SIZE
+
+SKIP_WRITE_TX_PREAMBLE_BUFFER_LENGTH:
+    ORI     R30 , (BM_SRIE)
+    STS     SFIR , R30
+
+    LDI     R30 , low(WRITE_TX_PREAMBLE_BUFFER_DATA/2)
+    STS     g_sSpiConfig + SPICONFIG_PTMP , R30
+
+    LDI     R30 , high(WRITE_TX_PREAMBLE_BUFFER_DATA/2)
+    STS     g_sSpiConfig + SPICONFIG_PTMP + 1 , R30
+    ; <-- normally end of macro
+
+    JMP     ATA_spiRxBufferEnd_ASM
+
+
+; ------------------------------------------------------------------------------
+WRITE_TX_PREAMBLE_BUFFER_DATA:
+; ------------------------------------------------------------------------------
+
+    SET_RXTX_SFC_DIR TX_DIR
+
+    LDS     R30 , g_sSpiConfig + SPICONFIG_LENGTH
+
+LOOP_WRITE_TX_PREAMBLE_BUFFER_DATA:                 ;do{
+    IN      R31 , SPDR                              ;   Load Data to SFD
+    STS     SFD , R31
+
+    DEC     R30                                     ;   DataToWrite(R30)--;
+    BREQ    BREAK_WRITE_TX_PREAMBLE_BUFFER_DATA     ;   if( DataToWrite(R30) == 0 ) break;
+
+    LDS     R31 , SFFR
+    ANDI    R31 , (BM_RFL2|BM_RFL1|BM_RFL0)         ; }
+    BRNE    LOOP_WRITE_TX_PREAMBLE_BUFFER_DATA      ; while( RxFifoLevel > 0 )
+
+    STS     g_sSpiConfig + SPICONFIG_LENGTH , R30             ; Store remaining DataToWrite(R30)
+
+    CPI     R30 , TX_BUFFER_FIFO_SIZE               ; if( DataToWrite(R30) > TX_BUFFER_FIFO_SIZE )
+    BRLT    SKIP_WRITE_TX_PREAMBLE_BUFFER_DATA      ;   SFIR = TX_BUFFER_FIFO_SIZE
+    LDI     R30 , TX_BUFFER_FIFO_SIZE               ; else
+                                                    ;   SFIR = DataToWrite(R30)
+SKIP_WRITE_TX_PREAMBLE_BUFFER_DATA:
+    ORI     R30 , (BM_SRIE)                         ; SFIR |= BM_SRIE -> Enable IRQ
+
+BREAK_WRITE_TX_PREAMBLE_BUFFER_DATA:
+    STS     SFIR , R30
+
+    RESTORE_RXTX_SFC_DIR
+
+    JMP     ATA_spiRxBufferEnd_ASM
+
+
+/* ---------------------------------------------------------------------------*/
+/** \brief SPI Command <b>SET_SYSTEM_MODE</b>
+    The spi command SetSystemMode writtes the systemModeConfig and serviceChannelConfig
+    variable of the extReq structure.
+
+    \return none
+*/
+/* ---------------------------------------------------------------------------*/
+SET_SYSTEM_MODE:                 ; ID= 0x0D
+; ------------------------------------------------------------------------------
+    CLR     R31
+    OUT     SPDR , R31
+    
+    ENABLE_SPIRXBUFFER SET_SYSTEM_MODE_DATA , 2
+    RJMP    SPI_READY
+
+; ------------------------------------------------------------------------------
+SET_SYSTEM_MODE_DATA:
+; ------------------------------------------------------------------------------
+    IN      R30 , SPDR
+    STS     extReq + EXT_REQ_SYSTEM_MODE_CONFIG , R30
+    
+    LDS     R30 , g_sAta5700_flash + ATA5700_STATUS
+    ORI     R30 , BM_ATA5700_STATUS_UPDATE_FLAG
+    STS     g_sAta5700_flash + ATA5700_STATUS , R30
+
+    ;Original SigmaX-Code
+    ;SBI     GPIOR3 , SYS_STATUS_UPDATE
+
+    IN      R30 , SPDR
+    STS     extReq + EXT_REQ_SERVICE_CHANNEL_CONFIG , R30
+    JMP     ATA_spiRxBufferDisableInt_ASM
+
+/* ---------------------------------------------------------------------------*/
+/**  \brief SPI Command <b>CALIBRATE_AND_CHECK</b>
+    The spi command CalibrateAndCheck writtes the tuneCheckConfig and
+    serviceChannelConfig variable of the extReq structure.
+    \return none
+*/
+/* ---------------------------------------------------------------------------*/
+CALIBRATE_AND_CHECK:             ; ID= 0x0E
+; ------------------------------------------------------------------------------
+
+    ENABLE_SPIRXBUFFER CALIBRATE_AND_CHECK_DATA , 2
+    RJMP    SPI_READY
+
+; ------------------------------------------------------------------------------
+CALIBRATE_AND_CHECK_DATA:
+; ------------------------------------------------------------------------------
+    IN      R30 , SPDR
+    STS     extReq + EXT_REQ_TUNE_CHECK_CONFIG , R30
+
+    IN      R30 , SPDR
+    STS     extReq + EXT_REQ_SERVICE_CHANNEL_CONFIG , R30
+
+    JMP     ATA_spiRxBufferDisableInt_ASM
+
+/* ---------------------------------------------------------------------------*/
+/** \brief SPI Command <b>PATCH_SPI</b>
+    The Patch_Spi command is used to extend the SPI command set by the customer as follows:
+    Patch_Spi jumps to the functions which is stored in patchSpi
+    The parameter of Patch_Spi is located in SPDR register.
+    The Patch SPI extension has no return and the customer has to finish with a jump
+    to PATCH_SPI_READY (which is the same as SPIBUFRDY_DISABLERXBUFINT).
+
+    \return none
+*/
+/* ---------------------------------------------------------------------------*/
+PATCH_SPI:                        ; ID= 0x0F
+; ------------------------------------------------------------------------------
+    ENABLE_SPIRXBUFFER PATCH_SPI_DATA , 1
+    RJMP    SPI_READY
+
+; ------------------------------------------------------------------------------
+PATCH_SPI_DATA:
+; ------------------------------------------------------------------------------
+    LDS     R31 , patchSpi                  ; Load addr H
+    LDS     R30 , patchSpi + 1              ; Load addr L
+    IJMP                                ; call pointed routine
+    ;   routine has N cycles                                       41+N
+    ;   routine has no return but an JMP to SPI_READY
+    ;   IJMP and JMP saves 7 cycles compared to an ICALL
+    ; ----Patch, IJMP to stored address [CMD,mode ]--
+
+/* ---------------------------------------------------------------------------*/
+/** \brief SPI Command <b>GET_ROM_VERSION</b>
+    The command GetRomVersion returns the rom version.
+
+    \return none
+*/
+/* ---------------------------------------------------------------------------*/
+GET_ROM_VERSION:                  ; ID= 0x12
+; ------------------------------------------------------------------------------
+    LDI     R30 , low(romVersion)
+    LDI     R31 , high(romVersion)
+    LPM     R25 , Z
+    OUT     SPDR , R25
+    RJMP    SPI_READY
+
+/* ---------------------------------------------------------------------------*/
+/** \brief SPI Command <b>GET_FLASH_VERSION</b>
+    The command GetFlashVersion returns the
+    - Rom version
+    - Flash version
+    - Customer specific version
+
+    \return none
+*/
+/* ---------------------------------------------------------------------------*/
+GET_FLASH_VERSION:                ; ID= 0x13
+; ------------------------------------------------------------------------------
+    LDI     R30 , low(romVersion)
+    LDI     R31 , high(romVersion)
+    LPM     R25 , Z
+
+    OUT     SPDR , R25
+
+    ENABLE_SPIRXBUFFER GET_FLASH_VERSION_DATA , 1
+    RJMP    SPI_READY
+
+; ------------------------------------------------------------------------------
+GET_FLASH_VERSION_DATA:
+; ------------------------------------------------------------------------------
+    LDI     R31 , 0xFF
+    LDI     R30 , 0xF0
+
+    PUSH    R24
+    PUSH    R25
+    LDI     R24 , 3
+
+ CPYLOOPBUF:
+    LPM     R25 , Z+
+    OUT     SPDR , R25
+    DEC     R24
+    BRNE    CPYLOOPBUF
+
+    POP     R25
+    POP     R24
+    JMP     ATA_spiRxBufferDisableInt_ASM
+
+
+/* ---------------------------------------------------------------------------*/
+/**  \brief SPI Command <b>SYSTEM_RESET</b>
+    The SPI command System Resets configures the Watchdog and wait inside a
+    endless loop until the watchdog triggers the system.
+
+    \return none
+*/
+/* ---------------------------------------------------------------------------*/
+SYSTEM_RESET:                     ; ID= 0x15
+; ------------------------------------------------------------------------------
+    LDI     R31 , 0x18
+    STS     WDTCR , R31
+    LDI     R31 , 0x08
+    STS     WDTCR , R31
+
+ENDLESSLOOP:
+    RJMP    ENDLESSLOOP        ; wait until WDT reset triggers the system
+
+/* ===========================================================================*/
+/**  \brief SPI Command <b>SET_VOLTAGE_MONITOR</b>
+    The command Set_Voltage_Monitor configures the Voltage Monitor in Primus2+.
+
+    \return none
+*/
+; ------------------------------------------------------------------------------
+SET_VOLTAGE_MONITOR:              ; ID= 0x17
+; ------------------------------------------------------------------------------
+    ENABLE_SPIRXBUFFER SET_VOLTAGE_MONITOR_DATA , 1
+    RJMP    SPI_READY
+
+; ------------------------------------------------------------------------------
+SET_VOLTAGE_MONITOR_DATA:
+; ------------------------------------------------------------------------------
+;TODO: Implement the same way as the API function
+    IN      R31 , SPDR
+    LDI     R30 , 0x00               ; disable Voltage Monitor Interrupt
+    OUT     VMSCR, R30
+    
+    ; TODO: R31 needs to be saved as it will be written to VMCR completely
+
+    ANDI    R31 , 0x0F
+    CPI     R31 , 0x00               ; 0x00 VM is disabled
+    BRNE    VOLTAGE_MONITOR_ENABLED
+    
+    SBI     PRR0 , PRVM
+    
+    JMP     ATA_spiRxBufferDisableInt_ASM
+
+VOLTAGE_MONITOR_ENABLED:
+    
+    CBI     PRR0 , PRVM
+    
+    STS     VMCR , R31             /* NOP count is based on the Voltage Monitor WCET of 1.8us and the register update time
+                                       => 14 cycles (including safety margin) when AVR is running with 6 MHZ. */
+    NOP
+    NOP
+    NOP
+    NOP
+    NOP
+    NOP
+    NOP
+    NOP
+    NOP
+    NOP
+    NOP
+    NOP
+    NOP
+    NOP
+    ORI     R31 , BM_VMF
+    OUT     VMSCR , R31
+    NOP
+    NOP
+    NOP
+    NOP
+    NOP
+    NOP
+    NOP
+    NOP
+    NOP
+    NOP
+    NOP
+    NOP
+    NOP
+    NOP
+    ORI     R31 , BM_VMIM
+    STS     VMCR , R31
+    JMP     ATA_spiRxBufferDisableInt_ASM
+
+/* ---------------------------------------------------------------------------*/
+/** \brief SPI Command <b>OFF_COMMAND</b>
+    This command sets the SigmaX in OFF Mode
+
+    \return none
+*/
+/* ---------------------------------------------------------------------------*/
+OFF_COMMAND:                      ; ID= 0x18
+; ------------------------------------------------------------------------------
+
+    CLR     R31
+    OUT     DDRB , R31
+    OUT     DDRC , R31
+    OUT     DDRD , R31
+
+    SER     R30
+    OUT     PORTB , R30
+    OUT     PORTC , R30
+    CBI     PORTC , PORTC2
+    OUT     PORTD , R30
+
+OFF_COMMAND_WAIT_NVMBSY:
+    SBIC    EECR , NVMBSY
+    RJMP    OFF_COMMAND_WAIT_NVMBSY
+
+    IN      R30, SMCR
+    ORI     R30, (BM_SM2 | BM_SM0 | BM_SE)
+    OUT     SMCR, R30 
+    SLEEP
+
+    RJMP    SPI_READY
+
+
+/* ===========================================================================*/
+/** \brief SPI Command <b>INIT_SRAM_SERVICE</b>
+    The spi command Init_SRAM_Service initializes the service sramServices[sramServiceNumber]
+    with the service eepService[eepromServiceNumber].
+
+    \return none
+*/
+; ------------------------------------------------------------------------------
+INIT_SRAM_SERVICE:               ; ID= 0x1A
+; ------------------------------------------------------------------------------
+
+    ENABLE_SPIRXBUFFER INIT_SRAM_SERVICE_DATA , 2
+    RJMP    SPI_READY
+
+; ------------------------------------------------------------------------------
+INIT_SRAM_SERVICE_DATA:
+; ------------------------------------------------------------------------------
+    IN      R31 , SPDR   ; sramServiceNumber 0..1
+    IN      R30 , SPDR   ; eepServiceNumber  0..2
+    LSL     R30
+    OR      R31 , R30
+    ORI     R31 , BM_EXT_REQ_SERVICE_INIT_CONFIG_UPDATE_FLAG
+
+    STS     extReq + EXT_REQ_SERVICE_INIT_CONFIG , R31
+
+    JMP     ATA_spiRxBufferDisableInt_ASM
+
+
+/* ---------------------------------------------------------------------------*/
+/** \brief <b>INVALIDCMD</b>
+    If there is a invalid CMD (CMD Id > than MAXCOMMANDS) received, the INVALIDCMD
+    function is called.
+
+    \return none
+*/
+/* ---------------------------------------------------------------------------*/
+INVALIDCMD:
+; ------------------------------------------------------------------------------
+    RJMP    SPI_READY
+/* stopDoxyExclude */
+
+/* ---------------------------------------------------------------------------*/
+/**  \brief <b>ATA_interrupt0Handler_ASM</b>
+    triggers each time when the int0 flag is set. To ensure the synchronism of
+    the sended events bytes and the copied events byte this interrupt has not
+    to be interrupted by an other interrupt! (the blocking mechanism is done
+    via the SREG.I).
+
+    \return none
+*/
+/* ---------------------------------------------------------------------------*/
+#pragma vector=INT0_vect
+RSEG CODE:CODE:ROOT(1)
+ATA_interrupt0Handler_ASM:
+; ----Save Register contents----
+    PUSH    R31
+    PUSH    R30
+    IN      R31 , SREG
+    PUSH    R31
+
+    SBIS    PIND , PIND1
+    RJMP    SPI_SS_LOW
+
+    ; ---- slave select is high -> end of spi command
+SPI_SS_HIGH:
+
+    LDS     R31 , SFFR
+    ORI     R31 , (BM_RFC | BM_TFC)
+    STS     SFFR , R31
+
+    LDS     R31 , SFIR
+    ANDI    R31 , ~(BM_SRIE | BM_STIE)
+    STS     SFIR , R31
+
+    LDS     R30 , g_sAta5700_flash + ATA5700_STATUS
+    ANDI    R30 , ~BM_ATA5700_STATUS_SPI_CMD_IN_PROGRESS_FLAG
+    STS     g_sAta5700_flash + ATA5700_STATUS , R30
+
+    RJMP    INT0_END
+
+SPI_SS_LOW:
+    
+    ; ---- slave select is low -> beginning of spi command
+    LDS     R31 , SFFR
+    ORI     R31 ,(BM_RFC | BM_TFC)
+    STS     SFFR , R31
+
+    NOP    ; NOP necessary because of execution time of reseting RxFifo -> without this NOP the following OUT instruction don't work correct!
+
+    ; --- send the actual events_system & events_events to the SPI fifo
+    CLR     R31
+    OUT     SPDR , R31
+    OUT     SPDR , R31
+
+    IN      R31 , SPCR  ; enable SPI interrupt
+    ORI     R31 ,(BM_SPIE)
+    OUT     SPCR , R31
+
+    ; at NSS falling edge disable sleep enable in SMCR register
+    IN      R31 , SMCR
+    ANDI    R31 , 0xFE
+    OUT     SMCR , R31
+
+    ; set GPIOR1 = sysStatus SPI command in progress to disable SLEEP mode during SPI commands in main loop
+    
+    LDS     R30 , g_sAta5700_flash + ATA5700_STATUS
+    ORI     R30 , BM_ATA5700_STATUS_SPI_CMD_IN_PROGRESS_FLAG
+    STS     g_sAta5700_flash + ATA5700_STATUS , R30
+   
+INT0_END:
+
+    POP     R31
+    OUT     SREG , R31
+    POP     R30
+    POP     R31
+
+    RETI
+
+
+/* ---------------------------------------------------------------------------*/
+/**  \brief System Verification SPI Command <b>SYSVER_SPI_LF_TP_INIT</b>
+    This spi command initializes all LF and TP related registers with the 
+    corresponding EEPROM settings defined at EEPROM start address 
+    0x0280 (SigmaX Customer Section).
+
+    \return none
+*/
+/* ---------------------------------------------------------------------------*/
+SYSVER_SPI_LF_TP_INIT:        ; ID= 0x20
+; ------------------------------------------------------------------------------
+
+    LDI     R31 , 0x80
+    STS     extReq + EXT_REQ_LFRCRFTX_CONFIG, R31
+    
+    RJMP    SPI_READY
+
+
+/* ---------------------------------------------------------------------------*/
+/**  \brief System Verification SPI Command <b>SYSVER_SPI_LF_ENABLE</b>
+    This spi command enables the 3D LF Receiver.
+
+    \return none
+*/
+/* ---------------------------------------------------------------------------*/
+SYSVER_SPI_LF_ENABLE:        ; ID= 0x21
+; ------------------------------------------------------------------------------
+
+    IN  R31 , LFCR1
+    ORI R31 , BM_LFRE
+    OUT LFCR1 , R31
+
+    RJMP    SPI_READY
+    
+    
+/* ---------------------------------------------------------------------------*/
+/**  \brief System Verification SPI Command <b>SYSVER_SPI_TP_START_RX</b>
+    This SPI command starts the TP Rx corresponding 
+    corresponding EEPROM settings defined at EEPROM start address 
+    0x0280 (SigmaX Customer Section).
+
+    \return none
+*/
+/* ---------------------------------------------------------------------------*/
+SYSVER_SPI_TP_START_RX:        ; ID= 0x22
+; ------------------------------------------------------------------------------          
+
+    ; Start Transponder Rx
+    LDS R31 , TPCR3
+    ORI R31 , BM_TPRD
+    STS TPCR3 , R31
+
+    RJMP    SPI_READY
+    
+/* ---------------------------------------------------------------------------*/
+/**  \brief System Verification SPI Command <b>SYSVER_SPI_TP_START_TX</b>
+    This SPI command starts the TP Tx corresponding 
+    corresponding EEPROM settings defined at EEPROM start address 
+    0x0280 (SigmaX Customer Section).
+
+    \return none
+*/
+/* ---------------------------------------------------------------------------*/
+SYSVER_SPI_TP_START_TX:        ; ID = 0x23
+; ------------------------------------------------------------------------------
+
+    ; Start Transponder Tx
+    LDS R31 , TPCR3
+    ORI R31 , BM_TPTD
+    STS TPCR3 , R31
+
+    RJMP    SPI_READY
+
+
+/* ---------------------------------------------------------------------------*/
+/**  \brief System Verification SPI Command <b>SYSVER_SPI_PH_FIFO_READ_FL</b>
+    This SPI command returns the Protocol Handler FIFO fill level.
+
+    \return none
+*/
+/* ---------------------------------------------------------------------------*/
+SYSVER_SPI_PH_FIFO_READ_FL:    ; ID = 0x24
+    ; Put spare byte into SPI FIFO due to Worst Case PH FIFO clock 
+    ; switching time
+    CLR     R31
+    OUT     SPDR , R31
+
+    ; Switch clock from PH clock to AVR clock
+    LDI     R31 , BM_LDFSCSW   
+    OUT     LDFCKSW , R31
+
+PH_FIFO_READ_FILL_LEVEL_LOOP_CLOCK_SWITCH_PH_TO_AVR:
+    IN      R31 , LDFCKSW
+    SBRS    R31 , LDFSCKS
+    RJMP    PH_FIFO_READ_FILL_LEVEL_LOOP_CLOCK_SWITCH_PH_TO_AVR
+
+    IN      R31 , LDFFL       ;   SPDR = LDFFL
+    OUT     SPDR , R31
+
+    ; Switch clock from AVR clock back to PH clock
+    CLR     R31
+    OUT     LDFCKSW , R31
+
+PH_FIFO_READ_FILL_LEVEL_LOOP_CLOCK_SWITCH_AVR_TO_PH:
+    ; Wait until clock switch has been completed    
+    IN      R31 , LDFCKSW
+    SBRC    R31 , LDFSCKS
+    RJMP    PH_FIFO_READ_FILL_LEVEL_LOOP_CLOCK_SWITCH_AVR_TO_PH
+
+    ; End of SPI command SYSVER_SPI_PH_FIFO_READ_FL
+    RJMP    SPI_READY
+
+
+/* ---------------------------------------------------------------------------*/
+/**  \brief System Verification SPI Command <b>SYSVER_SPI_PH_FIFO_READ_DATA</b>
+    This SPI command returns the content of the Protocol Handler FIFO.
+
+    \return none
+*/
+/* ---------------------------------------------------------------------------*/
+SYSVER_SPI_PH_FIFO_READ_DATA:  ; ID = 0x25
+
+    CLR     R31
+    OUT     SPDR , R31
+    ENABLE_SPIRXBUFFER PH_FIFO_READ_BUFFER_LEN, 1
+
+    ; End of SPI command SYSVER_SPI_PH_FIFO_READ_DATA
+    RJMP    SPI_READY
+
+; ------------------------------------------------------------------------------
+PH_FIFO_READ_BUFFER_LEN:
+; ------------------------------------------------------------------------------
+    ; Put spare byte into SPI FIFO due to Worst Case PH FIFO clock 
+    ; switching time
+    CLR     R31
+    OUT     SPDR , R31
+    
+    ; Due to the PH FIFO clock switch, an additional spare byte is required 
+    ; 
+    SET_RXTX_LDFC_DIR RX_DIR
+    
+    ; write first BYTE to spi
+    IN      R31 , LDFD
+    OUT     SPDR , R31
+
+    ; RESTORE_RXTX_LDFC_DIR (RX for PH FIFO is ongoing, do not change direction)
+
+    ; read length BYTE
+    IN      R30 , SPDR
+    DEC     R30             ; first byte is already written
+    STS     g_sSpiConfig + SPICONFIG_LENGTH , R30
+    ENABLE_SPITXBUFFER PH_FIFO_READ_BUFFER_DATA , 0
+    JMP     ATA_spiRxBufferDisableInt_ASM
+
+; ------------------------------------------------------------------------------
+PH_FIFO_READ_BUFFER_DATA:
+; ------------------------------------------------------------------------------
+    LDS     R30 , g_sSpiConfig + SPICONFIG_LENGTH
+    CPI     R30 , 0
+    BREQ    BREAK_PH_FIFO_READ_BUFFER_DATA
+
+LOOP_PH_FIFO_READ_BUFFER_DATA:              ; do{
+    IN      R31 , LDFD                      ;   Load Data from LDFD
+    OUT     SPDR , R31
+
+    DEC     R30                             ;   DataToWrite(R30)--;
+    BREQ    BREAK_PH_FIFO_READ_BUFFER_DATA  ;   if( DataToWrite(R30) == 0 ) break;
+
+    LDS     R31 , SFFR
+    SBRS    R31 , TFL2                      ; }
+    BRNE    LOOP_PH_FIFO_READ_BUFFER_DATA   ; while( TxFifoLevel < 4 )
+
+    STS     g_sSpiConfig + SPICONFIG_LENGTH , R30     ; Store remaining DataToWrite(R30)
+
+    LDI     R30 , (BM_STIE)                 ; Set next IRQ when FillLevel = 0
+                                            ; & EnableIRQ
+    STS     SFIR , R30
+    RJMP    PH_FIFO_READ_BUFFER_DATA_STILL_TO_BE_READ
+
+BREAK_PH_FIFO_READ_BUFFER_DATA:
+    STS     SFIR , R30
+
+    ; RESTORE_RXTX_LDFC_DIR (just a comment for the next lines)
+    
+       
+    ; Switch clock from AVR clock back to PH clock
+    CLR     R31
+    OUT     LDFCKSW , R31
+
+PH_FIFO_READ_BUFFER_DATA_LOOP_CLOCK_SWITCH_AVR_TO_PH:
+    ; Wait until clock switch has been completed    
+    IN      R31 , LDFCKSW    
+    SBRC    R31 , LDFSCKS
+    RJMP    PH_FIFO_READ_BUFFER_DATA_LOOP_CLOCK_SWITCH_AVR_TO_PH
+
+PH_FIFO_READ_BUFFER_DATA_STILL_TO_BE_READ:
+    JMP     ATA_spiTxBufferEnd_ASM
+
+/* ---------------------------------------------------------------------------*/
+/**  \brief System Verification SPI Command <b>SYSVER_SPI_PH_FIFO_WRITE_DATA</b>
+    This SPI command writes the given bytes into the Protocol Handler FIFO.
+
+    \return none
+*/
+/* ---------------------------------------------------------------------------*/
+SYSVER_SPI_PH_FIFO_WRITE_DATA: ; ID = 0x26
+
+    CLR     R31
+    OUT     SPDR , R31
+    
+    ; SET_RXTX_LDFC_DIR TX_DIR (just a comment for the next lines)
+   
+    ; Switch clock from PH clock to AVR clock
+    LDI     R31 , BM_LDFSCSW    
+    OUT     LDFCKSW , R31
+
+PH_FIFO_WRITE_BUFFER_DATA_LOOP_CLOCK_SWITCH_PH_TO_AVR:
+    IN      R31 , LDFCKSW    
+    SBRS    R31 , LDFSCKS
+    RJMP    PH_FIFO_WRITE_BUFFER_DATA_LOOP_CLOCK_SWITCH_PH_TO_AVR
+    
+    ENABLE_SPIRXBUFFER PH_FIFO_WRITE_BUFFER_LENGTH , 2
+    RJMP    SPI_READY
+
+; ------------------------------------------------------------------------------
+PH_FIFO_WRITE_BUFFER_LENGTH:
+; ------------------------------------------------------------------------------
+    ; read SPARE BYTE
+    IN      R30 , SPDR
+    ; read length BYTE
+    IN      R30 , SPDR
+    STS     g_sSpiConfig + SPICONFIG_LENGTH , R30
+
+    ; --> The following functionality is normally called in ENABLE_SPIRXBUFFER MACRO    address, num_bytes
+    CPI     R30 , TX_BUFFER_FIFO_SIZE       ; how many bytes are to receive?
+    BRLO    SKIP_PH_FIFO_WRITE_BUFFER_LENGTH
+    LDI     R30 , TX_BUFFER_FIFO_SIZE
+
+SKIP_PH_FIFO_WRITE_BUFFER_LENGTH:
+    ORI     R30 , (BM_SRIE)
+    STS     SFIR , R30
+
+    LDI     R30 , low(PH_FIFO_WRITE_BUFFER_DATA/2)
+    STS     g_sSpiConfig + SPICONFIG_PTMP , R30
+
+    LDI     R30 , high(PH_FIFO_WRITE_BUFFER_DATA/2)
+    STS     g_sSpiConfig + SPICONFIG_PTMP + 1 , R30
+    ; <-- normally end of macro
+
+    JMP     ATA_spiRxBufferEnd_ASM
+
+; ------------------------------------------------------------------------------
+PH_FIFO_WRITE_BUFFER_DATA:
+; ------------------------------------------------------------------------------
+
+    LDS     R30 , g_sSpiConfig + SPICONFIG_LENGTH
+    CPI     R30 , 0
+    BREQ    PH_FIFO_BREAK_WRITE_BUFFER_DATA
+
+PH_FIFO_LOOP_WRITE_BUFFER_DATA:                 ; do{
+    IN      R31 , SPDR                          ;   Load Data to DFD
+    OUT     LDFD , R31
+
+    DEC     R30                                 ;   DataToWrite(R30)--;
+    BREQ    PH_FIFO_BREAK_WRITE_BUFFER_DATA     ;   if( DataToWrite(R30) == 0 ) break;
+
+    LDS     R31 , SFFR
+    ANDI    R31 , (BM_RFL2|BM_RFL1|BM_RFL0)     ; }
+    BRNE    PH_FIFO_LOOP_WRITE_BUFFER_DATA      ; while( RxFifoLevel > 0 )
+
+    STS     g_sSpiConfig + SPICONFIG_LENGTH , R30         ; Store remaining DataToWrite(R30)
+
+    CPI     R30 , TX_BUFFER_FIFO_SIZE           ; if( DataToWrite(R30) > TX_BUFFER_FIFO_SIZE )
+    BRLT    PH_FIFO_SKIP_WRITE_BUFFER_DATA      ;     SFIR = TX_BUFFER_FIFO_SIZE;
+    LDI     R30 , TX_BUFFER_FIFO_SIZE           ; else
+                                                ;   SFIR = DataToWrite(R30);
+PH_FIFO_SKIP_WRITE_BUFFER_DATA:
+    ORI     R30 , (BM_SRIE)                     ; SFIR |= BM_SIRE -> Enable IRQ
+    STS     SFIR , R30
+    RJMP    PH_FIFO_WRITE_BUFFER_DATA_STILL_TO_BE_READ
+
+PH_FIFO_BREAK_WRITE_BUFFER_DATA:
+    STS     SFIR , R30
+
+    ; RESTORE_RXTX_LDFC_DIR (just a comment for the next lines)
+
+    
+    ; Switch clock from AVR clock back to PH clock
+    CLR     R31
+    OUT     LDFCKSW , R31
+
+PH_FIFO_WRITE_BUFFER_DATA_LOOP_CLOCK_SWITCH_AVR_TO_PH:
+    ; Wait until clock switch has been completed    
+    IN      R31 , LDFCKSW    
+    SBRC    R31 , LDFSCKS
+    RJMP    PH_FIFO_WRITE_BUFFER_DATA_LOOP_CLOCK_SWITCH_AVR_TO_PH
+
+PH_FIFO_WRITE_BUFFER_DATA_STILL_TO_BE_READ:
+    JMP     ATA_spiRxBufferEnd_ASM
+
+/* ---------------------------------------------------------------------------*/
+/**  \brief System Verification SPI Command <b>SYSVER_SPI_LF_ENABLE_CONT</b>
+    This SPI command starts the LF continuous receive mode.
+
+    \return none
+*/
+/* ---------------------------------------------------------------------------*/
+SYSVER_SPI_LF_ENABLE_CONT:        ; ID = 0x27
+; ------------------------------------------------------------------------------
+    ; Enable continuous LF receive mode
+    SBI  PHTCR , CSM
+    
+    ; Reset continuous LF receive mode status variables again to allow for
+    ; multiple LF continuous sequences to be carried out without having to
+    ; reinitialize all registers
+    CLR     R31
+    STS     g_bLfRxEotShadowIndex_flash, R31
+    
+    ; Start LF Receiver
+    IN   R31 , LFCR1
+    ORI  R31 , BM_LFRE
+    OUT  LFCR1 , R31
+
+    RJMP SPI_READY
+
+
+/* ---------------------------------------------------------------------------*/
+/**  \brief System Verification SPI Command <b>SYSVER_SPI_LF_RSSI_MEAS</b>
+    This SPI command starts a LF RSSI measurement based on the 2 additional
+    bytes received.
+
+    \return none
+*/
+/* ---------------------------------------------------------------------------*/
+SYSVER_SPI_LF_RSSI_MEAS:  ; ID = 0x28
+; ------------------------------------------------------------------------------
+    CLR     R31
+    OUT     SPDR , R31
+    ENABLE_SPIRXBUFFER LF_RSSI_MEAS_START, 3
+
+    ; End of SPI command SYSVER_SPI_PH_FIFO_READ_DATA
+    RJMP    SPI_READY
+
+; ------------------------------------------------------------------------------
+LF_RSSI_MEAS_START:
+; ------------------------------------------------------------------------------
+
+    ; read incoming LFCR1 byte and store it to the corresponding register
+    IN      R30 , SPDR
+    OUT     LFCR1, R30
+
+    ; read incoming LFRSMR byte and store it to the corresponding register
+    IN      R30 , SPDR
+    ; STS     LFRSMR, R30
+
+    ; Disable Transponder detection
+    IN      R30 , TPCR2
+    ORI     R30 , BM_TPD
+    OUT     TPCR2, R30
+
+    ; read incoming LFRSCR byte and store it to the corresponding register
+    IN      R30 , SPDR
+    ; STS     LFRSCR, R30
+
+    ; End of SPI command SYSVER_SPI_PH_FIFO_READ_DATA
+    JMP     ATA_spiRxBufferDisableInt_ASM
+
+/* ---------------------------------------------------------------------------*/
+/**  \brief System Verification SPI Command <b>SYSVER_SPI_LF_TRANSP_ENABLE</b>
+    This SPI command starts a LF transparent reception sequence with Timer 3
+    and/or Timer 4 used as capture timers (includes reset of both timers).
+    
+    \return none
+*/
+; ------------------------------------------------------------------------------
+SYSVER_SPI_LF_TRANSP_ENABLE:    ; ID = 0x29
+; ------------------------------------------------------------------------------
+
+    ; Reset continuous LF receive mode status variables again to allow for
+    ; multiple LF continuous sequences to be carried out without having to
+    ; reinitialize all registers
+    CLR     R31
+    STS     g_bTimer3CaptureIndex_flash, R31
+    STS     g_bTimer4CaptureIndex_flash, R31
+    
+    ; Disable Timer 3
+    IN   R31, T3CR
+    ANDI R31, ~BM_T3ENA
+    OUT  T3CR, R31
+    
+    ; Reset Timer 3
+    IN   R31, T3CR
+    ORI  R31, BM_T3RES
+    OUT  T3CR, R31
+    
+    ; Enable Timer 3
+    IN   R31, T3CR
+    ORI  R31, BM_T3ENA
+    OUT  T3CR, R31
+
+    ; Disable Timer 4
+    IN   R31, T4CR
+    ANDI R31, ~BM_T4ENA
+    OUT  T4CR, R31
+    
+    ; Reset Timer 4
+    IN   R31, T4CR
+    ORI  R31, BM_T4RES
+    OUT  T4CR, R31
+    
+    ; Enable Timer 4
+    IN   R31, T4CR
+    ORI  R31, BM_T4ENA
+    OUT  T4CR, R31
+
+    ; End of SPI command SYSVER_SPI_LF_TRANSP_ENABLE
+    RJMP    SPI_READY
+
+
+/* ---------------------------------------------------------------------------*/
+/**  \brief System Verification SPI Command <b>SYSVER_SPI_SWITCH_AVR_TO_MRC</b>
+    This SPI command switches the AVR core clock to MRC
+
+    \return none
+*/
+; ------------------------------------------------------------------------------
+SYSVER_SPI_SWITCH_AVR_TO_MRC:    ; ID = 0x2A
+; ------------------------------------------------------------------------------
+
+    ; Set AVR core to MRC
+    CLI
+    LDS     R30, CMCR
+    SEI
+
+    ANDI    R30 , (BM_CMCCE | BM_CMONEN)
+    LDI     R31 , BM_CMCCE
+
+    CLI
+    STS     CMCR , R31
+    STS     CMCR , R30
+    SEI
+
+    ; set divider to 1
+    LDI     R30 , BM_CLPCE
+    LDI     R31 , BM_CLTPS0
+
+    CLI
+    STS     CLPR , R30
+    STS     CLPR , R31
+    SEI
+
+    ; End of SPI command SYSVER_SPI_SWITCH_AVR_TO_MRC
+    RJMP    SPI_READY
+
+/* ---------------------------------------------------------------------------*/
+/**  \brief System Verification SPI Command <b>SYSVER_SPI_LFRX_RFTX_TP</b>
+    This SPI command starts a LF initialization to receive LF telegrams based
+    on the transponder protocol.
+
+    \return none
+*/
+/* ---------------------------------------------------------------------------*/
+SYSVER_SPI_LFRX_RFTX_TP:  ; ID = 0x2B
+; ------------------------------------------------------------------------------
+    CLR     R31
+    OUT     SPDR , R31
+    
+    ENABLE_SPIRXBUFFER LFRX_RFTX_TP, 1
+    RJMP    SPI_READY
+
+; ------------------------------------------------------------------------------
+LFRX_RFTX_TP:
+; ------------------------------------------------------------------------------
+    IN      R30 , SPDR
+    STS     extReq + EXT_REQ_LFRCRFTX_CONFIG, R30
+
+    JMP     ATA_spiRxBufferDisableInt_ASM
+
+/* ---------------------------------------------------------------------------*/
+/**  \brief System Verification SPI Command <b>SYSVER_SPI_ENABLE_EM_MODE</b>
+    This SPI command shall enable EM Transponder Mode
+
+    \return none
+*/
+; ------------------------------------------------------------------------------
+SYSVER_SPI_START_EM_MODE:    ; ID = 0x2C
+; ------------------------------------------------------------------------------
+    CLR     R31
+    OUT     SPDR , R31
+    
+    ENABLE_SPIRXBUFFER START_EM_MODE, 1
+    RJMP    SPI_READY
+
+; ------------------------------------------------------------------------------
+START_EM_MODE:
+; ------------------------------------------------------------------------------
+    ; Set internal variable to EM mode selected
+    IN      R30 , SPDR
+    STS     extReq + EXT_REQ_TP_EM_MODE_CONFIG, R30
+
+    ; Set EM mode in TPCR1 if enabled via SPI (TPCR1 |= BM_TPMODE)
+    TST     R30
+    BREQ    START_EM_MODE_DISABLE
+    LDS     R30 , TPCR1
+    ORI     R30 , 0x80
+    STS     TPCR1 , R30
+    JMP     START_EM_MODE_CONTINUE
+    
+START_EM_MODE_DISABLE:
+    LDS     R30 , TPCR1
+    ANDI    R30 , 0x7F
+    STS     TPCR1 , R30
+
+START_EM_MODE_CONTINUE:
+    ; Set em status variable to init
+    LDI     R30 , EM_MODE_STATE_INIT
+    STS     g_bTpEmTransponderStateIndex_flash , R30
+
+    JMP     ATA_spiRxBufferDisableInt_ASM
+
+/* ---------------------------------------------------------------------------*/
+/**  \brief System Verification SPI Command <b>SYSVER_SPI_REMOTE_KEYLESS_ENTRY</b>
+    This SPI command trigger one Remote Keyless Entry sequence using the
+    Rolling Code Counter algorithm
+
+    \return none
+*/
+; ------------------------------------------------------------------------------
+SYSVER_SPI_REMOTE_KEYLESS_ENTRY:    ; ID = 0x2D
+; ------------------------------------------------------------------------------
+    CLR     R31
+    OUT     SPDR , R31
+    OUT     SPDR , R31
+    
+    ENABLE_SPIRXBUFFER REMOTE_KEYLESS_ENTRY, 2
+    RJMP    SPI_READY
+
+; ------------------------------------------------------------------------------
+REMOTE_KEYLESS_ENTRY:
+; ------------------------------------------------------------------------------
+    ; Set internal variable to Remote Keyless Entry
+    LDI     R30 , 0x01
+    STS     extReq + EXT_REQ_RF_REMOTE_KEYLESS_ENTRY, R30
+
+    ; Set selected key for Rolling Code Counter
+    IN      R30 , SPDR
+    STS     g_sRfRemoteKeylessEntryConf + 0, R30
+    
+    ; Set command ID for Rolling Code Counter
+    IN      R30 , SPDR
+    STS     g_sRfRemoteKeylessEntryConf + 1, R30
+
+    JMP     ATA_spiRxBufferDisableInt_ASM
+
+/* ----------------------------------------------------------------------------- */
+/** \brief SPI Command <b>MODIFY_VAR_REGISTER_SRAM</b>
+    writes the given data byte to the given SRAM/Register address starting from
+    the given start bit and bit length indication
+
+   \return none
+*/
+/* ----------------------------------------------------------------------------- */
+MODIFY_VAR_REGISTER_SRAM:              ; ID= 0x2E
+; ------------------------------------------------------------------------------
+    CLR     R31
+    OUT     SPDR , R31
+    OUT     SPDR , R31
+    OUT     SPDR , R31
+    ENABLE_SPIRXBUFFER MODIFY_VAR_REGISTER_SRAM_DATA , RX_BUFFER_FIFO_SIZE
+
+    RJMP    SPI_READY
+
+; ------------------------------------------------------------------------------
+MODIFY_VAR_REGISTER_SRAM_DATA:
+; ------------------------------------------------------------------------------
+    PUSH    R25     ; Start and end bit mask
+    PUSH    R24     ; Copy of start and end bit / Spare register
+    PUSH    R23     ; Bit mask for start bit
+    PUSH    R22     ; Bit mask for end bit / Original value from SRAM/Register
+
+    ; Bit mask start bit
+    LDI     R23, 0xFF
+
+    ; Read data from SPI RX FIFO (4 bytes of SPI command payload)
+    IN      R31 , SPDR              ; addr_high
+    STS     g_sSpiConfig + SPICONFIG_PADDRESS + 1, R31
+    IN      R30 , SPDR              ; addr_low
+    STS     g_sSpiConfig + SPICONFIG_PADDRESS, R31
+    IN      R25 , SPDR              ; bit start (low nibble) and bit end (high nibble)
+    IN      R22 , SPDR              ; Get data byte
+    
+    ; Compute bit frame to be modified from given bit start and end position 
+    MOV     R24, R25
+    SWAP    R25
+    ANDI    R25, 0x07               ; Start bit position range goes from [0-7]
+    BREQ    SKIP_MODIFY_VAR_REGISTER_SRAM_DATA_START_BIT
+    
+MODIFY_VAR_REGISTER_SRAM_DATA_START_BIT:
+    LSL     R23                     ; Shift start bit mask
+    LSL     R22                     ; Shift data byte
+    DEC     R25                     ; Decrement number of remaining shifts
+    BRNE    MODIFY_VAR_REGISTER_SRAM_DATA_START_BIT
+
+SKIP_MODIFY_VAR_REGISTER_SRAM_DATA_START_BIT:
+    ; Prepare end bit mask computation
+    ANDI    R24, 0x07
+    LDI     R25, 0x07
+    SUB     R25, R24
+
+    ; End bit mask
+    LDI     R24, 0xFF
+
+    TST     R25
+    BREQ    SKIP_MODIFY_VAR_REGISTER_SRAM_DATA_END_BIT
+    
+MODIFY_VAR_REGISTER_SRAM_DATA_END_BIT:
+    LSR     R24
+    DEC     R25                     ; Decrement number of remaining shifts
+    BRNE    MODIFY_VAR_REGISTER_SRAM_DATA_END_BIT
+
+SKIP_MODIFY_VAR_REGISTER_SRAM_DATA_END_BIT:
+    AND     R23, R24                ; Bit mask to apply data with
+    AND     R22, R23                ; Data to be written to register
+    LD      R24, Z                  ; Get original values from SRAM/Register
+    COM     R23                     ; Reverse mask to clear bits to be modified
+    AND     R24, R23                ; Set values to be modified to 0 to be able
+                                    ; to use a single OR instruction
+
+    OR      R24, R22                ; Store new data to given bit locations
+    ST      Z , R24
+
+    ; End
+    POP     R22
+    POP     R23
+    POP     R24
+    POP     R25
+    JMP     ATA_spiRxBufferDisableInt_ASM
+
+/* ----------------------------------------------------------------------------- */
+/** \brief SPI Command <b>MODIFY_VAR_EEPROM</b>
+    writes the given data byte to the given EEPROM address starting from
+    the given start bit and bit length indication
+
+   \return none
+*/
+/* ----------------------------------------------------------------------------- */
+MODIFY_VAR_EEPROM:              ; ID= 0x2F
+; ------------------------------------------------------------------------------
+    CLR     R31
+    OUT     SPDR , R31
+    OUT     SPDR , R31
+    OUT     SPDR , R31
+    ENABLE_SPIRXBUFFER MODIFY_VAR_EEPROM_DATA , RX_BUFFER_FIFO_SIZE
+
+    RJMP    SPI_READY
+
+; ------------------------------------------------------------------------------
+MODIFY_VAR_EEPROM_DATA:
+; ------------------------------------------------------------------------------
+    SBIC    EECR , EEWE         ; check if EEPROM is busy
+    RJMP    EEPROM_BUSY         ; Quit command, thus rubbish is sent to SPI Master
+    
+    PUSH    R25     ; Start and end bit mask
+    PUSH    R24     ; Copy of start and end bit / Spare register
+    PUSH    R23     ; Bit mask for start bit
+    PUSH    R22     ; Bit mask for end bit / Original value from SRAM/Register
+
+    ; Bit mask start bit
+    LDI     R23, 0xFF
+
+    ; Read data from SPI RX FIFO (4 bytes of SPI command payload)
+    IN      R31 , SPDR              ; addr_high
+    OUT     EEARH ,R31              ; write EEPROM address high
+    IN      R30 , SPDR              ; addr_low
+    OUT     EEARL ,R30              ; write EEPROM address low
+    IN      R25 , SPDR              ; bit start (low nibble) and bit end (high nibble)
+    IN      R22 , SPDR              ; Get data byte
+    
+    ; Compute bit frame to be modified from given bit start and end position 
+    MOV     R24, R25
+    SWAP    R25
+    ANDI    R25, 0x07               ; Start bit position range goes from [0-7]
+    BREQ    SKIP_MODIFY_VAR_EEPROM_DATA_START_BIT
+    
+MODIFY_VAR_EEPROM_DATA_START_BIT:
+    LSL     R23                     ; Shift start bit mask
+    LSL     R22                     ; Shift data byte
+    DEC     R25                     ; Decrement number of remaining shifts
+    BRNE    MODIFY_VAR_EEPROM_DATA_START_BIT
+
+SKIP_MODIFY_VAR_EEPROM_DATA_START_BIT:
+    ; Prepare end bit mask computation
+    ANDI    R24, 0x07
+    LDI     R25, 0x07
+    SUB     R25, R24
+
+    ; End bit mask
+    LDI     R24, 0xFF
+
+    TST     R25
+    BREQ    SKIP_MODIFY_VAR_EEPROM_DATA_END_BIT
+    
+MODIFY_VAR_EEPROM_DATA_END_BIT:
+    LSR     R24
+    DEC     R25                     ; Decrement number of remaining shifts
+    BRNE    MODIFY_VAR_EEPROM_DATA_END_BIT
+
+SKIP_MODIFY_VAR_EEPROM_DATA_END_BIT:
+    AND     R23, R24                ; Bit mask to apply data with
+    AND     R22, R23                ; Data to be written to register
+    
+    SBI     EECR , EERE             ; Get original values from EEPROM.
+    IN      R24, EEDR               ; Address is already set in EEARH/EEARL.
+    
+    COM     R23                     ; Reverse mask to clear bits to be modified
+    AND     R24, R23                ; Set values to be modified to 0 to be able
+                                    ; to use a single OR instruction
+
+    OR      R24, R22                ; Store new data to given bit locations
+
+    OUT     EEDR ,R24               ; Write EEPROM data register
+    SBI     EECR , EEMWE
+    SBI     EECR , EEWE
+
+    ; End Modify
+    POP     R22
+    POP     R23
+    POP     R24
+    POP     R25
+    JMP     ATA_spiRxBufferDisableInt_ASM
+
+/* ---------------------------------------------------------------------------*/
+/**  \brief System Verification SPI Command <b>SYSVER_SPI_ACT_TWI_SLAVE</b>
+    This SPI command triggers the activation of the TWI slave component
+
+    \return none
+*/
+; ------------------------------------------------------------------------------
+SYSVER_SPI_ACT_TWI_SLAVE:    ; ID = 0x33
+; ------------------------------------------------------------------------------
+    CLR     R31
+    OUT     SPDR , R31
+    
+    ENABLE_SPIRXBUFFER ACT_TWI_SLAVE, 2
+    RJMP    SPI_READY
+
+; ------------------------------------------------------------------------------
+ACT_TWI_SLAVE:
+; ------------------------------------------------------------------------------
+    ; Set internal variable to TWI slave
+    LDI     R30 , BM_EXT_REQ_MISC_TRIGGER_ACTIVATE_TWI_SLAVE
+    STS     extReq + EXT_REQ_MISC_TRIGGER, R30
+
+    ; Set TWI slave address (needs to be shifted 1-bit to the left (see TW1AR)
+    IN      R30 , SPDR
+    STS     g_TwiConfiguration_flash + 0, R30
+
+    ; Set TWI address mask
+    IN      R30 , SPDR
+    STS     g_TwiConfiguration_flash + 1, R30
+
+    JMP     ATA_spiRxBufferDisableInt_ASM
+
+/* ---------------------------------------------------------------------------*/
+/**  \brief ATE SPI Command <b>MODIFY_CHANGE_ENABLE_REGISTER</b>
+    This SPI command support setting of registers protected by change enable
+    mechanism
+
+    \return none
+*/
+/* ---------------------------------------------------------------------------*/
+MODIFY_CHANGE_ENABLE_REGISTER:  ; ID = 0x33    
+/* ---------------------------------------------------------------------------*/
+    CLR     R31
+    OUT     SPDR , R31
+    OUT     SPDR , R31
+    OUT     SPDR , R31
+    ENABLE_SPIRXBUFFER MODIFY_CHANGE_ENABLE_REGISTER_DATA, RX_BUFFER_FIFO_SIZE
+
+    RJMP    SPI_READY
+    
+/* ---------------------------------------------------------------------------*/
+MODIFY_CHANGE_ENABLE_REGISTER_DATA:
+/* ---------------------------------------------------------------------------*/
+    PUSH    R25     ; enable_mask
+    PUSH    R24     ; data
+
+    ; Read data from SPI RX FIFO (4 bytes of SPI command payload)
+    IN      R31 , SPDR              ; addr_high
+    IN      R30 , SPDR              ; addr_low
+    IN      R25 , SPDR              ; enable_mask
+    IN      R24 , SPDR              ; data
+    
+    ST      Z , R25
+    ST      Z , R24
+    ST      Z , R24                 ; 2nd write needed for WDTCR setting
+
+    ; End
+    POP     R24
+    POP     R25
+    JMP     ATA_spiRxBufferDisableInt_ASM
+    
+    ; End of file
+    END

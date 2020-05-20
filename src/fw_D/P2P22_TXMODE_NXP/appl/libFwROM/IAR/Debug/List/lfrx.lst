@@ -1,0 +1,472 @@
+###############################################################################
+#
+# IAR C/C++ Compiler V6.70.1.929 for Atmel AVR            05/Apr/2016  13:30:41
+# Copyright 1996-2015 IAR Systems AB.
+# Network license: DVRIAR01.corpp.atmel.com (STD)
+#
+#    Source file  =  
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\firmware\lfrx\src\lfrx.c
+#    Command line =  
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\firmware\lfrx\src\lfrx.c
+#        -v3 --enhanced_core -ms -o
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\Obj
+#        -lC
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\List
+#        -lA
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\List
+#        --initializers_in_flash --no_cse --no_inline --no_code_motion
+#        --no_cross_call --no_clustering --no_tbaa --debug --64k_flash
+#        -DENABLE_BIT_DEFINITIONS -e -I "C:\Program Files (x86)\IAR
+#        Systems\Embedded Workbench 6.0\avr\inc\" --eeprom_size 1152 --clib
+#        -Ohz
+#    List file    =  
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\List\lfrx.lst
+#    Object file  =  
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\Obj\lfrx.r90
+#
+###############################################################################
+
+C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\firmware\lfrx\src\lfrx.c
+      1          //lint -e9059
+      2          /* *C**************************************************************************
+      3            Use of this software is subject to Atmel's Software License Agreement.
+      4          -------------------------------------------------------------------------------
+      5            $URL: http://svnservulm.corp.atmel.com/svn/CDB/Apps/SW_Lib/Car_Access/CARS_GEN2/ATAB5702A/Branches/P2_Gen2_Merge/firmware/lfrx/src/lfrx.c $
+      6            $LastChangedRevision: 328482 $
+      7            $LastChangedDate: 2015-07-22 13:17:23 -0600 (Wed, 22 Jul 2015) $
+      8            $LastChangedBy: grueter $
+      9          -------------------------------------------------------------------------------
+     10            Project:      ATA5700
+     11            Target MCU:   ATA5700
+     12            Compiler:     IAR C/C++ Compiler for AVR 6.30.1
+     13          -------------------------------------------------------------------------------
+     14          
+     15          ******************************************************************************
+     16          * Copyright 2011, Atmel Automotive GmbH                                       *
+     17          *                                                                             *
+     18          * This software is owned by the Atmel Automotive GmbH                         *
+     19          * and is protected by and subject to worldwide patent protection.             *
+     20          * Atmel hereby grants to licensee a personal,                                 *
+     21          * non-exclusive, non-transferable license to copy, use, modify, create        *
+     22          * derivative works of, and compile the Atmel Source Code and derivative       *
+     23          * works for the sole purpose of creating custom software in support of        *
+     24          * licensee product to be used only in conjunction with a Atmel integrated     *
+     25          * circuit as specified in the applicable agreement. Any reproduction,         *
+     26          * modification, translation, compilation, or representation of this           *
+     27          * software except as specified above is prohibited without the express        *
+     28          * written permission of Atmel.                                                *
+     29          *                                                                             *
+     30          * Disclaimer: ATMEL MAKES NO WARRANTY OF ANY KIND,EXPRESS OR IMPLIED,         *
+     31          * WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED    *
+     32          * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.         *
+     33          * Atmel reserves the right to make changes without further notice to the      *
+     34          * materials described herein. Atmel does not assume any liability arising     *
+     35          * out of the application or use of any product or circuit described herein.   *
+     36          * Atmel does not authorize its products for use as critical components in     *
+     37          * life-support systems where a malfunction or failure may reasonably be       *
+     38          * expected to result in significant injury to the user. The inclusion of      *
+     39          * Atmel products in a life-support systems application implies that the       *
+     40          * manufacturer assumes all risk of such use and in doing so indemnifies       *
+     41          * Atmel against all charges.                                                  *
+     42          *                                                                             *
+     43          * Use may be limited by and subject to the applicable Atmel software          *
+     44          * license agreement.                                                          *
+     45          ******************************************************************************/
+     46          /** \file lfrx.c
+     47          */
+     48          //lint -restore
+     49          
+     50          /*===========================================================================*/
+     51          /*  INCLUDES                                                                 */
+     52          /*===========================================================================*/
+     53          #include "lfrx.h"
+
+   \                                 In  segment ABSOLUTE, at 0x21
+   \   union <unnamed> volatile __io _A_PRR1
+   \                     _A_PRR1:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x36
+   \   union <unnamed> volatile __io _A_EECR2
+   \                     _A_EECR2:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x3f
+   \   union <unnamed> volatile __io _A_EECR
+   \                     _A_EECR:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x40
+   \   union <unnamed> volatile __io _A_EEDR
+   \                     _A_EEDR:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x41
+   \   union <unnamed> volatile __io _A_EEARL
+   \                     _A_EEARL:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x42
+   \   union <unnamed> volatile __io _A_EEARH
+   \                     _A_EEARH:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x5f
+   \   union <unnamed> volatile __io _A_SREG
+   \                     _A_SREG:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x90
+   \   union <unnamed> volatile __io _A_LFCALR1
+   \                     _A_LFCALR1:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x130
+   \   union <unnamed> volatile __ext_io _A_LFDSR1
+   \                     _A_LFDSR1:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x18e
+   \   union <unnamed> volatile __ext_io _A_LFCPR
+   \                     _A_LFCPR:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x1f1
+   \   union <unnamed> volatile __ext_io _A_SRCCAL
+   \                     _A_SRCCAL:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x1f2
+   \   union <unnamed> volatile __ext_io _A_SRCTCAL
+   \                     _A_SRCTCAL:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x1f9
+   \   union <unnamed> volatile __ext_io _A_TPCALR11
+   \                     _A_TPCALR11:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x1fa
+   \   union <unnamed> volatile __ext_io _A_TPCALR12
+   \                     _A_TPCALR12:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x1fb
+   \   union <unnamed> volatile __ext_io _A_TPCALR13
+   \                     _A_TPCALR13:
+   \   00000000                      DS8 1
+     54          #include "../../eep/src/eep.h"
+     55          
+     56          /*===========================================================================*/
+     57          /*  DEFINES                                                                  */
+     58          /*===========================================================================*/
+     59          
+     60          /*===========================================================================*/
+     61          /*  Globals                                                                  */
+     62          /*===========================================================================*/
+     63          /** \brief <b>g_sLfRx</b>
+     64              contains the status information for module LFRX.
+     65          */
+     66          //lint -esym(9003, g_sLfRx) FlSc (10.06.2014)
+     67          /* disable lint note 9003 - could define variable 'g_sLfRx' at block scope
+     68           * variable shall be accessible from outside via flash software or other library
+     69           * modules
+     70           */
+     71          #pragma location = ".lfRx"
+
+   \                                 In  segment .lfRx, align 1, keep-with-next
+     72          __no_init sLfRx g_sLfRx;
+   \                     g_sLfRx:
+   \   00000000                      DS8 1
+     73          
+     74          
+     75          /*===========================================================================*/
+     76          /*  IMPLEMENTATION                                                           */
+     77          /*===========================================================================*/
+     78          
+     79          
+     80          /*---------------------------------------------------------------------------*/
+     81          /** \brief <b>ATA_lfRxInit_C</b>
+     82              shall initialize the LF Receiver calibration registers with the EEPROM
+     83              configured data.
+     84          
+     85              Variable Usage:
+     86              \li [out] ::g_sLfRx Global LF Rx component data
+     87              \li [out] ::g_sDebug Global Debug component data
+     88          
+     89              \image html ATA_lfRxInit_C.png
+     90          
+     91              \internal
+     92              \li 010: Reset flags of ::g_sLfRx since the default state before starting the
+     93                        LF initialization is ok.
+     94          
+     95              \li 020: Enable the LF Receiver clock by setting bit PRLFR in register PRR1 to
+     96                        0 in order to be able to update LF related registers
+     97                       AND
+     98                       Enable the Protocol Handler clock by setting bit PRLFPH in register 
+     99                        PRR1 to 0 in order to be able to update SRC related registers.
+    100          
+    101              \li 025: Wait for any previous EEPROM access (Write or AES) to be finished by
+    102                        checking the NVMBSY bit in register EECR being 0.
+    103          
+    104              \li 030: Set address of "SRCTCAL" EEPROM location to EEARH, EEARL registers
+    105                        in order to subsequently load the values for SRCTCAL and SRCCAL,
+    106                       AND
+    107                       Enable the EEPROM burst read mode by setting bit EEBRE in register
+    108                        EECR2 to 1.
+    109          
+    110              \li 040: Load SRC temperature compensation value (SRCTCAL) from its dedicated
+    111                        EEPROM location to register SRCTCAL,
+    112                       Load SRC calibration value (SRCCAL) from its dedicated EEPROM location
+    113                        to register SRCCAL.
+    114          
+    115              \li 050: Set starting address of LF calibration EEPROM location to EEARH, EEARL
+    116                        registers in order to subsequently load the LF calibration values.
+    117          
+    118              \li 060: Load all LF calibration values (LFCALR1 to LFCALR53) from their
+    119                        dedicated EEPROM location to registers LFCALR1 to LFCALR53.
+    120          
+    121              \li 065: Load Transponder calibration value (TPCALR11) from its dedicated
+    122                        EEPROM location to register TPCALR11,
+    123                       Load Transponder calibration value (TPCALR12) from its dedicated
+    124                        EEPROM location to register TPCALR12.
+    125                       Load Transponder calibration value (TPCALR13) from its dedicated
+    126                        EEPROM location to register TPCALR13.
+    127          
+    128              \li 070: Load all LF decoder configuration values (LFDSR1 to LFDSR11) from their
+    129                        dedicated EEPROM location to registers LFDSR1 to LFDSR11.
+    130          
+    131              \li 080: IF after the EEPROM read accesses to retrieve the requested data, an
+    132                        uncorrectable EEPROM error was detected, indicated by
+    133                        bit "E2FF" in register EECR2 being set 1,
+    134                       THEN
+    135                         Indicate an LF initialization error by setting the error flag in
+    136                          ::g_sLfRx and setting the global error code in ::g_sDebug to
+    137                          the LF Rx EEPROM read error.
+    138                       ENDIF
+    139          
+    140              \li 090: Clear EEPROM burst read mode flag by setting bit "EEBRE" in register
+    141                        EECR2 to 0 and clear both EEPROM error flags by setting bits "E2CF"
+    142                        and "E2FF" to 1.
+    143          
+    144              \li 100: Lock and activate all LF calibration registers by setting bits
+    145                        "LFCALRY" and "LFCALP" in register LFCPR to 1.
+    146          
+    147              \Derived{No}
+    148          
+    149              \Rationale{N/A}
+    150          
+    151              \Traceability{Primus2P-1989,Primus2P-2152}
+    152          \n
+    153          */
+    154          /*---------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    155          VOIDFUNC ATA_lfRxInit_C(void)
+   \                     ATA_lfRxInit_C:
+    156          {
+    157              uint8_t bSreg = SREG;
+   \   00000000   B72F               IN      R18, 0x3F
+    158              uint8_t* pDestValue;
+    159          
+    160              /* LLR-Ref: 010 */
+    161              g_sLfRx.bFlags = LFRX_FLAGS_RESET;
+   \   00000002   E000               LDI     R16, 0
+   \   00000004   9300....           STS     g_sLfRx, R16
+    162          
+    163              /* LLR-Ref: 020 */
+    164              ATA_POWERON_C(PRR1, PRLFR);
+   \   00000008   980D               CBI     0x01, 0x05
+    165              ATA_POWERON_C(PRR1, PRLFPH);
+   \   0000000A   980F               CBI     0x01, 0x07
+    166          
+    167              /* LLR-Ref: 025 */
+    168              while(EECR & BM_NVMBSY){}
+   \                     ??ATA_lfRxInit_C_0:
+   \   0000000C   99FF               SBIC    0x1F, 0x07
+   \   0000000E   CFFE               RJMP    ??ATA_lfRxInit_C_0
+    169          
+    170              /* lint -e923 GeWi (23nov2011)*/
+    171              /* disable lint error 923 - Cast between pointer type and an integral type.
+    172               * Misra Rule 11.3 says: Casting between a pointer and an integer type should be avoided where possible,
+    173               * but may be unavoidable when addressing memory mapped registers or other hardware specific features.
+    174               */
+    175              /* LLR-Ref: 030 */
+    176              EEARH = (uint8_t)((uint16_t)&g_sAtmelEEPromSection.eepSRCTCAL >> 8U);
+   \   00000010   ....               LDI     R16, HIGH((g_sAtmelEEPromSection + 46))
+   \   00000012   BD02               OUT     0x22, R16
+    177              EEARL = (uint8_t)((uint16_t)&g_sAtmelEEPromSection.eepSRCTCAL >> 0U);
+   \   00000014   ....               LDI     R16, LOW((g_sAtmelEEPromSection + 46))
+   \   00000016   BD01               OUT     0x21, R16
+    178              /*lint -restore */
+    179          
+    180              EECR2 |= BM_EEBRE;
+   \   00000018   9AB0               SBI     0x16, 0x00
+    181          
+    182              /* LLR-Ref: 040 */
+    183              SRCTCAL = EEDR;
+   \   0000001A   B500               IN      R16, 0x20
+   \   0000001C   9300....           STS     _A_SRCTCAL, R16
+    184              SRCCAL  = EEDR;
+   \   00000020   B500               IN      R16, 0x20
+   \   00000022   9300....           STS     _A_SRCCAL, R16
+    185          
+    186              /* LLR-Ref: 050 */
+    187              EEARH = (uint8_t)((uint16_t)&g_sAtmelEEPromSection.eepLFCALR[0] >> 8U);
+   \   00000026   ....               LDI     R16, HIGH((g_sAtmelEEPromSection + 64))
+   \   00000028   BD02               OUT     0x22, R16
+    188              EEARL = (uint8_t)((uint16_t)&g_sAtmelEEPromSection.eepLFCALR[0] >> 0U);
+   \   0000002A   ....               LDI     R16, LOW((g_sAtmelEEPromSection + 64))
+   \   0000002C   BD01               OUT     0x21, R16
+    189              
+    190              /* LLR-Ref: 060 */
+    191              pDestValue = (uint8_t*)&LFCALR1;
+   \   0000002E   E9E0               LDI     R30, LOW(144)
+   \   00000030   E0F0               LDI     R31, (144) >> 8
+    192              for( uint8_t i = 0x00U; i < EEP_NUM_LF_CALIB_REG; i++)
+   \   00000032   E305               LDI     R16, 53
+    193              {
+    194                  *pDestValue++ = EEDR;
+   \                     ??ATA_lfRxInit_C_1:
+   \   00000034   B510               IN      R17, 0x20
+   \   00000036   9311               ST      Z+, R17
+    195              }
+   \   00000038   950A               DEC     R16
+   \   0000003A   F7E1               BRNE    ??ATA_lfRxInit_C_1
+    196              
+    197              /* LLR-Ref: 065 */
+    198              TPCALR11 = EEDR;
+   \   0000003C   B500               IN      R16, 0x20
+   \   0000003E   9300....           STS     _A_TPCALR11, R16
+    199              TPCALR12 = EEDR;
+   \   00000042   B500               IN      R16, 0x20
+   \   00000044   9300....           STS     _A_TPCALR12, R16
+    200              TPCALR13 = EEDR;
+   \   00000048   B500               IN      R16, 0x20
+   \   0000004A   9300....           STS     _A_TPCALR13, R16
+    201              
+    202              /* LLR-Ref: 070 */
+    203              pDestValue = (uint8_t*)&LFDSR1;
+   \   0000004E   E3E0               LDI     R30, LOW(304)
+   \   00000050   E0F1               LDI     R31, (304) >> 8
+    204              for( uint8_t i = 0x00U; i < EEP_NUM_LF_DECODER_REG; i++)
+   \   00000052   E00B               LDI     R16, 11
+    205              {
+    206                  *pDestValue++ = EEDR;
+   \                     ??ATA_lfRxInit_C_2:
+   \   00000054   B510               IN      R17, 0x20
+   \   00000056   9311               ST      Z+, R17
+    207              }
+   \   00000058   950A               DEC     R16
+   \   0000005A   F7E1               BRNE    ??ATA_lfRxInit_C_2
+    208              
+    209              /* LLR-Ref: 080 */
+    210              if ( EECR2 & BM_E2FF )
+   \   0000005C   9BB6               SBIS    0x16, 0x06
+   \   0000005E   C009               RJMP    ??ATA_lfRxInit_C_3
+    211              {
+    212                  g_sLfRx.bFlags |= LFRX_FLAGS_BM_ERROR_FLAG;
+   \   00000060   ....               LDI     R30, LOW(g_sLfRx)
+   \   00000062   ....               LDI     R31, (g_sLfRx) >> 8
+   \   00000064   8100               LD      R16, Z
+   \   00000066   6800               ORI     R16, 0x80
+   \   00000068   8300               ST      Z, R16
+    213                  g_sDebug.bErrorCode = DEBUG_ERROR_CODE_LFRX_EEPROM_READ_ERROR;
+   \   0000006A   E300               LDI     R16, 48
+   \   0000006C   9300....           STS     g_sDebug, R16
+    214                  EECR2 |= BM_E2FF;
+   \   00000070   9AB6               SBI     0x16, 0x06
+    215              }
+    216              
+    217              /* LLR-Ref: 090 */
+    218              if(EECR2 & BM_E2AVF)
+   \                     ??ATA_lfRxInit_C_3:
+   \   00000072   9BB5               SBIS    0x16, 0x05
+   \   00000074   C009               RJMP    ??ATA_lfRxInit_C_4
+    219              {
+    220                  g_sLfRx.bFlags |= LFRX_FLAGS_BM_ERROR_FLAG;
+   \   00000076   ....               LDI     R30, LOW(g_sLfRx)
+   \   00000078   ....               LDI     R31, (g_sLfRx) >> 8
+   \   0000007A   8100               LD      R16, Z
+   \   0000007C   6800               ORI     R16, 0x80
+   \   0000007E   8300               ST      Z, R16
+    221                  g_sDebug.bErrorCode = DEBUG_ERROR_CODE_LFRX_EEPROM_ACCESS_ERROR;
+   \   00000080   E301               LDI     R16, 49
+   \   00000082   9300....           STS     g_sDebug, R16
+    222                  EECR2 |= BM_E2AVF;
+   \   00000086   9AB5               SBI     0x16, 0x05
+    223              }
+    224          
+    225              /* LLR-Ref: 090 */
+    226              EECR2 &= ~BM_EEBRE;
+   \                     ??ATA_lfRxInit_C_4:
+   \   00000088   98B0               CBI     0x16, 0x00
+    227          
+    228              /* LLR-Ref: 100 */
+    229              __disable_interrupt();
+   \   0000008A   94F8               CLI
+    230              LFCPR = BM_LFCPCE;
+   \   0000008C   E800               LDI     R16, 128
+   \   0000008E   9300....           STS     _A_LFCPR, R16
+    231              LFCPR = (BM_LFCALRY | BM_LFCALP);
+   \   00000092   E003               LDI     R16, 3
+   \   00000094   9300....           STS     _A_LFCPR, R16
+    232              SREG = bSreg;
+   \   00000098   BF2F               OUT     0x3F, R18
+    233          }
+   \   0000009A   9508               RET
+   \   0000009C                      REQUIRE _A_SREG
+   \   0000009C                      REQUIRE _A_PRR1
+   \   0000009C                      REQUIRE _A_EECR
+   \   0000009C                      REQUIRE _A_EEARH
+   \   0000009C                      REQUIRE _A_EEARL
+   \   0000009C                      REQUIRE _A_EECR2
+   \   0000009C                      REQUIRE _A_SRCTCAL
+   \   0000009C                      REQUIRE _A_EEDR
+   \   0000009C                      REQUIRE _A_SRCCAL
+   \   0000009C                      REQUIRE _A_LFCALR1
+   \   0000009C                      REQUIRE _A_TPCALR11
+   \   0000009C                      REQUIRE _A_TPCALR12
+   \   0000009C                      REQUIRE _A_TPCALR13
+   \   0000009C                      REQUIRE _A_LFDSR1
+   \   0000009C                      REQUIRE _A_LFCPR
+
+   Maximum stack usage in bytes:
+
+   RSTACK Function
+   ------ --------
+      2   ATA_lfRxInit_C
+
+
+   Segment part sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+     156  ATA_lfRxInit_C
+       1  _A_EEARH
+       1  _A_EEARL
+       1  _A_EECR
+       1  _A_EECR2
+       1  _A_EEDR
+       1  _A_LFCALR1
+       1  _A_LFCPR
+       1  _A_LFDSR1
+       1  _A_PRR1
+       1  _A_SRCCAL
+       1  _A_SRCTCAL
+       1  _A_SREG
+       1  _A_TPCALR11
+       1  _A_TPCALR12
+       1  _A_TPCALR13
+       1  g_sLfRx
+
+ 
+   1 byte  in segment .lfRx
+  15 bytes in segment ABSOLUTE
+ 156 bytes in segment CODE
+ 
+ 156 bytes of CODE memory
+   1 byte  of DATA memory (+ 15 bytes shared)
+
+Errors: none
+Warnings: none

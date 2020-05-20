@@ -1,0 +1,15 @@
+"-v3" 
+
+"--enhanced_core" 
+
+"--disable_internal_eeprom" 
+
+"--64k_flash" 
+
+"-d" 
+
+"sim" 
+
+
+
+

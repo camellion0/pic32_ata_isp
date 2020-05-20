@@ -1,0 +1,442 @@
+;----------------------------------------------------------------------------
+;
+;  Library routines for the ATMEL AT90S processors
+;  Function prologue/epilogue
+; 
+;  Copyright 1996-2008 IAR Systems AB. All rights reserved.
+; 
+;  $Revision: 328482 $
+; 
+;----------------------------------------------------------------------------
+    
+#include "macros.m90"
+
+;-------------------------------------------------------------------------
+; Macros for function entry/exit
+;-------------------------------------------------------------------------
+
+PUBLISH MACRO
+    PUBLIC  \116\2
+    PUBLIC  \115\2
+    PUBLIC  \114\2
+    PUBLIC  \113\2
+    PUBLIC  \112\2
+    PUBLIC  \111\2
+    PUBLIC  \110\2
+    PUBLIC  \19\2
+    PUBLIC  \18\2
+    PUBLIC  \17\2
+    PUBLIC  \16\2
+    PUBLIC  \15\2
+    PUBLIC  \14\2
+    PUBLIC  \13\2
+    PUBLIC  \12\2
+    PUBLIC  \11\2
+    ENDM
+
+; Args: \1=macro name
+REGS    MACRO
+; The order of registers must the reverse of preserved_reg in p03.c.
+    \1  16,R15
+    \1  15,R14
+    \1  14,R13
+    \1  13,R12
+    \1  12,R11
+    \1  11,R10
+    \1  10,R9
+    \1  9,R8
+    \1  8,R7
+    \1  7,R6
+    \1  6,R5
+    \1  5,R4
+    \1  4,R27
+    \1  3,R26
+    \1  2,R25
+    \1  1,R24
+    ENDM
+
+;-------------------------------------------------------------------------
+;
+; Function:     ?PROLOGUE*_L09
+;
+; Created:      07/Jun/96 IANP
+;
+; Inputs:       -
+;
+; Returns:      -
+;
+; Size:         
+;
+; Destroys:     Y0 Y1
+;
+; Description:      
+; Push a number of non-scratch registers, and make room for auto variables.
+; The order of pushed registers must the reverse of preserved_reg in p03.c.
+;
+;-------------------------------------------------------------------------
+    MODULE  ?PROLOGUE_L09
+
+    PUBLISH ?PROLOGUE,_L09
+
+PROLOGUE    MACRO
+        RSEG    CODE:CODE:NOROOT
+?PROLOGUE\1_L09:
+        ST  -Y,\2
+        REQUIRE ?PROLOGUE\3_L09
+        ENDM
+
+    PROLOGUE    16,R15,15
+    PROLOGUE    15,R14,14
+    PROLOGUE    14,R13,13
+    PROLOGUE    13,R12,12
+    PROLOGUE    12,R11,11
+    PROLOGUE    11,R10,10
+    PROLOGUE    10,R9,9
+    PROLOGUE    9,R8,8
+    PROLOGUE    8,R7,7
+    PROLOGUE    7,R6,6
+    PROLOGUE    6,R5,5
+    PROLOGUE    5,R4,4
+    PROLOGUE    4,R27,3
+    PROLOGUE    3,R26,2
+    PROLOGUE    2,R25,1
+    PROLOGUE    1,R24,0
+
+    RSEG    CODE:CODE:NOROOT
+?PROLOGUE0_L09:
+    RET
+    ENDMOD
+
+;-------------------------------------------------------------------------
+;
+; Function:     ?MON_PROLOGUE*_L09
+;
+; Created:      07/Jun/96 IANP
+;
+; Inputs:       -
+;
+; Returns:      -
+;
+; Size:         
+;
+; Destroys:     T0 Y0 Y1
+;
+; Description:      
+; Push SREG, disable interrupt.
+;
+;-------------------------------------------------------------------------
+    MODULE  ?MON_PROLOGUE_L09
+
+    PUBLISH ?MON_PROLOGUE,_L09
+    PUBLIC  ?MON_PROLOGUE0_L09
+
+MON_PROLOGUE    MACRO
+        RSEG    CODE:CODE:NOROOT
+?MON_PROLOGUE\1_L09:
+        ST  -Y,\2
+        REQUIRE ?MON_PROLOGUE\3_L09
+        ENDM
+
+    MON_PROLOGUE    16,R15,15
+    MON_PROLOGUE    15,R14,14
+    MON_PROLOGUE    14,R13,13
+    MON_PROLOGUE    13,R12,12
+    MON_PROLOGUE    12,R11,11
+    MON_PROLOGUE    11,R10,10
+    MON_PROLOGUE    10,R9,9
+    MON_PROLOGUE    9,R8,8
+    MON_PROLOGUE    8,R7,7
+    MON_PROLOGUE    7,R6,6
+    MON_PROLOGUE    6,R5,5
+    MON_PROLOGUE    5,R4,4
+    MON_PROLOGUE    4,R27,3
+    MON_PROLOGUE    3,R26,2
+    MON_PROLOGUE    2,R25,1
+    MON_PROLOGUE    1,R24,0
+
+    RSEG    CODE:CODE:NOROOT
+?MON_PROLOGUE0_L09: 
+    IN  T0,SREG
+    ST  -Y,T0
+    CLI
+    RET
+
+    ENDMOD
+    
+;-------------------------------------------------------------------------
+;
+; Function:     ?EPILOGUE_B*_L09
+;
+; Created:      07/Jun/96 IANP
+;
+; Inputs:       Z0  - Number of bytes for stack parameters
+;                 (0 for ellipsis functions) plus
+;                 the number of registers to restore.
+;
+; Returns:      -
+;
+; Size:         
+;
+; Destroys:     T0 Y0 Y1 Z1 and all restored registers
+;
+; Description:      
+;   Restore a number of non-scratch registers.
+;
+;-------------------------------------------------------------------------
+    MODULE  ?EPILOGUE_B_L09
+
+    PUBLISH ?EPILOGUE_B,_L09
+    PUBLIC  ?EPILOGUE_B0_L09
+
+EPILOGUE_B  MACRO
+        RSEG    CODE:CODE:NOROOT
+?EPILOGUE_B\1_L09:
+        LDD \2,Y+(\1-1)
+        REQUIRE ?EPILOGUE_B\3_L09
+        ENDM
+
+    EPILOGUE_B  16,R15,15
+    EPILOGUE_B  15,R14,14
+    EPILOGUE_B  14,R13,13
+    EPILOGUE_B  13,R12,12
+    EPILOGUE_B  12,R11,11
+    EPILOGUE_B  11,R10,10
+    EPILOGUE_B  10,R9,9
+    EPILOGUE_B  9,R8,8
+    EPILOGUE_B  8,R7,7
+    EPILOGUE_B  7,R6,6
+    EPILOGUE_B  6,R5,5
+    EPILOGUE_B  5,R4,4
+    EPILOGUE_B  4,R27,3
+    EPILOGUE_B  3,R26,2
+    EPILOGUE_B  2,R25,1
+    EPILOGUE_B  1,R24,0
+
+    RSEG    CODE:CODE:NOROOT
+?EPILOGUE_B0_L09:
+
+#if A90_POINTER_REG_SIZE > 1
+#ifdef __HAS_ENHANCED_CORE__
+    LDI     Z1,0
+    ADD     Z0,Y0
+    ADC     Z1,Y1
+    MOVW    Y1:Y0,Z1:Z0
+#else /* Classic */
+    ;; Disable interrupt while adjusting data stack
+    LDI     Z1,0
+    IN      T0,SREG
+    CLI
+    ADD     Y0,Z0
+    ADC     Y1,Z1
+    OUT     SREG,T0
+#endif
+#else /* A90_POINTER_REG_SIZE == 1 */
+    ADD     Y0,Z0
+#endif
+    RET
+
+
+    ENDMOD
+
+;-------------------------------------------------------------------------
+;
+; Function:     ?EPILOGUE_W*_L09
+;
+; Created:      07/Jun/96 IANP
+;
+; Inputs:       Z1:Z0   - Number of bytes for stack parameters
+;                 (0 for ellipsis functions) plus
+;                 the number of registers to restore.
+;
+; Returns:      -
+;
+; Size:         
+;
+; Destroys:     T0 Y0 Y1 and all restored registers
+;
+; Description:      
+;   Restore a number of non-scratch registers.
+;
+;-------------------------------------------------------------------------
+    MODULE  ?EPILOGUE_W_L09
+
+    PUBLISH ?EPILOGUE_W,_L09
+    PUBLIC  ?EPILOGUE_W0_L09
+
+EPILOGUE_W  MACRO
+        RSEG    CODE:CODE:NOROOT
+?EPILOGUE_W\1_L09:
+        LDD \2,Y+(\1-1)
+        REQUIRE ?EPILOGUE_W\3_L09
+        ENDM
+
+    EPILOGUE_W  16,R15,15
+    EPILOGUE_W  15,R14,14
+    EPILOGUE_W  14,R13,13
+    EPILOGUE_W  13,R12,12
+    EPILOGUE_W  12,R11,11
+    EPILOGUE_W  11,R10,10
+    EPILOGUE_W  10,R9,9
+    EPILOGUE_W  9,R8,8
+    EPILOGUE_W  8,R7,7
+    EPILOGUE_W  7,R6,6
+    EPILOGUE_W  6,R5,5
+    EPILOGUE_W  5,R4,4
+    EPILOGUE_W  4,R27,3
+    EPILOGUE_W  3,R26,2
+    EPILOGUE_W  2,R25,1
+    EPILOGUE_W  1,R24,0
+
+    RSEG    CODE:CODE:NOROOT
+?EPILOGUE_W0_L09:
+#ifdef __HAS_ENHANCED_CORE__
+    ADD     Z0,Y0
+    ADC     Z1,Y1
+    MOVW    Y1:Y0,Z1:Z0
+#else /* Classic */
+    ;; Disable interrupt while adjusting data stack
+    IN      T0,SREG
+    CLI
+    ADD     Y0,Z0
+    ADC     Y1,Z1
+    OUT     SREG,T0
+#endif
+    RET
+
+    ENDMOD
+
+;-------------------------------------------------------------------------
+;
+; Function:     ?MON_EPILOGUE_B*_L09
+;
+; Created:      07/Jun/96 IANP
+;
+; Inputs:       Z0  - Number of bytes for stack parameters
+;                 (0 for ellipsis functions) plus
+;                 the number of registers to restore.
+;                 MON_EPILOGUE compensates for the extra
+;                 stack byte used by SREG.
+;
+; Returns:      -
+;
+; Size:         
+;
+; Destroys:     T0 Y0 Y1 Z1 and all restored registers
+;
+; Description:      
+;   Restore a number of non-scratch registers.
+;
+;-------------------------------------------------------------------------
+    MODULE  ?MON_EPILOGUE_B_L09
+
+    PUBLISH ?MON_EPILOGUE_B,_L09
+    PUBLIC  ?MON_EPILOGUE_B0_L09
+
+MON_EPILOGUE_B  MACRO
+        RSEG    CODE:CODE:NOROOT
+?MON_EPILOGUE_B\1_L09:
+        LDD \2,Y+\1
+        REQUIRE ?MON_EPILOGUE_B\3_L09
+        ENDM
+
+    MON_EPILOGUE_B  16,R15,15
+    MON_EPILOGUE_B  15,R14,14
+    MON_EPILOGUE_B  14,R13,13
+    MON_EPILOGUE_B  13,R12,12
+    MON_EPILOGUE_B  12,R11,11
+    MON_EPILOGUE_B  11,R10,10
+    MON_EPILOGUE_B  10,R9,9
+    MON_EPILOGUE_B  9,R8,8
+    MON_EPILOGUE_B  8,R7,7
+    MON_EPILOGUE_B  7,R6,6
+    MON_EPILOGUE_B  6,R5,5
+    MON_EPILOGUE_B  5,R4,4
+    MON_EPILOGUE_B  4,R27,3
+    MON_EPILOGUE_B  3,R26,2
+    MON_EPILOGUE_B  2,R25,1
+    MON_EPILOGUE_B  1,R24,0
+
+    RSEG    CODE:CODE:NOROOT
+?MON_EPILOGUE_B0_L09:
+#if A90_POINTER_REG_SIZE > 1
+    LDI     Z1,0
+#endif
+    LD      T0,Y+
+    ADD     Y0,Z0
+#if A90_POINTER_REG_SIZE > 1
+    ADC     Y1,Z1
+#endif
+    OUT     SREG,T0
+    RET
+
+    ENDMOD
+
+;-------------------------------------------------------------------------
+;
+; Function:     ?MON_EPILOGUE_W*_L09
+;
+; Created:      07/Jun/96 IANP
+;
+; Inputs:       Z1:Z0   - Number of bytes for stack parameters
+;                 (0 for ellipsis functions) plus
+;                 the number of registers to restore.
+;                 MON_EPILOGUE compensates for the extra
+;                 stack byte used by SREG.
+;
+; Returns:      -
+;
+; Size:         
+;
+; Destroys:     T0 Y0 Y1 and all restored registers
+;
+; Description:      
+;   Restore a number of non-scratch registers.
+;
+;-------------------------------------------------------------------------
+    MODULE  ?MON_EPILOGUE_W_L09
+
+    PUBLISH ?MON_EPILOGUE_W,_L09
+    PUBLIC  ?MON_EPILOGUE_W0_L09
+
+MON_EPILOGUE_W  MACRO
+        RSEG    CODE:CODE:NOROOT
+?MON_EPILOGUE_W\1_L09:
+        LDD \2,Y+\1
+        REQUIRE ?MON_EPILOGUE_W\3_L09
+        ENDM
+
+    MON_EPILOGUE_W  16,R15,15
+    MON_EPILOGUE_W  15,R14,14
+    MON_EPILOGUE_W  14,R13,13
+    MON_EPILOGUE_W  13,R12,12
+    MON_EPILOGUE_W  12,R11,11
+    MON_EPILOGUE_W  11,R10,10
+    MON_EPILOGUE_W  10,R9,9
+    MON_EPILOGUE_W  9,R8,8
+    MON_EPILOGUE_W  8,R7,7
+    MON_EPILOGUE_W  7,R6,6
+    MON_EPILOGUE_W  6,R5,5
+    MON_EPILOGUE_W  5,R4,4
+    MON_EPILOGUE_W  4,R27,3
+    MON_EPILOGUE_W  3,R26,2
+    MON_EPILOGUE_W  2,R25,1
+    MON_EPILOGUE_W  1,R24,0
+
+    RSEG    CODE:CODE:NOROOT
+?MON_EPILOGUE_W0_L09:
+    LD      T0,Y+
+#ifdef __XMEGA_CORE__
+    ADD     Z0,Y0
+    ADC     Z1,Y1
+    MOVW    Y1:Y0,Z1:Z0
+#else /* Classic */
+    ADD     Y0,Z0
+    ADC     Y1,Z1
+#endif /*__XMEGA_CORE__*/
+    OUT     SREG,T0
+    RET
+
+    END
+
+;----------------------------------------------------------------------------
+;  

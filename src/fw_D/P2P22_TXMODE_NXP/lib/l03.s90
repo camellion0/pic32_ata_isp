@@ -1,0 +1,433 @@
+;----------------------------------------------------------------------------
+;
+;  Library routines for the ATMEL AT90S processors
+;  Long arithmetics
+; 
+;  Copyright 1996-2008 IAR Systems AB. All rights reserved.
+; 
+;  $Revision: 328482 $
+; 
+;----------------------------------------------------------------------------
+; 
+; REMARKS ON THE SHIFT OPERATIONS:
+;---------------------------------
+; For shift counts > 31 on 32-bit operands, the ANSI standard defines the
+; corresponding result as 'undefined'.
+; In the present code these situations are treated as follows:
+; The shift count 'n' (input parameter) is always contained in a single
+; byte (Q0) which limits its range to 0..255.
+; If 31 < n < 129, $00_00_00_00 (or for arithmetic shift right possibly
+; $FF_FF_FF_FF) is returned in PL, but n loop iterations are always done.
+; For n > 129 the original value in PL is returned unaffected
+; and 'immediately'.
+;
+; REMARKS ON MULTIPLICATION:
+;---------------------------
+; For multiplication the ANSI standard requires that if the two operands
+; are unsigned 32-bit integers, the result shall be congruent mod 2**32 to the
+; true mathematical result. The current implementation fulfills this
+; requirement. For other types of operands the result is considered as
+; 'undefined' in case of overflow.
+;
+; REMARKS ON DIVISION:
+;---------------------
+; Division of two positive integers shall always be truncating (e.g.
+; 14/5 is 2 not 3). This is fulfilled here, (and the remainder in such
+; cases is always a positive integer). If either operand is negative,
+; the choice is 'left to the discretion of the implementator.'
+;
+; During the division the carry bit resulting from a previously compare
+; or subtract is successively shifted into the quotient. Since the carry
+; setting is the inverse of that expected by the algorithm, the quotinent
+; is complemented before return. This is a 'cheaper' operation than
+; explicitely setting the carry every time before it is shifted in.
+;
+
+    
+#include "macros.m90"
+
+;--------------------------------------------------------------
+; L_MUL_L03
+; 'long' (i.e. 32 bit) multiplication, both signed and unsigned
+; On call: PL = multiplier, QL = multiplicand
+; Returns 32-bit result in PL.
+; IMPORTANT: If possible, put smallest (in positive sense)
+; number in PL.
+;
+; Destroys: P0 P1 P2 P3 Q0 Q1 Q2 Q3 T0 T1 T2 T3 Z0
+;
+; SIZE: 56 bytes
+;
+
+    MODULE  ?L_MUL_L03
+    PUBLIC  ?L_MUL_L03
+    RSEG    CODE:CODE:NOROOT(1)
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?L_MUL_L03:
+    CLR     T0      ; Clear accumulator
+    CLR     T1      ;
+#ifdef __HAS_ENHANCED_CORE__
+    MOVW T3:T2,T1:T0
+#else
+    CLR     T2      ;
+    CLR     T3      ;
+#endif
+A31:    
+    MOV     Z0,P0       ; Test multiplier for 0
+    OR      Z0,P1
+    OR      Z0,P2
+    OR      Z0,P3
+    BREQ    X31     ; Multiplier exhausted
+    LSR     P3      ; Shift lowest bit of multiplicand
+    ROR     P2      ; rightwards into carry.
+    ROR     P1
+    ROR     P0
+    BRCC    B31
+    ADD     T0,Q0       ; If carry set, add multiplicand.
+    ADC     T1,Q1
+    ADC     T2,Q2
+    ADC     T3,Q3
+B31:    
+    LSL     Q0      ; Shift multiplicand leftwards
+    ROL     Q1
+    ROL     Q2
+    ROL     Q3
+    RJMP    A31
+X31:    
+#ifdef __HAS_ENHANCED_CORE__
+    MOVW    P1:P0,T1:T0
+    MOVW    P3:P2,T3:T2
+#else
+    MOV     P0,T0       ; Fill in return parameters
+    MOV     P1,T1
+    MOV     P2,T2
+    MOV     P3,T3
+#endif
+    RET
+
+    ENDMOD
+
+;--------------------------------------------------------------
+; L_EC_MUL_L03
+; 'long' (i.e. 32 bit) multiplication, both signed and unsigned
+; On call: PL = multiplier, QL = multiplicand
+; Returns 32-bit result in PL.
+; IMPORTANT: If possible, put smallest (in positive sense)
+; number in PL.
+;
+; Destroys: P0 P1 P2 P3 T0 T1 T2
+;
+; SIZE: 64 bytes
+;
+#if defined(__HAS_ENHANCED_CORE__) && defined(__HAS_MUL__)
+
+    MODULE  ?L_EC_MUL_L03
+    PUBLIC  ?L_EC_MUL_L03
+    RSEG    CODE:CODE:NOROOT(1)
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?L_EC_MUL_L03:
+    CLR     T2
+    MUL     P3,Q0
+    MOV     P3,T0
+    MUL     P2,Q1
+    ADD     P3,T0
+    MUL     P1,Q2
+    ADD     P3,T0
+    MUL     P0,Q3
+    ADD     P3,T0
+    MUL     P2,Q0
+    MOV     P2,T0
+    ADD     P3,T1
+    MUL     P1,Q1
+    ADD     P2,T0
+    ADC     P3,T1
+    MUL     P0,Q2
+    ADD     P2,T0
+    ADC     P3,T1
+    MUL     P1,Q0
+    MOV     P1,T0
+    ADD     P2,T1
+    ADC     P3,T2
+    MUL     P0,Q1
+    ADD     P1,T0
+    ADC     P2,T1
+    ADC     P3,T2
+    MUL     P0,Q0
+    MOV     P0,T0
+    ADD     P1,T1
+    ADC     P2,T2
+    ADC     P3,T2
+    RET
+
+    ENDMOD
+#endif
+
+;----------------------------------------------------------
+; L_SHL_L03
+; 'long' << n (n in 0..31)
+; Q0 contains n and is destroyed
+; PL contains value to be shifted and returns shifted value
+;
+; See also comments about the shift operations in the header.
+;
+; Destroys: P0 P1 P2 P3 Q0
+;
+; SIZE: 16 bytes
+;
+    MODULE  ?L_SHL_L03
+    PUBLIC  ?L_SHL_L03
+    RSEG    CODE:CODE:NOROOT(1)
+
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?L_SHL_L03:
+    DEC     Q0
+    BRMI    X32     ; Done
+    LSL     P0
+    ROL     P1
+    ROL     P2
+    ROL     P3
+    RJMP    ?L_SHL_L03
+X32:    
+    RET
+
+    ENDMOD
+
+;----------------------------------------------------------
+; UL_SHR_L03
+; 'long' >> n (n in 0..31) unsigned
+; Q0 contains n and is destroyed
+; PL contains value to be shifted and returns shifted value
+;
+; See also comments about the shift operations in the header.
+;
+; Destroys: P0 P1 P2 P3 Q0
+;
+; SIZE: 16 bytes
+
+    MODULE  ?UL_SHR_L03
+    PUBLIC  ?UL_SHR_L03
+    RSEG    CODE:CODE:NOROOT(1)
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?UL_SHR_L03:
+    DEC     Q0
+    BRMI    X33     ; Done
+    LSR     P3
+    ROR     P2
+    ROR     P1
+    ROR     P0
+    RJMP    ?UL_SHR_L03
+X33:    
+    RET
+
+    ENDMOD
+
+;----------------------------------------------------------
+; SL_SHR_L03
+; 'long' >> n (n in 0..31) signed
+; Q0 contains n and is destroyed
+; PL contains value to be shifted and returns shifted value
+;
+; See also comments about the shift operations in the header.
+;
+; Destroys: P0 P1 P2 P3 Q0
+;
+; SIZE: 16 bytes
+
+    MODULE  ?SL_SHR_L03
+    PUBLIC  ?SL_SHR_L03
+    RSEG    CODE:CODE:NOROOT(1)
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?SL_SHR_L03:
+    DEC     Q0
+    BRMI    X34     ; Done
+    ASR     P3
+    ROR     P2
+    ROR     P1
+    ROR     P0
+    RJMP    ?SL_SHR_L03
+X34:    
+    RET
+
+    ENDMOD
+
+;-------------------------------------------------------------
+; UL_DIVMOD_L03
+; 'unsigned long' (i.e. 32 bit) division and modulo
+; On call: PL = dividend (i.e. number to be divided by divisor)
+;      QL = divisor
+; On return: PL = quotient, QL = remainder
+;
+; NOTE: This subroutine is also called from SS_DIVMOD_L03
+;
+; Destroys: P0 P1 P2 P3 Q0 Q1 Q2 Q3 T0 T1 T2 T3 Z0
+;
+; SIZE: 76 bytes
+;
+
+    MODULE  ?UL_DIVMOD_L03
+    PUBLIC  ?UL_DIVMOD_L03
+    RSEG    CODE:CODE:NOROOT(1)
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?UL_DIVMOD_L03:
+    CLR     T0      ; Clear remainder
+    CLR     T1      ;     - "" -
+#ifdef __HAS_ENHANCED_CORE__
+    MOVW    T3:T2,T1:T0
+#else
+    CLR     T2      ;     - "" -
+    CLR     T3      ;     - "" -
+#endif
+    LDI Z0,32       ; Loop counter
+A35:    
+    DEC     Z0      ; Does not affect carry !
+    BRMI    B35     ; All done
+    ROL     P0      ; Shift quotient/dividend
+    ROL     P1
+    ROL     P2
+    ROL     P3      ;
+    ROL     T0      ; --> into remainder
+    ROL     T1
+    ROL     T2
+    ROL     T3      ;
+    CP      T0,Q0
+    CPC     T1,Q1
+    CPC     T2,Q2
+    CPC     T3,Q3
+    BRLO    A35     ; Carry 0 expected by algorithm but it
+                ; is actually 1 !
+;
+; Here if time to subtract, i.e. value in remainder is
+; larger than divisor.
+;
+    SUB     T0,Q0
+    SBC     T1,Q1
+    SBC     T2,Q2
+    SBC     T3,Q3
+    RJMP    A35     ; Carry 1 expected by algorithm, but is 0.
+B35:    
+    ROL     P0      ; Only quotient shifted
+    ROL     P1      ; in last step.
+    ROL     P2
+    ROL     P3
+#ifdef __HAS_ENHANCED_CORE__
+    MOVW    Q1:Q0,T1:T0
+    MOVW    Q3:Q2,T3:T2
+#else
+    MOV     Q0,T0       ; Remainder
+    MOV     Q1,T1
+    MOV     Q2,T2
+    MOV     Q3,T3
+#endif
+    COM     P0      ; Adjust for inverse carry setting
+    COM     P1
+    COM     P2
+    COM     P3
+    RET         ; Referred from SL_DIVMOD_L03
+
+    ENDMOD
+
+;-------------------------------------------------------------
+; SL_DIVMOD_L03
+; 'signed long' (i.e. 32 bit) division and modulo
+; On call: PL = dividend (i.e. number to be divided by divisor)
+;      QL = divisor
+; On return: PL = quotient, QL = remainder
+;
+; NOTE: This subroutine calls UL_DIVMOD_L03 and L_NEG_L03
+;
+; Destroys: P0 P1 P2 P3 Q0 Q1 Q2 Q3 T0 T1 T2 T3 Z0 Z1
+;
+; SIZE: 34 bytes
+;
+; Flag NEG_QUOTE is bit 0 of Z1
+; Flag NEG_REM   is bit 1 of Z1
+;
+
+    MODULE  ?SL_DIVMOD_L03
+    PUBLIC  ?SL_DIVMOD_L03
+    PUBLIC  ?L_NEG_Q_L03
+    PUBLIC  ?L_NEG_L03
+    IMPORT  ?UL_DIVMOD_L03
+    RSEG    CODE:CODE:NOROOT(1)
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?SL_DIVMOD_L03:
+    CLR     Z1      ; Used for flags NEG_QUOTE and NEG_REM
+    TST     Q3      ; Is divisor negative ?
+    BRPL    A36     ; No
+    ORI     Z1,1        ; Set NEG_QUOTE
+    RCALL   ?L_NEG_Q_L03    ; Negate divisor
+A36:    
+    TST     P3      ; Is dividend negative ?
+    BRPL    B36     ; No
+    COM     Z1      ; Invert NEG_QUOTE and set NEG_REM
+    RCALL   ?L_NEG_L03  ; Negate dividend
+B36:    
+    XCALL   ?UL_DIVMOD_L03
+    LSR     Z1
+    BRCC    C36     ; Skip if not NEG_QUOTE
+    RCALL   ?L_NEG_L03  ; Negate quotient
+C36:    
+    LSR     Z1
+    BRCC    C36b        ; Return
+    RJMP    ?L_NEG_Q_L03    ; Negate remainder and return there
+C36b:   
+    RET
+        
+;----------------------------------------------------
+; L_NEG_L03
+;
+; Negates value in PL
+;
+; No other registers are affected
+;
+; Destroys: P0 P1 P2 P3
+;
+; SIZE: 16 bytes
+;
+    RSEG    CODE:CODE:NOROOT(1)
+
+?L_NEG_L03:
+    COM     P3      ; Negate PL
+    COM     P2
+    COM     P1
+    NEG     P0
+    SBCI    P1,255
+    SBCI    P2,255
+    SBCI    P3,255
+    RET
+
+;----------------------------------------------------
+; L_NEG_Q_L03
+;
+; Negates value in QL
+;
+; No other registers are affected
+; Destroys: Q0 Q1 Q2 Q3
+;
+; SIZE: 16 bytes
+;
+    RSEG    CODE:CODE:NOROOT(1)
+
+?L_NEG_Q_L03:
+    COM     Q3      ; Negate QL
+    COM     Q2
+    COM     Q1
+    NEG     Q0
+    SBCI    Q1,255
+    SBCI    Q2,255
+    SBCI    Q3,255
+    RET
+
+    ENDMOD
+
+    END
+
+;----------------------------------------------------------------------------
+;  

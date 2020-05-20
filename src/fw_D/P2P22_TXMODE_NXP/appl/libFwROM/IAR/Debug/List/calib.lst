@@ -1,0 +1,1401 @@
+###############################################################################
+#
+# IAR C/C++ Compiler V6.70.1.929 for Atmel AVR            05/Apr/2016  13:30:40
+# Copyright 1996-2015 IAR Systems AB.
+# Network license: DVRIAR01.corpp.atmel.com (STD)
+#
+#    Source file  =  
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\firmware\calib\src\calib.c
+#    Command line =  
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\firmware\calib\src\calib.c
+#        -v3 --enhanced_core -ms -o
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\Obj
+#        -lC
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\List
+#        -lA
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\List
+#        --initializers_in_flash --no_cse --no_inline --no_code_motion
+#        --no_cross_call --no_clustering --no_tbaa --debug --64k_flash
+#        -DENABLE_BIT_DEFINITIONS -e -I "C:\Program Files (x86)\IAR
+#        Systems\Embedded Workbench 6.0\avr\inc\" --eeprom_size 1152 --clib
+#        -Ohz
+#    List file    =  
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\List\calib.lst
+#    Object file  =  
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\Obj\calib.r90
+#
+###############################################################################
+
+C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\firmware\calib\src\calib.c
+      1          //lint -e9059
+      2          /* *C**************************************************************************
+      3            Use of this software is subject to Atmel's Software License Agreement.
+      4          -------------------------------------------------------------------------------
+      5            $URL: http://svnservulm.corp.atmel.com/svn/CDB/Apps/SW_Lib/Car_Access/CARS_GEN2/ATAB5702A/Branches/P2_Gen2_Merge/firmware/calib/src/calib.c $
+      6            $LastChangedRevision: 328482 $
+      7            $LastChangedDate: 2015-07-22 13:17:23 -0600 (Wed, 22 Jul 2015) $
+      8            $LastChangedBy: grueter $
+      9          -------------------------------------------------------------------------------
+     10            Project:      ATA5700
+     11            Target MCU:   ATA5700
+     12            Compiler:     IAR C/C++ Compiler for AVR 6.30.1
+     13          -------------------------------------------------------------------------------
+     14          
+     15          ******************************************************************************
+     16          * Copyright 2011, Atmel Automotive GmbH                                       *
+     17          *                                                                             *
+     18          * This software is owned by the Atmel Automotive GmbH                         *
+     19          * and is protected by and subject to worldwide patent protection.             *
+     20          * Atmel hereby grants to licensee a personal,                                 *
+     21          * non-exclusive, non-transferable license to copy, use, modify, create        *
+     22          * derivative works of, and compile the Atmel Source Code and derivative       *
+     23          * works for the sole purpose of creating custom software in support of        *
+     24          * licensee product to be used only in conjunction with a Atmel integrated     *
+     25          * circuit as specified in the applicable agreement. Any reproduction,         *
+     26          * modification, translation, compilation, or representation of this           *
+     27          * software except as specified above is prohibited without the express        *
+     28          * written permission of Atmel.                                                *
+     29          *                                                                             *
+     30          * Disclaimer: ATMEL MAKES NO WARRANTY OF ANY KIND,EXPRESS OR IMPLIED,         *
+     31          * WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED    *
+     32          * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.         *
+     33          * Atmel reserves the right to make changes without further notice to the      *
+     34          * materials described herein. Atmel does not assume any liability arising     *
+     35          * out of the application or use of any product or circuit described herein.   *
+     36          * Atmel does not authorize its products for use as critical components in     *
+     37          * life-support systems where a malfunction or failure may reasonably be       *
+     38          * expected to result in significant injury to the user. The inclusion of      *
+     39          * Atmel products in a life-support systems application implies that the       *
+     40          * manufacturer assumes all risk of such use and in doing so indemnifies       *
+     41          * Atmel against all charges.                                                  *
+     42          *                                                                             *
+     43          * Use may be limited by and subject to the applicable Atmel software          *
+     44          * license agreement.                                                          *
+     45          ******************************************************************************/
+     46          /** \file calib.c
+     47          */
+     48          //lint -restore
+     49          /*===========================================================================*/
+     50          /*  INCLUDES                                                                 */
+     51          /*===========================================================================*/
+     52          #include "calib.h"
+
+   \                                 In  segment ABSOLUTE, at 0x21
+   \   union <unnamed> volatile __io _A_PRR1
+   \                     _A_PRR1:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x32
+   \   union <unnamed> volatile __io _A_T2CR
+   \                     _A_T2CR:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x33
+   \   union <unnamed> volatile __io _A_T3CR
+   \                     _A_T3CR:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x5f
+   \   union <unnamed> volatile __io _A_SREG
+   \                     _A_SREG:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x74
+   \   union <unnamed> volatile __io _A_T2COR
+   \                     _A_T2COR:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x79
+   \   union <unnamed> volatile __io _A_T3CORL
+   \                     _A_T3CORL:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x7a
+   \   union <unnamed> volatile __io _A_T3CORH
+   \                     _A_T3CORH:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x7b
+   \   union <unnamed> volatile __io _A_T3ICRL
+   \                     _A_T3ICRL:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x7c
+   \   union <unnamed> volatile __io _A_T3ICRH
+   \                     _A_T3ICRH:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x84
+   \   union <unnamed> volatile __io _A_T4ICRL
+   \                     _A_T4ICRL:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x85
+   \   union <unnamed> volatile __io _A_T4ICRH
+   \                     _A_T4ICRH:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0xc7
+   \   union <unnamed> volatile __io _A_FRCCAL
+   \                     _A_FRCCAL:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0xcc
+   \   union <unnamed> volatile __io _A_SUPCR
+   \                     _A_SUPCR:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0xfc
+   \   union <unnamed> volatile __io _A_TRCIDL
+   \                     _A_TRCIDL:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0xfd
+   \   union <unnamed> volatile __io _A_TRCIDH
+   \                     _A_TRCIDH:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0xff
+   \   union <unnamed> volatile __io _A_TRCDR
+   \                     _A_TRCDR:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x101
+   \   union <unnamed> volatile __ext_io _A_FEEN1
+   \                     _A_FEEN1:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x159
+   \   union <unnamed> volatile __ext_io _A_T2IFR
+   \                     _A_T2IFR:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x1e1
+   \   union <unnamed> volatile __ext_io _A_T3IFR
+   \                     _A_T3IFR:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x1f1
+   \   union <unnamed> volatile __ext_io _A_SRCCAL
+   \                     _A_SRCCAL:
+   \   00000000                      DS8 1
+     53          
+     54          #include "..\..\globals\src\globals.h"
+     55          #include "..\..\eep\src\eep.h"
+     56          
+     57          #include "..\..\timer2\src\timer2.h"
+     58          #include "..\..\timer3\src\timer3.h"
+     59          #include "..\..\timer4\src\timer4.h"
+     60          
+     61          /*===========================================================================*/
+     62          /*  DEFINES                                                                  */
+     63          /*===========================================================================*/
+     64          
+     65          /*===========================================================================*/
+     66          /*  Modul Globals                                                            */
+     67          /*===========================================================================*/
+     68          /** \brief <b>g_sCalibConfig</b>
+     69              contains the configuration and status information for module CALIB.
+     70          */
+     71          #pragma location = ".calib"
+
+   \                                 In  segment .calib, align 1, keep-with-next, root
+     72          __root __no_init sCalibConfig g_sCalibConfig;
+   \                     g_sCalibConfig:
+   \   00000000                      DS8 12
+     73          
+     74          /*===========================================================================*/
+     75          /*  IMPLEMENTATION                                                           */
+     76          /*===========================================================================*/
+     77          
+     78          static VOIDFUNC ATA_calibSrcMeasurement_C(void);
+     79          static VOIDFUNC ATA_calibSetSrcCalRegister_C(void);
+     80          
+     81          static VOIDFUNC ATA_calibFrcMeasurement_C(void);
+     82          static VOIDFUNC ATA_calibSetFrcCalRegister_C(void);
+     83          
+     84          
+     85          /*---------------------------------------------------------------------------*/
+     86          /** \brief <b>ATA_calibInit_C</b>
+     87              initializes the CALIB module. This function should be executed before
+     88              starting CALIB.
+     89          
+     90              Variable Usage:
+     91              \li [in,out] ::g_sCalibConfig Global Calibration component data
+     92              \li [out] ::g_sDebug Global Debug component data
+     93          
+     94              \image html ATA_calibInit_C.png
+     95          
+     96              \internal
+     97              \li 005: Set HW trace point for this function
+     98          
+     99              \li 010: Initialize module global ::g_sCalibConfig
+    100          
+    101              \li 017: Get address for SRC calibration configuration located in the
+    102                       User EEPROM section by evaluating the indirect address defined in the
+    103                       Customer EEPROM section.
+    104          
+    105              \li 018: IF after the EEPROM read access to retrieve the requested data, an
+    106                        uncorrectable EEPROM error was detected, indicated by
+    107                        the return value of function "ATA_eepReadBytes_C",
+    108                       THEN
+    109                         Set an EEPROM read error indication in ::g_sCalibConfig .bFlags and
+    110                         set ::g_sDebug .bErrorCode to the Calib module EEPROM read error
+    111                       ENDIF
+    112          
+    113              \li 020: Initialize SRC variables with EEPROM content from g_sEepCalibSrcCalibrationConfig
+    114          
+    115              \li 025: IF after the EEPROM read access to retrieve the requested data, an
+    116                        uncorrectable EEPROM error was detected, indicated by
+    117                        the return value of function "ATA_eepReadBytes_C",
+    118                       THEN
+    119                         Set an EEPROM read error indication in ::g_sCalibConfig .bFlags and
+    120                         set ::g_sDebug .bErrorCode to the Calib module EEPROM read error
+    121                       ENDIF
+    122          
+    123              \li 030: Initialize FRC variables with EEPROM content from g_sEepCalibFrcCalibrationConfig
+    124                       and get address for FRC calibration configuration located in the
+    125                       User EEPROM section
+    126          
+    127              \li 040: IF after the EEPROM read access to retrieve the requested data, an
+    128                        uncorrectable EEPROM error was detected, indicated by
+    129                        the return value of function "ATA_eepReadBytes_C",
+    130                       THEN
+    131                         Set an EEPROM read error indication in ::g_sCalibConfig .bFlags and
+    132                         set ::g_sDebug .bErrorCode to the Calib module EEPROM read error
+    133                       ENDIF
+    134          
+    135              \Derived{No}
+    136          
+    137              \Rationale{N/A}
+    138          
+    139              \Traceability{Primus2P-875,Primus2P-1979,Primus2P-1980,Primus2P-1981,\
+    140                            Primus2P-2444}
+    141              \endinternal
+    142          \n
+    143           */
+    144          /*---------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    145          VOIDFUNC ATA_calibInit_C(void)
+   \                     ATA_calibInit_C:
+    146          {
+   \   00000000   939A               ST      -Y, R25
+   \   00000002   938A               ST      -Y, R24
+   \   00000004   9722               SBIW    R29:R28, 2
+    147              eEepErrorCode sEepErrCode;
+    148          
+    149              /* LLR-Ref: 005 */
+    150              ATA_SET_FUNCTION_TRACE_POINT_C(ATA_calibInit_C, 0x00U);
+   \   00000006   B72F               IN      R18, 0x3F
+   \   00000008   94F8               CLI
+   \   0000000A   E000               LDI     R16, 0
+   \   0000000C   9300....           STS     _A_TRCDR, R16
+   \   00000010   ....               LDI     R16, LOW(ATA_calibInit_C/2)
+   \   00000012   9300....           STS     _A_TRCIDL, R16
+   \   00000016   ....               LDI     R16, (ATA_calibInit_C/2) >> 8
+   \   00000018   9300....           STS     _A_TRCIDH, R16
+   \   0000001C   BF2F               OUT     0x3F, R18
+    151          
+    152              /* LLR-Ref: 010 */
+    153              g_sCalibConfig.bFlags     = 0x00U;
+   \   0000001E   E000               LDI     R16, 0
+   \   00000020   9300....           STS     g_sCalibConfig, R16
+    154              g_sCalibConfig.bStatus    = 0x00U;
+   \   00000024   9300....           STS     (g_sCalibConfig + 1), R16
+    155              g_sCalibConfig.bConfig    = 0x00U;
+   \   00000028   9300....           STS     (g_sCalibConfig + 2), R16
+    156          
+    157              /* LLR-Ref: 017 */
+    158              uint8_t ary[2];
+    159              sEepErrCode = ATA_eepReadBytes_C(&ary[0],(uint16_t)&g_sCustomerEEPromSection.eepCalibConfPtr_l,2U);
+   \   0000002C   E042               LDI     R20, 2
+   \   0000002E   ....               LDI     R18, LOW((g_sCustomerEEPromSection + 106))
+   \   00000030   ....               LDI     R19, HIGH((g_sCustomerEEPromSection + 106))
+   \   00000032   018E               MOVW    R17:R16, R29:R28
+   \   00000034   ........           CALL    ATA_eepReadBytes_C
+    160              uint16_t wEepCalibAddr = (uint16_t)((ary[1]<<SHIFT_LOW_TO_HIGH_BYTE|ary[0]));
+   \   00000038   8199               LDD     R25, Y+1
+   \   0000003A   8128               LD      R18, Y
+   \   0000003C   2F82               MOV     R24, R18
+    161          
+    162              /* LLR-Ref: 018 */
+    163              if(sEepErrCode != EEC_NO_ERROR)
+   \   0000003E   2300               TST     R16
+   \   00000040   F041               BREQ    ??ATA_calibInit_C_0
+    164              {
+    165                  ATA_SETBITMASK_C(g_sCalibConfig.bFlags,BM_CALIB_CONFIG_FLAGS_ERROR)
+   \   00000042   ....               LDI     R30, LOW(g_sCalibConfig)
+   \   00000044   ....               LDI     R31, (g_sCalibConfig) >> 8
+   \   00000046   8100               LD      R16, Z
+   \   00000048   6800               ORI     R16, 0x80
+   \   0000004A   8300               ST      Z, R16
+    166                  g_sDebug.bErrorCode = DEBUG_ERROR_CODE_CALIB_EEPROM_READ_ERROR;
+   \   0000004C   E30E               LDI     R16, 62
+   \   0000004E   9300....           STS     g_sDebug, R16
+    167              }
+    168          
+    169              /* LLR-Ref: 020 */
+    170              g_sCalibConfig.wSrcResult = 0x0000U;
+   \                     ??ATA_calibInit_C_0:
+   \   00000052   E000               LDI     R16, 0
+   \   00000054   9300....           STS     (g_sCalibConfig + 3), R16
+   \   00000058   9300....           STS     (g_sCalibConfig + 4), R16
+    171              uint8_t *pDestData = (uint8_t*)(&g_sCalibConfig.sSrcCalibrationConfig);
+    172          
+    173              sEepErrCode = ATA_eepReadBytes_C(pDestData, wEepCalibAddr, sizeof(g_sCalibConfig.sSrcCalibrationConfig));
+    174          
+    175              /* LLR-Ref: 025 */
+    176              if(sEepErrCode != EEC_NO_ERROR)
+   \   0000005C   E043               LDI     R20, 3
+   \   0000005E   2F39               MOV     R19, R25
+   \   00000060   ....               LDI     R16, LOW((g_sCalibConfig + 5))
+   \   00000062   ....               LDI     R17, HIGH((g_sCalibConfig + 5))
+   \   00000064   ........           CALL    ATA_eepReadBytes_C
+   \   00000068   2300               TST     R16
+   \   0000006A   F041               BREQ    ??ATA_calibInit_C_1
+    177              {
+    178                  ATA_SETBITMASK_C(g_sCalibConfig.bFlags,BM_CALIB_CONFIG_FLAGS_ERROR)
+   \   0000006C   ....               LDI     R30, LOW(g_sCalibConfig)
+   \   0000006E   ....               LDI     R31, (g_sCalibConfig) >> 8
+   \   00000070   8100               LD      R16, Z
+   \   00000072   6800               ORI     R16, 0x80
+   \   00000074   8300               ST      Z, R16
+    179                  g_sDebug.bErrorCode = DEBUG_ERROR_CODE_CALIB_EEPROM_READ_ERROR;
+   \   00000076   E30E               LDI     R16, 62
+   \   00000078   9300....           STS     g_sDebug, R16
+    180              }
+    181          
+    182              /* LLR-Ref: 030 */
+    183              g_sCalibConfig.wFrcResult = 0x0000U;
+   \                     ??ATA_calibInit_C_1:
+   \   0000007C   E000               LDI     R16, 0
+   \   0000007E   9300....           STS     (g_sCalibConfig + 8), R16
+   \   00000082   9300....           STS     (g_sCalibConfig + 9), R16
+    184              wEepCalibAddr += (uint16_t)sizeof(g_sCalibConfig.sSrcCalibrationConfig);
+    185              pDestData = (uint8_t *)(&g_sCalibConfig.sFrcCalibrationConfig);
+    186          
+    187              sEepErrCode = ATA_eepReadBytes_C(pDestData, wEepCalibAddr, sizeof(g_sCalibConfig.sFrcCalibrationConfig));
+    188          
+    189              /* LLR-Ref: 040 */
+    190              if(sEepErrCode != EEC_NO_ERROR)
+   \   00000086   E042               LDI     R20, 2
+   \   00000088   9603               ADIW    R25:R24, 3
+   \   0000008A   019C               MOVW    R19:R18, R25:R24
+   \   0000008C   ....               LDI     R16, LOW((g_sCalibConfig + 10))
+   \   0000008E   ....               LDI     R17, HIGH((g_sCalibConfig + 10))
+   \   00000090   ........           CALL    ATA_eepReadBytes_C
+   \   00000094   2300               TST     R16
+   \   00000096   F041               BREQ    ??ATA_calibInit_C_2
+    191              {
+    192                  ATA_SETBITMASK_C(g_sCalibConfig.bFlags,BM_CALIB_CONFIG_FLAGS_ERROR)
+   \   00000098   ....               LDI     R30, LOW(g_sCalibConfig)
+   \   0000009A   ....               LDI     R31, (g_sCalibConfig) >> 8
+   \   0000009C   8100               LD      R16, Z
+   \   0000009E   6800               ORI     R16, 0x80
+   \   000000A0   8300               ST      Z, R16
+    193                  g_sDebug.bErrorCode = DEBUG_ERROR_CODE_CALIB_EEPROM_READ_ERROR;
+   \   000000A2   E30E               LDI     R16, 62
+   \   000000A4   9300....           STS     g_sDebug, R16
+    194              }
+    195          }
+   \                     ??ATA_calibInit_C_2:
+   \   000000A8   9622               ADIW    R29:R28, 2
+   \   000000AA                      REQUIRE ?Subroutine0
+   \   000000AA                      REQUIRE _A_SREG
+   \   000000AA                      REQUIRE _A_TRCDR
+   \   000000AA                      REQUIRE _A_TRCIDL
+   \   000000AA                      REQUIRE _A_TRCIDH
+   \   000000AA                      ;               // Fall through to label ?Subroutine0
+
+   \                                 In  segment CODE, align 2, keep-with-next
+   \                     ?Subroutine0:
+   \   00000000   9189               LD      R24, Y+
+   \   00000002   9199               LD      R25, Y+
+   \   00000004   9508               RET
+    196          
+    197          /*---------------------------------------------------------------------------*/
+    198          /** \brief <b>ATA_calibClose_C</b>
+    199              closes the CALIB module by disabling CALIB specific parts
+    200          
+    201              \image html ATA_calibClose_C.png
+    202          
+    203              \internal
+    204              \li 005: Set HW trace point for this function
+    205          
+    206              \Derived{No}
+    207          
+    208              \Rationale{N/A}
+    209          
+    210              \Traceability{Primus2P-875,Primus2P-1979,Primus2P-1980,Primus2P-1981}
+    211              \endinternal
+    212          \n
+    213           */
+    214          /*---------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    215          VOIDFUNC ATA_calibClose_C(void)
+   \                     ATA_calibClose_C:
+    216          {
+    217              /* LLR-Ref: 005 */
+    218              ATA_SET_FUNCTION_TRACE_POINT_C(ATA_calibClose_C, 0x00U);
+   \   00000000   B72F               IN      R18, 0x3F
+   \   00000002   94F8               CLI
+   \   00000004   E000               LDI     R16, 0
+   \   00000006   9300....           STS     _A_TRCDR, R16
+   \   0000000A   ....               LDI     R16, LOW(ATA_calibClose_C/2)
+   \   0000000C   9300....           STS     _A_TRCIDL, R16
+   \   00000010   ....               LDI     R16, (ATA_calibClose_C/2) >> 8
+   \   00000012   9300....           STS     _A_TRCIDH, R16
+   \   00000016   BF2F               OUT     0x3F, R18
+    219          }
+   \   00000018   9508               RET
+   \   0000001A                      REQUIRE _A_SREG
+   \   0000001A                      REQUIRE _A_TRCDR
+   \   0000001A                      REQUIRE _A_TRCIDL
+   \   0000001A                      REQUIRE _A_TRCIDH
+    220          
+    221          /*---------------------------------------------------------------------------*/
+    222          /** \brief <b>ATA_calibStartCalibration_C</b>
+    223              starts a SRC/FRC calibration as configured in parameter "bConfig".
+    224          
+    225              \param[in]      bConfig             Calibration configuration value
+    226              
+    227              Variable Usage:
+    228              \li [in,out] ::g_sCalibConfig Global Calibration component data
+    229          
+    230              \image html ATA_calibStartCalibration_C.png
+    231          
+    232              \internal
+    233              \li 005: Set HW trace point for this function
+    234              \li 010: Copy function argument "bConfig" to ::g_sCalibConfig .bConfig
+    235              \li 020: Activate XTO by callign function ::ATA_globalsActivateXTO_C if SRC/FRC
+    236                    calibration with XTO_CLK is selected in ::g_sCalibConfig .bConfig[0].
+    237                    Activation can be skipped, if XTO is already available (FESR.XRDY=1)
+    238              \li 030: Start SRC calibration by calling function ::ATA_calibStartSrcCalibration_C,
+    239                    if configured in ::g_sCalibConfig .bConfig[6]
+    240              \li 040: Start FRC calibration by calling function ::ATA_calibStartFrcCalibration_C,
+    241                    if configured in ::g_sCalibConfig .bConfig[7]
+    242              \li 050: Perform function [SHUTDOWN_RF_FRONTEND] to deactivate the XTO if
+    243                    configured in ::g_sCalibConfig .bConfig[1]
+    244          
+    245              \Derived{No}
+    246          
+    247              \Rationale{N/A}
+    248          
+    249              \Traceability{Primus2P-875,Primus2P-1979,Primus2P-1980,Primus2P-1981}
+    250              \endinternal
+    251          \n
+    252          */
+    253          /*---------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    254          VOIDFUNC ATA_calibStartCalibration_C(uint8_t bConfig)
+   \                     ATA_calibStartCalibration_C:
+    255          {
+    256              /* LLR-Ref: 005 */
+    257              ATA_SET_FUNCTION_TRACE_POINT_C(ATA_calibStartCalibration_C, bConfig);
+   \   00000000   B71F               IN      R17, 0x3F
+   \   00000002   94F8               CLI
+   \   00000004   9300....           STS     _A_TRCDR, R16
+   \   00000008   ....               LDI     R18, LOW(ATA_calibStartCalibration_C/2)
+   \   0000000A   9320....           STS     _A_TRCIDL, R18
+   \   0000000E   ....               LDI     R18, (ATA_calibStartCalibration_C/2) >> 8
+   \   00000010   9320....           STS     _A_TRCIDH, R18
+   \   00000014   BF1F               OUT     0x3F, R17
+    258          
+    259              /* LLR-Ref: 010 */
+    260              g_sCalibConfig.bConfig = bConfig;
+   \   00000016   9300....           STS     (g_sCalibConfig + 2), R16
+    261              g_sCalibConfig.bStatus = 0x00U;
+   \   0000001A   E000               LDI     R16, 0
+   \   0000001C   9300....           STS     (g_sCalibConfig + 1), R16
+    262          
+    263              /* LLR-Ref: 020 */
+    264              if ((g_sCalibConfig.bConfig & BM_CALIB_CONFIG_SRC_FRC_CALIBRATION_CLOCK) == 0) {
+   \   00000020   9100....           LDS     R16, (g_sCalibConfig + 2)
+   \   00000024   FD00               SBRC    R16, 0
+   \   00000026   C002               RJMP    ??ATA_calibStartCalibration_C_0
+    265                  ATA_globalsActivateXTO_C();
+   \   00000028   ........           CALL    ATA_globalsActivateXTO_C
+    266              }
+    267          
+    268              /* LLR-Ref: 030 */
+    269              if (g_sCalibConfig.bConfig & BM_CALIB_CONFIG_SRC_FRC_CALIBRATION_ENABLE_SRC) {
+   \                     ??ATA_calibStartCalibration_C_0:
+   \   0000002C   9100....           LDS     R16, (g_sCalibConfig + 2)
+   \   00000030   FD06               SBRC    R16, 6
+    270                  ATA_calibStartSrcCalibration_C();
+   \   00000032   ....               RCALL   ATA_calibStartSrcCalibration_C
+    271              }
+    272          
+    273              /* LLR-Ref: 040 */
+    274              if (g_sCalibConfig.bConfig & BM_CALIB_CONFIG_SRC_FRC_CALIBRATION_ENABLE_FRC) {
+   \                     ??ATA_calibStartCalibration_C_1:
+   \   00000034   9100....           LDS     R16, (g_sCalibConfig + 2)
+   \   00000038   FD07               SBRC    R16, 7
+    275                  ATA_calibStartFrcCalibration_C();
+   \   0000003A   ....               RCALL   ATA_calibStartFrcCalibration_C
+    276              }
+    277          
+    278              /* LLR-Ref: 050 */
+    279              if ((g_sCalibConfig.bConfig & BM_CALIB_CONFIG_SRC_FRC_CALIBRATION_CLOCK) == 0) {
+   \                     ??ATA_calibStartCalibration_C_2:
+   \   0000003C   9100....           LDS     R16, (g_sCalibConfig + 2)
+   \   00000040   7003               ANDI    R16, 0x03
+   \   00000042   F451               BRNE    ??ATA_calibStartCalibration_C_3
+    280                  if ((g_sCalibConfig.bConfig & BM_CALIB_CONFIG_SRC_FRC_CALIBRATION_XTO) == 0) {
+    281                      ATA_CLEARBIT_C(FEEN1, XTOEN);
+   \   00000044   91000101           LDS     R16, 257
+   \   00000048   7F0B               ANDI    R16, 0xFB
+   \   0000004A   93000101           STS     257, R16
+    282                      ATA_CLEARBIT_C(SUPCR, AVEN);
+   \   0000004E   910000CC           LDS     R16, 204
+   \   00000052   7E0F               ANDI    R16, 0xEF
+   \   00000054   930000CC           STS     204, R16
+    283                  }
+    284              }
+    285          
+    286          }
+   \                     ??ATA_calibStartCalibration_C_3:
+   \   00000058   9508               RET
+   \   0000005A                      REQUIRE _A_SREG
+   \   0000005A                      REQUIRE _A_TRCDR
+   \   0000005A                      REQUIRE _A_TRCIDL
+   \   0000005A                      REQUIRE _A_TRCIDH
+   \   0000005A                      REQUIRE _A_FEEN1
+   \   0000005A                      REQUIRE _A_SUPCR
+    287          /*---------------------------------------------------------------------------*/
+    288          /** \brief <b>ATA_calibStartSrcCalibration_C</b>
+    289              starts a SRC calibration
+    290          
+    291              Variable Usage:
+    292              \li [in,out] ::g_sCalibConfig Global Calibration component data
+    293              \li [out] ::g_sDebug Global Debug component data
+    294          
+    295              \image html ATA_calibStartSrcCalibration_C.png
+    296          
+    297              \internal
+    298              \li 005: Set HW trace point for this function
+    299              \li 010: Load default configuration for Timer2
+    300                         input clock of Timer2:      CLKSRC
+    301                         prescaler value of Timer2:  2^0 = 1
+    302              \li 020: Load default configuration for Timer3
+    303                         input clock of Timer3:      CLKXTO4
+    304                         prescaler value of Timer3:  2^0 = 1
+    305              \li 030: IF calibration shall be done with external clock input, clock of
+    306                        Timer3 shall be changed to CLKTEI
+    307              \li 040: Open Timer2 by calling function ::ATA_timer2Open_C and Timer3 by
+    308                        calling function ::ATA_timer3Open_C for SRC calibration with
+    309                        configuration of timer2Params and timer3params respectively.\n
+    310                          IF Timer2 and Timer3 are available for SRC calibration
+    311              \li 050:      Turn on power for LF Protocol Handler to enable SRCCAL setting
+    312              \li 060:      Measure the SRC oscillator using function
+    313                             ::ATA_calibSrcMeasurement_C
+    314                            Apply the result to SRCCAl register using function
+    315                             ::ATA_calibSetSrcCalRegister_C
+    316              \li 070:      Turn off power from LF-Reveiver via setting PRR1.PRLFR
+    317              \li 080:      Release Timer2 and Timer3 by calling function ::ATA_timer2Close_C
+    318                             and ::ATA_timer3Close_C
+    319                          ELSE (Timer2 or Timer3 are not available for SRC calibration)
+    320              \li 090:      Set error in ::g_sCalibConfig .bFlags[7] and
+    321                            set error code in ::g_sDebug .bErrorCode and ::g_sDebug .bSsmErrorCode
+    322              \li 095: Set HW trace point for this function again in order to be able to
+    323                        perform timing measurements for SRC calibration
+    324          
+    325              Derived{No}
+    326          
+    327              \Rationale{N/A}
+    328          
+    329              \Traceability{Primus2P-1980,Primus2P-1981}
+    330              \endinternal
+    331          \n
+    332           */
+    333          /*---------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    334          VOIDFUNC ATA_calibStartSrcCalibration_C(void)
+   \                     ATA_calibStartSrcCalibration_C:
+    335          {
+   \   00000000   939A               ST      -Y, R25
+   \   00000002   938A               ST      -Y, R24
+   \   00000004   9764               SBIW    R29:R28, 20
+    336              /* LLR-Ref: 005 */
+    337              ATA_SET_FUNCTION_TRACE_POINT_C(ATA_calibStartSrcCalibration_C, 0x00U);
+   \   00000006   B72F               IN      R18, 0x3F
+   \   00000008   94F8               CLI
+   \   0000000A   E000               LDI     R16, 0
+   \   0000000C   9300....           STS     _A_TRCDR, R16
+   \   00000010   ....               LDI     R16, LOW(ATA_calibStartSrcCalibration_C/2)
+   \   00000012   9300....           STS     _A_TRCIDL, R16
+   \   00000016   ....               LDI     R16, (ATA_calibStartSrcCalibration_C/2) >> 8
+   \   00000018   9300....           STS     _A_TRCIDH, R16
+   \   0000001C   BF2F               OUT     0x3F, R18
+    338          
+    339              /* LLR-Ref: 010 */
+    340              sTimerAsyn8BitParams  sTimer2Params = {
+    341                  (BM_T2ENA | BM_T2CTM),      // T2CR
+    342                  0x00U,                      // T2MR
+    343                  0x01U,                      // T2COR
+    344                  0x00U,                      // T2IMR
+    345                  (timerIRQHandler)0x0000,    // g_sTimer2.ovfIsr
+    346                  (timerIRQHandler)0x0000     // g_sTimer2.compIsr
+    347                  };
+   \   0000001E   019E               MOVW    R19:R18, R29:R28
+   \   00000020   5F24               SUBI    R18, 244
+   \   00000022   4F3F               SBCI    R19, 255
+   \   00000024   ....               LDI     R30, LOW(`?<Constant {130, 0, 1, 0, (void (*)(void))0, (`)
+   \   00000026   ....               LDI     R31, (`?<Constant {130, 0, 1, 0, (void (*)(void))0, (`) >> 8
+   \   00000028   0189               MOVW    R17:R16, R19:R18
+   \   0000002A   E048               LDI     R20, 8
+   \   0000002C   E050               LDI     R21, 0
+   \   0000002E   ........           CALL    ?ML_FLASH_SRAM_16EC_16_L07
+    348          
+    349              /* LLR-Ref: 020 */
+    350              sTimerAsyn16BitParams sTimer3Params = {
+    351                  (BM_T3ENA | BM_T3CPRM),     // T3CR
+    352                  BM_T3CS1,                   // T3MRA
+    353                  (BM_T3CE0 | BM_T3CNC),      // T3MRB
+    354                  0x00U,                      // T3CORL
+    355                  0x00U,                      // T3CORH
+    356                  0x00U,                      // T3IMR
+    357                  (timerIRQHandler)0x0000,    // g_sTimer3.ovfIsr
+    358                  (timerIRQHandler)0x0000,    // g_sTimer3.compIsr
+    359                  (timerIRQHandler)0x0000     // g_sTimer3.capIsr
+    360                  };
+   \   00000032   ....               LDI     R30, LOW(`?<Constant {136, 2, 12, 0, 0, 0, (void (*)(voi`)
+   \   00000034   ....               LDI     R31, (`?<Constant {136, 2, 12, 0, 0, 0, (void (*)(voi`) >> 8
+   \   00000036   018E               MOVW    R17:R16, R29:R28
+   \   00000038   E04C               LDI     R20, 12
+   \   0000003A   ........           CALL    ?ML_FLASH_SRAM_16EC_16_L07
+    361          
+    362              /* LLR-Ref: 030 */
+    363              if (g_sCalibConfig.bConfig & BM_CALIB_CONFIG_SRC_FRC_CALIBRATION_CLOCK) {
+   \   0000003E   9100....           LDS     R16, (g_sCalibConfig + 2)
+   \   00000042   FF00               SBRS    R16, 0
+   \   00000044   C002               RJMP    ??ATA_calibStartSrcCalibration_C_0
+    364                  sTimer3Params.modeA = (BM_T3CS1 | BM_T3CS0);
+   \   00000046   E003               LDI     R16, 3
+   \   00000048   8309               STD     Y+1, R16
+    365              }
+    366              /* LLR-Ref: 040 */
+    367              if (   (ATA_timer2Open_C(&sTimer2Params) == OK)
+    368                  && (ATA_timer3Open_C(&sTimer3Params) == OK)
+    369                 ){
+   \                     ??ATA_calibStartSrcCalibration_C_0:
+   \   0000004A   2F0C               MOV     R16, R28
+   \   0000004C   5F04               SUBI    R16, 244
+   \   0000004E   4F1F               SBCI    R17, 255
+   \   00000050   ........           CALL    ATA_timer2Open_C
+   \   00000054   2300               TST     R16
+   \   00000056   F479               BRNE    ??ATA_calibStartSrcCalibration_C_1
+   \   00000058   018E               MOVW    R17:R16, R29:R28
+   \   0000005A   ........           CALL    ATA_timer3Open_C
+   \   0000005E   2300               TST     R16
+   \   00000060   F451               BRNE    ??ATA_calibStartSrcCalibration_C_1
+    370                  /* LLR-Ref: 050 */
+    371                  uint8_t bPrr1Config = PRR1;
+   \   00000062   B181               IN      R24, 0x01
+    372                  ATA_POWERON_C(PRR1, PRLFPH);
+   \   00000064   980F               CBI     0x01, 0x07
+    373          
+    374                  /* LLR-Ref: 060 */
+    375                  ATA_calibSrcMeasurement_C();
+   \   00000066   ....               RCALL   ATA_calibSrcMeasurement_C
+    376                  ATA_calibSetSrcCalRegister_C();
+   \   00000068   ....               RCALL   ATA_calibSetSrcCalRegister_C
+    377          
+    378                  /* LLR-Ref: 070 */
+    379                  PRR1 = bPrr1Config;
+   \   0000006A   B981               OUT     0x01, R24
+    380          
+    381                  /* LLR-Ref: 080 */
+    382                  ATA_timer2Close_C();
+   \   0000006C   ........           CALL    ATA_timer2Close_C
+    383                  ATA_timer3Close_C();
+   \   00000070   ........           CALL    ATA_timer3Close_C
+   \   00000074   C00B               RJMP    ??ATA_calibStartSrcCalibration_C_2
+    384              }else {
+    385                  /* LLR-Ref: 090 */
+    386                  ATA_SETBITMASK_C(g_sCalibConfig.bFlags,BM_CALIB_CONFIG_FLAGS_ERROR)
+   \                     ??ATA_calibStartSrcCalibration_C_1:
+   \   00000076   ....               LDI     R30, LOW(g_sCalibConfig)
+   \   00000078   ....               LDI     R31, (g_sCalibConfig) >> 8
+   \   0000007A   8100               LD      R16, Z
+   \   0000007C   6800               ORI     R16, 0x80
+   \   0000007E   8300               ST      Z, R16
+    387                  g_sDebug.bErrorCode    = DEBUG_ERROR_CODE_CALIB_TIMER_SRCCAL_LOCKED;
+   \   00000080   E10F               LDI     R16, 31
+   \   00000082   9300....           STS     g_sDebug, R16
+    388                  g_sDebug.bSsmErrorCode = 0x00U;
+   \   00000086   E000               LDI     R16, 0
+   \   00000088   9300....           STS     (g_sDebug + 1), R16
+    389              }
+    390          
+    391              /* LLR-Ref: 095 */
+    392              ATA_SET_FUNCTION_TRACE_POINT_C(ATA_calibStartSrcCalibration_C+1, 0x00U);
+   \                     ??ATA_calibStartSrcCalibration_C_2:
+   \   0000008C   B71F               IN      R17, 0x3F
+   \   0000008E   94F8               CLI
+   \   00000090   E000               LDI     R16, 0
+   \   00000092   9300....           STS     _A_TRCDR, R16
+   \   00000096   ....               LDI     R24, (((ATA_calibStartSrcCalibration_C >> 1) + 1) & 0xff) & 0xFF
+   \   00000098   9380....           STS     _A_TRCIDL, R24
+   \   0000009C   ....               LDI     R24, LOW(ATA_calibStartSrcCalibration_C/2)
+   \   0000009E   ....               LDI     R25, (ATA_calibStartSrcCalibration_C/2) >> 8
+   \   000000A0   9601               ADIW    R25:R24, 1
+   \   000000A2   9390....           STS     _A_TRCIDH, R25
+   \   000000A6   BF1F               OUT     0x3F, R17
+    393          }
+   \   000000A8   9664               ADIW    R29:R28, 20
+   \   000000AA   ....               RJMP    ?Subroutine0
+   \   000000AC                      REQUIRE _A_SREG
+   \   000000AC                      REQUIRE _A_TRCDR
+   \   000000AC                      REQUIRE _A_TRCIDL
+   \   000000AC                      REQUIRE _A_TRCIDH
+   \   000000AC                      REQUIRE _A_PRR1
+
+   \                                 In  segment NEAR_F, align 1, keep-with-next
+   \                     `?<Constant {130, 0, 1, 0, (void (*)(void))0, (`:
+   \   00000000   00820001           DC8 130, 0, 1, 0
+   \   00000004   00000000           DC16 0H, 0H
+
+   \                                 In  segment NEAR_F, align 1, keep-with-next
+   \                     `?<Constant {136, 2, 12, 0, 0, 0, (void (*)(voi`:
+   \   00000000   0288000C0000       DC8 136, 2, 12, 0, 0, 0
+   \   00000006   000000000000       DC16 0H, 0H, 0H
+    394          
+    395          /*---------------------------------------------------------------------------*/
+    396          /** \brief <b>ATA_calibSrcMeasurement_C</b>
+    397              measures the number of XTO clock cycles in on SRC clock period and stores
+    398              the result in g_sCalibConfig.srcResult
+    399          
+    400              Variable Usage:
+    401              \li[out] ::g_sCalibConfig    Global Calibration component data
+    402          
+    403              \image html ATA_calibSrcMeasurement_C.png
+    404          
+    405              \internal
+    406              \li 010: Reset and Restart Timer2
+    407                       The T2RES bit can be written to logic one to reset the prescaler and counter.
+    408                       This is only allowed if the timer is stopped (T2ENA=0).
+    409                       The T2RES bit is automatically cleared one cycle after the write.
+    410              \li 020: Wait for 1st capture event by polling T2IFR.T2COF flag
+    411                       This step is needed to reset T3CNTL/H register for the SRC Measurement
+    412                       Resetting is done in Timer3 IP via T3CR.T3CPRM setting in ::ATA_timer3Open_C
+    413              \li 030: Reset Timer2 Compare Flag for SRC Measurement
+    414              \li 040: Set next capture event after 4 SRC cycles to use Timer3 input Capture Noise Canceller.
+    415                       the noise canceller is activated, the input from the input capture pin is filtered.
+    416                       The filter function requires four successive equal valued samples of the input
+    417                       capture pin to change its output. The input capture is therefore delayed by four
+    418                       counter clock (CL3) cycles when the noise canceller is enabled.
+    419              \li 050: Wait for next capture event
+    420              \li 055: Due to slow SRC clock compared to AVR system clock, extra cycles
+    421                       are required in order for registers T3ICRH/T3ICRL to be updated
+    422                       correctly.
+    423              \li 060: Store Timer3 input capture value to ::g_sCalibConfig .wSrcResult
+    424          
+    425              \Derived{No}
+    426          
+    427              \Rationale{N/A}
+    428          
+    429              \Traceability{Primus2P-1980,Primus2P-1981}
+    430              \endinternal
+    431          \n
+    432           */
+    433          /*---------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    434          VOIDFUNC ATA_calibSrcMeasurement_C(void)
+   \                     ATA_calibSrcMeasurement_C:
+    435          {
+    436              /* LLR-Ref: 010 */
+    437              ATA_CLEARBITMASK_C(T2CR,BM_T2ENA)
+   \   00000000   9897               CBI     0x12, 0x07
+    438              while(T2CR & BM_T2ENA);
+   \                     ??ATA_calibSrcMeasurement_C_0:
+   \   00000002   9997               SBIC    0x12, 0x07
+   \   00000004   CFFE               RJMP    ??ATA_calibSrcMeasurement_C_0
+    439          
+    440              ATA_SETBITMASK_C(T2CR,BM_T2RES)
+   \   00000006   9A95               SBI     0x12, 0x05
+    441              ATA_SETBITMASK_C(T2CR,BM_T2ENA)
+   \   00000008   9A97               SBI     0x12, 0x07
+    442          
+    443              /* LLR-Ref: 020 */
+    444              while(!(T2IFR & BM_T2COF));
+   \                     ??ATA_calibSrcMeasurement_C_1:
+   \   0000000A   9100....           LDS     R16, _A_T2IFR
+   \   0000000E   FF01               SBRS    R16, 1
+   \   00000010   CFFC               RJMP    ??ATA_calibSrcMeasurement_C_1
+    445          
+    446              /* LLR-Ref: 030 */
+    447              ATA_SETBITMASK_C(T2IFR,BM_T2COF)
+   \   00000012   91000159           LDS     R16, 345
+   \   00000016   6002               ORI     R16, 0x02
+   \   00000018   93000159           STS     345, R16
+    448          
+    449              /* LLR-Ref: 040 */
+    450              T2COR = 0x05U;
+   \   0000001C   E005               LDI     R16, 5
+   \   0000001E   9300....           STS     _A_T2COR, R16
+    451          
+    452              /* LLR-Ref: 050 */
+    453              while(!(T2IFR & BM_T2COF));
+   \                     ??ATA_calibSrcMeasurement_C_2:
+   \   00000022   9100....           LDS     R16, _A_T2IFR
+   \   00000026   FF01               SBRS    R16, 1
+   \   00000028   CFFC               RJMP    ??ATA_calibSrcMeasurement_C_2
+    454          
+    455              /* LLR-Ref: 055 */
+    456              ATA_globalsWaitNus_ASM(1U);
+   \   0000002A   E001               LDI     R16, 1
+   \   0000002C   ........           CALL    ATA_globalsWaitNus_ASM
+    457          
+    458              /* LLR-Ref: 060 */
+    459              g_sCalibConfig.wSrcResult  = (T3ICRH << SHIFT_LOW_TO_HIGH_BYTE);
+   \   00000030   9130....           LDS     R19, _A_T3ICRH
+    460              g_sCalibConfig.wSrcResult |=  T3ICRL;
+   \   00000034   9100....           LDS     R16, _A_T3ICRL
+   \   00000038   9300....           STS     (g_sCalibConfig + 3), R16
+   \   0000003C   9330....           STS     (g_sCalibConfig + 4), R19
+    461          }
+   \   00000040   9508               RET
+   \   00000042                      REQUIRE _A_T2CR
+   \   00000042                      REQUIRE _A_T2IFR
+   \   00000042                      REQUIRE _A_T2COR
+   \   00000042                      REQUIRE _A_T3ICRH
+   \   00000042                      REQUIRE _A_T3ICRL
+    462          
+    463          /*---------------------------------------------------------------------------*/
+    464          /** \brief <b>ATA_calibSetSrcCalRegister_C</b>
+    465              applies the SRC measurement result ::g_sCalibConfig .srcResult to HW
+    466              register SRCCAL.
+    467          
+    468              Variable Usage:
+    469              \li [in]  ::g_sCalibConfig  Global Calibration component data
+    470          
+    471              \image html ATA_calibSetSrcCalRegister_C.png
+    472          
+    473              \internal
+    474              \li 010: Calculate difference between measured xto clocks
+    475                        ::g_sCalibConfig .wSrcResult and reference value ::g_sCalibConfig
+    476                        .srcCalibrationConfig.xtoCyclesPerMeasurement
+    477              \li 020: Apply ::g_sCalibConfig .srcCalibrationConfig.gradient to the difference
+    478                        and add current SRCCAL setting
+    479              \li 030: Limit result to 127 to ensure a linear SRC calibration step
+    480              \li 040: Apply result to SRCCAL
+    481          
+    482              \Derived{No}
+    483          
+    484              \Rationale{N/A}
+    485          
+    486              \Traceability{Primus2P-1980,Primus2P-1981}
+    487              \endinternal
+    488          \n
+    489           */
+    490          /*---------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    491          VOIDFUNC ATA_calibSetSrcCalRegister_C(void)
+   \                     ATA_calibSetSrcCalRegister_C:
+    492          {
+    493              /* LLR-Ref: 010 */
+    494              int8_t  bDiffCycles = g_sCalibConfig.wSrcResult - g_sCalibConfig.sSrcCalibrationConfig.wXtoCyclesPerMeasurement;
+    495              /* LLR-Ref: 020 */
+    496              int8_t  bSrcOffset  = (int8_t)(ATA_globalsMulS8U8_ASM(bDiffCycles, g_sCalibConfig.sSrcCalibrationConfig.bGradient) >> 6U);
+   \   00000000   9110....           LDS     R17, (g_sCalibConfig + 7)
+   \   00000004   9100....           LDS     R16, (g_sCalibConfig + 3)
+   \   00000008   9120....           LDS     R18, (g_sCalibConfig + 5)
+   \   0000000C   1B02               SUB     R16, R18
+   \   0000000E   ........           CALL    ATA_globalsMulS8U8_ASM
+    497          
+    498              uint8_t bSrcValue = SRCCAL + bSrcOffset;
+   \   00000012   9120....           LDS     R18, _A_SRCCAL
+   \   00000016   E046               LDI     R20, 6
+   \   00000018   ........           CALL    ?SS_SHR_L02
+   \   0000001C   0F20               ADD     R18, R16
+    499              /* LLR-Ref: 030 */
+    500              bSrcValue  = (bSrcValue > 0x7F) ? 0x7F:bSrcValue;
+   \   0000001E   3820               CPI     R18, 128
+   \   00000020   F010               BRCS    ??ATA_calibSetSrcCalRegister_C_0
+   \   00000022   E70F               LDI     R16, 127
+   \   00000024   C001               RJMP    ??ATA_calibSetSrcCalRegister_C_1
+   \                     ??ATA_calibSetSrcCalRegister_C_0:
+   \   00000026   2F02               MOV     R16, R18
+    501          
+    502              /* LLR-Ref: 040 */
+    503              SRCCAL = bSrcValue;
+   \                     ??ATA_calibSetSrcCalRegister_C_1:
+   \   00000028   9300....           STS     _A_SRCCAL, R16
+    504          }
+   \   0000002C   9508               RET
+   \   0000002E                      REQUIRE _A_SRCCAL
+    505          
+    506          /*---------------------------------------------------------------------------*/
+    507          /** \brief <b>ATA_calibStartFrcCalibration_C</b>
+    508              starts FRC calibration
+    509          
+    510              Variable Usage:
+    511              \li [in,out] ::g_sCalibConfig Global Calibration component data
+    512              \li [out] ::g_sDebug Global Debug component data
+    513          
+    514              \image html ATA_calibStartFrcCalibration_C.png
+    515          
+    516              \internal
+    517              \li 005: Set HW trace point for this function
+    518              \li 010: Load default configuration for Timer3
+    519                         input clock of Timer3:      CLKXTO
+    520                         prescaler value of Timer3:  2^0 = 1
+    521              \li 020: Load default confiugration for Timer4
+    522                         input clock of Timer4:      CLKFRC
+    523                         prescaler value of Timer4:  2^0 = 1
+    524              \li 030: IF calibration shall be done with external clock input, clock of
+    525                        Timer3 shall be changed to CLKTEI
+    526              \li 040: Open Timer3 by calling function ::ATA_timer3Open_C and Timer4 by
+    527                        calling function ::ATA_timer3Open_C for FRC calibration with
+    528                        configuration of timer3Params and timer4params respectively.
+    529                       IF Timer3 and Timer4 are available for FRC calibration
+    530              \li 050:   Measure the FRC oscillator by calling function ::ATA_calibFrcMeasurement_C
+    531                         Apply the result to FRCCAl register by calling function
+    532                         ::ATA_calibSetFrcCalRegister_C
+    533              \li 060:   Release Timer3 and Timer4 by calling function ::ATA_timer3Close_C
+    534                          and ::ATA_timer4Close_C
+    535                       ELSE (Timer3 or Timer4 is not available for FRC calibration)
+    536              \li 070:   Set error in ::g_sCalibConfig .bFlags[7] and
+    537                          set error code in variable ::g_sDebug .bErrorCode and ::g_sDebug
+    538                          .bSsmErrorCode
+    539              \li 095: Set HW trace point for this function again in order to be able to
+    540                        perform timing measurements for FRC calibration
+    541          
+    542              \Derived{No}
+    543          
+    544              \Rationale{N/A}
+    545          
+    546              \Traceability{Primus2P-875,Primus2P-1979}
+    547              \endinternal
+    548          \n
+    549           */
+    550          /*---------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    551          VOIDFUNC ATA_calibStartFrcCalibration_C(void)
+   \                     ATA_calibStartFrcCalibration_C:
+    552          {
+   \   00000000   939A               ST      -Y, R25
+   \   00000002   938A               ST      -Y, R24
+   \   00000004   9768               SBIW    R29:R28, 24
+    553              /* LLR-Ref: 005 */
+    554              ATA_SET_FUNCTION_TRACE_POINT_C(ATA_calibStartFrcCalibration_C, 0x00U);
+   \   00000006   B72F               IN      R18, 0x3F
+   \   00000008   94F8               CLI
+   \   0000000A   E000               LDI     R16, 0
+   \   0000000C   9300....           STS     _A_TRCDR, R16
+   \   00000010   ....               LDI     R16, LOW(ATA_calibStartFrcCalibration_C/2)
+   \   00000012   9300....           STS     _A_TRCIDL, R16
+   \   00000016   ....               LDI     R16, (ATA_calibStartFrcCalibration_C/2) >> 8
+   \   00000018   9300....           STS     _A_TRCIDH, R16
+   \   0000001C   BF2F               OUT     0x3F, R18
+    555          
+    556              /* LLR-Ref: 010 */
+    557              sTimerAsyn16BitParams sTimer3Params = {
+    558                  (BM_T3ENA|BM_T3CTM|BM_T3CRM),   // T3CR
+    559                  (BM_T3CS1),                     // T3MRA
+    560                  0x00U,                          // T3MRB
+    561                  0x80U,                          // T3CORL
+    562                  0x00U,                          // T3CORH
+    563                  0x00U,                          // T3IMR
+    564                  (timerIRQHandler)0x0000,        // g_sTimer3.fpOvfIsr
+    565                  (timerIRQHandler)0x0000,        // g_sTimer3.fpCompIsr
+    566                  (timerIRQHandler)0x0000         // g_sTimer3.fpCapIsr
+    567                  };
+   \   0000001E   019E               MOVW    R19:R18, R29:R28
+   \   00000020   ....               LDI     R30, LOW(`?<Constant {134, 2, 0, 128, 0, 0, (void (*)(vo`)
+   \   00000022   ....               LDI     R31, (`?<Constant {134, 2, 0, 128, 0, 0, (void (*)(vo`) >> 8
+   \   00000024   018E               MOVW    R17:R16, R29:R28
+   \   00000026   E04C               LDI     R20, 12
+   \   00000028   E050               LDI     R21, 0
+   \   0000002A   ........           CALL    ?ML_FLASH_SRAM_16EC_16_L07
+    568          
+    569              /* LLR-Ref: 020 */
+    570              sTimerAsyn16BitParams sTimer4Params = {
+    571                  (BM_T4ENA | BM_T4CPRM),     // T4CR
+    572                  (BM_T4CS0 | BM_T4CS1),      // T4MRA
+    573                  (BM_T4ICS1| BM_T4CE0),      // T4MRB
+    574                  0x00U,                      // T4CORL
+    575                  0x00U,                      // T4CORH
+    576                  0x00U,                      // T4IMR
+    577                  (timerIRQHandler)0x0000,    // g_sTimer4.fpOvfIsr
+    578                  (timerIRQHandler)0x0000,    // g_sTimer4.fpCompIsr
+    579                  (timerIRQHandler)0x0000     // g_sTimer4.fpCapIsr
+    580                  };
+   \   0000002E   5F24               SUBI    R18, 244
+   \   00000030   4F3F               SBCI    R19, 255
+   \   00000032   ....               LDI     R30, LOW(`?<Constant {136, 3, 72, 0, 0, 0, (void (*)(voi`)
+   \   00000034   ....               LDI     R31, (`?<Constant {136, 3, 72, 0, 0, 0, (void (*)(voi`) >> 8
+   \   00000036   0189               MOVW    R17:R16, R19:R18
+   \   00000038   E04C               LDI     R20, 12
+   \   0000003A   ........           CALL    ?ML_FLASH_SRAM_16EC_16_L07
+    581          
+    582              /* LLR-Ref: 030 */
+    583              if (g_sCalibConfig.bConfig & BM_CALIB_CONFIG_SRC_FRC_CALIBRATION_CLOCK) {
+   \   0000003E   9100....           LDS     R16, (g_sCalibConfig + 2)
+   \   00000042   FF00               SBRS    R16, 0
+   \   00000044   C002               RJMP    ??ATA_calibStartFrcCalibration_C_0
+    584                  sTimer3Params.modeA = (BM_T3CS1 | BM_T3CS0);
+   \   00000046   E003               LDI     R16, 3
+   \   00000048   8309               STD     Y+1, R16
+    585              }
+    586          
+    587              /* LLR-Ref: 040 */
+    588               if (   (ATA_timer3Open_C(&sTimer3Params) == OK)
+    589                   && (ATA_timer4Open_C(&sTimer4Params) == OK)
+    590                  ){
+   \                     ??ATA_calibStartFrcCalibration_C_0:
+   \   0000004A   018E               MOVW    R17:R16, R29:R28
+   \   0000004C   ........           CALL    ATA_timer3Open_C
+   \   00000050   2300               TST     R16
+   \   00000052   F481               BRNE    ??ATA_calibStartFrcCalibration_C_1
+   \   00000054   018E               MOVW    R17:R16, R29:R28
+   \   00000056   5F04               SUBI    R16, 244
+   \   00000058   4F1F               SBCI    R17, 255
+   \   0000005A   ........           CALL    ATA_timer4Open_C
+   \   0000005E   2300               TST     R16
+   \   00000060   F449               BRNE    ??ATA_calibStartFrcCalibration_C_1
+    591                  /* LLR-Ref: 050 */
+    592                  ATA_calibFrcMeasurement_C();
+   \   00000062   ....               RCALL   ATA_calibFrcMeasurement_C
+    593                  ATA_calibSetFrcCalRegister_C();
+   \   00000064   ....               RCALL   ATA_calibSetFrcCalRegister_C
+    594          
+    595                  ATA_calibFrcMeasurement_C();
+   \   00000066   ....               RCALL   ATA_calibFrcMeasurement_C
+    596                  ATA_calibSetFrcCalRegister_C();
+   \   00000068   ....               RCALL   ATA_calibSetFrcCalRegister_C
+    597          
+    598                  /* LLR-Ref: 060 */
+    599                  ATA_timer3Close_C();
+   \   0000006A   ........           CALL    ATA_timer3Close_C
+    600                  ATA_timer4Close_C();
+   \   0000006E   ........           CALL    ATA_timer4Close_C
+   \   00000072   C00B               RJMP    ??ATA_calibStartFrcCalibration_C_2
+    601          
+    602              }else {
+    603                  /* LLR-Ref: 070 */
+    604                  ATA_SETBITMASK_C(g_sCalibConfig.bFlags,BM_CALIB_CONFIG_FLAGS_ERROR)
+   \                     ??ATA_calibStartFrcCalibration_C_1:
+   \   00000074   ....               LDI     R30, LOW(g_sCalibConfig)
+   \   00000076   ....               LDI     R31, (g_sCalibConfig) >> 8
+   \   00000078   8100               LD      R16, Z
+   \   0000007A   6800               ORI     R16, 0x80
+   \   0000007C   8300               ST      Z, R16
+    605                  g_sDebug.bErrorCode    = DEBUG_ERROR_CODE_CALIB_TIMER_FRCCAL_LOCKED;
+   \   0000007E   E200               LDI     R16, 32
+   \   00000080   9300....           STS     g_sDebug, R16
+    606                  g_sDebug.bSsmErrorCode = 0x00U;
+   \   00000084   E000               LDI     R16, 0
+   \   00000086   9300....           STS     (g_sDebug + 1), R16
+    607              }
+    608          
+    609              /* LLR-Ref: 075 */
+    610              ATA_SET_FUNCTION_TRACE_POINT_C(ATA_calibStartFrcCalibration_C+1, 0x00U);
+   \                     ??ATA_calibStartFrcCalibration_C_2:
+   \   0000008A   B71F               IN      R17, 0x3F
+   \   0000008C   94F8               CLI
+   \   0000008E   E000               LDI     R16, 0
+   \   00000090   9300....           STS     _A_TRCDR, R16
+   \   00000094   ....               LDI     R24, (((ATA_calibStartFrcCalibration_C >> 1) + 1) & 0xff) & 0xFF
+   \   00000096   9380....           STS     _A_TRCIDL, R24
+   \   0000009A   ....               LDI     R24, LOW(ATA_calibStartFrcCalibration_C/2)
+   \   0000009C   ....               LDI     R25, (ATA_calibStartFrcCalibration_C/2) >> 8
+   \   0000009E   9601               ADIW    R25:R24, 1
+   \   000000A0   9390....           STS     _A_TRCIDH, R25
+   \   000000A4   BF1F               OUT     0x3F, R17
+    611          }
+   \   000000A6   9668               ADIW    R29:R28, 24
+   \   000000A8   ....               RJMP    ?Subroutine0
+   \   000000AA                      REQUIRE _A_SREG
+   \   000000AA                      REQUIRE _A_TRCDR
+   \   000000AA                      REQUIRE _A_TRCIDL
+   \   000000AA                      REQUIRE _A_TRCIDH
+
+   \                                 In  segment NEAR_F, align 1, keep-with-next
+   \                     `?<Constant {134, 2, 0, 128, 0, 0, (void (*)(vo`:
+   \   00000000   028680000000       DC8 134, 2, 0, 128, 0, 0
+   \   00000006   000000000000       DC16 0H, 0H, 0H
+
+   \                                 In  segment NEAR_F, align 1, keep-with-next
+   \                     `?<Constant {136, 3, 72, 0, 0, 0, (void (*)(voi`:
+   \   00000000   038800480000       DC8 136, 3, 72, 0, 0, 0
+   \   00000006   000000000000       DC16 0H, 0H, 0H
+    612          
+    613          /*---------------------------------------------------------------------------*/
+    614          /** \brief <b>ATA_calibFrcMeasurement_C</b>
+    615              measures the number of XTO/4 clock cycles in during a period of 200 FRC cycles
+    616              (31.45µs @6.36MHz). The number of XTO/4 cycles for the measurement period
+    617              is stored in eepFrcCalibration.xtoCyclesPerMeasurement for reference.
+    618          
+    619              Variable Usage:
+    620              \li [in,out]  ::g_sCalibConfig  Global Calibration component data 
+    621          
+    622              \image html ATA_calibFrcMeasurement_C.png
+    623          
+    624              \internal
+    625              \li 010: Reset and Restart Timer3
+    626                       The T3RES bit can be written to logic one to reset the prescaler and counter.
+    627                       This is only allowed if the timer is stopped (T3ENA=0).
+    628                       The T3RES bit is automatically cleared one cycle after the write.
+    629              \li 020: Wait for 1st capture event by polling T3IFR.T3COF flag
+    630                       This step is needed to reset T3CNTL/H register for the FRC Measurement
+    631                       Resetting is done in Timer4 IP via T4CR.T4CPRM setting in
+    632                       ::ATA_timer4Open_C
+    633              \li 030: Reset Timer3 Compare Flag for FRC Measurement
+    634              \li 040: Set next capture event to ::g_sCalibConfig
+    635                        .sFrcCalibrationConfig.bT3CORL/H
+    636              \li 050: Wait for next capture event
+    637              \li 060: Store Timer4 input capture value to ::g_sCalibConfig .wFrcResult
+    638          
+    639              \Derived{No}
+    640          
+    641              \Rationale{N/A}
+    642          
+    643              \Traceability{Primus2P-875,Primus2P-1979}
+    644              \endinternal
+    645          \n
+    646           */
+    647          /*---------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    648          VOIDFUNC ATA_calibFrcMeasurement_C(void)
+   \                     ATA_calibFrcMeasurement_C:
+    649          {
+    650              /* LLR-Ref: 010 */
+    651              ATA_CLEARBITMASK_C(T3CR,BM_T3ENA)
+   \   00000000   989F               CBI     0x13, 0x07
+    652          
+    653              while(T3CR & BM_T3ENA);
+   \                     ??ATA_calibFrcMeasurement_C_0:
+   \   00000002   999F               SBIC    0x13, 0x07
+   \   00000004   CFFE               RJMP    ??ATA_calibFrcMeasurement_C_0
+    654              ATA_SETBITMASK_C(T3CR,BM_T3RES)
+   \   00000006   9A9D               SBI     0x13, 0x05
+    655              ATA_SETBITMASK_C(T3CR,BM_T3ENA)
+   \   00000008   9A9F               SBI     0x13, 0x07
+    656          
+    657              /* LLR-Ref: 020 */
+    658              while(!(T3IFR & BM_T3COF));
+   \                     ??ATA_calibFrcMeasurement_C_1:
+   \   0000000A   9100....           LDS     R16, _A_T3IFR
+   \   0000000E   FF01               SBRS    R16, 1
+   \   00000010   CFFC               RJMP    ??ATA_calibFrcMeasurement_C_1
+    659          
+    660              /* LLR-Ref: 030 */
+    661              ATA_SETBITMASK_C(T3IFR,BM_T3COF)
+   \   00000012   910001E1           LDS     R16, 481
+   \   00000016   6002               ORI     R16, 0x02
+   \   00000018   930001E1           STS     481, R16
+    662          
+    663              /* LLR-Ref: 040 */
+    664              T3CORL = g_sCalibConfig.sFrcCalibrationConfig.bT3CORL;
+   \   0000001C   9100....           LDS     R16, (g_sCalibConfig + 10)
+   \   00000020   9300....           STS     _A_T3CORL, R16
+    665              T3CORH = g_sCalibConfig.sFrcCalibrationConfig.bT3CORH;
+   \   00000024   9100....           LDS     R16, (g_sCalibConfig + 11)
+   \   00000028   9300....           STS     _A_T3CORH, R16
+    666          
+    667              /* LLR-Ref: 050 */
+    668              while(!(T3IFR & BM_T3COF));
+   \                     ??ATA_calibFrcMeasurement_C_2:
+   \   0000002C   9100....           LDS     R16, _A_T3IFR
+   \   00000030   FF01               SBRS    R16, 1
+   \   00000032   CFFC               RJMP    ??ATA_calibFrcMeasurement_C_2
+    669          
+    670              /* LLR-Ref: 060 */
+    671              g_sCalibConfig.wFrcResult  = (T4ICRH << SHIFT_LOW_TO_HIGH_BYTE);
+   \   00000034   9130....           LDS     R19, _A_T4ICRH
+    672              g_sCalibConfig.wFrcResult |=  T4ICRL;
+   \   00000038   9100....           LDS     R16, _A_T4ICRL
+   \   0000003C   9300....           STS     (g_sCalibConfig + 8), R16
+   \   00000040   9330....           STS     (g_sCalibConfig + 9), R19
+    673          }
+   \   00000044   9508               RET
+   \   00000046                      REQUIRE _A_T3CR
+   \   00000046                      REQUIRE _A_T3IFR
+   \   00000046                      REQUIRE _A_T3CORL
+   \   00000046                      REQUIRE _A_T3CORH
+   \   00000046                      REQUIRE _A_T4ICRH
+   \   00000046                      REQUIRE _A_T4ICRL
+    674          
+    675          /*---------------------------------------------------------------------------*/
+    676          /** \brief <b>ATA_calibSetFrcCalRegister_C</b>
+    677              applies the FRC measurement result g_sCalibConfig.frcResult to HW register FRCCAL
+    678          
+    679              Variable Usage:
+    680              \li [in] ::g_sCalibConfig Global Calibration component data
+    681          
+    682              \image html ATA_calibSetFrcCalRegister_C.png
+    683          
+    684              \internal
+    685              \li 010: Only low byte of ::g_sCalibConfig .frcResult is used for calibration.
+    686                       High byte can be ignored as range is 200 +/- 10% --> 180 - 220
+    687              \li 020: Add 3 for negative values to avoid rounding errors
+    688              \li 030: Divide result by for and limit result to a range of 45 ... 55
+    689              \li 040: Apply result to FRCCAL
+    690          
+    691              \Derived{No}
+    692          
+    693              \Rationale{N/A}
+    694          
+    695              \Traceability{Primus2P-875,Primus2P-1979}
+    696              \endinternal
+    697          \n
+    698          */
+    699          /*---------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    700          VOIDFUNC ATA_calibSetFrcCalRegister_C(void)
+   \                     ATA_calibSetFrcCalRegister_C:
+    701          {
+    702              /* LLR-Ref: 010 */
+    703              uint8_t bFrcRes = (uint8_t)g_sCalibConfig.wFrcResult;
+   \   00000000   9100....           LDS     R16, (g_sCalibConfig + 8)
+    704          
+    705              /* LLR-Ref: 020 */
+    706              if (bFrcRes < 200U) {
+   \   00000004   3C08               CPI     R16, 200
+   \   00000006   F408               BRCC    ??ATA_calibSetFrcCalRegister_C_0
+    707                  bFrcRes += 3U;
+   \   00000008   5F0D               SUBI    R16, 253
+    708              }
+    709          
+    710              /* LLR-Ref: 030 */
+    711              bFrcRes >>= 2U;
+   \                     ??ATA_calibSetFrcCalRegister_C_0:
+   \   0000000A   9506               LSR     R16
+   \   0000000C   9506               LSR     R16
+    712              bFrcRes = (bFrcRes < 45U) ? 45U:bFrcRes;
+   \   0000000E   320D               CPI     R16, 45
+   \   00000010   F468               BRCC    ??ATA_calibSetFrcCalRegister_C_1
+   \   00000012   E20D               LDI     R16, 45
+   \                     ??ATA_calibSetFrcCalRegister_C_2:
+   \   00000014   E312               LDI     R17, 50
+   \   00000016   1B10               SUB     R17, R16
+    713              bFrcRes = (bFrcRes > 55U) ? 55U:bFrcRes;
+    714          
+    715              /* LLR-Ref: 040 */
+    716              int8_t bResult = 50 - bFrcRes;
+    717              bResult += FRCCAL & (BM_FRCCAL4|BM_FRCCAL3|BM_FRCCAL2|BM_FRCCAL1|BM_FRCCAL0);
+   \                     ??ATA_calibSetFrcCalRegister_C_3:
+   \   00000018   9100....           LDS     R16, _A_FRCCAL
+   \   0000001C   710F               ANDI    R16, 0x1F
+   \   0000001E   0F10               ADD     R17, R16
+    718              bResult  = (bResult < 0x00) ? 0x00:bResult;
+   \   00000020   F44A               BRPL    ??ATA_calibSetFrcCalRegister_C_4
+   \   00000022   E010               LDI     R17, 0
+   \                     ??ATA_calibSetFrcCalRegister_C_5:
+   \   00000024   2F01               MOV     R16, R17
+    719              bResult  = (bResult > 0x1F) ? 0x1F:bResult;
+    720              FRCCAL  = bResult;
+   \                     ??ATA_calibSetFrcCalRegister_C_6:
+   \   00000026   9300....           STS     _A_FRCCAL, R16
+    721          }
+   \   0000002A   9508               RET
+   \                     ??ATA_calibSetFrcCalRegister_C_1:
+   \   0000002C   3308               CPI     R16, 56
+   \   0000002E   F390               BRCS    ??ATA_calibSetFrcCalRegister_C_2
+   \   00000030   EF1B               LDI     R17, 251
+   \   00000032   CFF2               RJMP    ??ATA_calibSetFrcCalRegister_C_3
+   \                     ??ATA_calibSetFrcCalRegister_C_4:
+   \   00000034   3210               CPI     R17, 32
+   \   00000036   F3B4               BRLT    ??ATA_calibSetFrcCalRegister_C_5
+   \   00000038   E10F               LDI     R16, 31
+   \   0000003A   CFF5               RJMP    ??ATA_calibSetFrcCalRegister_C_6
+   \   0000003C                      REQUIRE _A_FRCCAL
+
+   Maximum stack usage in bytes:
+
+   CSTACK RSTACK Function
+   ------ ------ --------
+      0      2   ATA_calibClose_C
+      0      2   ATA_calibFrcMeasurement_C
+      4      2   ATA_calibInit_C
+        4      2   -> ATA_eepReadBytes_C
+      0      2   ATA_calibSetFrcCalRegister_C
+      0      2   ATA_calibSetSrcCalRegister_C
+        0      2   -> ATA_globalsMulS8U8_ASM
+        0      2 ?SS_SHR_L02
+      0      2   ATA_calibSrcMeasurement_C
+        0      2   -> ATA_globalsWaitNus_ASM
+      0      2   ATA_calibStartCalibration_C
+        0      2   -> ATA_calibStartFrcCalibration_C
+        0      2   -> ATA_calibStartSrcCalibration_C
+        0      2   -> ATA_globalsActivateXTO_C
+     26      2   ATA_calibStartFrcCalibration_C
+       26      2   -> ATA_calibFrcMeasurement_C
+       26      2   -> ATA_calibSetFrcCalRegister_C
+       26      2   -> ATA_timer3Close_C
+       26      2   -> ATA_timer3Open_C
+       26      2   -> ATA_timer4Close_C
+       26      2   -> ATA_timer4Open_C
+       26      2 ?ML_FLASH_SRAM_16EC_16_L07
+     22      2   ATA_calibStartSrcCalibration_C
+       22      2   -> ATA_calibSetSrcCalRegister_C
+       22      2   -> ATA_calibSrcMeasurement_C
+       22      2   -> ATA_timer2Close_C
+       22      2   -> ATA_timer2Open_C
+       22      2   -> ATA_timer3Close_C
+       22      2   -> ATA_timer3Open_C
+       22      2 ?ML_FLASH_SRAM_16EC_16_L07
+
+
+   Segment part sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       8  ?<Constant {130, 0, 1, 0, (void (*)(void))0, (
+      12  ?<Constant {134, 2, 0, 128, 0, 0, (void (*)(vo
+      12  ?<Constant {136, 2, 12, 0, 0, 0, (void (*)(voi
+      12  ?<Constant {136, 3, 72, 0, 0, 0, (void (*)(voi
+       6  ?Subroutine0
+      26  ATA_calibClose_C
+      70  ATA_calibFrcMeasurement_C
+     170  ATA_calibInit_C
+      60  ATA_calibSetFrcCalRegister_C
+      46  ATA_calibSetSrcCalRegister_C
+      66  ATA_calibSrcMeasurement_C
+      90  ATA_calibStartCalibration_C
+     170  ATA_calibStartFrcCalibration_C
+     172  ATA_calibStartSrcCalibration_C
+       1  _A_FEEN1
+       1  _A_FRCCAL
+       1  _A_PRR1
+       1  _A_SRCCAL
+       1  _A_SREG
+       1  _A_SUPCR
+       1  _A_T2COR
+       1  _A_T2CR
+       1  _A_T2IFR
+       1  _A_T3CORH
+       1  _A_T3CORL
+       1  _A_T3CR
+       1  _A_T3ICRH
+       1  _A_T3ICRL
+       1  _A_T3IFR
+       1  _A_T4ICRH
+       1  _A_T4ICRL
+       1  _A_TRCDR
+       1  _A_TRCIDH
+       1  _A_TRCIDL
+      12  g_sCalibConfig
+
+ 
+  12 bytes in segment .calib
+  20 bytes in segment ABSOLUTE
+ 876 bytes in segment CODE
+  44 bytes in segment NEAR_F
+ 
+ 920 bytes of CODE memory
+  12 bytes of DATA memory (+ 20 bytes shared)
+
+Errors: none
+Warnings: none

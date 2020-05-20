@@ -1,0 +1,459 @@
+###############################################################################
+#
+# IAR C/C++ Compiler V6.40.2.748 for Atmel AVR            08/Oct/2015  12:49:30
+# Copyright 1996-2014 IAR Systems AB.
+# Time limited license - IAR Embedded Workbench for Atmel AVR 6.40
+#
+#    Source file  =  
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\appFlash\src\FlashApplPEPSbuildMSG.c
+#    Command line =  
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\appFlash\src\FlashApplPEPSbuildMSG.c
+#        -v3 --enhanced_core -ms -o
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\appFlash\IAR\Debug\Obj\
+#        -lCN
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\appFlash\IAR\Debug\List\
+#        -lA
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\appFlash\IAR\Debug\List\
+#        --no_cse --no_inline --no_code_motion --no_cross_call --no_clustering
+#        --no_tbaa --debug --64k_flash -DENABLE_BIT_DEFINITIONS -e
+#        --eeprom_size 2304 --clib -Ohz
+#    List file    =  
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\appFlash\IAR\Debug\List\FlashApplPEPSbuildMSG.lst
+#    Object file  =  
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\appFlash\IAR\Debug\Obj\FlashApplPEPSbuildMSG.r90
+#
+###############################################################################
+
+C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\appFlash\src\FlashApplPEPSbuildMSG.c
+      1          /* *C**************************************************************************
+      2            Use of this software is subject to Atmel's Software License Agreement.
+      3          -------------------------------------------------------------------------------
+      4            $URL: http://svnservulm.corp.atmel.com/svn/CDB/Apps/SW_Lib/Car_Access/ATAK51003-V3_P2P_Demo/branch/P2P_Demo01/appl/appFlash/src/FlashAppl.c $
+      5            $LastChangedRevision: 241023 $
+      6            $LastChangedDate: 2014-01-28 16:15:50 -0700 (Tue, 28 Jan 2014) $
+      7            $LastChangedBy: grueter $
+      8          -------------------------------------------------------------------------------
+      9            Project:      ATA5700
+     10            Target MCU:   ATA5700
+     11            Compiler:     IAR C/C++ Compiler for AVR 5.51.0
+     12          -------------------------------------------------------------------------------
+     13          
+     14          *******************************************************************************
+     15          * Copyright 2011, Atmel Automotive GmbH                                       *
+     16          *                                                                             *
+     17          * This software is owned by the Atmel Automotive GmbH                         *
+     18          * and is protected by and subject to worldwide patent protection.             *
+     19          * Atmel hereby grants to licensee a personal,                                 *
+     20          * non-exclusive, non-transferable license to copy, use, modify, create        *
+     21          * derivative works of, and compile the Atmel Source Code and derivative       *
+     22          * works for the sole purpose of creating custom software in support of        *
+     23          * licensee product to be used only in conjunction with a Atmel integrated     *
+     24          * circuit as specified in the applicable agreement. Any reproduction,         *
+     25          * modification, translation, compilation, or representation of this           *
+     26          * software except as specified above is prohibited without the express        *
+     27          * written permission of Atmel.                                                *
+     28          *                                                                             *
+     29          * Disclaimer: ATMEL MAKES NO WARRANTY OF ANY KIND,EXPRESS OR IMPLIED,         *
+     30          * WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED    *
+     31          * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.         *
+     32          * Atmel reserves the right to make changes without further notice to the      *
+     33          * materials described herein. Atmel does not assume any liability arising     *
+     34          * out of the application or use of any product or circuit described herein.   *
+     35          * Atmel does not authorize its products for use as critical components in     *
+     36          * life-support systems where a malfunction or failure may reasonably be       *
+     37          * expected to result in significant injury to the user. The inclusion of      *
+     38          * Atmel products in a life-support systems application implies that the       *
+     39          * manufacturer assumes all risk of such use and in doing so indemnifies       *
+     40          * Atmel against all charges.                                                  *
+     41          *                                                                             *
+     42          * Use may be limited by and subject to the applicable Atmel software          *
+     43          * license agreement.                                                          *
+     44          ******************************************************************************/
+     45          
+     46          /** \file FlashApplPEPSbuildMSG.c
+     47              this file contains an ATA5700 Flash application software
+     48          */
+     49          
+     50          /*===========================================================================*/
+     51          /*  INCLUDES                                                                 */
+     52          /*===========================================================================*/
+     53          #include "../../../firmware/init/src/init.h"
+     54          #include "../../../firmware/rftx/src/rftx.h"
+     55          #include "../../../firmware/lfrx/src/lfrx.h"
+     56          #include "../../../firmware/spi/src/ata5700_command_set_flash.h"
+     57          
+     58          #include "../../../firmware/init/src/init_flash.h"
+     59          #include "../../../firmware/system/src/system_flash.h"
+     60          
+     61          #include "../../../firmware/timer1/src/timer1.h"
+     62          #include "../../../firmware/globals/src/globals.h"
+     63          
+     64          #include "../../../firmware/lfrx/src/lfrx_flash.h"
+     65          #include "../../../firmware/tp/src/tp_flash.h"
+     66          
+     67          #include "../../../firmware/extif/src/extif_flash.h"
+     68          
+     69          #include "../../../firmware/lfrssi/src/lfrssi.h"
+     70          #include "../../../firmware/lfrssi/src/lfrssi_flash.h"
+     71          
+     72          #include "../../../firmware/calib/src/calib.h"
+     73          #include "../../../firmware/eep/src/eep.h"
+     74          
+     75          #include "../src/FlashApplPEPS.h"
+     76          #include "../src/FlashApplLF.h" 
+     77          #include "../src/micro.h"
+     78          
+     79          #include "../src/FlashApplVars.h"
+     80          
+     81          #include "FlashApplMsg.h"
+     82          #include <stdbool.h>//OK
+     83          
+     84          
+     85          
+     86          
+     87          /*===========================================================================*/
+     88          /*  DEFINES                                                                  */
+     89          /*===========================================================================*/
+     90          #define CRC_INIT_00   0x00
+     91          #define CRC_INIT_FF   0xFF
+     92          
+     93          #define CRC_POLY_CCIT 0x07
+     94          
+     95          
+     96          /*===========================================================================*/
+     97          /*  Modul Globals                                                             */
+     98          /*===========================================================================*/
+     99          
+    100          extern uint8_t gLfMessageReceived; 
+    101          extern uint8_t gLfRxData[CFG_LF_BUFFER_SIZE];           // max LF buffer size = 32 bytes
+    102          extern uint8_t gLfNmbrRxByts;
+    103          extern uint16_t gExtLfRssi[3];
+    104          extern uint16_t gIntLfRssi[3];
+    105          extern uint16_t gLfRssiRes[3]; 
+    106          extern uint16_t wLfRssiref[3];
+    107          extern uint16_t wLfRssiNorm[3];
+    108          extern uint16_t wBref;
+    109          
+    110          // command ID received
+    111          extern uint8_t rub_cid;
+    112          // information on source message (channel LF/RF and wake-up id)
+    113          extern uint8_t rub_wuip;
+    114          // Fob Index
+    115          extern uint8_t rub_fob_idx;
+    116          // Fob ID
+    117          extern uint8_t rul_fob_id;
+    118          // RF channel to use
+    119          extern uint8_t rub_rf_chan;
+    120          extern RFMSG_FRAME_TS msg_rx_buffer;
+    121          extern RFMSG_FRAME_TS msg_tx_buffer;
+
+   \                                 In  segment CODE, align 2, keep-with-next
+    122          void ATA_rfTx_PEPSbuildmsg_flash_C(void)
+   \                     ATA_rfTx_PEPSbuildmsg_flash_C:
+    123          {
+    124            // UINT32* lpul_id;  
+    125            // common message data
+    126            for (uint8_t index = 0; index < (RKE_RFMESSAGEPREAMPLELENGTH-1); index++)
+   \   00000000   E000               LDI     R16, 0
+   \   00000002   EF2F               LDI     R18, 255
+   \   00000004   E010               LDI     R17, 0
+    127              {
+    128                 MSG_TX_DATA.rke.preamble0[index]=0xff;
+   \                     ??ATA_rfTx_PEPSbuildmsg_flash_C_0:
+   \   00000006   ....               LDI     R30, LOW(g_MsgTXbuffer)
+   \   00000008   ....               LDI     R31, (g_MsgTXbuffer) >> 8
+   \   0000000A   0FE0               ADD     R30, R16
+   \   0000000C   1FF1               ADC     R31, R17
+   \   0000000E   8322               STD     Z+2, R18
+    129              }  
+   \   00000010   9503               INC     R16
+   \   00000012   300F               CPI     R16, 15
+   \   00000014   F3C0               BRCS    ??ATA_rfTx_PEPSbuildmsg_flash_C_0
+    130            MSG_TX_DATA.rke.preamble1 = 0xfe;//Start bit in preamble byte 16
+   \   00000016   EF0E               LDI     R16, 254
+   \   00000018   9300....           STS     (g_MsgTXbuffer + 18), R16
+    131            MSG_TX_DATA.peps.fidx = rub_fob_idx&0x07;
+    132            MSG_TX_DATA.peps.bat = 0x01;//update battery flag
+    133            MSG_TX_DATA.peps.cid = rub_cid;
+   \   0000001C   9100....           LDS     R16, rub_fob_idx
+   \   00000020   7007               ANDI    R16, 0x07
+   \   00000022   0F00               LSL     R16
+   \   00000024   9110....           LDS     R17, rub_cid
+   \   00000028   9512               SWAP    R17
+   \   0000002A   7F10               ANDI    R17, 0xF0
+   \   0000002C   2B01               OR      R16, R17
+   \   0000002E   6001               ORI     R16, 0x01
+   \   00000030   9300....           STS     (g_MsgTXbuffer + 4), R16
+    134          
+    135            // Process message per LF received ID
+    136            switch (rub_cid)
+   \   00000034   9100....           LDS     R16, rub_cid
+   \   00000038   2300               TST     R16
+   \   0000003A   F059               BREQ    ??ATA_rfTx_PEPSbuildmsg_flash_C_1
+   \   0000003C   5005               SUBI    R16, 5
+   \   0000003E   F0F1               BREQ    ??ATA_rfTx_PEPSbuildmsg_flash_C_2
+   \   00000040   950A               DEC     R16
+   \   00000042   F0E1               BREQ    ??ATA_rfTx_PEPSbuildmsg_flash_C_2
+   \   00000044   950A               DEC     R16
+   \   00000046   F0E9               BREQ    ??ATA_rfTx_PEPSbuildmsg_flash_C_3
+   \   00000048   950A               DEC     R16
+   \   0000004A   F0D9               BREQ    ??ATA_rfTx_PEPSbuildmsg_flash_C_3
+   \   0000004C   5006               SUBI    R16, 6
+   \   0000004E   F079               BREQ    ??ATA_rfTx_PEPSbuildmsg_flash_C_4
+   \   00000050   9508               RET
+    137            {
+    138            case PEPS_CID_RD_ID:
+    139                MSG_TX_DATA.peps.data_id.fid = rul_fob_id;
+   \                     ??ATA_rfTx_PEPSbuildmsg_flash_C_1:
+   \   00000052   9100....           LDS     R16, rul_fob_id
+   \   00000056   E010               LDI     R17, 0
+   \   00000058   ....               LDI     R30, LOW(g_MsgTXbuffer)
+   \   0000005A   ....               LDI     R31, (g_MsgTXbuffer) >> 8
+   \   0000005C   8305               STD     Z+5, R16
+   \   0000005E   8316               STD     Z+6, R17
+   \   00000060   8317               STD     Z+7, R17
+   \   00000062   8710               STD     Z+8, R17
+    140                MSG_TX_DATA.peps.data_id.vid[0] = 0x5a; ////update Vehicle ID 
+   \   00000064   E50A               LDI     R16, 90
+   \   00000066   8701               STD     Z+9, R16
+    141                MSG_TX_DATA.peps.data_id.cks = 0x44;
+   \   00000068   E404               LDI     R16, 68
+   \   0000006A   8704               STD     Z+12, R16
+    142                break;
+   \   0000006C   9508               RET
+    143            case PEPS_CID_SWID:
+    144                MSG_TX_DATA.peps.data_swid.swid[0]=0xa5;  ///6 bytes - where is this????
+   \                     ??ATA_rfTx_PEPSbuildmsg_flash_C_4:
+   \   0000006E   EA05               LDI     R16, 165
+   \   00000070   9300....           STS     (g_MsgTXbuffer + 5), R16
+    145                MSG_TX_DATA.peps.data_swid.cks = 0x11;     
+   \   00000074   E101               LDI     R16, 17
+   \   00000076   9300....           STS     (g_MsgTXbuffer + 11), R16
+    146                break;
+   \   0000007A   9508               RET
+    147            case PEPS_CID_UNI_AUTH_SINGLE:
+    148                MSG_TX_DATA.peps.data_authent.mac[0]=0xbb;    
+    149                break;
+    150            case PEPS_CID_UNI_AUTH:
+    151               MSG_TX_DATA.peps.data_authent.rssi=0xaa;
+    152               MSG_TX_DATA.peps.data_authent.mac[0]=0xbb;
+    153               break;
+    154            case PEPS_CID_BI_AUTH:
+    155               MSG_TX_DATA.peps.data_authent.rssi=0xaa;
+   \                     ??ATA_rfTx_PEPSbuildmsg_flash_C_2:
+   \   0000007C   EA0A               LDI     R16, 170
+   \   0000007E   9300....           STS     (g_MsgTXbuffer + 5), R16
+    156               MSG_TX_DATA.peps.data_authent.mac[0]=0xbb;
+    157               break;
+    158            case PEPS_CID_BI_AUTH_SINGLE:
+    159               MSG_TX_DATA.peps.data_authent.mac[0]=0xbb;    
+   \                     ??ATA_rfTx_PEPSbuildmsg_flash_C_3:
+   \   00000082   EB0B               LDI     R16, 187
+   \   00000084   9300....           STS     (g_MsgTXbuffer + 6), R16
+    160               break;
+    161            case PEPS_CID_WR_PARAM:     
+    162               break;
+    163            case PEPS_CID_LF_TST:
+    164               break;
+    165            case PEPS_CID_LF_PARAM:
+    166               break;     
+    167            case PEPS_CID_MODE:
+    168               break;    
+    169            default:
+    170              break;
+    171            }
+    172          }
+   \   00000088   9508               RET
+    173               
+    174          
+    175           
+    176          /*
+    177              case PEPS_CID_UNI_AUTH:
+    178              case PEPS_CID_BI_AUTH:
+    179              case PEPS_CID_UNI_AUTH_SINGLE:
+    180              case PEPS_CID_BI_AUTH_SINGLE:
+    181              TIMEB_CLK_SPEED(CLK_SPEED_FULL);
+    182              MSG_TX_DATA.peps.data_authent.rssi = app_rssi_compute();
+    183                // compute MAC
+    184                // load AES key
+    185                EEPDATA_READ(raub_aes_keyin_cyphout, eaub_aes_key_fob);
+    186                // load message and cypher it
+    187                memory_copy(MSG_TX_DATA.peps.data_authent.mac, 
+    188                            ((RX_MSG_PEPS_TS*)MSG_RX_DATA)->data_auth_uni.challenge,
+    189                            CFG_PEPS_CHALLENGE_LENGTH);
+    190                lpul_id = (UINT32*)(MSG_TX_DATA.peps.data_authent.mac
+    191                                    +CFG_PEPS_CHALLENGE_LENGTH);
+    192                *lpul_id = rul_fob_id;
+    193                //compute AES
+    194                aes_calc((UINT8*)&MSG_TX_DATA.peps.data_authent-1,
+    195                         1+1+CFG_PEPS_CHALLENGE_LENGTH+4,
+    196                         TRUE,
+    197                         TRUE);
+    198                memory_copy(MSG_TX_DATA.peps.data_authent.mac,
+    199                            raub_aes_keyin_cyphout,
+    200                            CFG_PEPS_CHALLENGE_LENGTH);
+    201                TIMEB_CLK_SPEED(CLK_SPEED_NORM);
+    202                break;
+    203          
+    204              case PEPS_CID_WR_PARAM:
+    205                // store parameter in EEprom
+    206                EEPDATA_WRITE(eaub_param(((RX_MSG_PEPS_TS*)MSG_RX_DATA)->data_wr_param.param_index),
+    207                              ((RX_MSG_PEPS_TS*)MSG_RX_DATA)->data_wr_param.param_data);
+    208                // no break in switch case to send reply
+    209              case PEPS_CID_RD_PARAM:
+    210                // return VID
+    211                // read 4 bytes in every case, but last byte may be overwritte by cks
+    212                EEPDATA_READ((UINT8*)&MSG_TX_DATA.peps.data_param.vid, eaub_vid);
+    213                // read parameter in EEprom
+    214                EEPDATA_READ(&MSG_TX_DATA.peps.data_param.param_data[0],
+    215                             eaub_param(((RX_MSG_PEPS_TS*)MSG_RX_DATA)->data_wr_param.param_index));
+    216                // complete message (index + checksum)
+    217                MSG_TX_DATA.peps.data_param.param_index =
+    218                  ((RX_MSG_PEPS_TS*)MSG_RX_DATA)->data_wr_param.param_index;
+    219                break;
+    220          
+    221              case PEPS_CID_2WAY:
+    222                MSG_TX_DATA.peps.data_2way.rssi = app_rssi_compute();
+    223                // save rF channel for reply
+    224                rub_rf_chan = (((RX_MSG_PEPS_TS*)MSG_RX_DATA)->fidx)>>1;
+    225                // enable RF reception for 1s
+    226                timeb_timer_start_s(CFG_TIMER_RFRX, 1);
+    227                // return msg already completed
+    228                break;
+    229          
+    230              case PEPS_CID_LF_TST:
+    231                MSG_TX_DATA.peps.data_lf_tst.rss = app_rssi_compute();
+    232                MSG_TX_DATA.peps.data_lf_tst.norm_x = raub_rssi_norm_factor[LF_AXIS_X];
+    233                MSG_TX_DATA.peps.data_lf_tst.norm_y = raub_rssi_norm_factor[LF_AXIS_Y];
+    234                MSG_TX_DATA.peps.data_lf_tst.norm_z = raub_rssi_norm_factor[LF_AXIS_Z];
+    235                MSG_TX_DATA.peps.data_lf_tst.ref_x = raub_rssi_int_ref[LF_AXIS_X];
+    236                MSG_TX_DATA.peps.data_lf_tst.ref_y = raub_rssi_int_ref[LF_AXIS_Y];
+    237                MSG_TX_DATA.peps.data_lf_tst.ref_z = raub_rssi_int_ref[LF_AXIS_Z];
+    238                MSG_TX_DATA.peps.data_lf_tst.ext_x = raub_lf_rssi[LF_MEAS_EXT][LF_AXIS_X];
+    239                MSG_TX_DATA.peps.data_lf_tst.ext_y = raub_lf_rssi[LF_MEAS_EXT][LF_AXIS_Y];
+    240                MSG_TX_DATA.peps.data_lf_tst.ext_z = raub_lf_rssi[LF_MEAS_EXT][LF_AXIS_Z];
+    241                MSG_TX_DATA.peps.data_lf_tst.int_x = raub_lf_rssi[LF_MEAS_INT][LF_AXIS_X];
+    242                MSG_TX_DATA.peps.data_lf_tst.int_y = raub_lf_rssi[LF_MEAS_INT][LF_AXIS_Y];
+    243                MSG_TX_DATA.peps.data_lf_tst.int_z = raub_lf_rssi[LF_MEAS_INT][LF_AXIS_Z];
+    244                break;
+    245          
+    246              case PEPS_CID_LF_PARAM:
+    247                // update normalization factors
+    248                if ((((RX_MSG_PEPS_TS*)MSG_RX_DATA)->data_lf_param.norm_x != 0xFF) ||
+    249                    (((RX_MSG_PEPS_TS*)MSG_RX_DATA)->data_lf_param.norm_y != 0xFF) ||
+    250                    (((RX_MSG_PEPS_TS*)MSG_RX_DATA)->data_lf_param.norm_z != 0xFF))
+    251                {
+    252                  app_rssi_set_norm(((RX_MSG_PEPS_TS*)MSG_RX_DATA)->data_lf_param.norm_x,
+    253                                    ((RX_MSG_PEPS_TS*)MSG_RX_DATA)->data_lf_param.norm_y,
+    254                                    ((RX_MSG_PEPS_TS*)MSG_RX_DATA)->data_lf_param.norm_z);
+    255                }
+    256          
+    257                // update compensation factors
+    258                if ((((RX_MSG_PEPS_TS*)MSG_RX_DATA)->data_lf_param.ref_x == 0xFF) &&
+    259                    (((RX_MSG_PEPS_TS*)MSG_RX_DATA)->data_lf_param.ref_y == 0xFF) &&
+    260                    (((RX_MSG_PEPS_TS*)MSG_RX_DATA)->data_lf_param.ref_z == 0xFF))
+    261                {
+    262                  // do not change compensation
+    263                }
+    264                else if ((((RX_MSG_PEPS_TS*)MSG_RX_DATA)->data_lf_param.ref_x == 0xFE) &&
+    265                         (((RX_MSG_PEPS_TS*)MSG_RX_DATA)->data_lf_param.ref_y == 0xFE) &&
+    266                         (((RX_MSG_PEPS_TS*)MSG_RX_DATA)->data_lf_param.ref_z == 0xFE))
+    267                {
+    268                  // auto acquire new internal reference
+    269                  app_rssi_set_ref(TRUE);
+    270                }
+    271                else
+    272                {
+    273                  // set new internal reference = data received
+    274                  raub_lf_rssi[LF_MEAS_INT][LF_AXIS_X] =
+    275                    ((RX_MSG_PEPS_TS*)MSG_RX_DATA)->data_lf_param.ref_x;
+    276                  raub_lf_rssi[LF_MEAS_INT][LF_AXIS_Y] =
+    277                    ((RX_MSG_PEPS_TS*)MSG_RX_DATA)->data_lf_param.ref_y;
+    278                  raub_lf_rssi[LF_MEAS_INT][LF_AXIS_Z] =
+    279                    ((RX_MSG_PEPS_TS*)MSG_RX_DATA)->data_lf_param.ref_z;
+    280                  app_rssi_set_ref(FALSE);
+    281                }
+    282          
+    283                app_rssi_load_factors();
+    284                // fill RF message
+    285                MSG_TX_DATA.peps.data_lf_param.norm_x = raub_rssi_norm_factor[LF_AXIS_X];
+    286                MSG_TX_DATA.peps.data_lf_param.norm_y = raub_rssi_norm_factor[LF_AXIS_Y];
+    287                MSG_TX_DATA.peps.data_lf_param.norm_z = raub_rssi_norm_factor[LF_AXIS_Z];
+    288                MSG_TX_DATA.peps.data_lf_param.ref_x = raub_rssi_int_ref[LF_AXIS_X];
+    289                MSG_TX_DATA.peps.data_lf_param.ref_y = raub_rssi_int_ref[LF_AXIS_Y];
+    290                MSG_TX_DATA.peps.data_lf_param.ref_z = raub_rssi_int_ref[LF_AXIS_Z];
+    291                break;
+    292          
+    293              case PEPS_CID_SWID:
+    294                // send Software ID
+    295                memory_copy_const(MSG_TX_DATA.peps.data_swid.swid,
+    296                                  (const UINT8*)cts_appli_data.aub_app_id,
+    297                                  6);
+    298                break;
+    299          
+    300              case PEPS_CID_MODE:
+    301                // check mode and code
+    302                if (((RX_MSG_PEPS_TS*)MSG_RX_DATA)->data_mode.mode > 2)
+    303                {
+    304                  // unknown mode, back to diag OFF
+    305                  NTE_DIAG_MODE = DIAG_OFF;
+    306                }
+    307                else if (memory_compare_const(
+    308                           (UINT8*)&((RX_MSG_PEPS_TS*)MSG_RX_DATA)->data_mode.code,
+    309                           (const UINT8*)caub_diag_code[((RX_MSG_PEPS_TS*)MSG_RX_DATA)->data_mode.mode-1],
+    310                           4))
+    311                {
+    312                  NTE_DIAG_MODE = (DIAG_MODE_TE)((RX_MSG_PEPS_TS*)MSG_RX_DATA)->data_mode.mode;
+    313                  // activate long timeout @8s to exit diag
+    314                  timeb_timer_start_s(CFG_TIMER_MODE, 8);
+    315                }
+    316                else
+    317                {
+    318                  //wrong code
+    319                  NTE_DIAG_MODE = DIAG_OFF;
+    320                }
+    321                MSG_TX_DATA.peps.data_mode.fid = ((RX_MSG_PEPS_TS*)MSG_RX_DATA)->data_mode.fid;
+    322                MSG_TX_DATA.peps.data_mode.mode = (UINT8)NTE_DIAG_MODE;
+    323                break;
+    324                
+    325              default:
+    326                break;
+    327            }
+    328          
+    329            // compute frame checksum
+    330            if ((rub_cid < PEPS_CID_UNI_AUTH) || (rub_cid > PEPS_CID_BI_AUTH_SINGLE))
+    331            {
+    332              *((UINT8*)&MSG_TX_DATA.peps + caub_tx_length[rub_cid]-1) =
+    333                crc_compute((UINT8*)&MSG_TX_DATA.peps + CFG_PEPS_PREAMBLE_LENGTH,
+    334                            caub_tx_length[rub_cid]-(CFG_PEPS_PREAMBLE_LENGTH+1),
+    335                            CRC_INIT_00,
+    336                            CRC_POLY_CCIT);
+    337            }
+    338            
+    339            // rearm RFRX tieout if needed
+    340            if (!IS_TIMER_ENDED(CFG_TIMER_RFRX))
+    341            {
+    342              timeb_timer_start_s(CFG_TIMER_RFRX, 1);
+    343            }
+    344            */
+
+   Maximum stack usage in bytes:
+
+   RSTACK Function
+   ------ --------
+      2   ATA_rfTx_PEPSbuildmsg_flash_C
+
+
+   Segment part sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+     138  ATA_rfTx_PEPSbuildmsg_flash_C
+
+ 
+ 138 bytes in segment CODE
+ 
+ 138 bytes of CODE memory
+
+Errors: none
+Warnings: none

@@ -1,0 +1,1254 @@
+///////////////////////////////////////////////////////////////////////////////
+//
+// IAR C/C++ Compiler V7.10.1.1197 for Atmel AVR          13/May/2020  17:03:21
+// Copyright 1996-2017 IAR Systems AB.
+// Network license: dvriar01.mchp-main.com (STD)
+//
+//    Source file  =  
+//        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\src\FlashIrq.c
+//    Command line =  
+//        -f C:\Users\C41045\AppData\Local\Temp\EW147D.tmp
+//        (C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\src\FlashIrq.c
+//        -v3 --enhanced_core -ms -o
+//        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\Obj
+//        -lCN
+//        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\List
+//        -lA
+//        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\List
+//        --no_cse --no_inline --no_code_motion --no_cross_call --no_clustering
+//        --no_tbaa --debug --64k_flash -DENABLE_BIT_DEFINITIONS -e
+//        --eeprom_size 2304 --clib -Ohz)
+//    Locale       =  English_USA.1252
+//    List file    =  
+//        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\List\FlashIrq.s90
+//
+///////////////////////////////////////////////////////////////////////////////
+
+        NAME FlashIrq
+
+        RTMODEL "__64bit_doubles", "disabled"
+        RTMODEL "__SystemLibrary", "CLib"
+        RTMODEL "__cpu", "3"
+        RTMODEL "__enhanced_core", "enabled"
+        RTMODEL "__has_elpm", "false"
+        RTMODEL "__memory_model", "2"
+        RTMODEL "__rt_version", "3"
+        RTMODEL "__vtable_memory", "__nearflash"
+
+        RSEG CSTACK:DATA:NOROOT(0)
+        RSEG RSTACK:DATA:NOROOT(0)
+
+        EXTERN ?S_EC_MUL_L02
+        EXTERN ?need_segment_init
+
+        PUBWEAK `?<Segment init: NEAR_Z>`
+        PUBWEAK `??ATA_pinChangeInterrupt1Handler_ISR_flash_C::?`
+        PUBWEAK ??ATA_timer4CompareMatchInterruptHandler_ISR_fl
+        PUBWEAK ??ATA_timer5CompareMatchInterruptHandler_ISR_fl
+        PUBWEAK ??ATA_timer5OverflowInterruptHandler_ISR_flash_
+        PUBLIC ATA_FLashAppTimer4Start_C
+        PUBLIC ATA_FLashAppTimer5Start_C
+        PUBLIC ATA_FlashApplTimer4Process_C
+        PUBLIC ATA_FlashApplTimer5Process_C
+        PUBLIC ATA_PEPStimerProcess
+        PUBLIC ATA_PEPStimerStart
+        PUBLIC ATA_RKEtimer4Process
+        PUBLIC ATA_RKEtimer4Start
+        PUBLIC ATA_RKEtimerProcess
+        PUBLIC ATA_RKEtimerStart
+        PUBLIC ATA_pinChangeInterrupt1Handler_ISR_flash_C
+        PUBLIC ATA_timer4CompareMatchInterruptHandler_ISR_flash_C
+        PUBLIC ATA_timer5CompareMatchInterruptHandler_ISR_flash_C
+        PUBLIC ATA_timer5OverflowInterruptHandler_ISR_flash_C
+        PUBLIC ATA_transTXtimerProcess
+        PUBLIC ATA_transTXtimerStart
+        PUBLIC ButtonTimerCnt
+        PUBWEAK _A_PCICR
+        PUBWEAK _A_PCIFR
+        PUBWEAK _A_PCMSK1
+        PUBWEAK _A_PIND
+        PUBWEAK _A_PORTC
+        PUBWEAK _A_T4IMR
+        PUBWEAK _A_T5IMR
+        PUBWEAK __?EEARH
+        PUBWEAK __?EEARL
+        PUBWEAK __?EECR
+        PUBWEAK __?EEDR
+        PUBLIC gPCINTStatus
+        PUBLIC gTimer4Status
+        PUBLIC gTimer5Status
+        
+          CFI Names cfiNames0
+          CFI StackFrame CFA_Y Y DATA
+          CFI StackFrame CFA_SP SP DATA
+          CFI VirtualResource ?RetPad:1, ?RetHigh:8, ?RetLow:8, ?Ret:17
+          CFI Resource R0:8, R1:8, R2:8, R3:8, R4:8, R5:8, R6:8, R7:8, R8:8, R9:8
+          CFI Resource R10:8, R11:8, R12:8, R13:8, R14:8, R15:8, R16:8, R17:8
+          CFI Resource R18:8, R19:8, R20:8, R21:8, R22:8, R23:8, R24:8, R25:8
+          CFI Resource R26:8, R27:8, R28:8, R29:8, R30:8, R31:8
+          CFI Resource ?RetHighByteMask:8, SP:16, SPH:8, SPL:8, Y:16
+          CFI ResourceParts ?Ret ?RetHigh, ?RetLow, ?RetPad
+          CFI ResourceParts SP SPH, SPL
+          CFI ResourceParts Y R29, R28
+          CFI EndNames cfiNames0
+        
+          CFI Common cfiCommon0 Using cfiNames0
+          CFI CodeAlign 1
+          CFI DataAlign 1
+          CFI ReturnAddress ?Ret CODE
+          CFI CFA_Y Y+0
+          CFI CFA_SP SP+2
+          CFI ?RetPad 0
+          CFI ?RetHigh and(load(1, DATA, sub(CFA_SP, 1)), ?RetHighByteMask)
+          CFI ?RetLow Frame(CFA_SP, 0)
+          CFI ?Ret Concat
+          CFI R0 SameValue
+          CFI R1 SameValue
+          CFI R2 SameValue
+          CFI R3 SameValue
+          CFI R4 SameValue
+          CFI R5 SameValue
+          CFI R6 SameValue
+          CFI R7 SameValue
+          CFI R8 SameValue
+          CFI R9 SameValue
+          CFI R10 SameValue
+          CFI R11 SameValue
+          CFI R12 SameValue
+          CFI R13 SameValue
+          CFI R14 SameValue
+          CFI R15 SameValue
+          CFI R16 SameValue
+          CFI R17 SameValue
+          CFI R18 SameValue
+          CFI R19 SameValue
+          CFI R20 SameValue
+          CFI R21 SameValue
+          CFI R22 SameValue
+          CFI R23 SameValue
+          CFI R24 SameValue
+          CFI R25 SameValue
+          CFI R26 SameValue
+          CFI R27 SameValue
+          CFI R28 Undefined
+          CFI R29 Undefined
+          CFI R30 SameValue
+          CFI R31 SameValue
+          CFI ?RetHighByteMask SameValue
+          CFI SPH Undefined
+          CFI SPL Undefined
+          CFI EndCommon cfiCommon0
+        
+        
+          CFI Common cfiCommon1 Using cfiNames0
+          CFI CodeAlign 1
+          CFI DataAlign 1
+          CFI ReturnAddress ?Ret CODE
+          CFI CFA_Y Y+0
+          CFI CFA_SP SP+2
+          CFI ?RetPad 0
+          CFI ?RetHigh and(load(1, DATA, sub(CFA_SP, 1)), ?RetHighByteMask)
+          CFI ?RetLow Frame(CFA_SP, 0)
+          CFI ?Ret Concat
+          CFI R0 Undefined
+          CFI R1 Undefined
+          CFI R2 Undefined
+          CFI R3 Undefined
+          CFI R4 SameValue
+          CFI R5 SameValue
+          CFI R6 SameValue
+          CFI R7 SameValue
+          CFI R8 SameValue
+          CFI R9 SameValue
+          CFI R10 SameValue
+          CFI R11 SameValue
+          CFI R12 SameValue
+          CFI R13 SameValue
+          CFI R14 SameValue
+          CFI R15 SameValue
+          CFI R16 Undefined
+          CFI R17 Undefined
+          CFI R18 Undefined
+          CFI R19 Undefined
+          CFI R20 Undefined
+          CFI R21 Undefined
+          CFI R22 Undefined
+          CFI R23 Undefined
+          CFI R24 SameValue
+          CFI R25 SameValue
+          CFI R26 SameValue
+          CFI R27 SameValue
+          CFI R28 Undefined
+          CFI R29 Undefined
+          CFI R30 Undefined
+          CFI R31 Undefined
+          CFI ?RetHighByteMask SameValue
+          CFI SPH Undefined
+          CFI SPL Undefined
+          CFI EndCommon cfiCommon1
+        
+ATA_pinChangeInterrupt1Handler_ISR_flash_C SYMBOL "ATA_pinChangeInterrupt1Handler_ISR_flash_C"
+`??ATA_pinChangeInterrupt1Handler_ISR_flash_C::?` SYMBOL "??INTVEC 16", ATA_pinChangeInterrupt1Handler_ISR_flash_C
+ATA_timer4CompareMatchInterruptHandler_ISR_flash_C SYMBOL "ATA_timer4CompareMatchInterruptHandler_ISR_flash_C"
+??ATA_timer4CompareMatchInterruptHandler_ISR_fl SYMBOL "??INTVEC 68", ATA_timer4CompareMatchInterruptHandler_ISR_flash_C
+ATA_timer5CompareMatchInterruptHandler_ISR_flash_C SYMBOL "ATA_timer5CompareMatchInterruptHandler_ISR_flash_C"
+??ATA_timer5CompareMatchInterruptHandler_ISR_fl SYMBOL "??INTVEC 76", ATA_timer5CompareMatchInterruptHandler_ISR_flash_C
+ATA_timer5OverflowInterruptHandler_ISR_flash_C SYMBOL "ATA_timer5OverflowInterruptHandler_ISR_flash_C"
+??ATA_timer5OverflowInterruptHandler_ISR_flash_ SYMBOL "??INTVEC 80", ATA_timer5OverflowInterruptHandler_ISR_flash_C
+
+        EXTERN ATA_Flash_RKEbuttonfilter
+        EXTERN ATA_rfTx_PEPSrftimingprocess_flash_C
+        EXTERN ATA_systemErrorLoop_flash_C
+        EXTERN ATA_timer4Close_C
+        EXTERN ATA_timer4Open_C
+        EXTERN ATA_timer5Close_C
+        EXTERN ATA_timer5Open_C
+        EXTERN gFlashApplState
+
+// C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\src\FlashIrq.c
+//    1 /******************************************************************************
+//    2   Use of this software is subject to Microchip's Software License Agreement.
+//    3 --------------------------------------------------------------------------------
+//    4   $URL: http://svnservulm.corp.atmel.com/svn/CDB/Apps/SW_Lib/Car_Access/CARS_GEN2/ATAB5702A/Branches/P2P22_TXMODE_NXP/appl/appFlash/src/FlashIrq.c $
+//    5   $LastChangedRevision: 586334 $
+//    6   $LastChangedDate: 2020-01-27 13:26:46 -0700 (Mon, 27 Jan 2020) $
+//    7   $LastChangedBy: grueter $
+//    8 -------------------------------------------------------------------------------
+//    9   Project:      ATA5700
+//   10   Target MCU:   ATA5700
+//   11   Compiler:     IAR C/C++ Compiler for AVR 5.51.0
+//   12 -------------------------------------------------------------------------------
+//   13 
+//   14 ******************************************************************************
+//   15 * Copyright 2017, Microchip Technology Incorporated and its subsidiaries.     *
+//   16 *                                                                             *
+//   17 * This software is owned by the Microchip Technology Incorporated.            *
+//   18 * Microchip hereby grants to licensee a personal                              *
+//   19 * non-exclusive, non-transferable license to copy, use, modify, create        *
+//   20 * derivative works of, and compile the Microchip Source Code and derivative   *
+//   21 * works for the sole and exclusive purpose of creating custom software in     *
+//   22 * support of licensee product to be used only in conjunction with a Microchip *
+//   23 * integrated circuit as specified in the applicable agreement. Any            *        
+//   24 * reproduction, modification, translation, compilation, or representation of  *
+//   25 * this software except as specified above is prohibited without the express   *
+//   26 * written permission of Microchip.                                            *
+//   27 *                                                                             *
+//   28 * Disclaimer: MICROCHIP MAKES NO WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,    *
+//   29 * WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED    *
+//   30 * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.         *
+//   31 * Microchip reserves the right to make changes without further notice to the  *
+//   32 * materials described herein. Microchip does not assume any liability arising *
+//   33 * out of the application or use of any product or circuit described herein.   *
+//   34 * Microchip does not authorize its products for use as critical components in *
+//   35 * life-support systems where a malfunction or failure may reasonably be       *
+//   36 * expected to result in significant injury to the user. The inclusion of      *
+//   37 * Microchip products in a life-support systems application implies that the   *
+//   38 * manufacturer assumes all risk of such use and in doing so indemnifies       *
+//   39 * Microchip against all charges.                                              *
+//   40 *                                                                             *
+//   41 * Use may be limited by and subject to the applicable Microchip software      *
+//   42 * license agreement.                                                          *
+//   43 ******************************************************************************/
+//   44 
+//   45 /** \file FlashApplIRQ.c
+//   46     this file contains an ATA5700 Flash application software
+//   47 */
+//   48 
+//   49 /*===========================================================================*/
+//   50 /*  INCLUDES                                                                 */
+//   51 /*===========================================================================*/
+//   52 #include "../../../firmware/init/src/init.h"
+
+        ASEGN ABSOLUTE:DATA:NOROOT,028H
+// union <unnamed> volatile __io _A_PORTC
+_A_PORTC:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,029H
+// union <unnamed> volatile __io _A_PIND
+_A_PIND:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,046H
+// union <unnamed> volatile __io _A_PCICR
+_A_PCICR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,06dH
+// union <unnamed> volatile __io _A_PCMSK1
+_A_PCMSK1:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,088H
+// union <unnamed> volatile __io _A_T4IMR
+_A_T4IMR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,08fH
+// union <unnamed> volatile __io _A_T5IMR
+_A_T5IMR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,0161H
+// union <unnamed> volatile __ext_io _A_PCIFR
+_A_PCIFR:
+        DS8 1
+//   53 #include "../../../firmware/rftx/src/rftx.h"
+//   54 #include "../../../firmware/lfrx/src/lfrx.h"
+//   55 #include "../../../firmware/spi/src/ata5700_command_set.h"
+//   56 #include "../../../firmware/stdc/src/ioATA5700.h"
+//   57 
+//   58 #include "../../../firmware/init/src/init_flash.h"
+//   59 #include "../../../firmware/system/src/system_flash.h"
+//   60 
+//   61 #include "../../../firmware/timer1/src/timer1.h"
+//   62 #include "../../../firmware/timer5/src/timer5_flash.h"
+//   63 #include "../../../firmware/timer4/src/timer4_flash.h"
+//   64 #include "../../../firmware/globals/src/globals.h"
+//   65 
+//   66 #include "../../../firmware/lfrx/src/lfrx_flash.h"
+//   67 #include "../../../firmware/tp/src/tp_flash.h"
+//   68 
+//   69 #include "../../../firmware/extif/src/extif_flash.h"
+//   70 
+//   71 #include "../../../firmware/lfrssi/src/lfrssi.h"
+//   72 #include "../../../firmware/lfrssi/src/lfrssi_flash.h"
+//   73 
+//   74 #include "../../../firmware/calib/src/calib.h"
+//   75 #include "../../../firmware/aes/src/aes.h"
+//   76 #include "FlashApplVars.h"
+//   77 
+//   78 
+//   79 /*===========================================================================*/
+//   80 /*  DEFINES                                                                  */
+//   81 /*===========================================================================*/
+//   82 
+//   83 /*===========================================================================*/
+//   84 /*  Modul Globals                                                             */
+//   85 /*===========================================================================*/
+//   86 //uint8_t guiButton =0;
+
+        RSEG NEAR_Z:DATA:NOROOT(0)
+        REQUIRE `?<Segment init: NEAR_Z>`
+//   87 uint8_t ButtonTimerCnt=0;
+ButtonTimerCnt:
+        DS8 1
+
+        RSEG NEAR_Z:DATA:NOROOT(0)
+        REQUIRE `?<Segment init: NEAR_Z>`
+//   88 tTimer5Status gTimer5Status;
+gTimer5Status:
+        DS8 1
+
+        RSEG NEAR_Z:DATA:NOROOT(0)
+        REQUIRE `?<Segment init: NEAR_Z>`
+//   89 tTimer4Status gTimer4Status;
+gTimer4Status:
+        DS8 1
+
+        RSEG NEAR_Z:DATA:NOROOT(0)
+        REQUIRE `?<Segment init: NEAR_Z>`
+//   90 tPCINTStatus gPCINTStatus;
+gPCINTStatus:
+        DS8 1
+//   91 extern sFlashApplState gFlashApplState;
+//   92 extern sFlashApplVars gFlashApplVars;
+//   93 //extern sTmr5Config g_sTimer5;
+//   94 
+//   95 
+//   96 /*===========================================================================*/
+//   97 /*  IMPLEMENTATION                                                           */
+//   98 /*===========================================================================*/
+//   99 
+//  100 
+//  101 /*---------------------------------------------------------------------------*/
+//  102 #pragma vector=PCINT1_vect
+
+        RSEG CODE:CODE:ROOT(1)
+        CALL_GRAPH_ROOT ATA_pinChangeInterrupt1Handler_ISR_flash_C, "interrupt"
+//  103 __interrupt VOIDFUNC ATA_pinChangeInterrupt1Handler_ISR_flash_C(void)
+ATA_pinChangeInterrupt1Handler_ISR_flash_C:
+          CFI Block cfiBlock0 Using cfiCommon0
+          CFI Function ATA_pinChangeInterrupt1Handler_ISR_flash_C
+          CFI NoCalls
+//  104 {
+        ST      -Y, R31
+          CFI R31 Frame(CFA_Y, -1)
+          CFI CFA_Y Y+1
+        ST      -Y, R30
+          CFI R30 Frame(CFA_Y, -2)
+          CFI CFA_Y Y+2
+        ST      -Y, R17
+          CFI R17 Frame(CFA_Y, -3)
+          CFI CFA_Y Y+3
+        ST      -Y, R16
+          CFI R16 Frame(CFA_Y, -4)
+          CFI CFA_Y Y+4
+        IN      R17, 0x3F
+//  105    gPCINTStatus |= BM_PCINT1TRUE;  
+        LDI     R30, LOW(gPCINTStatus)
+        LDI     R31, (gPCINTStatus) >> 8
+        LD      R16, Z
+        ORI     R16, 0x40
+        ST      Z, R16
+//  106    PCICR &= ~(1<<PCIE1);//Disable Pin change interrupt
+        IN      R16, 0x26
+        ANDI    R16, 0xFD
+        OUT     0x26, R16
+//  107    PCIFR |= 0x02; //clear pin change interrupt bank 1 flag
+        LDS     R16, 353
+        ORI     R16, 0x02
+        STS     353, R16
+//  108 }
+        RJMP    ??Subroutine5_0
+          CFI EndBlock cfiBlock0
+        REQUIRE _A_PCICR
+        REQUIRE _A_PCIFR
+//  109 /*----------------------------------------------------------------------------- */
+//  110 #pragma vector=T5COMP_vect
+
+        RSEG CODE:CODE:ROOT(1)
+        CALL_GRAPH_ROOT ATA_timer5CompareMatchInterruptHandler_ISR_flash_C, "interrupt"
+//  111 __interrupt VOIDFUNC ATA_timer5CompareMatchInterruptHandler_ISR_flash_C(void)
+ATA_timer5CompareMatchInterruptHandler_ISR_flash_C:
+          CFI Block cfiBlock1 Using cfiCommon0
+          CFI Function ATA_timer5CompareMatchInterruptHandler_ISR_flash_C
+          CFI NoCalls
+//  112 {
+        ST      -Y, R31
+          CFI R31 Frame(CFA_Y, -1)
+          CFI CFA_Y Y+1
+        ST      -Y, R30
+          CFI R30 Frame(CFA_Y, -2)
+          CFI CFA_Y Y+2
+        ST      -Y, R17
+          CFI R17 Frame(CFA_Y, -3)
+          CFI CFA_Y Y+3
+        ST      -Y, R16
+          CFI R16 Frame(CFA_Y, -4)
+          CFI CFA_Y Y+4
+        IN      R17, 0x3F
+//  113   gTimer5Status |= BM_TIMER5COMPARETRUE;  
+        LDI     R30, LOW(gTimer5Status)
+        LDI     R31, (gTimer5Status) >> 8
+        RJMP    ?Subroutine0
+//  114 }
+          CFI EndBlock cfiBlock1
+//  115 /*----------------------------------------------------------------------------- */
+//  116 #pragma vector=T4COMP_vect
+
+        RSEG CODE:CODE:ROOT(1)
+        CALL_GRAPH_ROOT ATA_timer4CompareMatchInterruptHandler_ISR_flash_C, "interrupt"
+//  117 __interrupt VOIDFUNC ATA_timer4CompareMatchInterruptHandler_ISR_flash_C(void)
+ATA_timer4CompareMatchInterruptHandler_ISR_flash_C:
+          CFI Block cfiBlock2 Using cfiCommon0
+          CFI Function ATA_timer4CompareMatchInterruptHandler_ISR_flash_C
+          CFI NoCalls
+//  118 {
+        ST      -Y, R31
+          CFI R31 Frame(CFA_Y, -1)
+          CFI CFA_Y Y+1
+        ST      -Y, R30
+          CFI R30 Frame(CFA_Y, -2)
+          CFI CFA_Y Y+2
+        ST      -Y, R17
+          CFI R17 Frame(CFA_Y, -3)
+          CFI CFA_Y Y+3
+        ST      -Y, R16
+          CFI R16 Frame(CFA_Y, -4)
+          CFI CFA_Y Y+4
+        IN      R17, 0x3F
+//  119   gTimer4Status |= BM_TIMER4COMPARETRUE;
+        LDI     R30, LOW(gTimer4Status)
+        LDI     R31, (gTimer4Status) >> 8
+        RJMP    ?Subroutine0
+//  120 }
+          CFI EndBlock cfiBlock2
+//  121 /*----------------------------------------------------------------------------- */
+//  122 #pragma vector=T5OVF_vect
+
+        RSEG CODE:CODE:ROOT(1)
+        CALL_GRAPH_ROOT ATA_timer5OverflowInterruptHandler_ISR_flash_C, "interrupt"
+//  123 __interrupt VOIDFUNC ATA_timer5OverflowInterruptHandler_ISR_flash_C(void)
+ATA_timer5OverflowInterruptHandler_ISR_flash_C:
+          CFI Block cfiBlock3 Using cfiCommon0
+          CFI Function ATA_timer5OverflowInterruptHandler_ISR_flash_C
+          CFI NoCalls
+//  124 {
+        ST      -Y, R31
+          CFI R31 Frame(CFA_Y, -1)
+          CFI CFA_Y Y+1
+        ST      -Y, R30
+          CFI R30 Frame(CFA_Y, -2)
+          CFI CFA_Y Y+2
+        ST      -Y, R17
+          CFI R17 Frame(CFA_Y, -3)
+          CFI CFA_Y Y+3
+        ST      -Y, R16
+          CFI R16 Frame(CFA_Y, -4)
+          CFI CFA_Y Y+4
+        IN      R17, 0x3F
+//  125   gTimer5Status |= BM_TIMER5OVERFLOWTRUE;  
+        LDI     R30, LOW(gTimer5Status)
+        LDI     R31, (gTimer5Status) >> 8
+        LD      R16, Z
+        ORI     R16, 0x40
+        RJMP    ??Subroutine4_0
+//  126 }
+          CFI EndBlock cfiBlock3
+
+        RSEG CODE:CODE:NOROOT(1)
+?Subroutine0:
+          CFI Block cfiBlock4 Using cfiCommon0
+          CFI NoFunction
+          CFI CFA_Y Y+4
+          CFI R16 Frame(CFA_Y, -4)
+          CFI R17 Frame(CFA_Y, -3)
+          CFI R30 Frame(CFA_Y, -2)
+          CFI R31 Frame(CFA_Y, -1)
+        LD      R16, Z
+        ORI     R16, 0x80
+          CFI EndBlock cfiBlock4
+        REQUIRE ??Subroutine4_0
+        ;               // Fall through to label ??Subroutine4_0
+
+        RSEG CODE:CODE:NOROOT(1)
+??Subroutine4_0:
+          CFI Block cfiBlock5 Using cfiCommon0
+          CFI NoFunction
+          CFI CFA_Y Y+4
+          CFI R16 Frame(CFA_Y, -4)
+          CFI R17 Frame(CFA_Y, -3)
+          CFI R30 Frame(CFA_Y, -2)
+          CFI R31 Frame(CFA_Y, -1)
+        ST      Z, R16
+          CFI EndBlock cfiBlock5
+        REQUIRE ??Subroutine5_0
+        ;               // Fall through to label ??Subroutine5_0
+
+        RSEG CODE:CODE:NOROOT(1)
+??Subroutine5_0:
+          CFI Block cfiBlock6 Using cfiCommon0
+          CFI NoFunction
+          CFI CFA_Y Y+4
+          CFI R16 Frame(CFA_Y, -4)
+          CFI R17 Frame(CFA_Y, -3)
+          CFI R30 Frame(CFA_Y, -2)
+          CFI R31 Frame(CFA_Y, -1)
+        OUT     0x3F, R17
+        LD      R16, Y+
+          CFI CFA_Y Y+3
+          CFI R16 SameValue
+        LD      R17, Y+
+          CFI CFA_Y Y+2
+          CFI R17 SameValue
+        LD      R30, Y+
+          CFI CFA_Y Y+1
+          CFI R30 SameValue
+        LD      R31, Y+
+          CFI CFA_Y Y+0
+          CFI R31 SameValue
+        RETI
+          CFI EndBlock cfiBlock6
+
+        RSEG CODE:CODE:NOROOT(1)
+ATA_FLashAppTimer5Start_C:
+          CFI Block cfiBlock7 Using cfiCommon1
+          CFI Function ATA_FLashAppTimer5Start_C
+        SBIW    R29:R28, 10
+          CFI CFA_Y Y+10
+        ST      Y, R18
+        STD     Y+1, R16
+        STD     Y+2, R17
+        LDI     R16, 0
+        STD     Y+3, R16
+        STD     Y+4, R16
+        LDI     R16, 2
+        STD     Y+5, R16
+        LDI     R16, LOW(0)
+        STD     Y+6, R16
+        STD     Y+7, R16
+        STD     Y+8, R16
+        STD     Y+9, R16
+        MOVW    R17:R16, R29:R28
+          CFI FunCall ATA_timer5Open_C
+        CALL    ATA_timer5Open_C
+        CPI     R16, 1
+        BRNE    ??ATA_FLashAppTimer5Start_C_0
+          CFI FunCall ATA_systemErrorLoop_flash_C
+        CALL    ATA_systemErrorLoop_flash_C
+??ATA_FLashAppTimer5Start_C_0:
+        ADIW    R29:R28, 10
+          CFI CFA_Y Y+0
+        RET
+          CFI EndBlock cfiBlock7
+//  127 /*------------------------------------------------------------------------------*/
+
+        RSEG CODE:CODE:NOROOT(1)
+//  128 void ATA_RKEtimerStart()
+ATA_RKEtimerStart:
+          CFI Block cfiBlock8 Using cfiCommon1
+          CFI Function ATA_RKEtimerStart
+//  129 {
+//  130    gPCINTStatus &= ~(BM_PCINT1TRUE);//Clear the flag
+        LDI     R30, LOW(gPCINTStatus)
+        LDI     R31, (gPCINTStatus) >> 8
+        LD      R16, Z
+        ANDI    R16, 0xBF
+        ST      Z, R16
+//  131     gFlashApplState.State |= BM_RKETIMER_ACTIVE; 
+        LDI     R30, LOW(gFlashApplState)
+        LDI     R31, (gFlashApplState) >> 8
+        LDD     R16, Z+1
+        ORI     R16, 0x40
+        STD     Z+1, R16
+//  132    Intr_Disable(SW1_INTR);    //Disable SW1,2,3 interrupts 
+        LDS     R16, 109
+        ANDI    R16, 0xDF
+        STS     109, R16
+//  133    Intr_Disable(SW2_INTR);
+        LDS     R16, 109
+        ANDI    R16, 0xBF
+        STS     109, R16
+//  134    Intr_Disable(SW3_INTR);
+        LDS     R16, 109
+        ANDI    R16, 0x7F
+        STS     109, R16
+//  135    gFlashApplState.Buttons |=  BM_BUTTONPROCCESSINGACTIVE;  
+        LDD     R16, Z+3
+        ORI     R16, 0x20
+        STD     Z+3, R16
+//  136    ButtonTimerCnt=0;
+        LDI     R16, 0
+        STS     ButtonTimerCnt, R16
+//  137    uint16_t timer5Count = 0x0048;//72 * 1/(1 MHz/256) = 
+//  138    uint8_t timer5Config = (BM_T5CS1|BM_T5CS2|BM_T5CTC);//MRC 1 MHz clock/256
+//  139    ATA_FLashAppTimer5Start_C(timer5Count, timer5Config);  
+        LDI     R18, 14
+        LDI     R16, 72
+        LDI     R17, 0
+          CFI FunCall ATA_FLashAppTimer5Start_C
+        RJMP    ATA_FLashAppTimer5Start_C
+          CFI EndBlock cfiBlock8
+        REQUIRE _A_PCMSK1
+//  140 }
+
+        RSEG CODE:CODE:NOROOT(1)
+ATA_FLashAppTimer4Start_C:
+          CFI Block cfiBlock9 Using cfiCommon1
+          CFI Function ATA_FLashAppTimer4Start_C
+        SBIW    R29:R28, 12
+          CFI CFA_Y Y+12
+        ST      Y, R18
+        STD     Y+1, R19
+        STD     Y+3, R16
+        STD     Y+4, R17
+        LDI     R16, 2
+        STD     Y+5, R16
+        LDI     R16, LOW(0)
+        STD     Y+6, R16
+        STD     Y+7, R16
+        STD     Y+8, R16
+        STD     Y+9, R16
+        MOVW    R17:R16, R29:R28
+          CFI FunCall ATA_timer4Open_C
+        CALL    ATA_timer4Open_C
+        CPI     R16, 1
+        BRNE    ??ATA_FLashAppTimer4Start_C_0
+          CFI FunCall ATA_systemErrorLoop_flash_C
+        CALL    ATA_systemErrorLoop_flash_C
+??ATA_FLashAppTimer4Start_C_0:
+        ADIW    R29:R28, 12
+          CFI CFA_Y Y+0
+        RET
+          CFI EndBlock cfiBlock9
+//  141 /*------------------------------------------------------------------------------*/
+
+        RSEG CODE:CODE:NOROOT(1)
+//  142 void ATA_RKEtimer4Start()
+ATA_RKEtimer4Start:
+          CFI Block cfiBlock10 Using cfiCommon1
+          CFI Function ATA_RKEtimer4Start
+          CFI NoCalls
+//  143 {
+//  144    gPCINTStatus &= ~(BM_PCINT1TRUE);//Clear the flag
+        LDI     R30, LOW(gPCINTStatus)
+        LDI     R31, (gPCINTStatus) >> 8
+        LD      R16, Z
+        ANDI    R16, 0xBF
+        ST      Z, R16
+//  145    gFlashApplState.State |= BM_RKETIMER4_ACTIVE; 
+        LDI     R30, LOW(gFlashApplState)
+        LDI     R31, (gFlashApplState) >> 8
+        LDD     R16, Z+1
+        ORI     R16, 0x40
+        STD     Z+1, R16
+//  146    Intr_Disable(SW1_INTR);    //Disable SW1,2,3 interrupts 
+        LDS     R16, 109
+        ANDI    R16, 0xDF
+        STS     109, R16
+//  147    Intr_Disable(SW2_INTR);
+        LDS     R16, 109
+        ANDI    R16, 0xBF
+        STS     109, R16
+//  148    Intr_Disable(SW3_INTR);
+        LDS     R16, 109
+        ANDI    R16, 0x7F
+        STS     109, R16
+//  149    gFlashApplState.Buttons |=  BM_BUTTONPROCCESSINGACTIVE;  
+        LDD     R16, Z+3
+        ORI     R16, 0x20
+        STD     Z+3, R16
+//  150    ButtonTimerCnt=0;
+        LDI     R16, 0
+        STS     ButtonTimerCnt, R16
+//  151    uint16_t timer4Count = 0x0048;//72 * 1/(1 MHz/256) = 
+//  152    uint8_t timer4Config = (BM_T4ENA|BM_T4CRM);//MRC 1 MHz clock/256
+//  153    uint8_t timer4ModeA = (BM_T4CS1|BM_T4PS1|BM_T4PS2);//MRC 1 MHz clock/256
+//  154    ATA_FLashAppTimer4Start_C(timer4Count, timer4Config, timer4ModeA);
+        LDI     R19, 26
+        LDI     R18, 132
+        LDI     R16, 72
+        LDI     R17, 0
+          CFI EndBlock cfiBlock10
+        REQUIRE ?Subroutine2
+        REQUIRE _A_PCMSK1
+        ;               // Fall through to label ?Subroutine2
+//  155 }
+
+        RSEG CODE:CODE:NOROOT(1)
+?Subroutine2:
+          CFI Block cfiBlock11 Using cfiCommon1
+          CFI NoFunction
+          CFI FunCall ATA_RKEtimer4Start ATA_FLashAppTimer4Start_C
+          CFI FunCall ATA_PEPStimerStart ATA_FLashAppTimer4Start_C
+          CFI FunCall ATA_transTXtimerStart ATA_FLashAppTimer4Start_C
+        RJMP    ATA_FLashAppTimer4Start_C
+          CFI EndBlock cfiBlock11
+//  156 /*------------------------------------------------------------------------------*/
+
+        RSEG CODE:CODE:NOROOT(1)
+//  157 void ATA_RKEtimerProcess()
+ATA_RKEtimerProcess:
+          CFI Block cfiBlock12 Using cfiCommon1
+          CFI Function ATA_RKEtimerProcess
+//  158 {
+//  159   uint8_t ButtonState;  
+//  160   //_WDR; 
+//  161   gTimer5Status &= ~(BM_TIMER5COMPARETRUE);
+        LDI     R30, LOW(gTimer5Status)
+        LDI     R31, (gTimer5Status) >> 8
+        LD      R16, Z
+        ANDI    R16, 0x7F
+        ST      Z, R16
+//  162   if (ButtonTimerCnt==0)
+        LDS     R16, ButtonTimerCnt
+        TST     R16
+        BRNE    ??ATA_RKEtimerProcess_0
+//  163   {
+//  164   gFlashApplState.Buttons &= ~(BM_BUTTONFILTERON);//set filter off
+//  165   gFlashApplState.Buttons |= BM_BUTTONPROCCESSINGACTIVE;//set active true
+//  166   gFlashApplState.Buttons &= ~(BM_BUTTONDATAVALID);
+        LDS     R16, (gFlashApplState + 3)
+        ANDI    R16, 0xAF
+        STS     (gFlashApplState + 3), R16
+        ORI     R16, 0x20
+        STS     (gFlashApplState + 3), R16
+//  167   }  
+//  168   if (bit_test(LED2)) bit_clear(LED2);
+??ATA_RKEtimerProcess_0:
+        SBIS    0x08, 0x01
+        RJMP    ??ATA_RKEtimerProcess_1
+        CBI     0x08, 0x01
+        RJMP    ??ATA_RKEtimerProcess_2
+//  169   else bit_set(LED2);
+??ATA_RKEtimerProcess_1:
+        SBI     0x08, 0x01
+//  170   ButtonTimerCnt++;
+??ATA_RKEtimerProcess_2:
+        LDS     R16, ButtonTimerCnt
+        INC     R16
+        STS     ButtonTimerCnt, R16
+//  171   ButtonState = ~(PIND | SW_BM);
+//  172   ButtonState = ButtonState>>5;//New SW inputs
+        IN      R16, 0x09
+        COM     R16
+        SWAP    R16
+        ANDI    R16, 0x0F
+        LSR     R16
+//  173  if (   ((gFlashApplState.Buttons & BM_BUTTONDATAVALID)==BM_BUTTONDATAVALID)     ||  (ButtonTimerCnt>75))
+        LDI     R30, LOW(gFlashApplState)
+        LDI     R31, (gFlashApplState) >> 8
+        LDD     R17, Z+3
+        SBRC    R17, 4
+        RJMP    ??ATA_RKEtimerProcess_3
+        LDS     R17, ButtonTimerCnt
+        CPI     R17, 76
+        BRCS    ??ATA_RKEtimerProcess_4
+//  174   { 
+//  175     gFlashApplState.State &= ~(BM_RKETIMER_ACTIVE); 
+??ATA_RKEtimerProcess_3:
+        LDD     R16, Z+1
+        ANDI    R16, 0xBF
+        STD     Z+1, R16
+//  176     ATA_timer5Close_C(); 
+          CFI FunCall ATA_timer5Close_C
+        CALL    ATA_timer5Close_C
+//  177     T5IMR = 0x00;
+        LDI     R16, 0
+        STS     _A_T5IMR, R16
+//  178     PCIFR =0x03;
+        LDI     R16, 3
+        STS     _A_PCIFR, R16
+//  179     if (  (gFlashApplState.Buttons & BM_NEWCMNDVALID)==0)//False trigger re-enable INTs
+        LDI     R30, LOW(gFlashApplState)
+        LDI     R31, (gFlashApplState) >> 8
+        LDD     R16, Z+3
+        SBRC    R16, 7
+        RJMP    ??ATA_RKEtimerProcess_5
+//  180     { 
+//  181     Intr_Enable(SW1_INTR);    //Disable SW1,2,3 interrupts 
+        LDS     R16, 109
+        ORI     R16, 0x20
+        STS     109, R16
+//  182     Intr_Enable(SW2_INTR);
+        LDS     R16, 109
+        ORI     R16, 0x40
+        STS     109, R16
+//  183     Intr_Enable(SW3_INTR);
+        LDS     R16, 109
+        ORI     R16, 0x80
+        STS     109, R16
+//  184     }
+//  185     PORTC &= ~(1<<PORTC1);   
+??ATA_RKEtimerProcess_5:
+        CBI     0x08, 0x01
+//  186     ButtonTimerCnt=0;
+        LDI     R16, 0
+        STS     ButtonTimerCnt, R16
+//  187     gFlashApplState.Buttons &= ~(BM_BUTTONPROCCESSINGACTIVE);//set active false
+        LDD     R16, Z+3
+        ANDI    R16, 0xDF
+        STD     Z+3, R16
+//  188      gTimer5Status &= ~(BM_TIMER5COMPARETRUE);
+        LDI     R30, LOW(gTimer5Status)
+        LDI     R31, (gTimer5Status) >> 8
+        RJMP    ?Subroutine1
+//  189   }
+//  190   else
+//  191   {
+//  192    uint8_t cmnd =  ATA_Flash_RKEbuttonfilter(ButtonState, ButtonTimerCnt); 
+??ATA_RKEtimerProcess_4:
+          CFI EndBlock cfiBlock12
+        REQUIRE ?Subroutine3
+        REQUIRE _A_PORTC
+        REQUIRE _A_PIND
+        REQUIRE _A_T5IMR
+        REQUIRE _A_PCIFR
+        REQUIRE _A_PCMSK1
+        ;               // Fall through to label ?Subroutine3
+//  193   }
+//  194 }
+
+        RSEG CODE:CODE:NOROOT(1)
+?Subroutine3:
+          CFI Block cfiBlock13 Using cfiCommon1
+          CFI NoFunction
+          CFI FunCall ATA_RKEtimerProcess ATA_Flash_RKEbuttonfilter
+          CFI FunCall ATA_RKEtimer4Process ATA_Flash_RKEbuttonfilter
+        JMP     ATA_Flash_RKEbuttonfilter
+          CFI EndBlock cfiBlock13
+
+        RSEG CODE:CODE:NOROOT(1)
+?Subroutine1:
+          CFI Block cfiBlock14 Using cfiCommon1
+          CFI NoFunction
+        LD      R16, Z
+        ANDI    R16, 0x7F
+        ST      Z, R16
+        RET
+          CFI EndBlock cfiBlock14
+//  195 /*------------------------------------------------------------------------------*/
+
+        RSEG CODE:CODE:NOROOT(1)
+//  196 void ATA_RKEtimer4Process()
+ATA_RKEtimer4Process:
+          CFI Block cfiBlock15 Using cfiCommon1
+          CFI Function ATA_RKEtimer4Process
+//  197 {
+//  198   uint8_t ButtonState;  
+//  199   //_WDR; 
+//  200   gTimer4Status &= ~(BM_TIMER4COMPARETRUE);
+        LDI     R30, LOW(gTimer4Status)
+        LDI     R31, (gTimer4Status) >> 8
+        LD      R16, Z
+        ANDI    R16, 0x7F
+        ST      Z, R16
+//  201   if (ButtonTimerCnt==0)
+        LDS     R16, ButtonTimerCnt
+        TST     R16
+        BRNE    ??ATA_RKEtimer4Process_0
+//  202   {
+//  203     gFlashApplState.Buttons &= ~(BM_BUTTONFILTERON);//set filter off
+//  204     gFlashApplState.Buttons |= BM_BUTTONPROCCESSINGACTIVE;//set active true
+//  205     gFlashApplState.Buttons &= ~(BM_BUTTONDATAVALID);
+        LDS     R16, (gFlashApplState + 3)
+        ANDI    R16, 0xAF
+        STS     (gFlashApplState + 3), R16
+        ORI     R16, 0x20
+        STS     (gFlashApplState + 3), R16
+//  206   }   
+//  207   if (bit_test(LED2)) bit_clear(LED2);
+??ATA_RKEtimer4Process_0:
+        SBIS    0x08, 0x01
+        RJMP    ??ATA_RKEtimer4Process_1
+        CBI     0x08, 0x01
+        RJMP    ??ATA_RKEtimer4Process_2
+//  208   else bit_set(LED2);
+??ATA_RKEtimer4Process_1:
+        SBI     0x08, 0x01
+//  209   ButtonTimerCnt++;
+??ATA_RKEtimer4Process_2:
+        LDS     R16, ButtonTimerCnt
+        INC     R16
+        STS     ButtonTimerCnt, R16
+//  210   ButtonState = ~(PIND | SW_BM); 
+//  211   ButtonState = ButtonState>>5;//New SW inputs
+        IN      R16, 0x09
+        COM     R16
+        SWAP    R16
+        ANDI    R16, 0x0F
+        LSR     R16
+//  212   
+//  213   if (((gFlashApplState.Buttons & BM_BUTTONDATAVALID)==BM_BUTTONDATAVALID) || (ButtonTimerCnt>75))
+        LDI     R30, LOW(gFlashApplState)
+        LDI     R31, (gFlashApplState) >> 8
+        LDD     R17, Z+3
+        SBRC    R17, 4
+        RJMP    ??ATA_RKEtimer4Process_3
+        LDS     R17, ButtonTimerCnt
+        CPI     R17, 76
+        BRCS    ??ATA_RKEtimer4Process_4
+//  214   { 
+//  215     gFlashApplState.State &= ~(BM_RKETIMER_ACTIVE); 
+??ATA_RKEtimer4Process_3:
+        LDD     R16, Z+1
+        ANDI    R16, 0xBF
+        STD     Z+1, R16
+//  216     ATA_timer4Close_C(); 
+          CFI FunCall ATA_timer4Close_C
+        CALL    ATA_timer4Close_C
+//  217     T4IMR = 0x00;
+        LDI     R16, 0
+        STS     _A_T4IMR, R16
+//  218     PCIFR =0x03;
+        LDI     R16, 3
+        STS     _A_PCIFR, R16
+//  219     if (  (gFlashApplState.Buttons & BM_NEWCMNDVALID)==0)//False trigger re-enable INTs
+        LDI     R30, LOW(gFlashApplState)
+        LDI     R31, (gFlashApplState) >> 8
+        LDD     R16, Z+3
+        SBRC    R16, 7
+        RJMP    ??ATA_RKEtimer4Process_5
+//  220     { 
+//  221       Intr_Enable(SW1_INTR);    //Disable SW1,2,3 interrupts 
+        LDS     R16, 109
+        ORI     R16, 0x20
+        STS     109, R16
+//  222       Intr_Enable(SW2_INTR);
+        LDS     R16, 109
+        ORI     R16, 0x40
+        STS     109, R16
+//  223       Intr_Enable(SW3_INTR);
+        LDS     R16, 109
+        ORI     R16, 0x80
+        STS     109, R16
+//  224     }
+//  225     bit_clear(LED2);    
+??ATA_RKEtimer4Process_5:
+        CBI     0x08, 0x01
+//  226     ButtonTimerCnt=0;
+        LDI     R16, 0
+        STS     ButtonTimerCnt, R16
+//  227     gFlashApplState.Buttons &= ~(BM_BUTTONPROCCESSINGACTIVE);//set active false
+        LDD     R16, Z+3
+        ANDI    R16, 0xDF
+        STD     Z+3, R16
+//  228     gTimer4Status &= ~(BM_TIMER4COMPARETRUE);
+        LDI     R30, LOW(gTimer4Status)
+        LDI     R31, (gTimer4Status) >> 8
+        RJMP    ?Subroutine1
+//  229   }
+//  230   else
+//  231   {
+//  232     uint8_t cmnd =  ATA_Flash_RKEbuttonfilter(ButtonState, ButtonTimerCnt); 
+??ATA_RKEtimer4Process_4:
+        RJMP    ?Subroutine3
+          CFI EndBlock cfiBlock15
+        REQUIRE _A_PORTC
+        REQUIRE _A_PIND
+        REQUIRE _A_T4IMR
+        REQUIRE _A_PCIFR
+        REQUIRE _A_PCMSK1
+//  233   }
+//  234 }
+//  235 /*------------------------------------------------------------------------------*/
+//  236 void ATA_FLashAppTimer5Start_C(uint16_t Timer5CompareCnt, uint8_t Timer5Config)
+//  237 {
+//  238    sTimerSyn16BitParams sTimer5Params;
+//  239    sTimer5Params.ctrl = Timer5Config;     
+//  240    sTimer5Params.compL = (Timer5CompareCnt&0xff);                     
+//  241    sTimer5Params.compH = (Timer5CompareCnt>>8); 
+//  242    sTimer5Params.countL = 0x00U;                      
+//  243    sTimer5Params.countH = 0x00U;                       
+//  244    sTimer5Params.irqMask = (BM_T5CIM);                 // T5IrqMask
+//  245    sTimer5Params.ovfIsr = (timerIRQHandler)0x0000;     // g_sTimer5.ovfIsr
+//  246    sTimer5Params.compIsr = (timerIRQHandler)0x0000;    // g_sTimer5.compIsr
+//  247    if (ATA_timer5Open_C(&sTimer5Params) == FAIL){
+//  248    ATA_systemErrorLoop_flash_C();
+//  249    }  
+//  250 }
+//  251 /*------------------------------------------------------------------------------*/
+//  252 void ATA_FLashAppTimer4Start_C(uint16_t Timer4CompareCnt, uint8_t Timer4Config, uint8_t timer4ModeA)
+//  253 {
+//  254    sTimerAsyn16BitParams sTimer4Params;
+//  255    sTimer4Params.ctrl = Timer4Config;     
+//  256    sTimer4Params.modeA = timer4ModeA;
+//  257    sTimer4Params.compL = (Timer4CompareCnt&0xff);                     
+//  258    sTimer4Params.compH = (Timer4CompareCnt>>8);                       
+//  259    sTimer4Params.irqMask = (BM_T4CIM);                 // T4IrqMask
+//  260    sTimer4Params.ovfIsr = (timerIRQHandler)0x0000;     // g_sTimer4.ovfIsr
+//  261    sTimer4Params.compIsr = (timerIRQHandler)0x0000;    // g_sTimer4.compIsr
+//  262    if (ATA_timer4Open_C(&sTimer4Params) == FAIL){
+//  263    ATA_systemErrorLoop_flash_C();
+//  264    }  
+//  265 }
+//  266 /*------------------------------------------------------------------------------*/
+
+        RSEG CODE:CODE:NOROOT(1)
+//  267 void ATA_FlashApplTimer5Process_C()
+ATA_FlashApplTimer5Process_C:
+          CFI Block cfiBlock16 Using cfiCommon1
+          CFI Function ATA_FlashApplTimer5Process_C
+//  268 {
+//  269   if ((gFlashApplState.State & BM_RKETIMER_ACTIVE))ATA_RKEtimerProcess();
+        LDS     R16, (gFlashApplState + 1)
+        SBRC    R16, 6
+          CFI FunCall ATA_RKEtimerProcess
+        RJMP    ATA_RKEtimerProcess
+//  270   else if ((gFlashApplState.State & BM_PEPSRFTIMERACTIVE))ATA_rfTx_PEPSrftimingprocess_flash_C();// ATA_PEPStimerProcess();  
+??ATA_FlashApplTimer5Process_C_0:
+        SBRS    R16, 5
+        RJMP    ??ATA_FlashApplTimer5Process_C_1
+          CFI FunCall ATA_rfTx_PEPSrftimingprocess_flash_C
+        CALL    ATA_rfTx_PEPSrftimingprocess_flash_C
+//  271 }
+??ATA_FlashApplTimer5Process_C_1:
+        RET
+          CFI EndBlock cfiBlock16
+
+        RSEG CODE:CODE:NOROOT(1)
+//  272 void ATA_FlashApplTimer4Process_C()
+ATA_FlashApplTimer4Process_C:
+          CFI Block cfiBlock17 Using cfiCommon1
+          CFI Function ATA_FlashApplTimer4Process_C
+//  273 {
+//  274   if ((gFlashApplState.State & BM_RKETIMER_ACTIVE))ATA_RKEtimer4Process();
+        LDS     R16, (gFlashApplState + 1)
+        SBRC    R16, 6
+          CFI FunCall ATA_RKEtimer4Process
+        RJMP    ATA_RKEtimer4Process
+//  275   else if ((gFlashApplState.State & BM_PEPSRFTIMERACTIVE))ATA_rfTx_PEPSrftimingprocess_flash_C();// ATA_PEPStimerProcess();  
+??ATA_FlashApplTimer4Process_C_0:
+        SBRS    R16, 5
+        RJMP    ??ATA_FlashApplTimer4Process_C_1
+          CFI FunCall ATA_rfTx_PEPSrftimingprocess_flash_C
+        CALL    ATA_rfTx_PEPSrftimingprocess_flash_C
+//  276 }
+??ATA_FlashApplTimer4Process_C_1:
+        RET
+          CFI EndBlock cfiBlock17
+//  277 /*------------------------------------------------------------------------------*/
+
+        RSEG CODE:CODE:NOROOT(1)
+//  278 void ATA_PEPStimerStart(uint8_t mscount)
+ATA_PEPStimerStart:
+          CFI Block cfiBlock18 Using cfiCommon1
+          CFI Function ATA_PEPStimerStart
+//  279 {
+//  280    Intr_Disable(SW1_INTR);    //Disable SW1,2,3 interrupts 
+        LDS     R17, 109
+        ANDI    R17, 0xDF
+        STS     109, R17
+//  281    Intr_Disable(SW2_INTR);
+        LDS     R17, 109
+        ANDI    R17, 0xBF
+        STS     109, R17
+//  282    Intr_Disable(SW3_INTR);
+        LDS     R17, 109
+        ANDI    R17, 0x7F
+        STS     109, R17
+//  283    uint16_t timer4Count = mscount*0x219;//72 * 1/(1 MHz/256) = 
+//  284    uint8_t timer4Config = (BM_T4ENA|BM_T4CRM);//MRC 1 MHz clock/256
+//  285    uint8_t timer4ModeA = (BM_T4CS1|BM_T4PS0);//MRC 1 MHz clock/256
+//  286    ATA_FLashAppTimer4Start_C(timer4Count, timer4Config, timer4ModeA);
+        LDI     R19, 6
+        LDI     R18, 132
+        LDI     R17, 0
+        LDI     R20, 25
+        LDI     R21, 2
+          CFI FunCall ?S_EC_MUL_L02
+        CALL    ?S_EC_MUL_L02
+        RJMP    ?Subroutine2
+          CFI EndBlock cfiBlock18
+        REQUIRE _A_PCMSK1
+//  287 }
+//  288 /*------------------------------------------------------------------------------*/
+
+        RSEG CODE:CODE:NOROOT(1)
+//  289 void ATA_PEPStimerProcess()
+ATA_PEPStimerProcess:
+          CFI Block cfiBlock19 Using cfiCommon1
+          CFI Function ATA_PEPStimerProcess
+//  290 {
+//  291   //_WDR; 
+//  292   ATA_timer5Close_C(); 
+          CFI FunCall ATA_timer5Close_C
+        CALL    ATA_timer5Close_C
+//  293   T5IMR = 0x00;
+        LDI     R16, 0
+        STS     _A_T5IMR, R16
+//  294   gTimer5Status &= ~(BM_TIMER5COMPARETRUE);  
+        LDI     R30, LOW(gTimer5Status)
+        LDI     R31, (gTimer5Status) >> 8
+        LD      R16, Z
+        ANDI    R16, 0x7F
+        ST      Z, R16
+//  295   gFlashApplState.State &= ~(BM_MSGTIMER_ACTIVE); 
+        LDI     R30, LOW(gFlashApplState)
+        LDI     R31, (gFlashApplState) >> 8
+        LDD     R16, Z+1
+        ANDI    R16, 0x7F
+        STD     Z+1, R16
+//  296   Intr_Enable(SW1_INTR);    //Enable SW1,2,3 interrupts 
+        LDS     R16, 109
+        ORI     R16, 0x20
+        STS     109, R16
+//  297   Intr_Enable(SW2_INTR);
+        LDS     R16, 109
+        ORI     R16, 0x40
+        STS     109, R16
+//  298   Intr_Enable(SW3_INTR);   
+        LDS     R16, 109
+        ORI     R16, 0x80
+        STS     109, R16
+//  299 }
+        RET
+          CFI EndBlock cfiBlock19
+        REQUIRE _A_T5IMR
+        REQUIRE _A_PCMSK1
+
+        RSEG CODE:CODE:NOROOT(1)
+//  300 void ATA_transTXtimerStart(uint16_t mscount)
+ATA_transTXtimerStart:
+          CFI Block cfiBlock20 Using cfiCommon1
+          CFI Function ATA_transTXtimerStart
+          CFI NoCalls
+//  301 {
+//  302    uint16_t timer4Count = mscount;//72 * 1/(1 MHz/256) = 
+//  303    uint8_t timer4Config = (BM_T4ENA|BM_T4CRM);//MRC 1 MHz clock/256
+//  304    uint8_t timer4ModeA = (BM_T4CS1|BM_T4PS0|BM_T4PS2);//MRC 1 MHz clock/256
+//  305    gTimer4Status = 0x00;
+        LDI     R18, 0
+        STS     gTimer4Status, R18
+//  306    ATA_FLashAppTimer4Start_C(timer4Count, timer4Config, timer4ModeA);
+        LDI     R19, 22
+        LDI     R18, 132
+        RJMP    ?Subroutine2
+//  307 }
+          CFI EndBlock cfiBlock20
+
+        RSEG CODE:CODE:NOROOT(1)
+//  308 uint8_t ATA_transTXtimerProcess()
+ATA_transTXtimerProcess:
+          CFI Block cfiBlock21 Using cfiCommon1
+          CFI Function ATA_transTXtimerProcess
+//  309 {
+//  310   if((gTimer4Status & BM_TIMER4COMPARETRUE) == 0x80 )
+        LDS     R16, gTimer4Status
+        SBRS    R16, 7
+        RJMP    ??ATA_transTXtimerProcess_0
+//  311   {
+//  312     ATA_timer4Close_C(); 
+          CFI FunCall ATA_timer4Close_C
+        CALL    ATA_timer4Close_C
+//  313    // T4IFR |= 0x02;// CLear the T4 compare flag
+//  314     T4IMR = 0x00;
+        LDI     R16, 0
+        STS     _A_T4IMR, R16
+//  315     gTimer4Status = 0x00;
+        STS     gTimer4Status, R16
+//  316     return (1);
+        LDI     R16, 1
+        RET
+//  317   }
+//  318   return(0); 
+??ATA_transTXtimerProcess_0:
+        LDI     R16, 0
+        RET
+          CFI EndBlock cfiBlock21
+        REQUIRE _A_T4IMR
+//  319 }
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01cH
+__?EECR:
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01dH
+__?EEDR:
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01eH
+__?EEARL:
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01fH
+__?EEARH:
+
+        COMMON INTVEC:CODE:ROOT(1)
+        ORG 16
+`??ATA_pinChangeInterrupt1Handler_ISR_flash_C::?`:
+        JMP     ATA_pinChangeInterrupt1Handler_ISR_flash_C
+
+        COMMON INTVEC:CODE:ROOT(1)
+        ORG 68
+??ATA_timer4CompareMatchInterruptHandler_ISR_fl:
+        JMP     ATA_timer4CompareMatchInterruptHandler_ISR_flash_C
+
+        COMMON INTVEC:CODE:ROOT(1)
+        ORG 76
+??ATA_timer5CompareMatchInterruptHandler_ISR_fl:
+        JMP     ATA_timer5CompareMatchInterruptHandler_ISR_flash_C
+
+        COMMON INTVEC:CODE:ROOT(1)
+        ORG 80
+??ATA_timer5OverflowInterruptHandler_ISR_flash_:
+        JMP     ATA_timer5OverflowInterruptHandler_ISR_flash_C
+
+        RSEG INITTAB:CODE:NOROOT(0)
+`?<Segment init: NEAR_Z>`:
+        DC16    SFE(NEAR_Z) - SFB(NEAR_Z)
+        DC16    SFB(NEAR_Z)
+        DC16    0
+        REQUIRE ?need_segment_init
+
+        END
+// 
+//   7 bytes in segment ABSOLUTE
+// 866 bytes in segment CODE
+//   6 bytes in segment INITTAB
+//  16 bytes in segment INTVEC
+//   4 bytes in segment NEAR_Z
+// 
+// 866 bytes of CODE memory (+ 22 bytes shared)
+//   4 bytes of DATA memory (+  7 bytes shared)
+//
+//Errors: none
+//Warnings: none

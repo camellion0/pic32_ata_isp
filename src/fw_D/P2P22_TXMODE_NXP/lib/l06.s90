@@ -1,0 +1,694 @@
+;----------------------------------------------------------------------------
+;
+;  Library routines for the ATMEL AT90S processors
+;  Switch
+; 
+;  Copyright 1996-2008 IAR Systems AB. All rights reserved.
+; 
+;  $Revision: 328482 $
+; 
+;----------------------------------------------------------------------------
+; 
+; The case_value tables and the jump_address tables are always located
+; in the lowest 64Kbyte of program memory and must be accessed and
+; transferred to T0 via the LPM instruction.
+;
+; Or if the ELPM Rd,Z+ instruction is used the case_value tables 
+; and the jump_address tables can be located in any 64Kbyte page
+; but never cross a 64Kbyte page boundary.
+;
+; Once the jump address for a switch case has been established it
+; must be reached via an EIJMP/IJMP instruction. The corresponding
+; address shall then be in the Z-register.
+;
+; Information byte encoding:
+;
+; TABLE TYPE (bit 0):    0  = Dense, 1 = Spread
+; LABEL_TYPE (bit 1..2): 0x = Absolute addresses
+;                        10 = Use  8-bit displacement from
+;                        11 = Use 16-bit displacement from
+;
+; Note that the cases values must be in unsigned ascending order.
+;
+; Dx below can be DB, DW or DL, depending on the type of the switch
+; expression (char/short/long).
+;
+; Dy below can be 1-5 bytes, depending on the value.
+;
+; Dz is DW for derivatives with < 128Kbyte code and DP for derivatives
+; with > 128Kbyte code. It can also be DB when using 8-bit displacement
+; or DW when using 16-bit displacement.
+;
+; A. Dense set. Switch_TYPE_S_SWITCH_P60.
+;   Dx  lowest legal value with MSB first!
+;   DB  information byte, see above
+;   DW/DP   default label
+;   DW  number of case values, including lowest.
+;    Jump table. "Holes" are filled with the defaul label.
+;   Dz  first label
+;   Dz  second label
+;      ...
+;   Dz  last label
+;   Padding for word alignment.
+;
+; B. Spread set. Switch_TYPE_V_SWITCH_P60. Value/jump table
+;   Dx  lowest legal value with MSB first!
+;   DB  information byte, see above
+;   DW  default label
+;    Value/address table:
+;   Dz  first label
+;   Dy  second case value - lowest legal value
+;   Dz  second label
+;   Dy  third case value - second case value
+;      ...
+;   Dz  last label
+;   DB  0xFB    end of table
+;   Padding for word alignment.
+;
+; 'Normally' the difference between two successive values in a spread
+; set representation of VALTAB can be represented in one byte < 0xFB. 
+; Else a special escape sequence must be used.
+;
+; Escape sequences used: (0xFF) 1 byte value follows
+;            (0xFE) 2 bytes value follows, MSB first!
+;            (0xFC) 4 bytes value follows, MSB first!
+;            (0xFB) Marks end of table.
+;
+;
+
+    
+#include "macros.m90"
+
+#ifdef __HAS_ENHANCED_CORE__
+#ifdef __HAS_ELPM__
+
+;------------------------------------------------------------------
+; SWITCH
+; This is the 'exported' subroutine that is to be called by the
+; compiler.
+;
+; With the above data representations it is sufficient with only one
+; library routine:
+;
+; SWITCH   which takes the case value in P0, PW or PL and the address to
+;      VALTAB in ZW+RAMPZ as input arguments. The 'return' from SWITCH is
+;      always via an EIJMP/IJMP to the corresponding switch label.
+;      Note that even in the case of 'char' or 'word' arguments, the
+;      complete PL will be destroyed. Also all other scratch registers
+;      are destroyed.
+;
+; Destroys: P0 P1 P2 P3 Q0 Q1 Q2 Q3 T0 T1 T2 T3 Z0 Z1 RAMPZ EIND
+;
+; Size: 206 bytes
+;
+    MODULE  ?xV_SWITCH_L06
+    PUBLIC  ?CV_SWITCH_L06, ?SV_SWITCH_L06, ?LV_SWITCH_L06
+    RSEG    CODE:CODE:NOROOT(1)
+
+GET_INFO_L:
+    ;; Get low limit byte 3-2
+    ELPM    Q3,Z+
+    ELPM    Q2,Z+
+GET_INFO_S:
+    ;; Get low limit byte 1
+    ELPM    Q1,Z+
+GET_INFO_C:
+    ;; Get low limit low byte
+    ELPM    Q0,Z+
+    ;; Next is information byte
+    ELPM    T1,Z+
+    BST     T1,1            ; Save type of switch_table representation
+                            ; in the T-bit of SREG. T flag is zero if absolute
+    ;; Next is default address
+    ELPM    T2,Z+
+    ELPM    T3,Z+
+#if (A90_PROC_OPTION >= 5)
+    ELPM    T0,Z+
+    OUT     EIND,T0
+#endif
+    RET
+
+?CV_SWITCH_L06:
+    RCALL   GET_INFO_C
+    SUB     P0,Q0
+    LDI     P1,0
+    RJMP    P_0_S
+?SV_SWITCH_L06:
+    RCALL   GET_INFO_S
+    SUB     P0,Q0
+    SBC     P1,Q1
+P_0_S:  
+    LDI     P2,0
+    LDI     P3,0
+    RJMP    CHECK_LOW_LIMIT
+
+?LV_SWITCH_L06:
+    RCALL   GET_INFO_L
+    SUB     P0,Q0
+    SBC     P1,Q1
+    SBC     P2,Q2
+    SBC     P3,Q3
+
+CHECK_LOW_LIMIT:
+    BRCS    JMP_DEF         ; Take default if below low limit (unsigned compare)
+    SBRC    T1,0            ; Skip next instruction if bit clear -> dense
+    RJMP    SPREAD_
+
+    ;; Dense case values (jump table is used)
+    ELPM    Q0,Z+           ; Number of entries, low part
+    
+    ELPM    T0,Z+           ; Number of entries, high part
+
+    ADD     Z0,P0           ; Add to jump table start address
+    ADC     Z1,P1
+
+    CP      P0,Q0
+    CPC     P1,T0
+    LDI     Q0,0
+    CPC     P2,Q0
+    CPC     P3,Q0
+    BRCC    JMP_DEF         ; Take default if above high limit (unsigned compare)
+
+    ;; Calculate table address, depending on if offsets or full addresses are used
+    BRTC    CALC_ABS
+    ;; Offsets are used
+
+GET_OFFS:
+#if (A90_PROC_OPTION >= 5)
+    SBRS    T1,2
+    RJMP    ?GET_OFFS8
+    ADD     Z0,P0           ; Add one more time to get 16-bit offset
+    ADC     Z1,P1
+    ELPM    P0,Z+
+    ELPM    T0,Z
+    RJMP    ?DO_OFFS_JMP
+#endif
+
+?GET_OFFS8:
+    ELPM    P0,Z
+    CLR     T0
+
+?DO_OFFS_JMP:
+    MOVW    Z1:Z0,T3:T2
+    SUB     Z0,P0
+    SBC     Z1,T0
+#if (A90_PROC_OPTION >= 5)
+    IN      P0,EIND
+    SBCI    P0,0
+    OUT     EIND,P0
+    EIJMP
+#else
+    IJMP
+#endif
+
+CALC_ABS:   
+    ADD     Z0,P0           ; Add one more time to get 16-bit offset
+    ADC     Z1,P1
+#if (A90_PROC_OPTION >= 5)
+    ADD     Z0,P0           ; And yet one more to get 24-bit offset
+    ADC     Z1,P1
+#endif
+
+GET_ABS:
+    ELPM    T2,Z+           ; Get low part of address
+    ELPM    T3,Z+           ; Get high part of address
+#if (A90_PROC_OPTION >= 5)
+    ELPM    T0,Z+           ; Get highest part of address
+    OUT     EIND,T0
+#endif
+JMP_DEF:
+    MOVW    Z1:Z0,T3:T2
+#if (A90_PROC_OPTION >= 5)
+    EIJMP
+#else
+    IJMP
+#endif
+
+    ;; Spread case values (value/jump table is used)
+SPREAD_:
+    BRNE    VAL_LOOP
+ABS_OR_OFFS:
+    BRTC    GET_ABS
+    RJMP    GET_OFFS
+
+    ;; Value loop
+VAL_LOOP:
+    ADIW    Z1:Z0,1         ; Skip address (Z <-- Z+1)
+#if (A90_PROC_OPTION >= 5)
+    SBRC    T1,2            ; Two byte if 16-bit offsets are used
+    ADIW    Z1:Z0,1         ; Skip address (Z <-- Z+1)
+#endif
+    BRTS    SKIP1           ; Only one byte if offsets are used (T flag is 1)
+#if (A90_PROC_OPTION >= 5)
+    ADIW    Z1:Z0,2         ; Skip high addresses (Z <-- Z+1)
+#else
+    ADIW    Z1:Z0,1         ; Skip high address (Z <-- Z+1)
+#endif
+SKIP1:  
+    LDI     Q1,0
+    LDI     Q2,0
+    LDI     Q3,0
+    ELPM    Q0,Z+           ; Get first value byte
+    CPI     Q0,0xFB         ; Escape is >= 0xFB
+    BRCS    SUB_VALUE       ; No escape sequence.
+    ;; Escape sequence
+    BREQ    JMP_DEF         ; End of VALTAB reached without match
+    CPI     Q0,0xFF
+    BREQ    VAL1
+    CPI     Q0,0xFE
+    BREQ    VAL2
+    ELPM    Q3,Z+           ; Get fourth value byte
+    ELPM    Q2,Z+           ; Get third value byte
+VAL2:   
+    ELPM    Q1,Z+           ; Get second value byte
+VAL1:   
+    ELPM    Q0,Z+           ; Get first value byte (= the least significant byte)
+SUB_VALUE:
+    SUB     P0,Q0           ; Subtract value
+    SBC     P1,Q1
+    SBC     P2,Q2
+    SBC     P3,Q3
+    BREQ    ABS_OR_OFFS     ; Match found
+    BRCS    JMP_DEF         ; No match in table, go for default (unsigned)
+    RJMP    VAL_LOOP
+
+#else  /* defined(__HAS_ENHANCED_CORE__) && !defined(__HAS_ELPM__) */
+
+;------------------------------------------------------------------
+; SWITCH
+; This is the 'exported' subroutine that is to be called by the
+; compiler.
+;
+; With the above data representations it is sufficient with only one
+; library routine:
+;
+; SWITCH   which takes the case value in P0, PW or PL and the address to
+;      VALTAB in ZW as input arguments. The 'return' from SWITCH is
+;      always via an EIJMP/IJMP to the corresponding switch label.
+;      Note that even in the case of 'char' or 'word' arguments, the
+;      complete PL will be destroyed. Also all other scratch registers
+;      are destroyed.
+;
+; Destroys: P0 P1 P2 P3 Q0 Q1 Q2 Q3 T0 T1 T2 T3 Z0 Z1 RAMPZ EIND
+;
+; Size: 206 bytes
+;
+    MODULE  ?xV_SWITCH_L06
+    PUBLIC  ?CV_SWITCH_L06, ?SV_SWITCH_L06, ?LV_SWITCH_L06
+    RSEG    CODE:CODE:NOROOT(1)
+
+GET_INFO_L:
+    ;; Get low limit byte 3-2
+    LPM     Q3,Z+
+    LPM     Q2,Z+
+GET_INFO_S:
+    ;; Get low limit byte 1
+    LPM     Q1,Z+
+GET_INFO_C:
+    ;; Get low limit low byte
+    LPM     Q0,Z+
+    ;; Next is information byte
+    LPM     T1,Z+
+    BST     T1,1            ; Save type of switch_table representation
+                            ; in the T-bit of SREG. T flag is zero if absolute
+    ;; Next is default address
+    LPM     T2,Z+
+    LPM     T3,Z+
+#if (A90_PROC_OPTION >= 5)
+    LPM     T0,Z+
+    OUT     EIND,T0
+#endif
+    RET
+
+?CV_SWITCH_L06:
+    RCALL   GET_INFO_C
+    SUB     P0,Q0
+    LDI     P1,0
+    RJMP    P_0_S
+?SV_SWITCH_L06:
+    RCALL   GET_INFO_S
+    SUB     P0,Q0
+    SBC     P1,Q1
+P_0_S:  
+    LDI     P2,0
+    LDI     P3,0
+    RJMP    CHECK_LOW_LIMIT
+
+?LV_SWITCH_L06:
+    RCALL   GET_INFO_L
+    SUB     P0,Q0
+    SBC     P1,Q1
+    SBC     P2,Q2
+    SBC     P3,Q3
+
+CHECK_LOW_LIMIT:
+    BRCS    JMP_DEF         ; Take default if below low limit (unsigned compare)
+    SBRC    T1,0            ; Skip next instruction if bit clear -> dense
+    RJMP    SPREAD_
+
+    ;; Dense case values (jump table is used)
+    LPM     Q0,Z+           ; Number of entries, low part
+    
+    LPM     T0,Z+           ; Number of entries, high part
+
+    ADD     Z0,P0           ; Add to jump table start address
+    ADC     Z1,P1
+
+    CP      P0,Q0
+    CPC     P1,T0
+    LDI     Q0,0
+    CPC     P2,Q0
+    CPC     P3,Q0
+    BRCC    JMP_DEF         ; Take default if above high limit (unsigned compare)
+
+    ;; Calculate table address, depending on if offsets or full addresses are used
+    BRTC    CALC_ABS
+    ;; Offsets are used
+
+GET_OFFS:
+#if (A90_PROC_OPTION >= 5)
+    SBRS    T1,2
+    RJMP    ?GET_OFFS8
+    ADD     Z0,P0           ; Add one more time to get 16-bit offset
+    ADC     Z1,P1
+    LPM     P0,Z+
+    LPM     T0,Z
+    RJMP    ?DO_OFFS_JMP
+#endif
+
+?GET_OFFS8:
+    LPM     P0,Z
+    CLR     T0
+
+?DO_OFFS_JMP:
+    MOVW    Z1:Z0,T3:T2
+    SUB     Z0,P0
+    SBC     Z1,T0
+#if (A90_PROC_OPTION >= 5)
+    IN      P0,EIND
+    SBCI    P0,0
+    OUT     EIND,P0
+    EIJMP
+#else
+    IJMP
+#endif
+
+CALC_ABS:   
+    ADD     Z0,P0           ; Add one more time to get 16-bit offset
+    ADC     Z1,P1
+#if (A90_PROC_OPTION >= 5)
+    ADD     Z0,P0           ; And yet one more to get 24-bit offset
+    ADC     Z1,P1
+#endif
+
+GET_ABS:
+    LPM     T2,Z+           ; Get low part of address
+    LPM     T3,Z+           ; Get high part of address
+#if (A90_PROC_OPTION >= 5)
+    LPM     T0,Z+           ; Get highest part of address
+    OUT     EIND,T0
+#endif
+JMP_DEF:
+    MOVW    Z1:Z0,T3:T2
+#if (A90_PROC_OPTION >= 5)
+    EIJMP
+#else
+    IJMP
+#endif
+
+    ;; Spread case values (value/jump table is used)
+SPREAD_:
+    BRNE    VAL_LOOP
+ABS_OR_OFFS:
+    BRTC    GET_ABS
+    RJMP    GET_OFFS
+
+    ;; Value loop
+VAL_LOOP:
+    ADIW    Z1:Z0,1         ; Skip address (Z <-- Z+1)
+#if (A90_PROC_OPTION >= 5)
+    SBRC    T1,2            ; Two byte if 16-bit offsets are used
+    ADIW    Z1:Z0,1         ; Skip address (Z <-- Z+1)
+#endif
+    BRTS    SKIP1           ; Only one byte if offsets are used (T flag is 1)
+#if (A90_PROC_OPTION >= 5)
+    ADIW    Z1:Z0,2         ; Skip high addresses (Z <-- Z+1)
+#else
+    ADIW    Z1:Z0,1         ; Skip high address (Z <-- Z+1)
+#endif
+SKIP1:  
+    LDI     Q1,0
+    LDI     Q2,0
+    LDI     Q3,0
+    LPM     Q0,Z+           ; Get first value byte
+    CPI     Q0,0xFB         ; Escape is >= 0xFB
+    BRCS    SUB_VALUE       ; No escape sequence.
+    ;; Escape sequence
+    BREQ    JMP_DEF         ; End of VALTAB reached without match
+    CPI     Q0,0xFF
+    BREQ    VAL1
+    CPI     Q0,0xFE
+    BREQ    VAL2
+    LPM     Q3,Z+           ; Get fourth value byte
+    LPM     Q2,Z+           ; Get third value byte
+VAL2:   
+    LPM     Q1,Z+           ; Get second value byte
+VAL1:   
+    LPM     Q0,Z+           ; Get first value byte (= the least significant byte)
+SUB_VALUE:
+    SUB     P0,Q0           ; Subtract value
+    SBC     P1,Q1
+    SBC     P2,Q2
+    SBC     P3,Q3
+    BREQ    ABS_OR_OFFS     ; Match found
+    BRCS    JMP_DEF         ; No match in table, go for default (unsigned)
+    RJMP    VAL_LOOP
+
+#endif /* defined(__HAS_ENHANCED_CORE__) && !defined(__HAS_ELPM__) */
+#else  /* !defined(__HAS_ENHANCED_CORE__)*/
+
+;------------------------------------------------------------------
+; SWITCH
+; This is the 'exported' subroutine that is to be called by the
+; compiler.
+;
+; With the above data representations it is sufficient with only one
+; library routine:
+;
+; SWITCH   which takes the case value in P0, PW or PL and the address to
+;      VALTAB in ZW as input arguments. The 'return' from SWITCH is
+;      always via an IJMP to the corresponding switch label.
+;      Note that even in the case of 'char' or 'word' arguments, the
+;      complete PL will be destroyed. Also all other scratch registers
+;      are destroyed.
+;
+; Destroys: P0 P1 P2 P3 Q0 Q1 Q2 Q3 T0 T1 T2 T3 Z0 Z1 EIND
+;
+; Size: 206 bytes
+;
+    MODULE  ?xV_SWITCH_L06
+    PUBLIC  ?CV_SWITCH_L06, ?SV_SWITCH_L06, ?LV_SWITCH_L06
+    RSEG    CODE:CODE:NOROOT(1)
+
+GET_INFO_L:
+    ;; Get low limit byte 3-2
+    RCALL   NEXT
+    MOV     Q3,T0
+    RCALL   NEXT
+    MOV     Q2,T0
+GET_INFO_S:
+    ;; Get low limit byte 1
+    RCALL   NEXT
+    MOV     Q1,T0
+GET_INFO_C:
+    ;; Get low limit low byte
+    RCALL   NEXT
+    MOV     Q0,T0
+    ;; Next is information byte
+    RCALL   NEXT
+    MOV     T1,T0
+    BST     T0,1    ; Save type of switch_table representation
+                    ; in the T-bit of SREG. T flag is zero if absolute
+    ;; Next is default address
+    RCALL   NEXT
+    MOV     T2,T0
+    RCALL   NEXT
+    MOV     T3,T0
+
+#if (A90_PROC_OPTION >= 5)
+    RCALL   NEXT
+    OUT     EIND,T0
+#endif
+
+    RET
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+?CV_SWITCH_L06:
+    RCALL   GET_INFO_C
+    SUB     P0,Q0
+    LDI     P1,0
+    RJMP    P_0_S
+?SV_SWITCH_L06:
+    RCALL   GET_INFO_S
+    SUB     P0,Q0
+    SBC     P1,Q1
+P_0_S:  
+    LDI     P2,0
+    LDI     P3,0
+    RJMP    CHECK_LOW_LIMIT
+?LV_SWITCH_L06:
+    RCALL   GET_INFO_L
+    SUB     P0,Q0
+    SBC     P1,Q1
+    SBC     P2,Q2
+    SBC     P3,Q3
+
+CHECK_LOW_LIMIT:
+    BRCS    JMP_DEF ; Take default if below low limit (unsigned compare)
+    SBRC    T1,0    ; Skip next instruction if bit clear -> dense
+    RJMP    SPREAD_
+
+    ;; Dense case values (jump table is used)
+    RCALL   NEXT    ; Number of entries, low part
+    MOV     Q0,T0
+    RCALL   NEXT    ; Number of entries, high part
+
+    ADD     Z0,P0   ; Add to jump table start address
+    ADC     Z1,P1
+
+    CP      P0,Q0
+    CPC     P1,T0
+    LDI     Q0,0
+    CPC     P2,Q0
+    CPC     P3,Q0
+    BRCC    JMP_DEF ; Take default if above high limit (unsigned compare)
+
+    ;; Calculate table address, depending on if offsets or full addresses are used
+    BRTC    CALC_ABS
+    ;; Offsets are used
+
+GET_OFFS:
+#if (A90_PROC_OPTION >= 5)
+    SBRS    T1,2
+    RJMP    ?GET_OFFS8
+    ADD     Z0,P0   ; Add one more time to get 16-bit offset
+    ADC     Z1,P1
+    RCALL   NEXT
+    MOV     P0,T0
+    LPM
+    RJMP    ?DO_OFFS_JMP
+#endif
+
+?GET_OFFS8:
+    LPM
+    MOV     P0,T0
+    CLR     T0
+
+?DO_OFFS_JMP:
+    MOV     Z0,T2
+    MOV     Z1,T3
+    SUB     Z0,P0
+    SBC     Z1,T0
+#if (A90_PROC_OPTION >= 5)
+    IN      P0,EIND
+    SBCI    P0,0
+    OUT     EIND,P0
+    EIJMP
+#else
+    IJMP
+#endif
+
+CALC_ABS:   
+    ADD     Z0,P0   ; Add one more time to get 16-bit offset
+    ADC     Z1,P1
+#if (A90_PROC_OPTION >= 5)
+    ADD     Z0,P0   ; And yet one more to get 24-bit offset
+    ADC     Z1,P1
+#endif
+
+GET_ABS:
+    RCALL   NEXT    ; Get low part of address
+    MOV     T2,T0   ; Save it
+    RCALL   NEXT    ; Get high part of address
+    MOV     T3,T0
+#if (A90_PROC_OPTION >= 5)
+    RCALL   NEXT    ; Get highest part of address
+    OUT     EIND,T0
+#endif
+JMP_DEF:
+    MOV     Z0,T2
+    MOV     Z1,T3
+#if (A90_PROC_OPTION >= 5)
+    EIJMP
+#else
+    IJMP
+#endif
+
+    ;; Spread case values (value/jump table is used)
+SPREAD_:
+    BRNE    VAL_LOOP
+ABS_OR_OFFS:
+    BRTC    GET_ABS
+    RJMP    GET_OFFS
+
+    ;; Value loop
+VAL_LOOP:
+    ADIW    Z0,1    ; Skip address (Z <-- Z+1)
+#if (A90_PROC_OPTION >= 5)
+    SBRC    T1,2    ; Two byte if 16-bit offsets are used
+    ADIW    Z0,1    ; Skip address (Z <-- Z+1)
+#endif
+    BRTS    S1  ; Only one byte if offsets are used (T flag is 1)
+#if (A90_PROC_OPTION >= 5)
+    ADIW    Z0,2    ; Skip high addresses (Z <-- Z+1)
+#else
+    ADIW    Z0,1    ; Skip high address (Z <-- Z+1)
+#endif
+S1: 
+    LDI     Q1,0
+    LDI     Q2,0
+    LDI     Q3,0
+    RCALL   NEXT    ; Get first value byte
+    MOV     Q0,T0
+    CPI     Q0,0xFB ; Escape is >= 0xFB
+    BRCS    SUB_VALUE   ; No escape sequence.
+    ;; Escape sequence
+    BREQ    JMP_DEF ; End of VALTAB reached without match
+    CPI     Q0,0xFF
+    BREQ    VAL1
+    CPI     Q0,0xFE
+    BREQ    VAL2
+    RCALL   NEXT    ; Get fourth value byte
+    MOV     Q3,T0
+    RCALL   NEXT    ; Get third value byte
+    MOV     Q2,T0
+VAL2:   
+    RCALL   NEXT    ; Get second value byte
+    MOV     Q1,T0
+VAL1:   
+    RCALL   NEXT    ; Get first value byte (= the least significant byte)
+    MOV     Q0,T0
+SUB_VALUE:
+    SUB     P0,Q0   ; Subtract value
+    SBC     P1,Q1
+    SBC     P2,Q2
+    SBC     P3,Q3
+    BREQ    ABS_OR_OFFS ; Match found
+    BRCS    JMP_DEF ; No match in table, go for default (unsigned)
+    RJMP    VAL_LOOP
+
+; --------------------------------------------------------------
+; Suboutine NEXT fetches the byte positioned at Z to T0 and then
+; increments the pointer.
+; (Should be in-lined in some crucial places perhaps)
+;
+NEXT:   
+    LPM     ; T0 <-- (Z)
+    ADIW    Z0,1    ; Z <-- Z+1
+    RET
+
+#endif /* !defined(__HAS_ENHANCED_CORE__) */
+    END
+
+;----------------------------------------------------------------------------
+;  

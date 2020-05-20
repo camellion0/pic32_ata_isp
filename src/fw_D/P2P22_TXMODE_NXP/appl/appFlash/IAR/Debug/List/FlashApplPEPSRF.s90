@@ -1,0 +1,471 @@
+///////////////////////////////////////////////////////////////////////////////
+//
+// IAR C/C++ Compiler V6.40.2.748 for Atmel AVR           01/Sep/2015  14:25:56
+// Copyright 1996-2014 IAR Systems AB.
+// Time limited license - IAR Embedded Workbench for Atmel AVR 6.40
+//
+//    Source file  =  
+//        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\GR_inwork\appl\appFlash\src\FlashApplPEPSRF.c
+//    Command line =  
+//        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\GR_inwork\appl\appFlash\src\FlashApplPEPSRF.c
+//        -v3 --enhanced_core -ms -o
+//        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\GR_inwork\appl\appFlash\IAR\Debug\Obj\
+//        -lCN
+//        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\GR_inwork\appl\appFlash\IAR\Debug\List\
+//        -lA
+//        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\GR_inwork\appl\appFlash\IAR\Debug\List\
+//        --no_cse --no_inline --no_code_motion --no_cross_call --no_clustering
+//        --no_tbaa --debug --64k_flash -DENABLE_BIT_DEFINITIONS -e
+//        --eeprom_size 2304 --clib -Ohz
+//    List file    =  
+//        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\GR_inwork\appl\appFlash\IAR\Debug\List\FlashApplPEPSRF.s90
+//
+///////////////////////////////////////////////////////////////////////////////
+
+        NAME FlashApplPEPSRF
+
+        RTMODEL "__64bit_doubles", "disabled"
+        RTMODEL "__SystemLibrary", "CLib"
+        RTMODEL "__cpu", "3"
+        RTMODEL "__enhanced_core", "enabled"
+        RTMODEL "__has_elpm", "false"
+        RTMODEL "__memory_model", "2"
+        RTMODEL "__rt_version", "3"
+
+        RSEG CSTACK:DATA:NOROOT(0)
+        RSEG RSTACK:DATA:NOROOT(0)
+
+        PUBWEAK __?EEARH
+        PUBWEAK __?EEARL
+        PUBWEAK __?EECR
+        PUBWEAK __?EEDR
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01cH
+__?EECR:
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01dH
+__?EEDR:
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01eH
+__?EEARL:
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01fH
+__?EEARH:
+
+        END
+// C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\GR_inwork\appl\appFlash\src\FlashApplPEPSRF.c
+//    1 /* *C**************************************************************************
+//    2   Use of this software is subject to Atmel's Software License Agreement.
+//    3 -------------------------------------------------------------------------------
+//    4   $URL: http://svnservulm.corp.atmel.com/svn/CDB/Apps/SW_Lib/Car_Access/CARS_GEN2/ATAB5702A/Branches/GR_inwork/appl/appFlash/src/FlashApplRKE.c $
+//    5   $LastChangedRevision: 333314 $
+//    6   $LastChangedDate: 2015-08-14 16:42:10 -0600 (Fri, 14 Aug 2015) $
+//    7   $LastChangedBy: grueter $
+//    8 -------------------------------------------------------------------------------
+//    9   Project:      ATA5700
+//   10   Target MCU:   ATA5700
+//   11   Compiler:     IAR C/C++ Compiler for AVR 5.51.0
+//   12 -------------------------------------------------------------------------------
+//   13 
+//   14 *******************************************************************************
+//   15 * Copyright 2011, Atmel Automotive GmbH                                       *
+//   16 *                                                                             *
+//   17 * This software is owned by the Atmel Automotive GmbH                         *
+//   18 * and is protected by and subject to worldwide patent protection.             *
+//   19 * Atmel hereby grants to licensee a personal,                                 *
+//   20 * non-exclusive, non-transferable license to copy, use, modify, create        *
+//   21 * derivative works of, and compile the Atmel Source Code and derivative       *
+//   22 * works for the sole purpose of creating custom software in support of        *
+//   23 * licensee product to be used only in conjunction with a Atmel integrated     *
+//   24 * circuit as specified in the applicable agreement. Any reproduction,         *
+//   25 * modification, translation, compilation, or representation of this           *
+//   26 * software except as specified above is prohibited without the express        *
+//   27 * written permission of Atmel.                                                *
+//   28 *                                                                             *
+//   29 * Disclaimer: ATMEL MAKES NO WARRANTY OF ANY KIND,EXPRESS OR IMPLIED,         *
+//   30 * WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED    *
+//   31 * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.         *
+//   32 * Atmel reserves the right to make changes without further notice to the      *
+//   33 * materials described herein. Atmel does not assume any liability arising     *
+//   34 * out of the application or use of any product or circuit described herein.   *
+//   35 * Atmel does not authorize its products for use as critical components in     *
+//   36 * life-support systems where a malfunction or failure may reasonably be       *
+//   37 * expected to result in significant injury to the user. The inclusion of      *
+//   38 * Atmel products in a life-support systems application implies that the       *
+//   39 * manufacturer assumes all risk of such use and in doing so indemnifies       *
+//   40 * Atmel against all charges.                                                  *
+//   41 *                                                                             *
+//   42 * Use may be limited by and subject to the applicable Atmel software          *
+//   43 * license agreement.                                                          *
+//   44 ******************************************************************************/
+//   45 
+//   46 /** \file FlashApplPEPSRF.c
+//   47     this file contains an ATA5700 Flash application software
+//   48 */
+//   49 
+//   50 /*===========================================================================*/
+//   51 /*  INCLUDES                                                                 */
+//   52 /*===========================================================================*/
+//   53 #include "../../../firmware/init/src/init.h"
+//   54 #include "../../../firmware/rftx/src/rftx.h"
+//   55 #include "../../../firmware/lfrx/src/lfrx.h"
+//   56 //#include "../../../firmware/rfrcc/src/rfrcc.h"
+//   57 #include "../../../firmware/spi/src/ata5700_command_set.h"
+//   58 
+//   59 #include "../../../firmware/init/src/init_flash.h"
+//   60 #include "../../../firmware/system/src/system_flash.h"
+//   61 #include "../../../firmware/rftx/src/rftx.h"
+//   62 #include "../../../firmware/timer1/src/timer1.h"
+//   63 #include "../../../firmware/globals/src/globals.h"
+//   64 
+//   65 #include "../../../firmware/lfrx/src/lfrx_flash.h"
+//   66 #include "../../../firmware/tp/src/tp_flash.h"
+//   67 
+//   68 #include "../../../firmware/extif/src/extif_flash.h"
+//   69 
+//   70 #include "../../../firmware/lfrssi/src/lfrssi.h"
+//   71 #include "../../../firmware/lfrssi/src/lfrssi_flash.h"
+//   72 
+//   73 #include "../../../firmware/calib/src/calib.h"
+//   74 #include "../../../firmware/aes/src/aes.h"
+//   75 
+//   76 #include "rfrcc_flash.h"
+//   77 #include "FlashApplVars.h"
+//   78 #include "FlashApplPEPSRF.h"
+//   79 
+//   80 /*===========================================================================*/
+//   81 /*  DEFINES                                                                  */
+//   82 /*===========================================================================*/
+//   83 
+//   84 
+//   85 #define RF_FRAME_LENGTH(NB_BYTES) (1000.0/CFG_RF1_BITRATE*8.0*(NB_BYTES+0.5))
+//   86 /*===========================================================================*/
+//   87 /*  Modul Globals                                                             */
+//   88 /*===========================================================================*/
+//   89 
+//   90 
+//   91 // extern eAesSecretKeySelection bAesSecretKeySelection = AES_USE_SECRET_KEY_A;
+//   92 //uint8_t_t bUserCmd=0xa5;
+//   93 extern  uint16_t g_EepRFRcc_flash;
+//   94 extern uint8_t guiButton;
+//   95 extern sFlashApplState gFlashApplState;
+//   96 extern sFlashApplVars gFlashApplVars;
+//   97 extern uint16_t wEepRfrccAddress;
+//   98 extern sCustomerEEPromSection g_sCustomerEEPromSection;
+//   99 
+//  100 //extern RFMSG_FRAME_TS msg_rx_buffer;
+//  101 //extern RFMSG_FRAME_TS msg_tx_buffer;
+//  102 /*   
+//  103 static uint8_t caub_tx_length[16] =
+//  104 {
+//  105   PEPS_SIZE_TX_MSG_ID,
+//  106   PEPS_SIZE_TX_MSG_PARAM, //PEPS_CID_RD_PARAM  1
+//  107   PEPS_SIZE_TX_MSG_PARAM, //PEPS_CID_WR_PARAM  2
+//  108   0,
+//  109   PEPS_SIZE_TX_MSG_2WAY, //PEPS_CID_2WAY 4
+//  110   PEPS_SIZE_TX_MSG_AUTH, //PEPS_CID_UNI_AUTH 5
+//  111   PEPS_SIZE_TX_MSG_AUTH, //PEPS_CID_BI_AUTH  6
+//  112   PEPS_SIZE_TX_MSG_AUTH, //PEPS_CID_UNI_AUTH_SINGLE 7
+//  113   PEPS_SIZE_TX_MSG_AUTH, //PEPS_CID_UNI_AUTH_SINGLE 8
+//  114   0,
+//  115   PEPS_SIZE_TX_MSG_LF_TST, //PEPS_CID_LF_TST  10
+//  116   PEPS_SIZE_TX_MSG_LF_PARAM, //PEPS_CID_LF_PARAM 11
+//  117   0,
+//  118   0,
+//  119   PEPS_SIZE_TX_MSG_SWID, //PEPS_CID_SWID 14
+//  120   PEPS_SIZE_TX_MSG_MODE  //PEPS_CID_MODE 15
+//  121 };
+//  122 
+//  123 //LF message length
+//  124 static uint8_t caub_lf_length[16] =
+//  125 {
+//  126   PEPS_SIZE_RX_MSG_ID,
+//  127   PEPS_SIZE_RX_MSG_PARAM_RD, //PEPS_CID_RD_PARAM  1
+//  128   PEPS_SIZE_RX_MSG_PARAM_WR, //PEPS_CID_WR_PARAM  2
+//  129   0,
+//  130 #ifdef CFG_APP_2WAYRF  
+//  131   PEPS_SIZE_RX_MSG_2WAY,     //PEPS_CID_2WAY     4
+//  132 #else
+//  133   0,
+//  134 #endif
+//  135   PEPS_SIZE_RX_MSG_AUTH_UNI, //PEPS_CID_UNI_AUTH 5
+//  136   PEPS_SIZE_RX_MSG_AUTH_BI,  //PEPS_CID_BI_AUTH  6
+//  137   PEPS_SIZE_RX_MSG_AUTH_UNI, //PEPS_CID_UNI_AUTH_SING 7
+//  138   PEPS_SIZE_RX_MSG_AUTH_BI,  //PEPS_CID_BI_AUTH_SING  8
+//  139   0,
+//  140   PEPS_SIZE_RX_MSG_LF_TST,   //PEPS_CID_LF_TST   10
+//  141   PEPS_SIZE_RX_MSG_LF_PARAM, //PEPS_CID_SET_REF  11
+//  142   0,
+//  143   0,
+//  144   PEPS_SIZE_RX_MSG_SWID, //PEPS_CID_SWID 14
+//  145   PEPS_SIZE_RX_MSG_MODE  //PEPS_CID_MODE 15
+//  146 };
+//  147 
+//  148 //Command with LF CW ?
+//  149 static uint8_t cabb_cmd_with_cw[16] =
+//  150 {
+//  151   FALSE,
+//  152   FALSE, //PEPS_CID_RD_PARAM  1
+//  153   FALSE, //PEPS_CID_WR_PARAM  2
+//  154   FALSE,
+//  155   TRUE,  //PEPS_CID_2WAY     4
+//  156   TRUE,  //PEPS_CID_UNI_AUTH 5
+//  157   TRUE,  //PEPS_CID_BI_AUTH  6
+//  158   TRUE,  //PEPS_CID_UNI_AUTH_SING 7
+//  159   TRUE,  //PEPS_CID_BI_AUTH_SING  8
+//  160   FALSE,
+//  161   TRUE,  //PEPS_CID_LF_TST   10
+//  162   TRUE, //PEPS_CID_SET_REF  11
+//  163   FALSE,
+//  164   FALSE,
+//  165   FALSE, //PEPS_CID_SWID 14
+//  166   FALSE  //PEPS_CID_MODE 15
+//  167 };
+//  168 
+//  169 // Access codes for diagnostic (OEM, AS)
+//  170 
+//  171 static uint8_t caub_diag_code[2][4] =
+//  172 {
+//  173   {
+//  174     (CFG_APP_OEM_CODE>>24)&0xFF,
+//  175     (CFG_APP_OEM_CODE>>16)&0xFF,
+//  176     (CFG_APP_OEM_CODE>>8)&0xFF,
+//  177     (CFG_APP_OEM_CODE&0xFF)
+//  178   },
+//  179   {
+//  180     (CFG_APP_AS_CODE>>24)&0xFF,
+//  181     (CFG_APP_AS_CODE>>16)&0xFF,
+//  182     (CFG_APP_AS_CODE>>8)&0xFF,
+//  183     (CFG_APP_AS_CODE&0xFF)
+//  184   }
+//  185 };
+//  186 
+//  187 static uint8_t caub_frame_auth_delay[8] =
+//  188 {
+//  189   0,
+//  190   (uint8_t)((RF_FRAME_LENGTH(PEPS_SIZE_TX_MSG_AUTH) + INTERFRAME)*1 + 0.5),
+//  191   (uint8_t)((RF_FRAME_LENGTH(PEPS_SIZE_TX_MSG_AUTH) + INTERFRAME)*2 + 0.5),
+//  192   (uint8_t)((RF_FRAME_LENGTH(PEPS_SIZE_TX_MSG_AUTH) + INTERFRAME)*3 + 0.5),
+//  193   (uint8_t)((RF_FRAME_LENGTH(PEPS_SIZE_TX_MSG_AUTH) + INTERFRAME)*4 + 0.5),
+//  194   (uint8_t)((RF_FRAME_LENGTH(PEPS_SIZE_TX_MSG_AUTH) + INTERFRAME)*5 + 0.5),
+//  195   (uint8_t)((RF_FRAME_LENGTH(PEPS_SIZE_TX_MSG_AUTH) + INTERFRAME)*6 + 0.5),
+//  196   (uint8_t)((RF_FRAME_LENGTH(PEPS_SIZE_TX_MSG_AUTH) + INTERFRAME)*7 + 0.5),
+//  197 };
+//  198 static uint8_t caub_frame_2way_delay[8] =
+//  199 {
+//  200   0,
+//  201   (uint8_t)((RF_FRAME_LENGTH(PEPS_SIZE_TX_MSG_2WAY) + INTERFRAME)*1 + 0.5),
+//  202   (uint8_t)((RF_FRAME_LENGTH(PEPS_SIZE_TX_MSG_2WAY) + INTERFRAME)*2 + 0.5),
+//  203   (uint8_t)((RF_FRAME_LENGTH(PEPS_SIZE_TX_MSG_2WAY) + INTERFRAME)*3 + 0.5),
+//  204   (uint8_t)((RF_FRAME_LENGTH(PEPS_SIZE_TX_MSG_2WAY) + INTERFRAME)*4 + 0.5),
+//  205   (uint8_t)((RF_FRAME_LENGTH(PEPS_SIZE_TX_MSG_2WAY) + INTERFRAME)*5 + 0.5),
+//  206   (uint8_t)((RF_FRAME_LENGTH(PEPS_SIZE_TX_MSG_2WAY) + INTERFRAME)*6 + 0.5),
+//  207   (uint8_t)((RF_FRAME_LENGTH(PEPS_SIZE_TX_MSG_2WAY) + INTERFRAME)*7 + 0.5),
+//  208 };
+//  209 */
+//  210 // command ID received
+//  211 //static uint8_t rub_cid;
+//  212 
+//  213 // information on source message (channel LF/RF and wake-up id)
+//  214 //static uint8_t rub_wuip;
+//  215 
+//  216 // Fob Index
+//  217 //static uint8_t rub_fob_idx;
+//  218 
+//  219 // Fob ID
+//  220 //static uint32_t rul_fob_id;
+//  221 
+//  222 // RF channel to use
+//  223 //static uint8_t rub_rf_chan;
+//  224 
+//  225  //RFMSG_FRAME_TS msg_rx_buffer;
+//  226 // RFMSG_FRAME_TS msg_tx_buffer;
+//  227 
+//  228 //==============================================================================
+//  229 // Local functions Prototypes
+//  230 //==============================================================================
+//  231 // PEPS main task
+//  232 //static void _app_peps_task(void);
+//  233 
+//  234 // Check LF message received
+//  235 //static uint8_t _peps_cmd_validity(void);
+//  236 
+//  237 // Build PEPS RF message
+//  238 //static void _peps_build_msg(void);
+//  239 
+//  240 // Send PEPS RF message
+//  241 //static void _peps_send_msg(void);
+//  242 
+//  243 // Send PEPS RF message
+//  244 //static void _peps_send_frame(void);
+//  245 
+//  246 
+//  247 
+//  248 /*===========================================================================*/
+//  249 /*  IMPLEMENTATION                                                           */
+//  250 /*===========================================================================*/
+//  251 //** \brief <b>ATA_Flash_RKEsend(void)</b>
+//  252 
+//  253 // PEPS main task
+//  254 //static void _app_peps_task(void);
+//  255 
+//  256 
+//  257 
+//  258 /**
+//  259  * \brief PEPS Task on frame reception
+//  260  *        Start LF RSSI acquisiotns if needed
+//  261  *        Check WUID is coming from RF link
+//  262  *        Call PEPS handler
+//  263  *
+//  264  * \return none
+//  265  */
+//  266 /*
+//  267 void app_peps_handler(uint8_t lub_channel)
+//  268 {
+//  269   uint8_t laub_data[4];
+//  270   
+//  271   // accept only frames with more than 5 bytes (WUID + CID + CKS)
+//  272   //if (MSG_RX_CNT >= 5)//This define is confusing
+//  273    if (msg_rx_buffer.ub_size >= 5) 
+//  274   {
+//  275     // get CID
+//  276     //rub_cid = ((RX_MSG_PEPS_TS*)MSG_RX_DATA)->cid;// Another confusing defince
+//  277     rub_cid = ((RX_MSG_PEPS_TS*) msg_rx_buffer.aub_data)->cid;
+//  278     rub_wuip = lub_channel;
+//  279     
+//  280     if (rub_wuip&RX_CHAN_LF_MSK)
+//  281     { 
+//  282       // message received by LF
+//  283       rub_wuip |= (rub_wuip<<3);    // set WUID source
+//  284       // RSSI acquisitions ?
+//  285       if (cabb_cmd_with_cw[rub_cid])
+//  286       {
+//  287         // acquire internal RSSI (CW OFF)
+//  288         lf_measureRSSI(LF_MEAS_INT);
+//  289  #ifdef RSSI_COMPENSATION
+//  290         // wait before internal field measurement
+//  291         TIMEB_WAIT_US((16-CFG_LF_RSSI_ACQ)*100);
+//  292         // acquire external RSSI (CW ON)
+//  293         lf_measureRSSI(LF_MEAS_EXT);
+//  294  #endif
+//  295       }
+//  296       // force emission on channel 1 when command is received by LF
+//  297       rub_rf_chan = 1;
+//  298     }
+//  299     else
+//  300     {
+//  301       // message received by RF
+//  302       // Note: ATA5831 returns 1 additionnal byte due to additionnal bit in EOF
+//  303       msg_rx_buffer.ub_size -= 1;
+//  304       
+//  305       // check if wake-up ID match WUID0
+//  306 #ifdef CFG_LF_WUP0_IN_EEPROM    
+//  307       EEPDATA_READ(laub_data, CFG_LF_WUP0);
+//  308 #else
+//  309       laub_data[3] = (CFG_LF_WUP0>>((CFG_LF_WUP0_LENGTH-32)&0x1F)) & 0xFF;
+//  310       laub_data[2] = (CFG_LF_WUP0>>((CFG_LF_WUP0_LENGTH-24)&0x1F)) & 0xFF;
+//  311       laub_data[1] = (CFG_LF_WUP0>>((CFG_LF_WUP0_LENGTH-16)&0x1F)) & 0xFF;
+//  312       laub_data[0] = (CFG_LF_WUP0>>((CFG_LF_WUP0_LENGTH-8)&0x1F)) & 0xFF;
+//  313 #endif
+//  314       if (memory_compare(((RX_MSG_PEPS_TS*)MSG_RX_DATA)->vid,
+//  315                           laub_data, CFG_PEPS_VID_LENGTH))
+//  316       {
+//  317         rub_wuip = RX_WUID0;
+//  318       }
+//  319       
+//  320       // check if wake-up ID match WUID1
+//  321 #ifdef CFG_LF_WUP1_IN_EEPROM    
+//  322       EEPDATA_READ(laub_data, CFG_LF_WUP1);
+//  323 #else
+//  324       laub_data[3] = (CFG_LF_WUP1>>((CFG_LF_WUP0_LENGTH-32)&0x1F)) & 0xFF;
+//  325       laub_data[2] = (CFG_LF_WUP1>>((CFG_LF_WUP0_LENGTH-24)&0x1F)) & 0xFF;
+//  326       laub_data[1] = (CFG_LF_WUP1>>((CFG_LF_WUP0_LENGTH-16)&0x1F)) & 0xFF;
+//  327       laub_data[0] = (CFG_LF_WUP1>>((CFG_LF_WUP0_LENGTH-8)&0x1F)) & 0xFF;
+//  328 #endif
+//  329       if (memory_compare(((RX_MSG_PEPS_TS*)MSG_RX_DATA)->vid,
+//  330                          laub_data, CFG_PEPS_VID_LENGTH))
+//  331       {
+//  332         rub_wuip = RX_WUID1;
+//  333       }
+//  334     }
+//  335     LF_ENABLE(FALSE);
+//  336     
+//  337     if (rub_wuip&RX_WUID_MSK)
+//  338     {
+//  339       _app_peps_task();
+//  340     }
+//  341   }
+//  342 }
+//  343 */
+//  344 /**
+//  345  * \brief PEPS common Task
+//  346  *        Analyse and execute frame receive
+//  347  *        Prepare RF message reply
+//  348  *        Send RF message reply
+//  349  *        Acquire battery status
+//  350  *        Light ON LED for 50ms
+//  351  *
+//  352  * \return none
+//  353  */
+//  354 /*
+//  355 static void _app_peps_task(void)
+//  356 {
+//  357   // execute command
+//  358   if (_peps_cmd_validity())
+//  359   {
+//  360     // light on LED
+//  361     SET_LED_STATUS(TRUE);
+//  362     
+//  363 #ifdef CFG_APP_2WAYRF
+//  364     // wake-up RF
+//  365     rf_ata5831_setmode(E_STATE_IDLE, (RF_ATA5831_CONFIG_TU){0});
+//  366 #else // ONE WAY
+//  367     // start XTO quartz now so that it is stabilized when we need to transmit
+//  368 //    rf_ata5791_setmode(RF_MODE_IDLE);//
+//  369 #endif
+//  370 
+//  371     // Build RF message
+//  372     _peps_build_msg();
+//  373 
+//  374     //activate voltage monitor
+//  375 //    PRR0 &= ~(1<<PRVM); // remove power reduction on voltage monitor (2.0V)
+//  376  //   VMCR = (VMCR & ((1<<BODLS) | (1<<BODPD))) | (1<<VMPS) | (0<<VMIM) 
+//  377 //           | (0<<VMLS3) | (0<<VMLS2) | (0<<VMLS1) | (1<<VMLS1);
+//  378 //    VMSR = (1<<VMF); // clear VMF flag
+//  379 
+//  380     // Send RF message
+//  381     _peps_send_msg();
+//  382 
+//  383     // filter and update battery flag
+//  384   //  raub_filt_input[CFG_FILT_BATTERY] = NUB_BAT;
+//  385  //   gpio_input_filtering(CFG_FILT_BATTERY, (VMSR & (1<<VMF)));
+//  386  //   NUB_BAT = raub_filt_input[CFG_FILT_BATTERY];
+//  387 
+//  388     // stop voltage monitor
+//  389   //  VMCR &= (1<<BODLS) | (1<<BODPD);
+//  390     PRR0 |= (1<<PRVM);
+//  391 
+//  392     // shut down LED if emission length < 50ms (1000 is here to get result in ms)
+//  393 #if ((1000/CFG_RF1_BITRATE*8*PEPS_SIZE_MSG_AUTH) < 50)
+//  394     // do not wait if another command is expected soon
+//  395     if (rub_cid != PEPS_CID_2WAY)
+//  396     {
+//  397        // LED must be light on at least 50ms
+//  398 //      timeb_timer_start_ms(CFG_TIMER_APP, 
+//  399               //    (uint8_t)(50 - 1000.0/CFG_RF1_BITRATE*8*PEPS_SIZE_TX_MSG_AUTH));
+//  400 //      timeb_timer_wait_end(CFG_TIMER_APP);
+//  401     }
+//  402 #endif
+//  403 //    SET_LED_STATUS(OFF);
+//  404   }
+//  405 }
+//  406 */
+//  407 
+//  408 
+// 
+//
+// 
+//
+//
+//Errors: none
+//Warnings: none

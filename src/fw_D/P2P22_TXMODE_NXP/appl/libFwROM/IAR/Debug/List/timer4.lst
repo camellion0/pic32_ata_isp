@@ -1,0 +1,440 @@
+###############################################################################
+#
+# IAR C/C++ Compiler V6.70.1.929 for Atmel AVR            05/Apr/2016  13:30:44
+# Copyright 1996-2015 IAR Systems AB.
+# Network license: DVRIAR01.corpp.atmel.com (STD)
+#
+#    Source file  =  
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\firmware\timer4\src\timer4.c
+#    Command line =  
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\firmware\timer4\src\timer4.c
+#        -v3 --enhanced_core -ms -o
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\Obj
+#        -lC
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\List
+#        -lA
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\List
+#        --initializers_in_flash --no_cse --no_inline --no_code_motion
+#        --no_cross_call --no_clustering --no_tbaa --debug --64k_flash
+#        -DENABLE_BIT_DEFINITIONS -e -I "C:\Program Files (x86)\IAR
+#        Systems\Embedded Workbench 6.0\avr\inc\" --eeprom_size 1152 --clib
+#        -Ohz
+#    List file    =  
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\List\timer4.lst
+#    Object file  =  
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\Obj\timer4.r90
+#
+###############################################################################
+
+C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\firmware\timer4\src\timer4.c
+      1          //lint -e9059
+      2          /* *C**************************************************************************
+      3            Use of this software is subject to Atmel's Software License Agreement.
+      4          -------------------------------------------------------------------------------
+      5            $URL: http://svnservulm.corp.atmel.com/svn/CDB/Apps/SW_Lib/Car_Access/CARS_GEN2/ATAB5702A/Branches/P2_Gen2_Merge/firmware/timer4/src/timer4.c $
+      6            $LastChangedRevision: 328482 $
+      7            $LastChangedDate: 2015-07-22 13:17:23 -0600 (Wed, 22 Jul 2015) $
+      8            $LastChangedBy: grueter $
+      9          -------------------------------------------------------------------------------
+     10            Project:      ATA5700
+     11            Target MCU:   ATA5700
+     12            Compiler:     IAR C/C++ Compiler for AVR 6.30.1
+     13          -------------------------------------------------------------------------------
+     14            
+     15          ******************************************************************************
+     16          * Copyright 2011, Atmel Automotive GmbH                                       *
+     17          *                                                                             *
+     18          * This software is owned by the Atmel Automotive GmbH                         *
+     19          * and is protected by and subject to worldwide patent protection.             *
+     20          * Atmel hereby grants to licensee a personal,                                 *
+     21          * non-exclusive, non-transferable license to copy, use, modify, create        *
+     22          * derivative works of, and compile the Atmel Source Code and derivative       *
+     23          * works for the sole purpose of creating custom software in support of        *
+     24          * licensee product to be used only in conjunction with a Atmel integrated     *
+     25          * circuit as specified in the applicable agreement. Any reproduction,         *
+     26          * modification, translation, compilation, or representation of this           *
+     27          * software except as specified above is prohibited without the express        *
+     28          * written permission of Atmel.                                                *
+     29          *                                                                             *
+     30          * Disclaimer: ATMEL MAKES NO WARRANTY OF ANY KIND,EXPRESS OR IMPLIED,         *
+     31          * WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED    *
+     32          * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.         *
+     33          * Atmel reserves the right to make changes without further notice to the      *
+     34          * materials described herein. Atmel does not assume any liability arising     *
+     35          * out of the application or use of any product or circuit described herein.   *
+     36          * Atmel does not authorize its products for use as critical components in     *
+     37          * life-support systems where a malfunction or failure may reasonably be       *
+     38          * expected to result in significant injury to the user. The inclusion of      *
+     39          * Atmel products in a life-support systems application implies that the       *
+     40          * manufacturer assumes all risk of such use and in doing so indemnifies       *
+     41          * Atmel against all charges.                                                  *
+     42          *                                                                             *
+     43          * Use may be limited by and subject to the applicable Atmel software          *
+     44          * license agreement.                                                          *
+     45          ******************************************************************************/
+     46          /** \file timer4.c
+     47          */
+     48          //lint -restore
+     49          
+     50          /*---------------------------------------------------------------------------*/
+     51          /*  INCLUDES                                                                 */
+     52          /*---------------------------------------------------------------------------*/
+     53          #include "timer4.h"
+
+   \                                 In  segment ABSOLUTE, at 0x21
+   \   union <unnamed> volatile __io _A_PRR1
+   \                     _A_PRR1:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x34
+   \   union <unnamed> volatile __io _A_T4CR
+   \                     _A_T4CR:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x82
+   \   union <unnamed> volatile __io _A_T4CORL
+   \                     _A_T4CORL:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x83
+   \   union <unnamed> volatile __io _A_T4CORH
+   \                     _A_T4CORH:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x86
+   \   union <unnamed> volatile __io _A_T4MRA
+   \                     _A_T4MRA:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x87
+   \   union <unnamed> volatile __io _A_T4MRB
+   \                     _A_T4MRB:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x88
+   \   union <unnamed> volatile __io _A_T4IMR
+   \                     _A_T4IMR:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x1d2
+   \   union <unnamed> volatile __ext_io _A_T4IFR
+   \                     _A_T4IFR:
+   \   00000000                      DS8 1
+     54          
+     55          /*---------------------------------------------------------------------------*/
+     56          /*  DEFINES                                                                  */
+     57          /*---------------------------------------------------------------------------*/
+     58          /*---------------------------------------------------------------------------*/
+     59          /*  Modul Globals                                                            */
+     60          /*---------------------------------------------------------------------------*/
+     61          /** \brief <b>g_sTimer4</b>
+     62              contains the configuration settings for Timer4.
+     63          */
+     64          #pragma location = ".tmr4ram"
+
+   \                                 In  segment .tmr4ram, align 1, keep-with-next
+     65          __no_init sTmr4Config g_sTimer4;
+   \                     g_sTimer4:
+   \   00000000                      DS8 7
+     66          
+     67          /*---------------------------------------------------------------------------*/
+     68          /*  IMPLEMENTATION                                                           */
+     69          /*---------------------------------------------------------------------------*/
+     70          /*---------------------------------------------------------------------------*/
+     71          /** \brief <b>ATA_timer4Init_C</b>
+     72              shall initialize Timer4 data structure sTmr4Config.
+     73          
+     74              Variable Usage:
+     75              \li [out] ::g_sTimer4  Global Timer 4 component data
+     76          
+     77              \image html ATA_timer4Init_C.png
+     78          
+     79              \internal
+     80                  \li 010:   Set all ::g_sTimer4 attributes to 0.
+     81          
+     82                  \Derived{Yes}
+     83          
+     84                  \Rationale{Since the hardware SRAM initialization is turned off, all SRAM
+     85                             variables need initialization prior to its usage}
+     86          
+     87                  \Traceability   N/A
+     88              \endinternal
+     89          \n
+     90          */
+     91          /*---------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+     92          VOIDFUNC ATA_timer4Init_C(void)
+   \                     ATA_timer4Init_C:
+     93          {
+     94              g_sTimer4.bStatus  = 0x00U;
+   \   00000000   E000               LDI     R16, 0
+   \   00000002   9300....           STS     g_sTimer4, R16
+     95              g_sTimer4.fpCompIsr = (timerIRQHandler)0x0000U;
+   \   00000006   9300....           STS     (g_sTimer4 + 1), R16
+   \   0000000A   9300....           STS     (g_sTimer4 + 2), R16
+     96              g_sTimer4.fpOvfIsr  = (timerIRQHandler)0x0000U;
+   \   0000000E   9300....           STS     (g_sTimer4 + 3), R16
+   \   00000012   9300....           STS     (g_sTimer4 + 4), R16
+     97              g_sTimer4.fpCapIsr  = (timerIRQHandler)0x0000U;
+   \   00000016   9300....           STS     (g_sTimer4 + 5), R16
+   \   0000001A   9300....           STS     (g_sTimer4 + 6), R16
+     98          }
+   \   0000001E   9508               RET
+     99          
+    100          /*---------------------------------------------------------------------------*/
+    101          /** \brief <b>ATA_timer4Open_C</b>
+    102              shall open and initialize Timer 4, in case it is not yet locked.
+    103          
+    104              \param[in]      pTimer4Params    Asynchronous timer configuration settings
+    105              \return OK on success, FAIL on failure
+    106              
+    107              Variable Usage:
+    108              \li [in,out] ::g_sTimer4 Global Timer 4 component data
+    109              
+    110              \image html ATA_timer4Open_C.png
+    111          
+    112              \internal
+    113                       Note:
+    114                       Power up of Timer 4 via register PRR1 needs to occur before any 
+    115                       Timer 4 register is accessed in order for the intended action to 
+    116                       take effect.
+    117          
+    118                       IF Timer 4 is not locked, i.e. not already used by another component,
+    119                       THEN
+    120              \li 010:   Lock Timer 4 by setting the lock status in global variable 
+    121                         ::g_sTimer4 in order to synchronize the usage of Timer 4.
+    122          
+    123              \li 020:   Power up Timer 4 by setting bit PRT4 in register PRR1 to 0 to 
+    124                         disable the power reduction feature for Timer 4.
+    125          
+    126              \li 030:   Disable and reset Timer 4 by writing a 1 to the bit T4RES in
+    127                         register T4CR and a 0 to bit T4ENA.
+    128          
+    129              \li 040:   Store the given function pointer parameters "ovf", "comp" and "cap"
+    130                         of parameter "pTimer4Params"
+    131                         to the global variable ::g_sTimer4 in order for those functions 
+    132                         to be called when the corresponding interrupt, overflow and compare 
+    133                         and capture, is triggered.
+    134          
+    135              \li 050:   Clear Timer 4 interrupt flags T4COF, T4OFF and T4ICF in register
+    136                         T4IFR.
+    137          
+    138              \li 060:   Set Timer 4 registers T4CORH, T4CORL, T4MRA, T4MRB T4IMR and T4CR 
+    139                         to the given attributes of parameter "pTimer4Params".
+    140          
+    141                       ENDIF
+    142          
+    143              \li 070: Return OK to the calling function if Timer 4 was successfully 
+    144                       configured.
+    145                       Return FAIL if Timer 4 was already locked and therefore could 
+    146                       not be configured.
+    147          
+    148              \Derived{No}
+    149          
+    150              \Rationale{N/A}
+    151          
+    152              \Traceability{Primus2P-887,Primus2P-1328}
+    153              \endinternal
+    154          \n
+    155          */
+    156          /*---------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    157          UINT8FUNC ATA_timer4Open_C(const sTimerAsyn16BitParams * const pTimer4Params)
+   \                     ATA_timer4Open_C:
+    158          {
+    159              uint8_t fRetVal = FAIL;
+   \   00000000   E021               LDI     R18, 1
+    160              
+    161              if( !(g_sTimer4.bStatus & TMR4LOCK) )
+   \   00000002   ....               LDI     R30, LOW(g_sTimer4)
+   \   00000004   ....               LDI     R31, (g_sTimer4) >> 8
+   \   00000006   8130               LD      R19, Z
+   \   00000008   FD37               SBRC    R19, 7
+   \   0000000A   C030               RJMP    ??ATA_timer4Open_C_0
+    162              {
+    163                  /* LLR-Ref: 010 */
+    164                  g_sTimer4.bStatus |= TMR4LOCK;
+   \   0000000C   6830               ORI     R19, 0x80
+   \   0000000E   8330               ST      Z, R19
+    165                
+    166                  /* LLR-Ref: 020 */
+    167                  ATA_POWERON_C(PRR1, PRT4)
+   \   00000010   980B               CBI     0x01, 0x03
+    168                  
+    169                  /* LLR-Ref: 030 */
+    170                  T4CR &= ~BM_T4ENA;
+   \   00000012   98A7               CBI     0x14, 0x07
+    171                  T4CR = BM_T3RES;
+   \   00000014   E220               LDI     R18, 32
+   \   00000016   BB24               OUT     0x14, R18
+    172          
+    173                  /* LLR-Ref: 040 */
+    174                  g_sTimer4.fpCompIsr = pTimer4Params->compIsr;
+   \   00000018   01F8               MOVW    R31:R30, R17:R16
+   \   0000001A   8520               LDD     R18, Z+8
+   \   0000001C   8531               LDD     R19, Z+9
+   \   0000001E   9320....           STS     (g_sTimer4 + 1), R18
+   \   00000022   9330....           STS     (g_sTimer4 + 2), R19
+    175                  g_sTimer4.fpOvfIsr = pTimer4Params->ovfIsr;
+   \   00000026   8126               LDD     R18, Z+6
+   \   00000028   8137               LDD     R19, Z+7
+   \   0000002A   9320....           STS     (g_sTimer4 + 3), R18
+   \   0000002E   9330....           STS     (g_sTimer4 + 4), R19
+    176                  g_sTimer4.fpCapIsr = pTimer4Params->capIsr;
+   \   00000032   8522               LDD     R18, Z+10
+   \   00000034   8533               LDD     R19, Z+11
+   \   00000036   9320....           STS     (g_sTimer4 + 5), R18
+   \   0000003A   9330....           STS     (g_sTimer4 + 6), R19
+    177                  
+    178                  /* LLR-Ref: 050 */
+    179                  T4IFR |= ((uint8_t)(BM_T4ICF|BM_T4COF|BM_T4OFF));
+   \   0000003E   9120....           LDS     R18, _A_T4IFR
+   \   00000042   6027               ORI     R18, 0x07
+   \   00000044   9320....           STS     _A_T4IFR, R18
+    180                  
+    181                  /* LLR-Ref: 060 */
+    182                  T4MRA  = pTimer4Params->modeA;
+   \   00000048   8121               LDD     R18, Z+1
+   \   0000004A   9320....           STS     _A_T4MRA, R18
+    183                  T4MRB  = pTimer4Params->modeB;
+   \   0000004E   8122               LDD     R18, Z+2
+   \   00000050   9320....           STS     _A_T4MRB, R18
+    184                  T4CORL = pTimer4Params->compL;
+   \   00000054   8123               LDD     R18, Z+3
+   \   00000056   9320....           STS     _A_T4CORL, R18
+    185                  T4CORH = pTimer4Params->compH;
+   \   0000005A   8124               LDD     R18, Z+4
+   \   0000005C   9320....           STS     _A_T4CORH, R18
+    186                  T4IMR  = pTimer4Params->irqMask;
+   \   00000060   8125               LDD     R18, Z+5
+   \   00000062   9320....           STS     _A_T4IMR, R18
+    187                  T4CR   = pTimer4Params->ctrl;
+   \   00000066   8100               LD      R16, Z
+   \   00000068   BB04               OUT     0x14, R16
+    188                  
+    189                  fRetVal = OK;
+   \   0000006A   E020               LDI     R18, 0
+    190              }
+    191              
+    192              /* LLR-Ref: 070 */
+    193              return fRetVal;
+   \                     ??ATA_timer4Open_C_0:
+   \   0000006C   2F02               MOV     R16, R18
+   \   0000006E   9508               RET
+   \   00000070                      REQUIRE _A_PRR1
+   \   00000070                      REQUIRE _A_T4CR
+   \   00000070                      REQUIRE _A_T4IFR
+   \   00000070                      REQUIRE _A_T4MRA
+   \   00000070                      REQUIRE _A_T4MRB
+   \   00000070                      REQUIRE _A_T4CORL
+   \   00000070                      REQUIRE _A_T4CORH
+   \   00000070                      REQUIRE _A_T4IMR
+    194          }
+    195          
+    196          
+    197          /* ---------------------------------------------------------------------------*/
+    198          /** \brief <b>ATA_timer4Close_C</b>
+    199              shall stop Timer 4 and enable the power reduction feature of Timer 4.
+    200          
+    201              Variable Usage:
+    202              \li [out] ::g_sTimer4  Global Timer 4 component data
+    203          
+    204              \image html ATA_timer4Close_C.png
+    205          
+    206              \internal
+    207                       Note:
+    208                       Disabling of the Power Reduction feature of Timer 4 via register PRR1
+    209                       needs to occur before any Timer 4 register is accessed in order for the
+    210                       intended actions to take effect.
+    211                       Enabling of the Power Reduction feature of Timer 4 via register PRR1 
+    212                       needs to occur after any Timer 4 register is accessed in order for the 
+    213                       intended action to take effect.
+    214          
+    215              \li 005: Disable the power reduction feature of Timer 4 by setting bit PRT4 in 
+    216                       register PRR1 to 0.
+    217          
+    218              \li 010: Disable Timer 4 by setting all bits of register T4CR to 0,
+    219                       except bit T4RES which is set to 1 to reset the prescaler and counter
+    220                       value.
+    221          
+    222              \li 020: Unlock Timer 4 by setting the status indication of the global variable
+    223                       ::g_sTimer4 to 0.
+    224          
+    225              \li 030: Enable the power reduction feature of Timer 4 by setting bit PRT4 in 
+    226                       register PRR1 to 1.
+    227          
+    228              \Derived{No}
+    229          
+    230              \Rationale{N/A}
+    231          
+    232              \Traceability{Primus2P-888}
+    233              \endinternal
+    234          \n
+    235          */
+    236          /* ---------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    237          VOIDFUNC ATA_timer4Close_C(void)
+   \                     ATA_timer4Close_C:
+    238          {
+    239              /* LLR-Ref: 005 */
+    240              ATA_POWERON_C(PRR1, PRT4)
+   \   00000000   980B               CBI     0x01, 0x03
+    241            
+    242              /* LLR-Ref: 010 */
+    243              T4CR = BM_T4RES;
+   \   00000002   E200               LDI     R16, 32
+   \   00000004   BB04               OUT     0x14, R16
+    244              
+    245              /* LLR-Ref: 020 */
+    246              g_sTimer4.bStatus = 0x00;
+   \   00000006   E000               LDI     R16, 0
+   \   00000008   9300....           STS     g_sTimer4, R16
+    247            
+    248              /* LLR-Ref: 030 */
+    249              ATA_POWEROFF_C(PRR1, PRT4);
+   \   0000000C   9A0B               SBI     0x01, 0x03
+    250          }
+   \   0000000E   9508               RET
+   \   00000010                      REQUIRE _A_PRR1
+   \   00000010                      REQUIRE _A_T4CR
+    251          
+
+   Maximum stack usage in bytes:
+
+   RSTACK Function
+   ------ --------
+      2   ATA_timer4Close_C
+      2   ATA_timer4Init_C
+      2   ATA_timer4Open_C
+
+
+   Segment part sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+      16  ATA_timer4Close_C
+      32  ATA_timer4Init_C
+     112  ATA_timer4Open_C
+       1  _A_PRR1
+       1  _A_T4CORH
+       1  _A_T4CORL
+       1  _A_T4CR
+       1  _A_T4IFR
+       1  _A_T4IMR
+       1  _A_T4MRA
+       1  _A_T4MRB
+       7  g_sTimer4
+
+ 
+   7 bytes in segment .tmr4ram
+   8 bytes in segment ABSOLUTE
+ 160 bytes in segment CODE
+ 
+ 160 bytes of CODE memory
+   7 bytes of DATA memory (+ 8 bytes shared)
+
+Errors: none
+Warnings: none

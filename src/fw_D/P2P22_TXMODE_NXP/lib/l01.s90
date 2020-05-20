@@ -1,0 +1,375 @@
+;----------------------------------------------------------------------------
+;
+;  Library routines for the ATMEL AT90S processors
+;  Char arithmetics
+; 
+;  Copyright 1996-2008 IAR Systems AB. All rights reserved.
+; 
+;  $Revision: 328482 $
+; 
+;----------------------------------------------------------------------------
+;
+; REMARKS ON THE SHIFT OPERATIONS:
+;---------------------------------
+; For shift counts > 7 on 8-bit operands, the ANSI standard defines the
+; corresponding result as 'undefined'.
+; In the present code these situations are treated as follows:
+; The shift count 'n' (input parameter) is always contained in a single
+; byte (Q0) which limits its range to 0..255.
+; If 15 < n < 129, $00 (or for arithmetic shift right possibly $FF)
+; is returned in P0, but n loop iterations are always done.
+; For n > 129 the original value in P0 is returned unaffected
+; and 'immediately'.
+;
+; REMARKS ON MULTIPLICATION:
+;---------------------------
+; For multiplication the ANSI standard requires that if the two operands
+; are unsigned 8-bit integers, the result shall be congruent mod 2**8 to the
+; true mathematical result. The current implementation fulfills this
+; requirement. For other types of operands the result is considered as
+; 'undefined' in case of overflow.
+;
+; REMARKS ON DIVISION:
+;---------------------
+; Division of two positive integers shall always be truncating (e.g.
+; 14/5 is 2 not 3). This is fulfilled here, (and the remainder in such
+; cases is always a positive integer). If either operand is negative,
+; the choice is 'left to the discretion of the implementator.'
+;
+; During the division the carry bit resulting from a previously compare
+; or subtract is successively shifted into the quotient. Since the carry
+; setting is the inverse of that expected by the algorithm, the quotinent
+; is complemented before return. This is a 'cheaper' operation than
+; explicitely setting the carry every time before it is shifted in.
+
+    
+#include "macros.m90"
+
+;------------------------------------------------
+; ?C_MUL_L01
+; 'char' multiplication, both signed and unsigned.
+; On call: P0 = multiplier, Q0 = multiplicand
+; Returns: 8-bit result in P0.
+; If possible, put smallest (in absolute sense) number in P0.
+;
+; Destroys: P0 Q0 T0 
+;
+; SIZE: 16 bytes.
+
+    MODULE  ?C_MUL_L01
+    PUBLIC  ?C_MUL_L01
+    RSEG    CODE:CODE:NOROOT(1)
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?C_MUL_L01:
+    MOV     T0,P0       ; Move 1:st operand to T0
+    CLR     P0      ; Clear accumulator
+?LOOP1: 
+    LSR     Q0      ; Test LSB
+    BRCC    ?SKIP1
+    ADD     P0,T0       ; Add to accumulator if LSB == 1
+?SKIP1: 
+    LSL     T0      ; Shift 2:nd operand
+    BRNE    ?LOOP1      ; Keep going if not exhausted
+    RET
+
+    ENDMOD
+
+;------------------------------------------------
+; ?C_EC_MUL_L01
+; 'char' multiplication, both signed and unsigned. Uses enhanced
+; core instructions.
+;
+; On call: P0 = multiplier, Q0 = multiplicand
+; Returns: 8-bit result in P0.
+;
+; Destroys: P0 T0 T1
+;
+; SIZE: 6 bytes.
+#if defined(__HAS_ENHANCED_CORE__) && defined(__HAS_MUL__)
+
+    MODULE  ?C_EC_MUL_L01
+    PUBLIC  ?C_EC_MUL_L01
+    RSEG    CODE:CODE:NOROOT(1)
+
+    RTMODEL "__enhanced_core", "enabled"
+
+?C_EC_MUL_L01:
+    MUL     P0,Q0   ; P0 x Q0 -> T1 : T0
+    MOV     P0,T0
+    RET
+
+    ENDMOD
+#endif
+
+;----------------------------------------------------------
+; ?C_SHL_L01
+; 'char' << n (n in 0..7)
+; Q0 contains n and is destroyed
+; P0 contains value to be shifted and returns shifted value
+; No other register is destroyed
+;
+; See also comments about the shift operations in the header.
+;
+; Destroys: P0 Q0 
+;
+; SIZE: 10 bytes
+
+    MODULE  ?C_SHL_L01
+    PUBLIC  ?C_SHL_L01
+    RSEG    CODE:CODE:NOROOT(1)
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?C_SHL_L01:
+    DEC     Q0
+    BRMI    X12  ; Done
+    LSL     P0
+    BRNE    ?C_SHL_L01 ; If 0, no idea to shift more.
+X12:    
+    RET
+
+    ENDMOD
+
+;----------------------------------------------------------
+; ?C_SHL7_L02 .. ?C_SHL2_L01
+; 'char' << (2 .. 7)
+; P0 contains value to be shifted and returns shifted value
+; No other register is destroyed
+;
+; Destroys: P0 
+;
+; SIZE: 16 bytes
+
+    MODULE  ?C_SHL7_2_L01
+    PUBLIC  ?C_SHL7_L01, ?C_SHL6_L01, ?C_SHL5_L01,
+    PUBLIC  ?C_SHL4_L01, ?C_SHL3_L01, ?C_SHL2_L01
+    RSEG    CODE:CODE:NOROOT(1)
+
+?C_SHL7_L01:    
+    LSL     P0
+?C_SHL6_L01:    
+    LSL     P0
+?C_SHL5_L01:    
+    LSL     P0
+?C_SHL4_L01:
+    LSL     P0
+?C_SHL3_L01:
+    LSL     P0
+?C_SHL2_L01:
+    LSL     P0
+    LSL     P0
+    RET
+
+    ENDMOD
+
+;----------------------------------------------------------
+; ?UC_SHR_L01
+; 'unsigned char' >> n (n in 0..7)
+; Q0 contains n and is destroyed
+; P0 contains value to be shifted and returns shifted value
+; No other register is destroyed
+;
+; See also comments about the shift operations in the header.
+;
+; Destroys: P0 Q0 
+;
+; SIZE: 10 bytes
+
+    MODULE  ?UC_SHR_L01
+    PUBLIC  ?UC_SHR_L01
+    RSEG    CODE:CODE:NOROOT(1)
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?UC_SHR_L01:
+
+    DEC     Q0
+    BRMI    X13     ; Done
+    LSR     P0
+    BRNE    ?UC_SHR_L01 ; If 0, no idea to shift more
+X13:    
+    RET
+
+    ENDMOD
+
+;----------------------------------------------------------
+; ?UC_SHR1_L01 .. ?UC_SHR7_L01
+; 'unsigned char' >> (2 .. 7)
+; P0 contains value to be shifted and returns shifted value
+; No other register is destroyed
+;
+; Destroys: P0 
+;
+; SIZE: 16 bytes
+
+    MODULE  ?UC_SHRx_L01
+    PUBLIC  ?UC_SHR7_L01, ?UC_SHR6_L01, ?UC_SHR5_L01
+    PUBLIC  ?UC_SHR4_L01, ?UC_SHR3_L01, ?UC_SHR2_L01
+    RSEG    CODE:CODE:NOROOT(1)
+
+?UC_SHR7_L01:   
+    LSR     P0
+?UC_SHR6_L01:   
+    LSR     P0
+?UC_SHR5_L01:   
+    LSR     P0
+?UC_SHR4_L01:   
+    LSR     P0
+?UC_SHR3_L01:   
+    LSR     P0
+?UC_SHR2_L01:   
+    LSR     P0
+    LSR     P0
+    RET
+
+    ENDMOD
+
+;----------------------------------------------------------
+; ?SC_SHR_L01
+; 'signed char' >> n (n in 0..7)
+; Q0 contains n and is destroyed
+; P0 contains value to be shifted and returns shifted value
+; No other register is destroyed
+;
+; See also comments about the shift operations in the header.
+;
+; Destroys: P0 Q0 
+;
+; SIZE: 10 bytes
+
+    MODULE  ?SC_SHR_L01
+    PUBLIC  ?SC_SHR_L01
+    RSEG    CODE:CODE:NOROOT(1)
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?SC_SHR_L01:
+    DEC     Q0
+    BRMI    X14     ; Done
+    ASR     P0
+    BRNE    ?SC_SHR_L01 ; If 0, no idea to shift more
+X14:    
+    RET
+
+    ENDMOD
+
+;----------------------------------------------------------
+; ?SC_SHR1_L07 .. ?SC_SHR7_L02
+; 'signed char' >> (2 .. 7)
+; P0 contains value to be shifted and returns shifted value
+; No other register is destroyed
+;
+; Destroys: P0 
+;
+; SIZE: 16 bytes
+
+    MODULE  ?SC_SHRx_L01
+    PUBLIC  ?SC_SHR7_L01, ?SC_SHR6_L01, ?SC_SHR5_L01
+    PUBLIC  ?SC_SHR4_L01, ?SC_SHR3_L01, ?SC_SHR2_L01
+    RSEG    CODE:CODE:NOROOT(1)
+
+?SC_SHR7_L01:   
+    ASR     P0
+?SC_SHR6_L01:   
+    ASR     P0
+?SC_SHR5_L01:   
+    ASR     P0
+?SC_SHR4_L01:   
+    ASR     P0
+?SC_SHR3_L01:   
+    ASR     P0
+?SC_SHR2_L01:   
+    ASR     P0
+    ASR     P0
+    RET
+
+    ENDMOD
+
+;-------------------------------------------------------------
+; ?UC_DIVMOD_L01
+; 'unsigned char' division and modulo
+; On call: P0 = dividend (i.e. number to be divided by divisor)
+;      Q0 = divisor
+; On return: P0 = quotient, Q0 = remainder
+;
+; NOTE: This subroutine is also called from US_DIVMOD_L01
+;
+; Destroys: P0 Q0 T0 Z0 
+;
+; SIZE: 28 bytes
+;
+    MODULE  ?UC_DIVMOD_L01
+    PUBLIC  ?UC_DIVMOD_L01
+    RSEG    CODE:CODE:NOROOT(1)
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?UC_DIVMOD_L01:
+
+    CLR     T0      ; Clear remainder
+    LDI     Z0,8        ; Loop counter
+;
+; The loop will always be executed 8 times
+;
+A16:    
+    DEC     Z0      ; DEC never affect carry !
+    BRMI    B16     ; All done
+    ROL     P0      ; Shift quotient/dividend
+    ROL     T0      ; into remainder
+    CP      T0,Q0       ; Is remainder >= divisor ?
+    BRLO    A16     ; No (Carry is 1 here which is 'wrong')
+    SUB     T0,Q0
+    RJMP    A16     ; Carry is 0 here which is 'wrong'
+;
+B16:    
+    ROL     P0      ; Only quotient shifted
+    MOV     Q0,T0       ; Remainder
+    COM     P0      ; Correct for the 'wrong' setting of carry.
+    RET
+
+    ENDMOD
+
+;-------------------------------------------------------------
+; ?SC_DIVMOD_L01
+; 'signed char' division and modulo
+; On call: P0 = dividend (i.e. number to be divided by divisor)
+;      Q0 = divisor
+; On return: P0 = quotient, Q0 = remainder
+;
+; NOTE: This subroutine calls US_DIVMOD_L01.
+;
+; Flag NEG_QUOTE  is bit 0 of Z1
+; Flag NEG_REM    is bit 1 of Z1
+;
+; Destroys: P0 Q0 T0 Z0 (via ?UC_DIVMOD_L01) Z1 
+;
+; SIZE: 30 bytes
+
+    MODULE  ?SC_DIVMOD_L01
+    PUBLIC  ?SC_DIVMOD_L01
+    IMPORT  ?UC_DIVMOD_L01
+    RSEG    CODE:CODE:NOROOT(1)
+
+; Do not change this function without changing the information in the compiler. 2004-02-26
+?SC_DIVMOD_L01:
+    CLR     Z1      ; Used for flags NEG_QUOTE and NEG_REM
+    TST     Q0      ; Is divisor negative ?
+    BRPL    A17     ; No
+    ORI     Z1,1        ; Set NEG_QUOTE
+    NEG     Q0      ; Negate dividend
+
+A17:    
+    TST     P0      ; Is dividend negative ?
+    BRPL    B17     ; No
+    COM     Z1      ; Invert NEG_QUOTE and set NEG_REM
+    NEG     P0      ; Negate divisor
+
+B17:    
+    XCALL   ?UC_DIVMOD_L01
+    SBRC    Z1,0        ; Skip next if NEG_QUOTE not set
+    NEG     P0      ; Negate quotient
+    SBRC    Z1,1        ; Skip next if NEG_REM not set
+    NEG     Q0      ; Negate remainder
+    RET
+
+    END
+
+;----------------------------------------------------------------------------
+;  

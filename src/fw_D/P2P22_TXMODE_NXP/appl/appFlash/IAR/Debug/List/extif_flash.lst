@@ -1,0 +1,174 @@
+###############################################################################
+#
+# IAR C/C++ Compiler V7.10.1.1197 for Atmel AVR           13/May/2020  17:03:17
+# Copyright 1996-2017 IAR Systems AB.
+# Network license: dvriar01.mchp-main.com (STD)
+#
+#    Source file  =  
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\firmware\extif\src\extif_flash.c
+#    Command line =  
+#        -f C:\Users\C41045\AppData\Local\Temp\EW6A8.tmp
+#        (C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\firmware\extif\src\extif_flash.c
+#        -v3 --enhanced_core -ms -o
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\Obj
+#        -lCN
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\List
+#        -lA
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\List
+#        --no_cse --no_inline --no_code_motion --no_cross_call --no_clustering
+#        --no_tbaa --debug --64k_flash -DENABLE_BIT_DEFINITIONS -e
+#        --eeprom_size 2304 --clib -Ohz)
+#    Locale       =  English_USA.1252
+#    List file    =  
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\List\extif_flash.lst
+#    Object file  =  
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\Obj\extif_flash.r90
+#
+###############################################################################
+
+C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\firmware\extif\src\extif_flash.c
+      1          //lint -e9059
+      2          /******************************************************************************
+      3            Use of this software is subject to Microchip's Software License Agreement.
+      4          --------------------------------------------------------------------------------
+      5            $URL: http://svnservulm.corp.atmel.com/svn/CDB/Apps/SW_Lib/Car_Access/CARS_GEN2/ATAB5702A/Branches/P2P22_TXMODE_NXP/firmware/extif/src/extif_flash.c $
+      6            $LastChangedRevision: 458065 $
+      7            $LastChangedDate: 2017-05-02 04:55:50 -0600 (Tue, 02 May 2017) $
+      8            $LastChangedBy: krishna.balan $
+      9          -------------------------------------------------------------------------------
+     10            Project:      ATA5700
+     11            Target MCU:   ATA5700
+     12            Compiler:     IAR C/C++ Compiler for AVR 6.30.1
+     13          -------------------------------------------------------------------------------
+     14          
+     15          ******************************************************************************
+     16          * Copyright 2017, Microchip Technology Incorporated and its subsidiaries.     *
+     17          *                                                                             *
+     18          * This software is owned by the Microchip Technology Incorporated.            *
+     19          * Microchip hereby grants to licensee a personal                              *
+     20          * non-exclusive, non-transferable license to copy, use, modify, create        *
+     21          * derivative works of, and compile the Microchip Source Code and derivative   *
+     22          * works for the sole and exclusive purpose of creating custom software in     *
+     23          * support of licensee product to be used only in conjunction with a Microchip *
+     24          * integrated circuit as specified in the applicable agreement. Any            *        
+     25          * reproduction, modification, translation, compilation, or representation of  *
+     26          * this software except as specified above is prohibited without the express   *
+     27          * written permission of Microchip.                                            *
+     28          *                                                                             *
+     29          * Disclaimer: MICROCHIP MAKES NO WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,    *
+     30          * WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED    *
+     31          * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.         *
+     32          * Microchip reserves the right to make changes without further notice to the  *
+     33          * materials described herein. Microchip does not assume any liability arising *
+     34          * out of the application or use of any product or circuit described herein.   *
+     35          * Microchip does not authorize its products for use as critical components in *
+     36          * life-support systems where a malfunction or failure may reasonably be       *
+     37          * expected to result in significant injury to the user. The inclusion of      *
+     38          * Microchip products in a life-support systems application implies that the   *
+     39          * manufacturer assumes all risk of such use and in doing so indemnifies       *
+     40          * Microchip against all charges.                                              *
+     41          *                                                                             *
+     42          * Use may be limited by and subject to the applicable Microchip software      *
+     43          * license agreement.                                                          *
+     44          ******************************************************************************/
+     45          /** \file extif_flash.c
+     46          */
+     47          
+     48          //lint -restore
+     49          
+     50          /*===========================================================================*/
+     51          /*  INCLUDES                                                                 */
+     52          /*===========================================================================*/
+     53          #include "extif_flash.h"
+
+   \                                 In  segment ABSOLUTE, at 0x23
+   \   union <unnamed> volatile __io _A_PINB
+   \                     _A_PINB:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x29
+   \   union <unnamed> volatile __io _A_PIND
+   \                     _A_PIND:
+   \   00000000                      DS8 1
+     54          
+     55          /*===========================================================================*/
+     56          /*  Modul Globals                                                            */
+     57          /*===========================================================================*/
+     58          /** \brief <b>extIf</b>
+     59              contains the variables used pin change handling.
+     60          */
+     61          #pragma location = ".sram_FlashApp_ExtIf"
+
+   \                                 In  segment .sram_FlashApp_ExtIf, align 1, keep-with-next, root
+     62          __root __no_init sIFData        g_sExtIf;
+   \                     g_sExtIf:
+   \   00000000                      DS8 6
+     63          
+     64          /*===========================================================================*/
+     65          /*  IMPLEMENTATION                                                           */
+     66          /*===========================================================================*/
+     67          /*----------------------------------------------------------------------------- */
+     68          /** \brief <b>ATA_initExtIf_flash_C</b>
+     69              does the initialization of extif software module.
+     70          
+     71              \param fpPortBisr function pointer for PC int on portB
+     72              \param pcIntHandler function pointer for PC int on portD
+     73          
+     74              \return none
+     75          
+     76              \image html ATA_initExtIf_flash_C.png
+     77              \image rtf ATA_initExtIf_flash_C.png
+     78              \n
+     79          */
+     80          /*----------------------------------------------------------------------------- */
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+     81          VOIDFUNC ATA_initExtIf_flash_C(pcIntHandler fpPortBisr, pcIntHandler fpPortDisr)
+   \                     ATA_initExtIf_flash_C:
+     82          {
+     83              /**/
+     84              g_sExtIf.pcInt0old = PINB;
+   \   00000000   B143               IN      R20, 0x03
+   \   00000002   9340....           STS     (g_sExtIf + 4), R20
+     85              g_sExtIf.pcInt1old = PIND;
+   \   00000006   B149               IN      R20, 0x09
+   \   00000008   9340....           STS     (g_sExtIf + 5), R20
+     86              g_sExtIf.pcInt0    = fpPortBisr;
+   \   0000000C   ....               LDI     R30, LOW(g_sExtIf)
+   \   0000000E   ....               LDI     R31, (g_sExtIf) >> 8
+   \   00000010   8300               ST      Z, R16
+   \   00000012   8311               STD     Z+1, R17
+     87              g_sExtIf.pcInt1    = fpPortDisr;
+   \   00000014   8322               STD     Z+2, R18
+   \   00000016   8333               STD     Z+3, R19
+     88          }
+   \   00000018   9508               RET
+   \   0000001A                      REQUIRE _A_PINB
+   \   0000001A                      REQUIRE _A_PIND
+
+   Maximum stack usage in bytes:
+
+   RSTACK Function
+   ------ --------
+      2   ATA_initExtIf_flash_C
+
+
+   Segment part sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+      26  ATA_initExtIf_flash_C
+       1  _A_PINB
+       1  _A_PIND
+       6  g_sExtIf
+
+ 
+  6 bytes in segment .sram_FlashApp_ExtIf
+  2 bytes in segment ABSOLUTE
+ 26 bytes in segment CODE
+ 
+ 26 bytes of CODE memory
+  6 bytes of DATA memory (+ 2 bytes shared)
+
+Errors: none
+Warnings: none

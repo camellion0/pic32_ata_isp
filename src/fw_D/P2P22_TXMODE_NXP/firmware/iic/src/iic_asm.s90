@@ -1,0 +1,512 @@
+/* *ASM************************************************************************
+  Use of this software is subject to Atmel's Software License Agreement.
+-------------------------------------------------------------------------------
+  $URL: http://svnservulm.corp.atmel.com/svn/CDB/Apps/SW_Lib/Car_Access/CARS_GEN2/ATAB5702A/Branches/P2P22_TXMODE_NXP/firmware/iic/src/iic_asm.s90 $
+  $LastChangedRevision: 328482 $
+  $LastChangedDate: 2015-07-22 13:17:23 -0600 (Wed, 22 Jul 2015) $
+  $LastChangedBy: grueter $
+-------------------------------------------------------------------------------
+  Project:      ATA5700
+  Target MCU:   ATA5700
+  Compiler:     IAR Assembler for AVR 6.3.18.2236
+-------------------------------------------------------------------------------
+  
+******************************************************************************
+* Copyright 2011, Atmel Automotive GmbH                                       *
+*                                                                             *
+* This software is owned by the Atmel Automotive GmbH                         *
+* and is protected by and subject to worldwide patent protection.             *
+* Atmel hereby grants to licensee a personal,                                 *
+* non-exclusive, non-transferable license to copy, use, modify, create        *
+* derivative works of, and compile the Atmel Source Code and derivative       *
+* works for the sole purpose of creating custom software in support of        *
+* licensee product to be used only in conjunction with a Atmel integrated     *
+* circuit as specified in the applicable agreement. Any reproduction,         *
+* modification, translation, compilation, or representation of this           *
+* software except as specified above is prohibited without the express        *
+* written permission of Atmel.                                                *
+*                                                                             *
+* Disclaimer: ATMEL MAKES NO WARRANTY OF ANY KIND,EXPRESS OR IMPLIED,         *
+* WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED    *
+* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.         *
+* Atmel reserves the right to make changes without further notice to the      *
+* materials described herein. Atmel does not assume any liability arising     *
+* out of the application or use of any product or circuit described herein.   *
+* Atmel does not authorize its products for use as critical components in     *
+* life-support systems where a malfunction or failure may reasonably be       *
+* expected to result in significant injury to the user. The inclusion of      *
+* Atmel products in a life-support systems application implies that the       *
+* manufacturer assumes all risk of such use and in doing so indemnifies       *
+* Atmel against all charges.                                                  *
+*                                                                             *
+* Use may be limited by and subject to the applicable Atmel software          *
+* license agreement.                                                          *
+*******************************************************************************/
+/* \file iic_asm.s90
+*/
+    NAME iic_asm
+    
+    PUBLIC twiByteCompleteHandler_ASM
+    
+    EXTERN iicCtrlBlock
+
+/*===========================================================================*/
+/*  INCLUDES                                                                 */
+/*===========================================================================*/
+#include "regs.inc"                                                  
+#include "globals.h"
+#include "iic.h"
+
+/*===========================================================================*/
+/*  IMPLEMENTATION                                                           */
+/*===========================================================================*/
+/*---------------------------------------------------------------------------*/
+/** \brief <b>I2C Status JMPTABLE</b>
+    used for analysis/handling of the different I2C transmit status values
+    for coding and execution efficiency the table is aligned to 128 byte
+    borders. ROOT(7) ==> aligned to 2^^7 bytes\n
+*/
+/*---------------------------------------------------------------------------*/
+RSEG CODE:CODE:ROOT(7)
+   ; IIC status JMP  Table
+JUMPTABLE:               ; Status         TableIndex  
+    RJMP TWIERROR        ; 0x00                0
+    ; >>MASTER TRX<<
+    RJMP STARTTXED       ; 0x08                1
+    RJMP REPSTTXED       ; 0x10                2
+    RJMP SLAWACKED       ; 0x18                3
+    RJMP SLAWNACKD       ; 0x20                4
+    RJMP DATATXACKED     ; 0x28                5
+    RJMP DATATXNACKD     ; 0x30                6
+    RJMP ARBIMSTLOST     ; 0x38                7
+    RJMP SLARACKED       ; 0x40                8
+    RJMP SLARNACKD       ; 0x48                9
+    RJMP DATARXACKED     ; 0x50                10
+    RJMP DATARXNACKD     ; 0x58                11
+    ; >>SLAVE TRX<<
+    RJMP SLAWACK         ; 0x60                12
+    RJMP LOSTARBISLAW    ; 0x68                13
+    RJMP GENWACK         ; 0x70                14
+    RJMP LOSTARBIGENW    ; 0x78                15
+    RJMP RXDATASLA_A     ; 0x80                16
+    RJMP RXDATASLA_NA    ; 0x88                17
+    RJMP RXDATAGEN_A     ; 0x90                18
+    RJMP RXDATAGEN_NA    ; 0x98                19
+    RJMP GOTSTOP         ; 0xA0                1A
+    RJMP SLARACK         ; 0xA8                1B
+    RJMP LOSTARBISLAR    ; 0xB0                1C
+    RJMP TXDATA_A        ; 0xB8                1D
+    RJMP TXDATA_NA       ; 0xC0                1E
+    RJMP TXLAST_A        ; 0xC8                1F
+
+
+/*---------------------------------------------------------------------------*/
+/** \brief <b>twiByteCompleteHandler_ASM</b> Is the TWI byte Complete IRQ.
+    Triggers each time a complete byte is shifted in/out via the TWI peripheral.
+
+\param[in,out]  ::iicCtrlBlock is global IIC component data
+
+\return     N/A
+
+\StackUsageInBytes{XXX}
+
+\image html twiByteCompleteHandler_ASM.png
+
+\internal
+\li 010: save register contents
+\li 020: status calculation for JUMP Table
+\li 025: Trigger Tracer 
+\li 030: setup pointer to JUMP Table
+\li 040: reaction on the corresponding IIC status. see EA and Jump - Table for details
+    .
+    .
+    .
+\li 200:
+\li 210: restore register contents
+ 
+\Derived{No}
+
+\Rationale{N/A}
+
+\Traceability{Primus2P-2426,Primus2P-2427,Primus2P-2428,Primus2P-2429,Primus2P-2430,Primus2P-2477,Primus2P-2501}
+\endinternal
+\n
+
+\resourceusage 36 Cycles + corresponding sub block
+*/
+/*---------------------------------------------------------------------------*/
+#pragma vector=I2C_vect
+RSEG CODE:CODE:ROOT(1)
+twiByteCompleteHandler_ASM:
+    /* LLR-Ref: 010 */
+    PUSH R24
+    PUSH R31
+    PUSH R30
+    PUSH R25
+    IN   R25 , SREG
+    PUSH R25
+    /* LLR-Ref: 020 */
+    LDS     R24 , I2CR
+    LDS     R25 , I2SR   
+    
+    /* LLR-Ref: 025 */ 
+    ; TRCDR = data;
+    STS     TRCDR , R25
+    ; TRCIDL = (uint8_t) ((uint16_t)id >> 0);
+    LDI     R30 , low(twiByteCompleteHandler_ASM/2)
+    STS     TRCIDL , R30
+    ; TRCIDH = (uint8_t) ((uint16_t)id >> 8);
+    LDI     R30 , high(twiByteCompleteHandler_ASM/2)
+    STS     TRCIDH , R30
+
+    LSR     R25
+    LSR     R25
+    LSR     R25
+    ANDI    R25 , 0x1F
+    /* LLR-Ref: 030 */ 
+    LDI     R30 , low(JUMPTABLE/2)
+    ADD     R30 , R25
+    LDI     R31 , high(JUMPTABLE/2)
+    IJMP
+; -----------------------------------------------------------------------------
+TWIERROR:    ; Status: Unknown
+             ; NXT action -> Do Nothing end ISR with error flag raised
+; ----------------------------------------------------------------------------- 
+    /* LLR-Ref: 040 */    
+    LDS     R25 , iicCtrlBlock+IICCTRLBLOCK_IICSTATUS
+    ORI     R25 , BM_IICTRXERROR
+    STS     iicCtrlBlock+IICCTRLBLOCK_IICSTATUS , R25
+    ORI     R24 , BM_I2INT   
+    ANDI    R24 , ~BM_I2EA    
+    RJMP    IIC_IRQ_RDY
+   
+; -----------------------------------------------------------------------------
+STARTTXED:   ; Status: Start condition put on Bus as a MASTER
+             ; NXT action -> Present SLA + R/W on Bus
+REPSTTXED:   ; Status: RepeatedStart condition put on Bus as a MASTER          
+             ; NXT action -> Present SLA + R/W on Bus
+SLAWACKED:   ; Status: SLA + W TXed ACK RXed
+             ; NXT action -> Present DATA on the IIC Busor STOP in case all 
+             ; data has been exchanged                
+DATATXACKED: ; Status: Data TXed ACK RXed
+             ; NXT action -> Present DATA on the IIC Bus or STOP in case all 
+             ; data has been exchanged             
+; -----------------------------------------------------------------------------
+    /* LLR-Ref: 050 */    
+    LDS     R25 , iicCtrlBlock+IICCTRLBLOCK_IICBYTCNT
+    LDS     R30 , iicCtrlBlock+IICCTRLBLOCK_IICDATATX
+    CP      R25 , R30
+    BRLO    PUTDATA_SLAW
+PUTSTOP_SLAW:  
+    LDS     R25 , iicCtrlBlock+IICCTRLBLOCK_IICSTATUS
+    ANDI    R25 , ~BM_IICTRANSACTIONONGOING    
+    STS     iicCtrlBlock+IICCTRLBLOCK_IICSTATUS , R25 
+    ORI     R24 , BM_I2INT|BM_I2EA|BM_I2STO
+    ANDI    R24 , ~BM_I2STA    
+    RJMP    IIC_IRQ_RDY
+PUTDATA_SLAW:    
+    LDS     R31 , iicCtrlBlock+IICCTRLBLOCK_IICBUFFER+1
+    LDS     R30 , iicCtrlBlock+IICCTRLBLOCK_IICBUFFER
+    ADD     R30 , R25
+    INC     R25
+    STS     iicCtrlBlock+IICCTRLBLOCK_IICBYTCNT , R25
+    CLR     R25
+    ADC     R31 , R25
+    LD      R25 , Z
+    STS     I2DR , R25    
+    ORI     R24 , BM_I2INT|BM_I2EA
+    ANDI    R24 , ~BM_I2STA
+    RJMP    IIC_IRQ_RDY
+; -----------------------------------------------------------------------------
+SLAWNACKD:   ; Status: SLA + W TXed NACK RXed    
+             ; NXT action -> Set SW error indication and present STOP on the Bus  
+DATATXNACKD: ; Status: DATA TXed NACK RXed    
+             ; NXT action -> Set SW error indication and present STOP on the Bus    
+; -----------------------------------------------------------------------------    
+    /* LLR-Ref: 060 */    
+    ORI     R24 , BM_I2INT|BM_I2EA|BM_I2STO
+    RJMP    MSTTXFAILURE
+; -----------------------------------------------------------------------------
+ARBIMSTLOST: ; Arbitration lost during IIC Transaction
+             ; NXT action -> Set SW error indication, Bus will be released
+; -----------------------------------------------------------------------------   
+    /* LLR-Ref: 070 */         
+    ORI     R24 , BM_I2INT|BM_I2EA
+MSTTXFAILURE:
+    LDS     R30 , iicCtrlBlock+IICCTRLBLOCK_IICSTATUS
+    ANDI    R30 , ~BM_IICTRANSACTIONONGOING    
+    ORI     R30 , BM_IICTRXERROR
+    STS     iicCtrlBlock+IICCTRLBLOCK_IICSTATUS , R30 
+    RJMP    IIC_IRQ_RDY
+; -----------------------------------------------------------------------------
+SLARACKED:   ; SLA+R has been TXed and was ACKED
+             ; NXT action -> DATA will be RXed and ACKed     
+; -----------------------------------------------------------------------------    
+    /* LLR-Ref: 080 */        
+    LDS     R25 , iicCtrlBlock+IICCTRLBLOCK_IICBYTCNT
+    LDS     R30 , iicCtrlBlock+IICCTRLBLOCK_IICDATATX
+    CP      R25 , R30    
+    BRSH    SLAR2NACK
+SLAR2ACK:
+    ORI     R24 , BM_I2INT|BM_I2EA
+    RJMP    IIC_IRQ_RDY
+SLAR2NACK:    
+    ORI     R24 , BM_I2INT
+    ANDI    R24 , ~BM_I2EA
+    RJMP    IIC_IRQ_RDY
+; -----------------------------------------------------------------------------
+SLARNACKD:   ; SLA+R has been TXed and was NOT ACKED
+             ; NXT action -> Set SW error indication and present STOP on the Bus    
+; -----------------------------------------------------------------------------    
+    /* LLR-Ref: 090 */     
+    LDS     R30 , iicCtrlBlock+IICCTRLBLOCK_IICSTATUS
+    ANDI    R30 , ~BM_IICTRANSACTIONONGOING    
+    ORI     R30 , BM_IICTRXERROR
+    STS     iicCtrlBlock+IICCTRLBLOCK_IICSTATUS , R30     
+    ORI     R24 , BM_I2INT|BM_I2EA|BM_I2STO
+    RJMP    MSTTXFAILURE 
+; -----------------------------------------------------------------------------
+DATARXACKED: ; DATA has been RXed and was ACKED
+             ; NXT action -> Get nxt Data and return ACK in case no buffer
+             ;               overrun. Else return NOT ACK             
+; -----------------------------------------------------------------------------
+    /* LLR-Ref: 100 */    
+    LDS     R25 , iicCtrlBlock+IICCTRLBLOCK_IICBYTCNT
+    LDS     R30 , iicCtrlBlock+IICCTRLBLOCK_IICBUFFER
+    LDS     R31 , iicCtrlBlock+IICCTRLBLOCK_IICBUFFER+1
+    ADD     R30 , R25
+    INC     R25
+    STS     iicCtrlBlock+IICCTRLBLOCK_IICBYTCNT , R25
+    LDS     R25 , I2DR
+    ST      Z , R25
+    LDS     R30 , iicCtrlBlock+IICCTRLBLOCK_IICDATATX
+    LDS     R25 , iicCtrlBlock+IICCTRLBLOCK_IICBYTCNT
+    CP      R25 , R30
+    BRSH    MSTRXBUFFEROVL       
+    ORI     R24 , BM_I2INT|BM_I2EA
+    RJMP    IIC_IRQ_RDY    
+MSTRXBUFFEROVL:
+    ORI     R24 , BM_I2INT
+    ANDI    R24 , ~BM_I2EA    
+    RJMP    IIC_IRQ_RDY    
+; -----------------------------------------------------------------------------
+DATARXNACKD: ; DATA has been RXed and was NOT ACKED
+             ; NXT action -> present STOP on the Bus         
+; -----------------------------------------------------------------------------   
+    /* LLR-Ref: 110 */       
+    LDS     R25 , iicCtrlBlock+IICCTRLBLOCK_IICBYTCNT
+    LDS     R30 , iicCtrlBlock+IICCTRLBLOCK_IICBUFFER
+    LDS     R31 , iicCtrlBlock+IICCTRLBLOCK_IICBUFFER+1
+    ADD     R30 , R25
+    INC     R25
+    STS     iicCtrlBlock+IICCTRLBLOCK_IICBYTCNT , R25
+    LDS     R25 , I2DR
+    ST      Z , R25
+    LDS     R25 , iicCtrlBlock+IICCTRLBLOCK_IICSTATUS
+    ORI     R25 , BM_IICRXDATAPEDING
+    ANDI    R25 , ~BM_IICTRANSACTIONONGOING
+    STS     iicCtrlBlock+IICCTRLBLOCK_IICSTATUS , R25 
+    ORI     R24 , BM_I2INT|BM_I2EA|BM_I2STO
+    RJMP    IIC_IRQ_RDY 
+; -----------------------------------------------------------------------------
+SLAWACK:     ; OWN SLA+W RXed
+             ; NXT action -> ACK RXed SLA+W
+GENWACK:     ; General Call+W RXed
+             ; NXT action -> ACK RXed SLA+W               
+; -----------------------------------------------------------------------------
+    /* LLR-Ref: 120 */    
+    LDS     R25 , iicCtrlBlock+IICCTRLBLOCK_IICSTATUS    
+    ANDI    R25 , ~BM_IICTRXSTATE    
+    ORI     R25 , (IICSLAVERX|BM_IICTRANSACTIONONGOING)    
+    STS     iicCtrlBlock+IICCTRLBLOCK_IICSTATUS , R25 
+    CLR     R25
+    STS     iicCtrlBlock+IICCTRLBLOCK_IICBYTCNT , R25    
+    ORI     R24 , BM_I2INT|BM_I2EA
+    RJMP    IIC_IRQ_RDY   
+; -----------------------------------------------------------------------------
+LOSTARBISLAW: ; Lost Arbitration during SLA+W RXed
+             ; NXT action -> NOT ACK RXed to IIC bus
+LOSTARBIGENW: ; Lost Arbitration during General Call+W RXed
+             ; NXT action -> NOT ACK RXed to IIC bus          
+LOSTARBISLAR: ; Arbitration Lost as Master/ Own SLA+R RXed and ACKed
+             ; NXT action -> ACK RXed SLA+R, Present Data                
+; -----------------------------------------------------------------------------
+    /* LLR-Ref: 130 */    
+    LDS     R25 , iicCtrlBlock+IICCTRLBLOCK_IICSTATUS
+    ORI     R25 , BM_IICTRXERROR
+    ANDI    R25 , ~BM_IICTRANSACTIONONGOING
+    STS     iicCtrlBlock+IICCTRLBLOCK_IICSTATUS , R25         
+    ANDI    R24 , ~(BM_I2EA|BM_I2INT|BM_I2EN|BM_I2IE) 
+    RJMP    IIC_IRQ_RDY   
+; -----------------------------------------------------------------------------
+RXDATAGEN_A:
+RXDATASLA_A: ; DATA RXed, ACKed
+             ; NXT action -> ACK to IIC bus    
+    /* LLR-Ref: 140 */                 
+    ORI     R24 , BM_I2INT|BM_I2EA  
+    RJMP    RXSLAFLOW    
+RXDATAGEN_NA:
+RXDATASLA_NA: ; DATA RXed, not Acked
+              ; NXT action -> NACK to IIC bus       
+    /* LLR-Ref: 150 */                  
+    ORI     R24 , BM_I2INT
+    ANDI    R24 , ~BM_I2EA
+    RJMP    RXSLAFLOW              
+; -----------------------------------------------------------------------------
+RXSLAFLOW:
+    LDS     R30 , iicCtrlBlock+IICCTRLBLOCK_IICBUFLEN
+    LDS     R25 , iicCtrlBlock+IICCTRLBLOCK_IICBYTCNT
+    CP      R25 , R30
+    BRNE    IICRXSLAOK
+    LDS     R25 , iicCtrlBlock+IICCTRLBLOCK_IICSTATUS
+    ORI     R25 , BM_IICTRXERROR
+    ANDI    R25 , ~BM_IICTRANSACTIONONGOING
+    STS     iicCtrlBlock+IICCTRLBLOCK_IICSTATUS , R25  
+    ORI     R24 , BM_I2INT
+    ANDI    R24 , ~BM_I2EA
+    RJMP    IIC_IRQ_RDY         
+IICRXSLAOK:   
+    LDS     R30 , iicCtrlBlock+IICCTRLBLOCK_IICBUFFER
+    LDS     R31 , iicCtrlBlock+IICCTRLBLOCK_IICBUFFER+1
+    ADD     R30 , R25
+    INC     R25
+    STS     iicCtrlBlock+IICCTRLBLOCK_IICBYTCNT , R25
+    
+    LDS     R25 , I2DR
+    ST      Z , R25
+    
+    LDS     R30 , iicCtrlBlock+IICCTRLBLOCK_IICBUFLEN
+    LDS     R25 , iicCtrlBlock+IICCTRLBLOCK_IICBYTCNT    
+    CP      R25 , R30
+    BRSH    SLARXBUFFEROVL    
+    ORI     R24 , BM_I2INT|BM_I2EA
+    RJMP    IIC_IRQ_RDY    
+SLARXBUFFEROVL:    
+    ORI     R24 , BM_I2INT
+    ANDI    R24 , ~BM_I2EA
+    RJMP    IIC_IRQ_RDY     
+; -----------------------------------------------------------------------------
+GOTSTOP:     ; Got STOP condition
+             ; NXT action -> Switch to not addressed state
+; -----------------------------------------------------------------------------
+    /* LLR-Ref: 160 */    
+    LDS     R25 , iicCtrlBlock+IICCTRLBLOCK_IICSTATUS
+    ORI     R25 , BM_IICRXDATAPEDING
+    ANDI    R25 , ~BM_IICTRANSACTIONONGOING
+    STS     iicCtrlBlock+IICCTRLBLOCK_IICSTATUS , R25       
+    ORI     R24 , BM_I2INT
+    ANDI    R24 , ~BM_I2EA    
+    RJMP    IIC_IRQ_RDY  
+; -----------------------------------------------------------------------------
+SLARACK:     ; OWN SLA+R RXed
+             ; NXT action -> ACK RXed SLA+R, Present Data                        
+; -----------------------------------------------------------------------------   
+    /* LLR-Ref: 170 */    
+    LDS     R25 , iicCtrlBlock+IICCTRLBLOCK_IICSTATUS
+    LDS     R30 , iicCtrlBlock+IICCTRLBLOCK_IICDATATX
+    CPI     R30 , 0x00
+    BRNE    IICDATASLAR
+    RJMP    SLARERROR
+IICDATASLAR:        
+    ANDI    R25 , ~(BM_IICTRXSTATE|BM_IICTXDATAPENDING)
+    ORI     R25 , (IICSLAVETX|BM_IICTRANSACTIONONGOING)    
+    STS     iicCtrlBlock+IICCTRLBLOCK_IICSTATUS , R25 
+    LDI     R25 , 0x00
+    STS     iicCtrlBlock+IICCTRLBLOCK_IICBYTCNT , R25        
+    RJMP    TXDATA_A  
+SLARERROR:    
+    ANDI    R25 , ~BM_IICTRXSTATE
+    ORI     R25 , (IICSLAVETX)
+    ORI     R25 , BM_CONFERRORIIC    
+    STS     iicCtrlBlock+IICCTRLBLOCK_IICSTATUS , R25 
+    CLR     R25
+    STS     I2DR , R25        
+    ORI     R24 , BM_I2INT
+    ANDI    R24 , ~BM_I2EA    
+    RJMP    IIC_IRQ_RDY   
+; -----------------------------------------------------------------------------
+TXDATA_A:    ; DATA byte has been TXed, ACKed
+             ; NXT action -> Present Data              
+; -----------------------------------------------------------------------------
+    /* LLR-Ref: 180 */    
+    LDS     R25 , iicCtrlBlock+IICCTRLBLOCK_IICBYTCNT
+    LDS     R30 , iicCtrlBlock+IICCTRLBLOCK_IICBUFFER
+    LDS     R31 , iicCtrlBlock+IICCTRLBLOCK_IICBUFFER+1
+    ADD     R30 , R25
+    INC     R25
+    STS     iicCtrlBlock+IICCTRLBLOCK_IICBYTCNT , R25    
+    LD      R25 , Z
+    STS     I2DR , R25
+    LDS     R30 , iicCtrlBlock+IICCTRLBLOCK_IICDATATX
+    LDS     R25 , iicCtrlBlock+IICCTRLBLOCK_IICBYTCNT
+    CP      R30 , R25
+    BREQ    TXDATASLADONE    
+    ORI     R24 , BM_I2INT|BM_I2EA
+    RJMP    IIC_IRQ_RDY      
+TXDATASLADONE:  
+    LDS     R25 , iicCtrlBlock+IICCTRLBLOCK_IICBYTCNT
+    DEC     R25
+    STS     iicCtrlBlock+IICCTRLBLOCK_IICBYTCNT , R25
+    ORI     R24 , BM_I2INT   
+    ANDI    R24 , ~BM_I2EA    
+    RJMP    IIC_IRQ_RDY    
+; -----------------------------------------------------------------------------
+TXDATA_NA:  ; DATA byte has been TXed, NOT ACKed     
+            ; NXT action -> switch to not addressed   
+; -----------------------------------------------------------------------------
+    /* LLR-Ref: 190 */    
+    LDS     R30 , I2CR
+    SBRS    R30 , I2EA
+    RJMP    FINISHIICSLATX
+    LDS     R25 , iicCtrlBlock+IICCTRLBLOCK_IICSTATUS
+    ORI     R25 , BM_IICTRXERROR    
+    ANDI    R25 , ~BM_IICTRANSACTIONONGOING        
+    STS     iicCtrlBlock+IICCTRLBLOCK_IICSTATUS , R25  
+    ANDI    R24 , ~BM_I2EA    
+    RJMP    IIC_IRQ_RDY       
+FINISHIICSLATX:    
+    LDS     R25 , iicCtrlBlock+IICCTRLBLOCK_IICSTATUS    
+    ANDI    R25 , ~BM_IICTRANSACTIONONGOING
+    STS     iicCtrlBlock+IICCTRLBLOCK_IICSTATUS , R25       
+    ORI     R24 , BM_I2INT|BM_I2EA  
+    RJMP    IIC_IRQ_RDY
+; -----------------------------------------------------------------------------    
+TXLAST_A:   ; LAST DATA byte has been TXed, NOT ACKed     
+            ; NXT action -> switch to not addressed                  
+; -----------------------------------------------------------------------------    
+    /* LLR-Ref: 200 */    
+    LDS     R25 , iicCtrlBlock+IICCTRLBLOCK_IICSTATUS
+    ORI     R25 , BM_IICTRXERROR    
+    ANDI    R25 , ~BM_IICTRANSACTIONONGOING    
+    STS     iicCtrlBlock+IICCTRLBLOCK_IICSTATUS , R25  
+    ANDI    R24 , ~BM_I2EA
+    ORI     R24 , BM_I2INT    
+    RJMP    IIC_IRQ_RDY   
+    
+    /* LLR-Ref: 210 */        
+IIC_IRQ_RDY: 
+    STS       I2CR , R24   
+    POP       R25
+    OUT       SREG , R25
+    POP       R25
+    POP       R30
+    POP       R31
+    POP       R24
+    RETI
+
+
+
+   END
+
+
+
+
+
+
+
+
+
+
+
+/* ---------------------------------------------------------------------------*/
+

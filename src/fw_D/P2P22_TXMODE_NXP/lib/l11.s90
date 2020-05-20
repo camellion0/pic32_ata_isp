@@ -1,0 +1,1497 @@
+;----------------------------------------------------------------------------
+;
+;  Library routines for the ATMEL AT90S processors
+;  Double arithmetics
+;
+;  Copyright 2002-2008 IAR Systems AB. All rights reserved.
+;
+;  $Revision: 328482 $
+;
+;----------------------------------------------------------------------------
+
+#include "macros.m90"
+
+        MODULE  ?DOUBLES_L11
+
+        PUBLIC    ?D_ADD_L11
+        PUBLIC    ?D_SUB_L11
+        PUBLIC    ?D_MUL_L11
+        PUBLIC    ?D_DIV_L11
+        PUBLIC    ?D_CMP_EQ_L11
+        PUBLIC    ?D_CMP_LT_L11
+        PUBLIC    ?D_CMP_GE_L11
+        PUBLIC    ?FL2D_L11
+        PUBLIC    ?D2FL_L11
+        PUBLIC    ?SL2D_L11
+        PUBLIC    ?UL2D_L11
+        PUBLIC    ?D2UL_L11
+        PUBLIC    ?D2SL_L11
+        PUBLIC    ?D_UNPACK_1_L11
+        PUBLIC    ?D_NORMALIZE_L11
+
+        EXTERN    ?L_NEG_L03
+        EXTERN    ?UL_SHR_L03
+        EXTERN    ?TEST_P_L04
+        EXTERN    ?F_INFINITE_L04
+        EXTERN    ?F_ZERO_L04
+        EXTERN    ?F_NAN_L04
+        EXTERN    ?F_ROUND_L04
+
+;------------------------------------------------------------------------
+;D_UNPACK unpacks two operands
+;On call: first operand, A, is in register P3:P0, Q3:Q0
+; LSB (P0:P1:P2:P3:Q0:Q1)(mantissa):(Q2:Q3)(exponent) MSB
+;       and the X-pointer pointing to the other.
+;On return: A is stored as:
+;       sign bit in bit 7 of T0
+;       exponent in Z0 and Q3
+;       mantissa in P3:P0 and Q2:Q0
+;the other operand B is stored as
+;         sign bit in T3
+;         exponent in T2 and T1
+;         and the 7 bytes of the mantissa on the Y stack
+;D_UNPACK_1 only unpacks the first operand A
+;
+;Destroys: All scratch registers.
+;
+;
+
+        RSEG      CODE:CODE:NOROOT(1)
+
+?D_UNPACK:
+    SBIW    Y0,7
+    ST      -Y,P3             ;Make room for unpacking B
+    ST      -Y,P2
+    ST      -Y,P1
+    ST      -Y,P0
+    ST      -Y,Q0
+
+    LD      T0,X+             ;Load B from X
+    LD      P3,X+
+    LD      Z1,X+
+    LD      Z0,X+
+    LD      P0,X+
+    LD      P1,X+
+    LD      P2,X+
+    LD      T1,X
+    SBIW    X0,7              ;Reset X
+
+    CLR     T3
+    CLR     T2
+    LDI     Q0,3
+    LSL     T1                ;Shift sign bit --> C
+    ROR     T3                ;C --> sign bit (MSB of Z0)
+    LSR     T1
+
+?SHIFT_LOOP:                        ;Shift of exponent and mantissa
+    LSL     T0
+    ROL     P3
+    ROL     Z1
+    ROL     Z0
+    ROL     P0
+    ROL     P1
+    ROL     P2
+    ROL     T1
+    ROL     T2
+    DEC     Q0
+    BRNE    ?SHIFT_LOOP
+
+    LSL     P2
+    ROL     T1
+    ROL     T2
+    CP      T1,Q0             ;Q0 cleared by the ?SHIFT_LOOP
+    CPC     T2,Q0
+    SEC
+    BRNE    SKIP_1            ;Test for MSB of mantissa
+    CLC                       ;If exp == 0, set MSB = 0 and exp = 1
+    INC     T1
+SKIP_1:
+    ROR     P2
+
+    STD    Y+11,P2            ;Store mantissa of B on Y-stack
+    STD    Y+10,P1
+    STD    Y+9 ,P0
+    STD    Y+8 ,Z0
+    STD    Y+7 ,Z1
+    STD    Y+6 ,P3
+    STD    Y+5 ,T0
+
+    LD      Q0,Y+             ;Restore A
+    LD      P0,Y+
+    LD      P1,Y+
+    LD      P2,Y+
+    LD      P3,Y+
+
+;Destroys: P3 P2 P1 P0 Q3 Q2 Q1 Q0 Z1 Z0 T0
+; LSB (P0:P1:P2:P3:Q0:Q1)(mantissa):(Q2:Q3)(exponent) MSB
+;
+?D_UNPACK_1_L11:              ;Unpacks number in P3:P0 and Q3:Q0
+    CLR     T0                ;Clear sign bit
+    CLR     Z0                ;Clear lowest bit
+    LDI     Z1,3
+    LSL     Q3                ;Shift sign bit --> C
+    ROR     T0                ;C --> sign bit (T0), then T0 are either 0x80 or 0x00
+    LSR     Q3                ;Clear the MSB in Q3
+?SHIFT_LOOP_1:                ;Shift of exponent and mantissa 3 steps
+    LSL     P0
+    ROL     P1
+    ROL     P2
+    ROL     P3
+    ROL     Q0
+    ROL     Q1
+    ROL     Q2
+    ROL     Q3
+    ROL     Z0
+    DEC     Z1
+    BRNE    ?SHIFT_LOOP_1
+
+    LSL     Q2                ;Exponent is shifted one more step
+    ROL     Q3
+    ROL     Z0
+    CP      Q3,Z1             ;Check if exponent==0, Z1 is cleared by the ?SHIFT_LOOP_1
+    CPC     Z0,Z1             ;Z1 is cleared by the loop
+    SEC
+    BRNE    ?SKIP1            ;Shift 'implied' bit to MSB of mantissa
+    CLC
+    LDI     Q3,1
+
+?SKIP1:
+    ROR     Q2
+    RET
+
+
+;------------------------------------------------------------------------
+;D_NORMALIZE  shifts the number until MSB is 1 or exponent is 1
+;D_ROUND      performs the correct rounding of the number. On call the T flag
+;             shall be set if the 'trailing part' of the mantissa is non-zero.
+;DENORM       checks if number is denormal, i.e. if exp == 1 and MSB of mantissa = 0,
+;             exponent is set to Zero
+;INF_CHECK    checks if number should be returned as an Inf
+;D_PACK       finally packs the number to P3:P0 Q3:Q0
+;
+;Destroys: P3 P2 P1 P0 Q3 Q2 Q1 Q0 Z1 Z0 T0
+
+    RSEG      CODE:CODE:NOROOT(1)
+
+?LOOP1:
+    SBRC    Q2,7              ;Test if MSB is 1
+    RJMP    ?D_ROUND
+    LSL     P0                ;If not shift mantissa and
+    ROL     P1                ;decrement exponent
+    ROL     P2
+    ROL     P3
+    ROL     Q0
+    ROL     Q1
+    ROL     Q2
+    SUBI    Q3,1
+    SBCI    Z0,0
+?D_NORMALIZE_L11:
+    CLR     Z1
+?D_NORMALIZE_1:
+    CPI     Q3,1              ;Test if the exponent is 1
+    CPC     Z0,Z1
+    BREQ    ?D_ROUND
+    BRGE    ?LOOP1
+
+    LSR     Q2              ; A negative or zero exponent is not ok.
+    ROR     Q1              ; Shift the mantissa one step to the right
+    ROR     Q0              ; and increment the exponent
+    ROR     P3              ; until the exponent is one.
+    ROR     P2
+    ROR     P1
+    ROR     P0
+    BRCC    ?D_NORM_1       ; loosing some bits?
+    SET                     ; Remember lost bits in the sticky bit.
+?D_NORM_1:
+    SUBI    Q3,$FF
+    SBCI    Z0,$FF
+    RJMP    ?D_NORMALIZE_1
+
+
+?D_ROUND:
+    LDI       Z1,$07            ;Put low part of mantissa in Z1
+    AND       Z1,P0
+    CPI       Z1,$04
+    BRNE      ?ROUND2
+    BRTS      ?ROUND3           ;If Z1 == $04, round if T is set
+    SBRC      P0,3              ;If Z1 == $04, T is cleared:
+    RJMP      ?ROUND3           ;round if Q0:3 is set
+    RJMP      ?DENORM           ;don't round if Q0:3 is cleared
+?ROUND2:
+    BRCC      ?ROUND3           ;If Z1 > $04, round
+    RJMP      ?DENORM           ;If Z1 < $04, don't round
+?ROUND3:
+    SUBI      P0,$F8            ;Round, i.e. add $08
+    SBCI      P1,$FF
+    SBCI      P2,$FF
+    SBCI      P3,$FF
+    SBCI      Q0,$FF
+    SBCI      Q1,$FF
+    SBCI      Q2,$FF
+    SBCI      Q3,$FF
+    SBCI      Z0,$FF
+
+?DENORM:                            ;Check if denormal number
+    CLR       Z1
+    CPI       Q3,2
+    CPC       Z0,Z1
+    BRCC      ?INF_CHECK        ;If exponent is larger than 1, check for Inf
+    SBRS      Q2,7              ;If exponent == 1 && MSB of mantissa == 0,
+    CLR       Q3                ;set exp = 0
+    RJMP      ?D_PACK
+
+?INF_CHECK:                         ;Check if number became infinity after rounding
+    LDI       Z1,$07
+    CPI       Q3,$FF
+    CPC       Z0,Z1
+    BRCS      ?D_PACK
+    CLR       Q2                ;If exp >= $07_FF, make a proper infinity with
+    CLR       Q1                ;cleared mantissa
+    CLR       Q0
+#ifdef __HAS_ENHANCED_CORE__
+    MOVW    P3:P2,Q1:Q0
+    MOVW    P1:P0,Q1:Q0
+#else
+    CLR       P3
+    CLR       P2
+    CLR       P1
+    CLR       P0
+#endif
+
+?D_PACK:
+    LDI       Z1,3              ;Loop counter
+    LSL       Q2                ;Shift out implied bit
+    LSR       Z0
+    ROR       Q3
+    ROR       Q2
+?SHIFTLOOP:                         ;Shift exponent and mantissa to
+    LSR       Z0                ;correct position
+    ROR       Q3
+    ROR       Q2
+    ROR       Q1
+    ROR       Q0
+    ROR       P3
+    ROR       P2
+    ROR       P1
+    ROR       P0
+    DEC       Z1
+    BRNE      ?SHIFTLOOP
+
+    ADD       Q3,T0             ;Add sign bit, T0 needs to be either 0x80 or 0x00.
+
+    RET
+
+;--------------------------------------------------------------
+;?D_INF, D_ZERO and D_NAN return signed infinity, signed zero
+;and NaN.
+;On call sign should be in MSB of T0.
+;Value is put in P3:P0 and Q3:Q0
+;
+;Destroys: P3 P2 P1 P0 Q3 Q2 Q1 Q0
+
+    RSEG      CODE:CODE:NOROOT(1)
+
+?D_INF:
+    LDI       Q3,$7F            ;Put exponent to 7_FF
+    OR        Q3,T0             ;and add correct sign
+?CLEAR_INF:
+    LDI       Q2,$F0
+?CLEAR:
+    CLR       Q1                ;Clear rest of mantissa
+    CLR       Q0
+#ifdef __HAS_ENHANCED_CORE__
+    MOVW    P3:P2,Q1:Q0
+    MOVW    P1:P0,Q1:Q0
+#else
+    CLR       P3
+    CLR       P2
+    CLR       P1
+    CLR       P0
+#endif
+    RET
+
+?D_ZERO:
+    MOV       Q3,T0             ;Put sign to correct sign
+    ANDI      Q3,$80            ;and everything else to Zero
+?D_ZERO_2:
+    CLR       Q2
+    RJMP      ?CLEAR
+
+?D_NAN:                         ;Sign does not matter if NaN
+    LDI       Q3,$FF            ;Value of mantissa only has to be Non Zero
+    LDI       Q2,$FF
+    RET
+
+
+;------------------------------------------------------------------------
+;?FL2D_L11
+;Conversion from float to double
+;On call floatnumber is in P3:P0
+;On return doublenumber is in P3:P0 Q3:Q0
+;
+;Destroys: P3 P2 P1 P0 Q3 Q2 Q1 Q0 T0 Z0 Z1
+
+    RSEG      CODE:CODE:NOROOT(1)
+
+?FL2D_L11:
+    XCALL   ?TEST_P_L04       ;If number was Zero, Inf or NaN,
+    BRCS    ?D_NAN            ;return Zero, Inf or NaN in double format
+    MOV     T0,P3
+    BREQ    ?D_ZERO
+    BRVS    ?D_INF
+
+    BST     P3,7              ;Store sign bit in T
+    ANDI    P3,$7F            ;Remove sign bit
+    TST     Z1                ;Z1 contains the Exponent, it was set by ?TEST_P_L04
+    BRNE    ?FL2D_NORMAL
+    LDI     Z1,1
+?FL2D_SUBNORMAL:
+    SBRC    P2,7
+    RJMP    ?FL2D_NORMAL_1
+    LSL     P0
+    ROL     P1
+    ROL     P2
+    DEC     Z1
+    RJMP    ?FL2D_SUBNORMAL
+?FL2D_NORMAL_1:
+    LSL     P2                ;Dropping the implicit bit
+    ASR     Z1                ;Merging exponent and mantissa
+    ROR     P2
+    MOV     P3,Z1
+?FL2D_NORMAL:
+#ifdef __HAS_ENHANCED_CORE__
+    MOVW    Q1:Q0,P1:P0
+    MOVW    Q3:Q2,P3:P2
+#else
+    MOV     Q0,P0
+    MOV     Q1,P1
+    MOV     Q2,P2
+    MOV     Q3,P3
+#endif
+
+    CLR       P3
+    CLR       P2
+#ifdef __HAS_ENHANCED_CORE__
+    MOVW    P1:P0,P3:P2
+#else
+    CLR       P1
+    CLR       P0
+#endif
+
+    LDI       Z1,3
+?FL2D_SHIFT:
+    ASR       Q3
+    ROR       Q2
+    ROR       Q1
+    ROR       Q0
+    ROR       P3
+    DEC       Z1
+    BRNE      ?FL2D_SHIFT
+    SUBI      Q3,$C8            ;Adjust exponent because of the difference in bias
+    BLD       Q3,7              ;Load sign bit from T
+    RET
+
+;------------------------------------------------------------------------
+;?D2FL_L11
+;Conversion from double to float
+;On call doublenumber is in Q3:Q0 P3:P0
+;On return floatnumber is in P3:P0
+;
+;Destroys: P3 P2 P1 P0 Q3 Q2 Q1 Q0 Z1 Z0 T0
+
+    RSEG      CODE:CODE:NOROOT(1)
+
+?D2FL_L11:
+    RCALL     ?TEST_A
+    MOV       T0,Q3
+    BRCS      D2FL_F_NAN
+    BRVS      D2FL_F_INFINITE
+    BREQ      D2FL_F_ZERO
+    RCALL     ?D_UNPACK_1_L11
+    SUBI      Q3,$80            ;Adjust for bias
+    SBCI      Z0,$03
+    CPI       Q3,$FF
+    CPC       Z0,Z1             ;Z1 are cleared by ?D_UNPACK_1_L11
+    BRGE      D2FL_F_INFINITE   ;If exponent too large (Signed), return Inf
+    LDI       Z1,$FF            ;If resulting exponent is too small,
+    CPI       Q3,$E9            ;return Zero
+    CPC       Z0,Z1
+    BRLT      D2FL_F_ZERO       ;(Signed)
+
+    CLT
+    OR        P0,P1
+    OR        P0,P2
+    BREQ      D2FL_1
+    SET
+D2FL_1:
+    TST       Z0
+    BRMI      D2FL_2
+    TST       Q3
+    BRNE      D2FL_4
+D2FL_2:
+    LSR     Q2              ; A negative or zero exponent is not ok.
+    ROR     Q1              ; Shift the mantissa one step to the right
+    ROR     Q0              ; and increment the exponent
+    ROR     P3              ; until the exponent is one.
+    BRCC    D2FL_3          ; loosing some bits?
+    SET                     ; Remember lost bits in the sticky bit.
+D2FL_3:
+    INC     Q3
+    CPI     Q3,$01
+    BRLT    D2FL_2       ; (signed)
+D2FL_4:
+
+    MOV       Z0,P3
+#ifdef __HAS_ENHANCED_CORE__
+    MOVW      P1:P0,Q1:Q0
+    MOVW      P3:P2,Q3:Q2
+#else
+    MOV       P0,Q0
+    MOV       P1,Q1
+    MOV       P2,Q2
+    MOV       P3,Q3
+#endif
+    XJMP      ?F_ROUND_L04
+D2FL_F_ZERO:
+    XJMP      ?F_ZERO_L04
+D2FL_F_INFINITE:
+    XJMP      ?F_INFINITE_L04
+D2FL_F_NAN:
+    XJMP      ?F_NAN_L04
+
+;-----------------------------------------------
+;?SL2D_L11  Signed long to double conversion
+;?UL2D_L11  Unsigned long to double conversion,
+;       uses ?SL2D_L11
+;On call number to be converted is in P3:P0
+;On return number is in P3:P0 and Q3:Q0
+;
+;Destroys: P3 P2 P1 P0 Q3 Q2 Q1 Q0 T0 Z1 Z0
+
+    RSEG      CODE:CODE:NOROOT(1)
+
+?SL2D_L11:
+    CLR       T0
+    BST       P3,7
+    BLD       T0,7
+    BRTC      ?SL2D_1
+    XCALL     ?L_NEG_L03
+    REQUIRE   ?SL2D_1
+    RSEG      CODE:CODE:NOROOT(1)
+
+?SL2D_1:
+    MOV       Q0,P1
+    MOV       Q1,P2
+    MOV       Q2,P3
+    MOV       P3,P0
+    CLR       P0
+    CLR       P1
+    CLR       P2
+    LDI       Z0,$04            ;Initial exponent is 31 + BIAS = 31 + 1023
+    LDI       Q3,$1E
+    CLT                         ;Clear the sticky
+    RJMP      ?D_NORMALIZE_L11
+
+
+    RSEG      CODE:CODE:NOROOT(1)
+
+?UL2D_L11:
+    CLR       T0                ;Set sign to positive
+    RJMP      ?SL2D_1           ;Use signed-long-to-double conversion
+
+;------------------------------------------------------------------------
+;?D2SL_L11,?D2UL_L11 Double to long conversions
+;On call number is in P3:P0 and Q3:Q0
+;On return long number is in P3:P0
+;
+;Destroys: P3 P2 P1 P0 Q3 Q2 Q1 Q0 Z1 Z0 T1 T0
+
+        RSEG    CODE:CODE:NOROOT(1)
+?D2UL_L11:
+        SBRC    Q3,7            ;If < 0, return 0
+        RJMP    ?D2L3
+        RCALL   ?D_UNPACK_1_L11
+        SUBI    Q3,$FF          ;Subtract bias
+        SBCI    Z0,$03
+        BRCS    ?D2L3           ;Branch if exponent < 0
+        CLR     T1
+        CPI     Q3,$20
+        CPC     Z0,T1
+        BRCS    ?D2L4           ;Branch if exponent <= 32
+                                ;If exponent > 32, return
+                                ;$FF_FF_FF_FF if sign is positive
+        LDI     P3,$FF
+        RJMP    ?D2L5
+
+        RSEG    CODE:CODE:NOROOT(1)
+        
+?D2SL_L11:
+        RCALL   ?D_UNPACK_1_L11
+        SUBI    Q3,$FF          ;Subtract bias
+        SBCI    Z0,$03
+        BRCS    ?D2L3           ;Branch if exponent < 0
+        CLR     T1
+        CPI     Q3,$1F
+        CPC     Z0,T1
+        BRCS    ?D2L4           ;Branch if exponent <= 31
+        SBRC    T0,7            ;If exponent > 31, return
+        RJMP    ?D2L1           ;$7F_FF_FF_FF if sign is positive
+                                ;or $80_00_00_00 if sign is negative
+        LDI     P3,$7F
+        REQUIRE ?D2L5
+        RSEG    CODE:CODE:NOROOT(1)
+?D2L5:
+        LDI     P2,$FF
+        LDI     P1,$FF
+        LDI     P0,$FF
+        RET        
+?D2L1:
+        LDI     P3,$80
+?D2L2:
+        CLR     P2
+        CLR     P1
+        CLR     P0
+        RET
+?D2L3:
+        CLR     P3              ;Zero is returned if exponent is too small
+        RJMP    ?D2L2
+?D2L4:
+        MOV     P2,Q1
+        MOV     P1,Q0
+        MOV     P0,P3
+        MOV     P3,Q2
+        MOV     Q0,Q3
+        SUBI    Q0,31
+        NEG     Q0
+        XCALL   ?UL_SHR_L03
+        SBRS    T0,7
+        RET
+        XJMP    ?L_NEG_L03
+        
+;------------------------------------------------------------------------
+;?TEST_A tests A for Inf, Zero and NaN
+;If A = Inf   V is set
+;If A = NaN   C is set
+;If A = Zero  Z is set
+;?TEST_B tests in the same way B
+;
+;Destroys: T0 Z1 Z0
+
+    RSEG      CODE:CODE:NOROOT(1)
+
+?TEST_A:
+    MOV       T0,Q3
+    MOV       Z0,Q2
+    LSL       Z0
+    ROL       T0
+    LDI       Z1,$FF
+    CPI       Z0,$E0
+    CPC       T0,Z1
+    BRCC      ?A_INF_OR_NAN     ;If Carry cleared, A is either Inf or NaN
+    OR        Z0,T0
+    OR        Z0,Q1
+    OR        Z0,Q0
+    OR        Z0,P3
+    OR        Z0,P2
+    OR        Z0,P1
+    OR        Z0,P0             ;Test if A is zero
+    CLC                         ;If A = Zero, C = 0, V = 0, Z = 1
+    CLV                         ;If 'normal' number, C = 0, V = 0, Z = 0
+    RET
+
+?A_INF_OR_NAN                   ;If mantissa == 0, A = Inf, NaN otherwise
+    SUBI      Z0,$E0            ;Take away exponent part of highest byte of mantissa
+    OR        Z0,Q1
+    OR        Z0,Q0
+    OR        Z0,P3
+    OR        Z0,P2
+    OR        Z0,P1
+    OR        Z0,P0
+    BREQ      ?A_INF
+?A_NAN:
+    SEC                         ;If A = NaN, C = 1, V = 0, Z = 0
+    CLV
+    RET
+?A_INF:                         ;If A = Inf, C = 0, V = 1, Z = 0
+    CLC
+    CLZ
+    SEV
+    RET
+
+
+
+?TEST_B:
+    ADIW      X0,7
+    LD        T0,X
+    LD        Z0,-X
+    LSL       Z0
+    ROL       T0
+    LDI       Z1,$FF
+    CPI       Z0,$E0
+    CPC       T0,Z1
+    BRCC      ?B_INF_OR_NAN     ;If Carry cleared, B is either Inf or NaN
+    OR        Z0,T0
+    LD        T3,-X
+    LD        T2,-X
+    LD        T1,-X
+    OR        Z0,T3
+    OR        Z0,T2
+    OR        Z0,T1
+    LD        T3,-X
+    LD        T2,-X
+    LD        T1,-X
+    OR        Z0,T3
+    OR        Z0,T2
+    OR        Z0,T1             ;Test if B is Zero
+    CLC                         ;If B = Zero, C = 0, V = 0, Z = 1
+    CLV                         ;If 'normal' number, C = 0, V = 0, Z = 0
+    RET
+
+?B_INF_OR_NAN                       ;If mantissa == 0, B = Inf, NaN otherwise
+    SUBI      Z0,$E0            ;Take away exponent part of highest byte of mantissa
+    LD        T3,-X
+    LD        T2,-X
+    LD        T1,-X
+    OR        Z0,T3
+    OR        Z0,T2
+    OR        Z0,T1
+    LD        T3,-X
+    LD        T2,-X
+    LD        T1,-X
+    OR        Z0,T3
+    OR        Z0,T2
+    OR        Z0,T1
+    BREQ      ?A_INF
+    RJMP      ?A_NAN
+
+
+
+;------------------------------------------------------------------------
+;?D_ADD_L11
+;Addition of the operands A and B.
+;On call P3:P0 and Q3:Q0 contain A and X is pointing to B
+;On return result is placed in P3:P0 and Q3:Q0
+;
+;Works also on denormal numbers
+;
+;Destroys: All scratch registers
+
+    RSEG      CODE:CODE:NOROOT(1)
+
+?ADD_NAN:                           ;If A or B = NaN, A + B = NaN
+    LDI       Q3,$FF
+    LDI       Q2,$FF
+    RET
+
+?ADD_A_INF:
+    RCALL     ?TEST_B
+    BRVS      ?ADD_INF_INF      ;Inf+Inf = Inf OR NaN
+    BRCS      ?ADD_NAN          ;Inf+NaN = NaN
+    RET
+
+?ADD_INF_INF:
+    ADIW      X0,7
+    LD        Z1,X
+    SBIW      X0,7
+    EOR       Z1,Q3
+    BRMI      ?ADD_NAN          ;If signs are different, return NaN
+    RET                         ;Otherwise result = A, ie do nothing
+
+?ADD_A_ZERO:
+    RCALL     ?TEST_B
+    BREQ      ?ADD_ZERO_ZERO    ;0+0 = 0 (AND signs)
+    LD        P0,X+             ;0+B = B (also if B=Inf or NaN)
+    LD        P1,X+
+    LD        P2,X+
+    LD        P3,X+
+    LD        Q0,X+
+    LD        Q1,X+
+    LD        Q2,X+
+    LD        Q3,X
+    SBIW      X0,7
+    RET
+
+?ADD_ZERO_ZERO:
+    ADIW      X0,7              ;If both A and B are Zero, just AND signs
+    LD        Z0,X
+    SBIW      X0,7
+    AND       Q3,Z0
+    RET
+
+?ADD_B_INF:
+    ADIW      X0,7              ;A+Inf = Inf
+    LD        Q3,X              ;result is Inf with same sign as B
+    SBIW      X0,7
+    RJMP      ?CLEAR_INF
+
+?ADD_B_ZERO:                        ;If B is Zero and A 'normal' number,
+    RET                         ;return A unchanged
+?D_ADD_L11:
+    RCALL     ?TEST_A
+    BRCS      ?ADD_NAN          ;A = NaN?
+    BRVS      ?ADD_A_INF        ;A = Inf?
+    BREQ      ?ADD_A_ZERO       ;A = 0?
+
+    RCALL     ?TEST_B
+    BRCS      ?ADD_NAN          ;B = NaN?
+    BRVS      ?ADD_B_INF        ;B = Inf?
+    BREQ      ?ADD_B_ZERO       ;B = 0?
+
+    SBIW      Y0,3
+    CLT
+    RCALL     ?D_UNPACK
+    CP        T1,Q3
+    CPC       T2,Z0
+    BRCC      ?SHIFT_MANT1
+                                ;If exp A > exp B
+    STD       Y+7,T0            ;store sign and
+    STD       Y+8,Z0            ;store exponent
+    STD       Y+9,Q3
+    SUB       Q3,T1             ;determine number of shifts
+    SBC       Z0,T2
+    TST       Z0                ;If Z0 is nonzero, result = A (A>>B)
+    BRNE      ?A_PLUS_0
+    PUSH      X2                ;make extra room
+    PUSH      X1
+    PUSH      T3                ;store sign of B on top of the stack
+    MOV       X2,Q3
+    LD        Q3,Y+             ;Load mantissa
+    LD        Z0,Y+
+    LD        Z1,Y+
+    LD        T0,Y+
+    LD        T1,Y+
+    LD        T2,Y+
+    LD        T3,Y+
+?SHIFTING:
+    LSR       T3
+    ROR       T2
+    ROR       T1
+    ROR       T0
+    ROR       Z1
+    ROR       Z0
+    ROR       Q3
+    BRCC      ?SKIPSET          ;Check if carry out is set. This is needed
+    SET                         ;to determine rounding
+?SKIPSET:
+    DEC       X2
+    BRNE      ?SHIFTING
+    POP       X2                ;Put sign of B in X2
+    LD        X1,Y              ;Load sign of A
+    EOR       X2,X1
+    POP       X1
+    POP       X2
+    RJMP      ?SUB_OR_ADD
+?A_PLUS_0:
+    ADD       Q3,T1
+    ADC       Z0,T2
+    ADIW      Y0,10             ;Reset Y
+    RJMP      ?D_PACK           ;and then pack A
+
+
+?SHIFT_MANT1:                       ;exp. A <= exp. B
+    CP        T1,Q3
+    CPC       T2,Z0
+    BREQ      ?ADD1
+    LSR       Q2                ;Shift mantissa of A
+    ROR       Q1
+    ROR       Q0
+    ROR       P3
+    ROR       P2
+    ROR       P1
+    ROR       P0
+    BRCC      ?SKIP_2           ;Check if carry out is set. This is needed
+    SET                         ;to determine rounding
+?SKIP_2:
+                                ;and increment exponent of A
+    SUBI      Q3,$FF
+    SBCI      Z0,$FF
+    RJMP      ?SHIFT_MANT1
+
+
+?ADD1:
+    EOR       T3,T0
+    STD       Y+7,T0            ;Store sign...
+    STD       Y+8,Z0            ;and exponent
+    STD       Y+9,Q3
+    LD        Q3,Y+             ;Load mantissa
+    LD        Z0,Y+
+    LD        Z1,Y+
+    LD        T0,Y+
+    LD        T1,Y+
+    LD        T2,Y+
+    LD        T3,Y+
+?SUB_OR_ADD:
+    BRMI      ?SUB_MANT
+
+?ADD_MANT:
+    ADD       P0,Q3             ;If signs were equal, add mantissas
+    ADC       P1,Z0
+    ADC       P2,Z1
+    ADC       P3,T0
+    ADC       Q0,T1
+    ADC       Q1,T2
+    ADC       Q2,T3             ;Carry set?
+    LD        T0,Y+             ;Load sign and exponent
+    LD        Z0,Y+
+    LD        Q3,Y+
+    BRCC      ?ADD3
+    ROR       Q2                ;If carry out, rotate back
+    ROR       Q1
+    ROR       Q0
+    ROR       P3
+    ROR       P2
+    ROR       P1
+    ROR       P0
+    SUBI      Q3,$FF            ;and exponent incremented
+    SBCI      Z0,$FF
+    RJMP      ?D_NORMALIZE_L11
+?SUB_MANT:
+    CP        P0,Q3             ;If signs are different, subtract the mantissa with
+    CPC       P1,Z0             ;the smaller magnitude from the larger one.
+    CPC       P2,Z1             ;final sign is equal to the sign of the larger number
+    CPC       P3,T0
+    CPC       Q0,T1
+    CPC       Q1,T2
+    CPC       Q2,T3
+    BREQ      ?POS_ZERO
+    BRCC      ?SUB2
+                                ;Initially Carry is set
+    BRTS      ?SUB1             ;If T flag is set Carry is set
+    CLC                         ;otherwise it's cleared
+?SUB1:
+    SBC       Q3,P0             ;B's mantissa largest
+    SBC       Z0,P1
+    SBC       Z1,P2
+    SBC       T0,P3
+    SBC       T1,Q0
+    SBC       T2,Q1
+    SBC       T3,Q2
+    MOV       P0,Q3             ;Move mantissa to right position
+    MOV       P1,Z0
+    MOV       P2,Z1
+    MOV       P3,T0
+    MOV       Q0,T1
+    MOV       Q1,T2
+    MOV       Q2,T3
+    LD        T0,Y+             ;Load sign and exponent
+    LD        Z0,Y+
+    LD        Q3,Y+
+    LDI       Z1,$80            ;If B larger, swap sign
+    EOR       T0,Z1
+    RJMP      ?D_NORMALIZE_L11
+
+?POS_ZERO:
+    CLR       Q3
+    ADIW      Y0,3
+    RJMP      ?D_ZERO_2
+?SUB2:
+    BRTC      ?SUB3
+    SEC
+?SUB3:
+    SBC       P0,Q3             ;A's mantissa largest
+    SBC       P1,Z0
+    SBC       P2,Z1
+    SBC       P3,T0
+    SBC       Q0,T1
+    SBC       Q1,T2
+    SBC       Q2,T3
+    LD        T0,Y+             ;Load sign and exponent
+    LD        Z0,Y+
+    LD        Q3,Y+
+?ADD3:
+    RJMP      ?D_NORMALIZE_L11
+
+;------------------------------------------------------------------------
+;D_SUB performs B - A
+;On call A is placed in P3:P0 and Q3:Q0 and the adress of B in X
+;On return difference is placed in P3:P0 and Q3:Q0
+;
+;Works also on denormal numbers
+;
+;Destroys: All scratch registers.
+
+    RSEG      CODE:CODE:NOROOT(1)
+
+?D_SUB_L11:
+    LDI       Z1,$80
+    EOR       Q3,Z1             ;Swap sign
+    RJMP      ?D_ADD_L11            ;and perform addition
+
+
+;------------------------------------------------------------------------
+;D_MUL performs a multiplication between A and B
+;On call P3:P0 and Q3:Q0 contain A and X contains the adress of B
+;
+;Destroys: All scratch registers
+    RSEG      CODE:CODE:NOROOT(1)
+    EXTERN    ?Register_R4_is_cg_reg
+    REQUIRE   ?Register_R4_is_cg_reg
+
+?MUL_A_INF:
+    RCALL     ?TEST_B
+    BRCS      ?MUL_NAN          ;Inf*NaN = NaN
+    BREQ      ?MUL_NAN          ;Inf*0 = NaN
+?MUL_INF_INF:                       ;Inf*Inf = Inf
+    ADIW      X0,7
+    LD        Z1,X
+    SBIW      X0,7
+    ANDI      Z1,$80
+    EOR       Q3,Z1
+    RET
+
+?MUL_NAN:
+    RJMP      ?ADD_NAN
+
+?MUL_A_ZERO:
+    RCALL     ?TEST_B
+    BRCS      ?MUL_NAN          ;0*NaN = NaN
+    BRVS      ?MUL_NAN          ;0*Inf = NaN
+    ADIW      X0,7              ;0*B = 0 otherwise
+    LD        Z1,X
+    SBIW      X0,7
+    ANDI      Z1,$80
+    EOR       Q3,Z1
+    RET
+
+?MUL_B_INF:                         ;A*Inf = Inf
+    ADIW      X0,7
+    LD        Z1,X
+    SBIW      X0,7
+    EOR       Q3,Z1
+    ANDI      Q3,$80
+?MUL_B_INF_1:
+    SUBI      Q3,$81
+    RJMP      ?CLEAR_INF
+
+?MUL_B_ZERO:                        ;A*0 = 0
+    ADIW      X0,7
+    LD        Z1,X
+    SBIW      X0,7
+    EOR       Q3,Z1
+    ANDI      Q3,$80
+    RJMP      ?D_ZERO_2
+
+;?MULT_INF and ?MULT_ZERO are called in ?D_MUL_L11 and ?D_DIV_L11 if the
+;resulting exponent becomes too large or too small. Final sign is in both cases in T0.
+
+    RSEG      CODE:CODE:NOROOT(1)
+
+?MULT_INF:
+    ADIW      Y0,10              ;Reset Y
+    MOV       Q3,T0
+    RJMP      ?MUL_B_INF_1
+?MULT_ZERO:
+    ADIW      Y0,10
+    MOV       Q3,T0
+    RJMP      ?D_ZERO_2
+
+    RSEG      CODE:CODE:NOROOT(1)
+
+?D_MUL_L11:
+    RCALL     ?TEST_A
+    BRCS      ?MUL_NAN          ;A = NaN?
+    BRVS      ?MUL_A_INF        ;A = Inf?
+    BREQ      ?MUL_A_ZERO       ;A = 0?
+
+    RCALL     ?TEST_B
+    BRCS      ?MUL_NAN          ;B = NaN?
+    BRVS      ?MUL_B_INF        ;B = Inf?
+    BREQ      ?MUL_B_ZERO       ;B = 0?
+
+    SBIW      Y0,3              ;Make room for sign and exponent to be
+                                ;stored later
+    CLT                         ;Test flag is used to determine rounding
+
+    RCALL     ?D_UNPACK
+    EOR       T0,T3             ;Determine final sign
+
+    ADD       Q3,T1             ;Add exponents
+    ADC       Z0,T2
+    SUBI      Q3,$FF            ;and subtract one bias (=03_FF)
+    SBCI      Z0,$03
+
+    LDI       Z1,$FF
+    CPI       Q3,$CD
+    CPC       Z0,Z1
+    BRLT      ?MULT_ZERO        ;(Signed)
+    LDI       Z1,$07
+    CPI       Q3,$FF
+    CPC       Z0,Z1
+    BRGE      ?MULT_INF         ;If exp >= 07_FF (Signed), return Inf
+
+;----Multiplication of mantissas----
+
+    STD       Y+7,T0            ;Store sign
+    STD       Y+8,Z0            ;store exponent
+    STD       Y+9,Q3
+    PUSH      X0                ;Need more space...
+    PUSH      X1                ;19 registers are required
+    PUSH      X2
+    PUSH      R24
+    PUSH      R4
+    LDI       Z1,7              ;Big loop counter
+
+    CLR       T2                ;Clear accumulator
+    CLR       T1
+    CLR       T0
+#ifdef __HAS_ENHANCED_CORE__
+    MOVW    X2:R24,T1:T0
+    MOVW    X1:X0, T1:T0
+#else
+    CLR       X2
+    CLR       X1
+    CLR       X0
+    CLR       R24
+#endif
+?BIG_LOOP:
+    LDI       Z0,8
+    CLR       T3
+    CLR       Q3
+    LD        R4,Y+             ;Load mantissa of B, one byte at the time
+?INNER_LOOP:
+    SBRS      R4,0
+    RJMP      ?MULT_SHIFT
+    ADD       R24,P0            ;Add mantissa of A shifted if MSB of B-byte = 1
+    ADC       X0,P1             ;to accumulator
+    ADC       X1,P2
+    ADC       X2,P3
+    ADC       T0,Q0
+    ADC       T1,Q1
+    ADC       T2,Q2
+    ADC       T3,Q3
+?MULT_SHIFT:                        ;Shift the mantissa of A left
+    LSL       P0
+    ROL       P1
+    ROL       P2
+    ROL       P3
+    ROL       Q0
+    ROL       Q1
+    ROL       Q2
+    ROL       Q3
+    LSR       R4                ;and the B-byte right
+    DEC       Z0
+    BRNE      ?INNER_LOOP       ;Do this for every bit in B-byte
+    TST       R24
+    BREQ      ?MULT_SKIP        ;If least significant byte of accumulator is nonzero
+    SET                         ;set T
+?MULT_SKIP:
+    DEC       Z1
+    BREQ      ?MULT2
+    MOV       R24,X0            ;Move accumulator in right position for adding next byte
+    MOV       X0,X1             ;of B
+    MOV       X1,X2
+    MOV       X2,T0
+    MOV       T0,T1
+    MOV       T1,T2
+    MOV       T2,T3
+    MOV       P0,P1             ;And set mantissa of A to original position
+    MOV       P1,P2
+    MOV       P2,P3
+    MOV       P3,Q0
+    MOV       Q0,Q1
+    MOV       Q1,Q2
+    MOV       Q2,Q3
+    RJMP      ?BIG_LOOP         ;Then repeat big loop for next byte of B
+?MULT2:
+    MOV       Q2,T3             ;Move accumulator to right position for
+    MOV       Q1,T2             ;normalization
+    MOV       Q0,T1
+    MOV       P3,T0
+    MOV       P2,X2
+#ifdef __HAS_ENHANCED_CORE__
+    MOVW    P1:P0,X1:X0
+#else
+    MOV       P1,X1
+    MOV       P0,X0
+#endif
+    LD        T0,Y+             ;Load sign and exponent to right position
+    LD        Z0,Y+
+    LD        Q3,Y+
+    SBRS      Q2,7
+    RJMP      ?MULT3
+    SUBI      Q3,$FF            ;If MSB of mantissa set, add one to exponent
+    SBCI      Z0,$FF
+    RJMP      ?MULT4
+?MULT3:
+    LSL       P0                ;If MSB is cleared, shift the mantissa one step
+    ROL       P1
+    ROL       P2
+    ROL       P3
+    ROL       Q0
+    ROL       Q1
+    ROL       Q2
+?MULT4:
+    POP       R4                ;Restore non scratch registers
+    POP       R24
+    POP       X2
+    POP       X1
+    POP       X0
+    RJMP      ?D_NORMALIZE_L11
+
+;------------------------------------------------------------------------
+;?D_DIV_L11 performs a division between A and B i.e. A/B
+;On call P3:P0 and Q3:Q0 contain A (dividend) and X contains the adress of B (divisor)
+;
+;Destroys: All scratch registers
+
+    RSEG      CODE:CODE:NOROOT(1)
+
+?DIV_A_INF:
+    RCALL     ?TEST_B
+    BRCS      ?DIV_NAN          ;Inf/NaN = NaN
+    BRVS      ?DIV_NAN          ;Inf/Inf = NaN
+    RJMP      ?MUL_INF_INF      ;Inf/B = Inf otherwise
+
+?DIV_NAN:
+    RJMP      ?ADD_NAN
+
+?DIV_A_ZERO:
+    RCALL     ?TEST_B
+    BREQ      ?DIV_NAN          ;0/0 = NaN
+    BRCS      ?DIV_NAN          ;0/NaN = NaN
+?DIV_B_INF:                         ;0/B = 0
+    RJMP      ?MUL_B_ZERO       ;A/Inf = 0
+
+?DIV_B_ZERO:
+    RJMP      ?MUL_B_INF        ;A/0 = Inf
+
+?D_DIV_L11:
+    RCALL     ?TEST_A
+    BRCS      ?DIV_NAN          ;A = NaN?
+    BRVS      ?DIV_A_INF        ;A = Inf?
+    BREQ      ?DIV_A_ZERO       ;A = 0?
+
+    RCALL     ?TEST_B
+    BRCS      ?DIV_NAN          ;B = NaN?
+    BRVS      ?DIV_B_INF        ;B = Inf?
+    BREQ      ?DIV_B_ZERO       ;B = 0?
+
+    SBIW      Y0,3              ;Make room for sign and exponent to be
+                                ;stored later
+    CLT                         ;Test flag is used to determine rounding
+
+    RCALL     ?D_UNPACK
+                                ;Here: A is stored as:
+                                ;       sign bit in bit 7 of T0
+                                ;       exponent in Z0 and Q3
+                                ;       mantissa in P3:P0 and Q2:Q0
+                                ;the other operand B is stored as
+                                ;         sign bit in T3
+                                ;         exponent in T2 and T1
+                                ;         and the 7 bytes of the mantissa on the Y stack
+    EOR       T0,T3             ;Determine final sign
+
+?D_DIV_ND_A:
+    SBRC      Q2,7
+    RJMP      ?D_DIV_ND_B
+    LSL       P0
+    ROL       P1
+    ROL       P2
+    ROL       P3
+    ROL       Q0
+    ROL       Q1
+    ROL       Q2
+    SUBI      Q3,$01
+    SBCI      Z0,$00
+    RJMP      ?D_DIV_ND_A
+
+?D_DIV_ND_B:
+    LDD        T3,Y+6
+    SBRC      T3,7
+    RJMP      ?D_DIV_ND_C
+
+    LD        Z1,Y
+    LSL       Z1
+    ST        Y,Z1
+
+    LDD        Z1,Y+1
+    ROL       Z1
+    STD        Y+1,Z1
+
+    LDD        Z1,Y+2
+    ROL       Z1
+    STD        Y+2,Z1
+
+    LDD        Z1,Y+3
+    ROL       Z1
+    STD        Y+3,Z1
+
+    LDD        Z1,Y+4
+    ROL       Z1
+    STD        Y+4,Z1
+
+    LDD        Z1,Y+5
+    ROL       Z1
+    STD        Y+5,Z1
+
+    ROL       T3
+    STD        Y+6,T3
+
+    LDI       Z1,$01
+    SUB       T1,Z1
+    LDI       Z1,$00
+    SBC       T2,Z1
+    RJMP      ?D_DIV_ND_B
+
+?D_DIV_ND_C:
+    SUBI      Q3,$01            ;Add Bias = 03_FF
+    SBCI      Z0,$FC
+    SUB       Q3,T1             ;And subtract exponent of B
+    SBC       Z0,T2
+    BRPL      ?SKIP11           ;Positive Exponent.
+    LDI       Z1,$FF
+    CPI       Q3,$CD
+    CPC       Z0,Z1
+    BRCC      ?SKIP11           ;Negative Exponent but larger than -51
+    RJMP      ?MULT_ZERO
+?SKIP11:
+    LDI       Z1,$07
+    CPI       Q3,$FF
+    CPC       Z0,Z1
+    BRLT      ?SKIP12
+    RJMP      ?MULT_INF         ;If exp >= 07_FF, return Inf
+?SKIP12:
+    STD       Y+7,T0            ;Store sign
+    STD       Y+8,Z0            ;and exponent
+    STD       Y+9,Q3
+
+;----Division of mantissas----
+
+    PUSH      X2                ;17 registers are needed, i.e. 3 extra
+    PUSH      X1
+    PUSH      X0
+    LD        Q3,Y+             ;Load mantissa
+    LD        Z0,Y+             ;Initially remainder is set to A
+    LD        Z1,Y+
+    LD        T0,Y+
+    LD        T1,Y+
+    LD        T2,Y+
+    LD        T3,Y+
+    LSR       Q2
+    ROR       Q1
+    ROR       Q0
+    ROR       P3
+    ROR       P2
+    ROR       P1
+    ROR       P0
+    LSR       T3
+    ROR       T2
+    ROR       T1
+    ROR       T0
+    ROR       Z1
+    ROR       Z0
+    ROR       Q3
+    LDI       X0,7              ;quotient will be placed in X2
+?O_DIV_LOOP:
+    CLR       X2
+    LDI       X1,8
+?DIV_LOOP:
+    LSL       X2                ;Shift quotient left
+    CP        P0,Q3
+    CPC       P1,Z0
+    CPC       P2,Z1
+    CPC       P3,T0
+    CPC       Q0,T1
+    CPC       Q1,T2
+    CPC       Q2,T3             ;If Carry set, put remainder = remainder - B
+    BRCS      ?DIV_SHIFT
+    SUB       P0,Q3
+    SBC       P1,Z0
+    SBC       P2,Z1
+    SBC       P3,T0
+    SBC       Q0,T1
+    SBC       Q1,T2
+    SBC       Q2,T3
+    INC       X2                ;and also add one to quotient
+?DIV_SHIFT:
+    LSL       P0                ;Shift remaider
+    ROL       P1
+    ROL       P2
+    ROL       P3
+    ROL       Q0
+    ROL       Q1
+    ROL       Q2
+    DEC       X1
+    BRNE      ?DIV_LOOP
+    ST        -Y,X2             ;Store quotient
+    DEC       X0
+    BRNE      ?O_DIV_LOOP       ;We do this 7 times to calculate 7  quotient bytes
+    CP        P0,X0             ;Check if remainder is nonzero
+    CPC       P1,X0
+    CPC       P2,X0
+    CPC       P3,X0
+    CPC       Q0,X0
+    CPC       Q1,X0
+    CPC       Q2,X0
+    BREQ      ?DIV_SKIP
+    SET                         ;If remainder was nonzero, set T flag
+?DIV_SKIP:
+    POP       X0
+    POP       X1
+    POP       X2
+    LD        P0,Y+             ;Load mantissa (which is placed on Y-stack
+    LD        P1,Y+             ;in reversed order)
+    LD        P2,Y+
+    LD        P3,Y+
+    LD        Q0,Y+
+    LD        Q1,Y+
+    LD        Q2,Y+
+    LD        T0,Y+             ;and sign...
+    LD        Z0,Y+             ;and finally exponent
+    LD        Q3,Y+
+    RJMP      ?D_NORMALIZE_L11  ;and then normalize and return there
+
+
+;------------------------------------------------------------------------
+;?D_CMP_EQ_L11
+;compare between two doubles A and B
+;On call P3:P0 and Q3:Q0 contains A and X the adress of B
+;
+;On return:   If A=B            then Z=1
+;             If A<>B           then Z=0
+;             If A or B is NaN, then Z=0
+;             If A=+0 and B=-0  then Z=1  (or A=+0 and B=-0)
+;
+;Destroys: T3 T2 T1 T0 Z1 Z0. A and B are left unchanged.
+
+    RSEG    CODE:CODE:NOROOT(1)
+
+?CMP_A_ZERO:
+    RJMP   ?TEST_B    ;If both A and B Zero, Zero flag is set
+
+?CMP_NEQ_SUB_2:
+    SBIW   X0,2
+?CMP_NEQ:
+    CLZ
+    RET
+?CMP_EQ:
+    SEZ
+    RET
+?D_CMP_EQ_L11:
+    RCALL   ?TEST_A
+    BRCS    ?CMP_NEQ
+    BREQ    ?CMP_A_ZERO
+
+    RCALL   ?TEST_B
+    BRCS    ?CMP_NEQ
+
+    LD      T3,X+
+    LD      T2,X+
+    CP      P0,T3
+    CPC     P1,T2
+    BRNE    ?CMP_NEQ_SUB_2
+    LD      T3,X+
+    LD      T2,X+
+    LD      T1,X+
+    LD      T0,X+
+    LD      Z1,X+
+    LD      Z0,X
+    SBIW    X0,7
+    CP      P2,T3
+    CPC     P3,T2
+    CPC     Q0,T1
+    CPC     Q1,T0
+    CPC     Q2,Z1
+    CPC     Q3,Z0
+    RET
+
+;------------------------------------------------------------------------
+;?D_CMP_LT_L11
+;compare between two doubles A and B
+;On call P3:P0 and Q3:Q0 contains A and X the adress of B
+;
+;On return:   If A<B            then C=1
+;             If A>=B           then C=0
+;             If A or B is NaN, then C=0
+;
+;Destroys: T3 T2 T1 T0 Z1 Z0. A and B are left unchanged.
+
+    RSEG    CODE:CODE:NOROOT(1)
+
+?LT_ZERO:
+    RCALL   ?TEST_B
+    BREQ    ?NOTLESSTHAN        ;0 < 0 false
+    ADIW    X0,7
+    LD      Z1,X
+    SBIW    X0,7
+    TST     Z1
+    BRMI    ?NOTLESSTHAN        ;0 < B false if B neg.
+    SEC                         ;0 < B true if B pos.
+    RET
+
+?D_CMP_LT_L11:
+    RCALL   ?TEST_B
+    BRCS    ?NOTLESSTHAN        ;B = NaN?
+    RCALL   ?TEST_A
+    BRCS    ?NOTLESSTHAN        ;A = NaN?
+?D_CMP_LT:
+    BREQ    ?LT_ZERO
+    MOV     Z0,Q3
+    ADIW    X0,7
+    LD      Z1,X
+    EOR     Z0,Z1               ;Start with comparing signs
+    BRPL    ?CMP1               ;Signs were equal, continue comparing
+    SBIW    X0,7
+    CP      Z1,Q3               ;A<B true if A neg. B pos.
+    RET
+
+?CMP1:
+    LD      T3,-X
+    LD      T2,-X
+    LD      T1,-X
+    SBIW    X0,4
+    CP      Q0,T1               ;Compare 4 highest bytes
+    CPC     Q1,T2
+    CPC     Q2,T3
+    CPC     Q3,Z1
+    BRCS    ?CMP3
+    BRNE    ?CMP3
+    ADIW    X0,4
+    LD      T3,-X               ;If they were equal, continue with
+    LD      T2,-X               ;4 lowest bytes
+    LD      T1,-X
+    LD      T0,-X
+    CP      P0,T0
+    CPC     P1,T1
+    CPC     P2,T2
+    CPC     P3,T3
+    BREQ    ?SKIP_SWAP
+?CMP3:
+    TST     Q3                  ;If signs were negative, invert Carry
+    BRPL    ?SKIP_SWAP
+    BRCC    ?CMP2
+?NOTLESSTHAN:
+    CLC
+    RET
+
+;------------------------------------------------------------------------
+;?D_CMP_GE_L11
+;compare between two doubles A and B
+;On call P3:P0 and Q3:Q0 contains A and X the adress of B
+;
+;On return:   If A>=B            then C=1
+;             If A<B             then C=0
+;             If A or B is NaN,  then C=0
+;
+;Destroys: T3 T2 T1 T0 Z1 Z0. A and B are left unchanged
+
+    RSEG      CODE:CODE:NOROOT(1)
+
+?D_CMP_GE_L11:
+    RCALL     ?TEST_B
+    BRCS      ?NOTLESSTHAN      ;B = NaN?
+    RCALL     ?TEST_A
+    BRCS      ?NOTLESSTHAN      ;A = NaN?
+    RCALL     ?D_CMP_LT         ;Use D_CMP_LT and then just invert Carry
+    BRCS      ?NOTLESSTHAN
+    SEC
+    RET
+?CMP2:
+    SEC
+?SKIP_SWAP:
+    RET
+
+END
+
+;----------------------------------------------------------------------------
+;  

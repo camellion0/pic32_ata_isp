@@ -1,0 +1,604 @@
+###############################################################################
+#
+# IAR C/C++ Compiler V6.70.1.929 for Atmel AVR            05/Apr/2016  13:30:43
+# Copyright 1996-2015 IAR Systems AB.
+# Network license: DVRIAR01.corpp.atmel.com (STD)
+#
+#    Source file  =  
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\firmware\spi\src\spi.c
+#    Command line =  
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\firmware\spi\src\spi.c
+#        -v3 --enhanced_core -ms -o
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\Obj
+#        -lC
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\List
+#        -lA
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\List
+#        --initializers_in_flash --no_cse --no_inline --no_code_motion
+#        --no_cross_call --no_clustering --no_tbaa --debug --64k_flash
+#        -DENABLE_BIT_DEFINITIONS -e -I "C:\Program Files (x86)\IAR
+#        Systems\Embedded Workbench 6.0\avr\inc\" --eeprom_size 1152 --clib
+#        -Ohz
+#    List file    =  
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\List\spi.lst
+#    Object file  =  
+#        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\Obj\spi.r90
+#
+###############################################################################
+
+C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\firmware\spi\src\spi.c
+      1          //lint -e9059
+      2          /* *C**************************************************************************
+      3            Use of this software is subject to Atmel's Software License Agreement.
+      4          -------------------------------------------------------------------------------
+      5            $URL: http://svnservulm.corp.atmel.com/svn/CDB/Apps/SW_Lib/Car_Access/CARS_GEN2/ATAB5702A/Branches/P2_Gen2_Merge/firmware/spi/src/spi.c $
+      6            $LastChangedRevision: 328482 $
+      7            $LastChangedDate: 2015-07-22 13:17:23 -0600 (Wed, 22 Jul 2015) $
+      8            $LastChangedBy: grueter $
+      9          -------------------------------------------------------------------------------
+     10            Project:      ATA5700
+     11            Target MCU:   ATA5700
+     12            Compiler:     IAR C/C++ Compiler for AVR 6.30.1
+     13          -------------------------------------------------------------------------------
+     14          
+     15          ******************************************************************************
+     16          * Copyright 2011, Atmel Automotive GmbH                                       *
+     17          *                                                                             *
+     18          * This software is owned by the Atmel Automotive GmbH                         *
+     19          * and is protected by and subject to worldwide patent protection.             *
+     20          * Atmel hereby grants to licensee a personal,                                 *
+     21          * non-exclusive, non-transferable license to copy, use, modify, create        *
+     22          * derivative works of, and compile the Atmel Source Code and derivative       *
+     23          * works for the sole purpose of creating custom software in support of        *
+     24          * licensee product to be used only in conjunction with a Atmel integrated     *
+     25          * circuit as specified in the applicable agreement. Any reproduction,         *
+     26          * modification, translation, compilation, or representation of this           *
+     27          * software except as specified above is prohibited without the express        *
+     28          * written permission of Atmel.                                                *
+     29          *                                                                             *
+     30          * Disclaimer: ATMEL MAKES NO WARRANTY OF ANY KIND,EXPRESS OR IMPLIED,         *
+     31          * WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED    *
+     32          * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.         *
+     33          * Atmel reserves the right to make changes without further notice to the      *
+     34          * materials described herein. Atmel does not assume any liability arising     *
+     35          * out of the application or use of any product or circuit described herein.   *
+     36          * Atmel does not authorize its products for use as critical components in     *
+     37          * life-support systems where a malfunction or failure may reasonably be       *
+     38          * expected to result in significant injury to the user. The inclusion of      *
+     39          * Atmel products in a life-support systems application implies that the       *
+     40          * manufacturer assumes all risk of such use and in doing so indemnifies       *
+     41          * Atmel against all charges.                                                  *
+     42          *                                                                             *
+     43          * Use may be limited by and subject to the applicable Atmel software          *
+     44          * license agreement.                                                          *
+     45          ******************************************************************************/
+     46          /** \file spi.c
+     47          */
+     48          //lint -restore
+     49          
+     50          /*---------------------------------------------------------------------------*/
+     51          /*  INCLUDES                                                                 */
+     52          /*---------------------------------------------------------------------------*/
+     53          #include "spi.h"
+
+   \                                 In  segment ABSOLUTE, at 0x24
+   \   union <unnamed> volatile __io _A_DDRB
+   \                     _A_DDRB:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x2a
+   \   union <unnamed> volatile __io _A_DDRD
+   \                     _A_DDRD:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x2b
+   \   union <unnamed> volatile __io _A_PORTD
+   \                     _A_PORTD:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x3a
+   \   union <unnamed> volatile __io _A_PRR0
+   \                     _A_PRR0:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x47
+   \   union <unnamed> volatile __io _A_EIMSK
+   \                     _A_EIMSK:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x4c
+   \   union <unnamed> volatile __io _A_SPCR
+   \                     _A_SPCR:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x4d
+   \   union <unnamed> volatile __io _A_SPSR
+   \                     _A_SPSR:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x4e
+   \   union <unnamed> volatile __io _A_SPDR
+   \                     _A_SPDR:
+   \   00000000                      DS8 1
+     54          
+     55          /*---------------------------------------------------------------------------*/
+     56          /*  DEFINES                                                                  */
+     57          /*---------------------------------------------------------------------------*/
+     58          
+     59          /*---------------------------------------------------------------------------*/
+     60          /*  Modul Globals                                                            */
+     61          /*---------------------------------------------------------------------------*/
+     62          /** \brief <b>g_sSpiConfig</b>
+     63              contains the configuration and status information for module SPI.
+     64          */
+     65          #pragma location = ".spiConfig"
+
+   \                                 In  segment .spiConfig, align 1, keep-with-next
+     66          __no_init sSpiConfig g_sSpiConfig;
+   \                     g_sSpiConfig:
+   \   00000000                      DS8 6
+     67          
+     68          /*---------------------------------------------------------------------------*/
+     69          /*  IMPLEMENTATION                                                           */
+     70          /*---------------------------------------------------------------------------*/
+     71          
+     72          
+     73          /*---------------------------------------------------------------------------*/
+     74          /** \brief <b>ATA_spiOpen_C</b>
+     75              shall setup a SPI master interface. The PRR0.PRSPI clock domain remains 
+     76              active after functions is left.
+     77          
+     78              \param[in]  bSpcr           SPCR register setting
+     79              \param[in]  bSpsr           SPSR register setting
+     80              \return     FAIL if SPI is already opened, otherwise OK
+     81          
+     82              Variable Usage:
+     83              \li [out] ::g_sSpiConfig  Global SPI component data
+     84              \li [out] ::g_sDebug      Global Debug component data
+     85              
+     86              \image html ATA_spiOpen_C.png
+     87          
+     88              \internal
+     89              \li 005: Power up SPI interface via PRR0.PRSPI=0
+     90              \li 010: IF the SPI interface is already in use as indicated by bit SPE in
+     91                       register SPCR being set to 1, THEN
+     92                         Set ::g_sDebug .bErrorCode to DEBUG_ERROR_CODE_SPI_NOT_INITIALIZED\n
+     93                       ELSE
+     94                         Disable INT0 via register EIMSK
+     95          
+     96              \li 020:   Configure the ports as follows
+     97                          - PD1/NSS  - SPI Not Slave Select    (output) + Pull up
+     98                          - PB5/MISO - SPI Master In Slave Out (input)
+     99                          - PB6/MOSI - SPI Master Out Slave In (output)
+    100                          - PB7/SCK  - SPI Clock               (output)
+    101          
+    102              \li 040:   Configure SPCR register setting according to function parameters
+    103                          - SPSR = spsr
+    104                          - SPCR = spcr
+    105          
+    106              \li 050:   Set SPI status to "INITIALIZED" in ::g_sSpiConfig .bStatus\n
+    107                       ENDIF
+    108          
+    109              \Derived{No}
+    110          
+    111              \Rationale{N/A}
+    112          
+    113              \Traceability{Primus2P-788}
+    114              \endinternal
+    115          \n
+    116          */
+    117          /*---------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    118          UINT8FUNC ATA_spiOpen_C(uint8_t bSpcr, uint8_t bSpsr)
+   \                     ATA_spiOpen_C:
+    119          {
+    120              int fRetVal = FAIL;
+   \   00000000   E021               LDI     R18, 1
+    121          
+    122              /* LLR-Ref: 005 */
+    123              ATA_POWERON_C(PRR0, PRSPI)
+   \   00000002   98D0               CBI     0x1A, 0x00
+    124              
+    125              /* LLR-Ref: 010 */
+    126              if (SPCR & BM_SPE)
+   \   00000004   B53C               IN      R19, 0x2C
+   \   00000006   FF36               SBRS    R19, 6
+   \   00000008   C004               RJMP    ??ATA_spiOpen_C_0
+    127              {
+    128                  g_sDebug.bErrorCode = DEBUG_ERROR_CODE_SPI_ALREADY_OPENED;
+   \   0000000A   E10D               LDI     R16, 29
+   \   0000000C   9300....           STS     g_sDebug, R16
+   \   00000010   C00F               RJMP    ??ATA_spiOpen_C_1
+    129              }
+    130              else
+    131              {
+    132                  EIMSK &= ~BM_INT0;
+   \                     ??ATA_spiOpen_C_0:
+   \   00000012   B527               IN      R18, 0x27
+   \   00000014   7F2E               ANDI    R18, 0xFE
+   \   00000016   BD27               OUT     0x27, R18
+    133                    
+    134                  /* LLR-Ref: 020 */
+    135                  DDRB |= (BM_SPI_MOSI_PIN | BM_SPI_SCK_PIN);
+   \   00000018   B124               IN      R18, 0x04
+   \   0000001A   6C20               ORI     R18, 0xC0
+   \   0000001C   B924               OUT     0x04, R18
+    136                  DDRB &= (uint8_t)~BM_SPI_MISO_PIN;
+   \   0000001E   9825               CBI     0x04, 0x05
+    137                  DDRD |= BM_SPI_NSS_PIN;
+   \   00000020   9A51               SBI     0x0A, 0x01
+    138                  PORTD|= BM_SPI_NSS_PIN;
+   \   00000022   9A59               SBI     0x0B, 0x01
+    139          
+    140                  /* LLR-Ref: 040 */
+    141                  SPSR  = bSpsr;
+   \   00000024   BD1D               OUT     0x2D, R17
+    142                  SPCR  = bSpcr;
+   \   00000026   BD0C               OUT     0x2C, R16
+    143          
+    144                  /* LLR-Ref: 050 */
+    145                  g_sSpiConfig.bStatus = BM_SPICONFIG_STATUS_INITIALIZATION_STATUS;
+   \   00000028   E800               LDI     R16, 128
+   \   0000002A   9300....           STS     g_sSpiConfig, R16
+    146                  fRetVal = OK;
+   \   0000002E   E020               LDI     R18, 0
+    147              }
+    148              return fRetVal;
+   \                     ??ATA_spiOpen_C_1:
+   \   00000030   2F02               MOV     R16, R18
+   \   00000032   9508               RET
+   \   00000034                      REQUIRE _A_PRR0
+   \   00000034                      REQUIRE _A_SPCR
+   \   00000034                      REQUIRE _A_EIMSK
+   \   00000034                      REQUIRE _A_DDRB
+   \   00000034                      REQUIRE _A_DDRD
+   \   00000034                      REQUIRE _A_PORTD
+   \   00000034                      REQUIRE _A_SPSR
+    149          }
+    150          
+    151          /*---------------------------------------------------------------------------*/
+    152          /** \brief <b>ATA_spiClose_C</b>
+    153              shall disable the SPI interface.
+    154          
+    155              Variable Usage:
+    156              \li [out] ::g_sSpiConfig Global SPI component data
+    157          
+    158              \image html ATA_spiClose_C.png
+    159          
+    160              \internal
+    161              \li 010: Reset SPCR register setting
+    162          
+    163              \li 020: Power down SPI interface via PRR0.PRSPI=1
+    164          
+    165              \li 030: Set output back pins to input
+    166          
+    167              \li 040: Set SPI status to "NOT INITIALIZED" in ::g_sSpiConfig .bStatus
+    168          
+    169              \Derived{No}
+    170          
+    171              \Rationale{N/A}
+    172          
+    173              \Traceability{Primus2P-958}
+    174              \endinternal
+    175          \n
+    176          */
+    177          /*---------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    178          VOIDFUNC ATA_spiClose_C(void)
+   \                     ATA_spiClose_C:
+    179          {
+    180              /* LLR-Ref: 010 */
+    181              SPCR = 0U;
+   \   00000000   E000               LDI     R16, 0
+   \   00000002   BD0C               OUT     0x2C, R16
+    182          
+    183              /* LLR-Ref: 020 */
+    184              ATA_POWEROFF_C(PRR0, PRSPI)
+   \   00000004   9AD0               SBI     0x1A, 0x00
+    185          
+    186              /* LLR-Ref: 030 */
+    187              DDRB &= (uint8_t)~(BM_SPI_MOSI_PIN | BM_SPI_MISO_PIN | BM_SPI_SCK_PIN);
+   \   00000006   B104               IN      R16, 0x04
+   \   00000008   710F               ANDI    R16, 0x1F
+   \   0000000A   B904               OUT     0x04, R16
+    188              DDRD &= (uint8_t)~(BM_SPI_NSS_PIN);
+   \   0000000C   9851               CBI     0x0A, 0x01
+    189              
+    190              /* LLR-Ref: 040 */
+    191              g_sSpiConfig.bStatus &= (uint8_t)~BM_SPICONFIG_STATUS_INITIALIZATION_STATUS;
+   \   0000000E   ....               LDI     R30, LOW(g_sSpiConfig)
+   \   00000010   ....               LDI     R31, (g_sSpiConfig) >> 8
+   \   00000012   8100               LD      R16, Z
+   \   00000014   770F               ANDI    R16, 0x7F
+   \   00000016   8300               ST      Z, R16
+    192          }
+   \   00000018   9508               RET
+   \   0000001A                      REQUIRE _A_SPCR
+   \   0000001A                      REQUIRE _A_PRR0
+   \   0000001A                      REQUIRE _A_DDRB
+   \   0000001A                      REQUIRE _A_DDRD
+    193          
+    194          
+    195          /*---------------------------------------------------------------------------*/
+    196          /** \brief <b>ATA_spiDataExchange_C</b>
+    197              sends a byte via SPI interface and returns the response.
+    198          
+    199              \param[in]  data    Data byte to be sent
+    200              \return     Received data byte
+    201          
+    202              \image html ATA_spiDataExchange_C.png
+    203          
+    204              \internal
+    205              \li 010: Write data byte to SPDR register
+    206          
+    207              \li 020: Wait for SPSR.SPIF flag which indicates that serial transfer is complete
+    208          
+    209              \li 030: Return SPDR register content
+    210          
+    211              \Derived{Yes}
+    212          
+    213              \Rationale{This function is a helper function in order to implement the SPI
+    214                         specific data handling}
+    215          
+    216              \Traceability   N/A
+    217              \endinternal
+    218          \n
+    219          */
+    220          /*---------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    221          UINT8FUNC ATA_spiDataExchange_C(uint8_t data)
+   \                     ATA_spiDataExchange_C:
+    222          {
+    223              /* LLR-Ref: 010 */
+    224              SPDR = data;
+   \   00000000   BD0E               OUT     0x2E, R16
+    225              
+    226              /* LLR-Ref: 020 */
+    227              while(!(SPSR & BM_SPIF));
+   \                     ??ATA_spiDataExchange_C_0:
+   \   00000002   B50D               IN      R16, 0x2D
+   \   00000004   FF07               SBRS    R16, 7
+   \   00000006   CFFD               RJMP    ??ATA_spiDataExchange_C_0
+    228              
+    229              /* LLR-Ref: 030 */
+    230              return SPDR;
+   \   00000008                      REQUIRE ?Subroutine0
+   \   00000008                      REQUIRE _A_SPDR
+   \   00000008                      REQUIRE _A_SPSR
+   \   00000008                      ;               // Fall through to label ?Subroutine0
+    231          }
+
+   \                                 In  segment CODE, align 2, keep-with-next
+   \                     ?Subroutine0:
+   \   00000000   B50E               IN      R16, 0x2E
+   \   00000002   9508               RET
+    232          
+    233          
+    234          /*---------------------------------------------------------------------------*/
+    235          /** \brief <b>ATA_spiTransfer_C</b>
+    236              does the data transfer via SPI interface.
+    237          
+    238              \param[in]      pTxData         Pointer to transmit buffer
+    239              \param[in]      pRxData         Pointer to receive buffer
+    240              \param[in]      bLen            Data bytes to transmit
+    241              \return     FAIL if SPI is not initialized, otherwise OK
+    242          
+    243              Variable Usage:
+    244              \li [out] ::g_sDebug Global Debug component data
+    245              \li [in] ::g_sSpiConfig Global SPI component data
+    246              
+    247              \image html ATA_spiTransfer_C.png
+    248          
+    249              \internal
+    250                       IF SPI interface is initialized as indicated by ::g_sSpiConfig 
+    251                       .bStatus[7] being set to 1, THEN
+    252              \li 010: Select SPI interface by calling function ::ATA_spiSelect_C
+    253          
+    254              \li 020: Write given number of data bytes to the SPI interface and read data 
+    255                       the same amount of data from the SPI interface
+    256          
+    257              \li 030: Deselect SPI interface by calling function ::ATA_spiDeselect_C\n
+    258                       ELSE
+    259              \li 040: Set ::g_sDebug .bErrorCode to DEBUG_ERROR_CODE_SPI_NOT_INITIALIZED\n
+    260                       ENDIF
+    261          
+    262              \Derived{Yes}
+    263          
+    264              \Rationale{This function is a helper function in order to implement the SPI
+    265                         specific data handling}
+    266          
+    267              \Traceability   N/A
+    268              \endinternal
+    269          \n
+    270          */
+    271          /*---------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    272          UINT8FUNC ATA_spiTransfer_C(uint8_t *pTxData, uint8_t *pRxData, uint8_t bLen)
+   \                     ATA_spiTransfer_C:
+    273          {
+   \   00000000   01B8               MOVW    R23:R22, R17:R16
+    274              uint8_t fRetVal = OK;
+   \   00000002   E010               LDI     R17, 0
+    275          
+    276              if (g_sSpiConfig.bStatus & BM_SPICONFIG_STATUS_INITIALIZATION_STATUS)
+   \   00000004   9100....           LDS     R16, g_sSpiConfig
+   \   00000008   FF07               SBRS    R16, 7
+   \   0000000A   C013               RJMP    ??ATA_spiTransfer_C_0
+    277              {
+    278                  /* LLR-Ref: 010 */
+    279                  ATA_spiSelect_C();
+   \   0000000C   ....               RCALL   ATA_spiSelect_C
+    280          
+    281                  /* LLR-Ref: 020 */
+    282                  for(uint8_t i=0; i< bLen; i++)
+   \   0000000E   E000               LDI     R16, 0
+   \   00000010   C00C               RJMP    ??ATA_spiTransfer_C_1
+    283                  {
+    284                      // *pRxData++ = ATA_spi_data_exchange(*pTxData++);
+    285                      SPDR = *pTxData++;
+   \                     ??ATA_spiTransfer_C_2:
+   \   00000012   01FB               MOVW    R31:R30, R23:R22
+   \   00000014   9151               LD      R21, Z+
+   \   00000016   01BF               MOVW    R23:R22, R31:R30
+   \   00000018   BD5E               OUT     0x2E, R21
+    286                      while(!(SPSR & BM_SPIF));
+   \                     ??ATA_spiTransfer_C_3:
+   \   0000001A   B55D               IN      R21, 0x2D
+   \   0000001C   FF57               SBRS    R21, 7
+   \   0000001E   CFFD               RJMP    ??ATA_spiTransfer_C_3
+    287                      *pRxData++ = SPDR;
+   \   00000020   B55E               IN      R21, 0x2E
+   \   00000022   01F9               MOVW    R31:R30, R19:R18
+   \   00000024   9351               ST      Z+, R21
+   \   00000026   019F               MOVW    R19:R18, R31:R30
+    288                  }
+   \   00000028   9503               INC     R16
+   \                     ??ATA_spiTransfer_C_1:
+   \   0000002A   1704               CP      R16, R20
+   \   0000002C   F390               BRCS    ??ATA_spiTransfer_C_2
+    289          
+    290                  /* LLR-Ref: 030 */
+    291                  ATA_spiDeselect_C();
+   \   0000002E   ....               RCALL   ATA_spiDeselect_C
+   \   00000030   C004               RJMP    ??ATA_spiTransfer_C_4
+    292              }
+    293              else
+    294              {
+    295                  /* LLR-Ref: 040 */
+    296                  fRetVal = FAIL;
+   \                     ??ATA_spiTransfer_C_0:
+   \   00000032   E011               LDI     R17, 1
+    297                  g_sDebug.bErrorCode = DEBUG_ERROR_CODE_SPI_NOT_INITIALIZED;
+   \   00000034   E10C               LDI     R16, 28
+   \   00000036   9300....           STS     g_sDebug, R16
+    298              }
+    299          
+    300              return fRetVal;
+   \                     ??ATA_spiTransfer_C_4:
+   \   0000003A   2F01               MOV     R16, R17
+   \   0000003C   9508               RET
+   \   0000003E                      REQUIRE _A_SPDR
+   \   0000003E                      REQUIRE _A_SPSR
+    301          }
+    302          
+    303          /*---------------------------------------------------------------------------*/
+    304          /** \brief <b>ATA_spiSelect_C</b>
+    305              selects the SPI interface via NSS pin.
+    306          
+    307              \image html ATA_spiSelect_C.png
+    308          
+    309              \internal
+    310              \li 010: Set the NSS pin to low to indicate the start of a SPI communication
+    311          
+    312              \li 020: Clear the SPSR.SPIF bit by first reading the SPI Status Register with 
+    313                       SPIF set, then accessing the SPI Data Register (SPDR).
+    314                  
+    315              \Derived{Yes}
+    316          
+    317              \Rationale{This function is a helper function in order to implement the SPI
+    318                         specific data handling}
+    319          
+    320              \Traceability   N/A
+    321              \endinternal
+    322          \n
+    323          */
+    324          /*---------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    325          VOIDFUNC ATA_spiSelect_C(void)
+   \                     ATA_spiSelect_C:
+    326          {
+    327              /* LLR-Ref: 010 */
+    328              PORTD &= (uint8_t)~BM_SPI_NSS_PIN;
+   \   00000000   9859               CBI     0x0B, 0x01
+    329              
+    330              /* LLR-Ref: 020 */
+    331              uint8_t bTmp = SPSR;
+   \   00000002   B50D               IN      R16, 0x2D
+    332              bTmp = SPDR;
+   \   00000004   ....               RJMP    ?Subroutine0
+   \   00000006                      REQUIRE _A_PORTD
+   \   00000006                      REQUIRE _A_SPSR
+   \   00000006                      REQUIRE _A_SPDR
+    333          }
+    334          
+    335          /*---------------------------------------------------------------------------*/
+    336          /** \brief <b>ATA_spiDeselect_C</b>
+    337              deselects the SPI interface via NSS pin.
+    338          
+    339              \image html ATA_spiDeselect_C.png
+    340          
+    341              \internal
+    342              \li 010: Set the NSS pin to high to indicate the end of a SPI communication
+    343          
+    344              \Derived{Yes}
+    345          
+    346              \Rationale{This function is a helper function in order to implement the SPI
+    347                         specific data handling}
+    348          
+    349              \Traceability   N/A
+    350              \endinternal
+    351          \n
+    352          */
+    353          /*---------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    354          VOIDFUNC ATA_spiDeselect_C(void)
+   \                     ATA_spiDeselect_C:
+    355          {
+    356              /* LLR-Ref: 010 */
+    357              PORTD |= BM_SPI_NSS_PIN;
+   \   00000000   9A59               SBI     0x0B, 0x01
+    358          }
+   \   00000002   9508               RET
+   \   00000004                      REQUIRE _A_PORTD
+
+   Maximum stack usage in bytes:
+
+   RSTACK Function
+   ------ --------
+      2   ATA_spiClose_C
+      2   ATA_spiDataExchange_C
+      2   ATA_spiDeselect_C
+      2   ATA_spiOpen_C
+      2   ATA_spiSelect_C
+      2   ATA_spiTransfer_C
+        2   -> ATA_spiDeselect_C
+        2   -> ATA_spiSelect_C
+
+
+   Segment part sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       4  ?Subroutine0
+      26  ATA_spiClose_C
+       8  ATA_spiDataExchange_C
+       4  ATA_spiDeselect_C
+      52  ATA_spiOpen_C
+       6  ATA_spiSelect_C
+      62  ATA_spiTransfer_C
+       1  _A_DDRB
+       1  _A_DDRD
+       1  _A_EIMSK
+       1  _A_PORTD
+       1  _A_PRR0
+       1  _A_SPCR
+       1  _A_SPDR
+       1  _A_SPSR
+       6  g_sSpiConfig
+
+ 
+   6 bytes in segment .spiConfig
+   8 bytes in segment ABSOLUTE
+ 162 bytes in segment CODE
+ 
+ 162 bytes of CODE memory
+   6 bytes of DATA memory (+ 8 bytes shared)
+
+Errors: none
+Warnings: none

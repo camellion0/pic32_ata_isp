@@ -1,0 +1,909 @@
+###############################################################################
+#                                                                             #
+#     IAR Assembler V6.70.1.929/W32 for Atmel AVR 05/Apr/2016  13:30:38       #
+#     Copyright 2015 IAR Systems AB.                                          #
+#                                                                             #
+#           Target option =  Relative jumps do not wrap                       #
+#           Source file   =  C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\firmware\iic\src\iic_asm.s90#
+#           List file     =  C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\List\iic_asm.lst#
+#           Object file   =  C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\Obj\iic_asm.r90#
+#           Command line  =  C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\firmware\iic\src\iic_asm.s90 #
+#                            -v3                                              #
+#                            -OC:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\Obj #
+#                            -s+ -w+ -r -DHAVE_BITREVERSAL -M<>               #
+#                            -LC:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\List #
+#                            -t8 -u_enhancedCore -D__HAS_ENHANCED_CORE__=1    #
+#                            -D__HAS_MUL__=1                                  #
+#                            -IC:\Program Files (x86)\IAR Systems\Embedded Workbench 7.3\avr\INC\ #
+#                            -IC:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\..\..\..\firmware\stdc\src\ #
+#                            -IC:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\..\..\..\firmware\globals\src\ #
+#                            -IC:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\..\..\..\firmware\eep\src\ #
+#                            -IC:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\..\..\..\firmware\rf\src\ #
+#                            -IC:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\..\..\..\firmware\calib\src\ #
+#                            -D__MEMORY_MODEL__=2                             #
+#                                                                             #
+###############################################################################
+
+                                     LDS     R24 , I2CR
+                                 ---------------^
+                                 "C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\
+                      Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\fir
+                      mware\iic\src\iic_asm.s90
+                                 ",149  Error[50]: Undefined symbol:'I2CR'
+                                     LDS     R25 , I2SR   
+                                 ---------------^
+                                 "C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\
+                      Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\fir
+                      mware\iic\src\iic_asm.s90
+                                 ",150  Error[50]: Undefined symbol:'I2SR'
+                                     ORI     R24 , BM_I2INT   
+                                 ---------------^
+                                 "C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\
+                      Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\fir
+                      mware\iic\src\iic_asm.s90
+                                 ",179  Error[50]: Undefined symbol:'BM_I2INT'
+                                     ANDI    R24 , ~BM_I2EA    
+                                 ---------------^
+                                 "C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\
+                      Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\fir
+                      mware\iic\src\iic_asm.s90
+                                 ",180  Error[50]: Undefined symbol:'BM_I2EA'
+                                     ORI     R24 , BM_I2INT|BM_I2EA|BM_I2STO
+                                 ---------------^
+                                 "C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\
+                      Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\fir
+                      mware\iic\src\iic_asm.s90
+                                 ",204  Error[50]: Undefined symbol:'BM_I2STO'
+                                     ANDI    R24 , ~BM_I2STA    
+                                 ---------------^
+                                 "C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\
+                      Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\fir
+                      mware\iic\src\iic_asm.s90
+                                 ",205  Error[50]: Undefined symbol:'BM_I2STA'
+                                     STS     I2DR , R25    
+                                 ----------------^
+                                 "C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\
+                      Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\fir
+                      mware\iic\src\iic_asm.s90
+                                 ",216  Error[50]: Undefined symbol:'I2DR'
+                                     ANDI    R24 , ~(BM_I2EA|BM_I2INT|BM_I2EN|
+                      BM_I2IE) 
+                                 ---------------^
+                                 "C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\
+                      Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\fir
+                      mware\iic\src\iic_asm.s90
+                                 ",339  Error[50]: Undefined symbol:'BM_I2EN'
+                                 "C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\
+                      Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\fir
+                      mware\iic\src\iic_asm.s90
+                                 ",339  Error[50]: Undefined symbol:'BM_I2IE'
+                                     SBRS    R30 , I2EA
+                                 ---------------^
+                                 "C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\
+                      Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\fir
+                      mware\iic\src\iic_asm.s90
+                                 ",459  Error[50]: Undefined symbol:'I2EA'
+
+
+      1    00000000              /* *ASM***************************************
+                                 *********************************
+      2    00000000                Use of this software is subject to Atmel's
+                                  Software License Agreement.
+      3    00000000              ----------------------------------------------
+                                 ---------------------------------
+      4    00000000                $URL: http://svnservulm.corp.atmel.com/svn/C
+                                 DB/Apps/SW_Lib/Car_Access/CARS_GEN2/ATAB5702A/
+                                 Branches/P2_Gen2_Merge/firmware/iic/src/iic_as
+                                 m.s90 $
+      5    00000000                $LastChangedRevision: 328482 $
+      6    00000000                $LastChangedDate: 2015-07-22 13:17:23 -0600
+                                  (Wed, 22 Jul 2015) $
+      7    00000000                $LastChangedBy: grueter $
+      8    00000000              ----------------------------------------------
+                                 ---------------------------------
+      9    00000000                Project:      ATA5700
+     10    00000000                Target MCU:   ATA5700
+     11    00000000                Compiler:     IAR Assembler for AVR
+                                  6.3.18.2236
+     12    00000000              ----------------------------------------------
+                                 ---------------------------------
+     13    00000000                
+     14    00000000              **********************************************
+                                 ********************************
+     15    00000000              * Copyright 2011, Atmel Automotive GmbH       
+                                                                 *
+     16    00000000              *                                             
+                                                                 *
+     17    00000000              * This software is owned by the Atmel
+                                  Automotive GmbH                        
+                                  *
+     18    00000000              * and is protected by and subject to worldwide
+                                  patent protection.             *
+     19    00000000              * Atmel hereby grants to licensee a personal, 
+                                                                 *
+     20    00000000              * non-exclusive, non-transferable license to
+                                  copy, use, modify, create        *
+     21    00000000              * derivative works of, and compile the Atmel
+                                  Source Code and derivative       *
+     22    00000000              * works for the sole purpose of creating
+                                  custom software in support of       
+                                  *
+     23    00000000              * licensee product to be used only in
+                                  conjunction with a Atmel integrated    
+                                  *
+     24    00000000              * circuit as specified in the applicable
+                                  agreement. Any reproduction,        
+                                  *
+     25    00000000              * modification, translation, compilation, or
+                                  representation of this           *
+     26    00000000              * software except as specified above is
+                                  prohibited without the express       
+                                  *
+     27    00000000              * written permission of Atmel.                
+                                                                 *
+     28    00000000              *                                             
+                                                                 *
+     29    00000000              * Disclaimer: ATMEL MAKES NO WARRANTY OF ANY
+                                  KIND,EXPRESS OR IMPLIED,         *
+     30    00000000              * WITH REGARD TO THIS MATERIAL, INCLUDING, BUT
+                                  NOT LIMITED TO, THE IMPLIED    *
+     31    00000000              * WARRANTIES OF MERCHANTABILITY AND FITNESS
+                                  FOR A PARTICULAR PURPOSE.         *
+     32    00000000              * Atmel reserves the right to make changes
+                                  without further notice to the      *
+     33    00000000              * materials described herein. Atmel does not
+                                  assume any liability arising     *
+     34    00000000              * out of the application or use of any product
+                                  or circuit described herein.   *
+     35    00000000              * Atmel does not authorize its products for
+                                  use as critical components in     *
+     36    00000000              * life-support systems where a malfunction or
+                                  failure may reasonably be       *
+     37    00000000              * expected to result in significant injury to
+                                  the user. The inclusion of      *
+     38    00000000              * Atmel products in a life-support systems
+                                  application implies that the       *
+     39    00000000              * manufacturer assumes all risk of such use
+                                  and in doing so indemnifies       *
+     40    00000000              * Atmel against all charges.                  
+                                                                 *
+     41    00000000              *                                             
+                                                                 *
+     42    00000000              * Use may be limited by and subject to the
+                                  applicable Atmel software          *
+     43    00000000              * license agreement.                          
+                                                                 *
+     44    00000000              **********************************************
+                                 *********************************/
+     45    00000000              /* \file iic_asm.s90
+     46    00000000              */
+     47    00000000                  NAME iic_asm
+     48    00000000                  
+     49    00000000                  PUBLIC twiByteCompleteHandler_ASM
+     50    00000000                  
+     51    00000000                  EXTERN iicCtrlBlock
+     52    00000000              
+     53    00000000              /*============================================
+                                 ===============================*/
+     54    00000000              /*  INCLUDES                                  
+                                                                */
+     55    00000000              /*============================================
+                                 ===============================*/
+     56    00000000              #include "regs.inc"                           
+                                                        
+     57    00000000              #include "globals.h"
+     58    00000000              #include "iic.h"
+     59    00000000              
+     60    00000000              /*============================================
+                                 ===============================*/
+     61    00000000              /*  IMPLEMENTATION                            
+                                                                */
+     62    00000000              /*============================================
+                                 ===============================*/
+     63    00000000              /*--------------------------------------------
+                                 -------------------------------*/
+     64    00000000              /** \brief <b>I2C Status JMPTABLE</b>
+     65    00000000                  used for analysis/handling of the
+                                  different I2C transmit status values
+     66    00000000                  for coding and execution efficiency the
+                                  table is aligned to 128 byte
+     67    00000000                  borders. ROOT(7) ==> aligned to 2^^7
+                                  bytes\n
+     68    00000000              */
+     69    00000000              /*--------------------------------------------
+                                 -------------------------------*/
+     70    00000000              RSEG CODE:CODE:ROOT(7)
+     71    00000000                 ; IIC status JMP  Table
+     72    00000000              JUMPTABLE:               ; Status        
+                                  TableIndex  
+     73    00000000 ....             RJMP TWIERROR        ; 0x00               
+                                                           0
+     74    00000002                  ; >>MASTER TRX<<
+     75    00000002 ....             RJMP STARTTXED       ; 0x08               
+                                                           1
+     76    00000004 ....             RJMP REPSTTXED       ; 0x10               
+                                                           2
+     77    00000006 ....             RJMP SLAWACKED       ; 0x18               
+                                                           3
+     78    00000008 ....             RJMP SLAWNACKD       ; 0x20               
+                                                           4
+     79    0000000A ....             RJMP DATATXACKED     ; 0x28               
+                                                           5
+     80    0000000C ....             RJMP DATATXNACKD     ; 0x30               
+                                                           6
+     81    0000000E ....             RJMP ARBIMSTLOST     ; 0x38               
+                                                           7
+     82    00000010 ....             RJMP SLARACKED       ; 0x40               
+                                                           8
+     83    00000012 ....             RJMP SLARNACKD       ; 0x48               
+                                                           9
+     84    00000014 ....             RJMP DATARXACKED     ; 0x50               
+                                                           10
+     85    00000016 ....             RJMP DATARXNACKD     ; 0x58               
+                                                           11
+     86    00000018                  ; >>SLAVE TRX<<
+     87    00000018 ....             RJMP SLAWACK         ; 0x60               
+                                                           12
+     88    0000001A ....             RJMP LOSTARBISLAW    ; 0x68               
+                                                           13
+     89    0000001C ....             RJMP GENWACK         ; 0x70               
+                                                           14
+     90    0000001E ....             RJMP LOSTARBIGENW    ; 0x78               
+                                                           15
+     91    00000020 ....             RJMP RXDATASLA_A     ; 0x80               
+                                                           16
+     92    00000022 ....             RJMP RXDATASLA_NA    ; 0x88               
+                                                           17
+     93    00000024 ....             RJMP RXDATAGEN_A     ; 0x90               
+                                                           18
+     94    00000026 ....             RJMP RXDATAGEN_NA    ; 0x98               
+                                                           19
+     95    00000028 ....             RJMP GOTSTOP         ; 0xA0               
+                                                           1A
+     96    0000002A ....             RJMP SLARACK         ; 0xA8               
+                                                           1B
+     97    0000002C ....             RJMP LOSTARBISLAR    ; 0xB0               
+                                                           1C
+     98    0000002E ....             RJMP TXDATA_A        ; 0xB8               
+                                                           1D
+     99    00000030 ....             RJMP TXDATA_NA       ; 0xC0               
+                                                           1E
+    100    00000032 ....             RJMP TXLAST_A        ; 0xC8               
+                                                           1F
+    101    00000034              
+    102    00000034              
+    103    00000034              /*--------------------------------------------
+                                 -------------------------------*/
+    104    00000034              /** \brief <b>twiByteCompleteHandler_ASM</b>
+                                  Is the TWI byte Complete IRQ.
+    105    00000034                  Triggers each time a complete byte is
+                                  shifted in/out via the TWI peripheral.
+    106    00000034              
+    107    00000034              \param[in,out]  ::iicCtrlBlock is global IIC
+                                  component data
+    108    00000034              
+    109    00000034              \return     N/A
+    110    00000034              
+    111    00000034              \StackUsageInBytes{XXX}
+    112    00000034              
+    113    00000034              \image html twiByteCompleteHandler_ASM.png
+    114    00000034              
+    115    00000034              \internal
+    116    00000034              \li 010: save register contents
+    117    00000034              \li 020: status calculation for JUMP
+                                  Table
+    118    00000034              \li 025: Trigger Tracer 
+    119    00000034              \li 030: setup pointer to JUMP Table
+    120    00000034              \li 040: reaction on the corresponding IIC
+                                  status. see EA and Jump - Table for
+                                  details
+    121    00000034                  .
+    122    00000034                  .
+    123    00000034                  .
+    124    00000034              \li 200:
+    125    00000034              \li 210: restore register contents
+    126    00000034               
+    127    00000034              \Derived{No}
+    128    00000034              
+    129    00000034              \Rationale{N/A}
+    130    00000034              
+    131    00000034              \Traceability{Primus2P-2426,Primus2P-2427,Prim
+                                 us2P-2428,Primus2P-2429,Primus2P-2430,Primus2P
+                                 -2477,Primus2P-2501}
+    132    00000034              \endinternal
+    133    00000034              \n
+    134    00000034              
+    135    00000034              \resourceusage 36 Cycles + corresponding sub
+                                  block
+    136    00000034              */
+    137    00000034              /*--------------------------------------------
+                                 -------------------------------*/
+    138    00000034              #pragma vector=I2C_vect
+    139    00000000              RSEG CODE:CODE:ROOT(1)
+    140    00000000              twiByteCompleteHandler_ASM:
+    141    00000000                  /* LLR-Ref: 010 */
+    142    00000000 938F             PUSH R24
+    143    00000002 93FF             PUSH R31
+    144    00000004 93EF             PUSH R30
+    145    00000006 939F             PUSH R25
+    146    00000008 B79F             IN   R25 , SREG
+    147    0000000A 939F             PUSH R25
+    148    0000000C                  /* LLR-Ref: 020 */
+                                     LDS     R24 , I2CR
+                                 ---------------^
+                                 "C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\
+                      Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\fir
+                      mware\iic\src\iic_asm.s90
+                                 ",149  Error[50]: Undefined symbol:'I2CR'
+                                     LDS     R25 , I2SR   
+                                 ---------------^
+                                 "C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\
+                      Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\fir
+                      mware\iic\src\iic_asm.s90
+                                 ",150  Error[50]: Undefined symbol:'I2SR'
+    151    00000014                  
+    152    00000014                  /* LLR-Ref: 025 */ 
+    153    00000014                  ; TRCDR = data;
+    154    00000014 939000FF         STS     TRCDR , R25
+    155    00000018                  ; TRCIDL = (uint8_t) ((uint16_t)id >>
+                                  0);
+    156    00000018 ....             LDI     R30 , low(twiByteCompleteHandler_A
+                                                 SM/2)
+    157    0000001A 93E000FC         STS     TRCIDL , R30
+    158    0000001E                  ; TRCIDH = (uint8_t) ((uint16_t)id >>
+                                  8);
+    159    0000001E ....             LDI     R30 , high(twiByteCompleteHandler_
+                                                 ASM/2)
+    160    00000020 93E000FD         STS     TRCIDH , R30
+    161    00000024              
+    162    00000024 9596             LSR     R25
+    163    00000026 9596             LSR     R25
+    164    00000028 9596             LSR     R25
+    165    0000002A 719F             ANDI    R25 , 0x1F
+    166    0000002C                  /* LLR-Ref: 030 */ 
+    167    0000002C ....             LDI     R30 , low(JUMPTABLE/2)
+    168    0000002E 0FE9             ADD     R30 , R25
+    169    00000030 ....             LDI     R31 , high(JUMPTABLE/2)
+    170    00000032 9409             IJMP
+    171    00000034              ; --------------------------------------------
+                                 ---------------------------------
+    172    00000034              TWIERROR:    ; Status: Unknown
+    173    00000034                           ; NXT action -> Do Nothing end
+                                  ISR with error flag raised
+    174    00000034              ; --------------------------------------------
+                                 --------------------------------- 
+    175    00000034                  /* LLR-Ref: 040 */    
+    176    00000034 9190....         LDS     R25 , iicCtrlBlock+IICCTRLBLOCK_II
+                                                 CSTATUS
+    177    00000038 6290             ORI     R25 , BM_IICTRXERROR
+    178    0000003A 9390....         STS     iicCtrlBlock+IICCTRLBLOCK_IICSTATU
+                                                          S , R25
+                                     ORI     R24 , BM_I2INT   
+                                 ---------------^
+                                 "C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\
+                      Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\fir
+                      mware\iic\src\iic_asm.s90
+                                 ",179  Error[50]: Undefined symbol:'BM_I2INT'
+                                     ANDI    R24 , ~BM_I2EA    
+                                 ---------------^
+                                 "C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\
+                      Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\fir
+                      mware\iic\src\iic_asm.s90
+                                 ",180  Error[50]: Undefined symbol:'BM_I2EA'
+    181    00000042 C101             RJMP    IIC_IRQ_RDY
+    182    00000044                 
+    183    00000044              ; --------------------------------------------
+                                 ---------------------------------
+    184    00000044              STARTTXED:   ; Status: Start condition put on
+                                  Bus as a MASTER
+    185    00000044                           ; NXT action -> Present SLA + R/W
+                                  on Bus
+    186    00000044              REPSTTXED:   ; Status: RepeatedStart condition
+                                  put on Bus as a MASTER          
+    187    00000044                           ; NXT action -> Present SLA + R/W
+                                  on Bus
+    188    00000044              SLAWACKED:   ; Status: SLA + W TXed ACK
+                                  RXed
+    189    00000044                           ; NXT action -> Present DATA on
+                                  the IIC Busor STOP in case all 
+    190    00000044                           ; data has been exchanged        
+                                         
+    191    00000044              DATATXACKED: ; Status: Data TXed ACK
+                                  RXed
+    192    00000044                           ; NXT action -> Present DATA on
+                                  the IIC Bus or STOP in case all 
+    193    00000044                           ; data has been exchanged        
+                                      
+    194    00000044              ; --------------------------------------------
+                                 ---------------------------------
+    195    00000044                  /* LLR-Ref: 050 */    
+    196    00000044 9190....         LDS     R25 , iicCtrlBlock+IICCTRLBLOCK_II
+                                                 CBYTCNT
+    197    00000048 91E0....         LDS     R30 , iicCtrlBlock+IICCTRLBLOCK_II
+                                                 CDATATX
+    198    0000004C 179E             CP      R25 , R30
+    199    0000004E F040             BRLO    PUTDATA_SLAW
+    200    00000050              PUTSTOP_SLAW:  
+    201    00000050 9190....         LDS     R25 , iicCtrlBlock+IICCTRLBLOCK_II
+                                                 CSTATUS
+    202    00000054 7F97             ANDI    R25 , ~BM_IICTRANSACTIONONGOING   
+                                                  
+    203    00000056 9390....         STS     iicCtrlBlock+IICCTRLBLOCK_IICSTATU
+                                                          S , R25 
+                                     ORI     R24 , BM_I2INT|BM_I2EA|BM_I2STO
+                                 ---------------^
+                                 "C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\
+                      Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\fir
+                      mware\iic\src\iic_asm.s90
+                                 ",204  Error[50]: Undefined symbol:'BM_I2STO'
+                                     ANDI    R24 , ~BM_I2STA    
+                                 ---------------^
+                                 "C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\
+                      Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\fir
+                      mware\iic\src\iic_asm.s90
+                                 ",205  Error[50]: Undefined symbol:'BM_I2STA'
+    206    0000005E C0F3             RJMP    IIC_IRQ_RDY
+    207    00000060              PUTDATA_SLAW:    
+    208    00000060 91F0....         LDS     R31 , iicCtrlBlock+IICCTRLBLOCK_II
+                                                 CBUFFER+1
+    209    00000064 91E0....         LDS     R30 , iicCtrlBlock+IICCTRLBLOCK_II
+                                                 CBUFFER
+    210    00000068 0FE9             ADD     R30 , R25
+    211    0000006A 9593             INC     R25
+    212    0000006C 9390....         STS     iicCtrlBlock+IICCTRLBLOCK_IICBYTCN
+                                                          T , R25
+    213    00000070 2799             CLR     R25
+    214    00000072 1FF9             ADC     R31 , R25
+    215    00000074 8190             LD      R25 , Z
+                                     STS     I2DR , R25    
+                                 ----------------^
+                                 "C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\
+                      Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\fir
+                      mware\iic\src\iic_asm.s90
+                                 ",216  Error[50]: Undefined symbol:'I2DR'
+    217    0000007A ....             ORI     R24 , BM_I2INT|BM_I2EA
+    218    0000007C ....             ANDI    R24 , ~BM_I2STA
+    219    0000007E C0E3             RJMP    IIC_IRQ_RDY
+    220    00000080              ; --------------------------------------------
+                                 ---------------------------------
+    221    00000080              SLAWNACKD:   ; Status: SLA + W TXed NACK RXed 
+                                    
+    222    00000080                           ; NXT action -> Set SW error
+                                  indication and present STOP on the Bus 
+                                  
+    223    00000080              DATATXNACKD: ; Status: DATA TXed NACK RXed   
+                                  
+    224    00000080                           ; NXT action -> Set SW error
+                                  indication and present STOP on the Bus   
+                                  
+    225    00000080              ; --------------------------------------------
+                                 ---------------------------------   
+                                  
+    226    00000080                  /* LLR-Ref: 060 */    
+    227    00000080 ....             ORI     R24 , BM_I2INT|BM_I2EA|BM_I2STO
+    228    00000082 C001             RJMP    MSTTXFAILURE
+    229    00000084              ; --------------------------------------------
+                                 ---------------------------------
+    230    00000084              ARBIMSTLOST: ; Arbitration lost during IIC
+                                  Transaction
+    231    00000084                           ; NXT action -> Set SW error
+                                  indication, Bus will be released
+    232    00000084              ; --------------------------------------------
+                                 ---------------------------------   
+    233    00000084                  /* LLR-Ref: 070 */         
+    234    00000084 ....             ORI     R24 , BM_I2INT|BM_I2EA
+    235    00000086              MSTTXFAILURE:
+    236    00000086 91E0....         LDS     R30 , iicCtrlBlock+IICCTRLBLOCK_II
+                                                 CSTATUS
+    237    0000008A 7FE7             ANDI    R30 , ~BM_IICTRANSACTIONONGOING   
+                                                  
+    238    0000008C 62E0             ORI     R30 , BM_IICTRXERROR
+    239    0000008E 93E0....         STS     iicCtrlBlock+IICCTRLBLOCK_IICSTATU
+                                                          S , R30 
+    240    00000092 C0D9             RJMP    IIC_IRQ_RDY
+    241    00000094              ; --------------------------------------------
+                                 ---------------------------------
+    242    00000094              SLARACKED:   ; SLA+R has been TXed and was
+                                  ACKED
+    243    00000094                           ; NXT action -> DATA will be RXed
+                                  and ACKed     
+    244    00000094              ; --------------------------------------------
+                                 ---------------------------------   
+                                  
+    245    00000094                  /* LLR-Ref: 080 */        
+    246    00000094 9190....         LDS     R25 , iicCtrlBlock+IICCTRLBLOCK_II
+                                                 CBYTCNT
+    247    00000098 91E0....         LDS     R30 , iicCtrlBlock+IICCTRLBLOCK_II
+                                                 CDATATX
+    248    0000009C 179E             CP      R25 , R30    
+    249    0000009E F410             BRSH    SLAR2NACK
+    250    000000A0              SLAR2ACK:
+    251    000000A0 ....             ORI     R24 , BM_I2INT|BM_I2EA
+    252    000000A2 C0D1             RJMP    IIC_IRQ_RDY
+    253    000000A4              SLAR2NACK:    
+    254    000000A4 ....             ORI     R24 , BM_I2INT
+    255    000000A6 ....             ANDI    R24 , ~BM_I2EA
+    256    000000A8 C0CE             RJMP    IIC_IRQ_RDY
+    257    000000AA              ; --------------------------------------------
+                                 ---------------------------------
+    258    000000AA              SLARNACKD:   ; SLA+R has been TXed and was NOT
+                                  ACKED
+    259    000000AA                           ; NXT action -> Set SW error
+                                  indication and present STOP on the Bus   
+                                  
+    260    000000AA              ; --------------------------------------------
+                                 ---------------------------------   
+                                  
+    261    000000AA                  /* LLR-Ref: 090 */     
+    262    000000AA 91E0....         LDS     R30 , iicCtrlBlock+IICCTRLBLOCK_II
+                                                 CSTATUS
+    263    000000AE 7FE7             ANDI    R30 , ~BM_IICTRANSACTIONONGOING   
+                                                  
+    264    000000B0 62E0             ORI     R30 , BM_IICTRXERROR
+    265    000000B2 93E0....         STS     iicCtrlBlock+IICCTRLBLOCK_IICSTATU
+                                                          S , R30    
+                                                           
+    266    000000B6 ....             ORI     R24 , BM_I2INT|BM_I2EA|BM_I2STO
+    267    000000B8 CFE6             RJMP    MSTTXFAILURE 
+    268    000000BA              ; --------------------------------------------
+                                 ---------------------------------
+    269    000000BA              DATARXACKED: ; DATA has been RXed and was
+                                  ACKED
+    270    000000BA                           ; NXT action -> Get nxt Data and
+                                  return ACK in case no buffer
+    271    000000BA                           ;               overrun. Else
+                                  return NOT ACK             
+    272    000000BA              ; --------------------------------------------
+                                 ---------------------------------
+    273    000000BA                  /* LLR-Ref: 100 */    
+    274    000000BA 9190....         LDS     R25 , iicCtrlBlock+IICCTRLBLOCK_II
+                                                 CBYTCNT
+    275    000000BE 91E0....         LDS     R30 , iicCtrlBlock+IICCTRLBLOCK_II
+                                                 CBUFFER
+    276    000000C2 91F0....         LDS     R31 , iicCtrlBlock+IICCTRLBLOCK_II
+                                                 CBUFFER+1
+    277    000000C6 0FE9             ADD     R30 , R25
+    278    000000C8 9593             INC     R25
+    279    000000CA 9390....         STS     iicCtrlBlock+IICCTRLBLOCK_IICBYTCN
+                                                          T , R25
+    280    000000CE 9190....         LDS     R25 , I2DR
+    281    000000D2 8390             ST      Z , R25
+    282    000000D4 91E0....         LDS     R30 , iicCtrlBlock+IICCTRLBLOCK_II
+                                                 CDATATX
+    283    000000D8 9190....         LDS     R25 , iicCtrlBlock+IICCTRLBLOCK_II
+                                                 CBYTCNT
+    284    000000DC 179E             CP      R25 , R30
+    285    000000DE F410             BRSH    MSTRXBUFFEROVL       
+    286    000000E0 ....             ORI     R24 , BM_I2INT|BM_I2EA
+    287    000000E2 C0B1             RJMP    IIC_IRQ_RDY    
+    288    000000E4              MSTRXBUFFEROVL:
+    289    000000E4 ....             ORI     R24 , BM_I2INT
+    290    000000E6 ....             ANDI    R24 , ~BM_I2EA    
+    291    000000E8 C0AE             RJMP    IIC_IRQ_RDY    
+    292    000000EA              ; --------------------------------------------
+                                 ---------------------------------
+    293    000000EA              DATARXNACKD: ; DATA has been RXed and was NOT
+                                  ACKED
+    294    000000EA                           ; NXT action -> present STOP on
+                                  the Bus         
+    295    000000EA              ; --------------------------------------------
+                                 ---------------------------------   
+    296    000000EA                  /* LLR-Ref: 110 */       
+    297    000000EA 9190....         LDS     R25 , iicCtrlBlock+IICCTRLBLOCK_II
+                                                 CBYTCNT
+    298    000000EE 91E0....         LDS     R30 , iicCtrlBlock+IICCTRLBLOCK_II
+                                                 CBUFFER
+    299    000000F2 91F0....         LDS     R31 , iicCtrlBlock+IICCTRLBLOCK_II
+                                                 CBUFFER+1
+    300    000000F6 0FE9             ADD     R30 , R25
+    301    000000F8 9593             INC     R25
+    302    000000FA 9390....         STS     iicCtrlBlock+IICCTRLBLOCK_IICBYTCN
+                                                          T , R25
+    303    000000FE 9190....         LDS     R25 , I2DR
+    304    00000102 8390             ST      Z , R25
+    305    00000104 9190....         LDS     R25 , iicCtrlBlock+IICCTRLBLOCK_II
+                                                 CSTATUS
+    306    00000108 6190             ORI     R25 , BM_IICRXDATAPEDING
+    307    0000010A 7F97             ANDI    R25 , ~BM_IICTRANSACTIONONGOING
+    308    0000010C 9390....         STS     iicCtrlBlock+IICCTRLBLOCK_IICSTATU
+                                                          S , R25 
+    309    00000110 ....             ORI     R24 , BM_I2INT|BM_I2EA|BM_I2STO
+    310    00000112 C099             RJMP    IIC_IRQ_RDY 
+    311    00000114              ; --------------------------------------------
+                                 ---------------------------------
+    312    00000114              SLAWACK:     ; OWN SLA+W RXed
+    313    00000114                           ; NXT action -> ACK RXed
+                                  SLA+W
+    314    00000114              GENWACK:     ; General Call+W RXed
+    315    00000114                           ; NXT action -> ACK RXed SLA+W   
+                                             
+    316    00000114              ; --------------------------------------------
+                                 ---------------------------------
+    317    00000114                  /* LLR-Ref: 120 */    
+    318    00000114 9190....         LDS     R25 , iicCtrlBlock+IICCTRLBLOCK_II
+                                                 CSTATUS    
+    319    00000118 7F9C             ANDI    R25 , ~BM_IICTRXSTATE   
+                                                  
+    320    0000011A 609B             ORI     R25 , (IICSLAVERX|BM_IICTRANSACTIO
+                                                 NONGOING)    
+    321    0000011C 9390....         STS     iicCtrlBlock+IICCTRLBLOCK_IICSTATU
+                                                          S , R25 
+    322    00000120 2799             CLR     R25
+    323    00000122 9390....         STS     iicCtrlBlock+IICCTRLBLOCK_IICBYTCN
+                                                          T , R25    
+    324    00000126 ....             ORI     R24 , BM_I2INT|BM_I2EA
+    325    00000128 C08E             RJMP    IIC_IRQ_RDY   
+    326    0000012A              ; --------------------------------------------
+                                 ---------------------------------
+    327    0000012A              LOSTARBISLAW: ; Lost Arbitration during SLA+W
+                                  RXed
+    328    0000012A                           ; NXT action -> NOT ACK RXed to
+                                  IIC bus
+    329    0000012A              LOSTARBIGENW: ; Lost Arbitration during
+                                  General Call+W RXed
+    330    0000012A                           ; NXT action -> NOT ACK RXed to
+                                  IIC bus          
+    331    0000012A              LOSTARBISLAR: ; Arbitration Lost as Master/
+                                  Own SLA+R RXed and ACKed
+    332    0000012A                           ; NXT action -> ACK RXed SLA+R,
+                                  Present Data                
+    333    0000012A              ; --------------------------------------------
+                                 ---------------------------------
+    334    0000012A                  /* LLR-Ref: 130 */    
+    335    0000012A 9190....         LDS     R25 , iicCtrlBlock+IICCTRLBLOCK_II
+                                                 CSTATUS
+    336    0000012E 6290             ORI     R25 , BM_IICTRXERROR
+    337    00000130 7F97             ANDI    R25 , ~BM_IICTRANSACTIONONGOING
+    338    00000132 9390....         STS     iicCtrlBlock+IICCTRLBLOCK_IICSTATU
+                                                          S , R25        
+                                                           
+                                     ANDI    R24 , ~(BM_I2EA|BM_I2INT|BM_I2EN|
+                      BM_I2IE) 
+                                 ---------------^
+                                 "C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\
+                      Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\fir
+                      mware\iic\src\iic_asm.s90
+                                 ",339  Error[50]: Undefined symbol:'BM_I2EN'
+                                 "C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\
+                      Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\fir
+                      mware\iic\src\iic_asm.s90
+                                 ",339  Error[50]: Undefined symbol:'BM_I2IE'
+    340    00000138 C086             RJMP    IIC_IRQ_RDY   
+    341    0000013A              ; --------------------------------------------
+                                 ---------------------------------
+    342    0000013A              RXDATAGEN_A:
+    343    0000013A              RXDATASLA_A: ; DATA RXed, ACKed
+    344    0000013A                           ; NXT action -> ACK to IIC bus   
+                                  
+    345    0000013A                  /* LLR-Ref: 140 */                
+                                  
+    346    0000013A ....             ORI     R24 , BM_I2INT|BM_I2EA  
+    347    0000013C C003             RJMP    RXSLAFLOW    
+    348    0000013E              RXDATAGEN_NA:
+    349    0000013E              RXDATASLA_NA: ; DATA RXed, not Acked
+    350    0000013E                            ; NXT action -> NACK to IIC bus 
+                                       
+    351    0000013E                  /* LLR-Ref: 150 */                 
+                                  
+    352    0000013E ....             ORI     R24 , BM_I2INT
+    353    00000140 ....             ANDI    R24 , ~BM_I2EA
+    354    00000142 C000             RJMP    RXSLAFLOW              
+    355    00000144              ; --------------------------------------------
+                                 ---------------------------------
+    356    00000144              RXSLAFLOW:
+    357    00000144 91E0....         LDS     R30 , iicCtrlBlock+IICCTRLBLOCK_II
+                                                 CBUFLEN
+    358    00000148 9190....         LDS     R25 , iicCtrlBlock+IICCTRLBLOCK_II
+                                                 CBYTCNT
+    359    0000014C 179E             CP      R25 , R30
+    360    0000014E F449             BRNE    IICRXSLAOK
+    361    00000150 9190....         LDS     R25 , iicCtrlBlock+IICCTRLBLOCK_II
+                                                 CSTATUS
+    362    00000154 6290             ORI     R25 , BM_IICTRXERROR
+    363    00000156 7F97             ANDI    R25 , ~BM_IICTRANSACTIONONGOING
+    364    00000158 9390....         STS     iicCtrlBlock+IICCTRLBLOCK_IICSTATU
+                                                          S , R25  
+    365    0000015C ....             ORI     R24 , BM_I2INT
+    366    0000015E ....             ANDI    R24 , ~BM_I2EA
+    367    00000160 C072             RJMP    IIC_IRQ_RDY         
+    368    00000162              IICRXSLAOK:   
+    369    00000162 91E0....         LDS     R30 , iicCtrlBlock+IICCTRLBLOCK_II
+                                                 CBUFFER
+    370    00000166 91F0....         LDS     R31 , iicCtrlBlock+IICCTRLBLOCK_II
+                                                 CBUFFER+1
+    371    0000016A 0FE9             ADD     R30 , R25
+    372    0000016C 9593             INC     R25
+    373    0000016E 9390....         STS     iicCtrlBlock+IICCTRLBLOCK_IICBYTCN
+                                                          T , R25
+    374    00000172                  
+    375    00000172 9190....         LDS     R25 , I2DR
+    376    00000176 8390             ST      Z , R25
+    377    00000178                  
+    378    00000178 91E0....         LDS     R30 , iicCtrlBlock+IICCTRLBLOCK_II
+                                                 CBUFLEN
+    379    0000017C 9190....         LDS     R25 , iicCtrlBlock+IICCTRLBLOCK_II
+                                                 CBYTCNT    
+    380    00000180 179E             CP      R25 , R30
+    381    00000182 F410             BRSH    SLARXBUFFEROVL    
+    382    00000184 ....             ORI     R24 , BM_I2INT|BM_I2EA
+    383    00000186 C05F             RJMP    IIC_IRQ_RDY    
+    384    00000188              SLARXBUFFEROVL:    
+    385    00000188 ....             ORI     R24 , BM_I2INT
+    386    0000018A ....             ANDI    R24 , ~BM_I2EA
+    387    0000018C C05C             RJMP    IIC_IRQ_RDY     
+    388    0000018E              ; --------------------------------------------
+                                 ---------------------------------
+    389    0000018E              GOTSTOP:     ; Got STOP condition
+    390    0000018E                           ; NXT action -> Switch to not
+                                  addressed state
+    391    0000018E              ; --------------------------------------------
+                                 ---------------------------------
+    392    0000018E                  /* LLR-Ref: 160 */    
+    393    0000018E 9190....         LDS     R25 , iicCtrlBlock+IICCTRLBLOCK_II
+                                                 CSTATUS
+    394    00000192 6190             ORI     R25 , BM_IICRXDATAPEDING
+    395    00000194 7F97             ANDI    R25 , ~BM_IICTRANSACTIONONGOING
+    396    00000196 9390....         STS     iicCtrlBlock+IICCTRLBLOCK_IICSTATU
+                                                          S , R25      
+                                                           
+    397    0000019A ....             ORI     R24 , BM_I2INT
+    398    0000019C ....             ANDI    R24 , ~BM_I2EA    
+    399    0000019E C053             RJMP    IIC_IRQ_RDY  
+    400    000001A0              ; --------------------------------------------
+                                 ---------------------------------
+    401    000001A0              SLARACK:     ; OWN SLA+R RXed
+    402    000001A0                           ; NXT action -> ACK RXed SLA+R,
+                                  Present Data                       
+                                  
+    403    000001A0              ; --------------------------------------------
+                                 ---------------------------------   
+    404    000001A0                  /* LLR-Ref: 170 */    
+    405    000001A0 9190....         LDS     R25 , iicCtrlBlock+IICCTRLBLOCK_II
+                                                 CSTATUS
+    406    000001A4 91E0....         LDS     R30 , iicCtrlBlock+IICCTRLBLOCK_II
+                                                 CDATATX
+    407    000001A8 30E0             CPI     R30 , 0x00
+    408    000001AA F409             BRNE    IICDATASLAR
+    409    000001AC C008             RJMP    SLARERROR
+    410    000001AE              IICDATASLAR:        
+    411    000001AE 7B9C             ANDI    R25 , ~(BM_IICTRXSTATE|BM_IICTXDAT
+                                                 APENDING)
+    412    000001B0 609A             ORI     R25 , (IICSLAVETX|BM_IICTRANSACTIO
+                                                 NONGOING)    
+    413    000001B2 9390....         STS     iicCtrlBlock+IICCTRLBLOCK_IICSTATU
+                                                          S , R25 
+    414    000001B6 E090             LDI     R25 , 0x00
+    415    000001B8 9390....         STS     iicCtrlBlock+IICCTRLBLOCK_IICBYTCN
+                                                          T , R25       
+                                                           
+    416    000001BC C00B             RJMP    TXDATA_A  
+    417    000001BE              SLARERROR:    
+    418    000001BE 7F9C             ANDI    R25 , ~BM_IICTRXSTATE
+    419    000001C0 6092             ORI     R25 , (IICSLAVETX)
+    420    000001C2 6094             ORI     R25 , BM_CONFERRORIIC   
+                                                  
+    421    000001C4 9390....         STS     iicCtrlBlock+IICCTRLBLOCK_IICSTATU
+                                                          S , R25 
+    422    000001C8 2799             CLR     R25
+    423    000001CA 9390....         STS     I2DR , R25        
+    424    000001CE ....             ORI     R24 , BM_I2INT
+    425    000001D0 ....             ANDI    R24 , ~BM_I2EA    
+    426    000001D2 C039             RJMP    IIC_IRQ_RDY   
+    427    000001D4              ; --------------------------------------------
+                                 ---------------------------------
+    428    000001D4              TXDATA_A:    ; DATA byte has been TXed,
+                                  ACKed
+    429    000001D4                           ; NXT action -> Present Data     
+                                          
+    430    000001D4              ; --------------------------------------------
+                                 ---------------------------------
+    431    000001D4                  /* LLR-Ref: 180 */    
+    432    000001D4 9190....         LDS     R25 , iicCtrlBlock+IICCTRLBLOCK_II
+                                                 CBYTCNT
+    433    000001D8 91E0....         LDS     R30 , iicCtrlBlock+IICCTRLBLOCK_II
+                                                 CBUFFER
+    434    000001DC 91F0....         LDS     R31 , iicCtrlBlock+IICCTRLBLOCK_II
+                                                 CBUFFER+1
+    435    000001E0 0FE9             ADD     R30 , R25
+    436    000001E2 9593             INC     R25
+    437    000001E4 9390....         STS     iicCtrlBlock+IICCTRLBLOCK_IICBYTCN
+                                                          T , R25    
+    438    000001E8 8190             LD      R25 , Z
+    439    000001EA 9390....         STS     I2DR , R25
+    440    000001EE 91E0....         LDS     R30 , iicCtrlBlock+IICCTRLBLOCK_II
+                                                 CDATATX
+    441    000001F2 9190....         LDS     R25 , iicCtrlBlock+IICCTRLBLOCK_II
+                                                 CBYTCNT
+    442    000001F6 17E9             CP      R30 , R25
+    443    000001F8 F011             BREQ    TXDATASLADONE    
+    444    000001FA ....             ORI     R24 , BM_I2INT|BM_I2EA
+    445    000001FC C024             RJMP    IIC_IRQ_RDY      
+    446    000001FE              TXDATASLADONE:  
+    447    000001FE 9190....         LDS     R25 , iicCtrlBlock+IICCTRLBLOCK_II
+                                                 CBYTCNT
+    448    00000202 959A             DEC     R25
+    449    00000204 9390....         STS     iicCtrlBlock+IICCTRLBLOCK_IICBYTCN
+                                                          T , R25
+    450    00000208 ....             ORI     R24 , BM_I2INT   
+    451    0000020A ....             ANDI    R24 , ~BM_I2EA    
+    452    0000020C C01C             RJMP    IIC_IRQ_RDY    
+    453    0000020E              ; --------------------------------------------
+                                 ---------------------------------
+    454    0000020E              TXDATA_NA:  ; DATA byte has been TXed, NOT
+                                  ACKed     
+    455    0000020E                          ; NXT action -> switch to not
+                                  addressed   
+    456    0000020E              ; --------------------------------------------
+                                 ---------------------------------
+    457    0000020E                  /* LLR-Ref: 190 */    
+    458    0000020E 91E0....         LDS     R30 , I2CR
+                                     SBRS    R30 , I2EA
+                                 ---------------^
+                                 "C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\
+                      Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\fir
+                      mware\iic\src\iic_asm.s90
+                                 ",459  Error[50]: Undefined symbol:'I2EA'
+    460    00000214 C008             RJMP    FINISHIICSLATX
+    461    00000216 9190....         LDS     R25 , iicCtrlBlock+IICCTRLBLOCK_II
+                                                 CSTATUS
+    462    0000021A 6290             ORI     R25 , BM_IICTRXERROR    
+    463    0000021C 7F97             ANDI    R25 , ~BM_IICTRANSACTIONONGOING   
+                                                      
+    464    0000021E 9390....         STS     iicCtrlBlock+IICCTRLBLOCK_IICSTATU
+                                                          S , R25  
+    465    00000222 ....             ANDI    R24 , ~BM_I2EA    
+    466    00000224 C010             RJMP    IIC_IRQ_RDY       
+    467    00000226              FINISHIICSLATX:    
+    468    00000226 9190....         LDS     R25 , iicCtrlBlock+IICCTRLBLOCK_II
+                                                 CSTATUS    
+    469    0000022A 7F97             ANDI    R25 , ~BM_IICTRANSACTIONONGOING
+    470    0000022C 9390....         STS     iicCtrlBlock+IICCTRLBLOCK_IICSTATU
+                                                          S , R25      
+                                                           
+    471    00000230 ....             ORI     R24 , BM_I2INT|BM_I2EA  
+    472    00000232 C009             RJMP    IIC_IRQ_RDY
+    473    00000234              ; --------------------------------------------
+                                 ---------------------------------   
+                                  
+    474    00000234              TXLAST_A:   ; LAST DATA byte has been TXed,
+                                  NOT ACKed     
+    475    00000234                          ; NXT action -> switch to not
+                                  addressed                  
+    476    00000234              ; --------------------------------------------
+                                 ---------------------------------   
+                                  
+    477    00000234                  /* LLR-Ref: 200 */    
+    478    00000234 9190....         LDS     R25 , iicCtrlBlock+IICCTRLBLOCK_II
+                                                 CSTATUS
+    479    00000238 6290             ORI     R25 , BM_IICTRXERROR    
+    480    0000023A 7F97             ANDI    R25 , ~BM_IICTRANSACTIONONGOING   
+                                                  
+    481    0000023C 9390....         STS     iicCtrlBlock+IICCTRLBLOCK_IICSTATU
+                                                          S , R25  
+    482    00000240 ....             ANDI    R24 , ~BM_I2EA
+    483    00000242 ....             ORI     R24 , BM_I2INT    
+    484    00000244 C000             RJMP    IIC_IRQ_RDY   
+    485    00000246                  
+    486    00000246                  /* LLR-Ref: 210 */        
+    487    00000246              IIC_IRQ_RDY: 
+    488    00000246 9380....         STS       I2CR , R24   
+    489    0000024A 919F             POP       R25
+    490    0000024C BF9F             OUT       SREG , R25
+    491    0000024E 919F             POP       R25
+    492    00000250 91EF             POP       R30
+    493    00000252 91FF             POP       R31
+    494    00000254 918F             POP       R24
+    495    00000256 9518             RETI
+    496    00000258              
+    497    00000258              
+    498    00000258              
+    499    00000258                 END
+##############################
+#        Errors:   10        #
+#        Warnings: 0         #
+#         Bytes: 628         #
+##############################
+
+
+
+

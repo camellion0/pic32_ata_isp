@@ -1,0 +1,2345 @@
+///////////////////////////////////////////////////////////////////////////////
+//
+// IAR C/C++ Compiler V7.10.1.1197 for Atmel AVR          13/May/2020  17:03:23
+// Copyright 1996-2017 IAR Systems AB.
+// Network license: dvriar01.mchp-main.com (STD)
+//
+//    Source file  =  
+//        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\firmware\lfrx\src\lfrx_flash.c
+//    Command line =  
+//        -f C:\Users\C41045\AppData\Local\Temp\EW1ACA.tmp
+//        (C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\firmware\lfrx\src\lfrx_flash.c
+//        -v3 --enhanced_core -ms -o
+//        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\Obj
+//        -lCN
+//        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\List
+//        -lA
+//        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\List
+//        --no_cse --no_inline --no_code_motion --no_cross_call --no_clustering
+//        --no_tbaa --debug --64k_flash -DENABLE_BIT_DEFINITIONS -e
+//        --eeprom_size 2304 --clib -Ohz)
+//    Locale       =  English_USA.1252
+//    List file    =  
+//        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\List\lfrx_flash.s90
+//
+///////////////////////////////////////////////////////////////////////////////
+
+        NAME lfrx_flash
+
+        RTMODEL "__64bit_doubles", "disabled"
+        RTMODEL "__SystemLibrary", "CLib"
+        RTMODEL "__cpu", "3"
+        RTMODEL "__enhanced_core", "enabled"
+        RTMODEL "__has_elpm", "false"
+        RTMODEL "__memory_model", "2"
+        RTMODEL "__rt_version", "3"
+        RTMODEL "__vtable_memory", "__nearflash"
+
+        RSEG CSTACK:DATA:NOROOT(0)
+        RSEG RSTACK:DATA:NOROOT(0)
+
+        EXTERN ?need_segment_init
+
+        PUBWEAK `?<Segment init: NEAR_Z>`
+        PUBWEAK `??ATA_lfRxBitCountReachedInterrupt_ISR_flash_C:`
+        PUBWEAK `??ATA_lfRxDecoderErrorInterrupt_ISR_flash_C::??`
+        PUBWEAK `??ATA_lfRxEotInterrupt_ISR_flash_C::??INTVEC 15`
+        PUBWEAK `??ATA_lfRxId0MatchInterrupt_ISR_flash_C::??INTV`
+        PUBWEAK `??ATA_lfRxId1MatchInterrupt_ISR_flash_C::??INTV`
+        PUBWEAK `??ATA_lfRxIdFrameEndInterrupt_ISR_flash_C::??IN`
+        PUBWEAK `??ATA_lfRxLDFIMfoErrorInterrupt_ISR_flash_C::??`
+        PUBWEAK ??ATA_lfRxLDFIMfoFillLevelReachedInterrupt_ISR__1
+        PUBWEAK `??ATA_lfRxPhTimerCompareInterrupt_ISR_flash_C::`
+        PUBWEAK `??ATA_lfRxSyncDetectedInterrupt_ISR_flash_C::??`
+        PUBLIC ATA_lfRxBitCountReachedInterrupt_ISR_flash_C
+        PUBLIC ATA_lfRxDecoderErrorInterrupt_ISR_flash_C
+        PUBLIC ATA_lfRxEotInterrupt_ISR_flash_C
+        PUBLIC ATA_lfRxId0MatchInterrupt_ISR_flash_C
+        PUBLIC ATA_lfRxId1MatchInterrupt_ISR_flash_C
+        PUBLIC ATA_lfRxIdFrameEndInterrupt_ISR_flash_C
+        PUBLIC ATA_lfRxInit_flash_C
+        PUBLIC ATA_lfRxLDFIMfoErrorInterrupt_ISR_flash_C
+        PUBLIC ATA_lfRxLDFIMfoFillLevelReachedInterrupt_ISR_flash_C
+        PUBLIC ATA_lfRxPhTimerCompareInterrupt_ISR_flash_C
+        PUBLIC ATA_lfRxSyncDetectedInterrupt_ISR_flash_C
+        PUBWEAK _A_DDRD
+        PUBWEAK _A_LDFCKSW
+        PUBWEAK _A_LFFR
+        PUBWEAK _A_LFIMR
+        PUBWEAK _A_PHCRCR
+        PUBWEAK _A_PHCRPH
+        PUBWEAK _A_PHCRPL
+        PUBWEAK _A_PHCSTH
+        PUBWEAK _A_PHCSTL
+        PUBWEAK _A_PHDFR
+        PUBWEAK _A_PHFR
+        PUBWEAK _A_PHIDFR
+        PUBWEAK _A_PHIMR
+        PUBWEAK _A_PHTBLR
+        PUBWEAK _A_PHTCR
+        PUBWEAK _A_PORTC
+        PUBWEAK _A_PORTD
+        PUBWEAK _A_PRR1
+        PUBWEAK _A_TPCR3
+        PUBWEAK _A_TPECMR
+        PUBWEAK _A_TPECR1
+        PUBWEAK _A_TPECR2
+        PUBWEAK _A_TPECR3
+        PUBWEAK _A_TPECR4
+        PUBWEAK __?EEARH
+        PUBWEAK __?EEARL
+        PUBWEAK __?EECR
+        PUBWEAK __?EEDR
+        PUBLIC g_bBitsToReceive
+        PUBLIC g_bBytesToTransmit
+        PUBLIC g_bLfRxEotShadowIndex_flash
+        PUBLIC g_bReceiveState
+        PUBLIC g_bResponseDelayReached
+        PUBLIC g_bRxBuffer
+        PUBLIC g_bRxBufferIndex
+        PUBLIC g_bTpStatusByte
+        PUBLIC g_bTxBuffer
+        PUBLIC g_sLfRxEotShadowValues_flash
+        PUBLIC g_sLfRxIdShadowValues_flash
+        PUBLIC g_sLfRx_flash
+        PUBLIC g_uTpConfig
+        
+          CFI Names cfiNames0
+          CFI StackFrame CFA_Y Y DATA
+          CFI StackFrame CFA_SP SP DATA
+          CFI VirtualResource ?RetPad:1, ?RetHigh:8, ?RetLow:8, ?Ret:17
+          CFI Resource R0:8, R1:8, R2:8, R3:8, R4:8, R5:8, R6:8, R7:8, R8:8, R9:8
+          CFI Resource R10:8, R11:8, R12:8, R13:8, R14:8, R15:8, R16:8, R17:8
+          CFI Resource R18:8, R19:8, R20:8, R21:8, R22:8, R23:8, R24:8, R25:8
+          CFI Resource R26:8, R27:8, R28:8, R29:8, R30:8, R31:8
+          CFI Resource ?RetHighByteMask:8, SP:16, SPH:8, SPL:8, Y:16
+          CFI ResourceParts ?Ret ?RetHigh, ?RetLow, ?RetPad
+          CFI ResourceParts SP SPH, SPL
+          CFI ResourceParts Y R29, R28
+          CFI EndNames cfiNames0
+        
+          CFI Common cfiCommon0 Using cfiNames0
+          CFI CodeAlign 1
+          CFI DataAlign 1
+          CFI ReturnAddress ?Ret CODE
+          CFI CFA_Y Y+0
+          CFI CFA_SP SP+2
+          CFI ?RetPad 0
+          CFI ?RetHigh and(load(1, DATA, sub(CFA_SP, 1)), ?RetHighByteMask)
+          CFI ?RetLow Frame(CFA_SP, 0)
+          CFI ?Ret Concat
+          CFI R0 SameValue
+          CFI R1 SameValue
+          CFI R2 SameValue
+          CFI R3 SameValue
+          CFI R4 SameValue
+          CFI R5 SameValue
+          CFI R6 SameValue
+          CFI R7 SameValue
+          CFI R8 SameValue
+          CFI R9 SameValue
+          CFI R10 SameValue
+          CFI R11 SameValue
+          CFI R12 SameValue
+          CFI R13 SameValue
+          CFI R14 SameValue
+          CFI R15 SameValue
+          CFI R16 SameValue
+          CFI R17 SameValue
+          CFI R18 SameValue
+          CFI R19 SameValue
+          CFI R20 SameValue
+          CFI R21 SameValue
+          CFI R22 SameValue
+          CFI R23 SameValue
+          CFI R24 SameValue
+          CFI R25 SameValue
+          CFI R26 SameValue
+          CFI R27 SameValue
+          CFI R28 Undefined
+          CFI R29 Undefined
+          CFI R30 SameValue
+          CFI R31 SameValue
+          CFI ?RetHighByteMask SameValue
+          CFI SPH Undefined
+          CFI SPL Undefined
+          CFI EndCommon cfiCommon0
+        
+        
+          CFI Common cfiCommon1 Using cfiNames0
+          CFI CodeAlign 1
+          CFI DataAlign 1
+          CFI ReturnAddress ?Ret CODE
+          CFI CFA_Y Y+0
+          CFI CFA_SP SP+2
+          CFI ?RetPad 0
+          CFI ?RetHigh and(load(1, DATA, sub(CFA_SP, 1)), ?RetHighByteMask)
+          CFI ?RetLow Frame(CFA_SP, 0)
+          CFI ?Ret Concat
+          CFI R0 Undefined
+          CFI R1 Undefined
+          CFI R2 Undefined
+          CFI R3 Undefined
+          CFI R4 SameValue
+          CFI R5 SameValue
+          CFI R6 SameValue
+          CFI R7 SameValue
+          CFI R8 SameValue
+          CFI R9 SameValue
+          CFI R10 SameValue
+          CFI R11 SameValue
+          CFI R12 SameValue
+          CFI R13 SameValue
+          CFI R14 SameValue
+          CFI R15 SameValue
+          CFI R16 Undefined
+          CFI R17 Undefined
+          CFI R18 Undefined
+          CFI R19 Undefined
+          CFI R20 Undefined
+          CFI R21 Undefined
+          CFI R22 Undefined
+          CFI R23 Undefined
+          CFI R24 SameValue
+          CFI R25 SameValue
+          CFI R26 SameValue
+          CFI R27 SameValue
+          CFI R28 Undefined
+          CFI R29 Undefined
+          CFI R30 Undefined
+          CFI R31 Undefined
+          CFI ?RetHighByteMask SameValue
+          CFI SPH Undefined
+          CFI SPL Undefined
+          CFI EndCommon cfiCommon1
+        
+ATA_lfRxBitCountReachedInterrupt_ISR_flash_C SYMBOL "ATA_lfRxBitCountReachedInterrupt_ISR_flash_C"
+`??ATA_lfRxBitCountReachedInterrupt_ISR_flash_C:` SYMBOL "??INTVEC 144", ATA_lfRxBitCountReachedInterrupt_ISR_flash_C
+ATA_lfRxDecoderErrorInterrupt_ISR_flash_C SYMBOL "ATA_lfRxDecoderErrorInterrupt_ISR_flash_C"
+`??ATA_lfRxDecoderErrorInterrupt_ISR_flash_C::??` SYMBOL "??INTVEC 152", ATA_lfRxDecoderErrorInterrupt_ISR_flash_C
+ATA_lfRxEotInterrupt_ISR_flash_C SYMBOL "ATA_lfRxEotInterrupt_ISR_flash_C"
+`??ATA_lfRxEotInterrupt_ISR_flash_C::??INTVEC 15` SYMBOL "??INTVEC 156", ATA_lfRxEotInterrupt_ISR_flash_C
+ATA_lfRxId0MatchInterrupt_ISR_flash_C SYMBOL "ATA_lfRxId0MatchInterrupt_ISR_flash_C"
+`??ATA_lfRxId0MatchInterrupt_ISR_flash_C::??INTV` SYMBOL "??INTVEC 132", ATA_lfRxId0MatchInterrupt_ISR_flash_C
+ATA_lfRxId1MatchInterrupt_ISR_flash_C SYMBOL "ATA_lfRxId1MatchInterrupt_ISR_flash_C"
+`??ATA_lfRxId1MatchInterrupt_ISR_flash_C::??INTV` SYMBOL "??INTVEC 136", ATA_lfRxId1MatchInterrupt_ISR_flash_C
+ATA_lfRxIdFrameEndInterrupt_ISR_flash_C SYMBOL "ATA_lfRxIdFrameEndInterrupt_ISR_flash_C"
+`??ATA_lfRxIdFrameEndInterrupt_ISR_flash_C::??IN` SYMBOL "??INTVEC 140", ATA_lfRxIdFrameEndInterrupt_ISR_flash_C
+ATA_lfRxLDFIMfoErrorInterrupt_ISR_flash_C SYMBOL "ATA_lfRxLDFIMfoErrorInterrupt_ISR_flash_C"
+`??ATA_lfRxLDFIMfoErrorInterrupt_ISR_flash_C::??` SYMBOL "??INTVEC 172", ATA_lfRxLDFIMfoErrorInterrupt_ISR_flash_C
+ATA_lfRxLDFIMfoFillLevelReachedInterrupt_ISR_flash_C SYMBOL "ATA_lfRxLDFIMfoFillLevelReachedInterrupt_ISR_flash_C"
+??ATA_lfRxLDFIMfoFillLevelReachedInterrupt_ISR__1 SYMBOL "??INTVEC 168", ATA_lfRxLDFIMfoFillLevelReachedInterrupt_ISR_flash_C
+ATA_lfRxPhTimerCompareInterrupt_ISR_flash_C SYMBOL "ATA_lfRxPhTimerCompareInterrupt_ISR_flash_C"
+`??ATA_lfRxPhTimerCompareInterrupt_ISR_flash_C::` SYMBOL "??INTVEC 160", ATA_lfRxPhTimerCompareInterrupt_ISR_flash_C
+ATA_lfRxSyncDetectedInterrupt_ISR_flash_C SYMBOL "ATA_lfRxSyncDetectedInterrupt_ISR_flash_C"
+`??ATA_lfRxSyncDetectedInterrupt_ISR_flash_C::??` SYMBOL "??INTVEC 148", ATA_lfRxSyncDetectedInterrupt_ISR_flash_C
+
+        EXTERN ATA_lfRxBitCntReachedImmo_flash_C
+        EXTERN ATA_systemSetEventPin_flash_ASM
+        EXTERN ID0_Wake
+        EXTERN ID1_Wake
+        EXTERN LF_DecErrFlag
+        EXTERN extReq
+        EXTERN g_bTpEmTransponderStateIndex_flash
+        EXTERN g_sEventHandling_flash
+
+// C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\firmware\lfrx\src\lfrx_flash.c
+//    1 //lint -e9059
+//    2 /******************************************************************************
+//    3   Use of this software is subject to Microchip's Software License Agreement.
+//    4 --------------------------------------------------------------------------------
+//    5   $URL: http://svnservulm.corp.atmel.com/svn/CDB/Apps/SW_Lib/Car_Access/CARS_GEN2/ATAB5702A/Branches/P2P22_TXMODE_NXP/firmware/lfrx/src/lfrx_flash.c $
+//    6   $LastChangedRevision: 458065 $
+//    7   $LastChangedDate: 2017-05-02 04:55:50 -0600 (Tue, 02 May 2017) $
+//    8   $LastChangedBy: krishna.balan $
+//    9 -------------------------------------------------------------------------------
+//   10   Project:      ATA5700
+//   11   Target MCU:   ATA5700
+//   12   Compiler:     IAR C/C++ Compiler for AVR 6.3.18.0
+//   13 -------------------------------------------------------------------------------
+//   14 
+//   15 ******************************************************************************
+//   16 * Copyright 2017, Microchip Technology Incorporated and its subsidiaries.     *
+//   17 *                                                                             *
+//   18 * This software is owned by the Microchip Technology Incorporated.            *
+//   19 * Microchip hereby grants to licensee a personal                              *
+//   20 * non-exclusive, non-transferable license to copy, use, modify, create        *
+//   21 * derivative works of, and compile the Microchip Source Code and derivative   *
+//   22 * works for the sole and exclusive purpose of creating custom software in     *
+//   23 * support of licensee product to be used only in conjunction with a Microchip *
+//   24 * integrated circuit as specified in the applicable agreement. Any            *        
+//   25 * reproduction, modification, translation, compilation, or representation of  *
+//   26 * this software except as specified above is prohibited without the express   *
+//   27 * written permission of Microchip.                                            *
+//   28 *                                                                             *
+//   29 * Disclaimer: MICROCHIP MAKES NO WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,    *
+//   30 * WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED    *
+//   31 * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.         *
+//   32 * Microchip reserves the right to make changes without further notice to the  *
+//   33 * materials described herein. Microchip does not assume any liability arising *
+//   34 * out of the application or use of any product or circuit described herein.   *
+//   35 * Microchip does not authorize its products for use as critical components in *
+//   36 * life-support systems where a malfunction or failure may reasonably be       *
+//   37 * expected to result in significant injury to the user. The inclusion of      *
+//   38 * Microchip products in a life-support systems application implies that the   *
+//   39 * manufacturer assumes all risk of such use and in doing so indemnifies       *
+//   40 * Microchip against all charges.                                              *
+//   41 *                                                                             *
+//   42 * Use may be limited by and subject to the applicable Microchip software      *
+//   43 * license agreement.                                                          *
+//   44 ******************************************************************************/
+//   45 /** \file lfrx_flash.c
+//   46 */
+//   47 /*===========================================================================*/
+//   48 /*  INCLUDES                                                                 */
+//   49 /*===========================================================================*/
+//   50 #include "lfrx_flash.h"
+
+        ASEGN ABSOLUTE:DATA:NOROOT,021H
+// union <unnamed> volatile __io _A_PRR1
+_A_PRR1:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,028H
+// union <unnamed> volatile __io _A_PORTC
+_A_PORTC:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,02aH
+// union <unnamed> volatile __io _A_DDRD
+_A_DDRD:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,02bH
+// union <unnamed> volatile __io _A_PORTD
+_A_PORTD:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,037H
+// union <unnamed> volatile __io _A_PHTCR
+_A_PHTCR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,03bH
+// union <unnamed> volatile __io _A_PHFR
+_A_PHFR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,03cH
+// union <unnamed> volatile __io _A_LFFR
+_A_LFFR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,049H
+// union <unnamed> volatile __io _A_LDFCKSW
+_A_LDFCKSW:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,016cH
+// union <unnamed> volatile __ext_io _A_TPECR1
+_A_TPECR1:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,016dH
+// union <unnamed> volatile __ext_io _A_TPECR2
+_A_TPECR2:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,016eH
+// union <unnamed> volatile __ext_io _A_TPECR3
+_A_TPECR3:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,016fH
+// union <unnamed> volatile __ext_io _A_TPECR4
+_A_TPECR4:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,0170H
+// union <unnamed> volatile __ext_io _A_TPECMR
+_A_TPECMR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,0171H
+// union <unnamed> volatile __ext_io _A_TPCR3
+_A_TPCR3:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,018fH
+// union <unnamed> volatile __ext_io _A_LFIMR
+_A_LFIMR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,019aH
+// union <unnamed> volatile __ext_io _A_PHIDFR
+_A_PHIDFR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01a4H
+// union <unnamed> volatile __ext_io _A_PHTBLR
+_A_PHTBLR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01a5H
+// union <unnamed> volatile __ext_io _A_PHDFR
+_A_PHDFR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01d8H
+// union <unnamed> volatile __ext_io _A_PHIMR
+_A_PHIMR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01d9H
+// union <unnamed> volatile __ext_io _A_PHCRCR
+_A_PHCRCR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01daH
+// union <unnamed> volatile __ext_io _A_PHCSTL
+_A_PHCSTL:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01dbH
+// union <unnamed> volatile __ext_io _A_PHCSTH
+_A_PHCSTH:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01dcH
+// union <unnamed> volatile __ext_io _A_PHCRPL
+_A_PHCRPL:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01ddH
+// union <unnamed> volatile __ext_io _A_PHCRPH
+_A_PHCRPH:
+        DS8 1
+//   51 #include "../../eep/src/eep.h"
+//   52 #include "../../init/src/init_flash.h"
+//   53 #include "../../system/src/system_flash.h"
+//   54 #include "../../spi/src/ata5700_command_set_flash.h"
+//   55 #include "../../lfrx/src/lfrx_immo_flash.h"
+//   56 #include "../../tp/src/tp_flash.h"
+//   57 #include "../../lfrssi/src/lfrssi_flash.h"
+//   58 
+//   59 /*===========================================================================*/
+//   60 /*  DEFINES                                                                  */
+//   61 /*===========================================================================*/
+//   62 
+//   63 /*===========================================================================*/
+//   64 /*  Modul Globals                                                            */
+//   65 /*===========================================================================*/
+//   66 
+//   67 /** \brief <b>g_sLfRx_flash</b>
+//   68     contains the 3D LF Receiver configuration
+//   69 */
+//   70 #pragma location = ".sram_FlashApp_LfRx"
+
+        RSEG `.sram_FlashApp_LfRx`:DATA:ROOT(0)
+//   71 __root __no_init s3dLfRxConfig g_sLfRx_flash;
+g_sLfRx_flash:
+        DS8 5
+//   72 
+//   73 /** \brief <b>g_sLfRxIdShadowValues_flash</b>
+//   74     contains the shadow register values to be applied during an ID match
+//   75     interrupt
+//   76 */
+//   77 #pragma location = ".sram_FlashApp_LfRx"
+
+        RSEG `.sram_FlashApp_LfRx`:DATA:ROOT(0)
+//   78 __root __no_init sPhShadowRegisters g_sLfRxIdShadowValues_flash;
+g_sLfRxIdShadowValues_flash:
+        DS8 16
+//   79 
+//   80 /** \brief <b>g_sLfRxIdShadowValues_flash</b>
+//   81     contains the shadow register values to be applied during an EOT interrupt
+//   82 */
+//   83 #pragma location = ".sram_FlashApp_LfRx"
+
+        RSEG `.sram_FlashApp_LfRx`:DATA:ROOT(0)
+//   84 __root __no_init sPhShadowRegisters g_sLfRxEotShadowValues_flash[ATA_SYSVER_MAX_LF_CONT_EOT_TELEGRAM_DEFS];
+g_sLfRxEotShadowValues_flash:
+        DS8 64
+//   85 
+//   86 /** \brief <b>g_bLfRxEotShadowIndex_flash</b>
+//   87     contains the index of the shadow register values to be applied during an
+//   88     EOT interrupt
+//   89 */
+//   90 #pragma location = ".sram_FlashApp_LfRx"
+
+        RSEG `.sram_FlashApp_LfRx`:DATA:ROOT(0)
+//   91 __root __no_init uint8_t            g_bLfRxEotShadowIndex_flash;
+g_bLfRxEotShadowIndex_flash:
+        DS8 1
+//   92 
+//   93 /** \brief <b>g_uTpConfig</b>
+//   94     structure to copy the TP configuration from EEPOM
+//   95 */
+
+        RSEG NEAR_N:DATA:NOROOT(0)
+//   96 __no_init uConfiguration g_uTpConfig;
+g_uTpConfig:
+        DS8 1
+//   97 
+//   98 /** \brief <b>g_bRxBufferIndex</b>
+//   99     index for receive buffer(g_bRxBuffer) used during LF reception
+//  100 */
+
+        RSEG NEAR_N:DATA:NOROOT(0)
+//  101 __no_init uint8_t g_bRxBufferIndex;
+g_bRxBufferIndex:
+        DS8 1
+//  102 
+//  103 /** \brief <b>g_bTpStatusByte</b>
+//  104     status byte of the transponder
+//  105 */
+
+        RSEG NEAR_N:DATA:NOROOT(0)
+//  106 __no_init uint8_t g_bTpStatusByte;
+g_bTpStatusByte:
+        DS8 1
+//  107 
+//  108 /** \brief <b>g_bBitsToReceive</b>
+//  109     indication of how many bits are expected to be received
+//  110 */
+
+        RSEG NEAR_N:DATA:NOROOT(0)
+//  111 __no_init uint8_t g_bBitsToReceive;
+g_bBitsToReceive:
+        DS8 1
+//  112 
+//  113 /** \brief <b>g_bReceiveState</b>
+//  114     indication of receive state
+//  115 */
+
+        RSEG NEAR_N:DATA:NOROOT(0)
+//  116 __no_init uint8_t g_bReceiveState;
+g_bReceiveState:
+        DS8 1
+//  117 
+//  118 /* transmission buffer to hold the data bytes to be transmitted */
+
+        RSEG NEAR_N:DATA:NOROOT(0)
+//  119 __no_init uint8_t g_bTxBuffer[36];
+g_bTxBuffer:
+        DS8 36
+//  120 
+//  121 /* receive buffer to hold the data bytes Received */
+
+        RSEG NEAR_N:DATA:NOROOT(0)
+//  122 __no_init uint8_t g_bRxBuffer[36];
+g_bRxBuffer:
+        DS8 36
+//  123 
+//  124 /* variable to hold response delay reached flag */
+
+        RSEG NEAR_Z:DATA:NOROOT(0)
+        REQUIRE `?<Segment init: NEAR_Z>`
+//  125 uint8_t g_bResponseDelayReached = FALSE;
+g_bResponseDelayReached:
+        DS8 1
+//  126 
+//  127 /*  */
+
+        RSEG NEAR_Z:DATA:NOROOT(0)
+        REQUIRE `?<Segment init: NEAR_Z>`
+//  128 uint8_t g_bBytesToTransmit = 0;
+g_bBytesToTransmit:
+        DS8 1
+//  129 
+//  130 /*===========================================================================*/
+//  131 /*  Modul Globals                                                            */
+//  132 /*===========================================================================*/
+//  133 /*===========================================================================*/
+//  134 /*  IMPLEMENTATION                                                           */
+//  135 /*===========================================================================*/
+//  136 
+//  137 
+//  138 /*---------------------------------------------------------------------------*/
+//  139 /** \brief <b>ATA_lfId0MatchInterrupt_ISR_flash_C</b>
+//  140     shall handle the LF ID0 interrupt triggered when ID0 has been found within
+//  141     the received data stream.
+//  142 
+//  143     \return VOIDFUNC
+//  144 
+//  145     \Derived no
+//  146 
+//  147     \Rationale none
+//  148 
+//  149     \Traceability
+//  150 
+//  151     \StackUsage SU_XXX bytes
+//  152 
+//  153     \image html ATA_lfId0MatchInterrupt_ISR_flash_C.png
+//  154     \image rtf ATA_lfId0MatchInterrupt_ISR_flash_C.png
+//  155     \n
+//  156 */
+//  157 /*---------------------------------------------------------------------------*/
+//  158 #pragma vector=LFID0INT_vect
+
+        RSEG CODE:CODE:ROOT(1)
+        CALL_GRAPH_ROOT ATA_lfRxId0MatchInterrupt_ISR_flash_C, "interrupt"
+//  159 __interrupt VOIDFUNC ATA_lfRxId0MatchInterrupt_ISR_flash_C(void)
+ATA_lfRxId0MatchInterrupt_ISR_flash_C:
+          CFI Block cfiBlock0 Using cfiCommon0
+          CFI Function ATA_lfRxId0MatchInterrupt_ISR_flash_C
+//  160 {
+        ST      -Y, R24
+          CFI R24 Frame(CFA_Y, -1)
+          CFI CFA_Y Y+1
+        ST      -Y, R31
+          CFI R31 Frame(CFA_Y, -2)
+          CFI CFA_Y Y+2
+        ST      -Y, R30
+          CFI R30 Frame(CFA_Y, -3)
+          CFI CFA_Y Y+3
+        ST      -Y, R3
+          CFI R3 Frame(CFA_Y, -4)
+          CFI CFA_Y Y+4
+        ST      -Y, R2
+          CFI R2 Frame(CFA_Y, -5)
+          CFI CFA_Y Y+5
+        ST      -Y, R1
+          CFI R1 Frame(CFA_Y, -6)
+          CFI CFA_Y Y+6
+        ST      -Y, R0
+          CFI R0 Frame(CFA_Y, -7)
+          CFI CFA_Y Y+7
+        ST      -Y, R23
+          CFI R23 Frame(CFA_Y, -8)
+          CFI CFA_Y Y+8
+        ST      -Y, R22
+          CFI R22 Frame(CFA_Y, -9)
+          CFI CFA_Y Y+9
+        ST      -Y, R21
+          CFI R21 Frame(CFA_Y, -10)
+          CFI CFA_Y Y+10
+        ST      -Y, R20
+          CFI R20 Frame(CFA_Y, -11)
+          CFI CFA_Y Y+11
+        ST      -Y, R19
+          CFI R19 Frame(CFA_Y, -12)
+          CFI CFA_Y Y+12
+        ST      -Y, R18
+          CFI R18 Frame(CFA_Y, -13)
+          CFI CFA_Y Y+13
+        ST      -Y, R17
+          CFI R17 Frame(CFA_Y, -14)
+          CFI CFA_Y Y+14
+        ST      -Y, R16
+          CFI R16 Frame(CFA_Y, -15)
+          CFI CFA_Y Y+15
+        IN      R24, 0x3F
+//  161     /* Update 3D LF Received status */
+//  162     g_sLfRx_flash.bLDFFLags0 |= BM_LFRXCONFIG_PH_FLAGS_0_PHID0F;
+        LDI     R30, LOW(g_sLfRx_flash)
+        LDI     R31, (g_sLfRx_flash) >> 8
+        LD      R16, Z
+        ORI     R16, 0x10
+        ST      Z, R16
+//  163     
+//  164     
+//  165     /* Do event pin handling */
+//  166     if ( g_sEventHandling_flash.bPhRxTx0 & BM_LFRXCONFIG_PH_FLAGS_0_PHID0F )
+        LDS     R16, (g_sEventHandling_flash + 5)
+        SBRS    R16, 4
+        RJMP    ??ATA_lfRxId0MatchInterrupt_ISR_flash_C_0
+//  167     {
+//  168         ATA_systemSetEventPin_flash_ASM();
+          CFI FunCall ATA_systemSetEventPin_flash_ASM
+        CALL    ATA_systemSetEventPin_flash_ASM
+//  169     }
+//  170     
+//  171     ID0_Wake=0x01;
+??ATA_lfRxId0MatchInterrupt_ISR_flash_C_0:
+        LDI     R16, 1
+        STS     ID0_Wake, R16
+//  172     
+//  173     LDFCKSW |= (1<<LDFSCSW); 
+        IN      R16, 0x29
+        ORI     R16, 0x01
+        OUT     0x29, R16
+//  174     while ((LDFCKSW & (1<<LDFSCKS)) ==0);          
+??ATA_lfRxId0MatchInterrupt_ISR_flash_C_1:
+        IN      R16, 0x29
+        SBRS    R16, 1
+        RJMP    ??ATA_lfRxId0MatchInterrupt_ISR_flash_C_1
+//  175     
+//  176     LFFR = 0x0F;//Clear the flags 
+        LDI     R16, 15
+        OUT     0x1C, R16
+//  177     LFIMR |= (1<<LFEOIM);
+        LDS     R16, 399
+        ORI     R16, 0x04
+        STS     399, R16
+//  178     LDFCKSW &= ~(1<<LDFSCSW); 
+        IN      R16, 0x29
+        ANDI    R16, 0xFE
+        OUT     0x29, R16
+//  179     PORTD &= ~(1<<1);   // Set PD3 high (LED1)
+        CBI     0x0B, 0x01
+//  180 
+//  181     
+//  182 }
+        RJMP    ?Subroutine0
+          CFI EndBlock cfiBlock0
+        REQUIRE _A_LDFCKSW
+        REQUIRE _A_LFFR
+        REQUIRE _A_LFIMR
+        REQUIRE _A_PORTD
+//  183 
+//  184 /*---------------------------------------------------------------------------*/
+//  185 /** \brief <b>ATA_lfRxId1MatchInterrupt_ISR_flash_C</b>
+//  186     shall handle the LF ID1 interrupt triggered when ID1 has been found within
+//  187     the received data stream.
+//  188 
+//  189     \return VOIDFUNC
+//  190 
+//  191     \Derived no
+//  192 
+//  193     \Rationale none
+//  194 
+//  195     \Traceability
+//  196 
+//  197     \StackUsage SU_XXX bytes
+//  198 
+//  199     \image html ATA_lfRxId1MatchInterrupt_ISR_flash_C.png
+//  200     \image rtf ATA_lfRxId1MatchInterrupt_ISR_flash_C.png
+//  201     \n
+//  202 */
+//  203 /*---------------------------------------------------------------------------*/
+//  204 #pragma vector=LFID1INT_vect
+
+        RSEG CODE:CODE:ROOT(1)
+        CALL_GRAPH_ROOT ATA_lfRxId1MatchInterrupt_ISR_flash_C, "interrupt"
+//  205 __interrupt VOIDFUNC ATA_lfRxId1MatchInterrupt_ISR_flash_C(void)
+ATA_lfRxId1MatchInterrupt_ISR_flash_C:
+          CFI Block cfiBlock1 Using cfiCommon0
+          CFI Function ATA_lfRxId1MatchInterrupt_ISR_flash_C
+//  206 {
+        ST      -Y, R24
+          CFI R24 Frame(CFA_Y, -1)
+          CFI CFA_Y Y+1
+        ST      -Y, R31
+          CFI R31 Frame(CFA_Y, -2)
+          CFI CFA_Y Y+2
+        ST      -Y, R30
+          CFI R30 Frame(CFA_Y, -3)
+          CFI CFA_Y Y+3
+        ST      -Y, R3
+          CFI R3 Frame(CFA_Y, -4)
+          CFI CFA_Y Y+4
+        ST      -Y, R2
+          CFI R2 Frame(CFA_Y, -5)
+          CFI CFA_Y Y+5
+        ST      -Y, R1
+          CFI R1 Frame(CFA_Y, -6)
+          CFI CFA_Y Y+6
+        ST      -Y, R0
+          CFI R0 Frame(CFA_Y, -7)
+          CFI CFA_Y Y+7
+        ST      -Y, R23
+          CFI R23 Frame(CFA_Y, -8)
+          CFI CFA_Y Y+8
+        ST      -Y, R22
+          CFI R22 Frame(CFA_Y, -9)
+          CFI CFA_Y Y+9
+        ST      -Y, R21
+          CFI R21 Frame(CFA_Y, -10)
+          CFI CFA_Y Y+10
+        ST      -Y, R20
+          CFI R20 Frame(CFA_Y, -11)
+          CFI CFA_Y Y+11
+        ST      -Y, R19
+          CFI R19 Frame(CFA_Y, -12)
+          CFI CFA_Y Y+12
+        ST      -Y, R18
+          CFI R18 Frame(CFA_Y, -13)
+          CFI CFA_Y Y+13
+        ST      -Y, R17
+          CFI R17 Frame(CFA_Y, -14)
+          CFI CFA_Y Y+14
+        ST      -Y, R16
+          CFI R16 Frame(CFA_Y, -15)
+          CFI CFA_Y Y+15
+        IN      R24, 0x3F
+//  207     /* Update 3D LF Received status */
+//  208     g_sLfRx_flash.bLDFFLags0 |= BM_LFRXCONFIG_PH_FLAGS_0_PHID1F;
+        LDI     R30, LOW(g_sLfRx_flash)
+        LDI     R31, (g_sLfRx_flash) >> 8
+        LD      R16, Z
+        ORI     R16, 0x20
+        ST      Z, R16
+//  209 
+//  210     /* Do event pin handling */
+//  211     if ( g_sEventHandling_flash.bPhRxTx0 & BM_LFRXCONFIG_PH_FLAGS_0_PHID1F )
+        LDS     R16, (g_sEventHandling_flash + 5)
+        SBRS    R16, 5
+        RJMP    ??ATA_lfRxId1MatchInterrupt_ISR_flash_C_0
+//  212     {
+//  213         ATA_systemSetEventPin_flash_ASM();
+          CFI FunCall ATA_systemSetEventPin_flash_ASM
+        CALL    ATA_systemSetEventPin_flash_ASM
+//  214     }
+//  215     ID1_Wake=0x01;
+??ATA_lfRxId1MatchInterrupt_ISR_flash_C_0:
+        LDI     R16, 1
+        STS     ID1_Wake, R16
+//  216     
+//  217     LDFCKSW |= (1<<LDFSCSW); 
+        IN      R16, 0x29
+        ORI     R16, 0x01
+        OUT     0x29, R16
+//  218     while ((LDFCKSW & (1<<LDFSCKS)) ==0);          
+??ATA_lfRxId1MatchInterrupt_ISR_flash_C_1:
+        IN      R16, 0x29
+        SBRS    R16, 1
+        RJMP    ??ATA_lfRxId1MatchInterrupt_ISR_flash_C_1
+//  219     
+//  220     LFFR = 0x0F;//Clear the flags 
+        LDI     R16, 15
+        OUT     0x1C, R16
+//  221     LFIMR |= (1<<LFEOIM);
+        LDS     R16, 399
+        ORI     R16, 0x04
+        STS     399, R16
+//  222     LDFCKSW &= ~(1<<LDFSCSW); 
+        IN      R16, 0x29
+        ANDI    R16, 0xFE
+        OUT     0x29, R16
+//  223     
+//  224 }
+        RJMP    ?Subroutine0
+          CFI EndBlock cfiBlock1
+        REQUIRE _A_LDFCKSW
+        REQUIRE _A_LFFR
+        REQUIRE _A_LFIMR
+//  225 
+//  226 /*---------------------------------------------------------------------------*/
+//  227 /** \brief <b>ATA_lfRxIdFrameEndInterrupt_ISR_flash_C</b>
+//  228     shall handle the LF Frame End interrupt triggered when ID1 has been found within
+//  229     the received data stream.
+//  230 
+//  231     \return VOIDFUNC
+//  232 
+//  233     \Derived no
+//  234 
+//  235     \Rationale none
+//  236 
+//  237     \Traceability
+//  238 
+//  239     \StackUsage SU_XXX bytes
+//  240 
+//  241     \image html ATA_lfRxIdFrameEndInterrupt_ISR_flash_C.png
+//  242     \image rtf ATA_lfRxIdFrameEndInterrupt_ISR_flash_C.png
+//  243     \n
+//  244 */
+//  245 /*---------------------------------------------------------------------------*/
+//  246 #pragma vector=LFFEINT_vect
+
+        RSEG CODE:CODE:ROOT(1)
+        CALL_GRAPH_ROOT ATA_lfRxIdFrameEndInterrupt_ISR_flash_C, "interrupt"
+//  247 __interrupt VOIDFUNC ATA_lfRxIdFrameEndInterrupt_ISR_flash_C(void)
+ATA_lfRxIdFrameEndInterrupt_ISR_flash_C:
+          CFI Block cfiBlock2 Using cfiCommon0
+          CFI Function ATA_lfRxIdFrameEndInterrupt_ISR_flash_C
+//  248 {
+        ST      -Y, R24
+          CFI R24 Frame(CFA_Y, -1)
+          CFI CFA_Y Y+1
+        ST      -Y, R31
+          CFI R31 Frame(CFA_Y, -2)
+          CFI CFA_Y Y+2
+        ST      -Y, R30
+          CFI R30 Frame(CFA_Y, -3)
+          CFI CFA_Y Y+3
+        ST      -Y, R3
+          CFI R3 Frame(CFA_Y, -4)
+          CFI CFA_Y Y+4
+        ST      -Y, R2
+          CFI R2 Frame(CFA_Y, -5)
+          CFI CFA_Y Y+5
+        ST      -Y, R1
+          CFI R1 Frame(CFA_Y, -6)
+          CFI CFA_Y Y+6
+        ST      -Y, R0
+          CFI R0 Frame(CFA_Y, -7)
+          CFI CFA_Y Y+7
+        ST      -Y, R23
+          CFI R23 Frame(CFA_Y, -8)
+          CFI CFA_Y Y+8
+        ST      -Y, R22
+          CFI R22 Frame(CFA_Y, -9)
+          CFI CFA_Y Y+9
+        ST      -Y, R21
+          CFI R21 Frame(CFA_Y, -10)
+          CFI CFA_Y Y+10
+        ST      -Y, R20
+          CFI R20 Frame(CFA_Y, -11)
+          CFI CFA_Y Y+11
+        ST      -Y, R19
+          CFI R19 Frame(CFA_Y, -12)
+          CFI CFA_Y Y+12
+        ST      -Y, R18
+          CFI R18 Frame(CFA_Y, -13)
+          CFI CFA_Y Y+13
+        ST      -Y, R17
+          CFI R17 Frame(CFA_Y, -14)
+          CFI CFA_Y Y+14
+        ST      -Y, R16
+          CFI R16 Frame(CFA_Y, -15)
+          CFI CFA_Y Y+15
+        IN      R24, 0x3F
+//  249    
+//  250   
+//  251   /* Update 3D LF Received status */
+//  252     g_sLfRx_flash.bLDFFLags0 |= BM_LFRXCONFIG_PH_FLAGS_0_PHIDFF;
+        LDI     R30, LOW(g_sLfRx_flash)
+        LDI     R31, (g_sLfRx_flash) >> 8
+        LD      R16, Z
+        ORI     R16, 0x08
+        ST      Z, R16
+//  253 
+//  254     /* Do event pin handling */
+//  255     if ( g_sEventHandling_flash.bPhRxTx0 & BM_LFRXCONFIG_PH_FLAGS_0_PHIDFF )
+        LDS     R16, (g_sEventHandling_flash + 5)
+        SBRS    R16, 3
+        RJMP    ??ATA_lfRxIdFrameEndInterrupt_ISR_flash_C_0
+//  256     {
+//  257         ATA_systemSetEventPin_flash_ASM();
+          CFI FunCall ATA_systemSetEventPin_flash_ASM
+        CALL    ATA_systemSetEventPin_flash_ASM
+//  258     }
+//  259 
+//  260     /* Handle EM Transponder Rx/Tx */
+//  261     if (extReq.tpEmModeConfig)
+??ATA_lfRxIdFrameEndInterrupt_ISR_flash_C_0:
+        LDS     R16, (extReq + 6)
+        TST     R16
+        BREQ    ??ATA_lfRxIdFrameEndInterrupt_ISR_flash_C_1
+//  262     {
+//  263         /* Disable ID Frame interrupt */
+//  264         PHIMR &= ~BM_PHIDFIM;
+        LDS     R16, 472
+        ANDI    R16, 0xF7
+        STS     472, R16
+//  265         PHIDFR = 0x00;          /* disable ID frame length */
+        LDI     R16, 0
+        STS     _A_PHIDFR, R16
+//  266 
+//  267         /**/
+//  268         PHTCR |= BM_CSM;
+        SBI     0x17, 0x07
+//  269 
+//  270         /* Set global variable to EM mode reconfiguration */
+//  271         g_bTpEmTransponderStateIndex_flash = EM_MODE_STATE_RECONFIG;
+        LDI     R16, 1
+        STS     g_bTpEmTransponderStateIndex_flash, R16
+        RJMP    ??ATA_lfRxIdFrameEndInterrupt_ISR_flash_C_2
+//  272 
+//  273     }
+//  274     else /* Normal LF/Transponder processing */
+//  275     {
+//  276         if ( (PHTCR & BM_CSM) != 0x00 )
+??ATA_lfRxIdFrameEndInterrupt_ISR_flash_C_1:
+        SBIS    0x17, 0x07
+        RJMP    ??ATA_lfRxIdFrameEndInterrupt_ISR_flash_C_2
+//  277         {
+//  278             /* Apply shadow register values for ID match */
+//  279             PHCRPH = g_sLfRxIdShadowValues_flash.bPhcrph;
+        LDS     R16, (g_sLfRxIdShadowValues_flash + 3)
+        STS     _A_PHCRPH, R16
+//  280             PHCRPL = g_sLfRxIdShadowValues_flash.bPhcrpl;
+        LDS     R16, (g_sLfRxIdShadowValues_flash + 4)
+        STS     _A_PHCRPL, R16
+//  281             PHCSTH = g_sLfRxIdShadowValues_flash.bPhcsth;
+        LDS     R16, (g_sLfRxIdShadowValues_flash + 5)
+        STS     _A_PHCSTH, R16
+//  282             PHCSTL = g_sLfRxIdShadowValues_flash.bPhcstl;
+        LDS     R16, (g_sLfRxIdShadowValues_flash + 6)
+        STS     _A_PHCSTL, R16
+//  283             PHIDFR = g_sLfRxIdShadowValues_flash.bPhidfr;
+        LDS     R16, g_sLfRxIdShadowValues_flash
+        STS     _A_PHIDFR, R16
+//  284             PHDFR  = g_sLfRxIdShadowValues_flash.bPhdfr;
+        LDS     R16, (g_sLfRxIdShadowValues_flash + 1)
+        STS     _A_PHDFR, R16
+//  285             PHTBLR = g_sLfRxIdShadowValues_flash.bPhtblr;
+        LDS     R16, (g_sLfRxIdShadowValues_flash + 2)
+        STS     _A_PHTBLR, R16
+//  286             PHCRCR = g_sLfRxIdShadowValues_flash.bPhcrcr;
+        LDS     R16, (g_sLfRxIdShadowValues_flash + 7)
+        STS     _A_PHCRCR, R16
+//  287 
+//  288             if ((PRR1 & BM_PRLFTP) == 0x00)
+        SBIC    0x01, 0x06
+        RJMP    ??ATA_lfRxIdFrameEndInterrupt_ISR_flash_C_3
+//  289             {
+//  290                 TPECMR = g_sLfRxIdShadowValues_flash.bTpecmr;
+        LDS     R16, (g_sLfRxIdShadowValues_flash + 8)
+        STS     _A_TPECMR, R16
+//  291                 TPECR1 = g_sLfRxIdShadowValues_flash.bTpecr1;
+        LDS     R16, (g_sLfRxIdShadowValues_flash + 9)
+        STS     _A_TPECR1, R16
+//  292                 TPECR2 = g_sLfRxIdShadowValues_flash.bTpecr2;
+        LDS     R16, (g_sLfRxIdShadowValues_flash + 10)
+        STS     _A_TPECR2, R16
+//  293                 TPECR3 = g_sLfRxIdShadowValues_flash.bTpecr3;
+        LDS     R16, (g_sLfRxIdShadowValues_flash + 11)
+        STS     _A_TPECR3, R16
+//  294                 TPECR4 = g_sLfRxIdShadowValues_flash.bTpecr4;
+        LDS     R16, (g_sLfRxIdShadowValues_flash + 12)
+        STS     _A_TPECR4, R16
+//  295             }
+//  296 
+//  297             /* Only modify CSM bit */
+//  298             if ( (g_sLfRxIdShadowValues_flash.bPhtcr & BM_CSM) == 0x00U )
+??ATA_lfRxIdFrameEndInterrupt_ISR_flash_C_3:
+        LDS     R16, (g_sLfRxIdShadowValues_flash + 13)
+        SBRC    R16, 7
+        RJMP    ??ATA_lfRxIdFrameEndInterrupt_ISR_flash_C_4
+//  299             {
+//  300                 PHTCR &= ~BM_CSM;
+        CBI     0x17, 0x07
+        RJMP    ??ATA_lfRxIdFrameEndInterrupt_ISR_flash_C_2
+//  301             }
+//  302             else
+//  303             {
+//  304                 PHTCR |= BM_CSM;
+??ATA_lfRxIdFrameEndInterrupt_ISR_flash_C_4:
+        SBI     0x17, 0x07
+//  305             }
+//  306           }
+//  307     }
+//  308 }
+??ATA_lfRxIdFrameEndInterrupt_ISR_flash_C_2:
+        RJMP    ?Subroutine0
+          CFI EndBlock cfiBlock2
+        REQUIRE _A_PHIMR
+        REQUIRE _A_PHIDFR
+        REQUIRE _A_PHTCR
+        REQUIRE _A_PHCRPH
+        REQUIRE _A_PHCRPL
+        REQUIRE _A_PHCSTH
+        REQUIRE _A_PHCSTL
+        REQUIRE _A_PHDFR
+        REQUIRE _A_PHTBLR
+        REQUIRE _A_PHCRCR
+        REQUIRE _A_PRR1
+        REQUIRE _A_TPECMR
+        REQUIRE _A_TPECR1
+        REQUIRE _A_TPECR2
+        REQUIRE _A_TPECR3
+        REQUIRE _A_TPECR4
+//  309 
+//  310 /*---------------------------------------------------------------------------*/
+//  311 /** \brief <b>ATA_lfRxEotInterrupt_ISR_flash_C</b>
+//  312     shall handle the LF end of telegram interrupt.
+//  313 
+//  314     \return VOIDFUNC
+//  315 
+//  316     \Derived no
+//  317 
+//  318     \Rationale none
+//  319 
+//  320     \Traceability
+//  321 
+//  322     \StackUsage SU_XXX bytes
+//  323 
+//  324     \image html ATA_lfRxEotInterrupt_ISR_flash_C.png
+//  325     \image rtf ATA_lfRxEotInterrupt_ISR_flash_C.png
+//  326     \n
+//  327 */
+//  328 /*---------------------------------------------------------------------------*/
+//  329 #pragma vector=LFEOT_vect
+
+        RSEG CODE:CODE:ROOT(1)
+        CALL_GRAPH_ROOT ATA_lfRxEotInterrupt_ISR_flash_C, "interrupt"
+//  330 __interrupt VOIDFUNC ATA_lfRxEotInterrupt_ISR_flash_C(void)
+ATA_lfRxEotInterrupt_ISR_flash_C:
+          CFI Block cfiBlock3 Using cfiCommon0
+          CFI Function ATA_lfRxEotInterrupt_ISR_flash_C
+//  331 {
+        ST      -Y, R24
+          CFI R24 Frame(CFA_Y, -1)
+          CFI CFA_Y Y+1
+        ST      -Y, R31
+          CFI R31 Frame(CFA_Y, -2)
+          CFI CFA_Y Y+2
+        ST      -Y, R30
+          CFI R30 Frame(CFA_Y, -3)
+          CFI CFA_Y Y+3
+        ST      -Y, R3
+          CFI R3 Frame(CFA_Y, -4)
+          CFI CFA_Y Y+4
+        ST      -Y, R2
+          CFI R2 Frame(CFA_Y, -5)
+          CFI CFA_Y Y+5
+        ST      -Y, R1
+          CFI R1 Frame(CFA_Y, -6)
+          CFI CFA_Y Y+6
+        ST      -Y, R0
+          CFI R0 Frame(CFA_Y, -7)
+          CFI CFA_Y Y+7
+        ST      -Y, R23
+          CFI R23 Frame(CFA_Y, -8)
+          CFI CFA_Y Y+8
+        ST      -Y, R22
+          CFI R22 Frame(CFA_Y, -9)
+          CFI CFA_Y Y+9
+        ST      -Y, R21
+          CFI R21 Frame(CFA_Y, -10)
+          CFI CFA_Y Y+10
+        ST      -Y, R20
+          CFI R20 Frame(CFA_Y, -11)
+          CFI CFA_Y Y+11
+        ST      -Y, R19
+          CFI R19 Frame(CFA_Y, -12)
+          CFI CFA_Y Y+12
+        ST      -Y, R18
+          CFI R18 Frame(CFA_Y, -13)
+          CFI CFA_Y Y+13
+        ST      -Y, R17
+          CFI R17 Frame(CFA_Y, -14)
+          CFI CFA_Y Y+14
+        ST      -Y, R16
+          CFI R16 Frame(CFA_Y, -15)
+          CFI CFA_Y Y+15
+        IN      R24, 0x3F
+//  332         DDRD |= (1<<1);
+        SBI     0x0A, 0x01
+//  333         PORTD |= (1<<1);   // Set PD3 high (LED1)
+        SBI     0x0B, 0x01
+//  334 
+//  335   /* Check if EOT has been detected */
+//  336     if ( (LFFR & BM_LFEOF) != 0x00U )
+        SBIS    0x1C, 0x02
+        RJMP    ??ATA_lfRxEotInterrupt_ISR_flash_C_0
+//  337     {
+//  338         g_sLfRx_flash.bLfFlags |= BM_LFRXCONFIG_LF_FLAGS_LFEOF;
+        LDI     R30, LOW(g_sLfRx_flash)
+        LDI     R31, (g_sLfRx_flash) >> 8
+        LDD     R16, Z+2
+        ORI     R16, 0x04
+        STD     Z+2, R16
+//  339 
+//  340         /* Do event pin handling */
+//  341         if ( g_sEventHandling_flash.bLf3dRx & BM_LFRXCONFIG_LF_FLAGS_LFEOF )
+        LDS     R16, (g_sEventHandling_flash + 7)
+        SBRS    R16, 2
+        RJMP    ??ATA_lfRxEotInterrupt_ISR_flash_C_1
+//  342         {
+//  343             ATA_systemSetEventPin_flash_ASM();
+          CFI FunCall ATA_systemSetEventPin_flash_ASM
+        CALL    ATA_systemSetEventPin_flash_ASM
+//  344         }
+//  345 
+//  346         /* Clear flag */
+//  347         LFFR |= BM_LFEOF;
+??ATA_lfRxEotInterrupt_ISR_flash_C_1:
+        SBI     0x1C, 0x02
+//  348     }
+//  349 
+//  350     /* Check if a timeout has been detected */
+//  351     if ( (LFFR & BM_LFTOF) != 0x00U )
+??ATA_lfRxEotInterrupt_ISR_flash_C_0:
+        SBIS    0x1C, 0x03
+        RJMP    ??ATA_lfRxEotInterrupt_ISR_flash_C_2
+//  352     {
+//  353         g_sLfRx_flash.bLfFlags |= BM_LFRXCONFIG_LF_FLAGS_LFTOF;
+        LDI     R30, LOW(g_sLfRx_flash)
+        LDI     R31, (g_sLfRx_flash) >> 8
+        LDD     R16, Z+2
+        ORI     R16, 0x08
+        STD     Z+2, R16
+//  354 
+//  355         /* Do event pin handling */
+//  356         if ( g_sEventHandling_flash.bLf3dRx & BM_LFRXCONFIG_LF_FLAGS_LFTOF )
+        LDS     R16, (g_sEventHandling_flash + 7)
+        SBRS    R16, 3
+        RJMP    ??ATA_lfRxEotInterrupt_ISR_flash_C_3
+//  357         {
+//  358             ATA_systemSetEventPin_flash_ASM();
+          CFI FunCall ATA_systemSetEventPin_flash_ASM
+        CALL    ATA_systemSetEventPin_flash_ASM
+//  359         }
+//  360 
+//  361         /* Clear flag */
+//  362         LFFR |= BM_LFTOF;
+??ATA_lfRxEotInterrupt_ISR_flash_C_3:
+        SBI     0x1C, 0x03
+//  363     }
+//  364 
+//  365     /* Check if a CRC error has been detected */
+//  366     if ( (PHFR & BM_CRCEF) != 0x00U )
+??ATA_lfRxEotInterrupt_ISR_flash_C_2:
+        SBIS    0x1B, 0x00
+        RJMP    ??ATA_lfRxEotInterrupt_ISR_flash_C_4
+//  367     {
+//  368         g_sLfRx_flash.bLDFFLags0 |= BM_LFRXCONFIG_PH_FLAGS_0_CRCEF;
+        LDI     R30, LOW(g_sLfRx_flash)
+        LDI     R31, (g_sLfRx_flash) >> 8
+        LD      R16, Z
+        ORI     R16, 0x01
+        ST      Z, R16
+//  369 
+//  370         /* Do event pin handling */
+//  371         if ( g_sEventHandling_flash.bPhRxTx0 & BM_LFRXCONFIG_PH_FLAGS_0_CRCEF )
+        LDS     R16, (g_sEventHandling_flash + 5)
+        SBRS    R16, 0
+        RJMP    ??ATA_lfRxEotInterrupt_ISR_flash_C_5
+//  372         {
+//  373             ATA_systemSetEventPin_flash_ASM();
+          CFI FunCall ATA_systemSetEventPin_flash_ASM
+        CALL    ATA_systemSetEventPin_flash_ASM
+//  374         }
+//  375 
+//  376         /* Clear flag */
+//  377         PHFR |= BM_CRCEF;
+??ATA_lfRxEotInterrupt_ISR_flash_C_5:
+        SBI     0x1B, 0x00
+//  378     }
+//  379  
+//  380     LF_DecErrFlag = 0x01; 
+??ATA_lfRxEotInterrupt_ISR_flash_C_4:
+        LDI     R16, 1
+        STS     LF_DecErrFlag, R16
+//  381     LFFR = 0x0F;//Clear the flags 
+        LDI     R16, 15
+        OUT     0x1C, R16
+//  382     LFIMR =0;
+        LDI     R16, 0
+        STS     _A_LFIMR, R16
+//  383     
+//  384 
+//  385 }
+        RJMP    ?Subroutine0
+          CFI EndBlock cfiBlock3
+        REQUIRE _A_DDRD
+        REQUIRE _A_PORTD
+        REQUIRE _A_LFFR
+        REQUIRE _A_PHFR
+        REQUIRE _A_LFIMR
+//  386 
+//  387 
+//  388 /*---------------------------------------------------------------------------*/
+//  389 /** \brief <b>ATA_lfRxBitCountReachedInterrupt_ISR_flash_C</b>
+//  390     shall handle the Data Frame End interrupt and the Telegram Bit Length
+//  391     reached interrupt.
+//  392 
+//  393     \return VOIDFUNC
+//  394 
+//  395     \Derived no
+//  396 
+//  397     \Rationale none
+//  398 
+//  399     \Traceability
+//  400 
+//  401     \StackUsage SU_XXX bytes
+//  402 
+//  403     \image html ATA_lfRxDataFrameEndInterrupt_ISR_flash_C.png
+//  404     \image rtf ATA_lfRxDataFrameEndInterrupt_ISR_flash_C.png
+//  405     \n
+//  406 */
+//  407 /*---------------------------------------------------------------------------*/
+//  408 #pragma vector=LFBCR_vect
+
+        RSEG CODE:CODE:ROOT(1)
+        CALL_GRAPH_ROOT ATA_lfRxBitCountReachedInterrupt_ISR_flash_C, "interrupt"
+//  409 __interrupt VOIDFUNC ATA_lfRxBitCountReachedInterrupt_ISR_flash_C(void)
+ATA_lfRxBitCountReachedInterrupt_ISR_flash_C:
+          CFI Block cfiBlock4 Using cfiCommon0
+          CFI Function ATA_lfRxBitCountReachedInterrupt_ISR_flash_C
+//  410 {
+        ST      -Y, R24
+          CFI R24 Frame(CFA_Y, -1)
+          CFI CFA_Y Y+1
+        ST      -Y, R31
+          CFI R31 Frame(CFA_Y, -2)
+          CFI CFA_Y Y+2
+        ST      -Y, R30
+          CFI R30 Frame(CFA_Y, -3)
+          CFI CFA_Y Y+3
+        ST      -Y, R3
+          CFI R3 Frame(CFA_Y, -4)
+          CFI CFA_Y Y+4
+        ST      -Y, R2
+          CFI R2 Frame(CFA_Y, -5)
+          CFI CFA_Y Y+5
+        ST      -Y, R1
+          CFI R1 Frame(CFA_Y, -6)
+          CFI CFA_Y Y+6
+        ST      -Y, R0
+          CFI R0 Frame(CFA_Y, -7)
+          CFI CFA_Y Y+7
+        ST      -Y, R23
+          CFI R23 Frame(CFA_Y, -8)
+          CFI CFA_Y Y+8
+        ST      -Y, R22
+          CFI R22 Frame(CFA_Y, -9)
+          CFI CFA_Y Y+9
+        ST      -Y, R21
+          CFI R21 Frame(CFA_Y, -10)
+          CFI CFA_Y Y+10
+        ST      -Y, R20
+          CFI R20 Frame(CFA_Y, -11)
+          CFI CFA_Y Y+11
+        ST      -Y, R19
+          CFI R19 Frame(CFA_Y, -12)
+          CFI CFA_Y Y+12
+        ST      -Y, R18
+          CFI R18 Frame(CFA_Y, -13)
+          CFI CFA_Y Y+13
+        ST      -Y, R17
+          CFI R17 Frame(CFA_Y, -14)
+          CFI CFA_Y Y+14
+        ST      -Y, R16
+          CFI R16 Frame(CFA_Y, -15)
+          CFI CFA_Y Y+15
+        IN      R24, 0x3F
+//  411 if ((PORTC & 0x01)==0x01) PORTC &= ~(1<<PORTC0);
+        SBIS    0x08, 0x00
+        RJMP    ??ATA_lfRxBitCountReachedInterrupt_ISR_flash_C_0
+        CBI     0x08, 0x00
+        RJMP    ??ATA_lfRxBitCountReachedInterrupt_ISR_flash_C_1
+//  412     else PORTC |= (1<<PORTC0);       
+??ATA_lfRxBitCountReachedInterrupt_ISR_flash_C_0:
+        SBI     0x08, 0x00
+//  413   if( extReq.lfrxRftxConfig & BIT_MASK_0 )
+??ATA_lfRxBitCountReachedInterrupt_ISR_flash_C_1:
+        LDS     R16, (extReq + 5)
+        SBRS    R16, 0
+        RJMP    ??ATA_lfRxBitCountReachedInterrupt_ISR_flash_C_2
+//  414     {
+//  415         ATA_lfRxBitCntReachedImmo_flash_C();
+          CFI FunCall ATA_lfRxBitCntReachedImmo_flash_C
+        CALL    ATA_lfRxBitCntReachedImmo_flash_C
+        RJMP    ??ATA_lfRxBitCountReachedInterrupt_ISR_flash_C_3
+//  416     }
+//  417     else if ( extReq.tpEmModeConfig == 0x01 )
+??ATA_lfRxBitCountReachedInterrupt_ISR_flash_C_2:
+        LDS     R16, (extReq + 6)
+        CPI     R16, 1
+        BRNE    ??ATA_lfRxBitCountReachedInterrupt_ISR_flash_C_4
+//  418     {
+//  419 
+//  420         /* Transmission finished, go back to init state */
+//  421         if ((TPCR3 & BM_TPTD) != 0x00U)
+        LDS     R16, _A_TPCR3
+        SBRS    R16, 0
+        RJMP    ??ATA_lfRxBitCountReachedInterrupt_ISR_flash_C_5
+//  422         {
+//  423             g_bTpEmTransponderStateIndex_flash = EM_MODE_STATE_INIT;
+        LDI     R16, 0
+        STS     g_bTpEmTransponderStateIndex_flash, R16
+//  424 
+//  425             /* Stop transmission. */
+//  426             TPCR3 &= ~BM_TPTD;
+        LDS     R16, 369
+        ANDI    R16, 0xFE
+        STS     369, R16
+        RJMP    ??ATA_lfRxBitCountReachedInterrupt_ISR_flash_C_6
+//  427         }
+//  428         /* Reception finished */
+//  429         else if ((TPCR3 & BM_TPRD) != 0x00U)
+??ATA_lfRxBitCountReachedInterrupt_ISR_flash_C_5:
+        LDS     R16, _A_TPCR3
+        SBRS    R16, 1
+        RJMP    ??ATA_lfRxBitCountReachedInterrupt_ISR_flash_C_6
+//  430         {
+//  431             /* Set global variable to EM mode processing */
+//  432             g_bTpEmTransponderStateIndex_flash = EM_MODE_STATE_PROCESSING;
+        LDI     R16, 2
+        STS     g_bTpEmTransponderStateIndex_flash, R16
+//  433         }
+//  434 
+//  435         /* Clear Telegram Bit length reached flag, since this interrupt is
+//  436            enabled. PHDFF interrupt flag is not used for EM mode. */
+//  437         PHFR |= BM_PHTBLF;
+??ATA_lfRxBitCountReachedInterrupt_ISR_flash_C_6:
+        SBI     0x1B, 0x01
+        RJMP    ??ATA_lfRxBitCountReachedInterrupt_ISR_flash_C_3
+//  438     }
+//  439     else
+//  440     {
+//  441         /* Check if Data Frame End has been detected */
+//  442         if ( (PHFR & BM_PHDFF) != 0x00U )
+??ATA_lfRxBitCountReachedInterrupt_ISR_flash_C_4:
+        SBIS    0x1B, 0x02
+        RJMP    ??ATA_lfRxBitCountReachedInterrupt_ISR_flash_C_7
+//  443         {
+//  444             g_sLfRx_flash.bLDFFLags0 |= BM_LFRXCONFIG_PH_FLAGS_0_PHDFF;
+        LDI     R30, LOW(g_sLfRx_flash)
+        LDI     R31, (g_sLfRx_flash) >> 8
+        LD      R16, Z
+        ORI     R16, 0x04
+        ST      Z, R16
+//  445 
+//  446             /* Do event pin handling */
+//  447             if ( g_sEventHandling_flash.bPhRxTx0 & BM_LFRXCONFIG_PH_FLAGS_0_PHDFF )
+        LDS     R16, (g_sEventHandling_flash + 5)
+        SBRS    R16, 2
+        RJMP    ??ATA_lfRxBitCountReachedInterrupt_ISR_flash_C_8
+//  448             {
+//  449                 ATA_systemSetEventPin_flash_ASM();
+          CFI FunCall ATA_systemSetEventPin_flash_ASM
+        CALL    ATA_systemSetEventPin_flash_ASM
+//  450             }
+//  451 
+//  452             /* Clear flag */
+//  453             PHFR |= BM_PHDFF;
+??ATA_lfRxBitCountReachedInterrupt_ISR_flash_C_8:
+        SBI     0x1B, 0x02
+//  454         }
+//  455 
+//  456         /* Check if Telegram Bit Length reached has been detected */
+//  457         if ( (PHFR & BM_PHTBLF) != 0x00U )
+??ATA_lfRxBitCountReachedInterrupt_ISR_flash_C_7:
+        SBIS    0x1B, 0x01
+        RJMP    ??ATA_lfRxBitCountReachedInterrupt_ISR_flash_C_9
+//  458         {
+//  459             g_sLfRx_flash.bLDFFLags0 |= BM_LFRXCONFIG_PH_FLAGS_0_PHTBLF;
+        LDI     R30, LOW(g_sLfRx_flash)
+        LDI     R31, (g_sLfRx_flash) >> 8
+        LD      R16, Z
+        ORI     R16, 0x02
+        ST      Z, R16
+//  460 
+//  461             /* Do event pin handling */
+//  462             if ( g_sEventHandling_flash.bPhRxTx0 & BM_LFRXCONFIG_PH_FLAGS_0_PHTBLF )
+        LDS     R16, (g_sEventHandling_flash + 5)
+        SBRS    R16, 1
+        RJMP    ??ATA_lfRxBitCountReachedInterrupt_ISR_flash_C_10
+//  463             {
+//  464                 ATA_systemSetEventPin_flash_ASM();
+          CFI FunCall ATA_systemSetEventPin_flash_ASM
+        CALL    ATA_systemSetEventPin_flash_ASM
+//  465             }
+//  466 
+//  467             /* Clear flag */
+//  468             PHFR |= BM_PHTBLF;
+??ATA_lfRxBitCountReachedInterrupt_ISR_flash_C_10:
+        SBI     0x1B, 0x01
+//  469 
+//  470             /* Set next shadow configuration for next EOT. */
+//  471             if (g_bLfRxEotShadowIndex_flash >= ATA_SYSVER_MAX_LF_CONT_EOT_TELEGRAM_DEFS)
+        LDS     R16, g_bLfRxEotShadowIndex_flash
+        CPI     R16, 4
+        BRCS    ??ATA_lfRxBitCountReachedInterrupt_ISR_flash_C_11
+//  472             {
+//  473                 g_bLfRxEotShadowIndex_flash = ATA_SYSVER_MAX_LF_CONT_EOT_TELEGRAM_DEFS - 0x01U;
+        LDI     R16, 3
+        STS     g_bLfRxEotShadowIndex_flash, R16
+//  474             }
+//  475 
+//  476             /**/
+//  477             if ( (PHTCR & BM_CSM) != 0x00 )
+??ATA_lfRxBitCountReachedInterrupt_ISR_flash_C_11:
+        SBIS    0x17, 0x07
+        RJMP    ??ATA_lfRxBitCountReachedInterrupt_ISR_flash_C_9
+//  478             {
+//  479                 PHCRPH = g_sLfRxEotShadowValues_flash[g_bLfRxEotShadowIndex_flash].bPhcrph;
+        LDS     R16, g_bLfRxEotShadowIndex_flash
+        LDI     R17, 16
+        MUL     R16, R17
+        MOVW    R31:R30, R1:R0
+        SUBI    R30, LOW((-(g_sLfRxEotShadowValues_flash) & 0xFFFF))
+        SBCI    R31, (-(g_sLfRxEotShadowValues_flash) & 0xFFFF) >> 8
+        LDD     R16, Z+3
+        STS     _A_PHCRPH, R16
+//  480                 PHCRPL = g_sLfRxEotShadowValues_flash[g_bLfRxEotShadowIndex_flash].bPhcrpl;
+        LDS     R16, g_bLfRxEotShadowIndex_flash
+        MUL     R16, R17
+        MOVW    R31:R30, R1:R0
+        SUBI    R30, LOW((-(g_sLfRxEotShadowValues_flash) & 0xFFFF))
+        SBCI    R31, (-(g_sLfRxEotShadowValues_flash) & 0xFFFF) >> 8
+        LDD     R16, Z+4
+        STS     _A_PHCRPL, R16
+//  481                 PHCSTH = g_sLfRxEotShadowValues_flash[g_bLfRxEotShadowIndex_flash].bPhcsth;
+        LDS     R16, g_bLfRxEotShadowIndex_flash
+        MUL     R16, R17
+        MOVW    R31:R30, R1:R0
+        SUBI    R30, LOW((-(g_sLfRxEotShadowValues_flash) & 0xFFFF))
+        SBCI    R31, (-(g_sLfRxEotShadowValues_flash) & 0xFFFF) >> 8
+        LDD     R16, Z+5
+        STS     _A_PHCSTH, R16
+//  482                 PHCSTL = g_sLfRxEotShadowValues_flash[g_bLfRxEotShadowIndex_flash].bPhcstl;
+        LDS     R16, g_bLfRxEotShadowIndex_flash
+        MUL     R16, R17
+        MOVW    R31:R30, R1:R0
+        SUBI    R30, LOW((-(g_sLfRxEotShadowValues_flash) & 0xFFFF))
+        SBCI    R31, (-(g_sLfRxEotShadowValues_flash) & 0xFFFF) >> 8
+        LDD     R16, Z+6
+        STS     _A_PHCSTL, R16
+//  483 
+//  484                 /* Load first shadow register values which DO NOT require a clock switch */
+//  485                 PHIDFR = g_sLfRxEotShadowValues_flash[g_bLfRxEotShadowIndex_flash].bPhidfr;
+        LDS     R16, g_bLfRxEotShadowIndex_flash
+        MUL     R16, R17
+        MOVW    R31:R30, R1:R0
+        SUBI    R30, LOW((-(g_sLfRxEotShadowValues_flash) & 0xFFFF))
+        SBCI    R31, (-(g_sLfRxEotShadowValues_flash) & 0xFFFF) >> 8
+        LD      R16, Z
+        STS     _A_PHIDFR, R16
+//  486                 PHDFR  = g_sLfRxEotShadowValues_flash[g_bLfRxEotShadowIndex_flash].bPhdfr;
+        LDS     R16, g_bLfRxEotShadowIndex_flash
+        MUL     R16, R17
+        MOVW    R31:R30, R1:R0
+        SUBI    R30, LOW((-(g_sLfRxEotShadowValues_flash) & 0xFFFF))
+        SBCI    R31, (-(g_sLfRxEotShadowValues_flash) & 0xFFFF) >> 8
+        LDD     R16, Z+1
+        STS     _A_PHDFR, R16
+//  487                 PHTBLR = g_sLfRxEotShadowValues_flash[g_bLfRxEotShadowIndex_flash].bPhtblr;
+        LDS     R16, g_bLfRxEotShadowIndex_flash
+        MUL     R16, R17
+        MOVW    R31:R30, R1:R0
+        SUBI    R30, LOW((-(g_sLfRxEotShadowValues_flash) & 0xFFFF))
+        SBCI    R31, (-(g_sLfRxEotShadowValues_flash) & 0xFFFF) >> 8
+        LDD     R16, Z+2
+        STS     _A_PHTBLR, R16
+//  488                 PHCRCR = g_sLfRxEotShadowValues_flash[g_bLfRxEotShadowIndex_flash].bPhcrcr;
+        LDS     R16, g_bLfRxEotShadowIndex_flash
+        MUL     R16, R17
+        MOVW    R31:R30, R1:R0
+        SUBI    R30, LOW((-(g_sLfRxEotShadowValues_flash) & 0xFFFF))
+        SBCI    R31, (-(g_sLfRxEotShadowValues_flash) & 0xFFFF) >> 8
+        LDD     R16, Z+7
+        STS     _A_PHCRCR, R16
+//  489 
+//  490                 if ((PRR1 & BM_PRLFTP) == 0x00)
+        SBIC    0x01, 0x06
+        RJMP    ??ATA_lfRxBitCountReachedInterrupt_ISR_flash_C_12
+//  491                 {
+//  492                     TPECMR = g_sLfRxEotShadowValues_flash[g_bLfRxEotShadowIndex_flash].bTpecmr;
+        LDS     R16, g_bLfRxEotShadowIndex_flash
+        MUL     R16, R17
+        MOVW    R31:R30, R1:R0
+        SUBI    R30, LOW((-(g_sLfRxEotShadowValues_flash) & 0xFFFF))
+        SBCI    R31, (-(g_sLfRxEotShadowValues_flash) & 0xFFFF) >> 8
+        LDD     R16, Z+8
+        STS     _A_TPECMR, R16
+//  493                     TPECR1 = g_sLfRxEotShadowValues_flash[g_bLfRxEotShadowIndex_flash].bTpecr1;
+        LDS     R16, g_bLfRxEotShadowIndex_flash
+        MUL     R16, R17
+        MOVW    R31:R30, R1:R0
+        SUBI    R30, LOW((-(g_sLfRxEotShadowValues_flash) & 0xFFFF))
+        SBCI    R31, (-(g_sLfRxEotShadowValues_flash) & 0xFFFF) >> 8
+        LDD     R16, Z+9
+        STS     _A_TPECR1, R16
+//  494                     TPECR2 = g_sLfRxEotShadowValues_flash[g_bLfRxEotShadowIndex_flash].bTpecr2;
+        LDS     R16, g_bLfRxEotShadowIndex_flash
+        MUL     R16, R17
+        MOVW    R31:R30, R1:R0
+        SUBI    R30, LOW((-(g_sLfRxEotShadowValues_flash) & 0xFFFF))
+        SBCI    R31, (-(g_sLfRxEotShadowValues_flash) & 0xFFFF) >> 8
+        LDD     R16, Z+10
+        STS     _A_TPECR2, R16
+//  495                     TPECR3 = g_sLfRxEotShadowValues_flash[g_bLfRxEotShadowIndex_flash].bTpecr3;
+        LDS     R16, g_bLfRxEotShadowIndex_flash
+        MUL     R16, R17
+        MOVW    R31:R30, R1:R0
+        SUBI    R30, LOW((-(g_sLfRxEotShadowValues_flash) & 0xFFFF))
+        SBCI    R31, (-(g_sLfRxEotShadowValues_flash) & 0xFFFF) >> 8
+        LDD     R16, Z+11
+        STS     _A_TPECR3, R16
+//  496                     TPECR4 = g_sLfRxEotShadowValues_flash[g_bLfRxEotShadowIndex_flash].bTpecr4;
+        LDS     R16, g_bLfRxEotShadowIndex_flash
+        MUL     R16, R17
+        MOVW    R31:R30, R1:R0
+        SUBI    R30, LOW((-(g_sLfRxEotShadowValues_flash) & 0xFFFF))
+        SBCI    R31, (-(g_sLfRxEotShadowValues_flash) & 0xFFFF) >> 8
+        LDD     R16, Z+12
+        STS     _A_TPECR4, R16
+//  497                 }
+//  498 
+//  499                 /* Only modify CSM bit */
+//  500                 if ( (g_sLfRxEotShadowValues_flash[g_bLfRxEotShadowIndex_flash].bPhtcr) == 0x00U )
+??ATA_lfRxBitCountReachedInterrupt_ISR_flash_C_12:
+        LDS     R16, g_bLfRxEotShadowIndex_flash
+        MUL     R16, R17
+        MOVW    R31:R30, R1:R0
+        SUBI    R30, LOW((-(g_sLfRxEotShadowValues_flash) & 0xFFFF))
+        SBCI    R31, (-(g_sLfRxEotShadowValues_flash) & 0xFFFF) >> 8
+        LDD     R16, Z+13
+        TST     R16
+        BRNE    ??ATA_lfRxBitCountReachedInterrupt_ISR_flash_C_13
+//  501                 {
+//  502                     PHTCR &= ~BM_CSM;
+        CBI     0x17, 0x07
+        RJMP    ??ATA_lfRxBitCountReachedInterrupt_ISR_flash_C_14
+//  503                 }
+//  504                 else
+//  505                 {
+//  506                     PHTCR |= BM_CSM;
+??ATA_lfRxBitCountReachedInterrupt_ISR_flash_C_13:
+        SBI     0x17, 0x07
+//  507                 }
+//  508 
+//  509                 /**/
+//  510                 g_bLfRxEotShadowIndex_flash++;
+??ATA_lfRxBitCountReachedInterrupt_ISR_flash_C_14:
+        LDS     R16, g_bLfRxEotShadowIndex_flash
+        INC     R16
+        STS     g_bLfRxEotShadowIndex_flash, R16
+//  511             }
+//  512         }
+//  513 
+//  514         /* Check if a CRC error has been detected */
+//  515         if ( (PHFR & BM_CRCEF) != 0x00U )
+??ATA_lfRxBitCountReachedInterrupt_ISR_flash_C_9:
+        SBIS    0x1B, 0x00
+        RJMP    ??ATA_lfRxBitCountReachedInterrupt_ISR_flash_C_3
+//  516         {
+//  517             g_sLfRx_flash.bLDFFLags0 |= BM_LFRXCONFIG_PH_FLAGS_0_CRCEF;
+        LDI     R30, LOW(g_sLfRx_flash)
+        LDI     R31, (g_sLfRx_flash) >> 8
+        LD      R16, Z
+        ORI     R16, 0x01
+        ST      Z, R16
+//  518 
+//  519             /* Do event pin handling */
+//  520             if ( g_sEventHandling_flash.bPhRxTx0 & BM_LFRXCONFIG_PH_FLAGS_0_CRCEF )
+        LDS     R16, (g_sEventHandling_flash + 5)
+        SBRS    R16, 0
+        RJMP    ??ATA_lfRxBitCountReachedInterrupt_ISR_flash_C_15
+//  521             {
+//  522                 ATA_systemSetEventPin_flash_ASM();
+          CFI FunCall ATA_systemSetEventPin_flash_ASM
+        CALL    ATA_systemSetEventPin_flash_ASM
+//  523             }
+//  524 
+//  525             /* Clear flag */
+//  526             PHFR |= BM_CRCEF;
+??ATA_lfRxBitCountReachedInterrupt_ISR_flash_C_15:
+        SBI     0x1B, 0x00
+//  527         }
+//  528     }
+//  529 }
+??ATA_lfRxBitCountReachedInterrupt_ISR_flash_C_3:
+        RJMP    ?Subroutine0
+          CFI EndBlock cfiBlock4
+        REQUIRE _A_PORTC
+        REQUIRE _A_TPCR3
+        REQUIRE _A_PHFR
+        REQUIRE _A_PHTCR
+        REQUIRE _A_PHCRPH
+        REQUIRE _A_PHCRPL
+        REQUIRE _A_PHCSTH
+        REQUIRE _A_PHCSTL
+        REQUIRE _A_PHIDFR
+        REQUIRE _A_PHDFR
+        REQUIRE _A_PHTBLR
+        REQUIRE _A_PHCRCR
+        REQUIRE _A_PRR1
+        REQUIRE _A_TPECMR
+        REQUIRE _A_TPECR1
+        REQUIRE _A_TPECR2
+        REQUIRE _A_TPECR3
+        REQUIRE _A_TPECR4
+//  530 
+//  531 
+//  532 /*---------------------------------------------------------------------------*/
+//  533 /** \brief <b>ATA_lfRxLDFIMfoErrorInterrupt_ISR_flash_C</b>
+//  534     shall handle an overflow/underflow error of the PH FIFO.
+//  535 
+//  536     \return VOIDFUNC
+//  537 
+//  538     \Derived no
+//  539 
+//  540     \Rationale none
+//  541 
+//  542     \Traceability
+//  543 
+//  544     \StackUsage SU_XXX bytes
+//  545 
+//  546     \image html ATA_lfRxLDFIMfoErrorInterrupt_ISR_flash_C.png
+//  547     \image rtf ATA_lfRxLDFIMfoErrorInterrupt_ISR_flash_C.png
+//  548     \n
+//  549 */
+//  550 /*---------------------------------------------------------------------------*/
+//  551 #pragma vector=LDFOUE_vect
+
+        RSEG CODE:CODE:ROOT(1)
+        CALL_GRAPH_ROOT ATA_lfRxLDFIMfoErrorInterrupt_ISR_flash_C, "interrupt"
+//  552 __interrupt VOIDFUNC ATA_lfRxLDFIMfoErrorInterrupt_ISR_flash_C(void)
+ATA_lfRxLDFIMfoErrorInterrupt_ISR_flash_C:
+          CFI Block cfiBlock5 Using cfiCommon0
+          CFI Function ATA_lfRxLDFIMfoErrorInterrupt_ISR_flash_C
+//  553 {
+        ST      -Y, R24
+          CFI R24 Frame(CFA_Y, -1)
+          CFI CFA_Y Y+1
+        ST      -Y, R31
+          CFI R31 Frame(CFA_Y, -2)
+          CFI CFA_Y Y+2
+        ST      -Y, R30
+          CFI R30 Frame(CFA_Y, -3)
+          CFI CFA_Y Y+3
+        ST      -Y, R3
+          CFI R3 Frame(CFA_Y, -4)
+          CFI CFA_Y Y+4
+        ST      -Y, R2
+          CFI R2 Frame(CFA_Y, -5)
+          CFI CFA_Y Y+5
+        ST      -Y, R1
+          CFI R1 Frame(CFA_Y, -6)
+          CFI CFA_Y Y+6
+        ST      -Y, R0
+          CFI R0 Frame(CFA_Y, -7)
+          CFI CFA_Y Y+7
+        ST      -Y, R23
+          CFI R23 Frame(CFA_Y, -8)
+          CFI CFA_Y Y+8
+        ST      -Y, R22
+          CFI R22 Frame(CFA_Y, -9)
+          CFI CFA_Y Y+9
+        ST      -Y, R21
+          CFI R21 Frame(CFA_Y, -10)
+          CFI CFA_Y Y+10
+        ST      -Y, R20
+          CFI R20 Frame(CFA_Y, -11)
+          CFI CFA_Y Y+11
+        ST      -Y, R19
+          CFI R19 Frame(CFA_Y, -12)
+          CFI CFA_Y Y+12
+        ST      -Y, R18
+          CFI R18 Frame(CFA_Y, -13)
+          CFI CFA_Y Y+13
+        ST      -Y, R17
+          CFI R17 Frame(CFA_Y, -14)
+          CFI CFA_Y Y+14
+        ST      -Y, R16
+          CFI R16 Frame(CFA_Y, -15)
+          CFI CFA_Y Y+15
+        IN      R24, 0x3F
+//  554     /* Check if EOT has been detected */
+//  555     g_sLfRx_flash.bLDFFLags1 |= BM_LFRXCONFIG_PH_FLAGS_1_OUFLF;
+        LDI     R30, LOW(g_sLfRx_flash)
+        LDI     R31, (g_sLfRx_flash) >> 8
+        LDD     R16, Z+1
+        ORI     R16, 0x02
+        STD     Z+1, R16
+//  556 
+//  557     /* Do event pin handling */
+//  558     if ( g_sEventHandling_flash.bPhRxTx1 & BM_LFRXCONFIG_PH_FLAGS_1_OUFLF )
+        LDS     R16, (g_sEventHandling_flash + 6)
+        SBRS    R16, 1
+        RJMP    ??ATA_lfRxLDFIMfoErrorInterrupt_ISR_flash_C_0
+//  559     {
+//  560         ATA_systemSetEventPin_flash_ASM();
+          CFI FunCall ATA_systemSetEventPin_flash_ASM
+        CALL    ATA_systemSetEventPin_flash_ASM
+//  561     }
+//  562 }
+??ATA_lfRxLDFIMfoErrorInterrupt_ISR_flash_C_0:
+          CFI EndBlock cfiBlock5
+        REQUIRE ?Subroutine0
+        ;               // Fall through to label ?Subroutine0
+
+        RSEG CODE:CODE:NOROOT(1)
+?Subroutine0:
+          CFI Block cfiBlock6 Using cfiCommon0
+          CFI NoFunction
+          CFI CFA_Y Y+15
+          CFI R0 Frame(CFA_Y, -7)
+          CFI R1 Frame(CFA_Y, -6)
+          CFI R2 Frame(CFA_Y, -5)
+          CFI R3 Frame(CFA_Y, -4)
+          CFI R16 Frame(CFA_Y, -15)
+          CFI R17 Frame(CFA_Y, -14)
+          CFI R18 Frame(CFA_Y, -13)
+          CFI R19 Frame(CFA_Y, -12)
+          CFI R20 Frame(CFA_Y, -11)
+          CFI R21 Frame(CFA_Y, -10)
+          CFI R22 Frame(CFA_Y, -9)
+          CFI R23 Frame(CFA_Y, -8)
+          CFI R24 Frame(CFA_Y, -1)
+          CFI R30 Frame(CFA_Y, -3)
+          CFI R31 Frame(CFA_Y, -2)
+        OUT     0x3F, R24
+        LD      R16, Y+
+          CFI CFA_Y Y+14
+          CFI R16 SameValue
+        LD      R17, Y+
+          CFI CFA_Y Y+13
+          CFI R17 SameValue
+        LD      R18, Y+
+          CFI CFA_Y Y+12
+          CFI R18 SameValue
+        LD      R19, Y+
+          CFI CFA_Y Y+11
+          CFI R19 SameValue
+        LD      R20, Y+
+          CFI CFA_Y Y+10
+          CFI R20 SameValue
+        LD      R21, Y+
+          CFI CFA_Y Y+9
+          CFI R21 SameValue
+        LD      R22, Y+
+          CFI CFA_Y Y+8
+          CFI R22 SameValue
+        LD      R23, Y+
+          CFI CFA_Y Y+7
+          CFI R23 SameValue
+        LD      R0, Y+
+          CFI CFA_Y Y+6
+          CFI R0 SameValue
+        LD      R1, Y+
+          CFI CFA_Y Y+5
+          CFI R1 SameValue
+        LD      R2, Y+
+          CFI CFA_Y Y+4
+          CFI R2 SameValue
+        LD      R3, Y+
+          CFI CFA_Y Y+3
+          CFI R3 SameValue
+        LD      R30, Y+
+          CFI CFA_Y Y+2
+          CFI R30 SameValue
+        LD      R31, Y+
+          CFI CFA_Y Y+1
+          CFI R31 SameValue
+        LD      R24, Y+
+          CFI CFA_Y Y+0
+          CFI R24 SameValue
+        RETI
+          CFI EndBlock cfiBlock6
+//  563 
+//  564 /*---------------------------------------------------------------------------*/
+//  565 /** \brief <b>ATA_lfRxLDFIMfoFillLevelReachedInterrupt_ISR_flash_C</b>
+//  566     shall handle the PH FIFO fill level reached interrupt.
+//  567 
+//  568     \return VOIDFUNC
+//  569 
+//  570     \Derived no
+//  571 
+//  572     \Rationale none
+//  573 
+//  574     \Traceability
+//  575 
+//  576     \StackUsage SU_XXX bytes
+//  577 
+//  578     \image html ATA_lfRxLDFIMfoFillLevelReachedInterrupt_ISR_flash_C.png
+//  579     \image rtf ATA_lfRxLDFIMfoFillLevelReachedInterrupt_ISR_flash_C.png
+//  580     \n
+//  581 */
+//  582 /*---------------------------------------------------------------------------*/
+//  583 #pragma vector=LDFFLR_vect
+
+        RSEG CODE:CODE:ROOT(1)
+        CALL_GRAPH_ROOT ATA_lfRxLDFIMfoFillLevelReachedInterrupt_ISR_flash_C, "interrupt"
+//  584 __interrupt VOIDFUNC ATA_lfRxLDFIMfoFillLevelReachedInterrupt_ISR_flash_C(void)
+ATA_lfRxLDFIMfoFillLevelReachedInterrupt_ISR_flash_C:
+          CFI Block cfiBlock7 Using cfiCommon0
+          CFI Function ATA_lfRxLDFIMfoFillLevelReachedInterrupt_ISR_flash_C
+//  585 {
+        ST      -Y, R24
+          CFI R24 Frame(CFA_Y, -1)
+          CFI CFA_Y Y+1
+        ST      -Y, R31
+          CFI R31 Frame(CFA_Y, -2)
+          CFI CFA_Y Y+2
+        ST      -Y, R30
+          CFI R30 Frame(CFA_Y, -3)
+          CFI CFA_Y Y+3
+        ST      -Y, R3
+          CFI R3 Frame(CFA_Y, -4)
+          CFI CFA_Y Y+4
+        ST      -Y, R2
+          CFI R2 Frame(CFA_Y, -5)
+          CFI CFA_Y Y+5
+        ST      -Y, R1
+          CFI R1 Frame(CFA_Y, -6)
+          CFI CFA_Y Y+6
+        ST      -Y, R0
+          CFI R0 Frame(CFA_Y, -7)
+          CFI CFA_Y Y+7
+        ST      -Y, R23
+          CFI R23 Frame(CFA_Y, -8)
+          CFI CFA_Y Y+8
+        ST      -Y, R22
+          CFI R22 Frame(CFA_Y, -9)
+          CFI CFA_Y Y+9
+        ST      -Y, R21
+          CFI R21 Frame(CFA_Y, -10)
+          CFI CFA_Y Y+10
+        ST      -Y, R20
+          CFI R20 Frame(CFA_Y, -11)
+          CFI CFA_Y Y+11
+        ST      -Y, R19
+          CFI R19 Frame(CFA_Y, -12)
+          CFI CFA_Y Y+12
+        ST      -Y, R18
+          CFI R18 Frame(CFA_Y, -13)
+          CFI CFA_Y Y+13
+        ST      -Y, R17
+          CFI R17 Frame(CFA_Y, -14)
+          CFI CFA_Y Y+14
+        ST      -Y, R16
+          CFI R16 Frame(CFA_Y, -15)
+          CFI CFA_Y Y+15
+        IN      R24, 0x3F
+//  586     /* Check if the fill level of the PH FIFO has been detected */
+//  587     g_sLfRx_flash.bLDFFLags1 |= BM_LFRXCONFIG_PH_FLAGS_1_FLRF;
+        LDI     R30, LOW(g_sLfRx_flash)
+        LDI     R31, (g_sLfRx_flash) >> 8
+        LDD     R16, Z+1
+        ORI     R16, 0x01
+        STD     Z+1, R16
+//  588 
+//  589     /* Do event pin handling */
+//  590     if ( g_sEventHandling_flash.bPhRxTx1 & BM_LFRXCONFIG_PH_FLAGS_1_FLRF )
+        LDS     R16, (g_sEventHandling_flash + 6)
+        SBRS    R16, 0
+        RJMP    ??ATA_lfRxLDFIMfoFillLevelReachedInterrupt_ISR__0
+//  591     {
+//  592         ATA_systemSetEventPin_flash_ASM();
+          CFI FunCall ATA_systemSetEventPin_flash_ASM
+        CALL    ATA_systemSetEventPin_flash_ASM
+//  593     }
+//  594 }
+??ATA_lfRxLDFIMfoFillLevelReachedInterrupt_ISR__0:
+        RJMP    ?Subroutine0
+          CFI EndBlock cfiBlock7
+//  595 
+//  596 /*---------------------------------------------------------------------------*/
+//  597 /** \brief <b>ATA_lfRxPhTimerCompareInterrupt_ISR_flash_C</b>
+//  598     shall handle the detection of the PH Timer compare interrupt.
+//  599 
+//  600     \return VOIDFUNC
+//  601 
+//  602     \Derived no
+//  603 
+//  604     \Rationale none
+//  605 
+//  606     \Traceability
+//  607 
+//  608     \StackUsage SU_XXX bytes
+//  609 
+//  610     \image html ATA_lfRxPhTimerCompareInterrupt_ISR_flash_C.png
+//  611     \image rtf ATA_lfRxPhTimerCompareInterrupt_ISR_flash_C.png
+//  612     \n
+//  613 */
+//  614 /*---------------------------------------------------------------------------*/
+//  615 #pragma vector=LFTCOR_vect
+
+        RSEG CODE:CODE:ROOT(1)
+        CALL_GRAPH_ROOT ATA_lfRxPhTimerCompareInterrupt_ISR_flash_C, "interrupt"
+//  616 __interrupt VOIDFUNC ATA_lfRxPhTimerCompareInterrupt_ISR_flash_C(void)
+ATA_lfRxPhTimerCompareInterrupt_ISR_flash_C:
+          CFI Block cfiBlock8 Using cfiCommon0
+          CFI Function ATA_lfRxPhTimerCompareInterrupt_ISR_flash_C
+//  617 {
+        ST      -Y, R24
+          CFI R24 Frame(CFA_Y, -1)
+          CFI CFA_Y Y+1
+        ST      -Y, R31
+          CFI R31 Frame(CFA_Y, -2)
+          CFI CFA_Y Y+2
+        ST      -Y, R30
+          CFI R30 Frame(CFA_Y, -3)
+          CFI CFA_Y Y+3
+        ST      -Y, R3
+          CFI R3 Frame(CFA_Y, -4)
+          CFI CFA_Y Y+4
+        ST      -Y, R2
+          CFI R2 Frame(CFA_Y, -5)
+          CFI CFA_Y Y+5
+        ST      -Y, R1
+          CFI R1 Frame(CFA_Y, -6)
+          CFI CFA_Y Y+6
+        ST      -Y, R0
+          CFI R0 Frame(CFA_Y, -7)
+          CFI CFA_Y Y+7
+        ST      -Y, R23
+          CFI R23 Frame(CFA_Y, -8)
+          CFI CFA_Y Y+8
+        ST      -Y, R22
+          CFI R22 Frame(CFA_Y, -9)
+          CFI CFA_Y Y+9
+        ST      -Y, R21
+          CFI R21 Frame(CFA_Y, -10)
+          CFI CFA_Y Y+10
+        ST      -Y, R20
+          CFI R20 Frame(CFA_Y, -11)
+          CFI CFA_Y Y+11
+        ST      -Y, R19
+          CFI R19 Frame(CFA_Y, -12)
+          CFI CFA_Y Y+12
+        ST      -Y, R18
+          CFI R18 Frame(CFA_Y, -13)
+          CFI CFA_Y Y+13
+        ST      -Y, R17
+          CFI R17 Frame(CFA_Y, -14)
+          CFI CFA_Y Y+14
+        ST      -Y, R16
+          CFI R16 Frame(CFA_Y, -15)
+          CFI CFA_Y Y+15
+        IN      R24, 0x3F
+//  618     __disable_interrupt();
+        CLI
+//  619     /*if( extReq.lfrxRftxConfig )
+//  620     //if( g_sLfRssiConfig_flash.bFlags & LFRSSICONFIG_FLAGS_BM_MEASUREMENT_ENABLE_FLAG )
+//  621     {
+//  622         // disable LF timer
+//  623         if( !(extReq.lfrxRftxConfig & BIT_MASK_2) )
+//  624         //if( g_sLfRssiConfig_flash.bStatus & LFRSSICONFIG_STATUS_BM_MEASUREMENT_SERIAL_FLAG )
+//  625         {
+//  626             LTCMR &= ~BM_LTENA;
+//  627         }
+//  628     }
+//  629     else
+//  630     {
+//  631 
+//  632         LTCMR &= ~BM_LTENA;
+//  633     }*/
+//  634    
+//  635     g_bResponseDelayReached = TRUE;
+        LDI     R16, 1
+        STS     g_bResponseDelayReached, R16
+//  636     __enable_interrupt();
+        SEI
+//  637 
+//  638     g_sLfRx_flash.bLDFFLags0 |= BM_LFRXCONFIG_PH_FLAGS_0_PHCOF;
+        LDI     R30, LOW(g_sLfRx_flash)
+        LDI     R31, (g_sLfRx_flash) >> 8
+        LD      R16, Z
+        ORI     R16, 0x80
+        ST      Z, R16
+//  639 
+//  640     /* Do event pin handling */
+//  641     if ( g_sEventHandling_flash.bPhRxTx0 & BM_LFRXCONFIG_PH_FLAGS_0_PHCOF )
+        LDS     R16, (g_sEventHandling_flash + 5)
+        SBRS    R16, 7
+        RJMP    ??ATA_lfRxPhTimerCompareInterrupt_ISR_flash_C_0
+//  642     {
+//  643         ATA_systemSetEventPin_flash_ASM();
+          CFI FunCall ATA_systemSetEventPin_flash_ASM
+        CALL    ATA_systemSetEventPin_flash_ASM
+//  644     }
+//  645 }
+??ATA_lfRxPhTimerCompareInterrupt_ISR_flash_C_0:
+        RJMP    ?Subroutine0
+          CFI EndBlock cfiBlock8
+//  646 
+//  647 /*---------------------------------------------------------------------------*/
+//  648 /** \brief <b>ATA_lfRxSyncDetectedInterrupt_ISR_flash_C</b>
+//  649     shall handle the detection of the synchronizaion pattern.
+//  650 
+//  651     \return VOIDFUNC
+//  652 
+//  653     \Derived no
+//  654 
+//  655     \Rationale none
+//  656 
+//  657     \Traceability
+//  658 
+//  659     \StackUsage SU_XXX bytes
+//  660 
+//  661     \image html ATA_lfRxSyncDetectedInterrupt_ISR_flash_C.png
+//  662     \image rtf ATA_lfRxSyncDetectedInterrupt_ISR_flash_C.png
+//  663     \n
+//  664 */
+//  665 /*---------------------------------------------------------------------------*/
+//  666 #pragma vector=LFPBD_vect
+
+        RSEG CODE:CODE:ROOT(1)
+        CALL_GRAPH_ROOT ATA_lfRxSyncDetectedInterrupt_ISR_flash_C, "interrupt"
+//  667 __interrupt VOIDFUNC ATA_lfRxSyncDetectedInterrupt_ISR_flash_C(void)
+ATA_lfRxSyncDetectedInterrupt_ISR_flash_C:
+          CFI Block cfiBlock9 Using cfiCommon0
+          CFI Function ATA_lfRxSyncDetectedInterrupt_ISR_flash_C
+//  668 {
+        ST      -Y, R24
+          CFI R24 Frame(CFA_Y, -1)
+          CFI CFA_Y Y+1
+        ST      -Y, R31
+          CFI R31 Frame(CFA_Y, -2)
+          CFI CFA_Y Y+2
+        ST      -Y, R30
+          CFI R30 Frame(CFA_Y, -3)
+          CFI CFA_Y Y+3
+        ST      -Y, R3
+          CFI R3 Frame(CFA_Y, -4)
+          CFI CFA_Y Y+4
+        ST      -Y, R2
+          CFI R2 Frame(CFA_Y, -5)
+          CFI CFA_Y Y+5
+        ST      -Y, R1
+          CFI R1 Frame(CFA_Y, -6)
+          CFI CFA_Y Y+6
+        ST      -Y, R0
+          CFI R0 Frame(CFA_Y, -7)
+          CFI CFA_Y Y+7
+        ST      -Y, R23
+          CFI R23 Frame(CFA_Y, -8)
+          CFI CFA_Y Y+8
+        ST      -Y, R22
+          CFI R22 Frame(CFA_Y, -9)
+          CFI CFA_Y Y+9
+        ST      -Y, R21
+          CFI R21 Frame(CFA_Y, -10)
+          CFI CFA_Y Y+10
+        ST      -Y, R20
+          CFI R20 Frame(CFA_Y, -11)
+          CFI CFA_Y Y+11
+        ST      -Y, R19
+          CFI R19 Frame(CFA_Y, -12)
+          CFI CFA_Y Y+12
+        ST      -Y, R18
+          CFI R18 Frame(CFA_Y, -13)
+          CFI CFA_Y Y+13
+        ST      -Y, R17
+          CFI R17 Frame(CFA_Y, -14)
+          CFI CFA_Y Y+14
+        ST      -Y, R16
+          CFI R16 Frame(CFA_Y, -15)
+          CFI CFA_Y Y+15
+        IN      R24, 0x3F
+//  669     g_sLfRx_flash.bLfFlags |= BM_LFRXCONFIG_LF_FLAGS_LFSYDF;
+        LDI     R30, LOW(g_sLfRx_flash)
+        LDI     R31, (g_sLfRx_flash) >> 8
+        LDD     R16, Z+2
+        ORI     R16, 0x01
+        STD     Z+2, R16
+//  670     
+//  671     /* Do event pin handling */
+//  672     if ( g_sEventHandling_flash.bLf3dRx & BM_LFRXCONFIG_LF_FLAGS_LFSYDF )
+        LDS     R16, (g_sEventHandling_flash + 7)
+        SBRS    R16, 0
+        RJMP    ??ATA_lfRxSyncDetectedInterrupt_ISR_flash_C_0
+//  673     {
+//  674         ATA_systemSetEventPin_flash_ASM();
+          CFI FunCall ATA_systemSetEventPin_flash_ASM
+        CALL    ATA_systemSetEventPin_flash_ASM
+//  675     }
+//  676 }
+??ATA_lfRxSyncDetectedInterrupt_ISR_flash_C_0:
+        RJMP    ?Subroutine0
+          CFI EndBlock cfiBlock9
+//  677 
+//  678 /*---------------------------------------------------------------------------*/
+//  679 /** \brief <b>ATA_lfRxDecoderErrorInterrupt_ISR_flash_C</b>
+//  680     shall handle the detection of a decoder error.
+//  681 
+//  682     \return VOIDFUNC
+//  683 
+//  684     \Derived no
+//  685 
+//  686     \Rationale none
+//  687 
+//  688     \Traceability
+//  689 
+//  690     \StackUsage SU_XXX bytes
+//  691 
+//  692     \image html ATA_lfRxDecoderErrorInterrupt_ISR_flash_C.png
+//  693     \image rtf ATA_lfRxDecoderErrorInterrupt_ISR_flash_C.png
+//  694     \n
+//  695 */
+//  696 /*---------------------------------------------------------------------------*/
+//  697 #pragma vector=LFDE_vect
+
+        RSEG CODE:CODE:ROOT(1)
+        CALL_GRAPH_ROOT ATA_lfRxDecoderErrorInterrupt_ISR_flash_C, "interrupt"
+//  698 __interrupt VOIDFUNC ATA_lfRxDecoderErrorInterrupt_ISR_flash_C(void)
+ATA_lfRxDecoderErrorInterrupt_ISR_flash_C:
+          CFI Block cfiBlock10 Using cfiCommon0
+          CFI Function ATA_lfRxDecoderErrorInterrupt_ISR_flash_C
+//  699 { 
+        ST      -Y, R24
+          CFI R24 Frame(CFA_Y, -1)
+          CFI CFA_Y Y+1
+        ST      -Y, R31
+          CFI R31 Frame(CFA_Y, -2)
+          CFI CFA_Y Y+2
+        ST      -Y, R30
+          CFI R30 Frame(CFA_Y, -3)
+          CFI CFA_Y Y+3
+        ST      -Y, R3
+          CFI R3 Frame(CFA_Y, -4)
+          CFI CFA_Y Y+4
+        ST      -Y, R2
+          CFI R2 Frame(CFA_Y, -5)
+          CFI CFA_Y Y+5
+        ST      -Y, R1
+          CFI R1 Frame(CFA_Y, -6)
+          CFI CFA_Y Y+6
+        ST      -Y, R0
+          CFI R0 Frame(CFA_Y, -7)
+          CFI CFA_Y Y+7
+        ST      -Y, R23
+          CFI R23 Frame(CFA_Y, -8)
+          CFI CFA_Y Y+8
+        ST      -Y, R22
+          CFI R22 Frame(CFA_Y, -9)
+          CFI CFA_Y Y+9
+        ST      -Y, R21
+          CFI R21 Frame(CFA_Y, -10)
+          CFI CFA_Y Y+10
+        ST      -Y, R20
+          CFI R20 Frame(CFA_Y, -11)
+          CFI CFA_Y Y+11
+        ST      -Y, R19
+          CFI R19 Frame(CFA_Y, -12)
+          CFI CFA_Y Y+12
+        ST      -Y, R18
+          CFI R18 Frame(CFA_Y, -13)
+          CFI CFA_Y Y+13
+        ST      -Y, R17
+          CFI R17 Frame(CFA_Y, -14)
+          CFI CFA_Y Y+14
+        ST      -Y, R16
+          CFI R16 Frame(CFA_Y, -15)
+          CFI CFA_Y Y+15
+        IN      R24, 0x3F
+//  700   g_sLfRx_flash.bLfFlags |= BM_LFRXCONFIG_LF_FLAGS_LFDEF;
+        LDI     R30, LOW(g_sLfRx_flash)
+        LDI     R31, (g_sLfRx_flash) >> 8
+        LDD     R16, Z+2
+        ORI     R16, 0x02
+        STD     Z+2, R16
+//  701     
+//  702     /* Do event pin handling */
+//  703     if ( g_sEventHandling_flash.bLf3dRx & BM_LFRXCONFIG_LF_FLAGS_LFDEF )
+        LDS     R16, (g_sEventHandling_flash + 7)
+        SBRS    R16, 1
+        RJMP    ??ATA_lfRxDecoderErrorInterrupt_ISR_flash_C_0
+//  704     {
+//  705         ATA_systemSetEventPin_flash_ASM();
+          CFI FunCall ATA_systemSetEventPin_flash_ASM
+        CALL    ATA_systemSetEventPin_flash_ASM
+//  706     }
+//  707     
+//  708 
+//  709 }
+??ATA_lfRxDecoderErrorInterrupt_ISR_flash_C_0:
+        RJMP    ?Subroutine0
+          CFI EndBlock cfiBlock10
+//  710 
+//  711 /*---------------------------------------------------------------------------*/
+//  712 /** \brief <b>ATA_lfRxInit_flash_C</b>
+//  713     shall initialize the Flash LF Receiver component data.
+//  714 
+//  715     \return VOIDFUNC
+//  716 
+//  717     \Derived no
+//  718 
+//  719     \Rationale none
+//  720 
+//  721     \Traceability
+//  722 
+//  723     \StackUsage SU_XXX bytes
+//  724 
+//  725     \image html ATA_lfRxInit_flash_C.png
+//  726     \image rtf ATA_lfRxInit_flash_C.png
+//  727     \n
+//  728 */
+//  729 /*---------------------------------------------------------------------------*/
+
+        RSEG CODE:CODE:ROOT(1)
+//  730 VOIDFUNC ATA_lfRxInit_flash_C(void)
+ATA_lfRxInit_flash_C:
+          CFI Block cfiBlock11 Using cfiCommon1
+          CFI Function ATA_lfRxInit_flash_C
+          CFI NoCalls
+//  731 {
+//  732     /* LF Receiver and Protocol Handler */
+//  733     g_sLfRx_flash.bLDFFLags0 = 0x00U;
+        LDI     R16, 0
+        STS     g_sLfRx_flash, R16
+//  734     g_sLfRx_flash.bLDFFLags1 = 0x00U;
+        STS     (g_sLfRx_flash + 1), R16
+//  735     g_sLfRx_flash.bLfFlags = 0x00U;
+        STS     (g_sLfRx_flash + 2), R16
+//  736     g_sLfRx_flash.bStatus = 0x00U;
+        STS     (g_sLfRx_flash + 3), R16
+//  737     g_sLfRx_flash.bConfig = 0x00U;
+        STS     (g_sLfRx_flash + 4), R16
+//  738 }
+        RET
+          CFI EndBlock cfiBlock11
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01cH
+__?EECR:
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01dH
+__?EEDR:
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01eH
+__?EEARL:
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01fH
+__?EEARH:
+
+        COMMON INTVEC:CODE:ROOT(1)
+        ORG 132
+`??ATA_lfRxId0MatchInterrupt_ISR_flash_C::??INTV`:
+        JMP     ATA_lfRxId0MatchInterrupt_ISR_flash_C
+
+        COMMON INTVEC:CODE:ROOT(1)
+        ORG 136
+`??ATA_lfRxId1MatchInterrupt_ISR_flash_C::??INTV`:
+        JMP     ATA_lfRxId1MatchInterrupt_ISR_flash_C
+
+        COMMON INTVEC:CODE:ROOT(1)
+        ORG 140
+`??ATA_lfRxIdFrameEndInterrupt_ISR_flash_C::??IN`:
+        JMP     ATA_lfRxIdFrameEndInterrupt_ISR_flash_C
+
+        COMMON INTVEC:CODE:ROOT(1)
+        ORG 144
+`??ATA_lfRxBitCountReachedInterrupt_ISR_flash_C:`:
+        JMP     ATA_lfRxBitCountReachedInterrupt_ISR_flash_C
+
+        COMMON INTVEC:CODE:ROOT(1)
+        ORG 148
+`??ATA_lfRxSyncDetectedInterrupt_ISR_flash_C::??`:
+        JMP     ATA_lfRxSyncDetectedInterrupt_ISR_flash_C
+
+        COMMON INTVEC:CODE:ROOT(1)
+        ORG 152
+`??ATA_lfRxDecoderErrorInterrupt_ISR_flash_C::??`:
+        JMP     ATA_lfRxDecoderErrorInterrupt_ISR_flash_C
+
+        COMMON INTVEC:CODE:ROOT(1)
+        ORG 156
+`??ATA_lfRxEotInterrupt_ISR_flash_C::??INTVEC 15`:
+        JMP     ATA_lfRxEotInterrupt_ISR_flash_C
+
+        COMMON INTVEC:CODE:ROOT(1)
+        ORG 160
+`??ATA_lfRxPhTimerCompareInterrupt_ISR_flash_C::`:
+        JMP     ATA_lfRxPhTimerCompareInterrupt_ISR_flash_C
+
+        COMMON INTVEC:CODE:ROOT(1)
+        ORG 168
+??ATA_lfRxLDFIMfoFillLevelReachedInterrupt_ISR__1:
+        JMP     ATA_lfRxLDFIMfoFillLevelReachedInterrupt_ISR_flash_C
+
+        COMMON INTVEC:CODE:ROOT(1)
+        ORG 172
+`??ATA_lfRxLDFIMfoErrorInterrupt_ISR_flash_C::??`:
+        JMP     ATA_lfRxLDFIMfoErrorInterrupt_ISR_flash_C
+
+        RSEG INITTAB:CODE:NOROOT(0)
+`?<Segment init: NEAR_Z>`:
+        DC16    SFE(NEAR_Z) - SFB(NEAR_Z)
+        DC16    SFB(NEAR_Z)
+        DC16    0
+        REQUIRE ?need_segment_init
+
+        END
+// 
+//    86 bytes in segment .sram_FlashApp_LfRx
+//    24 bytes in segment ABSOLUTE
+// 1 376 bytes in segment CODE
+//     6 bytes in segment INITTAB
+//    40 bytes in segment INTVEC
+//    77 bytes in segment NEAR_N
+//     2 bytes in segment NEAR_Z
+// 
+// 1 376 bytes of CODE memory (+ 46 bytes shared)
+//   165 bytes of DATA memory (+ 24 bytes shared)
+//
+//Errors: none
+//Warnings: none

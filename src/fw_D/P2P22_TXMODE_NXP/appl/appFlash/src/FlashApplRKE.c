@@ -1,0 +1,240 @@
+/******************************************************************************
+  Use of this software is subject to Microchip's Software License Agreement.
+--------------------------------------------------------------------------------
+  $URL: http://svnservulm.corp.atmel.com/svn/CDB/Apps/SW_Lib/Car_Access/CARS_GEN2/ATAB5702A/Branches/P2P22_TXMODE_NXP/appl/appFlash/src/FlashApplRKE.c $
+  $LastChangedRevision: 591974 $
+  $LastChangedDate: 2020-03-16 09:23:12 -0600 (Mon, 16 Mar 2020) $
+  $LastChangedBy: grueter $
+-------------------------------------------------------------------------------
+  Project:      ATA5700
+  Target MCU:   ATA5700
+  Compiler:     IAR C/C++ Compiler for AVR 5.51.0
+-------------------------------------------------------------------------------
+
+******************************************************************************
+* Copyright 2017, Microchip Technology Incorporated and its subsidiaries.     *
+*                                                                             *
+* This software is owned by the Microchip Technology Incorporated.            *
+* Microchip hereby grants to licensee a personal                              *
+* non-exclusive, non-transferable license to copy, use, modify, create        *
+* derivative works of, and compile the Microchip Source Code and derivative   *
+* works for the sole and exclusive purpose of creating custom software in     *
+* support of licensee product to be used only in conjunction with a Microchip *
+* integrated circuit as specified in the applicable agreement. Any            *        
+* reproduction, modification, translation, compilation, or representation of  *
+* this software except as specified above is prohibited without the express   *
+* written permission of Microchip.                                            *
+*                                                                             *
+* Disclaimer: MICROCHIP MAKES NO WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,    *
+* WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED    *
+* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.         *
+* Microchip reserves the right to make changes without further notice to the  *
+* materials described herein. Microchip does not assume any liability arising *
+* out of the application or use of any product or circuit described herein.   *
+* Microchip does not authorize its products for use as critical components in *
+* life-support systems where a malfunction or failure may reasonably be       *
+* expected to result in significant injury to the user. The inclusion of      *
+* Microchip products in a life-support systems application implies that the   *
+* manufacturer assumes all risk of such use and in doing so indemnifies       *
+* Microchip against all charges.                                              *
+*                                                                             *
+* Use may be limited by and subject to the applicable Microchip software      *
+* license agreement.                                                          *
+******************************************************************************/
+
+/** \file FlashApplRKE.c
+    this file contains an ATA5700 Flash application software
+*/
+
+/*===========================================================================*/
+/*  INCLUDES                                                                 */
+/*===========================================================================*/
+#include <string.h>
+#include "../../../firmware/init/src/init.h"
+#include "../../../firmware/rftx/src/rftx.h"
+#include "../../../firmware/lfrx/src/lfrx.h"
+//#include "../../../firmware/rfrcc/src/rfrcc.h"
+#include "../../../firmware/spi/src/ata5700_command_set.h"
+
+#include "../../../firmware/init/src/init_flash.h"
+#include "../../../firmware/system/src/system_flash.h"
+#include "../../../firmware/rftx/src/rftx.h"
+#include "../../../firmware/rftx/src/rftx_flash.h"
+#include "../../../firmware/timer1/src/timer1.h"
+#include "../../../firmware/timer4/src/timer4_flash.h"
+#include "../../../firmware/globals/src/globals.h"
+
+#include "../../../firmware/lfrx/src/lfrx_flash.h"
+#include "../../../firmware/tp/src/tp_flash.h"
+
+#include "../../../firmware/extif/src/extif_flash.h"
+
+#include "../../../firmware/lfrssi/src/lfrssi.h"
+#include "../../../firmware/lfrssi/src/lfrssi_flash.h"
+
+#include "../../../firmware/calib/src/calib.h"
+#include "../../../firmware/aes/src/aes.h"
+
+
+#include "../src/FlashApplPEPS.h"
+#include "../src/FlashApplLF.h" 
+#include "../src/micro.h"
+
+#include "../src/FlashApplVars.h"
+#include "../src/utils.h"
+
+
+#include "rfrcc_flash.h"
+#include "FlashApplVars.h"
+#include "FlashApplMsg.h"
+
+/*===========================================================================*/
+/*  Function Prototypes                                                      */
+/*===========================================================================*/
+void ATA_FlashAppMsgEncrypt(uint8_t* aesMsg, uint8_t msgLength, uint8_t bSecretKeyGroup, uint8_t bKeyId);
+
+/*===========================================================================*/
+/*  DEFINES                                                                  */
+/*===========================================================================*/
+#define MSG_RX_DATA (g_MsgRXbuffer.aub_data)
+
+#define SPItx433 0x40
+#define SPItx315 0x30
+
+/*===========================================================================*/
+/*  Modul Globals                                                             */
+/*===========================================================================*/
+eAesSecretKeySelection bAesSecretKeySelection = AES_USE_SECRET_KEY_A;
+uint8_t bUserCmd=0xa5;
+extern  uint16_t g_EepRFRcc_flash;
+extern uint8_t guiButton;
+extern sFlashApplState gFlashApplState;
+extern sFlashApplVars gFlashApplVars;
+extern uint16_t wEepRfrccAddress;
+
+extern sCustomerEEPromSection g_sCustomerEEPromSection;
+extern sEepFlashApp_AESKey g_sEepFlashApp_AESKey;
+
+extern RFMSG_FRAME_TS g_MsgRXbuffer;
+extern RFMSG_FRAME_TS g_MsgTXbuffer;
+
+extern uint8_t rub_cid;
+extern uint8_t rub_wuip;
+extern uint8_t rub_fob_idx;
+extern uint32_t rul_fob_id;
+extern uint8_t rub_rf_chan;
+extern uint8_t gVbat_Status;
+extern sEepFlashApp_RKEPEPS g_sEepFlashApp_RKEPEPS;
+extern uint8_t g_SPI_RXbuffer[10];
+   
+/*===========================================================================*/
+/*  IMPLEMENTATION                                                           */
+/*===========================================================================*/
+/** \brief <b>ATA_Flash_RKEsend(void)</b>
+    Shall configure the 3D LF receiver into LF listen mode and activate
+      the ID0 wake-up interrupt
+
+    \param[in]  bLfBdrate       selects the LF baud rate
+                bSense          selects the LF RX sensitivity
+                pLf_Id          pointer to the LF wake-up ID
+                bLf_IdLength    number of LF ID bits
+
+    \return none
+
+
+    \Traceability None
+
+    \image none
+    \n
+*/
+/*---------------------------------------------------------------------------*/
+void ATA_Flash_RKEbuttonProcessOut (void)
+{
+   uint8_t TXactvive_flag; 
+   uint16_t eepService;
+   memset(MSG_TX_DATA.rke.preamble0, 0xFF, RKE_RF_MSG_PREAMPLE_LEN);
+   ATA_globalsActivateXTO_C();  
+   ATA_rfTxInit_C();
+   
+   if ((gFlashApplState.State&BM_SPI_received_flag)==BM_SPI_received_flag){  //Process SPI requested send RF message - 1 RF message 
+     
+       bool spivalid = false;
+       if (g_SPI_RXbuffer[0] == SPItx433){
+          eepService = ATA_rfTxGetIndirectEEPromServiceConfigAddr_flash_C((uint16_t)&g_sCustomerEEPromSection.eepRfTxSer1Ptr_l);
+          spivalid = true;
+          bit_set(LED1);
+       }
+       else if (g_SPI_RXbuffer[0] == SPItx315){
+          eepService = ATA_rfTxGetIndirectEEPromServiceConfigAddr_flash_C((uint16_t)&g_sCustomerEEPromSection.eepRfTxSer0Ptr_l);
+          spivalid = true;
+          bit_set(LED2);
+       }
+       if (spivalid == true){   
+    for (uint8_t index = 0; index < 13; index++)
+            {
+              g_MsgTXbuffer.aub_data[(index+1)+RKE_RF_MSG_PREAMPLE_LEN] = index;
+            }          
+            g_MsgTXbuffer.aub_data[(14)+RKE_RF_MSG_PREAMPLE_LEN]=0x0D;//Force the last bayte to 0x0D 
+    ATA_rfTxInit_C();      
+    ATA_rfTxFillDFifo_C((RKE_RFMESSAGELENGTH+2), g_MsgTXbuffer.aub_data);//Added one, CAB + Omega2 missing last byte
+    ATA_rfTxStartTx_C( (BM_RFTXCONFIG_BCONFIG_SVC_LOCATION|BM_RFTXCONFIG_BCONFIG_VCO_TUNING|0), (uint8_t*) eepService);//
+    do {
+          ATA_rfTxProcessing_C();
+          
+        }while (g_sRfTx.bStatus & BM_RFTXCONFIG_BSTATUS_ACTIVE);
+        ATA_rfTxStop_C();
+       }
+   }    
+   
+   else if ((gFlashApplState.Buttons & BM_NEWCMNDVALID)== BM_NEWCMNDVALID)  //Process SW press send RF message - 3 RF message
+   {
+     bit_set(LED1);
+     g_sRfrccComponentData.bFlags = RFRCC_FLAGS_RESET;
+     ATA_rfrccGenRollCntMsg_C((uint16_t)&g_sEepFlashApp_RKEPEPS.ul_rolling_code, 0x00, gFlashApplVars.RKEcommand, 0x00);  
+     for (uint8_t loopcnt=0; loopcnt<3; loopcnt++)
+       {     
+          for (uint8_t index = 0; index < 13; index++)
+            {
+              g_MsgTXbuffer.aub_data[(index+1)+RKE_RF_MSG_PREAMPLE_LEN] = g_sRfrccComponentData.bRollCodeMsgBuffer[index];
+            }          
+            g_MsgTXbuffer.aub_data[(14)+RKE_RF_MSG_PREAMPLE_LEN]=0x0D;//Force the last bayte to 0x0D 
+            ATA_rfTxInit_C();      
+            ATA_rfTxFillDFifo_C((RKE_RFMESSAGELENGTH+2), g_MsgTXbuffer.aub_data);//Added one, CAB + Omega2 missing last byte
+            uint16_t eepService1 = ATA_rfTxGetIndirectEEPromServiceConfigAddr_flash_C((uint16_t)&g_sCustomerEEPromSection.eepRfTxSer1Ptr_l);
+            ATA_rfTxStartTx_C( (BM_RFTXCONFIG_BCONFIG_SVC_LOCATION|BM_RFTXCONFIG_BCONFIG_VCO_TUNING|loopcnt), (uint8_t*) eepService1);//Need variable name for      
+            do {
+            ATA_rfTxProcessing_C();          
+            }while (g_sRfTx.bStatus & BM_RFTXCONFIG_BSTATUS_ACTIVE);
+            ATA_rfTxStop_C();  
+       }
+   }
+   //----------------------------------------
+   else {               //Process RF on send RF message - Trasnparent mode
+   eepService = ATA_rfTxGetIndirectEEPromServiceConfigAddr_flash_C((uint16_t)&g_sCustomerEEPromSection.eepRfTxSer1Ptr_l);
+   ATA_rfTxInit_C(); 
+   ATA_rfTxStartTx_C((BM_RFTXCONFIG_BCONFIG_SVC_LOCATION|BM_RFTXCONFIG_BCONFIG_VCO_TUNING|0|BM_RFTXCONFIG_BCONFIG_TRANSPARENT_MODE), (uint8_t*)eepService);
+   TXactvive_flag = (PIND & 0x04);
+   while (  (TXactvive_flag==0x04)  ){
+       ATA_rfTxProcessing_C();
+       TXactvive_flag = (PIND & 0x04); 
+      }     
+      ATA_rfTxStop_C();      
+      ATA_rfTxClose_C();
+   }
+   ATA_globalsDeActivateXTO_C();
+   ATA_timer4Close_C(); 
+   T4IMR = 0x00;
+   bit_clear(TXACTIVE);   
+   SUPCR &= ~BM_AVEN;
+   bit_clear(LED1);
+   bit_clear(LED2);
+   gFlashApplState.State &= ~(BM_SPI_received_flag);
+   gFlashApplVars.SPIcount=0x00;
+   gFlashApplState.Buttons &= ~BM_NEWCMNDVALID;  //Clear new command available flag
+   gFlashApplVars.RKEcommand &= 0xfe; 
+   Intr_Enable(SW1_INTR);    //Enable SW1,2,3 interrupts 
+   Intr_Enable(SW2_INTR);
+   Intr_Enable(SW3_INTR);
+   PCICR |= (1<<PCIE1);
+   T0CR = 0;  
+}

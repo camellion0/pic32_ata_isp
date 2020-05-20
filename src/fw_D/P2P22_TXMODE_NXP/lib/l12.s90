@@ -1,0 +1,908 @@
+;----------------------------------------------------------------------------
+;
+;  Library routines for the ATMEL AT90S processors
+;  LongLong arithmetics
+;
+;  Copyright 2002-2008 IAR Systems AB. All rights reserved.
+;
+;  $Revision: 328482 $
+;
+;----------------------------------------------------------------------------
+#include "macros.m90"
+
+        MODULE  ?LL_MUL_L12
+        PUBLIC  ?LL_MUL_L12
+;-----------------------------------------------------
+; LL_MUL multiplies two long long's
+; On call one number is in PL and QL and the adress of the
+; other is in X.
+; All of the multiplicand is stored in register, one byte at the
+; time of the multiplier is loaded to register and result is accumulated
+;
+; Destroys: All scratch registers, plus whole X, r24, r25, r4, r5 and r6
+; Uses 5 bytes of data stack
+
+        RSEG    CODE:CODE:NOROOT(1)
+        EXTERN    ?Register_R4_is_cg_reg
+        EXTERN    ?Register_R5_is_cg_reg
+        EXTERN    ?Register_R6_is_cg_reg
+        REQUIRE   ?Register_R4_is_cg_reg
+        REQUIRE   ?Register_R5_is_cg_reg
+        REQUIRE   ?Register_R6_is_cg_reg
+
+?LL_MUL_L12:
+        ST      -Y,R24
+        ST      -Y,R25
+        ST      -Y,R4
+        ST      -Y,R5
+        ST      -Y,R6
+        ST      -Y,R26          ; Let the argument pointer be unaltered.
+        ST      -Y,R27          ;
+#ifdef A90_EXTENDED_DATA
+        IN      R4,RAMPX
+        ST      -Y,R4
+#endif
+
+        CLR     T0              ; Clear accumulator
+        CLR     T1
+#ifdef __HAS_ENHANCED_CORE__
+        MOVW    T3:T2,T1:T0
+        MOVW    R5:R4,T1:T0
+        MOVW    Z1:Z0,T1:T0
+#else
+        CLR     T2
+        CLR     T3
+        CLR     R4
+        CLR     R5
+        CLR     Z0
+        CLR     Z1
+#endif
+        LDI     R24,8
+OUTER_LOOP:
+        LD      R6,X+
+        LDI     R25,8
+        TST     R6              ; If zero, do byte shift on A.
+        BRNE    INNER_LOOP
+        MOV     Q3,Q2
+        MOV     Q2,Q1
+        MOV     Q1,Q0
+        MOV     Q0,P3
+        MOV     P3,P2
+        MOV     P2,P1
+        MOV     P1,P0
+        CLR     P0
+        RJMP    BYTE_SHIFT
+INNER_LOOP:
+        LSR     R6              ; And shift B-byte
+        BRCC    MULTSHIFT
+        ADD     T0,P0           ; If last bit is set in B-byte,
+        ADC     T1,P1           ; add shifted A to accumulator
+        ADC     T2,P2
+        ADC     T3,P3
+        ADC     R4,Q0
+        ADC     R5,Q1
+        ADC     Z0,Q2
+        ADC     Z1,Q3
+MULTSHIFT:                     ; Shift A
+        LSL     P0
+        ROL     P1
+        ROL     P2
+        ROL     P3
+        ROL     Q0
+        ROL     Q1
+        ROL     Q2
+        ROL     Q3
+        DEC     R25
+        BRNE    INNER_LOOP
+BYTE_SHIFT
+        DEC     R24
+        BRNE    OUTER_LOOP
+#ifdef __HAS_ENHANCED_CORE__
+        MOVW    P1:P0,T1:T0           ; Put accumulator to correct registers
+        MOVW    P3:P2,T3:T2
+        MOVW    Q1:Q0,R5:R4
+        MOVW    Q3:Q2,Z1:Z0
+#else
+        MOV     P0,T0           ; Put accumulator to correct registers
+        MOV     P1,T1
+        MOV     P2,T2
+        MOV     P3,T3
+        MOV     Q0,R4
+        MOV     Q1,R5
+        MOV     Q2,Z0
+        MOV     Q3,Z1
+#endif
+
+#ifdef A90_EXTENDED_DATA
+        LD      R4,Y+
+        OUT     RAMPX,R4
+#endif
+        LD      R27,Y+
+        LD      R26,Y+
+        LD      R6,Y+
+        LD      R5,Y+
+        LD      R4,Y+
+        LD      R25,Y+
+        LD      R24,Y+
+        RET
+        ENDMOD
+
+        MODULE ?LL_DIV_L12
+
+        PUBLIC  ?ULL_DIV_L12
+        PUBLIC  ?SLL_DIV_L12
+        PUBLIC  ?ULL_MOD_L12
+        PUBLIC  ?SLL_MOD_L12
+        EXTERN  ?LL_NEG_L12
+
+;-----------------------------------------------------
+; Unsigned long long division between A and B.
+; On call number to be divided by divisor is in PL and QL
+;         and the adress of the divisor in X
+; On return quotient is put in PL and QL
+;
+; Destroys: All scratch registers
+; Uses 13 bytes of data stack
+
+        RSEG    CODE:CODE:NOROOT(1)
+        EXTERN    ?Register_R4_is_cg_reg
+        REQUIRE   ?Register_R4_is_cg_reg
+
+?ULL_DIV_L12:
+        RCALL   DIV_MOD_PROLOGUE
+        RCALL   DIV_MOD_BODY
+        RJMP    DIV_EPILOGUE
+
+        RSEG    CODE:CODE:NOROOT(1)
+        EXTERN    ?Register_R4_is_cg_reg
+        REQUIRE   ?Register_R4_is_cg_reg
+
+DIV_MOD_PROLOGUE:
+        ST      -Y,R4
+        ST      -Y,R24
+        ST      -Y,R25
+        ST      -Y,R26          ; Let the argument pointer be unaltered.
+        ST      -Y,R27          ;
+#ifdef A90_EXTENDED_DATA
+        IN      R4,RAMPX
+        ST      -Y,R4
+#endif
+        LD      R24,X+          ; Devisor kept in register
+        LD      R4,X+           ; and not changed during the algorithm
+        LD      Z0,X+
+        LD      Z1,X+
+        LD      T0,X+
+        LD      T1,X+
+        LD      T2,X+
+        LD      T3,X
+        RET
+
+
+        RSEG    CODE:CODE:NOROOT(1)
+        EXTERN    ?Register_R4_is_cg_reg
+        REQUIRE   ?Register_R4_is_cg_reg
+
+DIV_EPILOGUE:
+        LD      P0,Y+
+        LD      P1,Y+
+        LD      P2,Y+
+        LD      P3,Y+
+        LD      Q0,Y+           ; Quotient is loaded to register
+        LD      Q1,Y+
+        LD      Q2,Y+
+        LD      Q3,Y+
+        ROL     P0              ; Quotient has to be shifted once more
+        ROL     P1
+        ROL     P2
+        ROL     P3
+        ROL     Q0
+        ROL     Q1
+        ROL     Q2
+        ROL     Q3
+        COM     P0              ; Adjust for inverse carry setting
+        COM     P1
+        COM     P2
+        COM     P3
+        COM     Q0
+        COM     Q1
+        COM     Q2
+        COM     Q3
+        REQUIRE DIV_MOD_EPILOGUE
+
+        RSEG    CODE:CODE:NOROOT(1)
+        EXTERN    ?Register_R4_is_cg_reg
+        REQUIRE   ?Register_R4_is_cg_reg
+
+DIV_MOD_EPILOGUE:
+#ifdef A90_EXTENDED_DATA
+        LD      R4,Y+
+        OUT     RAMPX,R4
+#endif
+        LD      R27,Y+
+        LD      R26,Y+
+        LD      R25,Y+
+        LD      R24,Y+
+        LD      R4,Y+
+        RET
+
+        RSEG    CODE:CODE:NOROOT(1)
+
+DIV_MOD_BODY:
+        PUSH    P0              ; The dividend is stored on call stack
+        PUSH    P1
+        PUSH    P2
+        PUSH    P3
+        PUSH    Q0
+        PUSH    Q1
+        PUSH    Q2
+        PUSH    Q3
+        CLR     P0              ; Clear remainder
+        CLR     P1
+#ifdef __HAS_ENHANCED_CORE__
+        MOVW    P3:P2,P1:P0
+        MOVW    Q1:Q0,P1:P0
+        MOVW    Q3:Q2,P1:P0
+#else
+        CLR     P2
+        CLR     P3
+        CLR     Q0
+        CLR     Q1
+        CLR     Q2
+        CLR     Q3
+#endif
+        LDI     X1,7
+A42:
+        LDI     X0,8
+        POP     R25             ; Load one byte of dividend
+B42:
+        DEC     X0
+        BRMI    C42
+        ROL     R25             ; quotient is shifted into R25
+        ROL     P0              ; Shift dividend into remainder
+        ROL     P1
+        ROL     P2
+        ROL     P3
+        ROL     Q0
+        ROL     Q1
+        ROL     Q2
+        ROL     Q3
+        CP      P0,R24
+        CPC     P1,R4
+        CPC     P2,Z0
+        CPC     P3,Z1
+        CPC     Q0,T0
+        CPC     Q1,T1
+        CPC     Q2,T2
+        CPC     Q3,T3
+        BRLO    B42            ; If remainder < dividend, don't subtract
+        SUB     P0,R24          ; Otherwise do
+        SBC     P1,R4
+        SBC     P2,Z0
+        SBC     P3,Z1
+        SBC     Q0,T0
+        SBC     Q1,T1
+        SBC     Q2,T2
+        SBC     Q3,T3           ; Carry will always be cleared in this case
+        RJMP    B42
+C42:
+        ST      -Y,R25          ; After every 8 iterations, calculated quotient
+        LDI     X0,8            ; is stored
+        DEC     X1
+        BRPL    A42           ; Remainder is now in P3:P0, Q3:Q0
+        RET
+
+;-----------------------------------------------------
+; Unsigned long long modulo operation between A and B.
+; On call number to be divided by divisor is in PL and QL
+;         and the adress of the divisor in X
+; On return reminder is put in PL and QL
+;
+; Destroys: All scratch registers
+; Uses 13 bytes of data stack
+        RSEG    CODE:CODE:NOROOT(1)
+        EXTERN    ?Register_R4_is_cg_reg
+        REQUIRE   ?Register_R4_is_cg_reg
+
+?ULL_MOD_L12:
+        RCALL   DIV_MOD_PROLOGUE
+        RCALL   DIV_MOD_BODY
+        ADIW    R29:R28,8       ; Reject the quote
+        RJMP    DIV_MOD_EPILOGUE
+
+;-----------------------------------------------------
+; Signed long long division between A and B.
+; On call number to be divided by divisor is in PL and QL
+;         and the adress of the divisor in X
+; On return quotient is put in PL and QL
+;
+; Destroys: All scratch registers
+; Uses 13 bytes of data stack
+
+        RSEG    CODE:CODE:NOROOT(1)
+        EXTERN    ?Register_R4_is_cg_reg
+        REQUIRE   ?Register_R4_is_cg_reg
+
+SLL_DIV_MOD:
+        RCALL   DIV_MOD_PROLOGUE
+        CLR     R25              ; R25 is used for determine neg quote
+        TST     T3               ; Test sign of divisor
+        BRPL    A36
+        ORI     R25,1            ; If divisor is negative, set neg quote
+        COM     R4               ; and negate divisor
+        COM     Z0
+        COM     Z1
+        COM     T0
+        COM     T1
+        COM     T2
+        COM     T3
+        NEG     R24
+        LDI     X1,255
+        SBC     R4,X1
+        SBC     Z0,X1
+        SBC     Z1,X1
+        SBC     T0,X1
+        SBC     T1,X1
+        SBC     T2,X1
+        SBC     T3,X1
+A36:
+        TST     Q3
+        BRPL    B36
+        COM     R25              ; If dividend negative, invert neg quote
+        XCALL   ?LL_NEG_L12      ; and negate dividend
+B36:
+        BST     R25,0            ; store neg quote in T
+        RJMP    DIV_MOD_BODY    ; perform unsigned division
+
+        RSEG    CODE:CODE:NOROOT(1)
+        EXTERN    ?Register_R4_is_cg_reg
+        REQUIRE   ?Register_R4_is_cg_reg
+
+?SLL_DIV_L12:
+        RCALL   SLL_DIV_MOD
+        RCALL   DIV_EPILOGUE
+        BRTC    ?SLL_DIV_1
+        XCALL   ?LL_NEG_L12      ; If neg quote, negate quote
+?SLL_DIV_1:
+        RET
+
+;-----------------------------------------------------
+; Signed long long modulo operation between A and B.
+; On call number to be divided by divisor is in PL and QL
+;         and the adress of the divisor in X
+; On return reminder is put in PL and QL
+;
+; Destroys: All scratch registers
+; Uses 13 bytes of data stack
+
+        RSEG    CODE:CODE:NOROOT(1)
+        EXTERN    ?Register_R4_is_cg_reg
+        REQUIRE   ?Register_R4_is_cg_reg
+
+?SLL_MOD_L12:
+        PUSH    R23
+        RCALL   SLL_DIV_MOD
+        ADIW    R29:R28,8       ; Reject the quote
+        RCALL   DIV_MOD_EPILOGUE
+        POP     R0
+        SBRS    R0,7
+        RET
+        XJMP    ?LL_NEG_L12     ; If neg numerator then neg reminder
+
+        ENDMOD
+
+
+        MODULE  ?LONGLONG
+
+        PUBLIC  ?LL_NEG_L12
+        PUBLIC  ?LL_SHL_L12
+        PUBLIC  ?ULL_SHR_L12
+        PUBLIC  ?SLL_SHR_L12
+
+        PUBLIC  ?LL_AND_L12
+        PUBLIC  ?LL_IOR_L12
+        PUBLIC  ?LL_XOR_L12
+        PUBLIC  ?LL_ADD_L12
+        PUBLIC  ?LL_SUB_L12
+
+        PUBLIC  ?LL_CMP_L12
+
+;-----------------------------------------------------
+; ?LL_SHL_L12
+; 'long long' << n (n in 0..63)
+; R24 contains n and is destroyed
+; PL and QL contains value to be shifted and returns shifted value
+;
+; Destroys: P0 P1 P2 P3 Q3 Q2 Q1 Q0 R24
+;
+
+        RSEG    CODE:CODE:NOROOT(1)
+
+?LL_SHL_L12:
+        DEC     R24
+        BRMI    X32       ; Done
+        LSL     P0
+        ROL     P1
+        ROL     P2
+        ROL     P3
+        ROL     Q0
+        ROL     Q1
+        ROL     Q2
+        ROL     Q3
+        RJMP    ?LL_SHL_L12
+X32:
+        RET
+
+
+;-----------------------------------------------------
+; ULL_SHR
+; 'long long' >> n (n in 0..63) unsigned
+; R24 contains n and is destroyed
+; PL and QL contains value to be shifted and returns shifted value
+;
+; Destroys: P3 P2 P1 P0 Q3 Q2 Q1 Q0 R24
+;
+
+        RSEG    CODE:CODE:NOROOT(1)
+
+?ULL_SHR_L12:
+        DEC     R24
+        BRMI    X33             ; Done
+        LSR     Q3
+        ROR     Q2
+        ROR     Q1
+        ROR     Q0
+        ROR     P3
+        ROR     P2
+        ROR     P1
+        ROR     P0
+        RJMP    ?ULL_SHR_L12
+X33:
+        RET
+
+
+;-----------------------------------------------------
+; SLL_SHR
+; 'long long' >> n (n in 0..63) signed
+; R24 contains n and is destroyed
+; PL and QL contains value to be shifted and returns shifted value
+;
+; Destroys: P3 P2 P1 P0 Q3 Q2 Q1 Q0 R24
+;
+
+        RSEG    CODE:CODE:NOROOT(1)
+
+?SLL_SHR_L12:
+        DEC     R24
+        BRMI    X34             ; Done
+        ASR     Q3
+        ROR     Q2
+        ROR     Q1
+        ROR     Q0
+        ROR     P3
+        ROR     P2
+        ROR     P1
+        ROR     P0
+        RJMP    ?SLL_SHR_L12
+X34:
+        RET
+
+
+;-----------------------------------------------------
+; ?LL_ADD_L12 adds two long long numbers, A + B
+; On call A is in P3:P0 and Q3:Q0 and the adress of B in Z
+; On return sum is placed in P3:P0 and Q3:Q0
+;
+; Destroys: P3 P2 P1 P0 Q3 Q2 Q1 Q0 R24
+;
+
+        RSEG    CODE:CODE:NOROOT(1)
+
+?LL_ADD_L12:
+        LDD     R24,Z+0          ; Simply add registers
+        ADD     P0,R24
+        LDD     R24,Z+1
+        ADC     P1,R24
+        LDD     R24,Z+2
+        ADC     P2,R24
+        LDD     R24,Z+3
+        ADC     P3,R24
+        LDD     R24,Z+4
+        ADC     Q0,R24
+        LDD     R24,Z+5
+        ADC     Q1,R24
+        LDD     R24,Z+6
+        ADC     Q2,R24
+        LDD     R24,Z+7
+        ADC     Q3,R24
+        RET
+
+;-----------------------------------------------------
+; ?LL_AND_L12 And between two long long numbers, A & B
+; On call A is in P3:P0 and Q3:Q0 and the adress of B in Z
+; On return the result is placed in P3:P0 and Q3:Q0
+;
+; Destroys: P3 P2 P1 P0 Q3 Q2 Q1 Q0 R24
+;
+
+        RSEG    CODE:CODE:NOROOT(1)
+
+?LL_AND_L12:
+        LDD     R24,Z+0          ; Simply add registers
+        AND     P0,R24
+        LDD     R24,Z+1
+        AND     P1,R24
+        LDD     R24,Z+2
+        AND     P2,R24
+        LDD     R24,Z+3
+        AND     P3,R24
+        LDD     R24,Z+4
+        AND     Q0,R24
+        LDD     R24,Z+5
+        AND     Q1,R24
+        LDD     R24,Z+6
+        AND     Q2,R24
+        LDD     R24,Z+7
+        AND     Q3,R24
+        RET
+;-----------------------------------------------------
+; ?LL_IOR_L12 IOR between two long long numbers, A | B
+; On call A is in P3:P0 and Q3:Q0 and the adress of B in Z
+; On return the return is placed in P3:P0 and Q3:Q0
+;
+; Destroys: P3 P2 P1 P0 Q3 Q2 Q1 Q0 R24
+;
+
+        RSEG    CODE:CODE:NOROOT(1)
+
+?LL_IOR_L12:
+        LDD     R24,Z+0          ; Simply add registers
+        OR      P0,R24
+        LDD     R24,Z+1
+        OR      P1,R24
+        LDD     R24,Z+2
+        OR      P2,R24
+        LDD     R24,Z+3
+        OR      P3,R24
+        LDD     R24,Z+4
+        OR      Q0,R24
+        LDD     R24,Z+5
+        OR      Q1,R24
+        LDD     R24,Z+6
+        OR      Q2,R24
+        LDD     R24,Z+7
+        OR      Q3,R24
+        RET
+;-----------------------------------------------------
+; ?LL_XOR_L12 XOR between two long long numbers, A ^ B
+; On call A is in P3:P0 and Q3:Q0 and the adress of B in Z
+; On return the result is placed in P3:P0 and Q3:Q0
+;
+; Destroys: P3 P2 P1 P0 Q3 Q2 Q1 Q0 R24
+;
+
+        RSEG    CODE:CODE:NOROOT(1)
+
+?LL_XOR_L12:
+        LDD     R24,Z+0          ; Simply add registers
+        EOR     P0,R24
+        LDD     R24,Z+1
+        EOR     P1,R24
+        LDD     R24,Z+2
+        EOR     P2,R24
+        LDD     R24,Z+3
+        EOR     P3,R24
+        LDD     R24,Z+4
+        EOR     Q0,R24
+        LDD     R24,Z+5
+        EOR     Q1,R24
+        LDD     R24,Z+6
+        EOR     Q2,R24
+        LDD     R24,Z+7
+        EOR     Q3,R24
+        RET
+
+
+;-----------------------------------------------------
+; ?LL_SUB_L12 Subtraction A - B
+; On call A is in PL and QL and adress of B in Z
+; On return difference is in PL and QL
+; Destroys: P3 P2 P1 P0 Q3 Q2 Q1 Q0 R24
+;
+
+        RSEG    CODE:CODE:NOROOT(1)
+
+?LL_SUB_L12:
+        LDD     R24,Z+0          ; Simply subtract registers
+        SUB     P0,R24
+        LDD     R24,Z+1
+        SBC     P1,R24
+        LDD     R24,Z+2
+        SBC     P2,R24
+        LDD     R24,Z+3
+        SBC     P3,R24
+        LDD     R24,Z+4
+        SBC     Q0,R24
+        LDD     R24,Z+5
+        SBC     Q1,R24
+        LDD     R24,Z+6
+        SBC     Q2,R24
+        LDD     R24,Z+7
+        SBC     Q3,R24
+        RET
+
+;-----------------------------------------------------
+; ?LL_NEG_L12
+;
+; Negates value in PL and QL
+;
+; No other registers are affected
+;
+; Destroys: P0 P1 P2 P3 Q0 Q1 Q2 Q3
+;
+
+        RSEG    CODE:CODE:NOROOT(1)
+
+?LL_NEG_L12:
+        COM     P1              ; Negate PL and QL
+        COM     P2
+        COM     P3
+        COM     Q0
+        COM     Q1
+        COM     Q2
+        COM     Q3
+        NEG     P0
+        SBCI    P1,255
+        SBCI    P2,255
+        SBCI    P3,255
+        SBCI    Q0,255
+        SBCI    Q1,255
+        SBCI    Q2,255
+        SBCI    Q3,255
+        RET
+
+
+;-----------------------------------------------------
+; ?LL_CMP_L12
+; Compare between two long longs
+; On call A is in PL and QL and Z pointing at B
+;
+; Destroys: R24
+;
+        RSEG    CODE:CODE:NOROOT(1)
+
+?LL_CMP_L12:
+        LD      R24,Z
+        CP      P0,R24
+        LDD     R24,Z+1
+        CPC     P1,R24
+        LDD     R24,Z+2
+        CPC     P2,R24
+        LDD     R24,Z+3
+        CPC     P3,R24
+
+        LDD     R24,Z+4
+        CPC     Q0,R24
+        LDD     R24,Z+5
+        CPC     Q1,R24
+        LDD     R24,Z+6
+        CPC     Q2,R24
+        LDD     R24,Z+7
+        CPC     Q3,R24
+
+        RET
+        
+        ENDMOD
+
+        
+        MODULE  ?LL_FLOAT_L12
+        PUBLIC  ?SLL2D_L12
+        PUBLIC  ?ULL2D_L12
+        PUBLIC  ?D2SLL_L12
+        PUBLIC  ?D2ULL_L12
+        PUBLIC  ?SLL2F_L12
+        PUBLIC  ?ULL2F_L12
+        PUBLIC  ?F2SLL_L12
+        PUBLIC  ?F2ULL_L12
+        
+        EXTERN  ?LL_NEG_L12
+        EXTERN  ?LL_SHL_L12
+        EXTERN  ?ULL_SHR_L12     
+                   
+        EXTERN  ?D_NORMALIZE_L11
+        EXTERN  ?D_UNPACK_1_L11
+        EXTERN  ?D2FL_L11
+        EXTERN  ?FL2D_L11
+
+;-----------------------------------------------------
+; ?SLL2D_L12  Signed long long to double conversion
+; ?ULL2D_L12  Unsigned long long to double conversion,
+;       uses ?SLL2D_L12
+; On call, the number to be converted is in P3:P0 and Q3:Q0
+; On return number is in P3:P0 and Q3:Q0
+;
+; Destroys: P3 P2 P1 P0 Q3 Q2 Q1 Q0 T0 Z0 Z1
+;
+
+    RSEG    CODE:CODE:NOROOT(1)
+
+?SLL2D_L12:
+    CLR     T0
+    BST     Q3,7
+    BLD     T0,7
+    BRTC    A38
+    XCALL   ?LL_NEG_L12     ; If sign was negative, negate
+A38:
+    LDI     Z0,$3E          ; Initial exponent is 63 + BIAS = 63 + 1023 =$04_3E
+                            ; low part is initially put in Z0
+    ST      -Y,R24
+B38:
+    TST     Q3
+    BRMI    C38             ; If MSB of long long number is Zero
+    LDI     R24,1           ; we shift one step and decrement exponent
+    XCALL   ?LL_SHL_L12
+    DEC     Z0              ; Don't have to do more than 62 shifts here
+    BREQ    C38
+    RJMP    B38
+C38:
+    LD      R24,Y+
+    MOV     P0,P1
+    MOV     P1,P2
+    MOV     P2,P3
+    MOV     P3,Q0
+    MOV     Q0,Q1
+    MOV     Q1,Q2
+    MOV     Q2,Q3
+    MOV     Q3,Z0           ; Move low part of exponent into right position
+    LDI     Z0,$04          ; and set high part of exponent
+    CLT                     ; Clear the sticky
+    XJMP    ?D_NORMALIZE_L11
+                            ; If more than 62 shifts are needed,
+                            ; they will be done here
+
+    RSEG    CODE:CODE:NOROOT(1)
+
+?ULL2D_L12:
+    CLR     T0              ; Set sign to positive
+    RJMP    A38             ; Use signed-long long-to-double conversion
+
+
+;-----------------------------------------------------
+; ?F2SLL_L12,?F2ULL_L12 Float to long long conversions
+; On call number is in P3:P0
+; On return long long number is in P3:P0 and Q3:Q0
+;
+; Destroys: P3 P2 P1 P0 Q3 Q2 Q1 Q0 Z0 Z1 T0 T1
+;
+
+;-----------------------------------------------------
+; ?D2SLL_L12,?D2ULL_L12 Double to long long conversions
+; On call number is in P3:P0 and Q3:Q0
+; On return long long number is in P3:P0 and Q3:Q0
+;
+; Destroys: P3 P2 P1 P0 Q3 Q2 Q1 Q0 Z0 Z1 T0 T1
+;
+        RSEG    CODE:CODE:NOROOT(1)
+?F2ULL_L12:
+        XCALL   ?FL2D_L11       ; Convert to double
+        REQUIRE ?D2ULL_L12      ; and then to long long
+
+        RSEG    CODE:CODE:NOROOT(1)
+?D2ULL_L12:
+        SBRC    Q3,7            ;If < 0, return 0
+        RJMP    D2L3
+        XCALL   ?D_UNPACK_1_L11
+        MOV     Z1,Q3
+        SUBI    Z1,$FF          ; Subtract bias
+        SBCI    Z0,$03
+        BRCS    D2L3            ; Branch if exponent < 0
+        CLR     T1
+        CPI     Z1,64
+        CPC     Z0,T1
+        BRCS    D2L4            ; Branch  if exponent <= 64
+        TST     T0
+        BRMI    D2L1            ; If exponent > 64, return
+        LDI     Q3,$FF          ; $FF_FF_FF_FF_FF_FF_FF_FF
+        RJMP    D2L5
+
+        RSEG    CODE:CODE:NOROOT(1)
+?F2SLL_L12:
+        XCALL   ?FL2D_L11       ; Convert to double
+        REQUIRE ?D2SLL_L12      ; and then to long long
+
+        RSEG    CODE:CODE:NOROOT(1)
+?D2SLL_L12:
+        XCALL   ?D_UNPACK_1_L11
+        MOV     Z1,Q3
+        SUBI    Z1,$FF          ; Subtract bias
+        SBCI    Z0,$03
+        BRCS    D2L3            ; Branch if exponent < 0
+        CLR     T1
+        CPI     Z1,63
+        CPC     Z0,T1
+        BRCS    D2L4            ; Branch  if exponent <= 63
+        TST     T0
+        BRMI    D2L1            ; If exponent > 63, return
+        LDI     Q3,$7F          ; $7F_FF_FF_FF_FF_FF_FF_FF
+        REQUIRE D2L5
+        RSEG    CODE:CODE:NOROOT(1)
+D2L5:
+        LDI     Q2,$FF          ; if sign is positive
+        LDI     Q1,$FF
+        LDI     Q0,$FF
+#ifdef __HAS_ENHANCED_CORE__
+        MOVW    P3:P2,Q1:Q0
+        MOVW    P1:P0,Q1:Q0
+#else
+        LDI     P3,$FF
+        LDI     P2,$FF
+        LDI     P1,$FF
+        LDI     P0,$FF
+#endif
+        RET
+        RSEG    CODE:CODE:NOROOT(1)
+D2L1:
+        LDI     Q3,$80          ; or $80_00_00_00_00_00_00_00
+D2L2:
+        CLR     Q2              ; if sign is negative
+        CLR     Q1
+        CLR     Q0
+#ifdef __HAS_ENHANCED_CORE__
+        MOVW    P3:P2,Q1:Q0
+        MOVW    P1:P0,Q1:Q0
+#else
+        CLR     P3
+        CLR     P2
+        CLR     P1
+        CLR     P0
+#endif
+        RET
+D2L3:
+        CLR     Q3              ; Zero is returned if exponent is too small
+        RJMP    D2L2
+D2L4:
+        MOV     Q3,Q2
+        MOV     Q2,Q1
+        MOV     Q1,Q0
+        MOV     Q0,P3
+        MOV     P3,P2
+        MOV     P2,P1
+        MOV     P1,P0
+        CLR     P0
+        SUBI    Z1,63
+        NEG     Z1
+        ST      -Y,R24
+        MOV     R24,Z1
+        XCALL   ?ULL_SHR_L12
+        LD      R24,Y+
+        SBRS    T0,7
+        RET
+        RJMP    ?LL_NEG_L12
+
+
+;-----------------------------------------------------
+; ?SLL2F_L12  Signed long long to float conversion
+; ?ULL2F_L12  Unsigned long long to double conversion,
+;       uses ?SLL2F_L12
+; On call number to be converted is in P3:P0 and Q3:Q0
+; On return number is in P3:P0
+;
+; Destroys: P3 P2 P1 P0 Q3 Q2 Q1 Q0 T0 Z0 Z1
+;
+
+        RSEG    CODE:CODE:NOROOT(1)
+
+?SLL2F_L12:
+        RCALL   ?SLL2D_L12      ; Simply convert to doubles first
+        XJMP    ?D2FL_L11       ; and then from double to float
+
+        RSEG    CODE:CODE:NOROOT(1)
+
+?ULL2F_L12:
+        RCALL   ?ULL2D_L12      ; Simply convert to doubles first
+        XJMP    ?D2FL_L11       ; and then from double to float
+
+
+        END
+
+;----------------------------------------------------------------------------
+;  

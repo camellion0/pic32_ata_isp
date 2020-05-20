@@ -1,0 +1,923 @@
+###############################################################################
+#
+# IAR C/C++ Compiler V7.10.1.1197 for Atmel AVR           13/May/2020  17:03:25
+# Copyright 1996-2017 IAR Systems AB.
+# Network license: dvriar01.mchp-main.com (STD)
+#
+#    Source file  =  
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\firmware\tp\src\tp_flash.c
+#    Command line =  
+#        -f C:\Users\C41045\AppData\Local\Temp\EW233E.tmp
+#        (C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\firmware\tp\src\tp_flash.c
+#        -v3 --enhanced_core -ms -o
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\Obj
+#        -lCN
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\List
+#        -lA
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\List
+#        --no_cse --no_inline --no_code_motion --no_cross_call --no_clustering
+#        --no_tbaa --debug --64k_flash -DENABLE_BIT_DEFINITIONS -e
+#        --eeprom_size 2304 --clib -Ohz)
+#    Locale       =  English_USA.1252
+#    List file    =  
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\List\tp_flash.lst
+#    Object file  =  
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\Obj\tp_flash.r90
+#
+###############################################################################
+
+C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\firmware\tp\src\tp_flash.c
+      1          //lint -e9059
+      2          /******************************************************************************
+      3            Use of this software is subject to Microchip's Software License Agreement.
+      4          --------------------------------------------------------------------------------
+      5            $URL: http://svnservulm.corp.atmel.com/svn/CDB/Apps/SW_Lib/Car_Access/CARS_GEN2/ATAB5702A/Branches/P2P22_TXMODE_NXP/firmware/tp/src/tp_flash.c $
+      6            $LastChangedRevision: 458065 $
+      7            $LastChangedDate: 2017-05-02 04:55:50 -0600 (Tue, 02 May 2017) $
+      8            $LastChangedBy: krishna.balan $
+      9          -------------------------------------------------------------------------------
+     10            Project:      ATA5700
+     11            Target MCU:   ATA5700
+     12            Compiler:     IAR C/C++ Compiler for AVR 6.3.18.0
+     13          -------------------------------------------------------------------------------
+     14          
+     15          ******************************************************************************
+     16          * Copyright 2017, Microchip Technology Incorporated and its subsidiaries.     *
+     17          *                                                                             *
+     18          * This software is owned by the Microchip Technology Incorporated.            *
+     19          * Microchip hereby grants to licensee a personal                              *
+     20          * non-exclusive, non-transferable license to copy, use, modify, create        *
+     21          * derivative works of, and compile the Microchip Source Code and derivative   *
+     22          * works for the sole and exclusive purpose of creating custom software in     *
+     23          * support of licensee product to be used only in conjunction with a Microchip *
+     24          * integrated circuit as specified in the applicable agreement. Any            *        
+     25          * reproduction, modification, translation, compilation, or representation of  *
+     26          * this software except as specified above is prohibited without the express   *
+     27          * written permission of Microchip.                                            *
+     28          *                                                                             *
+     29          * Disclaimer: MICROCHIP MAKES NO WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,    *
+     30          * WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED    *
+     31          * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.         *
+     32          * Microchip reserves the right to make changes without further notice to the  *
+     33          * materials described herein. Microchip does not assume any liability arising *
+     34          * out of the application or use of any product or circuit described herein.   *
+     35          * Microchip does not authorize its products for use as critical components in *
+     36          * life-support systems where a malfunction or failure may reasonably be       *
+     37          * expected to result in significant injury to the user. The inclusion of      *
+     38          * Microchip products in a life-support systems application implies that the   *
+     39          * manufacturer assumes all risk of such use and in doing so indemnifies       *
+     40          * Microchip against all charges.                                              *
+     41          *                                                                             *
+     42          * Use may be limited by and subject to the applicable Microchip software      *
+     43          * license agreement.                                                          *
+     44          ******************************************************************************/
+     45          /** \file tp_flash.c
+     46          */
+     47          
+     48          //lint -restore
+     49          
+     50          /*===========================================================================*/
+     51          /*  INCLUDES                                                                 */
+     52          /*===========================================================================*/
+     53          #include "tp_flash.h"
+
+   \                                 In  segment ABSOLUTE, at 0x2d
+   \   union <unnamed> volatile __io _A_TPFR
+   \                     _A_TPFR:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x37
+   \   union <unnamed> volatile __io _A_PHTCR
+   \                     _A_PHTCR:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x38
+   \   union <unnamed> volatile __io _A_LDFFL
+   \                     _A_LDFFL:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x39
+   \   union <unnamed> volatile __io _A_LDFD
+   \                     _A_LDFD:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x3b
+   \   union <unnamed> volatile __io _A_PHFR
+   \                     _A_PHFR:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x166
+   \   union <unnamed> volatile __ext_io _A_TPIMR
+   \                     _A_TPIMR:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x16c
+   \   union <unnamed> volatile __ext_io _A_TPECR1
+   \                     _A_TPECR1:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x170
+   \   union <unnamed> volatile __ext_io _A_TPECMR
+   \                     _A_TPECMR:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x171
+   \   union <unnamed> volatile __ext_io _A_TPCR3
+   \                     _A_TPCR3:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x194
+   \   union <unnamed> volatile __ext_io _A_PHID0L
+   \                     _A_PHID0L:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x199
+   \   union <unnamed> volatile __ext_io _A_PHID1L
+   \                     _A_PHID1L:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x19a
+   \   union <unnamed> volatile __ext_io _A_PHIDFR
+   \                     _A_PHIDFR:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x1a4
+   \   union <unnamed> volatile __ext_io _A_PHTBLR
+   \                     _A_PHTBLR:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x1a5
+   \   union <unnamed> volatile __ext_io _A_PHDFR
+   \                     _A_PHDFR:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x1d6
+   \   union <unnamed> volatile __ext_io _A_LDFIM
+   \                     _A_LDFIM:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x1d7
+   \   union <unnamed> volatile __ext_io _A_LDFC
+   \                     _A_LDFC:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x1d8
+   \   union <unnamed> volatile __ext_io _A_PHIMR
+   \                     _A_PHIMR:
+   \   00000000                      DS8 1
+     54          #include "../../eep/src/eep.h"
+     55          #include "../../init/src/init_flash.h"
+     56          #include "../../system/src/system_flash.h"
+     57          #include "../../globals/src/globals_flash.h"
+     58          
+     59          /*===========================================================================*/
+     60          /*  DEFINES                                                                  */
+     61          /*===========================================================================*/
+     62          
+     63          /*===========================================================================*/
+     64          /*  Modul Globals                                                            */
+     65          /*===========================================================================*/
+     66          
+     67          /** \brief <b>tpRxTx</b>
+     68              contains the Transponder configuration
+     69          */
+     70          #pragma location = ".sram_FlashApp_TpRxTx"
+
+   \                                 In  segment .sram_FlashApp_TpRxTx, align 1, keep-with-next, root
+     71          __root __no_init sTpRxTxConfig g_sTpRxTx;
+   \                     g_sTpRxTx:
+   \   00000000                      DS8 3
+     72          
+     73          /** \brief <b>g_bLfRxEmTransponderModeCommand_flash</b>
+     74              contains which EM Transponder Mode command has been received
+     75          */
+     76          #pragma location = ".sram_FlashApp_TpRxTx"
+
+   \                                 In  segment .sram_FlashApp_TpRxTx, align 1, keep-with-next, root
+     77          __root __no_init static uint8_t g_bTpEmTransponderModeCommand_flash;
+   \                     g_bTpEmTransponderModeCommand_flash:
+   \   00000000                      DS8 1
+     78          
+     79          /** \brief <b>g_bTpEmTransponderStateIndex_flash</b>
+     80              contains the EM Mode SW state
+     81          */
+     82          #pragma location = ".sram_FlashApp_TpRxTx"
+
+   \                                 In  segment .sram_FlashApp_TpRxTx, align 1, keep-with-next, root
+     83          __root __no_init uint8_t g_bTpEmTransponderStateIndex_flash;
+   \                     g_bTpEmTransponderStateIndex_flash:
+   \   00000000                      DS8 1
+     84          
+     85          /** \brief <b>g_fTpEmTransponderModeErrorFlag_flash</b>
+     86              indicates any EM Transponder Mode error
+     87          */
+     88          #pragma location = ".sram_FlashApp_TpRxTx"
+
+   \                                 In  segment .sram_FlashApp_TpRxTx, align 1, keep-with-next, root
+     89          __root __no_init static uint8_t g_fTpEmTransponderModeErrorFlag_flash;
+   \                     g_fTpEmTransponderModeErrorFlag_flash:
+   \   00000000                      DS8 1
+     90          
+     91          
+     92          /** \brief <b>g_fTpEmTransponderModeLongCommand_flash</b>
+     93              indicates the reception of a long EM Transponder Mode command, e.g.
+     94              Authentication
+     95          */
+     96          #pragma location = ".sram_FlashApp_TpRxTx"
+
+   \                                 In  segment .sram_FlashApp_TpRxTx, align 1, keep-with-next, root
+     97          __root __no_init static uint8_t g_fTpEmTransponderModeLongCommand_flash;
+   \                     g_fTpEmTransponderModeLongCommand_flash:
+   \   00000000                      DS8 1
+     98          
+     99          
+    100          
+    101          /*===========================================================================*/
+    102          /*  Modul Globals                                                            */
+    103          /*===========================================================================*/
+    104          
+    105          /*===========================================================================*/
+    106          /*  IMPLEMENTATION                                                           */
+    107          /*===========================================================================*/
+    108          
+    109          /**/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    110          VOIDFUNC ATA_tpEmModeInit_flash_C(void)
+   \                     ATA_tpEmModeInit_flash_C:
+    111          {
+    112              /* Reset long command indication */
+    113              g_fTpEmTransponderModeLongCommand_flash = FALSE;
+   \   00000000   E000               LDI     R16, 0
+   \   00000002   9300....           STS     g_fTpEmTransponderModeLongCommand_flash, R16
+    114              g_fTpEmTransponderModeErrorFlag_flash = 0x00U;
+   \   00000006   9300....           STS     g_fTpEmTransponderModeErrorFlag_flash, R16
+    115          
+    116              /* disable ID0 and ID1 */
+    117              PHID0L = 0x00U;
+   \   0000000A   9300....           STS     _A_PHID0L, R16
+    118              PHID1L = 0x00U;
+   \   0000000E   9300....           STS     _A_PHID1L, R16
+    119          
+    120              /* Set ID frame length to 3 bit to be able to set the parity bit length
+    121                 when BCR interrupt is executed. */
+    122              PHIDFR = 0x03U;
+   \   00000012   E003               LDI     R16, 3
+   \   00000014   9300....           STS     _A_PHIDFR, R16
+    123          
+    124              /* data frame length 4 bit */
+    125              PHDFR  = 0x04U;
+   \   00000018   E004               LDI     R16, 4
+   \   0000001A   9300....           STS     _A_PHDFR, R16
+    126          
+    127              /* telegram bit length 4 bit */
+    128              PHTBLR = 0x04U;
+   \   0000001E   9300....           STS     _A_PHTBLR, R16
+    129          
+    130              /* LLR-Ref: 050 */
+    131              PHTCR &= ~BM_CSM;
+   \   00000022   98BF               CBI     0x17, 0x07
+    132              PHTCR |= BM_FRFIFO;
+   \   00000024   9ABD               SBI     0x17, 0x05
+    133              ATA_globalsSwitchAvrPhClock_flash_C((uint8_t)(BM_LDFSCKS | BM_LDFSCSW));
+   \   00000026   E003               LDI     R16, 3
+   \   00000028   ........           CALL    ATA_globalsSwitchAvrPhClock_flash_C
+    134          
+    135              /* LLR-Ref: 070 */
+    136              LDFC = 0x00U|BM_LDFMSB;  /* Set fill level configuration to 0 */
+   \   0000002C   E400               LDI     R16, 64
+   \   0000002E   9300....           STS     _A_LDFC, R16
+    137              LDFFL = BM_LDFCLR;        /* clear RdPtr, WrPtr, fill-level, status and bit length */
+   \   00000032   E800               LDI     R16, 128
+   \   00000034   BB08               OUT     0x18, R16
+    138              PHFR = 0x07;            /* clear data frame, bit length and CRC error flags */
+   \   00000036   E007               LDI     R16, 7
+   \   00000038   BB0B               OUT     0x1B, R16
+    139          
+    140              /* LLR-Ref: 080 */
+    141              ATA_globalsSwitchAvrPhClock_flash_C((uint8_t)0x00U);
+   \   0000003A   E000               LDI     R16, 0
+   \   0000003C   ........           CALL    ATA_globalsSwitchAvrPhClock_flash_C
+    142          
+    143              /* LLR-Ref: 090 */
+    144              TPIMR &= ~BM_TPFTIM;                /* disable transponder field timeout interrupt (TPTOERR_vect) */
+   \   00000040   91000166           LDS     R16, 358
+   \   00000044   7F0D               ANDI    R16, 0xFD
+   \   00000046   93000166           STS     358, R16
+    145              PHIMR = (BM_PHIDFIM | BM_PHTBLIM);  /* disable data frame interrupt (LFBCR_vect)
+   \   0000004A   E00A               LDI     R16, 10
+   \   0000004C   9300....           STS     _A_PHIMR, R16
+    146                                                     enable bit count reached interrupt ()
+    147                                                     enable ID Frame interrupt
+    148                                                  */
+    149              LDFIM  = 0x00U;                      /* disable FIFO interrupts */
+   \   00000050   E000               LDI     R16, 0
+   \   00000052   9300....           STS     _A_LDFIM, R16
+    150          
+    151          
+    152              /* LLR-Ref: 120 */
+    153              TPCR3 |= (BM_TPRD | BM_TPTLIW);
+   \   00000056   9100....           LDS     R16, _A_TPCR3
+   \   0000005A   6006               ORI     R16, 0x06
+   \   0000005C   9300....           STS     _A_TPCR3, R16
+    154          }
+   \   00000060   9508               RET
+   \   00000062                      REQUIRE _A_PHID0L
+   \   00000062                      REQUIRE _A_PHID1L
+   \   00000062                      REQUIRE _A_PHIDFR
+   \   00000062                      REQUIRE _A_PHDFR
+   \   00000062                      REQUIRE _A_PHTBLR
+   \   00000062                      REQUIRE _A_PHTCR
+   \   00000062                      REQUIRE _A_LDFC
+   \   00000062                      REQUIRE _A_LDFFL
+   \   00000062                      REQUIRE _A_PHFR
+   \   00000062                      REQUIRE _A_TPIMR
+   \   00000062                      REQUIRE _A_PHIMR
+   \   00000062                      REQUIRE _A_LDFIM
+   \   00000062                      REQUIRE _A_TPCR3
+    155          
+    156          
+    157          /* function will be executed in an interrupt context */
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    158          VOIDFUNC ATA_tpEmModeCommandReconfiguration_flash_C(void)
+   \                     ATA_tpEmModeCommandReconfiguration_flash_C:
+    159          {
+    160              /* Retrieve the received command ID, switch FIFO clock */
+    161              ATA_globalsSwitchAvrPhClock_flash_C((uint8_t)(BM_LDFSCKS | BM_LDFSCSW));
+   \   00000000   E003               LDI     R16, 3
+   \   00000002   ........           CALL    ATA_globalsSwitchAvrPhClock_flash_C
+    162              
+    163              /* Store EM command ID */
+    164              g_bTpEmTransponderModeCommand_flash = LDFD;
+    165              g_bTpEmTransponderModeCommand_flash >>= 5;
+   \   00000006   B309               IN      R16, 0x19
+   \   00000008   9502               SWAP    R16
+   \   0000000A   700F               ANDI    R16, 0x0F
+   \   0000000C   9506               LSR     R16
+   \   0000000E   9300....           STS     g_bTpEmTransponderModeCommand_flash, R16
+    166              
+    167              /* If command ID is set to ID mode */
+    168              switch (g_bTpEmTransponderModeCommand_flash)
+   \   00000012   3003               CPI     R16, 3
+   \   00000014   F429               BRNE    ??ATA_tpEmModeCommandReconfiguration_flash_C_0
+    169              {
+    170                  case EM_CMD_ID_MODE:
+    171                    break;
+    172          
+    173                  case EM_CMD_AUTHENTICATION:
+    174                    /* data frame and telegram bit length to 36 bit */
+    175                    PHDFR  = 0x24U;
+   \   00000016   E204               LDI     R16, 36
+   \   00000018   9300....           STS     _A_PHDFR, R16
+    176                    PHTBLR = 0x24U;
+   \   0000001C   9300....           STS     _A_PHTBLR, R16
+    177                    break;
+    178          
+    179                  default:
+    180                    break;
+    181              }
+    182          
+    183              /**/
+    184              ATA_globalsSwitchAvrPhClock_flash_C((uint8_t)0x00U);
+   \                     ??ATA_tpEmModeCommandReconfiguration_flash_C_0:
+   \   00000020   E000               LDI     R16, 0
+   \   00000022   ........           JMP     ATA_globalsSwitchAvrPhClock_flash_C
+   \   00000026                      REQUIRE _A_LDFD
+   \   00000026                      REQUIRE _A_PHDFR
+   \   00000026                      REQUIRE _A_PHTBLR
+    185          }
+    186          
+    187          
+    188          /* function will be executed in an interrupt context */
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    189          VOIDFUNC ATA_tpEmModeSingleTelProc_flash_C(void)
+   \                     ATA_tpEmModeSingleTelProc_flash_C:
+    190          {
+   \   00000000   9724               SBIW    R29:R28, 4
+    191              /* Variable to hold the function's return value. */
+    192              eEepErrorCode eepErrorCode = EEC_NO_ERROR;
+    193              uint8_t tempDataBuffer[EEP_XROW_UID_SIZE];
+    194              uint8_t bParityBitValue;
+    195          
+    196              /* Retrieve the received command ID, switch FIFO clock */
+    197              ATA_globalsSwitchAvrPhClock_flash_C((uint8_t)(BM_LDFSCKS | BM_LDFSCSW));
+   \   00000002   E003               LDI     R16, 3
+   \   00000004   ........           CALL    ATA_globalsSwitchAvrPhClock_flash_C
+    198          
+    199              /* If command ID is set to ID mode */
+    200              switch (g_bTpEmTransponderModeCommand_flash)
+   \   00000008   9100....           LDS     R16, g_bTpEmTransponderModeCommand_flash
+   \   0000000C   950A               DEC     R16
+   \   0000000E   F019               BREQ    ??ATA_tpEmModeSingleTelProc_flash_C_0
+   \   00000010   5002               SUBI    R16, 2
+   \   00000012   F1C1               BREQ    ??ATA_tpEmModeSingleTelProc_flash_C_1
+   \   00000014   C07C               RJMP    ??ATA_tpEmModeSingleTelProc_flash_C_2
+    201              {
+    202                  case EM_CMD_ID_MODE:
+    203          
+    204                      /* Store EM command ID parity bit */
+    205                      bParityBitValue = LDFD;
+    206                      bParityBitValue >>= 7;
+    207                      
+    208                      if (bParityBitValue == EM_CMD_ID_MODE_PARITY)
+   \                     ??ATA_tpEmModeSingleTelProc_flash_C_0:
+   \   00000016   9BCF               SBIS    0x19, 0x07
+   \   00000018   C07A               RJMP    ??ATA_tpEmModeSingleTelProc_flash_C_2
+    209                      {
+    210                          /* Disable Transponder reception, since a response is required */
+    211                          TPCR3 &= ~ (BM_TPRD | BM_TPTLIW);
+   \   0000001A   9100....           LDS     R16, _A_TPCR3
+   \   0000001E   7F09               ANDI    R16, 0xF9
+   \   00000020   9300....           STS     _A_TPCR3, R16
+    212          
+    213                          /* LLR-Ref: 000 */
+    214                          PHDFR  = 0x32U;              /* data frame length 50 bit */
+   \   00000024   E302               LDI     R16, 50
+   \   00000026   9300....           STS     _A_PHDFR, R16
+    215                          PHTBLR = 0x32U;              /* telegram bit length 50 bit */
+   \   0000002A   9300....           STS     _A_PHTBLR, R16
+    216          
+    217                          /* LLR-Ref: 000 */
+    218                          LDFC = (BM_LDFMSB);  /* Set fill level configuration to 0 */
+   \   0000002E   E400               LDI     R16, 64
+   \   00000030   9300....           STS     _A_LDFC, R16
+    219                          LDFFL = 0x80U;       /* clear RdPtr, WrPtr, fill-level, status and bit length */
+   \   00000034   E800               LDI     R16, 128
+   \   00000036   BB08               OUT     0x18, R16
+    220                          LDFIM = 0x00U;       /* disable interrupts */
+   \   00000038   E000               LDI     R16, 0
+   \   0000003A   9300....           STS     _A_LDFIM, R16
+    221          
+    222                          /* Write data to PH FIFO: First header 12 Bit 1's and 4 Bit 0's */
+    223                          LDFD = 0xFFU;
+   \   0000003E   EF0F               LDI     R16, 255
+   \   00000040   BB09               OUT     0x19, R16
+    224                          LDFD = 0xF0U;
+   \   00000042   EF00               LDI     R16, 240
+   \   00000044   BB09               OUT     0x19, R16
+    225          
+    226                          /* Set Manchester encoding and bit length */
+    227                          TPECMR = 0xFFU;
+   \   00000046   EF0F               LDI     R16, 255
+   \   00000048   9300....           STS     _A_TPECMR, R16
+    228                          TPECR1 = 0x32U;
+   \   0000004C   E302               LDI     R16, 50
+   \   0000004E   9300....           STS     _A_TPECR1, R16
+    229          
+    230                          /* Fill EEPROM UID of 32 bits */
+    231                          eepErrorCode = ATA_eepReadBytes_C(&tempDataBuffer[0], (uint16_t)&g_sAtmelEEPromSection.eepUID[0], EEP_XROW_UID_SIZE);
+   \   00000052   E044               LDI     R20, 4
+   \   00000054   ....               LDI     R18, LOW((g_sAtmelEEPromSection + 48))
+   \   00000056   ....               LDI     R19, HIGH((g_sAtmelEEPromSection + 48))
+   \   00000058   018E               MOVW    R17:R16, R29:R28
+   \   0000005A   ........           CALL    ATA_eepReadBytes_C
+   \   0000005E   2F40               MOV     R20, R16
+    232          
+    233                          /* UID is stored MSB-wise in V2.0, thus this code is correct */
+    234                          for (uint8_t i = 0; i < EEP_XROW_UID_SIZE; i++)
+   \   00000060   E020               LDI     R18, 0
+   \   00000062   E004               LDI     R16, 4
+   \   00000064   E030               LDI     R19, 0
+    235                          {
+    236                              if (eepErrorCode == EEC_NO_ERROR)
+   \                     ??ATA_tpEmModeSingleTelProc_flash_C_3:
+   \   00000066   2344               TST     R20
+   \   00000068   F429               BRNE    ??ATA_tpEmModeSingleTelProc_flash_C_4
+    237                              {
+    238                                  LDFD = tempDataBuffer[i];
+   \   0000006A   01FE               MOVW    R31:R30, R29:R28
+   \   0000006C   0FE2               ADD     R30, R18
+   \   0000006E   1FF3               ADC     R31, R19
+   \   00000070   8110               LD      R17, Z
+   \   00000072   C001               RJMP    ??ATA_tpEmModeSingleTelProc_flash_C_5
+    239                              }
+    240                              else
+    241                              {
+    242                                  LDFD = 0x55U;
+   \                     ??ATA_tpEmModeSingleTelProc_flash_C_4:
+   \   00000074   E515               LDI     R17, 85
+   \                     ??ATA_tpEmModeSingleTelProc_flash_C_5:
+   \   00000076   BB19               OUT     0x19, R17
+    243                              }
+    244                          }
+   \   00000078   9523               INC     R18
+   \   0000007A   950A               DEC     R16
+   \   0000007C   F7A1               BRNE    ??ATA_tpEmModeSingleTelProc_flash_C_3
+    245          
+    246                          /* Add two trailing bits to have a none byte-aligned response. */
+    247                          LDFD = 0xC0U;
+   \   0000007E   EC00               LDI     R16, 192
+   \   00000080   BB09               OUT     0x19, R16
+    248          
+    249                          /* Enable Transponder trasmit sequence */
+    250                          TPCR3 |= BM_TPTD;
+   \   00000082   C040               RJMP    ??ATA_tpEmModeSingleTelProc_flash_C_6
+    251                      }
+    252                      break;
+    253          
+    254                  case EM_CMD_AUTHENTICATION:
+    255          
+    256                      /* Only the first part of the AUTHENTICATION message has been
+    257                         received */
+    258                      if ( g_fTpEmTransponderModeLongCommand_flash == FALSE )
+   \                     ??ATA_tpEmModeSingleTelProc_flash_C_1:
+   \   00000084   9100....           LDS     R16, g_fTpEmTransponderModeLongCommand_flash
+   \   00000088   2300               TST     R16
+   \   0000008A   F441               BRNE    ??ATA_tpEmModeSingleTelProc_flash_C_7
+    259                      {
+    260                          g_fTpEmTransponderModeLongCommand_flash = TRUE;
+   \   0000008C   E001               LDI     R16, 1
+   \   0000008E   9300....           STS     g_fTpEmTransponderModeLongCommand_flash, R16
+    261          
+    262                          /* Store AUTHENTICATION command ID parity bit */
+    263                          bParityBitValue = LDFD;
+    264                          bParityBitValue >>= 7;
+    265          
+    266                          if (bParityBitValue != EM_CMD_AUTHENTICATION_PARITY)
+   \   00000092   9BCF               SBIS    0x19, 0x07
+   \   00000094   C03C               RJMP    ??ATA_tpEmModeSingleTelProc_flash_C_2
+    267                          {
+    268                              g_fTpEmTransponderModeErrorFlag_flash = 0x01U;
+   \   00000096   9300....           STS     g_fTpEmTransponderModeErrorFlag_flash, R16
+   \   0000009A   C039               RJMP    ??ATA_tpEmModeSingleTelProc_flash_C_2
+    269                          }
+    270                      }
+    271                      else
+    272                      {
+    273                          /* Send ACK if command ID and parity do match, i.e. no error is flagged */
+    274                          if ( g_fTpEmTransponderModeErrorFlag_flash == 0x00U )
+   \                     ??ATA_tpEmModeSingleTelProc_flash_C_7:
+   \   0000009C   9100....           LDS     R16, g_fTpEmTransponderModeErrorFlag_flash
+   \   000000A0   2300               TST     R16
+   \   000000A2   9100....           LDS     R16, _A_TPCR3
+   \   000000A6   F4A1               BRNE    ??ATA_tpEmModeSingleTelProc_flash_C_8
+    275                          {
+    276                              /* Disable Transponder reception, since a response is required */
+    277                              TPCR3 &= ~ (BM_TPRD | BM_TPTLIW);
+   \   000000A8   7F09               ANDI    R16, 0xF9
+   \   000000AA   9300....           STS     _A_TPCR3, R16
+    278          
+    279                              /* Send NACK, since parity bit is wrong */
+    280                              PHDFR  = 0x0AU;              /* data frame length 10 bit */
+   \   000000AE   E00A               LDI     R16, 10
+   \   000000B0   9300....           STS     _A_PHDFR, R16
+    281                              PHTBLR = 0x0AU;              /* telegram bit length 10 bit */
+   \   000000B4   9300....           STS     _A_PHTBLR, R16
+    282          
+    283                              LDFC = (BM_LDFMSB);  /* Set fill level configuration to 0 */
+   \   000000B8   E400               LDI     R16, 64
+   \   000000BA   9300....           STS     _A_LDFC, R16
+    284                              LDFFL = 0x80U;       /* clear RdPtr, WrPtr, fill-level, status and bit length */
+   \   000000BE   E800               LDI     R16, 128
+   \   000000C0   BB08               OUT     0x18, R16
+    285                              LDFIM = 0x00U;       /* disable interrupts */
+   \   000000C2   E000               LDI     R16, 0
+   \   000000C4   9300....           STS     _A_LDFIM, R16
+    286          
+    287                              /* Write data to PH FIFO: 10 Bit ACK 0b1011 1011 10 */
+    288                              LDFD = 0xBBU;
+   \   000000C8   EB0B               LDI     R16, 187
+   \   000000CA   BB09               OUT     0x19, R16
+    289                              LDFD = 0x80U;
+   \   000000CC   E800               LDI     R16, 128
+   \   000000CE   C013               RJMP    ??ATA_tpEmModeSingleTelProc_flash_C_9
+    290          
+    291                              /* Set NRZ encoding and bit length */
+    292                              TPECMR = 0xAAU;
+    293                              TPECR1 = 0x0AU;
+    294          
+    295                              /* Enable Transponder trasmit sequence */
+    296                              TPCR3 |= BM_TPTD;
+    297                          }
+    298                          else
+    299                          {
+    300                              /* Disable Transponder reception, since a response is required */
+    301                              TPCR3 &= ~ (BM_TPRD | BM_TPTLIW);
+   \                     ??ATA_tpEmModeSingleTelProc_flash_C_8:
+   \   000000D0   7F09               ANDI    R16, 0xF9
+   \   000000D2   9300....           STS     _A_TPCR3, R16
+    302          
+    303                              /* Send ACK, since parity bit is wrong */
+    304                              PHDFR  = 0x0AU;              /* data frame length 10 bit */
+   \   000000D6   E00A               LDI     R16, 10
+   \   000000D8   9300....           STS     _A_PHDFR, R16
+    305                              PHTBLR = 0x0AU;              /* telegram bit length 10 bit */
+   \   000000DC   9300....           STS     _A_PHTBLR, R16
+    306          
+    307                              LDFC = (BM_LDFMSB);  /* Set fill level configuration to 0 */
+   \   000000E0   E400               LDI     R16, 64
+   \   000000E2   9300....           STS     _A_LDFC, R16
+    308                              LDFFL = 0x80U;       /* clear RdPtr, WrPtr, fill-level, status and bit length */
+   \   000000E6   E800               LDI     R16, 128
+   \   000000E8   BB08               OUT     0x18, R16
+    309                              LDFIM = 0x00U;       /* disable interrupts */
+   \   000000EA   E000               LDI     R16, 0
+   \   000000EC   9300....           STS     _A_LDFIM, R16
+    310          
+    311                              /* Write data to PH FIFO: 10 Bit NACK 0b1011 1011 01 */
+    312                              LDFD = 0xBBU;
+   \   000000F0   EB0B               LDI     R16, 187
+   \   000000F2   BB09               OUT     0x19, R16
+    313                              LDFD = 0x40U;
+   \   000000F4   E400               LDI     R16, 64
+   \                     ??ATA_tpEmModeSingleTelProc_flash_C_9:
+   \   000000F6   BB09               OUT     0x19, R16
+    314          
+    315                              /* Set NRZ encoding and bit length */
+    316                              TPECMR = 0xAAU;
+   \   000000F8   EA0A               LDI     R16, 170
+   \   000000FA   9300....           STS     _A_TPECMR, R16
+    317                              TPECR1 = 0x0AU;
+   \   000000FE   E00A               LDI     R16, 10
+   \   00000100   9300....           STS     _A_TPECR1, R16
+    318          
+    319                              /* Enable Transponder trasmit sequence */
+    320                              TPCR3 |= BM_TPTD;
+   \                     ??ATA_tpEmModeSingleTelProc_flash_C_6:
+   \   00000104   91000171           LDS     R16, 369
+   \   00000108   6001               ORI     R16, 0x01
+   \   0000010A   93000171           STS     369, R16
+    321                          }
+    322                      }
+    323                      break;
+    324          
+    325                  default:
+    326          
+    327                    break;
+    328              }
+    329          
+    330              /**/
+    331              ATA_globalsSwitchAvrPhClock_flash_C((uint8_t)0x00U);
+   \                     ??ATA_tpEmModeSingleTelProc_flash_C_2:
+   \   0000010E   E000               LDI     R16, 0
+   \   00000110   ........           CALL    ATA_globalsSwitchAvrPhClock_flash_C
+    332          }
+   \   00000114   9624               ADIW    R29:R28, 4
+   \   00000116   9508               RET
+   \   00000118                      REQUIRE _A_LDFD
+   \   00000118                      REQUIRE _A_TPCR3
+   \   00000118                      REQUIRE _A_PHDFR
+   \   00000118                      REQUIRE _A_PHTBLR
+   \   00000118                      REQUIRE _A_LDFC
+   \   00000118                      REQUIRE _A_LDFFL
+   \   00000118                      REQUIRE _A_LDFIM
+   \   00000118                      REQUIRE _A_TPECMR
+   \   00000118                      REQUIRE _A_TPECR1
+    333          
+    334          
+    335          
+    336          /*---------------------------------------------------------------------------*/
+    337          /** \brief <b>ATA_tpTimeoutError_flash_ISR_C</b>
+    338              shall handle Transponder errors.
+    339          
+    340              \return VOIDFUNC
+    341          
+    342              \Derived no
+    343          
+    344              \Rationale none
+    345          
+    346              \Traceability
+    347          
+    348              \StackUsage SU_XXX bytes
+    349          
+    350              \image html ATA_tpTimeoutError_flash_ISR_C.png
+    351              \image rtf ATA_tpTimeoutError_flash_ISR_C.png
+    352              \n
+    353          */
+    354          /*---------------------------------------------------------------------------*/
+    355          #pragma vector=TPTOERR_vect
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    356          __interrupt VOIDFUNC ATA_tpTimeoutError_flash_ISR_C(void)
+   \                     ATA_tpTimeoutError_flash_ISR_C:
+    357          {
+   \   00000000   938A               ST      -Y, R24
+   \   00000002   93FA               ST      -Y, R31
+   \   00000004   93EA               ST      -Y, R30
+   \   00000006   923A               ST      -Y, R3
+   \   00000008   922A               ST      -Y, R2
+   \   0000000A   921A               ST      -Y, R1
+   \   0000000C   920A               ST      -Y, R0
+   \   0000000E   937A               ST      -Y, R23
+   \   00000010   936A               ST      -Y, R22
+   \   00000012   935A               ST      -Y, R21
+   \   00000014   934A               ST      -Y, R20
+   \   00000016   933A               ST      -Y, R19
+   \   00000018   932A               ST      -Y, R18
+   \   0000001A   931A               ST      -Y, R17
+   \   0000001C   930A               ST      -Y, R16
+   \   0000001E   B78F               IN      R24, 0x3F
+    358              /* Check if a transponder bit error has been detected */
+    359              if ( (TPFR & BM_TPBERF) != 0x00U )
+   \   00000020   9B6B               SBIS    0x0D, 0x03
+   \   00000022   C00C               RJMP    ??ATA_tpTimeoutError_flash_ISR_C_0
+    360              {
+    361                  g_sTpRxTx.bTpFlags |= BM_LFRXCONFIG_TP_FLAGS_TPBERF;
+   \   00000024   ....               LDI     R30, LOW(g_sTpRxTx)
+   \   00000026   ....               LDI     R31, (g_sTpRxTx) >> 8
+   \   00000028   8100               LD      R16, Z
+   \   0000002A   6008               ORI     R16, 0x08
+   \   0000002C   8300               ST      Z, R16
+    362          
+    363                  /* Do event pin handling */
+    364                  if ( g_sEventHandling_flash.bTpRxTx & BM_LFRXCONFIG_TP_FLAGS_TPBERF )
+   \   0000002E   9100....           LDS     R16, (g_sEventHandling_flash + 8)
+   \   00000032   FF03               SBRS    R16, 3
+   \   00000034   C002               RJMP    ??ATA_tpTimeoutError_flash_ISR_C_1
+    365                  {
+    366                      ATA_systemSetEventPin_flash_ASM();
+   \   00000036   ........           CALL    ATA_systemSetEventPin_flash_ASM
+    367                  }
+    368          
+    369                  /* Clear flag */
+    370                  TPFR |= BM_TPBERF;
+   \                     ??ATA_tpTimeoutError_flash_ISR_C_1:
+   \   0000003A   9A6B               SBI     0x0D, 0x03
+    371              }
+    372          
+    373              /* Check if a No field timeout has been detected */
+    374              if ( (TPFR & BM_TPNFTF) != 0x00U )
+   \                     ??ATA_tpTimeoutError_flash_ISR_C_0:
+   \   0000003C   9B6A               SBIS    0x0D, 0x02
+   \   0000003E   C00C               RJMP    ??ATA_tpTimeoutError_flash_ISR_C_2
+    375              {
+    376                  g_sTpRxTx.bTpFlags |= BM_LFRXCONFIG_TP_FLAGS_TPNFTF;
+   \   00000040   ....               LDI     R30, LOW(g_sTpRxTx)
+   \   00000042   ....               LDI     R31, (g_sTpRxTx) >> 8
+   \   00000044   8100               LD      R16, Z
+   \   00000046   6004               ORI     R16, 0x04
+   \   00000048   8300               ST      Z, R16
+    377          
+    378                  /* Do event pin handling */
+    379                  if ( g_sEventHandling_flash.bTpRxTx & BM_LFRXCONFIG_TP_FLAGS_TPNFTF )
+   \   0000004A   9100....           LDS     R16, (g_sEventHandling_flash + 8)
+   \   0000004E   FF02               SBRS    R16, 2
+   \   00000050   C002               RJMP    ??ATA_tpTimeoutError_flash_ISR_C_3
+    380                  {
+    381                      ATA_systemSetEventPin_flash_ASM();
+   \   00000052   ........           CALL    ATA_systemSetEventPin_flash_ASM
+    382                  }
+    383          
+    384                  /* Clear flag */
+    385                  TPFR |= BM_TPNFTF;
+   \                     ??ATA_tpTimeoutError_flash_ISR_C_3:
+   \   00000056   9A6A               SBI     0x0D, 0x02
+    386              }
+    387          
+    388              /* Check if a field timeout has been detected */
+    389              if ( (TPFR & BM_TPFTF) != 0x00U )
+   \                     ??ATA_tpTimeoutError_flash_ISR_C_2:
+   \   00000058   9B69               SBIS    0x0D, 0x01
+   \   0000005A   C00C               RJMP    ??ATA_tpTimeoutError_flash_ISR_C_4
+    390              {
+    391                  g_sTpRxTx.bTpFlags |= BM_LFRXCONFIG_TP_FLAGS_TPFTF;
+   \   0000005C   ....               LDI     R30, LOW(g_sTpRxTx)
+   \   0000005E   ....               LDI     R31, (g_sTpRxTx) >> 8
+   \   00000060   8100               LD      R16, Z
+   \   00000062   6002               ORI     R16, 0x02
+   \   00000064   8300               ST      Z, R16
+    392          
+    393                  /* Do event pin handling */
+    394                  if ( g_sEventHandling_flash.bTpRxTx & BM_LFRXCONFIG_TP_FLAGS_TPFTF )
+   \   00000066   9100....           LDS     R16, (g_sEventHandling_flash + 8)
+   \   0000006A   FF01               SBRS    R16, 1
+   \   0000006C   C002               RJMP    ??ATA_tpTimeoutError_flash_ISR_C_5
+    395                  {
+    396                      ATA_systemSetEventPin_flash_ASM();
+   \   0000006E   ........           CALL    ATA_systemSetEventPin_flash_ASM
+    397                  }
+    398          
+    399                  /* Clear flag */
+    400                  TPFR |= BM_TPFTF;
+   \                     ??ATA_tpTimeoutError_flash_ISR_C_5:
+   \   00000072   9A69               SBI     0x0D, 0x01
+    401              }
+    402          }
+   \                     ??ATA_tpTimeoutError_flash_ISR_C_4:
+   \   00000074   BF8F               OUT     0x3F, R24
+   \   00000076   9109               LD      R16, Y+
+   \   00000078   9119               LD      R17, Y+
+   \   0000007A   9129               LD      R18, Y+
+   \   0000007C   9139               LD      R19, Y+
+   \   0000007E   9149               LD      R20, Y+
+   \   00000080   9159               LD      R21, Y+
+   \   00000082   9169               LD      R22, Y+
+   \   00000084   9179               LD      R23, Y+
+   \   00000086   9009               LD      R0, Y+
+   \   00000088   9019               LD      R1, Y+
+   \   0000008A   9029               LD      R2, Y+
+   \   0000008C   9039               LD      R3, Y+
+   \   0000008E   91E9               LD      R30, Y+
+   \   00000090   91F9               LD      R31, Y+
+   \   00000092   9189               LD      R24, Y+
+   \   00000094   9518               RETI
+   \   00000096                      REQUIRE _A_TPFR
+    403          
+    404          /*---------------------------------------------------------------------------*/
+    405          /** \brief <b>ATA_tpRxTxInit_flash_C</b>
+    406              shall initialize the Transponder component data.
+    407          
+    408              \return VOIDFUNC
+    409          
+    410              \Derived no
+    411          
+    412              \Rationale none
+    413          
+    414              \Traceability
+    415          
+    416              \StackUsage SU_XXX bytes
+    417          
+    418              \image html ATA_tpRxTxInit_flash_C.png
+    419              \image rtf ATA_tpRxTxInit_flash_C.png
+    420              \n
+    421          */
+    422          /*---------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    423          VOIDFUNC ATA_tpRxTxInit_flash_C(void)
+   \                     ATA_tpRxTxInit_flash_C:
+    424          {
+    425              g_sTpRxTx.bTpFlags = 0x00U;
+   \   00000000   E000               LDI     R16, 0
+   \   00000002   9300....           STS     g_sTpRxTx, R16
+    426              g_sTpRxTx.bStatus = 0x00U;
+   \   00000006   9300....           STS     (g_sTpRxTx + 1), R16
+    427              g_sTpRxTx.bConfig = 0x00U;
+   \   0000000A   9300....           STS     (g_sTpRxTx + 2), R16
+    428          
+    429              /* EM Transponder Mode */
+    430              g_bTpEmTransponderModeCommand_flash = 0x00U;
+   \   0000000E   9300....           STS     g_bTpEmTransponderModeCommand_flash, R16
+    431              g_bTpEmTransponderStateIndex_flash = EM_MODE_STATE_INIT;
+   \   00000012   9300....           STS     g_bTpEmTransponderStateIndex_flash, R16
+    432              g_fTpEmTransponderModeErrorFlag_flash = 0x00U;
+   \   00000016   9300....           STS     g_fTpEmTransponderModeErrorFlag_flash, R16
+    433          }
+   \   0000001A   9508               RET
+
+   \                                 In  segment INTVEC, offset 0x80, root
+   \                     `??ATA_tpTimeoutError_flash_ISR_C::??INTVEC 128`:
+   \   00000080   ........           JMP     ATA_tpTimeoutError_flash_ISR_C
+
+   Maximum stack usage in bytes:
+
+   CSTACK RSTACK Function
+   ------ ------ --------
+      0      2   ATA_tpEmModeCommandReconfiguration_flash_C
+        0      2   -> ATA_globalsSwitchAvrPhClock_flash_C
+      0      2   ATA_tpEmModeInit_flash_C
+        0      2   -> ATA_globalsSwitchAvrPhClock_flash_C
+      4      2   ATA_tpEmModeSingleTelProc_flash_C
+        4      2   -> ATA_eepReadBytes_C
+        4      2   -> ATA_globalsSwitchAvrPhClock_flash_C
+      0      2   ATA_tpRxTxInit_flash_C
+     15      2   ATA_tpTimeoutError_flash_ISR_C
+       15      2   -> ATA_systemSetEventPin_flash_ASM
+
+
+   Segment part sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+      38  ATA_tpEmModeCommandReconfiguration_flash_C
+      98  ATA_tpEmModeInit_flash_C
+     280  ATA_tpEmModeSingleTelProc_flash_C
+      28  ATA_tpRxTxInit_flash_C
+     150  ATA_tpTimeoutError_flash_ISR_C
+       4  ATA_tpTimeoutError_flash_ISR_C::??INTVEC 128
+       1  _A_LDFC
+       1  _A_LDFD
+       1  _A_LDFFL
+       1  _A_LDFIM
+       1  _A_PHDFR
+       1  _A_PHFR
+       1  _A_PHID0L
+       1  _A_PHID1L
+       1  _A_PHIDFR
+       1  _A_PHIMR
+       1  _A_PHTBLR
+       1  _A_PHTCR
+       1  _A_TPCR3
+       1  _A_TPECMR
+       1  _A_TPECR1
+       1  _A_TPFR
+       1  _A_TPIMR
+       1  g_bTpEmTransponderModeCommand_flash
+       1  g_bTpEmTransponderStateIndex_flash
+       1  g_fTpEmTransponderModeErrorFlag_flash
+       1  g_fTpEmTransponderModeLongCommand_flash
+       3  g_sTpRxTx
+
+ 
+   7 bytes in segment .sram_FlashApp_TpRxTx
+  17 bytes in segment ABSOLUTE
+ 594 bytes in segment CODE
+   4 bytes in segment INTVEC
+ 
+ 594 bytes of CODE memory (+  4 bytes shared)
+   7 bytes of DATA memory (+ 17 bytes shared)
+
+Errors: none
+Warnings: none

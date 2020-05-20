@@ -1,0 +1,323 @@
+;----------------------------------------------------------------------------
+;
+;  Library routines for the ATMEL AT90S processors
+;  setjmp/longjmp
+; 
+;  Copyright 1996-2008 IAR Systems AB. All rights reserved.
+; 
+;  $Revision: 328482 $
+; 
+;----------------------------------------------------------------------------
+
+#include "macros.m90"
+
+PUBLISH MACRO
+    PUBLIC  ?\1_0
+    PUBLIC  ?\1_1
+    PUBLIC  ?\1_2
+    PUBLIC  ?\1_3
+    PUBLIC  ?\1_4
+    PUBLIC  ?\1_5
+    PUBLIC  ?\1_6
+    PUBLIC  ?\1_7
+    PUBLIC  ?\1_8
+    PUBLIC  ?\1_9
+    PUBLIC  ?\1_10
+    PUBLIC  ?\1_11
+    PUBLIC  ?\1_12
+    ENDM
+
+ENTRY   MACRO
+    \1  0,1,R15
+    \1  1,2,R14
+    \1  2,3,R13
+    \1  3,4,R12
+    \1  4,5,R11
+    \1  5,6,R10
+    \1  6,7,R9
+    \1  7,8,R8
+    \1  8,9,R7
+    \1  9,10,R6
+    \1  10,11,R5
+    \1  11,12,R4
+    \1  12
+    ENDM
+
+REGS    MACRO
+    \1  R15
+    \1  R14
+    \1  R13
+    \1  R12
+    \1  R11
+    \1  R10
+    \1  R9
+    \1  R8
+    \1  R7
+    \1  R6
+    \1  R5
+    \1  R4
+    ENDM
+        
+SAVE    MACRO
+    RSEG    CODE:CODE:NOROOT
+    PUBLIC  ?setjmp_save_\1
+?setjmp_save_\1:
+    ST      Z+,\1
+    ENDM
+
+RESTORE MACRO
+    RSEG    CODE:CODE:NOROOT
+    PUBLIC  ?longjmp_restore_\1
+?longjmp_restore_\1:
+    LD      \1,Z+
+    ENDM
+
+ENTRY1  MACRO
+    RSEG    CODE:CODE:NOROOT
+?setjmp_\1:
+    IF  _args > 1
+    REQUIRE ?setjmp_\2
+    IF  _args > 2
+    REQUIRE ?setjmp_save_\3
+    ENDIF
+    ENDIF
+    ENDM
+
+ENTRY2  MACRO
+    RSEG    CODE:CODE:NOROOT
+?longjmp_\1:
+    IF  _args > 1
+    REQUIRE ?longjmp_\2
+    IF  _args > 2
+    REQUIRE ?longjmp_restore_\3
+    ENDIF
+    ENDIF
+    ENDM
+
+#define SPL 0x3D
+#define SPH 0x3E
+
+#ifdef __XMEGA_CORE__
+#define CCP 0x34
+#endif /* __XMEGA_CORE__ */
+
+;-------------------------------------------------------------------------
+;
+; Function:     setjmp
+;
+; Created:      18/Jun/96 IANP
+;
+; Inputs:       P2:P1:P0  - jmp_buf
+;
+; Returns:      P2:P1:P0  - == 0 when the buffer is set up,
+;                 != 0 when returning from a longjmp
+;
+; Size:         
+;
+; Destroys:     T0 T1 T2 T3 Z (and all other scratch registers
+;           if returning from a longjmp).
+;
+; Description:      
+; Store the stack and register environment in the buffer pointed to
+; by P2:P1:P0. PC, SP, Y, and all non-scratch registers are stored.
+;
+;-------------------------------------------------------------------------
+    MODULE  setjmp
+
+    PUBLISH setjmp
+
+    ENTRY   ENTRY1
+
+    MOV     Z0,P0
+#if (A90_POINTER_REG_SIZE > 1)
+#if (MEMORY_MODEL == SMALL_MEMORY_MODEL) || (MEMORY_MODEL == LARGE_MEMORY_MODEL) || (MEMORY_MODEL == HUGE_MEMORY_MODEL)
+    MOV     Z1,P1
+#else
+    LDI     Z1,0              ; Running -v[3,5] -mt
+#endif
+#if (A90_POINTER_REG_SIZE == 3)
+#if (MEMORY_MODEL == SMALL_MEMORY_MODEL)
+    CLR     T0
+    OUT     RAMPZ,T0
+#else
+    OUT     RAMPZ,P2
+#endif
+#endif
+#endif
+    REQUIRE ?SAVE_R24
+
+    REGS    SAVE
+
+    RSEG    CODE:CODE:NOROOT
+?SAVE_R24:
+    ST      Z+,R24          ; save R24  
+    ST      Z+,R25          ; save R25
+    ST      Z+,R26          ; save R26
+    ST      Z+,R27          ; save R27
+    ST      Z+,Y0           ; save Y0
+    ST      Z+,Y1           ; save Y1
+
+    ;; read PC by popping the return address stack
+#ifdef A90_LARGE_CODE
+    POP     T2
+#endif
+    POP     T1
+    POP     T0
+    ST      Z+,T0           ; save PC low
+    ST      Z+,T1           ; save PC high
+#ifdef A90_LARGE_CODE
+    ST      Z+,T2           ; save PC highest
+#endif
+    
+    ;; read SP from SFR SP
+    IN      T3,SPL
+    ST      Z+,T3           ; save SP low
+
+#if A90_POINTER_REG_SIZE > 1
+    IN      T3,SPH
+    ST      Z+,T3           ; save SP high
+#endif
+
+    LDI     P0,0            ; return value 0
+    LDI     P1,0
+
+#ifdef __HAS_ENHANCED_CORE__
+    MOVW    Z1:Z0,T1:T0
+#else
+    MOV     Z0,T0
+    MOV     Z1,T1
+#endif
+#ifdef A90_LARGE_CODE
+    OUT     EIND,T2
+    EIJMP                   ; return
+#else
+    IJMP
+#endif
+
+    ENDMOD
+
+;-------------------------------------------------------------------------
+;
+; Function:     longjmp
+;
+; Created:      18/Jun/96 IANP
+;
+; Inputs:       P2:P1:P0 - jmp_buf
+;           Q1:Q0    - value to give as "return" from setjmp
+;
+; Returns:      (not applicable)
+;
+; Size:         
+;
+; Destroys:     All scratch registers.
+;
+; Description:      
+; Restore the stack and register environment from the buffer pointed to
+; by P2:P1:P0. PC, SP, Y, and all non-scratch registers are stored.
+;
+;-------------------------------------------------------------------------
+    MODULE  longjmp
+
+    PUBLISH longjmp
+
+#if (A90_POINTER_REG_SIZE == 3) && ((MEMORY_MODEL == LARGE_MEMORY_MODEL) || (MEMORY_MODEL == HUGE_MEMORY_MODEL))
+#define V0  Q0
+#define V1  Q1
+#else
+#define V0  R18
+#define V1  R19
+#endif
+
+    ENTRY   ENTRY2
+
+    MOV     Z0,P0
+#if A90_POINTER_REG_SIZE > 1
+#if (MEMORY_MODEL == SMALL_MEMORY_MODEL) || (MEMORY_MODEL == LARGE_MEMORY_MODEL) || (MEMORY_MODEL == HUGE_MEMORY_MODEL)
+    MOV     Z1,P1
+#else
+    CLR     Z1              ; Running -v[3,5] -mt
+#endif
+#if (A90_POINTER_REG_SIZE == 3)
+    CLR     T0
+#if (MEMORY_MODEL == SMALL_MEMORY_MODEL)
+    OUT     RAMPZ,T0
+#else
+    OUT     RAMPZ,P2
+#endif
+    OUT     RAMPD,T0        ; Keep RAMPD zero
+#endif
+#endif
+
+    MOV     P0,V0
+    MOV     P1,V1           ; return value
+    OR      V0,V1
+    BRNE    ?SKIP
+    LDI     P0,1            ; zero return --> make it non-zero
+?SKIP:  REQUIRE ?RESTORE_R24
+
+    REGS    RESTORE
+
+    RSEG    CODE:CODE:NOROOT
+?RESTORE_R24:
+    LD      R24,Z+          ; restore R24   
+    LD      R25,Z+          ; restore R25
+    LD      R26,Z+          ; restore R26
+    LD      R27,Z+          ; restore R27
+
+#ifdef __XMEGA_CORE__
+    LD      Q0,Z+           ; restore Y0
+    LD      Q1,Z+           ; restore Y1
+    MOVW    Y1:Y0,Q1:Q0
+#else /* Classic */
+    ;; Disable interrupts while restoring SP and Y
+    IN      Q0,SREG
+    CLI                     ; disable interrupt
+    LD      Y0,Z+           ; restore Y0
+    LD      Y1,Z+           ; restore Y1
+#endif /* !Classic */
+
+    ;; saved PC
+    LD      T0,Z+           ; restore PC low
+    LD      T1,Z+           ; restore PC high
+#ifdef A90_LARGE_CODE
+    LD      T2,Z+           ; restore PC highest
+#endif
+
+#ifdef __XMEGA_CORE__
+    LDI     Q0,0x9D
+    LD      Q1,Z+     ; restore SP low
+    LD      Q2,Z+     ; restore SP high
+    OUT     CCP,Q0
+    ;; store saved SP in SFR SP, while interrupts are disabled
+    OUT     SPL,Q1
+    OUT     SPH,Q2    
+#else /* Classic */
+    ;; store saved SP in SFR SP, while interrupts are disabled
+    LD      T3,Z+               ; restore SP low
+    OUT     SPL,T3
+#if A90_POINTER_REG_SIZE > 1
+    LD      T3,Z+           ; restore SP high
+    OUT     SPH,T3
+#endif
+
+    ;; Restore interrupt flag
+    OUT     SREG,Q0
+#endif /* !Classic */
+
+#ifdef __HAS_ENHANCED_CORE__
+    MOVW    Z1:Z0,T1:T0
+#else
+    MOV     Z0,T0
+    MOV     Z1,T1
+#endif
+#ifdef A90_LARGE_CODE
+    OUT     EIND,T2
+    EIJMP           ; return
+#else
+    IJMP
+#endif
+
+    END
+
+;----------------------------------------------------------------------------
+;  

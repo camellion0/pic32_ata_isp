@@ -1,0 +1,213 @@
+//lint -e9059
+/* *ASM************************************************************************
+  Use of this software is subject to Atmel's Software License Agreement.
+-------------------------------------------------------------------------------
+  $URL: http://svnservulm.corp.atmel.com/svn/CDB/Apps/SW_Lib/Car_Access/CARS_GEN2/ATAB5702A/Branches/P2P22_TXMODE_NXP/firmware/globals/src/globals_asm.s90 $
+  $LastChangedRevision: 328482 $
+  $LastChangedDate: 2015-07-22 13:17:23 -0600 (Wed, 22 Jul 2015) $
+  $LastChangedBy: grueter $
+-------------------------------------------------------------------------------
+  Project:      ATA5700
+  Target MCU:   ATA5700
+  Compiler:     IAR Assembler for AVR 6.30.1
+-------------------------------------------------------------------------------
+
+******************************************************************************
+* Copyright 2011, Atmel Automotive GmbH                                       *
+*                                                                             *
+* This software is owned by the Atmel Automotive GmbH                         *
+* and is protected by and subject to worldwide patent protection.             *
+* Atmel hereby grants to licensee a personal,                                 *
+* non-exclusive, non-transferable license to copy, use, modify, create        *
+* derivative works of, and compile the Atmel Source Code and derivative       *
+* works for the sole purpose of creating custom software in support of        *
+* licensee product to be used only in conjunction with a Atmel integrated     *
+* circuit as specified in the applicable agreement. Any reproduction,         *
+* modification, translation, compilation, or representation of this           *
+* software except as specified above is prohibited without the express        *
+* written permission of Atmel.                                                *
+*                                                                             *
+* Disclaimer: ATMEL MAKES NO WARRANTY OF ANY KIND,EXPRESS OR IMPLIED,         *
+* WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED    *
+* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.         *
+* Atmel reserves the right to make changes without further notice to the      *
+* materials described herein. Atmel does not assume any liability arising     *
+* out of the application or use of any product or circuit described herein.   *
+* Atmel does not authorize its products for use as critical components in     *
+* life-support systems where a malfunction or failure may reasonably be       *
+* expected to result in significant injury to the user. The inclusion of      *
+* Atmel products in a life-support systems application implies that the       *
+* manufacturer assumes all risk of such use and in doing so indemnifies       *
+* Atmel against all charges.                                                  *
+*                                                                             *
+* Use may be limited by and subject to the applicable Atmel software          *
+* license agreement.                                                          *
+*******************************************************************************/
+/* \file globals_asm.s90
+*/
+//lint -restore
+
+    NAME globals_asm
+
+    PUBLIC ATA_globalsWaitNus_ASM
+    PUBLIC ATA_globalsMulS8U8_ASM
+    PUBLIC ATA_globalsMulU16U16_ASM
+
+/* ===========================================================================*/
+/*   INCLUDES                                                                 */
+/* ===========================================================================*/
+#include "regs.inc"
+
+/* ===========================================================================*/
+/*   DEFINES                                                                  */
+/* ===========================================================================*/
+/* ===========================================================================*/
+/*   Modul Globals                                                            */
+/* ===========================================================================*/
+/* ===========================================================================*/
+/*   IMPLEMENTATION                                                           */
+/* ===========================================================================*/
+
+/* ---------------------------------------------------------------------------*/
+/** \brief <b>ATA_globalsMulS8U8_ASM</b>
+    multiplies an signed 8 bit val with an unsigned 8 bit value.
+
+\param[in]  Factor1 is stored in R16
+\param[in]  Factor2 is stored in R17
+
+\return     Result is stored in R17:R16
+
+\StackUsageInBytes{XXX}
+
+\image html ATA_globalsMulS8U8_ASM.png
+
+\internal
+\Derived{Yes}
+
+\Rationale{This function provides basic multiplication functionality by using a
+           specific AVR instruction for better performance}
+
+\Traceability   N/A
+\endinternal
+\n
+*/
+/* ---------------------------------------------------------------------------*/
+RSEG CODE:CODE:ROOT(1)
+ATA_globalsMulS8U8_ASM:
+    PUSH    R0
+    PUSH    R1
+    MULSU   R16 , R17    ; Multiply factor1 with factor2
+    MOV     R16 , R0
+    MOV     R17 , R1
+    POP     R1
+    POP     R0
+    RET
+
+/* ---------------------------------------------------------------------------*/
+/** \brief <b>ATA_globalsWaitNus_ASM</b>
+    waits "bWaitNus" us. Parameter "bWaitNus" is passed via R16.\n\n
+    Note:
+    This function is based on a cycle count of the used AVR instructions and
+    the FRC as system clock.
+    This function must not be used with any other system clock source different
+    from FRC, since the given number of microseconds to wait will not
+    correspond to the real microseconds elapsed.
+
+\param[in]  bWaitNus is number of us (FRC based) to wait stored in R16
+
+\return     N/A
+
+\StackUsageInBytes{XXX}
+
+\image html ATA_globalsWaitNus_ASM.png
+
+\internal
+\Derived{Yes}
+
+\Rationale{This function provides basic utility functionality}
+
+\Traceability   N/A
+\endinternal
+\n
+*/
+/* ---------------------------------------------------------------------------*/
+RSEG CODE:CODE:ROOT(1)
+ATA_globalsWaitNus_ASM:
+WAITNUS_START:
+    CPI     R16 , 0x00          ; check for 0x00 in R16
+    BREQ    END_WAITNUS         ; loop end
+    DEC     R16                 ; decrement R16
+    RJMP    WAITNUS_START
+END_WAITNUS:
+    RET
+
+/* ---------------------------------------------------------------------------*/
+/** \brief <b>ATA_globalsMpy16u_ASM</b>
+    This subroutine multiplies the two 16 bit register variables r19:r18
+    and r17:r16. The result is placed in r19:r18:r17:r16.
+    
+    \param factor1 is stored in R17:R16
+    \param factor2 is stored in R19:R18
+    
+    \return product is stored in R19:R18:R17:R16
+*/
+/* ---------------------------------------------------------------------------*/
+RSEG CODE:CODE:ROOT(1)
+ATA_globalsMulU16U16_ASM:
+    CALL    ATA_globalsMpy16u_ASM
+    MOV     R16 , R18
+    MOV     R17 , R19
+    MOV     R18 , R20
+    MOV     R19 , R21
+
+    RET
+
+/* startDoxyExclude */    
+/* ---------------------------------------------------------------------------*/
+/** \brief <b>ATA_globalsMpy16u_ASM</b>
+    This subroutine multiplies the two 16 bit register variables r19:r18
+    and r17:r16. The result is placed in r21:r20:r19:r18.
+    Number of words  :14 + return
+    Number of cycles :153 + return
+    Low registers used   :None
+    High registers used  :7 (r18,r19,r16/r18,r17/r19,r20,r21,r22)
+    .def    mc16uL  =r16        ;multiplicand low byte
+    .def    mc16uH  =r17        ;multiplicand high byte
+    .def    mp16uL  =r18        ;multiplier low byte
+    .def    mp16uH  =r19        ;multiplier high byte
+    .def    m16u0   =r18        ;result byte 0 (LSB)
+    .def    m16u1   =r19        ;result byte 1
+    .def    m16u2   =r20        ;result byte 2
+    .def    m16u3   =r21        ;result byte 3 (MSB)
+    .def    mcnt16u =r22        ;loop counter
+   
+    \param factor1 is stored in R17:R16
+    \param factor2 is stored in R19:R18
+ 
+    \return product is stored in R21:R20:R19:R18
+*/
+/* ---------------------------------------------------------------------------*/
+RSEG CODE:CODE:ROOT(1)
+ATA_globalsMpy16u_ASM:
+    PUSH    R22                                                            
+    CLR     R21          ; clear 2 highest bytes of result                   
+    CLR     R20                                                            
+    LDI     R22 , 16     ; init loop counter                                 
+    LSR     R19                                                            
+    ROR     R18                                                            
+M16U_1:                                                             
+    BRCC    NOAD8        ; if bit 0 of multiplier set                        
+    ADD     R20 , R16    ; add multiplicand Low to byte 2 of res             
+    ADC     R21 , R17    ; add multiplicand high to byte 3 of res            
+NOAD8:                                                              
+    ROR     R21          ; shift right result byte 3                         
+    ROR     R20          ; rotate right result byte 2                        
+    ROR     R19          ; rotate result byte 1 and multiplier High          
+    ROR     R18          ; rotate result byte 0 and multiplier Low           
+    DEC     R22          ; decrement loop counter                            
+    BRNE    M16U_1       ; if not done, loop more                            
+    POP     R22                                                            
+    RET
+/* stopDoxyExclude */
+
+    END

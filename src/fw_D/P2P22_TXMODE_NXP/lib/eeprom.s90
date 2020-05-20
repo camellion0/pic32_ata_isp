@@ -1,0 +1,1654 @@
+;----------------------------------------------------------------------------
+;
+;  Library routines for the ATMEL AT90S processors
+;  EEProm load and store functions.
+;
+;  Copyright 1999-2003,2006,2008 IAR Systems AB. All rights reserved.
+;
+;  $Revision: 328482 $
+;
+;----------------------------------------------------------------------------
+#include    "macros.m90"
+
+#define EEMWE   2
+#define EEWE    1
+#define EERE    0
+
+#define EECR  __?EECR
+#define EEDR  __?EEDR
+#define EEARL __?EEARL
+#define EEARH __?EEARH
+        
+
+
+;----------------------------------------------------------
+; Functions to handle load from and store to eeproms that
+; are 256 bytes or smaller. This module is NOT compatible
+; with the next module!
+
+    MODULE  ?EEPROM_8
+
+    RTMODEL "EEPROM_SIZE", "1"
+
+    PUBLIC  __eeget8_8
+    PUBLIC  __eeget16_8
+    PUBLIC  __eeget24_8
+    PUBLIC  __eeget32_8
+    PUBLIC  __eeget64_8
+
+    PUBLIC  __eeput8_8
+    PUBLIC  __eeput16_8
+    PUBLIC  __eeput24_8
+    PUBLIC  __eeput32_8
+    PUBLIC  __eeput64_8
+
+    EXTERN  EECR
+    EXTERN  EEDR
+    EXTERN  EEARL
+
+;----------------------------------------------------------
+; ?eewait
+;
+; Wait for previous eeprom write operation to complete
+;
+; SIZE: 6 bytes
+
+    RSEG    CODE:CODE:NOROOT(1)
+?eewait:
+    SBIC    EECR,EEWE   ; Loop until previous write is completed
+    RJMP    ?eewait
+    RET
+
+;----------------------------------------------------------
+; ?eeget8
+;
+; To set up the address (8-bit) for one eeprom read operation
+;
+; Inputs:
+;   Q0  - The address of the char to read
+;
+; Outputs:
+;   Q0  - Has the same value as on entry
+;
+; SIZE: 8 bytes
+
+    RSEG    CODE:CODE:NOROOT(1)
+?eeget8_inc:
+    INC Q0
+?eeget8:
+    RCALL   ?eewait
+    OUT EEARL,Q0
+    SBI EECR,EERE
+    RET
+        
+;----------------------------------------------------------
+; ?eeget8_64
+;
+; To set up the address (8-bit) for one eeprom read operation
+;
+; Inputs:
+;   R24  - The address of the char to read
+;
+; Outputs:
+;   R24  -  Has the same value as on entry
+;
+; SIZE: 8 bytes
+
+    RSEG    CODE:CODE:NOROOT(1)
+?eeget8_64_inc:
+    INC R24
+?eeget8_64:
+    RCALL   ?eewait
+    OUT EEARL,R24
+    SBI EECR,EERE
+    RET
+
+;----------------------------------------------------------
+; __eeget8_8
+;
+; To read one char from the internal eeprom using 8-bit addresses
+;
+; Inputs:
+;   Q0  - The address of the char to read
+;
+; Outputs:
+;   P0  - The byte read from the eeprom.
+;   Q0  - Has the same value as on entry
+;
+; SIZE: 6 bytes
+
+    RSEG    CODE:CODE:NOROOT(1)
+__eeget8_8:
+    RCALL   ?eeget8
+    IN  P0,EEDR
+    RET
+
+;----------------------------------------------------------
+; __eeget16_8
+;
+; To read one int from the internal eeprom using 8-bit addresses
+;
+; Inputs:
+;   Q0  - The address of the int to read
+;
+; Outputs:
+;   P0...P1 - The int read from the eeprom.
+;   Q0  - The address of the last byte in the int
+;
+; SIZE: 10 bytes
+
+    RSEG    CODE:CODE:NOROOT(1)
+__eeget16_8:
+    RCALL   ?eeget8
+    IN  P0,EEDR
+    RCALL   ?eeget8_inc
+    IN  P1,EEDR
+    RET
+
+;----------------------------------------------------------
+; __eeget24_8
+;
+; To read one 3-byte pointer from the internal eeprom using 8-bit addresses
+;
+; Inputs:
+;   Q0  - The address of the pointer to read
+;
+; Outputs:
+;   P0...P2 - The pointer read from the eeprom.
+;   Q0  - The address of the last byte in the pointer
+;
+; SIZE: 14 bytes
+
+    RSEG    CODE:CODE:NOROOT(1)
+__eeget24_8:
+    RCALL   ?eeget8
+    IN  P0,EEDR
+    RCALL   ?eeget8_inc
+    IN  P1,EEDR
+    RCALL   ?eeget8_inc
+    IN  P2,EEDR
+    RET
+
+;----------------------------------------------------------
+; __eeget32_8
+;
+; To read one long int from the internal eeprom using 8-bit addresses
+;
+; Inputs:
+;   Q0  - The address of the long int to read
+;
+; Outputs:
+;   P0...P3 - The byte read from the eeprom.
+;   Q0  - The address of the last byte in the long int
+;
+; SIZE: 18 bytes
+
+    RSEG    CODE:CODE:NOROOT(1)
+__eeget32_8:
+    RCALL   ?eeget8
+    IN  P0,EEDR
+    RCALL   ?eeget8_inc
+    IN  P1,EEDR
+    RCALL   ?eeget8_inc
+    IN  P2,EEDR
+    RCALL   ?eeget8_inc
+    IN  P3,EEDR
+    RET
+
+;----------------------------------------------------------
+; __eeget64_8
+;
+; To read one long int from the internal eeprom using 8-bit addresses
+;
+; Inputs:
+;   T0  - The address of the long int to read
+;
+; Outputs:
+;   P0...P3,Q0...Q3 - The byte read from the eeprom.
+;   T0  - The address of the last byte in the long long int
+;
+; SIZE:  bytes
+
+    RSEG    CODE:CODE:NOROOT(1)
+__eeget64_8:
+    RCALL   ?eeget8_64
+    IN  P0,EEDR
+    RCALL   ?eeget8_64_inc
+    IN  P1,EEDR
+    RCALL   ?eeget8_64_inc
+    IN  P2,EEDR
+    RCALL   ?eeget8_64_inc
+    IN  P3,EEDR
+    RCALL   ?eeget8_64_inc
+    IN  Q0,EEDR
+    RCALL   ?eeget8_64_inc
+    IN  Q1,EEDR
+    RCALL   ?eeget8_64_inc
+    IN  Q2,EEDR
+    RCALL   ?eeget8_64_inc
+    IN  Q3,EEDR
+    RET
+
+;----------------------------------------------------------
+; ?eeput8
+;
+; To set up and perform one write operation to the eeprom.
+;
+; Inputs:
+;   EEDR    - The data to be written
+;   Q0  - The address of the byte to write
+;   T0  - The "original" status register content
+;
+; Outputs:
+;   Q0  - Has the same value as on entry
+;
+; SIZE: 12 bytes
+
+    RSEG    CODE:CODE:NOROOT(1)
+?eeput8_inc:
+    INC Q0
+?eeput8:
+    OUT EEARL,Q0
+    CLI
+    SBI EECR,EEMWE
+    SBI EECR,EEWE
+    OUT SREG,T0
+    RET
+        
+;----------------------------------------------------------
+; ?eeput8_64
+;
+; To set up and perform one write operation to the eeprom.
+;
+; Inputs:
+;   EEDR    - The data to be written
+;   R24  - The address of the byte to write
+;   T0  - The "original" status register content
+;
+; Outputs:
+;   R24  - Has the same value as on entry
+;
+; SIZE: 12 bytes
+
+    RSEG    CODE:CODE:NOROOT(1)
+?eeput8_64_inc:
+    INC R24
+?eeput8_64:
+    OUT EEARL,R24
+    CLI
+    SBI EECR,EEMWE
+    SBI EECR,EEWE
+    OUT SREG,T0
+    RET
+
+;----------------------------------------------------------
+; __eeput8_8
+;
+; To write one char to the internal eeprom using 8-bit addresses
+;
+; Inputs:
+;   P0  - The char to write to the eeprom.
+;   Q0  - The address of the char to write
+;
+; Outputs:
+;   Q0  - Has the same value as on entry
+;
+; SIZE: 8 bytes
+
+    RSEG    CODE:CODE:NOROOT(1)
+__eeput8_8:
+    IN  T0,SREG
+    RCALL   ?eewait
+    OUT EEDR,P0
+    RJMP    ?eeput8
+
+;----------------------------------------------------------
+; __eeput16_8
+;
+; To write one int to the internal eeprom using 8-bit addresses
+;
+; Inputs:
+;   P0...P1 - The int to write to the eeprom.
+;   Q0  - The address of the int to write
+;
+; Outputs:
+;   Q0  - The address of the last byte in the int
+;
+; SIZE: 14 bytes
+
+    RSEG    CODE:CODE:NOROOT(1)
+__eeput16_8:
+    IN  T0,SREG
+    RCALL   ?eewait
+    OUT EEDR,P0
+    RCALL   ?eeput8
+    RCALL   ?eewait
+    OUT EEDR,P1
+    RJMP    ?eeput8_inc
+
+;----------------------------------------------------------
+; __eeput24_8
+;
+; To write one 3-byte pointer to the internal eeprom using 8-bit addresses
+;
+; Inputs:
+;   P0...P2 - The pointer to write to the eeprom.
+;   Q0  - The address of the pointer to write
+;
+; Outputs:
+;   Q0  - The address of the last byte in the pointer
+;
+; SIZE: 20 bytes
+
+    RSEG    CODE:CODE:NOROOT(1)
+__eeput24_8:
+    IN  T0,SREG
+    RCALL   ?eewait
+    OUT EEDR,P0
+    RCALL   ?eeput8
+    RCALL   ?eewait
+    OUT EEDR,P1
+    RCALL   ?eeput8_inc
+    RCALL   ?eewait
+    OUT EEDR,P2
+    RJMP    ?eeput8_inc
+
+;----------------------------------------------------------
+; __eeput32_8
+;
+; To write one long int to the internal eeprom using 8-bit addresses
+;
+; Inputs:
+;   P0...P2 - The long int to write to the eeprom.
+;   Q0  - The address of the long int to write
+;
+; Outputs:
+;   Q0  - The address of the last byte in the long int
+;
+; SIZE: 26 bytes
+
+    RSEG    CODE:CODE:NOROOT(1)
+__eeput32_8:
+    IN  T0,SREG
+    RCALL   ?eewait
+    OUT EEDR,P0
+    RCALL   ?eeput8
+    RCALL   ?eewait
+    OUT EEDR,P1
+    RCALL   ?eeput8_inc
+    RCALL   ?eewait
+    OUT EEDR,P2
+    RCALL   ?eeput8_inc
+    RCALL   ?eewait
+    OUT EEDR,P3
+    RJMP    ?eeput8_inc
+
+;----------------------------------------------------------
+; __eeput64_8
+;
+; To write one long int to the internal eeprom using 8-bit addresses
+;
+; Inputs:
+;   P0...P3,Q0...Q3 - The long long int to write to the eeprom.
+;   R24  - The address of the long long int to write
+;
+; Outputs:
+;   R24  - The address of the last byte in the long long int
+;
+; SIZE:  bytes
+
+    RSEG    CODE:CODE:NOROOT(1)
+__eeput64_8:
+    PUSH    T0 
+    IN      T0,SREG
+    RCALL   ?eewait
+    OUT     EEDR,P0
+    RCALL   ?eeput8_64
+    RCALL   ?eewait
+    OUT     EEDR,P1
+    RCALL   ?eeput8_64_inc
+    RCALL   ?eewait
+    OUT     EEDR,P2
+    RCALL   ?eeput8_64_inc
+    RCALL   ?eewait
+    OUT     EEDR,P3
+    RCALL   ?eeput8_64_inc
+    RCALL   ?eewait
+    OUT     EEDR,Q0
+    RCALL   ?eeput8_64_inc
+    RCALL   ?eewait
+    OUT     EEDR,Q1
+    RCALL   ?eeput8_64_inc
+    RCALL   ?eewait
+    OUT     EEDR,Q2
+    RCALL   ?eeput8_64_inc
+    RCALL   ?eewait
+    OUT     EEDR,Q3
+    RCALL   ?eeput8_64_inc
+    POP     T0
+    RET
+            
+    ENDMOD
+
+;----------------------------------------------------------
+; Functions to handle load from and store to eeproms that
+; are larger than 256 bytes. This module is NOT compatible
+; with the previous module!
+
+    MODULE  ?EEPROM_16
+
+    RTMODEL "EEPROM_SIZE", "2"
+
+    PUBLIC  __eeget8_16
+    PUBLIC  __eeget16_16
+    PUBLIC  __eeget24_16
+    PUBLIC  __eeget32_16
+    PUBLIC  __eeget64_16
+
+    PUBLIC  __eeput8_16
+    PUBLIC  __eeput16_16
+    PUBLIC  __eeput24_16
+    PUBLIC  __eeput32_16
+    PUBLIC  __eeput64_16
+
+    EXTERN  EECR
+    EXTERN  EEDR
+    EXTERN  EEARL
+    EXTERN  EEARH
+
+;----------------------------------------------------------
+; ?eewait
+;
+; Wait for previous eeprom write operation to complete
+;
+; SIZE: 6 bytes
+
+    RSEG    CODE:CODE:NOROOT(1)
+?eewait:
+    SBIC    EECR,EEWE   ; Loop until previous write is completed
+    RJMP    ?eewait
+    RET
+
+;----------------------------------------------------------
+; ?eeget16
+;
+; To set up the address (16-bit) for one eeprom read operation
+;
+; Inputs:
+;   Q0...Q1 - The address of the char to read
+;
+; Outputs:
+;   Q0...Q1 - Has the same value as on entry
+;
+; SIZE: 10 bytes
+
+    RSEG    CODE:CODE:NOROOT(1)
+?eeget16_inc:
+    SUBI    Q0,255
+    SBCI    Q1,255
+?eeget16:
+    RCALL   ?eewait
+    OUT EEARL,Q0
+    OUT EEARH,Q1
+    SBI EECR,EERE
+    RET
+
+;----------------------------------------------------------
+; ?eeget16_64
+;
+; To set up the address (16-bit) for one eeprom read operation
+;
+; Inputs:
+;   R24...R25 - The address of the char to read
+;
+; Outputs:
+;   R24...R25 - Has the same value as on entry
+;
+; SIZE:  bytes
+
+    RSEG    CODE:CODE:NOROOT(1)
+?eeget16_64_inc:
+    ADIW    R25:R24,1
+?eeget16_64:
+    RCALL   ?eewait
+    OUT EEARL,R24
+    OUT EEARH,R25
+    SBI EECR,EERE
+    RET
+        
+;----------------------------------------------------------
+; __eeget8_16
+;
+; To read one char from the internal eeprom using 16-bit addresses
+;
+; Inputs:
+;   Q0...Q1 - The address of the char to read
+;
+; Outputs:
+;   P0  - The byte read from the eeprom.
+;   Q0...Q1 - Has the same value as on entry
+;
+; SIZE: 6 bytes
+
+    RSEG    CODE:CODE:NOROOT(1)
+__eeget8_16:
+    RCALL   ?eeget16
+    IN  P0,EEDR
+    RET
+
+;----------------------------------------------------------
+; __eeget16_16
+;
+; To read one int from the internal eeprom using 16-bit addresses
+;
+; Inputs:
+;   Q0...Q1 - The address of the int to read
+;
+; Outputs:
+;   P0...P1 - The int read from the eeprom.
+;   Q0...Q1 - The address of the last byte in the int
+;
+; SIZE: 10 bytes
+
+    RSEG    CODE:CODE:NOROOT(1)
+__eeget16_16:
+    RCALL   ?eeget16
+    IN  P0,EEDR
+    RCALL   ?eeget16_inc
+    IN  P1,EEDR
+    RET
+
+;----------------------------------------------------------
+; __eeget24_16
+;
+; To read one 3-byte pointer from the internal eeprom using 16-bit addresses
+;
+; Inputs:
+;   Q0...Q1 - The address of the pointer to read
+;
+; Outputs:
+;   P0...P2 - The pointer read from the eeprom.
+;   Q0...Q1 - The address of the last byte in the pointer
+;
+; SIZE: 14 bytes
+
+    RSEG    CODE:CODE:NOROOT(1)
+__eeget24_16:
+    RCALL   ?eeget16
+    IN  P0,EEDR
+    RCALL   ?eeget16_inc
+    IN  P1,EEDR
+    RCALL   ?eeget16_inc
+    IN  P2,EEDR
+    RET
+
+;----------------------------------------------------------
+; __eeget32_16
+;
+; To read one long int from the internal eeprom using 16-bit addresses
+;
+; Inputs:
+;   Q0...Q1 - The address of the long int to read
+;
+; Outputs:
+;   P0...P3 - The byte read from the eeprom.
+;   Q0...Q1 - The address of the last byte in the long int
+;
+; SIZE: 18 bytes
+
+    RSEG    CODE:CODE:NOROOT(1)
+__eeget32_16:
+    RCALL   ?eeget16
+    IN  P0,EEDR
+    RCALL   ?eeget16_inc
+    IN  P1,EEDR
+    RCALL   ?eeget16_inc
+    IN  P2,EEDR
+    RCALL   ?eeget16_inc
+    IN  P3,EEDR
+    RET
+
+;----------------------------------------------------------
+; __eeget64_16
+;
+; To read one long int from the internal eeprom using 16-bit addresses
+;
+; Inputs:
+;   R24...R25 - The address of the long int to read
+;
+; Outputs:
+;   P0...P3,Q0...Q3 - The byte read from the eeprom.
+;   R24...R25       - The address of the last byte in the long long int
+;
+; SIZE:  bytes
+
+    RSEG    CODE:CODE:NOROOT(1)
+__eeget64_16:
+    RCALL   ?eeget16_64
+    IN  P0,EEDR
+    RCALL   ?eeget16_64_inc
+    IN  P1,EEDR
+    RCALL   ?eeget16_64_inc
+    IN  P2,EEDR
+    RCALL   ?eeget16_64_inc
+    IN  P3,EEDR
+    RCALL   ?eeget16_64_inc
+    IN  Q0,EEDR
+    RCALL   ?eeget16_64_inc
+    IN  Q1,EEDR
+    RCALL   ?eeget16_64_inc
+    IN  Q2,EEDR
+    RCALL   ?eeget16_64_inc
+    IN  Q3,EEDR
+    RET
+        
+;----------------------------------------------------------
+; ?eeput16
+;
+; To set up and perform one write operation to the eeprom.
+;
+; Inputs:
+;   EEDR    - The data to be written
+;   Q0...Q1 - The address of the byte to write
+;   T0  - The "original" status register content
+;
+; Outputs:
+;   Q0...Q1 - Has the same value as on entry
+;
+; SIZE: 14 bytes
+
+    RSEG    CODE:CODE:NOROOT(1)
+?eeput16_inc:
+    SUBI    Q0,255
+    SBCI    Q1,255
+?eeput16:
+    OUT EEARL,Q0
+    OUT EEARH,Q1
+    CLI
+    SBI EECR,EEMWE
+    SBI EECR,EEWE
+    OUT SREG,T0
+    RET
+
+;----------------------------------------------------------
+; ?eeput16_64
+;
+; To set up and perform one write operation to the eeprom.
+;
+; Inputs:
+;   EEDR    - The data to be written
+;   R24...R25 - The address of the byte to write
+;   T0  - The "original" status register content
+;
+; Outputs:
+;   R24...R25 - Has the same value as on entry
+;
+; SIZE:  bytes
+
+    RSEG    CODE:CODE:NOROOT(1)
+?eeput16_64_inc:
+    ADIW    R25:R24,1
+?eeput16_64:
+    OUT EEARL,R24
+    OUT EEARH,R25
+    CLI
+    SBI EECR,EEMWE
+    SBI EECR,EEWE
+    OUT SREG,T0
+    RET
+        
+;----------------------------------------------------------
+; __eeput8_16
+;
+; To write one char to the internal eeprom using 16-bit addresses
+;
+; Inputs:
+;   P0  - The char to write to the eeprom.
+;   Q0...Q1 - The address of the char to write
+;
+; Outputs:
+;   Q0...Q1 - Has the same value as on entry
+;
+; SIZE: 8 bytes
+
+    RSEG    CODE:CODE:NOROOT(1)
+__eeput8_16:
+    IN  T0,SREG
+    RCALL   ?eewait
+    OUT EEDR,P0
+    RJMP    ?eeput16
+
+;----------------------------------------------------------
+; __eeput16_16
+;
+; To write one int to the internal eeprom using 16-bit addresses
+;
+; Inputs:
+;   P0...P1 - The int to write to the eeprom.
+;   Q0...Q1 - The address of the int to write
+;
+; Outputs:
+;   Q0...Q1 - The address of the last byte in the int
+;
+; SIZE: 14 bytes
+
+    RSEG    CODE:CODE:NOROOT(1)
+__eeput16_16:
+    IN  T0,SREG
+    RCALL   ?eewait
+    OUT EEDR,P0
+    RCALL   ?eeput16
+    RCALL   ?eewait
+    OUT EEDR,P1
+    RJMP    ?eeput16_inc
+
+;----------------------------------------------------------
+; __eeput24_16
+;
+; To write one 3-byte pointer to the internal eeprom using 16-bit addresses
+;
+; Inputs:
+;   P0...P2 - The pointer to write to the eeprom.
+;   Q0...Q1 - The address of the pointer to write
+;
+; Outputs:
+;   Q0...Q1 - The address of the last byte in the pointer
+;
+; SIZE: 20 bytes
+
+    RSEG    CODE:CODE:NOROOT(1)
+__eeput24_16:
+    IN  T0,SREG
+    RCALL   ?eewait
+    OUT EEDR,P0
+    RCALL   ?eeput16
+    RCALL   ?eewait
+    OUT EEDR,P1
+    RCALL   ?eeput16_inc
+    RCALL   ?eewait
+    OUT EEDR,P2
+    RJMP    ?eeput16_inc
+
+;----------------------------------------------------------
+; __eeput32_16
+;
+; To write one long int to the internal eeprom using 16-bit addresses
+;
+; Inputs:
+;   P0...P2 - The long int to write to the eeprom.
+;   Q0...Q1 - The address of the long int to write
+;
+; Outputs:
+;   Q0...Q1 - The address of the last byte in the long int
+;
+; SIZE: 26 bytes
+
+    RSEG    CODE:CODE:NOROOT(1)
+__eeput32_16:
+    IN  T0,SREG
+    RCALL   ?eewait
+    OUT EEDR,P0
+    RCALL   ?eeput16
+    RCALL   ?eewait
+    OUT EEDR,P1
+    RCALL   ?eeput16_inc
+    RCALL   ?eewait
+    OUT EEDR,P2
+    RCALL   ?eeput16_inc
+    RCALL   ?eewait
+    OUT EEDR,P3
+    RJMP    ?eeput16_inc
+
+;----------------------------------------------------------
+; __eeput64_16
+;
+; To write one long int to the internal eeprom using 16-bit addresses
+;
+; Inputs:
+;   P0...P3,Q0...Q3 - The long int to write to the eeprom.
+;   R24...R25       - The address of the long long int to write
+;
+; Outputs:
+;   R24...R25       - The address of the last byte in the long long int
+;
+; SIZE:  bytes
+
+    RSEG    CODE:CODE:NOROOT(1)
+__eeput64_16:
+    PUSH    T0
+    IN      T0,SREG
+    RCALL   ?eewait
+    OUT     EEDR,P0
+    RCALL   ?eeput16_64
+    RCALL   ?eewait
+    OUT     EEDR,P1
+    RCALL   ?eeput16_64_inc
+    RCALL   ?eewait
+    OUT     EEDR,P2
+    RCALL   ?eeput16_64_inc
+    RCALL   ?eewait
+    OUT     EEDR,P3
+    RCALL   ?eeput16_64_inc
+    RCALL   ?eewait
+    OUT     EEDR,Q0
+    RCALL   ?eeput16_64_inc
+    RCALL   ?eewait
+    OUT     EEDR,Q1
+    RCALL   ?eeput16_64_inc
+    RCALL   ?eewait
+    OUT     EEDR,Q2
+    RCALL   ?eeput16_64_inc
+    RCALL   ?eewait
+    OUT     EEDR,Q3
+    RCALL   ?eeput16_64_inc
+    POP     T0
+    RET
+
+    ENDMOD
+
+;----------------------------------------------------------
+; AT86RF401
+; Functions to handle load from and store to eeproms that
+; are 256 bytes or smaller. This module is NOT compatible
+; with any other module in this file!
+
+#define BSY     3
+#define EEU     2
+#define EEL     1
+#define EER     0
+
+#define DEECR  __?EECR
+#define DEEDR  __?EEDR
+#define DEEARL __?EEARL
+#define DEEARH __?EEARH
+
+    MODULE  ?EEPROM_8_RF
+
+    RTMODEL "EEPROM_SIZE", "1"
+
+    PUBLIC  __eeget8_8_AT86RF401
+    PUBLIC  __eeget16_8_AT86RF401
+    PUBLIC  __eeget24_8_AT86RF401
+    PUBLIC  __eeget32_8_AT86RF401
+    PUBLIC  __eeget64_8_AT86RF401
+
+    PUBLIC  __eeput8_8_AT86RF401
+    PUBLIC  __eeput16_8_AT86RF401
+    PUBLIC  __eeput24_8_AT86RF401
+    PUBLIC  __eeput32_8_AT86RF401
+    PUBLIC  __eeput64_8_AT86RF401
+
+    EXTERN  DEECR
+    EXTERN  DEEDR
+    EXTERN  DEEARL
+
+;----------------------------------------------------------
+; ?eewait
+;
+; Wait for previous eeprom write operation to complete
+;
+; SIZE: 6 bytes
+
+    RSEG    CODE:CODE:NOROOT(1)
+?eewait:
+    SBIC    DEECR,BSY   ; Loop until previous write is completed
+    RJMP    ?eewait
+    RET
+
+;----------------------------------------------------------
+; ?eeget8
+;
+; To set up the address (8-bit) for one eeprom read operation
+;
+; Inputs:
+;   Q0  - The address of the char to read
+;
+; Outputs:
+;   Q0  - Has the same value as on entry
+;
+; SIZE: 8 bytes
+
+    RSEG    CODE:CODE:NOROOT(1)
+?eeget8_inc:
+    INC Q0
+?eeget8:
+    RCALL   ?eewait
+    OUT DEEARL,Q0
+    SBI DEECR,EER
+    RET
+
+;----------------------------------------------------------
+; ?eeget8_64
+;
+; To set up the address (8-bit) for one eeprom read operation
+;
+; Inputs:
+;   R24  - The address of the char to read
+;
+; Outputs:
+;   R24  - Has the same value as on entry
+;
+; SIZE: 8 bytes
+
+    RSEG    CODE:CODE:NOROOT(1)
+?eeget8_64_inc:
+    INC R24
+?eeget8_64:
+    RCALL   ?eewait
+    OUT DEEARL,R24
+    SBI DEECR,EER
+    RET
+        
+;----------------------------------------------------------
+; __eeget8_8_AT86RF401
+;
+; To read one char from the internal eeprom using 8-bit addresses
+;
+; Inputs:
+;   Q0  - The address of the char to read
+;
+; Outputs:
+;   P0  - The byte read from the eeprom.
+;   Q0  - Has the same value as on entry
+;
+; SIZE: 6 bytes
+
+    RSEG    CODE:CODE:NOROOT(1)
+__eeget8_8_AT86RF401:
+    RCALL   ?eeget8
+    IN  P0,DEEDR
+    RET
+
+;----------------------------------------------------------
+; __eeget16_8_AT86RF401
+;
+; To read one int from the internal eeprom using 8-bit addresses
+;
+; Inputs:
+;   Q0  - The address of the int to read
+;
+; Outputs:
+;   P0...P1 - The int read from the eeprom.
+;   Q0  - The address of the last byte in the int
+;
+; SIZE: 10 bytes
+
+    RSEG    CODE:CODE:NOROOT(1)
+__eeget16_8_AT86RF401:
+    RCALL   ?eeget8
+    IN  P0,DEEDR
+    RCALL   ?eeget8_inc
+    IN  P1,DEEDR
+    RET
+
+;----------------------------------------------------------
+; __eeget24_8_AT86RF401
+;
+; To read one 3-byte pointer from the internal eeprom using 8-bit addresses
+;
+; Inputs:
+;   Q0  - The address of the pointer to read
+;
+; Outputs:
+;   P0...P2 - The pointer read from the eeprom.
+;   Q0  - The address of the last byte in the pointer
+;
+; SIZE: 14 bytes
+
+    RSEG    CODE:CODE:NOROOT(1)
+__eeget24_8_AT86RF401:
+    RCALL   ?eeget8
+    IN  P0,DEEDR
+    RCALL   ?eeget8_inc
+    IN  P1,DEEDR
+    RCALL   ?eeget8_inc
+    IN  P2,DEEDR
+    RET
+
+;----------------------------------------------------------
+; __eeget32_8_AT86RF401
+;
+; To read one long int from the internal eeprom using 8-bit addresses
+;
+; Inputs:
+;   Q0  - The address of the long int to read
+;
+; Outputs:
+;   P0...P3 - The byte read from the eeprom.
+;   Q0  - The address of the last byte in the long int
+;
+; SIZE: 18 bytes
+
+    RSEG    CODE:CODE:NOROOT(1)
+__eeget32_8_AT86RF401:
+    RCALL   ?eeget8
+    IN  P0,DEEDR
+    RCALL   ?eeget8_inc
+    IN  P1,DEEDR
+    RCALL   ?eeget8_inc
+    IN  P2,DEEDR
+    RCALL   ?eeget8_inc
+    IN  P3,DEEDR
+    RET
+
+;----------------------------------------------------------
+; __eeget64_8_AT86RF401
+;
+; To read one long int from the internal eeprom using 8-bit addresses
+;
+; Inputs:
+;   R24  - The address of the long int to read
+;
+; Outputs:
+;   P0...P3,Q0...Q3     - The byte read from the eeprom.
+;   R24                 - The address of the last byte in the long long int
+;
+; SIZE:  bytes
+
+    RSEG    CODE:CODE:NOROOT(1)
+__eeget64_8_AT86RF401:
+    RCALL   ?eeget8_64
+    IN  P0,DEEDR
+    RCALL   ?eeget8_64_inc
+    IN  P1,DEEDR
+    RCALL   ?eeget8_64_inc
+    IN  P2,DEEDR
+    RCALL   ?eeget8_64_inc
+    IN  P3,DEEDR
+    RCALL   ?eeget8_64_inc
+    IN  Q0,DEEDR
+    RCALL   ?eeget8_64_inc
+    IN  Q1,DEEDR
+    RCALL   ?eeget8_64_inc
+    IN  Q2,DEEDR
+    RCALL   ?eeget8_64_inc
+    IN  Q3,DEEDR
+    RET
+        
+;----------------------------------------------------------
+; ?eeput8
+;
+; To set up and perform one write operation to the eeprom.
+;
+; Inputs:
+;   EEDR    - The data to be written
+;   Q0  - The address of the byte to write
+;   T0  - The "original" status register content
+;
+; Outputs:
+;   Q0  - Has the same value as on entry
+;
+; SIZE:  bytes
+
+        RSEG    CODE:CODE:NOROOT(1)
+?eeput8_inc:
+        INC Q0
+?eeput8        
+        OUT DEEARL,Q0
+        SBI DEECR, EEL
+        RET
+        
+        RSEG    CODE:CODE:NOROOT(1)
+?eeput8_64_inc:
+        INC R24
+?eeput8_64        
+        OUT DEEARL,R24
+        SBI DEECR, EEL
+        RET
+        
+        RSEG    CODE:CODE:NOROOT(1)
+?eeput_prolog:  
+        IN  T0,SREG
+        CLI
+        SBI DEECR, EEU
+        RET
+        
+?eeput_epilog:  
+        CBI DEECR, EEL
+?eeput_wait:
+        SBIS    DEECR,BSY   ; Loop until the write is started
+        RJMP    ?eeput_wait
+        RCALL   ?eewait     ; Wait until the write is finished (4 ms) 
+        CBI DEECR, EEU    
+        OUT SREG,T0
+        RET
+                        
+;----------------------------------------------------------
+; __eeput8_8_AT86RF401
+;
+; To write one char to the internal eeprom using 8-bit addresses
+;
+; Inputs:
+;   P0  - The char to write to the eeprom.
+;   Q0  - The address of the char to write
+;
+; Outputs:
+;   Q0  - Has the same value as on entry
+;
+; SIZE: 8 bytes
+
+        RSEG    CODE:CODE:NOROOT(1)
+__eeput8_8_AT86RF401:
+        RCALL ?eeput_prolog
+        RCALL ?eeput8
+        OUT DEEDR, P0
+        RJMP ?eeput_epilog
+        
+;----------------------------------------------------------
+; __eeput16_8_AT86RF401
+;
+; To write one int to the internal eeprom using 8-bit addresses
+;
+; Inputs:
+;   P0...P1 - The int to write to the eeprom.
+;   Q0  - The address of the int to write
+;
+; Outputs:
+;   Q0  - The address of the last byte in the int
+;
+; SIZE: 14 bytes
+
+    RSEG    CODE:CODE:NOROOT(1)
+__eeput16_8_AT86RF401:
+        RCALL ?eeput_prolog
+        RCALL ?eeput8
+        OUT DEEDR, P0
+        RCALL ?eeput8_inc
+        OUT DEEDR, P1
+        RJMP ?eeput_epilog
+
+;----------------------------------------------------------
+; __eeput24_8_AT86RF401
+;
+; To write one 3-byte pointer to the internal eeprom using 8-bit addresses
+;
+; Inputs:
+;   P0...P2 - The pointer to write to the eeprom.
+;   Q0  - The address of the pointer to write
+;
+; Outputs:
+;   Q0  - The address of the last byte in the pointer
+;
+; SIZE: 20 bytes
+
+    RSEG    CODE:CODE:NOROOT(1)
+__eeput24_8_AT86RF401:
+        RCALL ?eeput_prolog
+        RCALL ?eeput8
+        OUT DEEDR, P0
+        RCALL ?eeput8_inc
+        OUT DEEDR, P1
+        RCALL ?eeput8_inc
+        OUT DEEDR, P2
+        RJMP ?eeput_epilog
+
+;----------------------------------------------------------
+; __eeput32_8_AT86RF401
+;
+; To write one long int to the internal eeprom using 8-bit addresses
+;
+; Inputs:
+;   P0...P2 - The long int to write to the eeprom.
+;   Q0  - The address of the long int to write
+;
+; Outputs:
+;   Q0  - The address of the last byte in the long int
+;
+; SIZE: 26 bytes
+
+    RSEG    CODE:CODE:NOROOT(1)
+__eeput32_8_AT86RF401:
+        RCALL ?eeput_prolog
+        RCALL ?eeput8
+        OUT DEEDR, P0
+        RCALL ?eeput8_inc
+        OUT DEEDR, P1
+        RCALL ?eeput8_inc
+        OUT DEEDR, P2
+        RCALL ?eeput8_inc
+        OUT DEEDR, P3
+        RJMP ?eeput_epilog
+
+;----------------------------------------------------------
+; __eeput64_8_AT86RF401
+;
+; To write one long int to the internal eeprom using 8-bit addresses
+;
+; Inputs:
+;   P0...P3,Q0...Q3     - The long int to write to the eeprom.
+;   R24                 - The address of the long int to write
+;
+; Outputs:
+;   R24                 - The address of the last byte in the long long int
+;
+; SIZE:  bytes
+
+    RSEG    CODE:CODE:NOROOT(1)
+__eeput64_8_AT86RF401:
+        PUSH    T0
+        RCALL   ?eeput_prolog
+        RCALL   ?eeput8_64
+        OUT     DEEDR, P0
+        RCALL   ?eeput8_64_inc
+        OUT     DEEDR, P1
+        RCALL   ?eeput8_64_inc
+        OUT     DEEDR, P2
+        RCALL   ?eeput8_64_inc
+        OUT     DEEDR, P3
+        RCALL   ?eeput8_64_inc
+        OUT     DEEDR, Q0
+        RCALL   ?eeput8_64_inc
+        OUT     DEEDR, Q1
+        RCALL   ?eeput8_64_inc
+        OUT     DEEDR, Q2
+        RCALL   ?eeput8_64_inc
+        OUT     DEEDR, Q3
+        RCALL   ?eeput_epilog
+        POP     T0
+        RET
+        ENDMOD
+
+;----------------------------------------------------------
+; AT86RF401
+; Functions to handle load from and store to eeproms that
+; are larger than 256 bytes and up to 65536 bytes. 
+; This module is NOT compatible with any other module in this file!
+
+    MODULE  ?EEPROM_16_RF
+
+    RTMODEL "EEPROM_SIZE", "2"
+
+    PUBLIC  __eeget8_16_AT86RF401
+    PUBLIC  __eeget16_16_AT86RF401
+    PUBLIC  __eeget24_16_AT86RF401
+    PUBLIC  __eeget32_16_AT86RF401
+    PUBLIC  __eeget64_16_AT86RF401
+
+    PUBLIC  __eeput8_16_AT86RF401
+    PUBLIC  __eeput16_16_AT86RF401
+    PUBLIC  __eeput24_16_AT86RF401
+    PUBLIC  __eeput32_16_AT86RF401
+    PUBLIC  __eeput64_16_AT86RF401
+
+    EXTERN  DEECR
+    EXTERN  DEEDR
+    EXTERN  DEEARL
+    EXTERN  DEEARH
+
+;----------------------------------------------------------
+; ?eewait
+;
+; Wait for previous eeprom write operation to complete
+;
+; SIZE: 6 bytes
+
+    RSEG    CODE:CODE:NOROOT(1)
+?eewait:
+    SBIC    DEECR,BSY   ; Loop until previous write is completed
+    RJMP    ?eewait
+    RET
+
+;----------------------------------------------------------
+; ?eeget8
+;
+; To set up the address (8-bit) for one eeprom read operation
+;
+; Inputs:
+;   Q0...Q1  - The address of the char to read
+;
+; Outputs:
+;   Q0...Q1  - Has the same value as on entry
+;
+; SIZE: 10 bytes
+
+    RSEG    CODE:CODE:NOROOT(1)
+?eeget8_inc:
+    SUBI    Q0,255
+    SBCI    Q1,255    
+?eeget8:
+    RCALL   ?eewait
+    OUT DEEARL,Q0
+    OUT DEEARH,Q1
+    SBI DEECR,EER
+    RET
+        
+;----------------------------------------------------------
+; ?eeget8_64
+;
+; To set up the address (8-bit) for one eeprom read operation
+;
+; Inputs:
+;   R24...R25  - The address of the char to read
+;
+; Outputs:
+;   R24...R25  - Has the same value as on entry
+;
+; SIZE: 10 bytes
+
+    RSEG    CODE:CODE:NOROOT(1)
+?eeget8_64_inc:
+    ADIW    R25:R24,1    
+?eeget8_64:
+    RCALL   ?eewait
+    OUT DEEARL,R24
+    OUT DEEARH,R25
+    SBI DEECR,EER
+    RET
+
+;----------------------------------------------------------
+; __eeget8_16_AT86RF401
+;
+; To read one char from the internal eeprom using 8-bit addresses
+;
+; Inputs:
+;   Q0...Q1  - The address of the char to read
+;
+; Outputs:
+;   P0  - The byte read from the eeprom.
+;   Q0...Q1  - Has the same value as on entry
+;
+; SIZE: 6 bytes
+
+    RSEG    CODE:CODE:NOROOT(1)
+__eeget8_16_AT86RF401:
+    RCALL   ?eeget8
+    IN  P0,DEEDR
+    RET
+
+;----------------------------------------------------------
+; __eeget16_16_AT86RF401
+;
+; To read one int from the internal eeprom using 8-bit addresses
+;
+; Inputs:
+;   Q0...Q1  - The address of the int to read
+;
+; Outputs:
+;   P0...P1 - The int read from the eeprom.
+;   Q0...Q1  - The address of the last byte in the int
+;
+; SIZE: 10 bytes
+
+    RSEG    CODE:CODE:NOROOT(1)
+__eeget16_16_AT86RF401:
+    RCALL   ?eeget8
+    IN  P0,DEEDR
+    RCALL   ?eeget8_inc
+    IN  P1,DEEDR
+    RET
+
+;----------------------------------------------------------
+; __eeget24_16_AT86RF401
+;
+; To read one 3-byte pointer from the internal eeprom using 8-bit addresses
+;
+; Inputs:
+;   Q0...Q1  - The address of the pointer to read
+;
+; Outputs:
+;   P0...P2 - The pointer read from the eeprom.
+;   Q0...Q1  - The address of the last byte in the pointer
+;
+; SIZE: 14 bytes
+
+    RSEG    CODE:CODE:NOROOT(1)
+__eeget24_16_AT86RF401:
+    RCALL   ?eeget8
+    IN  P0,DEEDR
+    RCALL   ?eeget8_inc
+    IN  P1,DEEDR
+    RCALL   ?eeget8_inc
+    IN  P2,DEEDR
+    RET
+
+;----------------------------------------------------------
+; __eeget32_16_AT86RF401
+;
+; To read one long int from the internal eeprom using 8-bit addresses
+;
+; Inputs:
+;   Q0...Q1  - The address of the long int to read
+;
+; Outputs:
+;   P0...P3 - The byte read from the eeprom.
+;   Q0...Q1  - The address of the last byte in the long int
+;
+; SIZE: 18 bytes
+
+    RSEG    CODE:CODE:NOROOT(1)
+__eeget32_16_AT86RF401:
+    RCALL   ?eeget8
+    IN  P0,DEEDR
+    RCALL   ?eeget8_inc
+    IN  P1,DEEDR
+    RCALL   ?eeget8_inc
+    IN  P2,DEEDR
+    RCALL   ?eeget8_inc
+    IN  P3,DEEDR
+    RET
+
+;----------------------------------------------------------
+; __eeget64_16_AT86RF401
+;
+; To read one long int from the internal eeprom using 8-bit addresses
+;
+; Inputs:
+;   R24...R25           - The address of the long int to read
+;
+; Outputs:
+;   P0...P3,Q0...Q3     - The byte read from the eeprom.
+;   R24...R25           - The address of the last byte in the long long int
+;
+; SIZE:  bytes
+
+    RSEG    CODE:CODE:NOROOT(1)
+__eeget64_16_AT86RF401:
+        RCALL   ?eeget8_64
+        IN      P0,DEEDR
+        RCALL   ?eeget8_64_inc
+        IN      P1,DEEDR
+        RCALL   ?eeget8_64_inc
+        IN      P2,DEEDR
+        RCALL   ?eeget8_64_inc
+        IN      P3,DEEDR
+        RCALL   ?eeget8_64_inc
+        IN      Q0,DEEDR
+        RCALL   ?eeget8_64_inc
+        IN      Q1,DEEDR
+        RCALL   ?eeget8_64_inc
+        IN      Q2,DEEDR
+        RCALL   ?eeget8_64_inc
+        IN      Q3,DEEDR
+        RET
+        
+;----------------------------------------------------------
+; ?eeput8
+;
+; To set up and perform one write operation to the eeprom.
+;
+; Inputs:
+;   EEDR    - The data to be written
+;   Q0...Q1  - The address of the byte to write
+;   T0  - The "original" status register content
+;
+; Outputs:
+;   Q0...Q1  - Has the same value as on entry
+;
+; SIZE:  bytes
+
+        RSEG    CODE:CODE:NOROOT(1)
+?eeput8_inc:
+        SUBI    Q0,255
+        SBCI    Q1,255
+?eeput8:
+        OUT DEEARL,Q0
+        OUT DEEARH,Q1
+        SBI DEECR, EEL
+        RET
+        
+        RSEG    CODE:CODE:NOROOT(1)
+?eeput8_64_inc:
+        ADIW    R25:R24,1
+?eeput8_64:
+        OUT DEEARL,R24
+        OUT DEEARH,R25
+        SBI DEECR, EEL
+        RET
+
+        RSEG    CODE:CODE:NOROOT(1)
+?eeput_prolog:  
+        IN  T0,SREG
+        CLI
+        SBI DEECR, EEU
+        RET
+        
+?eeput_epilog:  
+        CBI DEECR, EEL
+?eeput_wait:
+        SBIS    DEECR,BSY   ; Loop until the write is started
+        RJMP    ?eeput_wait
+        RCALL   ?eewait     ; Wait until the write is finished (4 ms) 
+        CBI DEECR, EEU    
+        OUT SREG,T0
+        RET
+        
+                        
+;----------------------------------------------------------
+; __eeput8_16_AT86RF401
+;
+; To write one char to the internal eeprom using 8-bit addresses
+;
+; Inputs:
+;   P0  - The char to write to the eeprom.
+;   Q0...Q1  - The address of the char to write
+;
+; Outputs:
+;   Q0...Q1  - Has the same value as on entry
+;
+; SIZE: 8 bytes
+
+        RSEG    CODE:CODE:NOROOT(1)
+__eeput8_16_AT86RF401:
+        RCALL ?eeput_prolog
+        RCALL ?eeput8
+        OUT DEEDR, P0
+        RJMP ?eeput_epilog
+        
+;----------------------------------------------------------
+; __eeput16_16_AT86RF401
+;
+; To write one int to the internal eeprom using 8-bit addresses
+;
+; Inputs:
+;   P0...P1 - The int to write to the eeprom.
+;   Q0...Q1  - The address of the int to write
+;
+; Outputs:
+;   Q0...Q1  - The address of the last byte in the int
+;
+; SIZE: 14 bytes
+
+    RSEG    CODE:CODE:NOROOT(1)
+__eeput16_16_AT86RF401:
+        RCALL ?eeput_prolog
+        RCALL ?eeput8
+        OUT DEEDR, P0
+        RCALL ?eeput8_inc
+        OUT DEEDR, P1
+        RJMP ?eeput_epilog
+
+;----------------------------------------------------------
+; __eeput24_16_AT86RF401
+;
+; To write one 3-byte pointer to the internal eeprom using 8-bit addresses
+;
+; Inputs:
+;   P0...P2 - The pointer to write to the eeprom.
+;   Q0...Q1  - The address of the pointer to write
+;
+; Outputs:
+;   Q0...Q1  - The address of the last byte in the pointer
+;
+; SIZE: 20 bytes
+
+    RSEG    CODE:CODE:NOROOT(1)
+__eeput24_16_AT86RF401:
+        RCALL ?eeput_prolog
+        RCALL ?eeput8
+        OUT DEEDR, P0
+        RCALL ?eeput8_inc
+        OUT DEEDR, P1
+        RCALL ?eeput8_inc
+        OUT DEEDR, P2
+        RJMP ?eeput_epilog
+
+;----------------------------------------------------------
+; __eeput32_16_AT86RF401
+;
+; To write one long int to the internal eeprom using 8-bit addresses
+;
+; Inputs:
+;   P0...P2 - The long int to write to the eeprom.
+;   Q0...Q1  - The address of the long int to write
+;
+; Outputs:
+;   Q0...Q1  - The address of the last byte in the long int
+;
+; SIZE: 26 bytes
+
+    RSEG    CODE:CODE:NOROOT(1)
+__eeput32_16_AT86RF401:
+        RCALL ?eeput_prolog
+        RCALL ?eeput8
+        OUT DEEDR, P0
+        RCALL ?eeput8_inc
+        OUT DEEDR, P1
+        RCALL ?eeput8_inc
+        OUT DEEDR, P2
+        RCALL ?eeput8_inc
+        OUT DEEDR, P3
+        RJMP ?eeput_epilog
+
+;----------------------------------------------------------
+; __eeput64_16_AT86RF401
+;
+; To write one long int to the internal eeprom using 8-bit addresses
+;
+; Inputs:
+;   P0...P3,Q0...Q3     - The long int to write to the eeprom.
+;   R24...R25           - The address of the long int to write
+;
+; Outputs:
+;   R24...R25           - The address of the last byte in the long long int
+;
+; SIZE:  bytes
+
+    RSEG    CODE:CODE:NOROOT(1)
+__eeput64_16_AT86RF401:
+        PUSH    T0
+        RCALL   ?eeput_prolog
+        RCALL   ?eeput8_64
+        OUT     DEEDR, P0
+        RCALL   ?eeput8_64_inc
+        OUT     DEEDR, P1
+        RCALL   ?eeput8_64_inc
+        OUT     DEEDR, P2
+        RCALL   ?eeput8_64_inc
+        OUT     DEEDR, P3
+        RCALL   ?eeput8_64_inc
+        OUT     DEEDR, Q0
+        RCALL   ?eeput8_64_inc
+        OUT     DEEDR, Q1
+        RCALL   ?eeput8_64_inc
+        OUT     DEEDR, Q2
+        RCALL   ?eeput8_64_inc
+        OUT     DEEDR, Q3
+        RCALL   ?eeput_epilog
+        POP     T0
+        RET
+        
+        END
+                
+
+;----------------------------------------------------------------------------
+;  

@@ -1,0 +1,831 @@
+///////////////////////////////////////////////////////////////////////////////
+//
+// IAR C/C++ Compiler V7.10.1.1197 for Atmel AVR          13/May/2020  17:03:18
+// Copyright 1996-2017 IAR Systems AB.
+// Network license: dvriar01.mchp-main.com (STD)
+//
+//    Source file  =  
+//        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\src\FlashApplLF.c
+//    Command line =  
+//        -f C:\Users\C41045\AppData\Local\Temp\EWB02.tmp
+//        (C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\src\FlashApplLF.c
+//        -v3 --enhanced_core -ms -o
+//        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\Obj
+//        -lCN
+//        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\List
+//        -lA
+//        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\List
+//        --no_cse --no_inline --no_code_motion --no_cross_call --no_clustering
+//        --no_tbaa --debug --64k_flash -DENABLE_BIT_DEFINITIONS -e
+//        --eeprom_size 2304 --clib -Ohz)
+//    Locale       =  English_USA.1252
+//    List file    =  
+//        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\List\FlashApplLF.s90
+//
+///////////////////////////////////////////////////////////////////////////////
+
+        NAME FlashApplLF
+
+        RTMODEL "__64bit_doubles", "disabled"
+        RTMODEL "__SystemLibrary", "CLib"
+        RTMODEL "__cpu", "3"
+        RTMODEL "__enhanced_core", "enabled"
+        RTMODEL "__has_elpm", "false"
+        RTMODEL "__memory_model", "2"
+        RTMODEL "__rt_version", "3"
+        RTMODEL "__vtable_memory", "__nearflash"
+
+        RSEG CSTACK:DATA:NOROOT(0)
+        RSEG RSTACK:DATA:NOROOT(0)
+
+        PUBLIC ATA_StartRssi_flash_C
+        PUBLIC ATA_lfRssiCalcCorr_C
+        PUBLIC CalcLinVector
+        PUBWEAK _A_RSCR
+        PUBWEAK _A_RSFR
+        PUBWEAK _A_RSMS1R
+        PUBWEAK _A_RSRES1H
+        PUBWEAK _A_RSRES1L
+        PUBWEAK _A_RSRES2H
+        PUBWEAK _A_RSRES2L
+        PUBWEAK _A_RSRES3H
+        PUBWEAK _A_RSRES3L
+        PUBWEAK _A_RSRES4H
+        PUBWEAK _A_RSRES4L
+        PUBWEAK _A_RSSR
+        PUBWEAK __?EEARH
+        PUBWEAK __?EEARL
+        PUBWEAK __?EECR
+        PUBWEAK __?EEDR
+        PUBLIC app_rssi_load_factors
+        
+          CFI Names cfiNames0
+          CFI StackFrame CFA_Y Y DATA
+          CFI StackFrame CFA_SP SP DATA
+          CFI VirtualResource ?RetPad:1, ?RetHigh:8, ?RetLow:8, ?Ret:17
+          CFI Resource R0:8, R1:8, R2:8, R3:8, R4:8, R5:8, R6:8, R7:8, R8:8, R9:8
+          CFI Resource R10:8, R11:8, R12:8, R13:8, R14:8, R15:8, R16:8, R17:8
+          CFI Resource R18:8, R19:8, R20:8, R21:8, R22:8, R23:8, R24:8, R25:8
+          CFI Resource R26:8, R27:8, R28:8, R29:8, R30:8, R31:8
+          CFI Resource ?RetHighByteMask:8, SP:16, SPH:8, SPL:8, Y:16
+          CFI ResourceParts ?Ret ?RetHigh, ?RetLow, ?RetPad
+          CFI ResourceParts SP SPH, SPL
+          CFI ResourceParts Y R29, R28
+          CFI EndNames cfiNames0
+        
+          CFI Common cfiCommon0 Using cfiNames0
+          CFI CodeAlign 1
+          CFI DataAlign 1
+          CFI ReturnAddress ?Ret CODE
+          CFI CFA_Y Y+0
+          CFI CFA_SP SP+2
+          CFI ?RetPad 0
+          CFI ?RetHigh and(load(1, DATA, sub(CFA_SP, 1)), ?RetHighByteMask)
+          CFI ?RetLow Frame(CFA_SP, 0)
+          CFI ?Ret Concat
+          CFI R0 Undefined
+          CFI R1 Undefined
+          CFI R2 Undefined
+          CFI R3 Undefined
+          CFI R4 SameValue
+          CFI R5 SameValue
+          CFI R6 SameValue
+          CFI R7 SameValue
+          CFI R8 SameValue
+          CFI R9 SameValue
+          CFI R10 SameValue
+          CFI R11 SameValue
+          CFI R12 SameValue
+          CFI R13 SameValue
+          CFI R14 SameValue
+          CFI R15 SameValue
+          CFI R16 Undefined
+          CFI R17 Undefined
+          CFI R18 Undefined
+          CFI R19 Undefined
+          CFI R20 Undefined
+          CFI R21 Undefined
+          CFI R22 Undefined
+          CFI R23 Undefined
+          CFI R24 SameValue
+          CFI R25 SameValue
+          CFI R26 SameValue
+          CFI R27 SameValue
+          CFI R28 Undefined
+          CFI R29 Undefined
+          CFI R30 Undefined
+          CFI R31 Undefined
+          CFI ?RetHighByteMask SameValue
+          CFI SPH Undefined
+          CFI SPL Undefined
+          CFI EndCommon cfiCommon0
+        
+        EXTERN ATA_eepReadBytes_C
+        EXTERN ATA_lfRssiCalc3dVec_C
+        EXTERN ATA_lfRssiCalcChanCalibVal_C
+        EXTERN ATA_lfRssiCalcLog2Lin_C
+        EXTERN ATA_lfRssiMeasEnableLfReceiver_flash_C
+        EXTERN ATA_lfRssiOpen_C
+        EXTERN ATA_lfRssiSetEepromConfig_C
+        EXTERN g3dVector
+        EXTERN g3dVectorFlag
+        EXTERN g3dVectorLin
+        EXTERN gExtLfRssi
+        EXTERN gIntLfRssi
+        EXTERN gLfRssiRes
+        EXTERN gRSSI_ResBuffer
+        EXTERN g_sEepFlashApp_RKEPEPS
+        EXTERN g_sLfRssi
+        EXTERN g_sLfRssiRegConfig_flash
+        EXTERN wLfRssiNorm
+        EXTERN wLfRssiref
+
+// C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\src\FlashApplLF.c
+//    1 /******************************************************************************
+//    2   Use of this software is subject to Microchip's Software License Agreement.
+//    3 --------------------------------------------------------------------------------
+//    4   $URL: http://svnservulm.corp.atmel.com/svn/CDB/Apps/SW_Lib/Car_Access/CARS_GEN2/ATAB5702A/Branches/P2P22_TXMODE_NXP/appl/appFlash/src/FlashApplLF.c $
+//    5   $LastChangedRevision: 463332 $
+//    6   $LastChangedDate: 2017-06-15 09:38:17 -0600 (Thu, 15 Jun 2017) $
+//    7   $LastChangedBy: krishna.balan $
+//    8 -------------------------------------------------------------------------------
+//    9   Project:      ATA5700
+//   10   Target MCU:   ATA5700
+//   11   Compiler:     IAR C/C++ Compiler for AVR 5.51.0
+//   12 -------------------------------------------------------------------------------
+//   13 
+//   14 ******************************************************************************
+//   15 * Copyright 2017, Microchip Technology Incorporated and its subsidiaries.     *
+//   16 *                                                                             *
+//   17 * This software is owned by the Microchip Technology Incorporated.            *
+//   18 * Microchip hereby grants to licensee a personal                              *
+//   19 * non-exclusive, non-transferable license to copy, use, modify, create        *
+//   20 * derivative works of, and compile the Microchip Source Code and derivative   *
+//   21 * works for the sole and exclusive purpose of creating custom software in     *
+//   22 * support of licensee product to be used only in conjunction with a Microchip *
+//   23 * integrated circuit as specified in the applicable agreement. Any            *        
+//   24 * reproduction, modification, translation, compilation, or representation of  *
+//   25 * this software except as specified above is prohibited without the express   *
+//   26 * written permission of Microchip.                                            *
+//   27 *                                                                             *
+//   28 * Disclaimer: MICROCHIP MAKES NO WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,    *
+//   29 * WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED    *
+//   30 * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.         *
+//   31 * Microchip reserves the right to make changes without further notice to the  *
+//   32 * materials described herein. Microchip does not assume any liability arising *
+//   33 * out of the application or use of any product or circuit described herein.   *
+//   34 * Microchip does not authorize its products for use as critical components in *
+//   35 * life-support systems where a malfunction or failure may reasonably be       *
+//   36 * expected to result in significant injury to the user. The inclusion of      *
+//   37 * Microchip products in a life-support systems application implies that the   *
+//   38 * manufacturer assumes all risk of such use and in doing so indemnifies       *
+//   39 * Microchip against all charges.                                              *
+//   40 *                                                                             *
+//   41 * Use may be limited by and subject to the applicable Microchip software      *
+//   42 * license agreement.                                                          *
+//   43 ******************************************************************************/
+//   44 
+//   45 /** \file FlashApplLF.c
+//   46     this file contains an ATA5700 Flash application software
+//   47 */
+//   48 
+//   49 /*===========================================================================*/
+//   50 /*  INCLUDES                                                                 */
+//   51 /*===========================================================================*/
+//   52 #include "../../../firmware/init/src/init.h"
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01b0H
+// union <unnamed> volatile __ext_io _A_RSCR
+_A_RSCR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01b1H
+// union <unnamed> volatile __ext_io _A_RSSR
+_A_RSSR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01b2H
+// union <unnamed> volatile __ext_io _A_RSMS1R
+_A_RSMS1R:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01b4H
+// union <unnamed> volatile __ext_io _A_RSFR
+_A_RSFR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01b8H
+// union <unnamed> volatile __ext_io _A_RSRES1L
+_A_RSRES1L:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01b9H
+// union <unnamed> volatile __ext_io _A_RSRES1H
+_A_RSRES1H:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01baH
+// union <unnamed> volatile __ext_io _A_RSRES2L
+_A_RSRES2L:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01bbH
+// union <unnamed> volatile __ext_io _A_RSRES2H
+_A_RSRES2H:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01bcH
+// union <unnamed> volatile __ext_io _A_RSRES3L
+_A_RSRES3L:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01bdH
+// union <unnamed> volatile __ext_io _A_RSRES3H
+_A_RSRES3H:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01beH
+// union <unnamed> volatile __ext_io _A_RSRES4L
+_A_RSRES4L:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01bfH
+// union <unnamed> volatile __ext_io _A_RSRES4H
+_A_RSRES4H:
+        DS8 1
+//   53 #include "../../../firmware/rftx/src/rftx.h"
+//   54 #include "../../../firmware/lfrx/src/lfrx.h"
+//   55 #include "../../../firmware/spi/src/ata5700_command_set_flash.h"
+//   56 
+//   57 #include "../../../firmware/init/src/init_flash.h"
+//   58 #include "../../../firmware/system/src/system_flash.h"
+//   59 
+//   60 #include "../../../firmware/timer1/src/timer1.h"
+//   61 #include "../../../firmware/globals/src/globals.h"
+//   62 
+//   63 #include "../../../firmware/lfrx/src/lfrx_flash.h"
+//   64 #include "../../../firmware/tp/src/tp_flash.h"
+//   65 
+//   66 #include "../../../firmware/extif/src/extif_flash.h"
+//   67 
+//   68 #include "../../../firmware/lfrssi/src/lfrssi.h"
+//   69 #include "../../../firmware/lfrssi/src/lfrssi_flash.h"
+//   70 
+//   71 #include "../../../firmware/calib/src/calib.h"
+//   72 #include "../../../firmware/aes/src/aes.h"
+//   73 
+//   74 #include "../src/FlashApplLF.h"
+//   75 #include "../src/FlashApplVars.h"
+//   76 
+//   77 
+//   78 /*===========================================================================*/
+//   79 /*  DEFINES                                                                  */
+//   80 /*===========================================================================*/
+//   81 #define DEFAULT_RSSI_REF_VALUE          (0x0A00)
+//   82 #define DEFAULT_RSSI_NORM_VALUE         (0x0A00)
+//   83 /*===========================================================================*/
+//   84 /*  Modul Globals                                                             */
+//   85 /*===========================================================================*/
+//   86 extern uint16_t gExtLfRssi[3];
+//   87 extern uint16_t gIntLfRssi[3];
+//   88 extern uint16_t gLfRssiRes[3]; 
+//   89 extern uint16_t wLfRssiref[3];
+//   90 extern uint16_t wLfRssiNorm[3];
+//   91 extern uint16_t wBref;
+//   92 extern uint8_t gRSSI_ResBuffer[6];
+//   93 extern uint8_t g3dVector[2];
+//   94 extern uint8_t g3dVectorLin[2];
+//   95 extern uint8_t g3dVectorFlag;
+//   96 extern sEepFlashApp_RKEPEPS g_sEepFlashApp_RKEPEPS;
+//   97 
+//   98 
+//   99 /*===========================================================================*/
+//  100 /*  IMPLEMENTATION                                                           */
+//  101 /*===========================================================================*/
+//  102 
+//  103 /*----------------------------------------------------------------------------- */
+//  104 /**\brief  TODO - code here
+//  105 
+//  106  */
+//  107 /*----------------------------------------------------------------------------- */
+//  108    
+//  109 //-----------------------------------------------------------------------------
+//  110 /** \brief <b>ATA_StartRssi_flash_C</b>
+//  111     Contains the complete flow for performing an LF RSSI measurement
+//  112     
+//  113 
+//  114     \param[in]  none
+//  115 
+//  116 
+//  117     \return none
+//  118 
+//  119 
+//  120     \Traceability None
+//  121 
+//  122     \image none
+//  123     \n
+//  124 */
+//  125 /*---------------------------------------------------------------------------*/
+
+        RSEG CODE:CODE:ROOT(1)
+//  126 VOIDFUNC ATA_StartRssi_flash_C(uint8_t bmode)
+ATA_StartRssi_flash_C:
+          CFI Block cfiBlock0 Using cfiCommon0
+          CFI Function ATA_StartRssi_flash_C
+//  127 {
+//  128   uint8_t srcVal =0;
+//  129   ATA_lfRssiSetEepromConfig_C( srcVal );        
+        LDI     R16, 0
+          CFI FunCall ATA_lfRssiSetEepromConfig_C
+        CALL    ATA_lfRssiSetEepromConfig_C
+//  130   ATA_lfRssiOpen_C();       // Check!!! 
+          CFI FunCall ATA_lfRssiOpen_C
+        CALL    ATA_lfRssiOpen_C
+//  131   ATA_lfRssiMeasEnableLfReceiver_flash_C();
+          CFI FunCall ATA_lfRssiMeasEnableLfReceiver_flash_C
+        CALL    ATA_lfRssiMeasEnableLfReceiver_flash_C
+//  132  // g_sLfRssiRegConfig_flash.bRscr = 0x08;
+//  133   g_sLfRssiRegConfig_flash.bRscr = (BM_RSOFM | RSSDEN);
+        LDI     R16, 8
+        STS     g_sLfRssiRegConfig_flash, R16
+//  134  
+//  135   //g_sLfRssiRegConfig_flash.bRsdlyr = 24; //select the RSSI Tracking time 0x18 8uS sampling rate/484 uS duration
+//  136   g_sLfRssiRegConfig_flash.bRsdlyr = 26; //select the RSSI Tracking time 0x18 8uS sampling rate/525 uS duration
+        LDI     R16, 26
+        STS     (g_sLfRssiRegConfig_flash + 3), R16
+//  137 
+//  138   g_sLfRssiRegConfig_flash.bRsms1r = 0x07;// select all channels
+        LDI     R16, 7
+        STS     (g_sLfRssiRegConfig_flash + 1), R16
+//  139   
+//  140   //g_sLfRssiRegConfig_flash.bRsms2r = 0x70; // select number of samples for averaging 128 samples * 8 uS sample rate = 625 uS
+//  141   g_sLfRssiRegConfig_flash.bRsms2r = 0x60; // select number of samples for averaging 64 samples * 8 uS sample rate = 512 uS
+        LDI     R16, 96
+        STS     (g_sLfRssiRegConfig_flash + 2), R16
+//  142 
+//  143   g_sLfRssiRegConfig_flash.bRssrcr = 0x00; // no SRC calibration
+        LDI     R16, 0
+        STS     (g_sLfRssiRegConfig_flash + 4), R16
+//  144 
+//  145   do 
+//  146   { 
+//  147     __no_operation();
+??ATA_StartRssi_flash_C_0:
+        NOP
+//  148   } while ((RSSR & 0x01) ==0);
+        LDS     R16, _A_RSSR
+        SBRS    R16, 0
+        RJMP    ??ATA_StartRssi_flash_C_0
+//  149  
+//  150 }
+        RET
+          CFI EndBlock cfiBlock0
+        REQUIRE _A_RSSR
+//  151 
+//  152 //-----------------------------------------------------------------------------
+//  153 /** \brief <b>ATA_lfRssiCalcCorr_C</b>
+//  154     Contains the complete flow for performing an LF RSSI measurement
+//  155     
+//  156 
+//  157     \param[in]  none
+//  158 
+//  159 
+//  160     \return none
+//  161 
+//  162 
+//  163     \Traceability None
+//  164 
+//  165     \image none
+//  166     \n
+//  167 */
+//  168 /*---------------------------------------------------------------------------*/
+//  169 
+
+        RSEG CODE:CODE:ROOT(1)
+//  170 VOIDFUNC ATA_lfRssiCalcCorr_C(void)
+ATA_lfRssiCalcCorr_C:
+          CFI Block cfiBlock1 Using cfiCommon0
+          CFI Function ATA_lfRssiCalcCorr_C
+          CFI NoCalls
+//  171 {
+//  172   uint8_t index; 
+//  173   RSMS1R &= ~BM_RSSCAL;
+        LDS     R16, 434
+        ANDI    R16, 0x7F
+        STS     434, R16
+//  174   RSCR   &= ~(BM_RSMODE1 | BM_RSOFM | BM_RSEOR);
+        LDS     R16, _A_RSCR
+        ANDI    R16, 0xD3
+        STS     _A_RSCR, R16
+//  175   RSCR   |= BM_RSMODE0;
+        LDS     R16, 432
+        ORI     R16, 0x10
+        STS     432, R16
+//  176   
+//  177   for( index = 0; index < 3; index++ )
+        LDI     R19, 0
+        LDI     R18, 3
+//  178   {
+//  179     RSFR = BM_RSOFF;
+??ATA_lfRssiCalcCorr_C_0:
+        LDI     R16, 8
+        STS     _A_RSFR, R16
+//  180     
+//  181     RSRES1L = gExtLfRssi[index] & 0x00FF;
+        LDI     R16, 2
+        MUL     R19, R16
+        MOVW    R31:R30, R1:R0
+        SUBI    R30, LOW((-(gExtLfRssi) & 0xFFFF))
+        SBCI    R31, (-(gExtLfRssi) & 0xFFFF) >> 8
+        LD      R16, Z
+        STS     _A_RSRES1L, R16
+//  182     RSRES1H = (gExtLfRssi[index]>>8);
+        MOVW    R31:R30, R1:R0
+        SUBI    R30, LOW((-(gExtLfRssi) & 0xFFFF))
+        SBCI    R31, (-(gExtLfRssi) & 0xFFFF) >> 8
+        LDD     R16, Z+1
+        STS     _A_RSRES1H, R16
+//  183     RSRES2L = gIntLfRssi[index] & 0x00FF;
+        MOVW    R31:R30, R1:R0
+        SUBI    R30, LOW((-(gIntLfRssi) & 0xFFFF))
+        SBCI    R31, (-(gIntLfRssi) & 0xFFFF) >> 8
+        LD      R16, Z
+        STS     _A_RSRES2L, R16
+//  184     RSRES2H = (gIntLfRssi[index]>>8);
+        MOVW    R31:R30, R1:R0
+        SUBI    R30, LOW((-(gIntLfRssi) & 0xFFFF))
+        SBCI    R31, (-(gIntLfRssi) & 0xFFFF) >> 8
+        LDD     R16, Z+1
+        STS     _A_RSRES2H, R16
+//  185     RSRES3L = g_sLfRssi.bChanCalibVal[index + index];
+        MOVW    R31:R30, R1:R0
+        SUBI    R30, LOW((-(g_sLfRssi) & 0xFFFF))
+        SBCI    R31, (-(g_sLfRssi) & 0xFFFF) >> 8
+        LDD     R16, Z+6
+        STS     _A_RSRES3L, R16
+//  186     RSRES3H = g_sLfRssi.bChanCalibVal[index + index + 1];
+        MOVW    R31:R30, R1:R0
+        SUBI    R30, LOW((-(g_sLfRssi) & 0xFFFF))
+        SBCI    R31, (-(g_sLfRssi) & 0xFFFF) >> 8
+        LDD     R16, Z+7
+        STS     _A_RSRES3H, R16
+//  187     
+//  188     _CLI;
+        cli
+//  189     RSCR |= BM_RSOS;    // start correction calculation
+        LDS     R16, 432
+        ORI     R16, 0x02
+        STS     432, R16
+//  190     
+//  191     while( !(RSFR & BM_RSOFF) ){}
+??ATA_lfRssiCalcCorr_C_1:
+        LDS     R16, _A_RSFR
+        SBRS    R16, 3
+        RJMP    ??ATA_lfRssiCalcCorr_C_1
+//  192     
+//  193     gLfRssiRes[index]  = RSRES4L;
+        LDS     R16, _A_RSRES4L
+//  194     gLfRssiRes[index] |= (RSRES4H<<8);
+        LDS     R17, _A_RSRES4H
+        MOVW    R31:R30, R1:R0
+        SUBI    R30, LOW((-(gLfRssiRes) & 0xFFFF))
+        SBCI    R31, (-(gLfRssiRes) & 0xFFFF) >> 8
+        ST      Z, R16
+        STD     Z+1, R17
+//  195   }
+        INC     R19
+        DEC     R18
+        BRNE    ??ATA_lfRssiCalcCorr_C_0
+//  196 
+//  197   RSFR = BM_RSOFF;
+        LDI     R16, 8
+        STS     _A_RSFR, R16
+//  198   
+//  199   
+//  200 }
+        RET
+          CFI EndBlock cfiBlock1
+        REQUIRE _A_RSMS1R
+        REQUIRE _A_RSCR
+        REQUIRE _A_RSFR
+        REQUIRE _A_RSRES1L
+        REQUIRE _A_RSRES1H
+        REQUIRE _A_RSRES2L
+        REQUIRE _A_RSRES2H
+        REQUIRE _A_RSRES3L
+        REQUIRE _A_RSRES3H
+        REQUIRE _A_RSRES4L
+        REQUIRE _A_RSRES4H
+//  201 
+//  202 
+//  203 
+
+        RSEG CODE:CODE:ROOT(1)
+//  204 VOIDFUNC CalcLinVector(void)
+CalcLinVector:
+          CFI Block cfiBlock2 Using cfiCommon0
+          CFI Function CalcLinVector
+//  205 {
+        ST      -Y, R27
+          CFI R27 Frame(CFA_Y, -1)
+          CFI CFA_Y Y+1
+        ST      -Y, R26
+          CFI R26 Frame(CFA_Y, -2)
+          CFI CFA_Y Y+2
+        SBIW    R29:R28, 1
+          CFI CFA_Y Y+3
+//  206   uint8_t bMargin; 
+//  207   
+//  208   ATA_eepReadBytes_C(&bMargin, MARGIN_EEADR, 0x01);
+        LDI     R20, 1
+        LDI     R18, 127
+        LDI     R19, 0
+        MOVW    R17:R16, R29:R28
+          CFI FunCall ATA_eepReadBytes_C
+        CALL    ATA_eepReadBytes_C
+//  209   ATA_eepReadBytes_C((uint8_t*)&wLfRssiref[0], (uint16_t)&g_sEepFlashApp_RKEPEPS.aub_rssi_intref, 0x06);
+        LDI     R20, 6
+        LDI     R18, LOW((g_sEepFlashApp_RKEPEPS + 36))
+        LDI     R19, HIGH((g_sEepFlashApp_RKEPEPS + 36))
+        LDI     R16, LOW(wLfRssiref)
+        LDI     R17, (wLfRssiref) >> 8
+          CFI FunCall ATA_eepReadBytes_C
+        CALL    ATA_eepReadBytes_C
+//  210   ATA_eepReadBytes_C((uint8_t*)&wLfRssiNorm[0], (uint16_t)&g_sEepFlashApp_RKEPEPS.aub_rssi_norm, 0x06);
+        LDI     R20, 6
+        LDI     R18, LOW((g_sEepFlashApp_RKEPEPS + 27))
+        LDI     R19, HIGH((g_sEepFlashApp_RKEPEPS + 27))
+        LDI     R16, LOW(wLfRssiNorm)
+        LDI     R17, (wLfRssiNorm) >> 8
+          CFI FunCall ATA_eepReadBytes_C
+        CALL    ATA_eepReadBytes_C
+//  211   
+//  212   /*--- EEPROM not yet intitialized, load dummy values in SRAM variables ---*/
+//  213   if (wLfRssiref[0] == 0xFFFF) { wLfRssiref[0] = DEFAULT_RSSI_REF_VALUE; }
+        LDI     R26, LOW(wLfRssiref)
+        LDI     R27, (wLfRssiref) >> 8
+        LD      R30, X+
+        LD      R31, X
+        CPI     R30, 255
+        SBCI    R31, 255
+        BRNE    ??CalcLinVector_0
+        LDI     R30, LOW(wLfRssiref)
+        LDI     R31, (wLfRssiref) >> 8
+        LDI     R16, 0
+        LDI     R17, 10
+        ST      Z, R16
+        STD     Z+1, R17
+//  214   if (wLfRssiref[1] == 0xFFFF) { wLfRssiref[1] = DEFAULT_RSSI_REF_VALUE; }
+??CalcLinVector_0:
+        LDI     R26, LOW((wLfRssiref + 2))
+        LDI     R27, HIGH((wLfRssiref + 2))
+        LD      R30, X+
+        LD      R31, X
+        CPI     R30, 255
+        SBCI    R31, 255
+        BRNE    ??CalcLinVector_1
+        LDI     R30, LOW(wLfRssiref)
+        LDI     R31, (wLfRssiref) >> 8
+        LDI     R16, 0
+        LDI     R17, 10
+        STD     Z+2, R16
+        STD     Z+3, R17
+//  215   if (wLfRssiref[2] == 0xFFFF) { wLfRssiref[2] = DEFAULT_RSSI_REF_VALUE; }
+??CalcLinVector_1:
+        LDI     R26, LOW((wLfRssiref + 4))
+        LDI     R27, HIGH((wLfRssiref + 4))
+        LD      R30, X+
+        LD      R31, X
+        CPI     R30, 255
+        SBCI    R31, 255
+        BRNE    ??CalcLinVector_2
+        LDI     R30, LOW(wLfRssiref)
+        LDI     R31, (wLfRssiref) >> 8
+        LDI     R16, 0
+        LDI     R17, 10
+        STD     Z+4, R16
+        STD     Z+5, R17
+//  216   
+//  217   if (wLfRssiNorm[0] == 0xFFFF) { wLfRssiNorm[0] = DEFAULT_RSSI_NORM_VALUE; }
+??CalcLinVector_2:
+        LDI     R26, LOW(wLfRssiNorm)
+        LDI     R27, (wLfRssiNorm) >> 8
+        LD      R30, X+
+        LD      R31, X
+        CPI     R30, 255
+        SBCI    R31, 255
+        BRNE    ??CalcLinVector_3
+        LDI     R30, LOW(wLfRssiNorm)
+        LDI     R31, (wLfRssiNorm) >> 8
+        LDI     R16, 0
+        LDI     R17, 10
+        ST      Z, R16
+        STD     Z+1, R17
+//  218   if (wLfRssiNorm[1] == 0xFFFF) { wLfRssiNorm[1] = DEFAULT_RSSI_NORM_VALUE; }
+??CalcLinVector_3:
+        LDI     R26, LOW((wLfRssiNorm + 2))
+        LDI     R27, HIGH((wLfRssiNorm + 2))
+        LD      R30, X+
+        LD      R31, X
+        CPI     R30, 255
+        SBCI    R31, 255
+        BRNE    ??CalcLinVector_4
+        LDI     R30, LOW(wLfRssiNorm)
+        LDI     R31, (wLfRssiNorm) >> 8
+        LDI     R16, 0
+        LDI     R17, 10
+        STD     Z+2, R16
+        STD     Z+3, R17
+//  219   if (wLfRssiNorm[2] == 0xFFFF) { wLfRssiNorm[2] = DEFAULT_RSSI_NORM_VALUE; }
+??CalcLinVector_4:
+        LDI     R26, LOW((wLfRssiNorm + 4))
+        LDI     R27, HIGH((wLfRssiNorm + 4))
+        LD      R30, X+
+        LD      R31, X
+        CPI     R30, 255
+        SBCI    R31, 255
+        BRNE    ??CalcLinVector_5
+        LDI     R30, LOW(wLfRssiNorm)
+        LDI     R31, (wLfRssiNorm) >> 8
+        LDI     R16, 0
+        LDI     R17, 10
+        STD     Z+4, R16
+        STD     Z+5, R17
+//  220   
+//  221  /*---- Coil connections ATAB5702A-V2.3 PCB -----
+//  222   
+//  223   Z coil is variable index 0 connected to A1x
+//  224   Y coil is variable index 1 connected to A2x
+//  225   X coil is variable index 2 connected to A3x
+//  226   
+//  227   ----------------------------------------------*/
+//  228    
+//  229   bMargin=0; //Margin variable is no lnger usued so set to 0 
+??CalcLinVector_5:
+        LDI     R16, 0
+        ST      Y, R16
+//  230   
+//  231   ATA_lfRssiCalcChanCalibVal_C(bMargin, &wLfRssiref[0],&wLfRssiNorm[0]);
+        LDI     R20, LOW(wLfRssiNorm)
+        LDI     R21, (wLfRssiNorm) >> 8
+        LDI     R18, LOW(wLfRssiref)
+        LDI     R19, (wLfRssiref) >> 8
+          CFI FunCall ATA_lfRssiCalcChanCalibVal_C
+        CALL    ATA_lfRssiCalcChanCalibVal_C
+//  232   ATA_lfRssiCalcCorr_C();
+          CFI FunCall ATA_lfRssiCalcCorr_C
+        RCALL   ATA_lfRssiCalcCorr_C
+//  233   for (uint8_t index=0;index < 3;index++)
+        LDI     R17, 0
+        LDI     R16, 3
+//  234   {
+//  235     gRSSI_ResBuffer[index+index]=(gLfRssiRes[index] & 0xFF);
+??CalcLinVector_6:
+        LDI     R18, 2
+        MUL     R17, R18
+        MOVW    R31:R30, R1:R0
+        SUBI    R30, LOW((-(gLfRssiRes) & 0xFFFF))
+        SBCI    R31, (-(gLfRssiRes) & 0xFFFF) >> 8
+        LD      R18, Z
+        MOVW    R31:R30, R1:R0
+        SUBI    R30, LOW((-(gRSSI_ResBuffer) & 0xFFFF))
+        SBCI    R31, (-(gRSSI_ResBuffer) & 0xFFFF) >> 8
+        ST      Z, R18
+//  236     gRSSI_ResBuffer[index+index+1]=(gLfRssiRes[index] >>8);
+        MOVW    R31:R30, R1:R0
+        SUBI    R30, LOW((-(gLfRssiRes) & 0xFFFF))
+        SBCI    R31, (-(gLfRssiRes) & 0xFFFF) >> 8
+        LDD     R18, Z+1
+        MOVW    R31:R30, R1:R0
+        SUBI    R30, LOW((-(gRSSI_ResBuffer) & 0xFFFF))
+        SBCI    R31, (-(gRSSI_ResBuffer) & 0xFFFF) >> 8
+        STD     Z+1, R18
+//  237   }
+        INC     R17
+        DEC     R16
+        BRNE    ??CalcLinVector_6
+//  238   ATA_lfRssiCalc3dVec_C(&gRSSI_ResBuffer[0],&g3dVector[0]);
+        LDI     R18, LOW(g3dVector)
+        LDI     R19, (g3dVector) >> 8
+        LDI     R16, LOW(gRSSI_ResBuffer)
+        LDI     R17, (gRSSI_ResBuffer) >> 8
+          CFI FunCall ATA_lfRssiCalc3dVec_C
+        CALL    ATA_lfRssiCalc3dVec_C
+//  239   while (g_sLfRssi.bStatus & LFRSSI_STATUS_BM_3DVEC_DATA_AVAILABLE_FLAG ==0);//Wait for it
+//  240   g3dVectorFlag = g_sLfRssi.bFlags;
+        LDS     R16, g_sLfRssi
+        STS     g3dVectorFlag, R16
+//  241   if ((g_sLfRssi.bFlags & LFRSSI_FLAGS_BM_ERROR_FLAG) != 0) {
+        SBRC    R16, 7
+        RJMP    ??CalcLinVector_7
+//  242     // Error in getting 3dVec value
+//  243     //g3dVector[0] = g3dVector[1] = 0;
+//  244     //g3dVectorLin[0] = g3dVectorLin[1] = 0;
+//  245   } 
+//  246   else {
+//  247     
+//  248     ATA_lfRssiCalcLog2Lin_C(&g3dVector[0],&g3dVectorLin[0]);
+        LDI     R18, LOW(g3dVectorLin)
+        LDI     R19, (g3dVectorLin) >> 8
+        LDI     R16, LOW(g3dVector)
+        LDI     R17, (g3dVector) >> 8
+          CFI FunCall ATA_lfRssiCalcLog2Lin_C
+        CALL    ATA_lfRssiCalcLog2Lin_C
+//  249     while (g_sLfRssi.bStatus & LFRSSI_STATUS_BM_LINEAR_DATA_AVAILABLE_FLAG ==0);//Wait for it
+//  250     if ((g_sLfRssi.bFlags & LFRSSI_FLAGS_BM_ERROR_FLAG) != 0) {
+//  251         // Error in getting 3D vector liner value
+//  252         //g3dVectorLin[0] = g3dVectorLin[1] = 0;
+//  253     }
+//  254   }
+//  255 }
+??CalcLinVector_7:
+        ADIW    R29:R28, 1
+          CFI CFA_Y Y+2
+        LD      R26, Y+
+          CFI R26 SameValue
+          CFI CFA_Y Y+1
+        LD      R27, Y+
+          CFI R27 SameValue
+          CFI CFA_Y Y+0
+        RET
+          CFI EndBlock cfiBlock2
+//  256 
+//  257 /**
+//  258  * \brief Load compensation / normalization factors from EEprom
+//  259  *
+//  260  * \return void
+//  261  */
+
+        RSEG CODE:CODE:ROOT(1)
+//  262 void app_rssi_load_factors(void)
+app_rssi_load_factors:
+          CFI Block cfiBlock3 Using cfiCommon0
+          CFI Function app_rssi_load_factors
+          CFI NoCalls
+//  263 {
+//  264 #ifdef RSSI_COMPENSATION
+//  265   // get RSSI internal ref
+//  266   ATA_eepReadBytes_C(wLfRssiref[LF_AXIS_X], LF_RSSI_INTREF_X,2);
+//  267   ATA_eepReadBytes_C(wLfRssiref[LF_AXIS_Y], LF_RSSI_INTREF_Y,2);
+//  268   ATA_eepReadBytes_C(wLfRssiref[LF_AXIS_Z], LF_RSSI_INTREF_Z,2);
+//  269 #else
+//  270   wLfRssiref[LF_AXIS_X] = 0x00;
+        LDI     R30, LOW(wLfRssiref)
+        LDI     R31, (wLfRssiref) >> 8
+        LDI     R16, 0
+        STD     Z+4, R16
+        STD     Z+5, R16
+//  271   wLfRssiref[LF_AXIS_Y] = 0x00;
+        STD     Z+2, R16
+        STD     Z+3, R16
+//  272   wLfRssiref[LF_AXIS_Z] = 0x00;
+        ST      Z, R16
+        STD     Z+1, R16
+//  273 #endif
+//  274 #ifdef RSSI_NORMALISATION
+//  275   // get RSSI compensation factor
+//  276   ATA_eepReadBytes_C(wLfRssiNorm[LF_AXIS_X], LF_RSSI_INTREF_X,2);
+//  277   ATA_eepReadBytes_C(wLfRssiNorm[LF_AXIS_Y], LF_RSSI_INTREF_Y,2);
+//  278   ATA_eepReadBytes_C(wLfRssiNorm[LF_AXIS_Z], LF_RSSI_INTREF_Z,2);
+//  279 #else
+//  280   wLfRssiNorm[LF_AXIS_X] = 0x0100;                        //MiHa value unclear
+        LDI     R30, LOW(wLfRssiNorm)
+        LDI     R31, (wLfRssiNorm) >> 8
+        LDI     R17, 1
+        STD     Z+4, R16
+        STD     Z+5, R17
+//  281   wLfRssiNorm[LF_AXIS_Y] = 0x0100;
+        STD     Z+2, R16
+        STD     Z+3, R17
+//  282   wLfRssiNorm[LF_AXIS_Z] = 0x0100;
+        ST      Z, R16
+        STD     Z+1, R17
+//  283 
+//  284              
+//  285 #endif
+//  286 }
+        RET
+          CFI EndBlock cfiBlock3
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01cH
+__?EECR:
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01dH
+__?EEDR:
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01eH
+__?EEARL:
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01fH
+__?EEARH:
+
+        END
+// 
+//  12 bytes in segment ABSOLUTE
+// 572 bytes in segment CODE
+// 
+// 572 bytes of CODE memory
+//   0 bytes of DATA memory (+ 12 bytes shared)
+//
+//Errors: none
+//Warnings: none

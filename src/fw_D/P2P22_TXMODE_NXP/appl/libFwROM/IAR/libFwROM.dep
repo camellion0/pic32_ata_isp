@@ -1,0 +1,589 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+    <fileVersion>2</fileVersion>
+    <fileChecksum>863994560</fileChecksum>
+    <configuration>
+        <name>Debug</name>
+        <outputs>
+            <file>$PROJ_DIR$\..\..\..\firmware\aes\src\aes.h</file>
+            <file>$PROJ_DIR$\..\..\..\firmware\compiler\src\compiler.h</file>
+            <file>$PROJ_DIR$\..\..\..\firmware\eep\src\eep.h</file>
+            <file>$PROJ_DIR$\..\..\..\firmware\globals\src\globals.c</file>
+            <file>$PROJ_DIR$\..\..\..\firmware\globals\src\globals_asm.s90</file>
+            <file>$PROJ_DIR$\..\..\..\firmware\globals\src\globals_defs.h</file>
+            <file>$PROJ_DIR$\..\..\..\firmware\eep\src\eep.c</file>
+            <file>$PROJ_DIR$\..\..\..\firmware\iic\src\iic.c</file>
+            <file>$PROJ_DIR$\..\..\..\firmware\iic\src\iic.h</file>
+            <file>$PROJ_DIR$\..\..\..\firmware\iic\src\iic_asm.s90</file>
+            <file>$PROJ_DIR$\..\..\..\firmware\init\src\init.c</file>
+            <file>$PROJ_DIR$\..\..\..\firmware\globals\src\globals.h</file>
+            <file>$PROJ_DIR$\..\..\..\firmware\globals\src\globals_types.h</file>
+            <file>$PROJ_DIR$\..\..\..\firmware\aes\src\aes.c</file>
+            <file>$PROJ_DIR$\..\..\..\firmware\calib\src\calib.c</file>
+            <file>$PROJ_DIR$\..\..\..\firmware\calib\src\calib.h</file>
+            <file>$PROJ_DIR$\..\..\..\firmware\spi\src\spi.c</file>
+            <file>$PROJ_DIR$\..\..\..\firmware\spi\src\spi_asm.s90</file>
+            <file>$PROJ_DIR$\..\..\..\firmware\stdc\src\intrinsics.h</file>
+            <file>$PROJ_DIR$\..\..\..\firmware\lfrx\src\lfrx.c</file>
+            <file>$PROJ_DIR$\..\..\..\firmware\stdc\src\ioATA5700.h</file>
+            <file>$PROJ_DIR$\..\..\..\firmware\timer1\src\timer1_asm.s90</file>
+            <file>$PROJ_DIR$\..\..\..\firmware\timer2\src\timer2.c</file>
+            <file>$PROJ_DIR$\..\..\..\firmware\timer2\src\timer2.h</file>
+            <file>$PROJ_DIR$\..\..\..\firmware\spi\src\ata5831_command_set.c</file>
+            <file>$PROJ_DIR$\..\..\..\firmware\stdc\src\stdc.h</file>
+            <file>$PROJ_DIR$\..\..\..\firmware\rftx\src\rftx_ant.h</file>
+            <file>$PROJ_DIR$\..\..\..\firmware\spi\src\ata5831_command_set_asm.s90</file>
+            <file>$PROJ_DIR$\..\..\..\firmware\stdc\src\regs.inc</file>
+            <file>$PROJ_DIR$\..\..\..\firmware\timer2\src\timer2_asm.s90</file>
+            <file>$PROJ_DIR$\..\..\..\firmware\signatureTest\src\signatureTest_asm.s90</file>
+            <file>$PROJ_DIR$\..\..\..\firmware\lfrssi\src\lfrssi.h</file>
+            <file>$PROJ_DIR$\..\..\..\firmware\timer1\src\timer1.c</file>
+            <file>$PROJ_DIR$\..\..\..\firmware\timer1\src\timer1.h</file>
+            <file>$PROJ_DIR$\..\..\..\firmware\rftx\src\rftx_vco.c</file>
+            <file>$PROJ_DIR$\..\..\..\firmware\lfrx\src\lfrx.h</file>
+            <file>$PROJ_DIR$\..\..\..\firmware\rftx\src\rftx.h</file>
+            <file>$PROJ_DIR$\..\..\..\firmware\rftx\src\rftx_vco.h</file>
+            <file>$PROJ_DIR$\..\..\..\firmware\rfrcc\src\rfrcc.h</file>
+            <file>$PROJ_DIR$\..\..\..\firmware\rftx\src\rftx.c</file>
+            <file>$PROJ_DIR$\..\..\..\firmware\spi\src\ata5831_command_set.h</file>
+            <file>$PROJ_DIR$\..\..\..\firmware\spi\src\spi.h</file>
+            <file>$PROJ_DIR$\..\..\..\firmware\init\src\init.h</file>
+            <file>$PROJ_DIR$\..\..\..\firmware\rftx\src\rftx_ant.c</file>
+            <file>$PROJ_DIR$\..\..\..\firmware\stdc\src\iomacro.h</file>
+            <file>$PROJ_DIR$\..\..\..\firmware\lfrssi\src\lfrssi.c</file>
+            <file>$PROJ_DIR$\..\..\..\firmware\rfrcc\src\rfrcc.c</file>
+            <file>$PROJ_DIR$\..\..\..\firmware\rftx\src\rftx_defs.h</file>
+            <file>$PROJ_DIR$\..\..\..\firmware\stdc\src\ioATA5702M322.h</file>
+            <file>$PROJ_DIR$\Debug\Obj\rftx.pbi</file>
+            <file>$PROJ_DIR$\Debug\Obj\rftx.r90</file>
+            <file>$PROJ_DIR$\Debug\Obj\timer1.pbi</file>
+            <file>$PROJ_DIR$\Debug\Obj\lfrssi.r90</file>
+            <file>$PROJ_DIR$\..\..\..\firmware\timer5\src\timer5_asm.s90</file>
+            <file>$PROJ_DIR$\Debug\Obj\ata5831_command_set_asm.r90</file>
+            <file>$PROJ_DIR$\Debug\Obj\iic_asm.r90</file>
+            <file>$PROJ_DIR$\Debug\Obj\timer5_asm.r90</file>
+            <file>$PROJ_DIR$\Debug\Obj\globals_asm.r90</file>
+            <file>$PROJ_DIR$\Debug\Obj\rfrcc.r90</file>
+            <file>$PROJ_DIR$\Debug\Obj\timer1.r90</file>
+            <file>$PROJ_DIR$\Debug\Obj\timer4_asm.r90</file>
+            <file>$PROJ_DIR$\Debug\Obj\signatureTest_asm.r90</file>
+            <file>$PROJ_DIR$\Debug\Obj\timer4.pbi</file>
+            <file>$PROJ_DIR$\Debug\Obj\spi_asm.r90</file>
+            <file>$PROJ_DIR$\Debug\Obj\timer2.r90</file>
+            <file>$PROJ_DIR$\..\..\..\firmware\timer4\src\timer4.c</file>
+            <file>$PROJ_DIR$\Debug\Obj\aes.pbi</file>
+            <file>$PROJ_DIR$\Debug\Obj\lfrssi.pbi</file>
+            <file>$PROJ_DIR$\..\..\..\firmware\timer3\src\timer3.c</file>
+            <file>$PROJ_DIR$\..\..\..\firmware\timer3\src\timer3.h</file>
+            <file>$PROJ_DIR$\..\..\..\firmware\timer5\src\timer5.h</file>
+            <file>$PROJ_DIR$\Debug\Obj\eep.r90</file>
+            <file>$PROJ_DIR$\..\..\..\firmware\timer4\src\timer4_asm.s90</file>
+            <file>$PROJ_DIR$\..\..\..\firmware\timer5\src\timer5.c</file>
+            <file>$PROJ_DIR$\Debug\Obj\rftx_ant.r90</file>
+            <file>$PROJ_DIR$\Debug\Obj\rftx_vco.pbi</file>
+            <file>$PROJ_DIR$\Debug\Obj\rftx_vco.r90</file>
+            <file>$PROJ_DIR$\Debug\Exe\libFwROM.d90</file>
+            <file>$PROJ_DIR$\..\..\..\firmware\timer3\src\timer3_asm.s90</file>
+            <file>$PROJ_DIR$\..\..\..\firmware\timer4\src\timer4.h</file>
+            <file>$PROJ_DIR$\Debug\Obj\timer1_asm.r90</file>
+            <file>$PROJ_DIR$\Debug\Obj\eep.pbi</file>
+            <file>$PROJ_DIR$\Debug\Obj\ata5831_command_set.pbi</file>
+            <file>$PROJ_DIR$\Debug\Obj\globals.pbi</file>
+            <file>$PROJ_DIR$\Debug\Obj\timer2_asm.r90</file>
+            <file>$PROJ_DIR$\Debug\Obj\init.r90</file>
+            <file>$PROJ_DIR$\Debug\Obj\rfrcc.pbi</file>
+            <file>$PROJ_DIR$\Debug\Obj\globals.r90</file>
+            <file>$PROJ_DIR$\Debug\Obj\init.pbi</file>
+            <file>$PROJ_DIR$\Debug\Obj\timer3_asm.r90</file>
+            <file>$PROJ_DIR$\Debug\Obj\calib.r90</file>
+            <file>$PROJ_DIR$\Debug\Obj\timer4.r90</file>
+            <file>$PROJ_DIR$\Debug\Obj\aes.r90</file>
+            <file>$PROJ_DIR$\Debug\Obj\ata5831_command_set.r90</file>
+            <file>$PROJ_DIR$\Debug\Obj\timer2.pbi</file>
+            <file>$PROJ_DIR$\Debug\Obj\spi.pbi</file>
+            <file>$PROJ_DIR$\Debug\Obj\rftx_ant.pbi</file>
+            <file>$PROJ_DIR$\Debug\Obj\lfrx.pbi</file>
+            <file>$PROJ_DIR$\Debug\Obj\spi.r90</file>
+            <file>$PROJ_DIR$\Debug\Obj\timer3.r90</file>
+            <file>$PROJ_DIR$\Debug\Obj\timer5.r90</file>
+            <file>$PROJ_DIR$\Debug\Obj\timer5.pbi</file>
+            <file>$PROJ_DIR$\Debug\Obj\calib.pbi</file>
+            <file>$PROJ_DIR$\Debug\Obj\lfrx.r90</file>
+            <file>$PROJ_DIR$\Debug\Obj\iic.pbi</file>
+            <file>$PROJ_DIR$\Debug\Obj\timer3.pbi</file>
+            <file>$PROJ_DIR$\Debug\Obj\iic.r90</file>
+        </outputs>
+        <file>
+            <name>[ROOT_NODE]</name>
+            <outputs>
+                <tool>
+                    <name>XLINK</name>
+                    <file> 77</file>
+                </tool>
+            </outputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\firmware\globals\src\globals.c</name>
+            <outputs>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 83</file>
+                </tool>
+                <tool>
+                    <name>ICCAVR</name>
+                    <file> 87</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 25 11 12 1 2 48 33 15 5 18 44 47 23</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\firmware\globals\src\globals_asm.s90</name>
+            <outputs>
+                <tool>
+                    <name>AAVR</name>
+                    <file> 57</file>
+                </tool>
+            </outputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\firmware\eep\src\eep.c</name>
+            <outputs>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 81</file>
+                </tool>
+                <tool>
+                    <name>ICCAVR</name>
+                    <file> 71</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 44 11 18 25 1 48 5 2 12</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\firmware\iic\src\iic.c</name>
+            <outputs>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 104</file>
+                </tool>
+                <tool>
+                    <name>ICCAVR</name>
+                    <file> 106</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 48 5 25 1 11 18 44 8 12</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\firmware\iic\src\iic_asm.s90</name>
+            <outputs>
+                <tool>
+                    <name>AAVR</name>
+                    <file> 55</file>
+                </tool>
+            </outputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\firmware\init\src\init.c</name>
+            <outputs>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 88</file>
+                </tool>
+                <tool>
+                    <name>ICCAVR</name>
+                    <file> 85</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 48 1 5 25 18 44 42</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\firmware\aes\src\aes.c</name>
+            <outputs>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 66</file>
+                </tool>
+                <tool>
+                    <name>ICCAVR</name>
+                    <file> 92</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 44 11 18 12 25 2 1 48 0 5</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\firmware\calib\src\calib.c</name>
+            <outputs>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 102</file>
+                </tool>
+                <tool>
+                    <name>ICCAVR</name>
+                    <file> 90</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 1 69 23 2 47 48 12 25 11 79 18 44 15 5</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\firmware\spi\src\spi.c</name>
+            <outputs>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 95</file>
+                </tool>
+                <tool>
+                    <name>ICCAVR</name>
+                    <file> 98</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 18 5 25 44 11 1 48 41 12</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\firmware\spi\src\spi_asm.s90</name>
+            <outputs>
+                <tool>
+                    <name>AAVR</name>
+                    <file> 63</file>
+                </tool>
+            </outputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\firmware\lfrx\src\lfrx.c</name>
+            <outputs>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 97</file>
+                </tool>
+                <tool>
+                    <name>ICCAVR</name>
+                    <file> 103</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 11 44 18 12 25 2 1 48 35 5</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\firmware\timer1\src\timer1_asm.s90</name>
+            <outputs>
+                <tool>
+                    <name>AAVR</name>
+                    <file> 80</file>
+                </tool>
+            </outputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\firmware\timer2\src\timer2.c</name>
+            <outputs>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 94</file>
+                </tool>
+                <tool>
+                    <name>ICCAVR</name>
+                    <file> 64</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 48 12 5 25 1 18 44 23</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\firmware\spi\src\ata5831_command_set.c</name>
+            <outputs>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 82</file>
+                </tool>
+                <tool>
+                    <name>ICCAVR</name>
+                    <file> 93</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 11 1 5 33 48 12 41 25 18 44 40</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\firmware\spi\src\ata5831_command_set_asm.s90</name>
+            <outputs>
+                <tool>
+                    <name>AAVR</name>
+                    <file> 54</file>
+                </tool>
+            </outputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\firmware\timer2\src\timer2_asm.s90</name>
+            <outputs>
+                <tool>
+                    <name>AAVR</name>
+                    <file> 84</file>
+                </tool>
+            </outputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\firmware\signatureTest\src\signatureTest_asm.s90</name>
+            <outputs>
+                <tool>
+                    <name>AAVR</name>
+                    <file> 61</file>
+                </tool>
+            </outputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\firmware\timer1\src\timer1.c</name>
+            <outputs>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 51</file>
+                </tool>
+                <tool>
+                    <name>ICCAVR</name>
+                    <file> 59</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 18 12 44 5 25 1 48 33</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\firmware\rftx\src\rftx_vco.c</name>
+            <outputs>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 75</file>
+                </tool>
+                <tool>
+                    <name>ICCAVR</name>
+                    <file> 76</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 18 23 25 36 11 44 5 37 2 69 1 48 47 12</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\firmware\rftx\src\rftx.c</name>
+            <outputs>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 49</file>
+                </tool>
+                <tool>
+                    <name>ICCAVR</name>
+                    <file> 50</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 47 5 2 11 37 69 48 25 36 26 23 1 12 18 44</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\firmware\rftx\src\rftx_ant.c</name>
+            <outputs>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 96</file>
+                </tool>
+                <tool>
+                    <name>ICCAVR</name>
+                    <file> 74</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 44 23 25 36 11 18 5 26 2 69 1 48 47 12</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\firmware\lfrssi\src\lfrssi.c</name>
+            <outputs>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 67</file>
+                </tool>
+                <tool>
+                    <name>ICCAVR</name>
+                    <file> 52</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 2 18 12 25 11 1 48 31 44 5</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\firmware\rfrcc\src\rfrcc.c</name>
+            <outputs>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 86</file>
+                </tool>
+                <tool>
+                    <name>ICCAVR</name>
+                    <file> 58</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 25 48 2 1 12 11 0 18 44 38 5</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\firmware\timer5\src\timer5_asm.s90</name>
+            <outputs>
+                <tool>
+                    <name>AAVR</name>
+                    <file> 56</file>
+                </tool>
+            </outputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\firmware\timer4\src\timer4.c</name>
+            <outputs>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 62</file>
+                </tool>
+                <tool>
+                    <name>ICCAVR</name>
+                    <file> 91</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 18 44 12 5 25 1 48 79</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\firmware\timer3\src\timer3.c</name>
+            <outputs>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 105</file>
+                </tool>
+                <tool>
+                    <name>ICCAVR</name>
+                    <file> 99</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 18 44 12 5 25 1 48 69</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\firmware\timer4\src\timer4_asm.s90</name>
+            <outputs>
+                <tool>
+                    <name>AAVR</name>
+                    <file> 60</file>
+                </tool>
+            </outputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\firmware\timer5\src\timer5.c</name>
+            <outputs>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 101</file>
+                </tool>
+                <tool>
+                    <name>ICCAVR</name>
+                    <file> 100</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 18 44 12 5 25 1 48 70</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\firmware\timer3\src\timer3_asm.s90</name>
+            <outputs>
+                <tool>
+                    <name>AAVR</name>
+                    <file> 89</file>
+                </tool>
+            </outputs>
+        </file>
+        <forcedrebuild>
+            <name>[MULTI_TOOL]</name>
+            <tool>XLINK</tool>
+        </forcedrebuild>
+    </configuration>
+    <configuration>
+        <name>Release</name>
+        <outputs />
+        <forcedrebuild>
+            <name>[MULTI_TOOL]</name>
+            <tool>XLINK</tool>
+        </forcedrebuild>
+    </configuration>
+</project>

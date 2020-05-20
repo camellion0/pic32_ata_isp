@@ -1,0 +1,342 @@
+###############################################################################
+#
+# IAR C/C++ Compiler V7.10.1.1197 for Atmel AVR           13/May/2020  17:03:24
+# Copyright 1996-2017 IAR Systems AB.
+# Network license: dvriar01.mchp-main.com (STD)
+#
+#    Source file  =  
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\firmware\system\src\system_flash.c
+#    Command line =  
+#        -f C:\Users\C41045\AppData\Local\Temp\EW200F.tmp
+#        (C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\firmware\system\src\system_flash.c
+#        -v3 --enhanced_core -ms -o
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\Obj
+#        -lCN
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\List
+#        -lA
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\List
+#        --no_cse --no_inline --no_code_motion --no_cross_call --no_clustering
+#        --no_tbaa --debug --64k_flash -DENABLE_BIT_DEFINITIONS -e
+#        --eeprom_size 2304 --clib -Ohz)
+#    Locale       =  English_USA.1252
+#    List file    =  
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\List\system_flash.lst
+#    Object file  =  
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\Obj\system_flash.r90
+#
+###############################################################################
+
+C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\firmware\system\src\system_flash.c
+      1          //lint -e9059
+      2          /******************************************************************************
+      3            Use of this software is subject to Microchip's Software License Agreement.
+      4          --------------------------------------------------------------------------------
+      5            $URL: http://svnservulm.corp.atmel.com/svn/CDB/Apps/SW_Lib/Car_Access/CARS_GEN2/ATAB5702A/Branches/P2P22_TXMODE_NXP/firmware/system/src/system_flash.c $
+      6            $LastChangedRevision: 458065 $
+      7            $LastChangedDate: 2017-05-02 04:55:50 -0600 (Tue, 02 May 2017) $
+      8            $LastChangedBy: krishna.balan $
+      9          -------------------------------------------------------------------------------
+     10            Project:      ATA5700
+     11            Target MCU:   ATA5700
+     12            Compiler:     IAR C/C++ Compiler for AVR 6.30.1
+     13          -------------------------------------------------------------------------------
+     14          
+     15          ******************************************************************************
+     16          * Copyright 2017, Microchip Technology Incorporated and its subsidiaries.     *
+     17          *                                                                             *
+     18          * This software is owned by the Microchip Technology Incorporated.            *
+     19          * Microchip hereby grants to licensee a personal                              *
+     20          * non-exclusive, non-transferable license to copy, use, modify, create        *
+     21          * derivative works of, and compile the Microchip Source Code and derivative   *
+     22          * works for the sole and exclusive purpose of creating custom software in     *
+     23          * support of licensee product to be used only in conjunction with a Microchip *
+     24          * integrated circuit as specified in the applicable agreement. Any            *        
+     25          * reproduction, modification, translation, compilation, or representation of  *
+     26          * this software except as specified above is prohibited without the express   *
+     27          * written permission of Microchip.                                            *
+     28          *                                                                             *
+     29          * Disclaimer: MICROCHIP MAKES NO WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,    *
+     30          * WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED    *
+     31          * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.         *
+     32          * Microchip reserves the right to make changes without further notice to the  *
+     33          * materials described herein. Microchip does not assume any liability arising *
+     34          * out of the application or use of any product or circuit described herein.   *
+     35          * Microchip does not authorize its products for use as critical components in *
+     36          * life-support systems where a malfunction or failure may reasonably be       *
+     37          * expected to result in significant injury to the user. The inclusion of      *
+     38          * Microchip products in a life-support systems application implies that the   *
+     39          * manufacturer assumes all risk of such use and in doing so indemnifies       *
+     40          * Microchip against all charges.                                              *
+     41          *                                                                             *
+     42          * Use may be limited by and subject to the applicable Microchip software      *
+     43          * license agreement.                                                          *
+     44          ******************************************************************************/
+     45          /** \file system.c
+     46          */
+     47          
+     48          //lint -restore
+     49          
+     50          /*---------------------------------------------------------------------------*/
+     51          /*  INCLUDES                                                                 */
+     52          /*---------------------------------------------------------------------------*/
+     53          #include "system_flash.h"
+
+   \                                 In  segment ABSOLUTE, at 0xcc
+   \   union <unnamed> volatile __io _A_SUPCR
+   \                     _A_SUPCR:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x1e6
+   \   union <unnamed> volatile __ext_io _A_VMCR
+   \                     _A_VMCR:
+   \   00000000                      DS8 1
+     54          #include "../../globals/src/globals.h"
+     55          #include "../../timer2/src/timer2.h"
+     56          #include "../../spi/src/ata5700_command_set_flash.h"
+     57          #include "../../init/src/init_flash.h"
+     58          
+     59          /*---------------------------------------------------------------------------*/
+     60          /*  DEFINES                                                                  */
+     61          /*---------------------------------------------------------------------------*/
+     62          /*---------------------------------------------------------------------------*/
+     63          /*  Modul Globals                                                            */
+     64          /*---------------------------------------------------------------------------*/
+     65          /*---------------------------------------------------------------------------*/
+     66          /*  IMPLEMENTATION                                                           */
+     67          /*---------------------------------------------------------------------------*/
+     68          
+     69          /*----------------------------------------------------------------------------- */
+     70          /** \brief <b>ATA_systemErrorLoop_flash_C</b>
+     71          */
+     72          /*----------------------------------------------------------------------------- */
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+     73          VOIDFUNC ATA_systemErrorLoop_flash_C(void)
+   \                     ATA_systemErrorLoop_flash_C:
+     74          {
+     75              ATA_globalsWdtDisable_C();
+   \   00000000   ........           CALL    ATA_globalsWdtDisable_C
+     76              for(;;)
+   \                     ??ATA_systemErrorLoop_flash_C_0:
+   \   00000004   CFFF               RJMP    ??ATA_systemErrorLoop_flash_C_0
+     77              {}
+     78          }
+     79          
+     80          /*----------------------------------------------------------------------------- */
+     81          /** \brief <b>ATA_systemLowBatt_ISR_flash_C</b>
+     82              is used as interrupt handler for voltage monitor. If interrupt occurs the
+     83              LOWBATT event in events_system is set and if configured the event pin is
+     84              set as configured. To avoid multiple signalizations the interrupt is disabled.
+     85          
+     86              \return none
+     87          
+     88              \image html ATA_systemLowBatt_ISR_flash_C.png
+     89              \image rtf ATA_systemLowBatt_ISR_flash_C.png
+     90              \n
+     91          */
+     92          /*----------------------------------------------------------------------------- */
+     93          #pragma vector=VMON_vect
+
+   \                                 In  segment CODE, align 2, keep-with-next
+     94          __interrupt void ATA_systemLowBatt_ISR_flash_C(void)
+   \                     ATA_systemLowBatt_ISR_flash_C:
+     95          {   /*lint !e957 GeWi (30jun11) ISR needs no prototype therefore Note 957 is disabled */
+   \   00000000   938A               ST      -Y, R24
+   \   00000002   93FA               ST      -Y, R31
+   \   00000004   93EA               ST      -Y, R30
+   \   00000006   923A               ST      -Y, R3
+   \   00000008   922A               ST      -Y, R2
+   \   0000000A   921A               ST      -Y, R1
+   \   0000000C   920A               ST      -Y, R0
+   \   0000000E   937A               ST      -Y, R23
+   \   00000010   936A               ST      -Y, R22
+   \   00000012   935A               ST      -Y, R21
+   \   00000014   934A               ST      -Y, R20
+   \   00000016   933A               ST      -Y, R19
+   \   00000018   932A               ST      -Y, R18
+   \   0000001A   931A               ST      -Y, R17
+   \   0000001C   930A               ST      -Y, R16
+   \   0000001E   B78F               IN      R24, 0x3F
+     96              VMCR &= (uint8_t)~BM_VMIM;
+   \   00000020   910001E6           LDS     R16, 486
+   \   00000024   7E0F               ANDI    R16, 0xEF
+   \   00000026   930001E6           STS     486, R16
+     97              g_sAta5700_flash.events_system |= BM_ATA5700_EVENTS_SYSTEM_LOWBATT;
+   \   0000002A   ....               LDI     R30, LOW(g_sAta5700_flash)
+   \   0000002C   ....               LDI     R31, (g_sAta5700_flash) >> 8
+   \   0000002E   8100               LD      R16, Z
+   \   00000030   6100               ORI     R16, 0x10
+   \   00000032   8300               ST      Z, R16
+     98              
+     99              if (g_sEventHandling_flash.bSystem & BIT_MASK_4) {
+   \   00000034   9100....           LDS     R16, (g_sEventHandling_flash + 1)
+   \   00000038   FF04               SBRS    R16, 4
+   \   0000003A   C002               RJMP    ??ATA_systemLowBatt_ISR_flash_C_0
+    100                  ATA_systemSetEventPin_flash_ASM();
+   \   0000003C   ........           CALL    ATA_systemSetEventPin_flash_ASM
+    101              }
+    102          }
+   \                     ??ATA_systemLowBatt_ISR_flash_C_0:
+   \   00000040                      REQUIRE ?Subroutine0
+   \   00000040                      REQUIRE _A_VMCR
+   \   00000040                      ;               // Fall through to label ?Subroutine0
+
+   \                                 In  segment CODE, align 2, keep-with-next
+   \                     ?Subroutine0:
+   \   00000000   BF8F               OUT     0x3F, R24
+   \   00000002   9109               LD      R16, Y+
+   \   00000004   9119               LD      R17, Y+
+   \   00000006   9129               LD      R18, Y+
+   \   00000008   9139               LD      R19, Y+
+   \   0000000A   9149               LD      R20, Y+
+   \   0000000C   9159               LD      R21, Y+
+   \   0000000E   9169               LD      R22, Y+
+   \   00000010   9179               LD      R23, Y+
+   \   00000012   9009               LD      R0, Y+
+   \   00000014   9019               LD      R1, Y+
+   \   00000016   9029               LD      R2, Y+
+   \   00000018   9039               LD      R3, Y+
+   \   0000001A   91E9               LD      R30, Y+
+   \   0000001C   91F9               LD      R31, Y+
+   \   0000001E   9189               LD      R24, Y+
+   \   00000020   9518               RETI
+    103          
+    104          /*----------------------------------------------------------------------------- */
+    105          /** \brief <b>ATA_systemAvccLow_ISR_flash_C</b>
+    106              interrupt handler for AVCCLOW. If interrupt occurs the AVCCLOW event in
+    107              events_system is set and if configured the event pin is set as configured.
+    108              To avoid multiple signalizations the interrupt is disabled.
+    109          
+    110              \return none
+    111          
+    112              \image html ATA_systemAvccLow_ISR_flash_C.png
+    113              \image rtf ATA_systemAvccLow_ISR_flash_C.png
+    114              \n
+    115          */
+    116          /*----------------------------------------------------------------------------- */
+    117          #pragma vector=AVCCL_vect
+
+   \                                 In  segment CODE, align 2, keep-with-next
+    118          __interrupt void ATA_systemAvccLow_ISR_flash_C(void)
+   \                     ATA_systemAvccLow_ISR_flash_C:
+    119          {   /*lint !e957 GeWi (30jun11) ISR needs no prototype therefore Note 957 is disabled */
+   \   00000000   938A               ST      -Y, R24
+   \   00000002   93FA               ST      -Y, R31
+   \   00000004   93EA               ST      -Y, R30
+   \   00000006   923A               ST      -Y, R3
+   \   00000008   922A               ST      -Y, R2
+   \   0000000A   921A               ST      -Y, R1
+   \   0000000C   920A               ST      -Y, R0
+   \   0000000E   937A               ST      -Y, R23
+   \   00000010   936A               ST      -Y, R22
+   \   00000012   935A               ST      -Y, R21
+   \   00000014   934A               ST      -Y, R20
+   \   00000016   933A               ST      -Y, R19
+   \   00000018   932A               ST      -Y, R18
+   \   0000001A   931A               ST      -Y, R17
+   \   0000001C   930A               ST      -Y, R16
+   \   0000001E   B78F               IN      R24, 0x3F
+    120              SUPCR &= (uint8_t)~BM_AVCCLM;
+   \   00000020   910000CC           LDS     R16, 204
+   \   00000024   7F0D               ANDI    R16, 0xFD
+   \   00000026   930000CC           STS     204, R16
+    121              g_sAta5700_flash.events_system |= BM_ATA5700_EVENTS_SYSTEM_AVCCLOW;
+   \   0000002A   ....               LDI     R30, LOW(g_sAta5700_flash)
+   \   0000002C   ....               LDI     R31, (g_sAta5700_flash) >> 8
+   \   0000002E   8100               LD      R16, Z
+   \   00000030   6200               ORI     R16, 0x20
+   \   00000032   8300               ST      Z, R16
+    122              
+    123              /*  */
+    124              if (g_sEventHandling_flash.bSystem & BIT_MASK_5) {
+   \   00000034   9100....           LDS     R16, (g_sEventHandling_flash + 1)
+   \   00000038   FF05               SBRS    R16, 5
+   \   0000003A   C002               RJMP    ??ATA_systemAvccLow_ISR_flash_C_0
+    125                  ATA_systemSetEventPin_flash_ASM();
+   \   0000003C   ........           CALL    ATA_systemSetEventPin_flash_ASM
+    126              }
+    127          }
+   \                     ??ATA_systemAvccLow_ISR_flash_C_0:
+   \   00000040   ....               RJMP    ?Subroutine0
+   \   00000042                      REQUIRE _A_SUPCR
+    128          
+    129          /*----------------------------------------------------------------------------- */
+    130          /** \brief <b>ATA_systemAvccReset_ISR_flash_C</b>
+    131              interrupt handler for AVCCRESET. There is no signalization for this interrupt
+    132              source available in the event bytes. To avoid multiple signalization the
+    133              interrupt is disabled.
+    134          
+    135              \return none
+    136          */
+    137          /*----------------------------------------------------------------------------- */
+    138          #pragma vector=AVCCR_vect
+
+   \                                 In  segment CODE, align 2, keep-with-next
+    139          __interrupt void ATA_systemAvccReset_ISR_flash_C(void)
+   \                     ATA_systemAvccReset_ISR_flash_C:
+    140          {   /*lint !e957 GeWi (30oct11) ISR needs no prototype therefore Note 957 is disabled */
+   \   00000000   931A               ST      -Y, R17
+   \   00000002   930A               ST      -Y, R16
+   \   00000004   B71F               IN      R17, 0x3F
+    141              SUPCR &= (uint8_t)~BM_AVCCRM;
+   \   00000006   910000CC           LDS     R16, 204
+   \   0000000A   7F0E               ANDI    R16, 0xFE
+   \   0000000C   930000CC           STS     204, R16
+    142          }
+   \   00000010   BF1F               OUT     0x3F, R17
+   \   00000012   9109               LD      R16, Y+
+   \   00000014   9119               LD      R17, Y+
+   \   00000016   9518               RETI
+   \   00000018                      REQUIRE _A_SUPCR
+
+   \                                 In  segment INTVEC, offset 0x14, root
+   \                     `??ATA_systemLowBatt_ISR_flash_C::??INTVEC 20`:
+   \   00000014   ........           JMP     ATA_systemLowBatt_ISR_flash_C
+
+   \                                 In  segment INTVEC, offset 0x18, root
+   \                     `??ATA_systemAvccReset_ISR_flash_C::??INTVEC 24`:
+   \   00000018   ........           JMP     ATA_systemAvccReset_ISR_flash_C
+
+   \                                 In  segment INTVEC, offset 0x1c, root
+   \                     `??ATA_systemAvccLow_ISR_flash_C::??INTVEC 28`:
+   \   0000001C   ........           JMP     ATA_systemAvccLow_ISR_flash_C
+    143          
+
+   Maximum stack usage in bytes:
+
+   CSTACK RSTACK Function
+   ------ ------ --------
+     15      2   ATA_systemAvccLow_ISR_flash_C
+       15      2   -> ATA_systemSetEventPin_flash_ASM
+      2      2   ATA_systemAvccReset_ISR_flash_C
+      0      2   ATA_systemErrorLoop_flash_C
+        0      2   -> ATA_globalsWdtDisable_C
+     15      2   ATA_systemLowBatt_ISR_flash_C
+       15      2   -> ATA_systemSetEventPin_flash_ASM
+
+
+   Segment part sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+      34  ?Subroutine0
+      66  ATA_systemAvccLow_ISR_flash_C
+       4  ATA_systemAvccLow_ISR_flash_C::??INTVEC 28
+      24  ATA_systemAvccReset_ISR_flash_C
+       4  ATA_systemAvccReset_ISR_flash_C::??INTVEC 24
+       6  ATA_systemErrorLoop_flash_C
+      64  ATA_systemLowBatt_ISR_flash_C
+       4  ATA_systemLowBatt_ISR_flash_C::??INTVEC 20
+       1  _A_SUPCR
+       1  _A_VMCR
+
+ 
+   2 bytes in segment ABSOLUTE
+ 194 bytes in segment CODE
+  12 bytes in segment INTVEC
+ 
+ 194 bytes of CODE memory (+ 12 bytes shared)
+   0 bytes of DATA memory (+  2 bytes shared)
+
+Errors: none
+Warnings: none

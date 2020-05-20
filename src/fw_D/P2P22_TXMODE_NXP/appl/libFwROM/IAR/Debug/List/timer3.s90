@@ -1,0 +1,530 @@
+///////////////////////////////////////////////////////////////////////////////
+//
+// IAR C/C++ Compiler V6.70.1.929 for Atmel AVR           05/Apr/2016  13:30:44
+// Copyright 1996-2015 IAR Systems AB.
+// Network license: DVRIAR01.corpp.atmel.com (STD)
+//
+//    Source file  =  
+//        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\firmware\timer3\src\timer3.c
+//    Command line =  
+//        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\firmware\timer3\src\timer3.c
+//        -v3 --enhanced_core -ms -o
+//        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\Obj
+//        -lC
+//        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\List
+//        -lA
+//        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\List
+//        --initializers_in_flash --no_cse --no_inline --no_code_motion
+//        --no_cross_call --no_clustering --no_tbaa --debug --64k_flash
+//        -DENABLE_BIT_DEFINITIONS -e -I "C:\Program Files (x86)\IAR
+//        Systems\Embedded Workbench 6.0\avr\inc\" --eeprom_size 1152 --clib
+//        -Ohz
+//    List file    =  
+//        C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\List\timer3.s90
+//
+///////////////////////////////////////////////////////////////////////////////
+
+        NAME timer3
+
+        RTMODEL "__64bit_doubles", "disabled"
+        RTMODEL "__SystemLibrary", "CLib"
+        RTMODEL "__cpu", "3"
+        RTMODEL "__enhanced_core", "enabled"
+        RTMODEL "__has_elpm", "false"
+        RTMODEL "__memory_model", "2"
+        RTMODEL "__rt_version", "3"
+
+        RSEG CSTACK:DATA:NOROOT(0)
+        RSEG RSTACK:DATA:NOROOT(0)
+
+        PUBLIC ATA_timer3Close_C
+        PUBLIC ATA_timer3Init_C
+        PUBLIC ATA_timer3Open_C
+        PUBWEAK _A_PRR1
+        PUBWEAK _A_T3CORH
+        PUBWEAK _A_T3CORL
+        PUBWEAK _A_T3CR
+        PUBWEAK _A_T3IFR
+        PUBWEAK _A_T3IMR
+        PUBWEAK _A_T3MRA
+        PUBWEAK _A_T3MRB
+        PUBWEAK __?EEARH
+        PUBWEAK __?EEARL
+        PUBWEAK __?EECR
+        PUBWEAK __?EEDR
+        PUBLIC g_sTimer3
+        
+          CFI Names cfiNames0
+          CFI StackFrame CFA_Y Y DATA
+          CFI StackFrame CFA_SP SP DATA
+          CFI VirtualResource ?RetPad:1, ?RetHigh:8, ?RetLow:8, ?Ret:17
+          CFI Resource R0:8, R1:8, R2:8, R3:8, R4:8, R5:8, R6:8, R7:8, R8:8, R9:8
+          CFI Resource R10:8, R11:8, R12:8, R13:8, R14:8, R15:8, R16:8, R17:8
+          CFI Resource R18:8, R19:8, R20:8, R21:8, R22:8, R23:8, R24:8, R25:8
+          CFI Resource R26:8, R27:8, R28:8, R29:8, R30:8, R31:8
+          CFI Resource ?RetHighByteMask:8, SP:16, SPH:8, SPL:8, Y:16
+          CFI ResourceParts ?Ret ?RetHigh, ?RetLow, ?RetPad
+          CFI ResourceParts SP SPH, SPL
+          CFI ResourceParts Y R29, R28
+          CFI EndNames cfiNames0
+        
+          CFI Common cfiCommon0 Using cfiNames0
+          CFI CodeAlign 1
+          CFI DataAlign 1
+          CFI ReturnAddress ?Ret CODE
+          CFI CFA_Y Y+0
+          CFI CFA_SP SP+2
+          CFI ?RetPad 0
+          CFI ?RetHigh and(load(1, DATA, sub(CFA_SP, 1)), ?RetHighByteMask)
+          CFI ?RetLow Frame(CFA_SP, 0)
+          CFI ?Ret Concat
+          CFI R0 Undefined
+          CFI R1 Undefined
+          CFI R2 Undefined
+          CFI R3 Undefined
+          CFI R4 SameValue
+          CFI R5 SameValue
+          CFI R6 SameValue
+          CFI R7 SameValue
+          CFI R8 SameValue
+          CFI R9 SameValue
+          CFI R10 SameValue
+          CFI R11 SameValue
+          CFI R12 SameValue
+          CFI R13 SameValue
+          CFI R14 SameValue
+          CFI R15 SameValue
+          CFI R16 Undefined
+          CFI R17 Undefined
+          CFI R18 Undefined
+          CFI R19 Undefined
+          CFI R20 Undefined
+          CFI R21 Undefined
+          CFI R22 Undefined
+          CFI R23 Undefined
+          CFI R24 SameValue
+          CFI R25 SameValue
+          CFI R26 SameValue
+          CFI R27 SameValue
+          CFI R28 Undefined
+          CFI R29 Undefined
+          CFI R30 Undefined
+          CFI R31 Undefined
+          CFI ?RetHighByteMask SameValue
+          CFI SPH Undefined
+          CFI SPL Undefined
+          CFI EndCommon cfiCommon0
+        
+// C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\firmware\timer3\src\timer3.c
+//    1 //lint -e9059
+//    2 /* *C**************************************************************************
+//    3   Use of this software is subject to Atmel's Software License Agreement.
+//    4 -------------------------------------------------------------------------------
+//    5   $URL: http://svnservulm.corp.atmel.com/svn/CDB/Apps/SW_Lib/Car_Access/CARS_GEN2/ATAB5702A/Branches/P2_Gen2_Merge/firmware/timer3/src/timer3.c $
+//    6   $LastChangedRevision: 328482 $
+//    7   $LastChangedDate: 2015-07-22 13:17:23 -0600 (Wed, 22 Jul 2015) $
+//    8   $LastChangedBy: grueter $
+//    9 -------------------------------------------------------------------------------
+//   10   Project:      ATA5700
+//   11   Target MCU:   ATA5700
+//   12   Compiler:     IAR C/C++ Compiler for AVR 6.30.1
+//   13 -------------------------------------------------------------------------------
+//   14   
+//   15 ******************************************************************************
+//   16 * Copyright 2011, Atmel Automotive GmbH                                       *
+//   17 *                                                                             *
+//   18 * This software is owned by the Atmel Automotive GmbH                         *
+//   19 * and is protected by and subject to worldwide patent protection.             *
+//   20 * Atmel hereby grants to licensee a personal,                                 *
+//   21 * non-exclusive, non-transferable license to copy, use, modify, create        *
+//   22 * derivative works of, and compile the Atmel Source Code and derivative       *
+//   23 * works for the sole purpose of creating custom software in support of        *
+//   24 * licensee product to be used only in conjunction with a Atmel integrated     *
+//   25 * circuit as specified in the applicable agreement. Any reproduction,         *
+//   26 * modification, translation, compilation, or representation of this           *
+//   27 * software except as specified above is prohibited without the express        *
+//   28 * written permission of Atmel.                                                *
+//   29 *                                                                             *
+//   30 * Disclaimer: ATMEL MAKES NO WARRANTY OF ANY KIND,EXPRESS OR IMPLIED,         *
+//   31 * WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED    *
+//   32 * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.         *
+//   33 * Atmel reserves the right to make changes without further notice to the      *
+//   34 * materials described herein. Atmel does not assume any liability arising     *
+//   35 * out of the application or use of any product or circuit described herein.   *
+//   36 * Atmel does not authorize its products for use as critical components in     *
+//   37 * life-support systems where a malfunction or failure may reasonably be       *
+//   38 * expected to result in significant injury to the user. The inclusion of      *
+//   39 * Atmel products in a life-support systems application implies that the       *
+//   40 * manufacturer assumes all risk of such use and in doing so indemnifies       *
+//   41 * Atmel against all charges.                                                  *
+//   42 *                                                                             *
+//   43 * Use may be limited by and subject to the applicable Atmel software          *
+//   44 * license agreement.                                                          *
+//   45 ******************************************************************************/
+//   46 /** \file timer3.c
+//   47 */
+//   48 //lint -restore
+//   49 
+//   50 /*===========================================================================*/
+//   51 /*  INCLUDES                                                                 */
+//   52 /*===========================================================================*/
+//   53 #include "timer3.h"
+
+        ASEGN ABSOLUTE:DATA:NOROOT,021H
+// union <unnamed> volatile __io _A_PRR1
+_A_PRR1:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,033H
+// union <unnamed> volatile __io _A_T3CR
+_A_T3CR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,079H
+// union <unnamed> volatile __io _A_T3CORL
+_A_T3CORL:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,07aH
+// union <unnamed> volatile __io _A_T3CORH
+_A_T3CORH:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,07dH
+// union <unnamed> volatile __io _A_T3MRA
+_A_T3MRA:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,07eH
+// union <unnamed> volatile __io _A_T3MRB
+_A_T3MRB:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,07fH
+// union <unnamed> volatile __io _A_T3IMR
+_A_T3IMR:
+        DS8 1
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01e1H
+// union <unnamed> volatile __ext_io _A_T3IFR
+_A_T3IFR:
+        DS8 1
+//   54 
+//   55 /*===========================================================================*/
+//   56 /*  DEFINES                                                                  */
+//   57 /*===========================================================================*/
+//   58 
+//   59 
+//   60 /*===========================================================================*/
+//   61 /*  Modul Globals                                                            */
+//   62 /*===========================================================================*/
+//   63 /** \brief <b>g_sTimer3</b>
+//   64     contains the configuration settings for Timer3.
+//   65 */
+//   66 #pragma location = ".tmr3ram"
+
+        RSEG `.tmr3ram`:DATA:NOROOT(0)
+//   67 __no_init sTmr3Config g_sTimer3;
+g_sTimer3:
+        DS8 7
+//   68 
+//   69 /*===========================================================================*/
+//   70 /*  IMPLEMENTATION                                                           */
+//   71 /*===========================================================================*/
+//   72 /*---------------------------------------------------------------------------*/
+//   73 /** \brief <b>ATA_timer3Init_C</b>
+//   74     shall initialize Timer3 data structure sTmr3Config.
+//   75 
+//   76     Variable Usage:
+//   77     \li [out] ::g_sTimer3  Global Timer 3 component data
+//   78 
+//   79     \image html ATA_timer3Init_C.png
+//   80 
+//   81     \internal
+//   82     \li 010:   Set all ::g_sTimer3 attributes to 0.
+//   83 
+//   84     \Derived{Yes}
+//   85 
+//   86     \Rationale{Since the hardware SRAM initialization is turned off, all SRAM
+//   87                variables need initialization prior to its usage}
+//   88 
+//   89     \Traceability   N/A
+//   90     \endinternal
+//   91 \n
+//   92 */
+//   93 /*---------------------------------------------------------------------------*/
+
+        RSEG CODE:CODE:ROOT(1)
+//   94 VOIDFUNC ATA_timer3Init_C(void)
+ATA_timer3Init_C:
+          CFI Block cfiBlock0 Using cfiCommon0
+          CFI Function ATA_timer3Init_C
+          CFI NoCalls
+//   95 {
+//   96     /* LLR-Ref: 010 */
+//   97     g_sTimer3.bStatus   = 0x00U;
+        LDI     R16, 0
+        STS     g_sTimer3, R16
+//   98     g_sTimer3.fpCompIsr = (timerIRQHandler)0x0000U;
+        STS     (g_sTimer3 + 1), R16
+        STS     (g_sTimer3 + 2), R16
+//   99     g_sTimer3.fpOvfIsr  = (timerIRQHandler)0x0000U;
+        STS     (g_sTimer3 + 3), R16
+        STS     (g_sTimer3 + 4), R16
+//  100     g_sTimer3.fpCapIsr  = (timerIRQHandler)0x0000U;
+        STS     (g_sTimer3 + 5), R16
+        STS     (g_sTimer3 + 6), R16
+//  101 }
+        RET
+          CFI EndBlock cfiBlock0
+//  102 
+//  103 /*---------------------------------------------------------------------------*/
+//  104 /** \brief <b>ATA_timer3Open_C</b>
+//  105     shall open and initialize Timer 3, in case it is not yet locked.
+//  106 
+//  107     \param[in]      pTimer3Params    Asynchronous timer configuration settings
+//  108     \return     OK on success, FAIL on failure
+//  109     
+//  110     Variable Usage:
+//  111     \li [in,out] ::g_sTimer3 Global Timer 3 component data
+//  112 
+//  113     \image html ATA_timer3Open_C.png
+//  114 
+//  115     \internal
+//  116              Note:
+//  117              Power up of Timer 3 via register PRR1 needs to occur before any 
+//  118              Timer 3 register is accessed in order for the intended action to 
+//  119              take effect.
+//  120 
+//  121              IF Timer 3 is not locked, i.e. not already used by another component,
+//  122              THEN
+//  123     \li 010:   Lock Timer 3 by setting the lock status in global variable 
+//  124                ::g_sTimer3 in order to synchronize the usage of Timer 3.
+//  125 
+//  126     \li 020:   Power up Timer 3 by setting bit PRT3 in register PRR1 to 0 to 
+//  127                disable the power reduction feature for Timer 3.
+//  128 
+//  129     \li 030:   Disable and reset Timer 3 by writing a 1 to the bit T3RES in
+//  130                register T3CR and a 0 to bit T3ENA.
+//  131 
+//  132     \li 040:   Store the given function pointer parameters "ovf", "comp" and "cap"
+//  133                of parameter "pTimer3Params"
+//  134                to the global variable ::g_sTimer3 in order for those functions 
+//  135                to be called when the corresponding interrupt, overflow and compare 
+//  136                and capture, is triggered.
+//  137 
+//  138     \li 050:   Clear Timer 3 interrupt flags T3COF, T3OFF and T3ICF in register
+//  139                T3IFR.
+//  140 
+//  141     \li 060:   Set Timer 3 registers T3CORH, T3CORL, T3MRA, T3MRB T3IMR and T3CR 
+//  142                to the given attributes of parameter "pTimer3Params".
+//  143 
+//  144              ENDIF
+//  145 
+//  146     \li 070: Return OK to the calling function if Timer 3 was successfully 
+//  147              configured.
+//  148              Return FAIL if Timer 3 was already locked and therefore could 
+//  149              not be configured.
+//  150 
+//  151     \Derived{No}
+//  152 
+//  153     \Rationale{N/A}
+//  154 
+//  155     \Traceability{Primus2P-885,Primus2P-1328}
+//  156     \endinternal
+//  157 \n
+//  158 */
+//  159 /*---------------------------------------------------------------------------*/
+
+        RSEG CODE:CODE:ROOT(1)
+//  160 UINT8FUNC ATA_timer3Open_C(const sTimerAsyn16BitParams * const pTimer3Params)
+ATA_timer3Open_C:
+          CFI Block cfiBlock1 Using cfiCommon0
+          CFI Function ATA_timer3Open_C
+          CFI NoCalls
+//  161 {
+//  162     uint8_t fRetVal = FAIL;
+        LDI     R18, 1
+//  163     
+//  164     if( !(g_sTimer3.bStatus & TMR3LOCK) )
+        LDI     R30, LOW(g_sTimer3)
+        LDI     R31, (g_sTimer3) >> 8
+        LD      R19, Z
+        SBRC    R19, 7
+        RJMP    ??ATA_timer3Open_C_0
+//  165     {   
+//  166         /* LLR-Ref: 010 */
+//  167         g_sTimer3.bStatus |= TMR3LOCK;
+        ORI     R19, 0x80
+        ST      Z, R19
+//  168         
+//  169         /* LLR-Ref: 020 */
+//  170         ATA_POWERON_C(PRR1, PRT3)
+        CBI     0x01, 0x02
+//  171 
+//  172         /* LLR-Ref: 030 */
+//  173         T3CR &= ~BM_T3ENA;
+        CBI     0x13, 0x07
+//  174         T3CR = BM_T3RES;
+        LDI     R18, 32
+        OUT     0x13, R18
+//  175 
+//  176         /* LLR-Ref: 040 */
+//  177         g_sTimer3.fpCompIsr = pTimer3Params->compIsr;
+        MOVW    R31:R30, R17:R16
+        LDD     R18, Z+8
+        LDD     R19, Z+9
+        STS     (g_sTimer3 + 1), R18
+        STS     (g_sTimer3 + 2), R19
+//  178         g_sTimer3.fpOvfIsr = pTimer3Params->ovfIsr;
+        LDD     R18, Z+6
+        LDD     R19, Z+7
+        STS     (g_sTimer3 + 3), R18
+        STS     (g_sTimer3 + 4), R19
+//  179         g_sTimer3.fpCapIsr = pTimer3Params->capIsr;
+        LDD     R18, Z+10
+        LDD     R19, Z+11
+        STS     (g_sTimer3 + 5), R18
+        STS     (g_sTimer3 + 6), R19
+//  180 
+//  181         /* LLR-Ref: 050 */
+//  182         T3IFR |= ((uint8_t)(BM_T3ICF|BM_T3COF|BM_T3OFF));
+        LDS     R18, _A_T3IFR
+        ORI     R18, 0x07
+        STS     _A_T3IFR, R18
+//  183         
+//  184         /* LLR-Ref: 060 */
+//  185         T3MRA  = pTimer3Params->modeA;
+        LDD     R18, Z+1
+        STS     _A_T3MRA, R18
+//  186         T3MRB  = pTimer3Params->modeB;
+        LDD     R18, Z+2
+        STS     _A_T3MRB, R18
+//  187         T3CORL = pTimer3Params->compL;
+        LDD     R18, Z+3
+        STS     _A_T3CORL, R18
+//  188         T3CORH = pTimer3Params->compH;
+        LDD     R18, Z+4
+        STS     _A_T3CORH, R18
+//  189         T3IMR  = pTimer3Params->irqMask;
+        LDD     R18, Z+5
+        STS     _A_T3IMR, R18
+//  190         T3CR   = pTimer3Params->ctrl;
+        LD      R16, Z
+        OUT     0x13, R16
+//  191 
+//  192         fRetVal = OK;        
+        LDI     R18, 0
+//  193     }
+//  194 
+//  195     /* LLR-Ref: 070 */
+//  196     return fRetVal;
+??ATA_timer3Open_C_0:
+        MOV     R16, R18
+        RET
+          CFI EndBlock cfiBlock1
+        REQUIRE _A_PRR1
+        REQUIRE _A_T3CR
+        REQUIRE _A_T3IFR
+        REQUIRE _A_T3MRA
+        REQUIRE _A_T3MRB
+        REQUIRE _A_T3CORL
+        REQUIRE _A_T3CORH
+        REQUIRE _A_T3IMR
+//  197 }
+//  198 
+//  199 /* ---------------------------------------------------------------------------*/
+//  200 /** \brief <b>ATA_timer3Close_C</b>
+//  201     shall stop Timer 3 and enable the power reduction feature of Timer 3.
+//  202 
+//  203     Variable Usage:
+//  204     \li [out] ::g_sTimer3  Global Timer 3 component data
+//  205 
+//  206     \image html ATA_timer3Close_C.png
+//  207 
+//  208     \internal
+//  209              Note:
+//  210              Disabling of the Power Reduction feature of Timer 3 via register PRR1
+//  211              needs to occur before any Timer 3 register is accessed in order for the
+//  212              intended actions to take effect.
+//  213              Enabling of the Power Reduction feature of Timer 3 via register PRR1 
+//  214              needs to occur after any Timer 3 register is accessed in order for the 
+//  215              intended action to take effect.
+//  216 
+//  217     \li 005: Disable the power reduction feature of Timer 3 by setting bit PRT3 in 
+//  218              register PRR1 to 0.
+//  219 
+//  220     \li 010: Disable Timer 3 by setting all bits of register T3CR to 0,
+//  221              except bit T3RES which is set to 1 to reset the prescaler and counter
+//  222              value.
+//  223 
+//  224     \li 020: Unlock Timer 3 by setting the status indication of the global variable
+//  225              ::g_sTimer3 to 0.
+//  226 
+//  227     \li 030: Enable the power reduction feature of Timer 3 by setting bit PRT3 in 
+//  228              register PRR1 to 1.
+//  229 
+//  230     \Derived{No}
+//  231 
+//  232     \Rationale{N/A}
+//  233 
+//  234     \Traceability{Primus2P-886}
+//  235     \endinternal
+//  236 \n
+//  237 */
+//  238 /* ---------------------------------------------------------------------------*/
+
+        RSEG CODE:CODE:ROOT(1)
+//  239 VOIDFUNC ATA_timer3Close_C(void)
+ATA_timer3Close_C:
+          CFI Block cfiBlock2 Using cfiCommon0
+          CFI Function ATA_timer3Close_C
+          CFI NoCalls
+//  240 {
+//  241     /* LLR-Ref: 005 */
+//  242     ATA_POWERON_C(PRR1, PRT3)
+        CBI     0x01, 0x02
+//  243   
+//  244     /* LLR-Ref: 010 */
+//  245     T3CR = BM_T3RES;
+        LDI     R16, 32
+        OUT     0x13, R16
+//  246     
+//  247     /* LLR-Ref: 020 */
+//  248     g_sTimer3.bStatus = 0x00;
+        LDI     R16, 0
+        STS     g_sTimer3, R16
+//  249   
+//  250     /* LLR-Ref: 030 */
+//  251     ATA_POWEROFF_C(PRR1, PRT3);
+        SBI     0x01, 0x02
+//  252 }
+        RET
+          CFI EndBlock cfiBlock2
+        REQUIRE _A_PRR1
+        REQUIRE _A_T3CR
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01cH
+__?EECR:
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01dH
+__?EEDR:
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01eH
+__?EEARL:
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01fH
+__?EEARH:
+
+        END
+//  253 
+// 
+//   7 bytes in segment .tmr3ram
+//   8 bytes in segment ABSOLUTE
+// 160 bytes in segment CODE
+// 
+// 160 bytes of CODE memory
+//   7 bytes of DATA memory (+ 8 bytes shared)
+//
+//Errors: none
+//Warnings: none

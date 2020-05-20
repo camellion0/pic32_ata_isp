@@ -1,0 +1,651 @@
+###############################################################################
+#                                                                             #
+# IAR C/C++ Compiler V6.21.1.50603 for Atmel AVR        15/Jun/2015  14:25:53 #
+# Copyright 1996-2013 IAR Systems AB.                                         #
+#                                                                             #
+#    Source file  =  C:\Daten\P2P_Demo01V2_0\firmware\lfrx\src\lfrx_immo.c    #
+#    Command line =  C:\Daten\P2P_Demo01V2_0\firmware\lfrx\src\lfrx_immo.c    #
+#                    -v3 --enhanced_core -ms -o C:\Daten\P2P_Demo01V2_0\appl\ #
+#                    appFlash\IAR\Debug\Obj\ -lCN                             #
+#                    C:\Daten\P2P_Demo01V2_0\appl\appFlash\IAR\Debug\List\    #
+#                    -lA C:\Daten\P2P_Demo01V2_0\appl\appFlash\IAR\Debug\List #
+#                    \ --no_cse --no_inline --no_code_motion --no_cross_call  #
+#                    --no_clustering --no_tbaa --debug --64k_flash            #
+#                    -DENABLE_BIT_DEFINITIONS -e --eeprom_size 2304 --clib    #
+#                    -Ohz                                                     #
+#    List file    =  C:\Daten\P2P_Demo01V2_0\appl\appFlash\IAR\Debug\List\lfr #
+#                    x_immo.lst                                               #
+#    Object file  =  C:\Daten\P2P_Demo01V2_0\appl\appFlash\IAR\Debug\Obj\lfrx #
+#                    _immo.r90                                                #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+C:\Daten\P2P_Demo01V2_0\firmware\lfrx\src\lfrx_immo.c
+      1          /* *C**************************************************************************
+      2            Use of this software is subject to Atmel's Software License Agreement.
+      3          -------------------------------------------------------------------------------
+      4            $URL: http://svnservulm.corp.atmel.com/svn/CDB/Apps/SW_Lib/Car_Access/CARS_GEN2/ATAB5702A/Branches/P2P22_TXMODE_NXP/appl/appFlash/IAR/Debug/List/lfrx_immo.lst $
+      5            $LastChangedRevision: 328482 $
+      6            $LastChangedDate: 2015-07-22 13:17:23 -0600 (Wed, 22 Jul 2015) $
+      7            $LastChangedBy: grueter $
+      8          -------------------------------------------------------------------------------
+      9            Project:      ATA5700
+     10            Target MCU:   ATA5700
+     11            Compiler:     IAR C/C++ Compiler for AVR 6.3.18.0
+     12          -------------------------------------------------------------------------------
+     13          
+     14          ******************************************************************************
+     15          * Copyright 2011, Atmel Automotive GmbH                                       *
+     16          *                                                                             *
+     17          * This software is owned by the Atmel Automotive GmbH                         *
+     18          * and is protected by and subject to worldwide patent protection.             *
+     19          * Atmel hereby grants to licensee a personal,                                 *
+     20          * non-exclusive, non-transferable license to copy, use, modify, create        *
+     21          * derivative works of, and compile the Atmel Source Code and derivative       *
+     22          * works for the sole purpose of creating custom software in support of        *
+     23          * licensee product to be used only in conjunction with a Atmel integrated     *
+     24          * circuit as specified in the applicable agreement. Any reproduction,         *
+     25          * modification, translation, compilation, or representation of this           *
+     26          * software except as specified above is prohibited without the express        *
+     27          * written permission of Atmel.                                                *
+     28          *                                                                             *
+     29          * Disclaimer: ATMEL MAKES NO WARRANTY OF ANY KIND,EXPRESS OR IMPLIED,         *
+     30          * WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED    *
+     31          * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.         *
+     32          * Atmel reserves the right to make changes without further notice to the      *
+     33          * materials described herein. Atmel does not assume any liability arising     *
+     34          * out of the application or use of any product or circuit described herein.   *
+     35          * Atmel does not authorize its products for use as critical components in     *
+     36          * life-support systems where a malfunction or failure may reasonably be       *
+     37          * expected to result in significant injury to the user. The inclusion of      *
+     38          * Atmel products in a life-support systems application implies that the       *
+     39          * manufacturer assumes all risk of such use and in doing so indemnifies       *
+     40          * Atmel against all charges.                                                  *
+     41          *                                                                             *
+     42          * Use may be limited by and subject to the applicable Atmel software          *
+     43          * license agreement.                                                          *
+     44          ******************************************************************************/
+     45          /** \file lfrx_immo.c
+     46          */
+     47          /*===========================================================================*/
+     48          /*  INCLUDES                                                                 */
+     49          /*===========================================================================*/
+     50          #include "lfrx_immo.h"
+     51          #include "../../lfrx/src/lfrx_flash.h"
+     52          #include "../../rftx/src/rftx.h"
+     53          #include "../../spi/src/ata5700_command_set.h"
+     54          #include "../../eep/src/eep.h"
+     55          #include "../../aes/src/aes.h"
+     56          #include "../../globals/src/globals_flash.h"
+     57          #include "../../lfrssi/src/lfrssi_flash.h"
+     58          
+     59          /*===========================================================================*/
+     60          /*  DEFINES                                                                  */
+     61          /*===========================================================================*/
+     62          
+     63          /*===========================================================================*/
+     64          /*  Modul Globals                                                            */
+     65          /*===========================================================================*/
+     66          __no_init static uint8_t m_bTempArray[40];
+     67          __no_init static uint8_t m_bChallengeLengthBits_flash;
+     68          __no_init static uint8_t m_bResponseLengthBits_flash;
+     69          
+     70          
+     71          /*===========================================================================*/
+     72          /*  LOCAL PROTOTYPES                                                         */
+     73          /*===========================================================================*/
+     74          static void ATA_lfRxInitImmo_flash_C(void);
+     75          static uint8_t ATA_lfRxParseCmdImmo_flash_C(void);
+     76          static void ATA_lfRxAuthenticateImmo_flash_C(void);
+     77          
+     78          /*===========================================================================*/
+     79          /*  IMPLEMENTATION                                                           */
+     80          /*===========================================================================*/
+     81          
+     82          //-----------------------------------------------------------------------------
+     83          /** \brief <b>ATA_lfRxRfTxProcessImmo_flash_C</b>
+     84              does the process of one command reception via LF, command processing via AOI
+     85              protocol and response via RF
+     86          
+     87              010:
+     88          
+     89              020:
+     90          
+     91              030:
+     92          
+     93          
+     94              \param none
+     95          
+     96              \return none
+     97          
+     98              \Derived no
+     99          
+    100              \Rationale none
+    101          
+    102              \Traceability none
+    103          
+    104              \StackUsage SU_XXX bytes
+    105          
+    106              \image none
+    107              \n
+    108          */
+    109          //-----------------------------------------------------------------------------
+    110          void ATA_lfRxRfTxProcessImmo_flash_C(void)
+    111          //-----------------------------------------------------------------------------
+    112          {
+    113            uint8_t bRftxConfig = 0x48;
+    114          
+    115            /* read the configuration byte present in EEPROM */
+    116            ATA_eepReadMultipleBytes_C(0x0815, 0x01, &g_uTpConfig.bConfigbyte);
+    117          
+    118            /* initialize for LF reception */
+    119            ATA_lfRxInitImmo_flash_C();
+    120            /* configure sleep mode power down */
+    121            SMCR = 0x05;
+    122          
+    123            /* sleep till complete frame is received */
+    124            while(TRUE) {
+    125              __disable_interrupt();
+    126              if(g_bReceiveState > 2) {
+    127                break;
+    128              }
+    129              __enable_interrupt();
+    130              __sleep();
+    131            }
+    132          
+    133            g_bReceiveState = 0;
+    134            __enable_interrupt();
+    135          
+    136            g_bBytesToTransmit = ATA_lfRxParseCmdImmo_flash_C();
+    137          
+    138            if(g_bBytesToTransmit > 0) {
+    139          
+    140              /* check if LF RSSI measurement has been done */
+    141              if( extReq.lfrxRftxConfig & 0x06 )
+    142              {
+    143                  ATA_lfRssiMeasConfig_flash_C( extReq.lfrxRftxConfig & 0x06 );
+    144                  bRftxConfig |= 0x04;  /* stay in TX after transmission */
+    145              }
+    146          
+    147              /* start RF TX statemachine */
+    148              ATA_rfTxStartTx_C(bRftxConfig, (uint8_t *) &g_sEepRfTxServiceConfig1);
+    149            }
+    150            /* delete external request flag */
+    151            extReq.lfrxRftxConfig &= ~BIT_MASK_0;
+    152          }
+    153          
+    154          //-----------------------------------------------------------------------------
+    155          /** \brief <b>ATA_lfRxInitImmo_flash_C</b>
+    156              shall configure the transponder for AOIP command reception
+    157          
+    158              010:
+    159          
+    160              020:
+    161          
+    162              030:
+    163          
+    164          
+    165              \param none
+    166          
+    167              \return none
+    168          
+    169              \Derived no
+    170          
+    171              \Rationale none
+    172          
+    173              \Traceability Primus2P-916, Primus2P-917, Primus2P-1226
+    174          
+    175              \StackUsage SU_XXX bytes
+    176          
+    177              \image none
+    178              \n
+    179          */
+    180          //-----------------------------------------------------------------------------
+    181          static void ATA_lfRxInitImmo_flash_C(void)
+    182          //-----------------------------------------------------------------------------
+    183          {
+    184            /* LLR-Ref: Disable power reduction to serial peripheral interface. */
+    185            PRR0 &= ~BM_PRCO;
+    186            /* LLR-Ref: Disable power reduction to LF receiver. */
+    187            PRR1 &= ~BM_PRLFR;
+    188          
+    189            /* LF synchronization stop bit */
+    190            LFSTOP = 0x4F; // symbols length = 4, symbols = b1111
+    191          
+    192            /* LF calibration protect */
+    193            m_bTempArray[0] = 0x03;
+    194            LFCPR = BM_LFCPCE;    // change enable
+    195            LFCPR = m_bTempArray[0]; // calibration ready, calibration protect
+    196          
+    197            /* LLR-Ref: Switch FIFO and CRC clock to AVR clock to do configuration. */
+    198            ATA_globalsSwitchAvrPhClock_flash_C((uint8_t)0x01, (uint8_t)0x01);
+    199          
+    200            /* LLR-Ref: CRC settings. */
+    201            PHCRCR = 0x00;
+    202            PHCSTH = 0x00;
+    203            PHCSTL = 0x00;
+    204            PHCRPH = 0x00;
+    205            PHCRPL = 0x02;
+    206            PHCRCR = 0xC8;      /* CRC enable, strobe enable, CRC4, MSB, ID frame excluded */
+    207          
+    208            /* LLR-Ref: FIFO settings. */
+    209            PHFC = 0x00;        /* DRA = 0: AVR read access to FIFO, set fill level configuration to 0 */
+    210            PHFL = BM_PHCLR;    /* clear RdPtr, WrPtr, fill-level, status and bit length */
+    211            PHFR = 0x03;        /* clear bit length and CRC error flags */
+    212          
+    213            /* LLR-Ref: Switch clocks back to protocol handler clock. */
+    214            ATA_globalsSwitchAvrPhClock_flash_C((uint8_t)0x00, (uint8_t)0x00);
+    215          
+    216            /* LLR-Ref: Interrupt settings. */
+    217            LFIMR = 0x00;       /* disable LF Interrupts */
+    218            PHIMR = BM_PHDFIM;  /* enable data frame interrupt (LFBCR_vect) */
+    219            PHFI  = 0x00;       /* disable FIFO interrupts */
+    220          
+    221            /* LLR-Ref: Clear the reception buffer index for LF reception. */
+    222            g_bRxBufferIndex = 0x00;
+    223          
+    224            /* LLR-Ref: Update the number of bits to be received. */
+    225            g_bBitsToReceive = 0x08;
+    226          
+    227            /* LLR-Ref: Initialize receive state */
+    228            g_bReceiveState = 0;
+    229          
+    230            /* LLR-Ref: Enable response delay timer. */
+    231            PHTCOR = 58;        /* 62 * 32ms = 1984ms */
+    232            PHTEMR = BM_TBLEM;  /* bit length reached triggers PH-timer event */
+    233            PHTCMR = 0x7A;      /* start timer on event, reset counter, enable
+    234                                   interrupt, compare reset, prescaler value = 4 */
+    235            g_bResponseDelayReached = FALSE; /* Reset response delay flag. */
+    236            PHTCMR |= BM_PHTE;
+    237          
+    238            /* LLR-Ref: Start reception. */
+    239            LFCR1 |= BM_LFRE;
+    240          }
+    241          
+    242          //-----------------------------------------------------------------------------
+    243          /** \brief <b>ATA_lfRxReinitImmo_flash_C</b>
+    244              Function is called to reconfigure the LF receiver while receiving data.
+    245              The reconfiguration is needed for commands which includes additional data
+    246              after the command byte.
+    247          
+    248              010: Parse commands for reconfiguration.
+    249          
+    250              020: Reconfiguration of CRC (no clock switch has to be done cause data is
+    251                   stored in shadow registers).
+    252          
+    253          
+    254              \param none
+    255          
+    256              \return none
+    257          
+    258              \Derived no
+    259          
+    260              \Rationale none
+    261          
+    262              \Traceability Primus2P-1222
+    263          
+    264              \StackUsage SU_XXX bytes
+    265          
+    266              \image none
+    267              \n
+    268          */
+    269          //-----------------------------------------------------------------------------
+    270          void ATA_lfRxReinitImmo_flash_C(uint8_t bCmd4Bit)
+    271          //-----------------------------------------------------------------------------
+    272          {
+    273            /* LLR-Ref: 010 */
+    274            if(bCmd4Bit == START_AUTH) {
+    275              /* read out challenge and response length from EEPROM */
+    276              ATA_eepReadMultipleBytes_C(0x0819, 0x02, &m_bTempArray[0]);
+    277              m_bChallengeLengthBits_flash = m_bTempArray[0];
+    278              m_bResponseLengthBits_flash = m_bTempArray[1];
+    279          
+    280              if(g_uTpConfig.sConfigbits.CM == UNILATERAL) {
+    281                g_bBitsToReceive = m_bChallengeLengthBits_flash;
+    282              }
+    283              else {
+    284                g_bBitsToReceive = m_bChallengeLengthBits_flash + m_bResponseLengthBits_flash;
+    285              }
+    286            }
+    287          
+    288            PHID0L = 0;               /* disable ID0 */
+    289            PHID1L = 0;               /* disable ID1 */
+    290            PHIDFR = 0;               /* disable ID frame length */
+    291            PHCKCR |= BM_CSM;         /* enable continue receive mode to transfer shadow register after telegram bit length reached */
+    292            PHDFR = g_bBitsToReceive; /* data frame length */
+    293            PHIMR = BM_PHTBLIM;       /* enable telegram bit length reached interrupt (LFBCR_vect) */
+    294          
+    295            /* LLR-Ref: 020 */
+    296            if(g_uTpConfig.sConfigbits.DCD == 0) {  /* CRC enabled */
+    297              PHCRPH = 0;                   /* CRC polynomial */
+    298              PHCRPL = 0xCA;
+    299              PHCSTH = 0;
+    300              PHCSTL = 0x00;
+    301              PHCRCR = 0xD8;                 /* CRC enable, strobe enable, CRC8, MSB, ID frame excluded */
+    302              PHTBLR = g_bBitsToReceive + 8; /* telegram bit length (+8 bit CRC) */
+    303            }
+    304            else {                                /* CRC disabled */
+    305              PHTBLR = g_bBitsToReceive;     /* telegram bit length */
+    306              PHCRCR = 0;                    /* disable CRC */
+    307            }
+    308          }
+    309          
+    310          //-----------------------------------------------------------------------------
+    311          /** \brief <b>ATA_lfRxParseCmdImmo_flash_C</b>
+    312              Function checks received command and prepares data for transmission.
+    313          
+    314              010:
+    315          
+    316              020:
+    317          
+    318              030:
+    319          
+    320          
+    321              \param none
+    322          
+    323              \return [out] bBytesToTransmit  number of bytes to be send out
+    324          
+    325              \Derived no
+    326          
+    327              \Rationale none
+    328          
+    329              \Traceability Primus2P-922, Primus2P-924, Primus2P-925, Primus2P-927,
+    330                            Primus2P-929, Primus2P-930, Primus2P-932, Primus2P-933,
+    331                            Primus2P-934, Primus2P-936, Primus2P-938, Primus2P-939,
+    332                            Primus2P-942, Primus2P-943, Primus2P-946, Primus2P-950,
+    333                            Primus2P-952, Primus2P-956, Primus2P-957
+    334          
+    335              \StackUsage SU_XXX bytes
+    336          
+    337              \image none
+    338              \n
+    339          */
+    340          //-----------------------------------------------------------------------------
+    341          static uint8_t ATA_lfRxParseCmdImmo_flash_C(void)
+    342          //-----------------------------------------------------------------------------
+    343          {
+    344            /* variable to hold the command without CRC4 */
+    345            uint8_t bCmd4Bit;
+    346            /* variable to hold the byte count to be transmitted */
+    347            uint8_t bBytesToTransmit = 1;
+    348          
+    349            /* extract the commmand from the received frame */
+    350            bCmd4Bit = g_bRxBuffer[0];
+    351          
+    352            if(g_bTpStatusByte == STATUS_SUCCESS) {
+    353              g_bTxBuffer[0] = 0xFE;
+    354          
+    355              /* if the command is to read the UID */
+    356              if(bCmd4Bit == READ_UID) {
+    357                /* load the transmission buffer with UID present in EEPROM */
+    358                ATA_eepReadMultipleBytes_C(0x08B0, 0x04, &g_bTxBuffer[1]);
+    359                /* update the number of bytes to be transmitted */
+    360                bBytesToTransmit = 5; // UID_SIZE + 1;
+    361              }
+    362          
+    363              /* if the command is to start the authentication process */
+    364              else if(bCmd4Bit == START_AUTH) {
+    365          
+    366                /* call the authentication processing function */
+    367                ATA_lfRxAuthenticateImmo_flash_C();
+    368          
+    369                /* update the number of bytes to be transmitted */
+    370                bBytesToTransmit = (m_bResponseLengthBits_flash >> 3) + 1;
+    371              }
+    372          
+    373              else {
+    374                /* any other cases nothing to be transmitted */
+    375                g_bTpStatusByte = STATUS_COMMAND_NOT_SUPPORTED;
+    376              }
+    377            }
+    378          
+    379            if(g_bTpStatusByte != STATUS_SUCCESS) {
+    380              bBytesToTransmit = 0;
+    381            }
+    382          
+    383            /* update the status byte with the command */
+    384            g_bTpStatusByte = ((bCmd4Bit << 4) | MASK_HIGH_NIBBLE) & g_bTpStatusByte;
+    385          
+    386            if(   (bCmd4Bit > TP_ERR_STS)
+    387               && (bCmd4Bit < RPT_LST_RES)) {
+    388              /* update the transmission buffer with existing status byte */
+    389              g_bTxBuffer[0] = g_bTpStatusByte;
+    390            }
+    391          
+    392            return bBytesToTransmit;
+    393          }
+    394          
+    395          //-----------------------------------------------------------------------------
+    396          /** \brief <b>ATA_lfRxAuthenticateImmo_flash_C</b>
+    397              Function handles the authentication process using the EEPROM data and the
+    398              AES block whether unilateral or bilateral authentication is configured.
+    399          
+    400              010:
+    401          
+    402              020:
+    403          
+    404              030:
+    405          
+    406          
+    407              \param none
+    408          
+    409              \return none
+    410          
+    411              \Derived no
+    412          
+    413              \Rationale none
+    414          
+    415              \Traceability Primus2P-924, Primus2P-925, Primus2P-956, Primus2P-1372,
+    416                            Primus2P-1406
+    417          
+    418              \StackUsage SU_XXX bytes
+    419          
+    420              \image none
+    421              \n
+    422          */
+    423          //-----------------------------------------------------------------------------
+    424          static void ATA_lfRxAuthenticateImmo_flash_C(void)
+    425          //-----------------------------------------------------------------------------
+    426          {
+    427              /* local value for calculation */
+    428              uint8_t bIndex, i;
+    429              /* value to hold the number of the actual secret key */
+    430              uint8_t bKeySelect = 0;
+    431              /* value to hold the number of challenge bytes */
+    432              uint8_t bChallengeLengthBytes;
+    433              /* value to hold the number of response bytes */
+    434              uint8_t bResponseLengthBytes;
+    435          
+    436              /* check configuration which key schould be used first */
+    437              if(g_uTpConfig.sConfigbits.KS == 1) {
+    438                  bKeySelect = 1;
+    439              }
+    440          
+    441              ATA_aesSetConfig_C(bKeySelect, 0x02);
+    442          
+    443              bChallengeLengthBytes = m_bChallengeLengthBits_flash >> 3;
+    444              for(bIndex = 0; bIndex < bChallengeLengthBytes; bIndex++) {
+    445                  g_sAesComponentData.bDataBuffer[bIndex] = g_bRxBuffer[1 + bIndex];
+    446              }
+    447              /* Padding done manually cause different to ROM library */
+    448              g_sAesComponentData.bDataLength = 128;
+    449              m_bTempArray[ 0] = 0x12;
+    450              m_bTempArray[ 1] = 0x34;
+    451              m_bTempArray[ 2] = 0x56;
+    452              m_bTempArray[ 3] = 0x78;
+    453              m_bTempArray[ 4] = 0x00;
+    454              m_bTempArray[ 5] = 0x00;
+    455              m_bTempArray[ 6] = 0x00;
+    456              m_bTempArray[ 7] = 0x00;
+    457              m_bTempArray[ 8] = 0x00;
+    458              m_bTempArray[ 9] = 0x00;
+    459              m_bTempArray[10] = 0x00;
+    460              m_bTempArray[11] = 0x00;
+    461              for(i = 0; bIndex < 16; bIndex++, i++) {
+    462                  g_sAesComponentData.bDataBuffer[bIndex] = m_bTempArray[i];
+    463              }
+    464          
+    465              ATA_aesEncryptData_C();
+    466          
+    467              bResponseLengthBytes = m_bResponseLengthBits_flash >> 3;
+    468          
+    469              if(g_uTpConfig.sConfigbits.CM == BILATERAL) {
+    470                  /* check if encrypted challenge correlate with received MAC */
+    471                  i = bChallengeLengthBytes + 1;
+    472                  for(bIndex = 0; bIndex < bResponseLengthBytes; bIndex++, i++) {
+    473                      if(g_bRxBuffer[i] != g_sAesComponentData.bDataBuffer[bIndex]) {
+    474                      g_bTpStatusByte = STATUS_BILATERAL_AUTHEN_FAILED;
+    475                      }
+    476                  }
+    477                  if(g_bTpStatusByte == STATUS_SUCCESS) {
+    478                      /* check configuration which key schould be used second */
+    479                      if(g_uTpConfig.sConfigbits.KS == 1) {
+    480                          bKeySelect = 0;
+    481                      }
+    482                      else {
+    483                          bKeySelect = 1;
+    484                      }
+    485                      ATA_aesSetConfig_C(bKeySelect, 0x02);
+    486          
+    487                      ATA_aesEncryptData_C();
+    488                  }
+    489              }
+    490          
+    491              /* copy encrypted data to TX buffer */
+    492              for(bIndex = 0; bIndex < bResponseLengthBytes; bIndex++) {
+    493                  g_bTxBuffer[1 + bIndex] = g_sAesComponentData.bDataBuffer[bIndex];
+    494              }
+    495          }
+    496          
+    497          //-----------------------------------------------------------------------------
+    498          /** \brief <b>ATA_lfRxBitCntReachedImmo_flash_C</b>
+    499              This function is serviced in after/while reception if the defined bit count
+    500              is reached to reconfigure or stop the ongoing reception.
+    501          
+    502              010:
+    503          
+    504              020:
+    505          
+    506              030:
+    507          
+    508          
+    509              \param none
+    510          
+    511              \return none
+    512          
+    513              \Derived no
+    514          
+    515              \Rationale none
+    516          
+    517              \Traceability none
+    518          
+    519              \StackUsage SU_XXX bytes
+    520          
+    521              \image none
+    522              \n
+    523          */
+    524          //-----------------------------------------------------------------------------
+    525          void ATA_lfRxBitCntReachedImmo_flash_C(void)
+    526          //-----------------------------------------------------------------------------
+    527          {
+    528            /* variable to hold the command without CRC4 */
+    529            uint8_t bCmd4Bit;
+    530            /* variable to hold count of bytes to be received */
+    531            uint8_t bBytesToReceive;
+    532          
+    533            /* LLR-Ref: 040 */
+    534            g_bReceiveState++;
+    535          
+    536            /* LLR-Ref: 045 */
+    537            PHFR = (BM_PHTBLF | BM_PHDFF);
+    538          
+    539            /* LLR-Ref: 050 */
+    540            if(g_bReceiveState > 1) {
+    541              PHCKCR &= ~BM_CSM;                   /* disable continue receive mode */
+    542              if(TPFR & BM_TPBERF) {               /* TP bit error */
+    543                g_bTpStatusByte = STATUS_BIT_ERROR;
+    544                TPFR = BM_TPBERF;
+    545              }
+    546              else if(PHFR & BM_CRCEF) {           /* PH CRC error */
+    547                g_bTpStatusByte = STATUS_CRC_INCORRECT;
+    548                PHFR = BM_CRCEF;
+    549              }
+    550              else {                               /* no error */
+    551                g_bTpStatusByte = STATUS_SUCCESS;
+    552              }
+    553            }
+    554          
+    555            /* LLR-Ref: 060 */
+    556            if(   (g_bReceiveState == 1)
+    557               || (g_bReceiveState == 3))
+    558            {
+    559              ATA_globalsSwitchAvrPhClock_flash_C((uint8_t)0x01, (uint8_t)0x01);
+    560          
+    561              bBytesToReceive = g_bBitsToReceive >> 3;
+    562              while(bBytesToReceive > 0) {
+    563                /* read data from protocol handler FIFO data register */
+    564                g_bRxBuffer[g_bRxBufferIndex] = PHFD;
+    565                g_bRxBufferIndex += 1;
+    566                bBytesToReceive--;
+    567              }
+    568          
+    569              PHFL = 0x80;            /* clear RdPtr, WrPtr, fill-level, status and bit length */
+    570          
+    571              ATA_globalsSwitchAvrPhClock_flash_C((uint8_t)0x00, (uint8_t)0x00);
+    572            }
+    573          
+    574            /* LLR-Ref: 070 */
+    575            bCmd4Bit = g_bRxBuffer[0];
+    576          
+    577            /* LLR-Ref: 080 */
+    578            if(   (g_bReceiveState == 1)
+    579               && (   (bCmd4Bit == START_AUTH)
+    580                   || ((bCmd4Bit >= READ_USR_MEM) && (bCmd4Bit <= LRN_SKT_K2)) ) ) {
+    581              ATA_lfRxReinitImmo_flash_C(bCmd4Bit);
+    582            }
+    583            /* LLR-Ref: 090 */
+    584            else if(g_bReceiveState == 1) {
+    585              /* enable telegram bit length reached interrupt (LFBCR_vect) */
+    586              PHIMR = BM_PHTBLIM;
+    587              g_bReceiveState++;
+    588            }
+    589            /* LLR-Ref: 100 */
+    590            else if(   (g_bReceiveState == 2)
+    591                    && (g_bTpStatusByte == STATUS_SUCCESS)) {
+    592              if(bCmd4Bit == WRT_USR_MEM) {
+    593                PHIMR = 0;          /* disable bit count reached interrupt (LFBCR_vect) */
+    594                TPIMR = BM_TPFTIM;  /* enable transponder field timeout interrupt (TPTOERR_vect) */
+    595              }
+    596              if(PHTEMR & BM_TBLEM) {
+    597                PHTCMR |= BM_PHRES;
+    598                g_bResponseDelayReached = FALSE; /* Reset response delay flag. */
+    599                PHTCMR |= BM_PHTE;
+    600              }
+    601            }
+    602            /* LLR-Ref: 105 */
+    603            else if(   (g_bReceiveState > 1)
+    604                    && (g_bTpStatusByte != STATUS_SUCCESS)) {
+    605              /* comparator value for time out detection */
+    606              TPDCR5 = 0x2D;
+    607              /* disable protocol handler interrupts */
+    608              PHIMR = 0;
+    609              /* enable transponder field timeout interrupt (TPTOERR_vect) */
+    610              TPIMR = BM_TPFTIM;
+    611              /* set receive state to value '2' to hold sleep in main function till
+    612                 field timeout is detected */
+    613              g_bReceiveState = 2;
+    614            }
+    615            /* LLR-Ref: 110 */
+    616            else {
+    617              /* LLR-Ref: 120 */
+    618              PHIMR = 0;
+    619              /* LLR-Ref: 130 */
+    620              TPCR3 &= ~BM_TPRD;
+    621              /* LLR-Ref: 140 */
+    622              PHCRCR = 0x00;
+    623            }
+    624          }
+
+Errors: 23
+Warnings: 3

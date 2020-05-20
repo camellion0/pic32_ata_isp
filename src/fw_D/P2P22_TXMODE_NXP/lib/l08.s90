@@ -1,0 +1,19 @@
+;----------------------------------------------------------------------------
+;
+;  Copyright 1999 IAR Systems. All rights reserved.
+; 
+;  $Revision: 328482 $
+;
+;---------------------------------------------------------------------------- 
+
+    MODULE  ?LIB_VERSION_L08
+; Library reference check
+; Renamed by the "xlib" command file to suit compiler generation
+    RSEG    CODE:CODE:NOROOT
+    PUBLIC  library_version
+library_version:
+    NOP
+    END
+
+;----------------------------------------------------------------------------
+;  

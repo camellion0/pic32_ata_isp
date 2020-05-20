@@ -1,0 +1,1291 @@
+###############################################################################
+#
+# IAR C/C++ Compiler V7.10.1.1197 for Atmel AVR           13/May/2020  17:03:22
+# Copyright 1996-2017 IAR Systems AB.
+# Network license: dvriar01.mchp-main.com (STD)
+#
+#    Source file  =  
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\firmware\init\src\init_flash.c
+#    Command line =  
+#        -f C:\Users\C41045\AppData\Local\Temp\EW17F9.tmp
+#        (C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\firmware\init\src\init_flash.c
+#        -v3 --enhanced_core -ms -o
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\Obj
+#        -lCN
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\List
+#        -lA
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\List
+#        --no_cse --no_inline --no_code_motion --no_cross_call --no_clustering
+#        --no_tbaa --debug --64k_flash -DENABLE_BIT_DEFINITIONS -e
+#        --eeprom_size 2304 --clib -Ohz)
+#    Locale       =  English_USA.1252
+#    List file    =  
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\List\init_flash.lst
+#    Object file  =  
+#        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\Obj\init_flash.r90
+#
+###############################################################################
+
+C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\firmware\init\src\init_flash.c
+      1          //lint -e9059
+      2          /******************************************************************************
+      3            Use of this software is subject to Microchip's Software License Agreement.
+      4          --------------------------------------------------------------------------------
+      5            $URL: http://svnservulm.corp.atmel.com/svn/CDB/Apps/SW_Lib/Car_Access/CARS_GEN2/ATAB5702A/Branches/P2P22_TXMODE_NXP/firmware/init/src/init_flash.c $
+      6            $LastChangedRevision: 591974 $
+      7            $LastChangedDate: 2020-03-16 09:23:12 -0600 (Mon, 16 Mar 2020) $
+      8            $LastChangedBy: grueter $
+      9          -------------------------------------------------------------------------------
+     10            Project:      ATA5700
+     11            Target MCU:   ATA5700
+     12            Compiler:     IAR C/C++ Compiler for AVR 6.30.1
+     13          -------------------------------------------------------------------------------
+     14          
+     15          ******************************************************************************
+     16          * Copyright 2017, Microchip Technology Incorporated and its subsidiaries.     *
+     17          *                                                                             *
+     18          * This software is owned by the Microchip Technology Incorporated.            *
+     19          * Microchip hereby grants to licensee a personal                              *
+     20          * non-exclusive, non-transferable license to copy, use, modify, create        *
+     21          * derivative works of, and compile the Microchip Source Code and derivative   *
+     22          * works for the sole and exclusive purpose of creating custom software in     *
+     23          * support of licensee product to be used only in conjunction with a Microchip *
+     24          * integrated circuit as specified in the applicable agreement. Any            *        
+     25          * reproduction, modification, translation, compilation, or representation of  *
+     26          * this software except as specified above is prohibited without the express   *
+     27          * written permission of Microchip.                                            *
+     28          *                                                                             *
+     29          * Disclaimer: MICROCHIP MAKES NO WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,    *
+     30          * WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED    *
+     31          * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.         *
+     32          * Microchip reserves the right to make changes without further notice to the  *
+     33          * materials described herein. Microchip does not assume any liability arising *
+     34          * out of the application or use of any product or circuit described herein.   *
+     35          * Microchip does not authorize its products for use as critical components in *
+     36          * life-support systems where a malfunction or failure may reasonably be       *
+     37          * expected to result in significant injury to the user. The inclusion of      *
+     38          * Microchip products in a life-support systems application implies that the   *
+     39          * manufacturer assumes all risk of such use and in doing so indemnifies       *
+     40          * Microchip against all charges.                                              *
+     41          *                                                                             *
+     42          * Use may be limited by and subject to the applicable Microchip software      *
+     43          * license agreement.                                                          *
+     44          ******************************************************************************/
+     45          /** \file init_flash.c
+     46          */
+     47          
+     48          //lint -restore
+     49          
+     50          /*===========================================================================*/
+     51          /*  INCLUDES                                                                 */
+     52          /*===========================================================================*/
+     53          #include "..\..\init\src\init_flash.h"
+
+   \                                 In  segment ABSOLUTE, at 0x21
+   \   union <unnamed> volatile __io _A_PRR1
+   \                     _A_PRR1:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x22
+   \   union <unnamed> volatile __io _A_PRR2
+   \                     _A_PRR2:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x24
+   \   union <unnamed> volatile __io _A_DDRB
+   \                     _A_DDRB:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x25
+   \   union <unnamed> volatile __io _A_PORTB
+   \                     _A_PORTB:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x27
+   \   union <unnamed> volatile __io _A_DDRC
+   \                     _A_DDRC:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x28
+   \   union <unnamed> volatile __io _A_PORTC
+   \                     _A_PORTC:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x2a
+   \   union <unnamed> volatile __io _A_DDRD
+   \                     _A_DDRD:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x2b
+   \   union <unnamed> volatile __io _A_PORTD
+   \                     _A_PORTD:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x2e
+   \   union <unnamed> volatile __io _A_MCUCR
+   \                     _A_MCUCR:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x3a
+   \   union <unnamed> volatile __io _A_PRR0
+   \                     _A_PRR0:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x46
+   \   union <unnamed> volatile __io _A_PCICR
+   \                     _A_PCICR:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x47
+   \   union <unnamed> volatile __io _A_EIMSK
+   \                     _A_EIMSK:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x4c
+   \   union <unnamed> volatile __io _A_SPCR
+   \                     _A_SPCR:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x4d
+   \   union <unnamed> volatile __io _A_SPSR
+   \                     _A_SPSR:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x5f
+   \   union <unnamed> volatile __io _A_SREG
+   \                     _A_SREG:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x6b
+   \   union <unnamed> volatile __io _A_EICRA
+   \                     _A_EICRA:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x6c
+   \   union <unnamed> volatile __io _A_PCMSK0
+   \                     _A_PCMSK0:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x6d
+   \   union <unnamed> volatile __io _A_PCMSK1
+   \                     _A_PCMSK1:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0xca
+   \   union <unnamed> volatile __io _A_CMOCR
+   \                     _A_CMOCR:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0xcc
+   \   union <unnamed> volatile __io _A_SUPCR
+   \                     _A_SUPCR:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x115
+   \   union <unnamed> volatile __ext_io _A_CLKOD
+   \                     _A_CLKOD:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x116
+   \   union <unnamed> volatile __ext_io _A_CLKOCR
+   \                     _A_CLKOCR:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x152
+   \   union <unnamed> volatile __ext_io _A_DBCR
+   \                     _A_DBCR:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x153
+   \   union <unnamed> volatile __ext_io _A_DBTC
+   \                     _A_DBTC:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x154
+   \   union <unnamed> volatile __ext_io _A_DBENB
+   \                     _A_DBENB:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x155
+   \   union <unnamed> volatile __ext_io _A_DBENC
+   \                     _A_DBENC:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x156
+   \   union <unnamed> volatile __ext_io _A_DBGSW
+   \                     _A_DBGSW:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x164
+   \   union <unnamed> volatile __ext_io _A_DBEND
+   \                     _A_DBEND:
+   \   00000000                      DS8 1
+     54          #include "..\..\spi\src\ata5700_command_set_flash.h"
+     55          #include "..\..\eep\src\eep.h"
+     56          #include "..\..\eep\src\eep_flash.h"
+     57          #include "..\..\globals\src\globals.h"
+     58          #include "..\..\spi\src\spi.h"
+     59          #include "..\..\spi\src\spi_flash.h"
+     60          
+     61          #include "..\..\timer1\src\timer1.h"
+     62          #include "..\..\timer2\src\timer2.h"
+     63          #include "..\..\timer3\src\timer3.h"
+     64          #include "..\..\timer4\src\timer4.h"
+     65          #include "..\..\timer5\src\timer5.h"
+     66          
+     67          #include "..\..\..\appl\appFlash\src\FlashApplVars.h"
+     68          extern sFlashApplState gFlashApplState;
+     69          /*===========================================================================*/
+     70          /*  DEFINES                                                                  */
+     71          /*===========================================================================*/
+     72          
+     73          /*===========================================================================*/
+     74          /*  Modul Globals                                                            */
+     75          /*===========================================================================*/
+     76          /** \brief <b>tmpAryApp</b>
+     77              used as scratch memory e.g. for block read from EEPROM.
+     78          */
+     79          #pragma location = ".sram_FlashApp_TempArray"
+     80          //__no_init static uint8_t m_bTempArray_flash[10];
+
+   \                                 In  segment .sram_FlashApp_TempArray, align 1, keep-with-next
+     81          __no_init uint8_t m_bTempArray_flash[10];
+   \                     m_bTempArray_flash:
+   \   00000000                      DS8 10
+     82          
+     83          #pragma location = ".sram_FlashApp_Sleep"
+
+   \                                 In  segment .sram_FlashApp_Sleep, align 1, keep-with-next
+     84          __no_init uint8_t g_bSleepModeConfig_flash;
+   \                     g_bSleepModeConfig_flash:
+   \   00000000                      DS8 1
+     85          
+     86          #pragma location = ".sram_FlashApp_EventHandling"
+
+   \                                 In  segment .sram_FlashApp_EventHandling, align 1, keep-with-next
+     87          __no_init sSramFlashAppEventHandling g_sEventHandling_flash;
+   \                     g_sEventHandling_flash:
+   \   00000000                      DS8 13
+     88          
+     89          /*===========================================================================*/
+     90          /*  IMPLEMENTATION                                                           */
+     91          /*===========================================================================*/
+     92          
+     93          /*---------------------------------------------------------------------------*/
+     94          /** \brief <b>ATA_initAta5700_flash_C</b>
+     95          */
+     96          /*---------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+     97          UINT8FUNC ATA_initAta5700_flash_C(void)
+   \                     ATA_initAta5700_flash_C:
+     98          {
+     99              // ------------------------------------------------------------------------
+    100              // SW initialization
+    101              // ------------------------------------------------------------------------
+    102              ATA_timer1Init_C();
+   \   00000000   ........           CALL    ATA_timer1Init_C
+    103              ATA_timer2Init_C();
+   \   00000004   ........           CALL    ATA_timer2Init_C
+    104              ATA_timer3Init_C();
+   \   00000008   ........           CALL    ATA_timer3Init_C
+    105              ATA_timer4Init_C();
+   \   0000000C   ........           CALL    ATA_timer4Init_C
+    106              ATA_timer5Init_C();
+   \   00000010   ........           CALL    ATA_timer5Init_C
+    107          
+    108              // ------------------------------------------------------------------------
+    109              // HW initialization
+    110              // ------------------------------------------------------------------------
+    111              // IO Module CLK
+    112              if (ATA_initIoModuleClk_flash_C() == FAIL){return FAIL;}
+   \   00000014   ....               RCALL   ATA_initIoModuleClk_flash_C
+   \   00000016   3001               CPI     R16, 1
+   \   00000018   F091               BREQ    ??ATA_initAta5700_flash_C_0
+    113              // IO Module INT
+    114              if (ATA_initIoModuleInt_flash_C() == FAIL){return FAIL;}
+   \   0000001A   ....               RCALL   ATA_initIoModuleInt_flash_C
+   \   0000001C   3001               CPI     R16, 1
+   \   0000001E   F079               BREQ    ??ATA_initAta5700_flash_C_0
+    115              // IO Module CPU
+    116              if (ATA_initIoModuleCpu_flash_C() == FAIL){return FAIL;}
+   \   00000020   ....               RCALL   ATA_initIoModuleCpu_flash_C
+   \   00000022   3001               CPI     R16, 1
+   \   00000024   F061               BREQ    ??ATA_initAta5700_flash_C_0
+    117              // IO Module DEBOUNCE
+    118              if (ATA_initIoModuleDebounce_flash_C() == FAIL){return FAIL;}
+   \   00000026   ....               RCALL   ATA_initIoModuleDebounce_flash_C
+   \   00000028   3001               CPI     R16, 1
+   \   0000002A   F049               BREQ    ??ATA_initAta5700_flash_C_0
+    119              // IO Module DEBUG
+    120              if (ATA_initIoModuleDebug_flash_C() == FAIL){return FAIL;}
+   \   0000002C   ....               RCALL   ATA_initIoModuleDebug_flash_C
+   \   0000002E   3001               CPI     R16, 1
+   \   00000030   F031               BREQ    ??ATA_initAta5700_flash_C_0
+    121              // IO Module SUP
+    122              if (ATA_initIoModuleSup_flash_C() == FAIL){return FAIL;}
+   \   00000032   ....               RCALL   ATA_initIoModuleSup_flash_C
+   \   00000034   3001               CPI     R16, 1
+   \   00000036   F019               BREQ    ??ATA_initAta5700_flash_C_0
+    123              // IO Module TIMER0_WDT
+    124              if (ATA_initIoModuleTimer0Wdt_flash_C() == FAIL){return FAIL;}
+   \   00000038   ....               RCALL   ATA_initIoModuleTimer0Wdt_flash_C
+   \   0000003A   3001               CPI     R16, 1
+   \   0000003C   F411               BRNE    ??ATA_initAta5700_flash_C_1
+   \                     ??ATA_initAta5700_flash_C_0:
+   \   0000003E   E001               LDI     R16, 1
+   \   00000040   9508               RET
+    125              return OK;
+   \                     ??ATA_initAta5700_flash_C_1:
+   \   00000042   E000               LDI     R16, 0
+   \   00000044   9508               RET
+    126          }
+    127          
+    128          /*---------------------------------------------------------------------------*/
+    129          /** \brief <b>gpio_init</b>
+    130          */
+    131          /*---------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    132          VOIDFUNC gpio_init(void)
+   \                     gpio_init:
+    133          {
+    134            // Set ports for LED
+    135            bit_clear(LED1);
+   \   00000000   9840               CBI     0x08, 0x00
+    136            bit_clear(LED2);
+   \   00000002   9841               CBI     0x08, 0x01
+    137            bit_set(LED1_DDR);
+   \   00000004   9A38               SBI     0x07, 0x00
+    138            bit_set(LED2_DDR);
+   \   00000006   9A39               SBI     0x07, 0x01
+    139            
+    140            // Set pins for switches
+    141            bit_set(SW1); 
+   \   00000008   9A5D               SBI     0x0B, 0x05
+    142            bit_set(SW2);
+   \   0000000A   9A5E               SBI     0x0B, 0x06
+    143            bit_set(SW3);
+   \   0000000C   9A5F               SBI     0x0B, 0x07
+    144            bit_set(SW1_DDR);
+   \   0000000E   9A55               SBI     0x0A, 0x05
+    145            bit_set(SW2_DDR);
+   \   00000010   9A56               SBI     0x0A, 0x06
+    146            bit_set(SW3_DDR);
+   \   00000012   9A57               SBI     0x0A, 0x07
+    147            
+    148            // Set pins for Transparent mode TX
+    149            bit_clear(CLKOUT);
+   \   00000014   985B               CBI     0x0B, 0x03
+    150            bit_set(CLKOUT_DDR);          
+   \   00000016   9A53               SBI     0x0A, 0x03
+    151            bit_clear(TMDI_STATE);        
+   \   00000018   985C               CBI     0x0B, 0x04
+    152            bit_clear(TMDI_DDR);      
+   \   0000001A   9854               CBI     0x0A, 0x04
+    153            bit_set(TXACTIVE);      //PB0 INT0 pull up active
+   \   0000001C   9A5A               SBI     0x0B, 0x02
+    154            bit_clear(TXACTIVE_DDR);
+   \   0000001E   9852               CBI     0x0A, 0x02
+    155                      
+    156                      
+    157            /* enable pin change interrupts */
+    158            bit_set(SW1_INTR);
+   \   00000020   9100006D           LDS     R16, 109
+   \   00000024   6200               ORI     R16, 0x20
+   \   00000026   9300006D           STS     109, R16
+    159            bit_set(SW2_INTR);
+   \   0000002A   9100006D           LDS     R16, 109
+   \   0000002E   6400               ORI     R16, 0x40
+   \   00000030   9300006D           STS     109, R16
+    160            bit_set(SW3_INTR);
+   \   00000034   9100006D           LDS     R16, 109
+   \   00000038   6800               ORI     R16, 0x80
+   \   0000003A   9300006D           STS     109, R16
+    161            
+    162           // PCICR = 2;          // enable pin change int on PCINT[7:0]
+    163            
+    164           // PCICR |= (1<<PCIE1);      //enable pin change int on PCINT[15:8]
+    165            SPCR &= ~((1<<SPIE) | (1<<SPE)); // Disable SPI port
+   \   0000003E   B50C               IN      R16, 0x2C
+   \   00000040   730F               ANDI    R16, 0x3F
+   \   00000042   BD0C               OUT     0x2C, R16
+    166            SPSR &= ~((1<<SPIF) | (1<<TXIF) | (1<<RXIF));
+   \   00000044   B50D               IN      R16, 0x2D
+   \   00000046   740F               ANDI    R16, 0x4F
+   \   00000048   BD0D               OUT     0x2D, R16
+    167              
+    168            gFlashApplState.Buttons = 0x00U;//Clear button state
+   \   0000004A   E000               LDI     R16, 0
+   \   0000004C   9300....           STS     (gFlashApplState + 3), R16
+    169           // PCICR = 2;          // enable pin change int on PCINT[7:0]
+    170          
+    171            
+    172              EICRA = (1<<ISC01); // Falling edge of INT0 (NSS) generates interrupt
+   \   00000050   E002               LDI     R16, 2
+   \   00000052   9300....           STS     _A_EICRA, R16
+    173            //  EIFR = 0x01; //Clear INT0 flag
+    174            //  DDRD |= 0x02;
+    175              PCMSK1 |= 0x04;//Enable Pin change interrupt 10
+   \   00000056   9100006D           LDS     R16, 109
+   \   0000005A   6004               ORI     R16, 0x04
+   \   0000005C   9300006D           STS     109, R16
+    176           //   PCIFR |= 0x02; //clear pin change interrupt bank 1 flag
+    177            //  PCMSK1 |= 0x02; //enable pin cahnge interrupt bank 1  
+    178              PCICR |= 0x02;
+   \   00000060   B506               IN      R16, 0x26
+   \   00000062   6002               ORI     R16, 0x02
+   \   00000064   BD06               OUT     0x26, R16
+    179            
+    180          }
+   \   00000066   9508               RET
+   \   00000068                      REQUIRE _A_PORTC
+   \   00000068                      REQUIRE _A_DDRC
+   \   00000068                      REQUIRE _A_PORTD
+   \   00000068                      REQUIRE _A_DDRD
+   \   00000068                      REQUIRE _A_PCMSK1
+   \   00000068                      REQUIRE _A_SPCR
+   \   00000068                      REQUIRE _A_SPSR
+   \   00000068                      REQUIRE _A_EICRA
+   \   00000068                      REQUIRE _A_PCICR
+    181          /*---------------------------------------------------------------------------*/
+    182          /** \brief <b>ATA_initEventHandling_flash_C</b>
+    183          */
+    184          /*---------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    185          UINT8FUNC ATA_initEventHandling_flash_C(void)
+   \                     ATA_initEventHandling_flash_C:
+    186          {
+   \   00000000   938A               ST      -Y, R24
+    187              uint8_t fRetVal = FAIL;
+   \   00000002   E081               LDI     R24, 1
+    188              g_sEepFlashAppEventHandling_flash.bComponents = 0;
+   \   00000004   E000               LDI     R16, 0
+   \   00000006   9300....           STS     (g_sEepFlashAppEventHandling_flash + 9), R16
+    189              if (ATA_eepReadBytes_C((uint8_t *)&g_sEventHandling_flash,(uint16_t)&g_sEepFlashAppEventHandling_flash,sizeof(sEepFlashAppEventHandling)) == EEC_NO_ERROR) {
+   \   0000000A   E04D               LDI     R20, 13
+   \   0000000C   ....               LDI     R18, LOW(g_sEepFlashAppEventHandling_flash)
+   \   0000000E   ....               LDI     R19, (g_sEepFlashAppEventHandling_flash) >> 8
+   \   00000010   ....               LDI     R16, LOW(g_sEventHandling_flash)
+   \   00000012   ....               LDI     R17, (g_sEventHandling_flash) >> 8
+   \   00000014   ........           CALL    ATA_eepReadBytes_C
+   \   00000018   2300               TST     R16
+   \   0000001A   F409               BRNE    ??ATA_initEventHandling_flash_C_0
+    190                  fRetVal = OK;
+   \   0000001C   E080               LDI     R24, 0
+    191              }
+    192              return fRetVal;
+   \                     ??ATA_initEventHandling_flash_C_0:
+   \   0000001E   ....               RJMP    ?Subroutine0
+    193          }
+
+   \                                 In  segment CODE, align 2, keep-with-next
+   \                     ?Subroutine0:
+   \   00000000   2F08               MOV     R16, R24
+   \   00000002   9189               LD      R24, Y+
+   \   00000004   9508               RET
+    194          
+    195          /*---------------------------------------------------------------------------*/
+    196          /** \brief <b>ATA_initIoModuleClk_flash_C</b>
+    197          */
+    198          /*---------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    199          UINT8FUNC ATA_initIoModuleClk_flash_C(void)
+   \                     ATA_initIoModuleClk_flash_C:
+    200          {
+   \   00000000   938A               ST      -Y, R24
+    201              uint8_t fRetVal = FAIL;
+   \   00000002   E081               LDI     R24, 1
+    202              uint8_t bFrcAlwaysOn;
+    203              
+    204              if (ATA_eepReadBytes_C(m_bTempArray_flash,(uint16_t)&g_sEepFlashAppClk_flash,sizeof(sEepFlashAppClk)) == EEC_NO_ERROR)
+   \   00000004   E046               LDI     R20, 6
+   \   00000006   ....               LDI     R18, LOW(g_sEepFlashAppClk_flash)
+   \   00000008   ....               LDI     R19, (g_sEepFlashAppClk_flash) >> 8
+   \   0000000A   ....               LDI     R16, LOW(m_bTempArray_flash)
+   \   0000000C   ....               LDI     R17, (m_bTempArray_flash) >> 8
+   \   0000000E   ........           CALL    ATA_eepReadBytes_C
+   \   00000012   2300               TST     R16
+   \   00000014   F5D9               BRNE    ??ATA_initIoModuleClk_flash_C_0
+    205              {
+    206                  PRR0   = m_bTempArray_flash[0];
+   \   00000016   9100....           LDS     R16, m_bTempArray_flash
+   \   0000001A   BB0A               OUT     0x1A, R16
+    207                  PRR1   = m_bTempArray_flash[1] & (~(BM_PRLFPH | BM_PRLFTP | BM_PRLFR));
+   \   0000001C   9100....           LDS     R16, (m_bTempArray_flash + 1)
+   \   00000020   710F               ANDI    R16, 0x1F
+   \   00000022   B901               OUT     0x01, R16
+    208                  PRR2   = m_bTempArray_flash[2];
+   \   00000024   9100....           LDS     R16, (m_bTempArray_flash + 2)
+   \   00000028   B902               OUT     0x02, R16
+    209                  
+    210                  /* Enable Clock Output clock domain to set corresponding registesr */
+    211                  uint8_t bPrr0 = PRR0;
+   \   0000002A   B31A               IN      R17, 0x1A
+    212                  ATA_POWERON_C(PRR0, PRCO)
+   \   0000002C   98D5               CBI     0x1A, 0x05
+    213                  CLKOD  = m_bTempArray_flash[3];
+   \   0000002E   9100....           LDS     R16, (m_bTempArray_flash + 3)
+   \   00000032   9300....           STS     _A_CLKOD, R16
+    214                  CLKOCR = m_bTempArray_flash[4];
+   \   00000036   9100....           LDS     R16, (m_bTempArray_flash + 4)
+   \   0000003A   9300....           STS     _A_CLKOCR, R16
+    215                  CLKOD = 0x05;
+   \   0000003E   E005               LDI     R16, 5
+   \   00000040   9300....           STS     _A_CLKOD, R16
+    216                  CLKOCR |= 0x03; //CLK SOURCE XTO (CLKOUT = 4.08 MHz)
+   \   00000044   9100....           LDS     R16, _A_CLKOCR
+   \   00000048   6003               ORI     R16, 0x03
+   \   0000004A   9300....           STS     _A_CLKOCR, R16
+    217                  CLKOCR |= 0x04; //Enable CLKOUT
+   \   0000004E   91000116           LDS     R16, 278
+   \   00000052   6004               ORI     R16, 0x04
+   \   00000054   93000116           STS     278, R16
+    218                  PRR0 = bPrr0;
+   \   00000058   BB1A               OUT     0x1A, R17
+    219          
+    220                  /* FRC always on setting, that is FRC may get activated immediately */
+    221                  bFrcAlwaysOn = m_bTempArray_flash[5] & BM_FRCAO;
+   \   0000005A   ....               LDI     R30, LOW(m_bTempArray_flash)
+   \   0000005C   ....               LDI     R31, (m_bTempArray_flash) >> 8
+   \   0000005E   8105               LDD     R16, Z+5
+   \   00000060   7001               ANDI    R16, 0x01
+    222                  if ( bFrcAlwaysOn != 0x00U )
+   \   00000062   FB00               BST     R16, 0
+   \   00000064   F456               BRTC    ??ATA_initIoModuleClk_flash_C_1
+    223                  {
+    224                      CMOCR |= bFrcAlwaysOn;
+   \   00000066   9110....           LDS     R17, _A_CMOCR
+   \   0000006A   2B10               OR      R17, R16
+   \   0000006C   9310....           STS     _A_CMOCR, R17
+    225                      do
+    226                      {
+    227                          _NOP;
+   \                     ??ATA_initIoModuleClk_flash_C_2:
+   \   00000070   0000               nop
+    228                      } while((CMOCR & BM_FRCACT) == 0U);
+   \   00000072   9100....           LDS     R16, _A_CMOCR
+   \   00000076   FF02               SBRS    R16, 2
+   \   00000078   CFFB               RJMP    ??ATA_initIoModuleClk_flash_C_2
+    229                  }
+    230                  
+    231                  /* Since FRC activation requires that MVCC and DVCC high enable are
+    232                     enabled before, just setting the FRCAO bit is no longer allowed. */
+    233                  if ( (m_bTempArray_flash[5] & BIT_MASK_7) == 0x00U )
+   \                     ??ATA_initIoModuleClk_flash_C_1:
+   \   0000007A   8105               LDD     R16, Z+5
+   \   0000007C   FD07               SBRC    R16, 7
+   \   0000007E   C002               RJMP    ??ATA_initIoModuleClk_flash_C_3
+    234                  {
+    235                      /* Activate FRC to be able to process SPI commands at a high data rate */
+    236                      ATA_globalsClkSwitchFrc_C();
+   \   00000080   ........           CALL    ATA_globalsClkSwitchFrc_C
+    237                  }
+    238          
+    239                  /* Set prescaler value system timer to 1 and system clock to 1 */
+    240                  ATA_globalsSetClk_C(BM_CLTPS0);
+   \                     ??ATA_initIoModuleClk_flash_C_3:
+   \   00000084   E008               LDI     R16, 8
+   \   00000086   ........           CALL    ATA_globalsSetClk_C
+    241          
+    242                  fRetVal = OK;
+   \   0000008A   E080               LDI     R24, 0
+    243              }
+    244          
+    245              return fRetVal;
+   \                     ??ATA_initIoModuleClk_flash_C_0:
+   \   0000008C   ....               RJMP    ?Subroutine0
+   \   0000008E                      REQUIRE _A_PRR0
+   \   0000008E                      REQUIRE _A_PRR1
+   \   0000008E                      REQUIRE _A_PRR2
+   \   0000008E                      REQUIRE _A_CLKOD
+   \   0000008E                      REQUIRE _A_CLKOCR
+   \   0000008E                      REQUIRE _A_CMOCR
+    246          }
+    247          
+    248          /*---------------------------------------------------------------------------*/
+    249          /** \brief <b>ATA_initIoModuleCpu_flash_C</b>
+    250          */
+    251          /*---------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    252          UINT8FUNC ATA_initIoModuleCpu_flash_C(void)
+   \                     ATA_initIoModuleCpu_flash_C:
+    253          {
+   \   00000000   939A               ST      -Y, R25
+   \   00000002   938A               ST      -Y, R24
+    254              uint8_t fRetVal = FAIL;
+   \   00000004   E091               LDI     R25, 1
+    255              uint8_t bTempMcucr = MCUCR;
+   \   00000006   B18E               IN      R24, 0x0E
+    256              
+    257              if (ATA_eepReadBytes_C(m_bTempArray_flash,(uint16_t)&g_sEepFlashAppCpu_flash,sizeof(sEepFlashAppCpu)) == EEC_NO_ERROR)
+   \   00000008   E042               LDI     R20, 2
+   \   0000000A   ....               LDI     R18, LOW(g_sEepFlashAppCpu_flash)
+   \   0000000C   ....               LDI     R19, (g_sEepFlashAppCpu_flash) >> 8
+   \   0000000E   ....               LDI     R16, LOW(m_bTempArray_flash)
+   \   00000010   ....               LDI     R17, (m_bTempArray_flash) >> 8
+   \   00000012   ........           CALL    ATA_eepReadBytes_C
+   \   00000016   2300               TST     R16
+   \   00000018   F469               BRNE    ??ATA_initIoModuleCpu_flash_C_0
+    258              {
+    259                  /* Do not modify Interrupt Vector Table location */
+    260                  bTempMcucr &= (BM_IVSEL|BM_IVL1|BM_IVL0);
+    261                  m_bTempArray_flash[0] &= ~(BM_IVSEL|BM_IVL1|BM_IVL0);
+    262                  m_bTempArray_flash[0] |= bTempMcucr;
+   \   0000001A   9100....           LDS     R16, m_bTempArray_flash
+   \   0000001E   770C               ANDI    R16, 0x7C
+   \   00000020   7883               ANDI    R24, 0x83
+   \   00000022   2B08               OR      R16, R24
+   \   00000024   9300....           STS     m_bTempArray_flash, R16
+    263                  
+    264                  MCUCR = m_bTempArray_flash[0];
+   \   00000028   B90E               OUT     0x0E, R16
+    265          
+    266                  /* Do not set Sleep Enable during initialization */
+    267                  g_bSleepModeConfig_flash = m_bTempArray_flash[1];
+   \   0000002A   9100....           LDS     R16, (m_bTempArray_flash + 1)
+   \   0000002E   9300....           STS     g_bSleepModeConfig_flash, R16
+    268          
+    269                  fRetVal = OK;
+   \   00000032   E090               LDI     R25, 0
+    270              }
+    271              return fRetVal;
+   \                     ??ATA_initIoModuleCpu_flash_C_0:
+   \   00000034   2F09               MOV     R16, R25
+   \   00000036                      REQUIRE ?Subroutine1
+   \   00000036                      REQUIRE _A_MCUCR
+   \   00000036                      ;               // Fall through to label ?Subroutine1
+    272          }
+
+   \                                 In  segment CODE, align 2, keep-with-next
+   \                     ?Subroutine1:
+   \   00000000   9189               LD      R24, Y+
+   \   00000002   9199               LD      R25, Y+
+   \   00000004   9508               RET
+    273          
+    274          /*---------------------------------------------------------------------------*/
+    275          /** \brief <b>ATA_initIoModuleDebounce_flash_C</b>
+    276          */
+    277          /*---------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    278          UINT8FUNC ATA_initIoModuleDebounce_flash_C(void)
+   \                     ATA_initIoModuleDebounce_flash_C:
+    279          {
+   \   00000000   938A               ST      -Y, R24
+    280              uint8_t fRetVal = FAIL;
+   \   00000002   E081               LDI     R24, 1
+    281              if (ATA_eepReadBytes_C(m_bTempArray_flash,(uint16_t)&g_sEepFlashAppDebounce_flash,sizeof(sEepFlashAppDebounce)) == EEC_NO_ERROR) {
+   \   00000004   E045               LDI     R20, 5
+   \   00000006   ....               LDI     R18, LOW(g_sEepFlashAppDebounce_flash)
+   \   00000008   ....               LDI     R19, (g_sEepFlashAppDebounce_flash) >> 8
+   \   0000000A   ....               LDI     R16, LOW(m_bTempArray_flash)
+   \   0000000C   ....               LDI     R17, (m_bTempArray_flash) >> 8
+   \   0000000E   ........           CALL    ATA_eepReadBytes_C
+   \   00000012   2300               TST     R16
+   \   00000014   F4A9               BRNE    ??ATA_initIoModuleDebounce_flash_C_0
+    282                  DBCR   = m_bTempArray_flash[0];
+   \   00000016   9100....           LDS     R16, m_bTempArray_flash
+   \   0000001A   9300....           STS     _A_DBCR, R16
+    283                  DBTC   = m_bTempArray_flash[1];
+   \   0000001E   9100....           LDS     R16, (m_bTempArray_flash + 1)
+   \   00000022   9300....           STS     _A_DBTC, R16
+    284                  DBENB  = m_bTempArray_flash[2];
+   \   00000026   9100....           LDS     R16, (m_bTempArray_flash + 2)
+   \   0000002A   9300....           STS     _A_DBENB, R16
+    285                  DBENC  = m_bTempArray_flash[3];
+   \   0000002E   9100....           LDS     R16, (m_bTempArray_flash + 3)
+   \   00000032   9300....           STS     _A_DBENC, R16
+    286                  DBEND  = m_bTempArray_flash[4];
+   \   00000036   9100....           LDS     R16, (m_bTempArray_flash + 4)
+   \   0000003A   9300....           STS     _A_DBEND, R16
+    287                  fRetVal = OK;
+   \   0000003E   E080               LDI     R24, 0
+    288              }
+    289              return fRetVal;
+   \                     ??ATA_initIoModuleDebounce_flash_C_0:
+   \   00000040   ....               RJMP    ?Subroutine0
+   \   00000042                      REQUIRE _A_DBCR
+   \   00000042                      REQUIRE _A_DBTC
+   \   00000042                      REQUIRE _A_DBENB
+   \   00000042                      REQUIRE _A_DBENC
+   \   00000042                      REQUIRE _A_DBEND
+    290          }
+    291          
+    292          /*---------------------------------------------------------------------------*/
+    293          /** \brief <b>ATA_initIoModuleDebug_flash_C</b>
+    294          */
+    295          /*---------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    296          UINT8FUNC ATA_initIoModuleDebug_flash_C(void)
+   \                     ATA_initIoModuleDebug_flash_C:
+    297          {
+   \   00000000   939A               ST      -Y, R25
+   \   00000002   938A               ST      -Y, R24
+    298              uint8_t fRetVal = FAIL;
+   \   00000004   E081               LDI     R24, 1
+    299              uint8_t bSreg = SREG;
+   \   00000006   B79F               IN      R25, 0x3F
+    300          
+    301              if (ATA_eepReadBytes_C(m_bTempArray_flash,(uint16_t)&g_sEepFlashAppDebug_flash,sizeof(sEepFlashAppDebug)) == EEC_NO_ERROR) {
+   \   00000008   E042               LDI     R20, 2
+   \   0000000A   ....               LDI     R18, LOW(g_sEepFlashAppDebug_flash)
+   \   0000000C   ....               LDI     R19, (g_sEepFlashAppDebug_flash) >> 8
+   \   0000000E   ....               LDI     R16, LOW(m_bTempArray_flash)
+   \   00000010   ....               LDI     R17, (m_bTempArray_flash) >> 8
+   \   00000012   ........           CALL    ATA_eepReadBytes_C
+   \   00000016   2300               TST     R16
+   \   00000018   F469               BRNE    ??ATA_initIoModuleDebug_flash_C_0
+    302                  // enable tracer if selected in variable g_sEepFlashAppDebug_flash.trace
+    303                  if (m_bTempArray_flash[0] & BIT_MASK_0)
+   \   0000001A   9100....           LDS     R16, m_bTempArray_flash
+   \   0000001E   FF00               SBRS    R16, 0
+   \   00000020   C004               RJMP    ??ATA_initIoModuleDebug_flash_C_1
+    304                  {
+    305                      __disable_interrupt();
+   \   00000022   94F8               CLI
+    306                      MCUCR |= BM_TRCCE;
+   \   00000024   9A75               SBI     0x0E, 0x05
+    307                      MCUCR |= BM_TRCEN;
+   \   00000026   9A76               SBI     0x0E, 0x06
+    308                      SREG = bSreg;
+   \   00000028   BF9F               OUT     0x3F, R25
+    309                  }
+    310          
+    311                  DBGSW  = m_bTempArray_flash[1];
+   \                     ??ATA_initIoModuleDebug_flash_C_1:
+   \   0000002A   9100....           LDS     R16, (m_bTempArray_flash + 1)
+   \   0000002E   9300....           STS     _A_DBGSW, R16
+    312                  fRetVal = OK;
+   \   00000032   E080               LDI     R24, 0
+    313              }
+    314              return fRetVal;
+   \                     ??ATA_initIoModuleDebug_flash_C_0:
+   \   00000034   2F08               MOV     R16, R24
+   \   00000036   ....               RJMP    ?Subroutine1
+   \   00000038                      REQUIRE _A_SREG
+   \   00000038                      REQUIRE _A_MCUCR
+   \   00000038                      REQUIRE _A_DBGSW
+    315          }
+    316          
+    317          /*---------------------------------------------------------------------------*/
+    318          /** \brief <b>ATA_initIoModuleInt_flash_C</b>
+    319          */
+    320          /*---------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    321          UINT8FUNC ATA_initIoModuleInt_flash_C(void)
+   \                     ATA_initIoModuleInt_flash_C:
+    322          {
+   \   00000000   938A               ST      -Y, R24
+    323              uint8_t fRetVal = FAIL;
+   \   00000002   E081               LDI     R24, 1
+    324              if (ATA_eepReadBytes_C(m_bTempArray_flash,(uint16_t)&g_sEepFlashAppInt_flash,sizeof(sEepFlashAppInt)) == EEC_NO_ERROR) {
+   \   00000004   E045               LDI     R20, 5
+   \   00000006   ....               LDI     R18, LOW(g_sEepFlashAppInt_flash)
+   \   00000008   ....               LDI     R19, (g_sEepFlashAppInt_flash) >> 8
+   \   0000000A   ....               LDI     R16, LOW(m_bTempArray_flash)
+   \   0000000C   ....               LDI     R17, (m_bTempArray_flash) >> 8
+   \   0000000E   ........           CALL    ATA_eepReadBytes_C
+   \   00000012   2300               TST     R16
+   \   00000014   F479               BRNE    ??ATA_initIoModuleInt_flash_C_0
+    325                  PCICR  = m_bTempArray_flash[0];
+   \   00000016   9100....           LDS     R16, m_bTempArray_flash
+   \   0000001A   BD06               OUT     0x26, R16
+    326                  EIMSK  = m_bTempArray_flash[1];
+   \   0000001C   9100....           LDS     R16, (m_bTempArray_flash + 1)
+   \   00000020   BD07               OUT     0x27, R16
+    327                  EICRA  = m_bTempArray_flash[2];
+   \   00000022   9100....           LDS     R16, (m_bTempArray_flash + 2)
+   \   00000026   9300....           STS     _A_EICRA, R16
+    328                  PCMSK0 = m_bTempArray_flash[3];
+   \   0000002A   9100....           LDS     R16, (m_bTempArray_flash + 3)
+   \   0000002E   9300....           STS     _A_PCMSK0, R16
+    329                  //PCMSK1 = m_bTempArray_flash[4];
+    330                  fRetVal = OK;
+   \   00000032   E080               LDI     R24, 0
+    331              }
+    332              return fRetVal;
+   \                     ??ATA_initIoModuleInt_flash_C_0:
+   \   00000034   ....               RJMP    ?Subroutine0
+   \   00000036                      REQUIRE _A_PCICR
+   \   00000036                      REQUIRE _A_EIMSK
+   \   00000036                      REQUIRE _A_EICRA
+   \   00000036                      REQUIRE _A_PCMSK0
+    333          }
+    334          
+    335          
+    336          /*---------------------------------------------------------------------------*/
+    337          /** \brief <b>ATA_initIoModulePortB_flash_C</b>
+    338          */
+    339          /*---------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    340          UINT8FUNC ATA_initIoModulePortB_flash_C(void)
+   \                     ATA_initIoModulePortB_flash_C:
+    341          {
+   \   00000000   938A               ST      -Y, R24
+    342              uint8_t fRetVal = FAIL;
+   \   00000002   E081               LDI     R24, 1
+    343              if (ATA_eepReadBytes_C(m_bTempArray_flash,(uint16_t)&g_sEepFlashAppPortB_flash,sizeof(sEepFlashAppPort)) == EEC_NO_ERROR) {
+   \   00000004   E042               LDI     R20, 2
+   \   00000006   ....               LDI     R18, LOW(g_sEepFlashAppPortB_flash)
+   \   00000008   ....               LDI     R19, (g_sEepFlashAppPortB_flash) >> 8
+   \   0000000A   ....               LDI     R16, LOW(m_bTempArray_flash)
+   \   0000000C   ....               LDI     R17, (m_bTempArray_flash) >> 8
+   \   0000000E   ........           CALL    ATA_eepReadBytes_C
+   \   00000012   2300               TST     R16
+   \   00000014   F479               BRNE    ??ATA_initIoModulePortB_flash_C_0
+    344                  DDRB   = m_bTempArray_flash[0];
+   \   00000016   9100....           LDS     R16, m_bTempArray_flash
+   \   0000001A   B904               OUT     0x04, R16
+    345                  PORTB  = m_bTempArray_flash[1];
+   \   0000001C   9100....           LDS     R16, (m_bTempArray_flash + 1)
+   \   00000020   B905               OUT     0x05, R16
+    346                  
+    347                  /* EVENT pin initialization */
+    348                  DDRB |= BM_DDRB3;
+   \   00000022   9A23               SBI     0x04, 0x03
+    349                  if( g_sEventHandling_flash.bConfig & BM_ATA5700_EVENTS_CONFIG_EVENTPIN_POL )
+   \   00000024   9100....           LDS     R16, g_sEventHandling_flash
+   \   00000028   FF00               SBRS    R16, 0
+   \   0000002A   C002               RJMP    ??ATA_initIoModulePortB_flash_C_1
+    350                  {
+    351                      PORTB &= (uint8_t)~BM_PORTB3;  // EVENTPIN_POL = 1 --> high active
+   \   0000002C   982B               CBI     0x05, 0x03
+   \   0000002E   C001               RJMP    ??ATA_initIoModulePortB_flash_C_2
+    352                  }
+    353                  else
+    354                  {
+    355                      PORTB |= BM_PORTB3;            // EVENTPIN_POL = 0 --> low active
+   \                     ??ATA_initIoModulePortB_flash_C_1:
+   \   00000030   9A2B               SBI     0x05, 0x03
+    356                  }
+    357                  
+    358                  fRetVal = OK;
+   \                     ??ATA_initIoModulePortB_flash_C_2:
+   \   00000032   E080               LDI     R24, 0
+    359              }
+    360              return fRetVal;
+   \                     ??ATA_initIoModulePortB_flash_C_0:
+   \   00000034   ....               RJMP    ?Subroutine0
+   \   00000036                      REQUIRE _A_DDRB
+   \   00000036                      REQUIRE _A_PORTB
+    361          }
+    362          
+    363          /*---------------------------------------------------------------------------*/
+    364          /** \brief <b>ATA_initIoModulePortC_flash_C</b>
+    365          */
+    366          /*---------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    367          UINT8FUNC ATA_initIoModulePortC_flash_C(void)
+   \                     ATA_initIoModulePortC_flash_C:
+    368          {
+   \   00000000   938A               ST      -Y, R24
+    369              uint8_t fRetVal = FAIL;
+   \   00000002   E081               LDI     R24, 1
+    370              if (ATA_eepReadBytes_C(m_bTempArray_flash,(uint16_t)&g_sEepFlashAppPortC_flash,sizeof(sEepFlashAppPort)) == EEC_NO_ERROR) {
+   \   00000004   E042               LDI     R20, 2
+   \   00000006   ....               LDI     R18, LOW(g_sEepFlashAppPortC_flash)
+   \   00000008   ....               LDI     R19, (g_sEepFlashAppPortC_flash) >> 8
+   \   0000000A   ....               LDI     R16, LOW(m_bTempArray_flash)
+   \   0000000C   ....               LDI     R17, (m_bTempArray_flash) >> 8
+   \   0000000E   ........           CALL    ATA_eepReadBytes_C
+   \   00000012   2300               TST     R16
+   \   00000014   F439               BRNE    ??ATA_initIoModulePortC_flash_C_0
+    371                  DDRC   = m_bTempArray_flash[0];
+   \   00000016   9100....           LDS     R16, m_bTempArray_flash
+   \   0000001A   B907               OUT     0x07, R16
+    372                  PORTC  = m_bTempArray_flash[1];
+   \   0000001C   9100....           LDS     R16, (m_bTempArray_flash + 1)
+   \   00000020   B908               OUT     0x08, R16
+    373          
+    374                  fRetVal = OK;
+   \   00000022   E080               LDI     R24, 0
+    375              }
+    376              return fRetVal;
+   \                     ??ATA_initIoModulePortC_flash_C_0:
+   \   00000024                      REQUIRE ?Subroutine0
+   \   00000024                      REQUIRE _A_DDRC
+   \   00000024                      REQUIRE _A_PORTC
+   \   00000024                      ;               // Fall through to label ?Subroutine0
+    377          }
+    378          
+    379          /*---------------------------------------------------------------------------*/
+    380          /** \brief <b>ATA_initIoModulePortD_flash_C</b>
+    381          */
+    382          /*---------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    383          UINT8FUNC ATA_initIoModulePortD_flash_C(void)
+   \                     ATA_initIoModulePortD_flash_C:
+    384          {
+   \   00000000   938A               ST      -Y, R24
+    385              uint8_t fRetVal = FAIL;
+   \   00000002   E081               LDI     R24, 1
+    386              if (ATA_eepReadBytes_C(m_bTempArray_flash,(uint16_t)&g_sEepFlashAppPortD_flash,sizeof(sEepFlashAppPort)) == EEC_NO_ERROR) {
+   \   00000004   E042               LDI     R20, 2
+   \   00000006   ....               LDI     R18, LOW(g_sEepFlashAppPortD_flash)
+   \   00000008   ....               LDI     R19, (g_sEepFlashAppPortD_flash) >> 8
+   \   0000000A   ....               LDI     R16, LOW(m_bTempArray_flash)
+   \   0000000C   ....               LDI     R17, (m_bTempArray_flash) >> 8
+   \   0000000E   ........           CALL    ATA_eepReadBytes_C
+   \   00000012   2300               TST     R16
+   \   00000014   F439               BRNE    ??ATA_initIoModulePortD_flash_C_0
+    387                  DDRD   = m_bTempArray_flash[0];
+   \   00000016   9100....           LDS     R16, m_bTempArray_flash
+   \   0000001A   B90A               OUT     0x0A, R16
+    388                  PORTD  = m_bTempArray_flash[1];
+   \   0000001C   9100....           LDS     R16, (m_bTempArray_flash + 1)
+   \   00000020   B90B               OUT     0x0B, R16
+    389                  fRetVal = OK;
+   \   00000022   E080               LDI     R24, 0
+    390              }
+    391              return fRetVal;
+   \                     ??ATA_initIoModulePortD_flash_C_0:
+   \   00000024   ....               RJMP    ?Subroutine0
+   \   00000026                      REQUIRE _A_DDRD
+   \   00000026                      REQUIRE _A_PORTD
+    392          }
+    393          
+    394          /*---------------------------------------------------------------------------*/
+    395          /** \brief <b>ATA_initIoModuleSpi_flash_C</b>
+    396          */
+    397          /*---------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    398          UINT8FUNC ATA_initIoModuleSpi_flash_C(void)
+   \                     ATA_initIoModuleSpi_flash_C:
+    399          {
+   \   00000000   938A               ST      -Y, R24
+    400              uint8_t fRetVal = FAIL;
+   \   00000002   E081               LDI     R24, 1
+    401              if (ATA_eepReadBytes_C(m_bTempArray_flash,(uint16_t)&g_sEepFlashAppSpi_flash,sizeof(sEepFlashAppSpi)) == EEC_NO_ERROR)
+   \   00000004   E042               LDI     R20, 2
+   \   00000006   ....               LDI     R18, LOW(g_sEepFlashAppSpi_flash)
+   \   00000008   ....               LDI     R19, (g_sEepFlashAppSpi_flash) >> 8
+   \   0000000A   ....               LDI     R16, LOW(m_bTempArray_flash)
+   \   0000000C   ....               LDI     R17, (m_bTempArray_flash) >> 8
+   \   0000000E   ........           CALL    ATA_eepReadBytes_C
+   \   00000012   2300               TST     R16
+   \   00000014   F4B1               BRNE    ??ATA_initIoModuleSpi_flash_C_0
+    402              {
+    403                  /* Do not initialize SPI if the system is starting due to a Transponder Reset.
+    404                     If VBAT is not available, this will result in undefined behaviour. */
+    405                  if ( ((g_sAta5700_flash.events_reset & BM_TPRF) == 0x00U) ||
+    406                       ((m_bTempArray_flash[0] & BM_SPIE) != 0x00U )
+    407                     )
+   \   00000016   9100....           LDS     R16, (g_sAta5700_flash + 10)
+   \   0000001A   FF05               SBRS    R16, 5
+   \   0000001C   C004               RJMP    ??ATA_initIoModuleSpi_flash_C_1
+   \   0000001E   9100....           LDS     R16, m_bTempArray_flash
+   \   00000022   FF07               SBRS    R16, 7
+   \   00000024   C00D               RJMP    ??ATA_initIoModuleSpi_flash_C_2
+    408                  {
+    409                      /* If SPI interface is configured as master */
+    410                      if ( m_bTempArray_flash[0] & BM_MSTR )
+   \                     ??ATA_initIoModuleSpi_flash_C_1:
+   \   00000026   9100....           LDS     R16, m_bTempArray_flash
+   \   0000002A   9110....           LDS     R17, (m_bTempArray_flash + 1)
+   \   0000002E   FF04               SBRS    R16, 4
+   \   00000030   C003               RJMP    ??ATA_initIoModuleSpi_flash_C_3
+    411                      {
+    412                          fRetVal = ATA_spiOpen_C(m_bTempArray_flash[0], m_bTempArray_flash[1]);
+   \   00000032   ........           CALL    ATA_spiOpen_C
+   \   00000036   C002               RJMP    ??ATA_initIoModuleSpi_flash_C_4
+    413                      }
+    414                      else
+    415                      {
+    416                          fRetVal = ATA_spiSlaveOpen_flash_C(m_bTempArray_flash[0], m_bTempArray_flash[1]);
+   \                     ??ATA_initIoModuleSpi_flash_C_3:
+   \   00000038   ........           CALL    ATA_spiSlaveOpen_flash_C
+   \                     ??ATA_initIoModuleSpi_flash_C_4:
+   \   0000003C   2F80               MOV     R24, R16
+   \   0000003E   C001               RJMP    ??ATA_initIoModuleSpi_flash_C_0
+    417                      }
+    418                  }
+    419                  else
+    420                  {
+    421                      fRetVal = OK;
+   \                     ??ATA_initIoModuleSpi_flash_C_2:
+   \   00000040   E080               LDI     R24, 0
+    422                  }
+    423              }
+    424              return fRetVal;
+   \                     ??ATA_initIoModuleSpi_flash_C_0:
+   \   00000042   ....               RJMP    ?Subroutine0
+    425          }
+    426          
+    427          /*---------------------------------------------------------------------------*/
+    428          /** \brief <b>ATA_initIoModuleSup_flash_C</b>
+    429          */
+    430          /*---------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    431          UINT8FUNC ATA_initIoModuleSup_flash_C(void)
+   \                     ATA_initIoModuleSup_flash_C:
+    432          {
+   \   00000000   938A               ST      -Y, R24
+    433              uint8_t fRetVal = FAIL;
+   \   00000002   E081               LDI     R24, 1
+    434              if (ATA_eepReadBytes_C(m_bTempArray_flash,(uint16_t)&g_sEepFlashAppSup_flash,sizeof(sEepFlashAppSup)) == EEC_NO_ERROR)
+   \   00000004   E042               LDI     R20, 2
+   \   00000006   ....               LDI     R18, LOW(g_sEepFlashAppSup_flash)
+   \   00000008   ....               LDI     R19, (g_sEepFlashAppSup_flash) >> 8
+   \   0000000A   ....               LDI     R16, LOW(m_bTempArray_flash)
+   \   0000000C   ....               LDI     R17, (m_bTempArray_flash) >> 8
+   \   0000000E   ........           CALL    ATA_eepReadBytes_C
+   \   00000012   2300               TST     R16
+   \   00000014   F479               BRNE    ??ATA_initIoModuleSup_flash_C_0
+    435              {
+    436                  /* Do not activate VMEM */
+    437                  m_bTempArray_flash[0] &= (BM_VMEMEN|BM_VMRESM);
+   \   00000016   9100....           LDS     R16, m_bTempArray_flash
+   \   0000001A   7C00               ANDI    R16, 0xC0
+   \   0000001C   9300....           STS     m_bTempArray_flash, R16
+    438                  SUPCR |= m_bTempArray_flash[0];
+   \   00000020   9110....           LDS     R17, _A_SUPCR
+   \   00000024   2B10               OR      R17, R16
+   \   00000026   9310....           STS     _A_SUPCR, R17
+    439                  // VMCR  setting
+    440                  ATA_globalsSetVoltageMonitor_C(m_bTempArray_flash[1]);
+   \   0000002A   9100....           LDS     R16, (m_bTempArray_flash + 1)
+   \   0000002E   ........           CALL    ATA_globalsSetVoltageMonitor_C
+    441                  fRetVal = OK;
+   \   00000032   E080               LDI     R24, 0
+    442              }
+    443              return fRetVal;
+   \                     ??ATA_initIoModuleSup_flash_C_0:
+   \   00000034   ....               RJMP    ?Subroutine0
+   \   00000036                      REQUIRE _A_SUPCR
+    444          }
+    445          
+    446          /*---------------------------------------------------------------------------*/
+    447          /** \brief <b>ATA_initIoModuleTimer0Wdt_flash_C</b>
+    448          */
+    449          /*---------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    450          UINT8FUNC ATA_initIoModuleTimer0Wdt_flash_C(void)
+   \                     ATA_initIoModuleTimer0Wdt_flash_C:
+    451          {
+   \   00000000   938A               ST      -Y, R24
+    452              uint8_t retVal = FAIL;
+   \   00000002   E081               LDI     R24, 1
+    453              if (ATA_eepReadBytes_C(m_bTempArray_flash,(uint16_t)&g_sEepFlashAppTimer0Wdt_flash.WDTCR, 1U) == EEC_NO_ERROR) {
+   \   00000004   E041               LDI     R20, 1
+   \   00000006   ....               LDI     R18, LOW(g_sEepFlashAppTimer0Wdt_flash)
+   \   00000008   ....               LDI     R19, (g_sEepFlashAppTimer0Wdt_flash) >> 8
+   \   0000000A   ....               LDI     R16, LOW(m_bTempArray_flash)
+   \   0000000C   ....               LDI     R17, (m_bTempArray_flash) >> 8
+   \   0000000E   ........           CALL    ATA_eepReadBytes_C
+   \   00000012   2300               TST     R16
+   \   00000014   F429               BRNE    ??ATA_initIoModuleTimer0Wdt_flash_C_0
+    454                  ATA_globalsWdtEnable_C(m_bTempArray_flash[0]);
+   \   00000016   9100....           LDS     R16, m_bTempArray_flash
+   \   0000001A   ........           CALL    ATA_globalsWdtEnable_C
+    455                  retVal = OK;
+   \   0000001E   E080               LDI     R24, 0
+    456              }
+    457              return retVal;
+   \                     ??ATA_initIoModuleTimer0Wdt_flash_C_0:
+   \   00000020   ....               RJMP    ?Subroutine0
+    458          }
+    459          
+    460          
+    461          /*---------------------------------------------------------------------------*/
+    462          /** \brief <b>ATA_initIoModuleTimer0Wdt_flash_C</b>
+    463              --> can be also done in clib in low_level_init.c
+    464          */
+    465          /*---------------------------------------------------------------------------*/
+
+   \                                 In  segment CODE, align 2, keep-with-next, root
+    466          VOIDFUNC ATA_initAvrRegister_flash_C(void)
+   \                     ATA_initAvrRegister_flash_C:
+    467          {
+    468              __asm("LDI  R31,0");
+   \   00000000   E0F0               LDI  R31,0
+    469              __asm("LDI  R30,0");
+   \   00000002   E0E0               LDI  R30,0
+    470              /* R29 used for STACK */
+    471              /* R28 used for STACK */
+    472              __asm("LDI  R27,0");
+   \   00000004   E0B0               LDI  R27,0
+    473              __asm("LDI  R26,0");
+   \   00000006   E0A0               LDI  R26,0
+    474              __asm("LDI  R25,0");
+   \   00000008   E090               LDI  R25,0
+    475              __asm("LDI  R24,0");
+   \   0000000A   E080               LDI  R24,0
+    476              __asm("LDI  R23,0");
+   \   0000000C   E070               LDI  R23,0
+    477              __asm("LDI  R22,0");
+   \   0000000E   E060               LDI  R22,0
+    478              __asm("LDI  R21,0");
+   \   00000010   E050               LDI  R21,0
+    479              __asm("LDI  R20,0");
+   \   00000012   E040               LDI  R20,0
+    480              __asm("LDI  R19,0");
+   \   00000014   E030               LDI  R19,0
+    481              __asm("LDI  R18,0");
+   \   00000016   E020               LDI  R18,0
+    482              __asm("LDI  R17,0");
+   \   00000018   E010               LDI  R17,0
+    483              __asm("LDI  R16,0");
+   \   0000001A   E000               LDI  R16,0
+    484              __asm("MOV  R15,R30");
+   \   0000001C   2EFE               MOV  R15,R30
+    485              __asm("MOV  R14,R30");
+   \   0000001E   2EEE               MOV  R14,R30
+    486              __asm("MOV  R13,R30");
+   \   00000020   2EDE               MOV  R13,R30
+    487              __asm("MOV  R12,R30");
+   \   00000022   2ECE               MOV  R12,R30
+    488              __asm("MOV  R11,R30");
+   \   00000024   2EBE               MOV  R11,R30
+    489              __asm("MOV  R10,R30");
+   \   00000026   2EAE               MOV  R10,R30
+    490              __asm("MOV  R9,R30");
+   \   00000028   2E9E               MOV  R9,R30
+    491              __asm("MOV  R8,R30");
+   \   0000002A   2E8E               MOV  R8,R30
+    492              __asm("MOV  R7,R30");
+   \   0000002C   2E7E               MOV  R7,R30
+    493              __asm("MOV  R6,R30");
+   \   0000002E   2E6E               MOV  R6,R30
+    494              __asm("MOV  R5,R30");
+   \   00000030   2E5E               MOV  R5,R30
+    495              __asm("MOV  R4,R30");
+   \   00000032   2E4E               MOV  R4,R30
+    496              __asm("MOV  R3,R30");
+   \   00000034   2E3E               MOV  R3,R30
+    497              __asm("MOV  R2,R30");
+   \   00000036   2E2E               MOV  R2,R30
+    498              __asm("MOV  R1,R30");
+   \   00000038   2E1E               MOV  R1,R30
+    499              __asm("MOV  R0,R30");
+   \   0000003A   2E0E               MOV  R0,R30
+    500          }
+   \   0000003C   9508               RET
+
+   Maximum stack usage in bytes:
+
+   CSTACK RSTACK Function
+   ------ ------ --------
+      0      2   ATA_initAta5700_flash_C
+        0      2   -> ATA_initIoModuleClk_flash_C
+        0      2   -> ATA_initIoModuleCpu_flash_C
+        0      2   -> ATA_initIoModuleDebounce_flash_C
+        0      2   -> ATA_initIoModuleDebug_flash_C
+        0      2   -> ATA_initIoModuleInt_flash_C
+        0      2   -> ATA_initIoModuleSup_flash_C
+        0      2   -> ATA_initIoModuleTimer0Wdt_flash_C
+        0      2   -> ATA_timer1Init_C
+        0      2   -> ATA_timer2Init_C
+        0      2   -> ATA_timer3Init_C
+        0      2   -> ATA_timer4Init_C
+        0      2   -> ATA_timer5Init_C
+      0      2   ATA_initAvrRegister_flash_C
+      1      2   ATA_initEventHandling_flash_C
+        1      2   -> ATA_eepReadBytes_C
+      1      2   ATA_initIoModuleClk_flash_C
+        1      2   -> ATA_eepReadBytes_C
+        1      2   -> ATA_globalsClkSwitchFrc_C
+        1      2   -> ATA_globalsSetClk_C
+      2      2   ATA_initIoModuleCpu_flash_C
+        2      2   -> ATA_eepReadBytes_C
+      1      2   ATA_initIoModuleDebounce_flash_C
+        1      2   -> ATA_eepReadBytes_C
+      2      2   ATA_initIoModuleDebug_flash_C
+        2      2   -> ATA_eepReadBytes_C
+      1      2   ATA_initIoModuleInt_flash_C
+        1      2   -> ATA_eepReadBytes_C
+      1      2   ATA_initIoModulePortB_flash_C
+        1      2   -> ATA_eepReadBytes_C
+      1      2   ATA_initIoModulePortC_flash_C
+        1      2   -> ATA_eepReadBytes_C
+      1      2   ATA_initIoModulePortD_flash_C
+        1      2   -> ATA_eepReadBytes_C
+      1      2   ATA_initIoModuleSpi_flash_C
+        1      2   -> ATA_eepReadBytes_C
+        1      2   -> ATA_spiOpen_C
+        1      2   -> ATA_spiSlaveOpen_flash_C
+      1      2   ATA_initIoModuleSup_flash_C
+        1      2   -> ATA_eepReadBytes_C
+        1      2   -> ATA_globalsSetVoltageMonitor_C
+      1      2   ATA_initIoModuleTimer0Wdt_flash_C
+        1      2   -> ATA_eepReadBytes_C
+        1      2   -> ATA_globalsWdtEnable_C
+      0      2   gpio_init
+
+
+   Segment part sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       6  ?Subroutine0
+       6  ?Subroutine1
+      70  ATA_initAta5700_flash_C
+      62  ATA_initAvrRegister_flash_C
+      32  ATA_initEventHandling_flash_C
+     142  ATA_initIoModuleClk_flash_C
+      54  ATA_initIoModuleCpu_flash_C
+      66  ATA_initIoModuleDebounce_flash_C
+      56  ATA_initIoModuleDebug_flash_C
+      54  ATA_initIoModuleInt_flash_C
+      54  ATA_initIoModulePortB_flash_C
+      36  ATA_initIoModulePortC_flash_C
+      38  ATA_initIoModulePortD_flash_C
+      68  ATA_initIoModuleSpi_flash_C
+      54  ATA_initIoModuleSup_flash_C
+      34  ATA_initIoModuleTimer0Wdt_flash_C
+       1  _A_CLKOCR
+       1  _A_CLKOD
+       1  _A_CMOCR
+       1  _A_DBCR
+       1  _A_DBENB
+       1  _A_DBENC
+       1  _A_DBEND
+       1  _A_DBGSW
+       1  _A_DBTC
+       1  _A_DDRB
+       1  _A_DDRC
+       1  _A_DDRD
+       1  _A_EICRA
+       1  _A_EIMSK
+       1  _A_MCUCR
+       1  _A_PCICR
+       1  _A_PCMSK0
+       1  _A_PCMSK1
+       1  _A_PORTB
+       1  _A_PORTC
+       1  _A_PORTD
+       1  _A_PRR0
+       1  _A_PRR1
+       1  _A_PRR2
+       1  _A_SPCR
+       1  _A_SPSR
+       1  _A_SREG
+       1  _A_SUPCR
+       1  g_bSleepModeConfig_flash
+      13  g_sEventHandling_flash
+     104  gpio_init
+      10  m_bTempArray_flash
+
+ 
+  13 bytes in segment .sram_FlashApp_EventHandling
+   1 byte  in segment .sram_FlashApp_Sleep
+  10 bytes in segment .sram_FlashApp_TempArray
+  28 bytes in segment ABSOLUTE
+ 936 bytes in segment CODE
+ 
+ 936 bytes of CODE memory
+  24 bytes of DATA memory (+ 28 bytes shared)
+
+Errors: none
+Warnings: none

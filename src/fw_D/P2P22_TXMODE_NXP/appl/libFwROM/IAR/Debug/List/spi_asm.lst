@@ -1,0 +1,297 @@
+###############################################################################
+#                                                                             #
+#     IAR Assembler V6.70.1.929/W32 for Atmel AVR 05/Apr/2016  13:30:38       #
+#     Copyright 2015 IAR Systems AB.                                          #
+#                                                                             #
+#           Target option =  Relative jumps do not wrap                       #
+#           Source file   =  C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\firmware\spi\src\spi_asm.s90#
+#           List file     =  C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\List\spi_asm.lst#
+#           Object file   =  C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\Obj\spi_asm.r90#
+#           Command line  =  C:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\firmware\spi\src\spi_asm.s90 #
+#                            -v3                                              #
+#                            -OC:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\Obj #
+#                            -s+ -w+ -r -DHAVE_BITREVERSAL -M<>               #
+#                            -LC:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\Debug\List #
+#                            -t8 -u_enhancedCore -D__HAS_ENHANCED_CORE__=1    #
+#                            -D__HAS_MUL__=1                                  #
+#                            -IC:\Program Files (x86)\IAR Systems\Embedded Workbench 7.3\avr\INC\ #
+#                            -IC:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\..\..\..\firmware\stdc\src\ #
+#                            -IC:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\..\..\..\firmware\globals\src\ #
+#                            -IC:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\..\..\..\firmware\eep\src\ #
+#                            -IC:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\..\..\..\firmware\rf\src\ #
+#                            -IC:\Users\grueter\Documents\CDB_\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2_Gen2_Merge\appl\libFwROM\IAR\..\..\..\firmware\calib\src\ #
+#                            -D__MEMORY_MODEL__=2                             #
+#                                                                             #
+###############################################################################
+
+      1    00000000              //lint -e9059
+      2    00000000              /* *ASM***************************************
+                                 *********************************
+      3    00000000                Use of this software is subject to Atmel's
+                                  Software License Agreement.
+      4    00000000              ----------------------------------------------
+                                 ---------------------------------
+      5    00000000                $URL: http://svnservulm.corp.atmel.com/svn/C
+                                 DB/Apps/SW_Lib/Car_Access/CARS_GEN2/ATAB5702A/
+                                 Branches/P2_Gen2_Merge/firmware/spi/src/spi_as
+                                 m.s90 $
+      6    00000000                $LastChangedRevision: 328482 $
+      7    00000000                $LastChangedDate: 2015-07-22 13:17:23 -0600
+                                  (Wed, 22 Jul 2015) $
+      8    00000000                $LastChangedBy: grueter $
+      9    00000000              ----------------------------------------------
+                                 ---------------------------------
+     10    00000000                Project:      ATA5700
+     11    00000000                Target MCU:   ATA5700
+     12    00000000                Compiler:     IAR Assembler for AVR
+                                  6.30.1
+     13    00000000              ----------------------------------------------
+                                 ---------------------------------
+     14    00000000              
+     15    00000000              **********************************************
+                                 ********************************
+     16    00000000              * Copyright 2011, Atmel Automotive GmbH       
+                                                                 *
+     17    00000000              *                                             
+                                                                 *
+     18    00000000              * This software is owned by the Atmel
+                                  Automotive GmbH                        
+                                  *
+     19    00000000              * and is protected by and subject to worldwide
+                                  patent protection.             *
+     20    00000000              * Atmel hereby grants to licensee a personal, 
+                                                                 *
+     21    00000000              * non-exclusive, non-transferable license to
+                                  copy, use, modify, create        *
+     22    00000000              * derivative works of, and compile the Atmel
+                                  Source Code and derivative       *
+     23    00000000              * works for the sole purpose of creating
+                                  custom software in support of       
+                                  *
+     24    00000000              * licensee product to be used only in
+                                  conjunction with a Atmel integrated    
+                                  *
+     25    00000000              * circuit as specified in the applicable
+                                  agreement. Any reproduction,        
+                                  *
+     26    00000000              * modification, translation, compilation, or
+                                  representation of this           *
+     27    00000000              * software except as specified above is
+                                  prohibited without the express       
+                                  *
+     28    00000000              * written permission of Atmel.                
+                                                                 *
+     29    00000000              *                                             
+                                                                 *
+     30    00000000              * Disclaimer: ATMEL MAKES NO WARRANTY OF ANY
+                                  KIND,EXPRESS OR IMPLIED,         *
+     31    00000000              * WITH REGARD TO THIS MATERIAL, INCLUDING, BUT
+                                  NOT LIMITED TO, THE IMPLIED    *
+     32    00000000              * WARRANTIES OF MERCHANTABILITY AND FITNESS
+                                  FOR A PARTICULAR PURPOSE.         *
+     33    00000000              * Atmel reserves the right to make changes
+                                  without further notice to the      *
+     34    00000000              * materials described herein. Atmel does not
+                                  assume any liability arising     *
+     35    00000000              * out of the application or use of any product
+                                  or circuit described herein.   *
+     36    00000000              * Atmel does not authorize its products for
+                                  use as critical components in     *
+     37    00000000              * life-support systems where a malfunction or
+                                  failure may reasonably be       *
+     38    00000000              * expected to result in significant injury to
+                                  the user. The inclusion of      *
+     39    00000000              * Atmel products in a life-support systems
+                                  application implies that the       *
+     40    00000000              * manufacturer assumes all risk of such use
+                                  and in doing so indemnifies       *
+     41    00000000              * Atmel against all charges.                  
+                                                                 *
+     42    00000000              *                                             
+                                                                 *
+     43    00000000              * Use may be limited by and subject to the
+                                  applicable Atmel software          *
+     44    00000000              * license agreement.                          
+                                                                 *
+     45    00000000              **********************************************
+                                 *********************************/
+     46    00000000              /* \file spi_asm.s90
+     47    00000000              */
+     48    00000000              //lint -restore
+     49    00000000              
+     50    00000000                  NAME spi_asm
+     51    00000000              
+     52    00000000                  PUBLIC ATA_spiRxBufferHandler_ISR_ASM
+     53    00000000                  PUBLIC ATA_spiRxBufferDisableInt_ASM
+     54    00000000                  PUBLIC ATA_spiRxBufferEnd_ASM
+     55    00000000                  
+     56    00000000                  PUBLIC ATA_spiTxBufferHandler_ISR_ASM
+     57    00000000                  PUBLIC ATA_spiTxBufferDisableInt_ASM
+     58    00000000                  PUBLIC ATA_spiTxBufferEnd_ASM   
+                                                                       
+     59    00000000              
+     60    00000000              
+     61    00000000                  EXTERN g_sSpiConfig
+     62    00000000              
+     63    00000000              /* ===========================================
+                                 ================================*/
+     64    00000000              /*   INCLUDES                                 
+                                                                 */
+     65    00000000              /* ===========================================
+                                 ================================*/
+     66    00000000              #include "regs.inc"
+     67    00000000              #include "globals.h"
+     68    00000000              #include "spi.h"
+     69    00000000              
+     70    00000000              /* ===========================================
+                                 ================================*/
+     71    00000000              /*   Modul Globals                            
+                                                                 */
+     72    00000000              /* ===========================================
+                                 ================================*/
+     73    00000000              /* ===========================================
+                                 ================================*/
+     74    00000000              /*   Macros                                   
+                                                                 */
+     75    00000000              /* ===========================================
+                                 ================================*/
+     76    00000000              /* ===========================================
+                                 ================================*/
+     77    00000000              /*   IMPLEMENTATION                           
+                                                                 */
+     78    00000000              /* ===========================================
+                                 ================================*/
+     79    00000000              
+     80    00000000              /* -------------------------------------------
+                                 --------------------------------*/
+     81    00000000              /** \brief <b>ATA_spiRxBufferHandler_ISR_ASM</
+                                 b>
+     82    00000000                  is the SPI Rx FIFO IRQ.
+     83    00000000              
+     84    00000000                  Variable Usage:
+     85    00000000                  \li[in]  ::g_sSpiConfig is global SPI
+                                  component data
+     86    00000000              
+     87    00000000                  \image html ATA_spiRxBufferHandler_ISR_ASM
+                                 .png
+     88    00000000              
+     89    00000000                  \internal
+     90    00000000                  \Derived{Yes}
+     91    00000000              
+     92    00000000                  \Rationale{This function is a helper
+                                  function in order to implement the SPI
+     93    00000000                             specific data handling}
+     94    00000000              
+     95    00000000                  \Traceability   N/A
+     96    00000000                  \endinternal
+     97    00000000              \n
+     98    00000000              */
+     99    00000000              /* -------------------------------------------
+                                 --------------------------------*/
+    100    00000000              #pragma vector=SRX_FIFO_vect
+    101    00000000              RSEG CODE:CODE:ROOT(1)
+    102    00000000              ATA_spiRxBufferHandler_ISR_ASM:
+    103    00000000 93EF             PUSH    R30
+    104    00000002 93FF             PUSH    R31
+    105    00000004              
+    106    00000004 B7FF             IN      R31 , SREG
+    107    00000006 93FF             PUSH    R31
+    108    00000008              
+    109    00000008                  ; ----------------------------------------
+                                 --
+    110    00000008 91E0....         LDS     R30 , g_sSpiConfig + SPICONFIG_PTM
+                                                 P
+    111    0000000C 91F0....         LDS     R31 , g_sSpiConfig + SPICONFIG_PTM
+                                                 P + 1
+    112    00000010 9409             IJMP
+    113    00000012                  ; ----------------------------------------
+                                 --
+    114    00000012              
+    115    00000012              ATA_spiRxBufferDisableInt_ASM:
+    116    00000012                  ; SFIR = BM_SRIE -> disable rx buffer
+                                  interrupt
+    117    00000012 91E00158         LDS     R30 , SFIR
+    118    00000016 7FE7             ANDI    R30 , ~(BM_SRIE)
+    119    00000018 93E00158         STS     SFIR , R30
+    120    0000001C              
+    121    0000001C              ATA_spiRxBufferEnd_ASM:
+    122    0000001C 91FF             POP     R31
+    123    0000001E BFFF             OUT     SREG , R31
+    124    00000020              
+    125    00000020 91FF             POP     R31
+    126    00000022 91EF             POP     R30
+    127    00000024              
+    128    00000024 9518             RETI
+    129    00000026              
+    130    00000026              /* -------------------------------------------
+                                 --------------------------------*/
+    131    00000026              /**  \brief <b>ATA_spiTxBufferHandler_ISR_ASM<
+                                 /b>
+    132    00000026                  is the SPI Tx FIFO IRQ.
+    133    00000026              
+    134    00000026                  Used Variables
+    135    00000026                  \li[in]  ::g_sSpiConfig is global SPI
+                                  component data
+    136    00000026              
+    137    00000026                  \image html ATA_spiTxBufferHandler_ISR_ASM
+                                 .png
+    138    00000026              
+    139    00000026                  \internal
+    140    00000026                  \Derived{Yes}
+    141    00000026              
+    142    00000026                  \Rationale{This function is a helper
+                                  function in order to implement the SPI
+    143    00000026                             specific data handling}
+    144    00000026              
+    145    00000026                  \Traceability   N/A
+    146    00000026                  \endinternal
+    147    00000026              \n
+    148    00000026              */
+    149    00000026              /* -------------------------------------------
+                                 --------------------------------*/
+    150    00000026              #pragma vector=STX_FIFO_vect
+    151    00000000              RSEG CODE:CODE:ROOT(1)
+    152    00000000              ATA_spiTxBufferHandler_ISR_ASM:
+    153    00000000 93EF             PUSH    R30
+    154    00000002 93FF             PUSH    R31
+    155    00000004              
+    156    00000004 B7FF             IN      R31 , SREG
+    157    00000006 93FF             PUSH    R31
+    158    00000008              
+    159    00000008                  ; ----------------------------------------
+                                 --
+    160    00000008 91E0....         LDS     R30 , g_sSpiConfig + SPICONFIG_PTM
+                                                 P
+    161    0000000C 91F0....         LDS     R31 , g_sSpiConfig + SPICONFIG_PTM
+                                                 P + 1
+    162    00000010 9409             IJMP
+    163    00000012                  ; ----------------------------------------
+                                 --
+    164    00000012              ATA_spiTxBufferDisableInt_ASM:
+    165    00000012                  ; SFIR = BM_STIE -> disable tx buffer
+                                  interrupt
+    166    00000012 91E00158         LDS     R30 , SFIR
+    167    00000016 77EF             ANDI    R30 , ~(BM_STIE)
+    168    00000018 93E00158         STS     SFIR , R30
+    169    0000001C              
+    170    0000001C              ATA_spiTxBufferEnd_ASM:
+    171    0000001C              
+    172    0000001C 91FF             POP     R31
+    173    0000001E BFFF             OUT     SREG , R31
+    174    00000020              
+    175    00000020 91FF             POP     R31
+    176    00000022 91EF             POP     R30
+    177    00000024              
+    178    00000024 9518             RETI
+    179    00000026              
+    180    00000026                  END
+##############################
+#          CRC:AC8B          #
+#        Errors:   0         #
+#        Warnings: 0         #
+#         Bytes: 76          #
+##############################
+
+
+
+

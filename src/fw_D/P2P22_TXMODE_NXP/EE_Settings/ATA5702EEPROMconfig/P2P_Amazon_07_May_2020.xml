@@ -1,0 +1,619 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <product>
+    <platform>Primus2p</platform>
+    <name>ATA5702</name>
+    <version>2.0</version>
+    <xto>24.305</xto>
+  </product>
+  <eeprom>
+    <variable name="g_bEnhancedModeFlag">
+      <setting name="eepEnhancedModeFlag" address="0x0000" type="uint8_t" size="0x01">0xAA</setting>
+    </variable>
+    <variable name="g_bKeyId">
+      <setting name="eepKeyId" address="0x0001" type="uint8_t" size="0x01">0x00</setting>
+    </variable>
+    <variable name="g_sEepCalibSrcCalibrationConfig">
+      <setting name="wXtoCyclesPerMeasurement" address="0x0004" type="uint16_t" size="0x02">0xC2 0x00</setting>
+      <setting name="bGradient" address="0x0006" type="uint8_t" size="0x01">0x40</setting>
+    </variable>
+    <variable name="g_sEepCalibFrcCalibrationConfig">
+      <setting name="bT3CORL" address="0x0007" type="uint8_t" size="0x01">0xBF</setting>
+      <setting name="bT3CORH" address="0x0008" type="uint8_t" size="0x01">0x00</setting>
+    </variable>
+    <variable name="g_sCustomer" />
+    <variable name="g_sFlashApp">
+      <setting name="g_sEepFlashAppEventHandling_flash.bConfig" address="0x0410" type="uint8_t" size="0x01">0x01</setting>
+      <setting name="g_sEepFlashAppEventHandling_flash.bSystem" address="0x0411" type="uint8_t" size="0x01">0x40</setting>
+      <setting name="g_sEepFlashAppEventHandling_flash.bWakeup" address="0x0412" type="uint8_t" size="0x01">0x00</setting>
+      <setting name="g_sEepFlashAppEventHandling_flash.bRfTx0" address="0x0413" type="uint8_t" size="0x01">0x00</setting>
+      <setting name="g_sEepFlashAppEventHandling_flash.bRfTx1" address="0x0414" type="uint8_t" size="0x01">0x00</setting>
+      <setting name="g_sEepFlashAppEventHandling_flash.bPhRxTx0" address="0x0415" type="uint8_t" size="0x01">0x00</setting>
+      <setting name="g_sEepFlashAppEventHandling_flash.bPhRxTx1" address="0x0416" type="uint8_t" size="0x01">0x00</setting>
+      <setting name="g_sEepFlashAppEventHandling_flash.bLf3dRx" address="0x0417" type="uint8_t" size="0x01">0x00</setting>
+      <setting name="g_sEepFlashAppEventHandling_flash.bTpRxTx" address="0x0418" type="uint8_t" size="0x01">0x00</setting>
+      <setting name="g_sEepFlashAppEventHandling_flash.bComponents" address="0x0419" type="uint8_t" size="0x01">0xFF</setting>
+      <setting name="g_sEepFlashAppEventHandling_flash.bReset" address="0x041A" type="uint8_t" size="0x01">0x00</setting>
+      <setting name="g_sEepFlashAppEventHandling_flash.bPinChangePortB" address="0x041B" type="uint8_t" size="0x01">0x00</setting>
+      <setting name="g_sEepFlashAppEventHandling_flash.bPinChangePortD" address="0x041C" type="uint8_t" size="0x01">0x00</setting>
+      <setting name="g_sEepFlashAppClk_flash.PRR0" address="0x041D" type="uint8_t" size="0x01">0xFF</setting>
+      <setting name="g_sEepFlashAppClk_flash.PRR1" address="0x041E" type="uint8_t" size="0x01">0xFF</setting>
+      <setting name="g_sEepFlashAppClk_flash.PRR2" address="0x041F" type="uint8_t" size="0x01">0xFF</setting>
+      <setting name="g_sEepFlashAppClk_flash.CLKOD" address="0x0420" type="uint8_t" size="0x01">0x04</setting>
+      <setting name="g_sEepFlashAppClk_flash.CLKOCR" address="0x0421" type="uint8_t" size="0x01">0x00</setting>
+      <setting name="g_sEepFlashAppClk_flash.CMOCR" address="0x0422" type="uint8_t" size="0x01">0x00</setting>
+      <setting name="g_sEepFlashAppCpu_flash.MCUCR" address="0x0423" type="uint8_t" size="0x01">0x08</setting>
+      <setting name="g_sEepFlashAppCpu_flash.SMCR" address="0x0424" type="uint8_t" size="0x01">0x86</setting>
+      <setting name="g_sEepFlashAppDebounce_flash.DBCR" address="0x0425" type="uint8_t" size="0x01">0x00</setting>
+      <setting name="g_sEepFlashAppDebounce_flash.DBTC" address="0x0426" type="uint8_t" size="0x01">0x00</setting>
+      <setting name="g_sEepFlashAppDebounce_flash.DBENB" address="0x0427" type="uint8_t" size="0x01">0x00</setting>
+      <setting name="g_sEepFlashAppDebounce_flash.DBENC" address="0x0428" type="uint8_t" size="0x01">0x00</setting>
+      <setting name="g_sEepFlashAppDebounce_flash.DBEND" address="0x0429" type="uint8_t" size="0x01">0x00</setting>
+      <setting name="g_sEepFlashAppDebug_flash.bTrace" address="0x042A" type="uint8_t" size="0x01">0x00</setting>
+      <setting name="g_sEepFlashAppDebug_flash.bDBGSW" address="0x042B" type="uint8_t" size="0x01">0x00</setting>
+      <setting name="g_sEepFlashAppInt_flash.PCICR" address="0x042C" type="uint8_t" size="0x01">0x00</setting>
+      <setting name="g_sEepFlashAppInt_flash.EIMSK" address="0x042D" type="uint8_t" size="0x01">0x00</setting>
+      <setting name="g_sEepFlashAppInt_flash.EICRA" address="0x042E" type="uint8_t" size="0x01">0x00</setting>
+      <setting name="g_sEepFlashAppInt_flash.PCMSK0" address="0x042F" type="uint8_t" size="0x01">0x20</setting>
+      <setting name="g_sEepFlashAppInt_flash.PCMSK1" address="0x0430" type="uint8_t" size="0x01">0x00</setting>
+      <setting name="g_sEepFlashAppPortB_flash.DDR" address="0x0431" type="uint8_t" size="0x01">0xC8</setting>
+      <setting name="g_sEepFlashAppPortB_flash.PORT" address="0x0432" type="uint8_t" size="0x01">0x88</setting>
+      <setting name="g_sEepFlashAppPortC_flash.DDR" address="0x0433" type="uint8_t" size="0x01">0x2C</setting>
+      <setting name="g_sEepFlashAppPortC_flash.PORT" address="0x0434" type="uint8_t" size="0x01">0x01</setting>
+      <setting name="g_sEepFlashAppPortD_flash.DDR" address="0x0435" type="uint8_t" size="0x01">0x00</setting>
+      <setting name="g_sEepFlashAppPortD_flash.PORT" address="0x0436" type="uint8_t" size="0x01">0x00</setting>
+      <setting name="g_sEepFlashAppSpi_flash.SPCR" address="0x0437" type="uint8_t" size="0x01">0xC0</setting>
+      <setting name="g_sEepFlashAppSpi_flash.SPSR" address="0x0438" type="uint8_t" size="0x01">0x00</setting>
+      <setting name="g_sEepFlashAppSup_flash.SUPCR" address="0x0439" type="uint8_t" size="0x01">0x00</setting>
+      <setting name="g_sEepFlashAppSup_flash.VMCR" address="0x043A" type="uint8_t" size="0x01">0x00</setting>
+      <setting name="g_sEepFlashAppTimer0Wdt_flash.WDTCR" address="0x043B" type="uint8_t" size="0x01">0x00</setting>
+      <setting name="g_sEepFlashAppLfRssiEndOfLineCalibrationSettings_flash.bMargin" address="0x043C" type="uint8_t" size="0x01">0xFF</setting>
+      <setting name="g_sEepFlashAppLfRssiEndOfLineCalibrationSettings_flash.wRssiRefLow[0]" address="0x043D" type="uint8_t" size="0x01">0xFF</setting>
+      <setting name="g_sEepFlashAppLfRssiEndOfLineCalibrationSettings_flash.wRssiRefHigh[0]" address="0x043E" type="uint8_t" size="0x01">0xFF</setting>
+      <setting name="g_sEepFlashAppLfRssiEndOfLineCalibrationSettings_flash.wRssiRefLow[1]" address="0x043F" type="uint8_t" size="0x01">0xFF</setting>
+      <setting name="g_sEepFlashAppLfRssiEndOfLineCalibrationSettings_flash.wRssiRefHigh[1]" address="0x0440" type="uint8_t" size="0x01">0xFF</setting>
+      <setting name="g_sEepFlashAppLfRssiEndOfLineCalibrationSettings_flash.wRssiRefLow[2]" address="0x0441" type="uint8_t" size="0x01">0xFF</setting>
+      <setting name="g_sEepFlashAppLfRssiEndOfLineCalibrationSettings_flash.wRssiRefHigh[2]" address="0x0442" type="uint8_t" size="0x01">0xFF</setting>
+      <setting name="g_sEepFlashAppLfRssiEndOfLineCalibrationSettings_flash.wRssiNormLow[0]" address="0x0443" type="uint8_t" size="0x01">0xFF</setting>
+      <setting name="g_sEepFlashAppLfRssiEndOfLineCalibrationSettings_flash.wRssiNormHigh[0]" address="0x0444" type="uint8_t" size="0x01">0xFF</setting>
+      <setting name="g_sEepFlashAppLfRssiEndOfLineCalibrationSettings_flash.wRssiNormLow[1]" address="0x0445" type="uint8_t" size="0x01">0xFF</setting>
+      <setting name="g_sEepFlashAppLfRssiEndOfLineCalibrationSettings_flash.wRssiNormHigh[1]" address="0x0446" type="uint8_t" size="0x01">0xFF</setting>
+      <setting name="g_sEepFlashAppLfRssiEndOfLineCalibrationSettings_flash.wRssiNormLow[2]" address="0x0447" type="uint8_t" size="0x01">0xFF</setting>
+      <setting name="g_sEepFlashAppLfRssiEndOfLineCalibrationSettings_flash.wRssiNormHigh[2]" address="0x0448" type="uint8_t" size="0x01">0xFF</setting>
+      <setting name="g_sEepFlashAppLfRssiEndOfLineCalibrationSettings_flash.wBrefLow" address="0x0449" type="uint8_t" size="0x01">0xFF</setting>
+      <setting name="g_sEepFlashAppLfRssiEndOfLineCalibrationSettings_flash.wBrefHigh" address="0x044A" type="uint8_t" size="0x01">0xFF</setting>
+      <setting name="g_bEepFlashAppLfRssiSrcCalibrationSetting_flash" address="0x044B" type="uint8_t" size="0x01">0xFF</setting>
+    </variable>
+    <variable name="g_sCustomerEEPromSection">
+      <setting name="eepTpConfig" address="0x0800" type="uint8_t" size="1">0x00</setting>
+      <setting name="eepTPCR1" address="0x0801" type="uint8_t" size="1">0x00</setting>
+      <setting name="eepTPCR2" address="0x0802" type="uint8_t" size="1">0x10</setting>
+      <setting name="eepTPCR5" address="0x0803" type="uint8_t" size="1">0x13</setting>
+      <setting name="eepCalLen" address="0x0804" type="uint8_t" size="1">0x20</setting>
+      <setting name="eepResLen" address="0x0805" type="uint8_t" size="1">0x20</setting>
+      <setting name="eepWDTCR" address="0x0806" type="uint8_t" size="1">0x00</setting>
+      <setting name="eepVMCR" address="0x0807" type="uint8_t" size="1">0x00</setting>
+      <setting name="eepTPresponseDelay" address="0x0808" type="uint8_t" size="1">0x87</setting>
+      <setting name="eepTPDCR1" address="0x0809" type="uint8_t" size="1">0x0A</setting>
+      <setting name="eepTPDCR2" address="0x080A" type="uint8_t" size="1">0x18</setting>
+      <setting name="eepTPDCR3" address="0x080B" type="uint8_t" size="1">0x00</setting>
+      <setting name="eepTPDCR4" address="0x080C" type="uint8_t" size="1">0x00</setting>
+      <setting name="eepTPDCR5" address="0x080D" type="uint8_t" size="1">0x2C</setting>
+      <setting name="eepPHCSTL4" address="0x080E" type="uint8_t" size="1">0x00</setting>
+      <setting name="eepPHCRPL4" address="0x080F" type="uint8_t" size="1">0x02</setting>
+      <setting name="eepPHCSTL8" address="0x0810" type="uint8_t" size="1">0x00</setting>
+      <setting name="eepPHCRPL8" address="0x0811" type="uint8_t" size="1">0xCA</setting>
+      <setting name="eepTPsyncLen" address="0x0812" type="uint8_t" size="1">0x01</setting>
+      <setting name="eepTPpreaLen" address="0x0813" type="uint8_t" size="1">0x07</setting>
+      <setting name="eepTPSync" address="0x0814" type="uint8_t" size="4">
+                0xFE 0x00 0x00 0x00
+            </setting>
+      <setting name="eepTPECMR" address="0x0818" type="uint8_t" size="1">0x00</setting>
+      <setting name="eepSysClocking" address="0x0819" type="uint8_t" size="1">0x00</setting>
+      <setting name="eepTCalcDelay" address="0x081A" type="uint8_t" size="1">0x00</setting>
+      <setting name="eepDampAdjust" address="0x081B" type="uint8_t" size="1">0x13</setting>
+      <setting name="eepFlashPtr_l" address="0x081C" type="uint8_t" size="1">0x00</setting>
+      <setting name="eepFlashPtr_h" address="0x081D" type="uint8_t" size="1">0x00</setting>
+      <setting name="eepDevIdVarAdr_l" address="0x081E" type="uint8_t" size="1">0x00</setting>
+      <setting name="eepDevIdVarAdr_h" address="0x081F" type="uint8_t" size="1">0x00</setting>
+      <setting name="eepEnhancedModeVarAdr_l" address="0x0820" type="uint8_t" size="1">0x00</setting>
+      <setting name="eepEnhancedModeVarAdr_h" address="0x0821" type="uint8_t" size="1">0x00</setting>
+      <setting name="eepKeyIdSelVarAdr_l" address="0x0822" type="uint8_t" size="1">0x01</setting>
+      <setting name="eepKeyIdSelVarAdr_h" address="0x0823" type="uint8_t" size="1">0x00</setting>
+      <setting name="eepComKeyAddr1_l" address="0x0824" type="uint8_t" size="1">0x00</setting>
+      <setting name="eepComKeyAddr1_h" address="0x0825" type="uint8_t" size="1">0x05</setting>
+      <setting name="eepComKeyAddr2_l" address="0x0826" type="uint8_t" size="1">0x00</setting>
+      <setting name="eepComKeyAddr2_h" address="0x0827" type="uint8_t" size="1">0x00</setting>
+      <setting name="eepComKeyAddr3_l" address="0x0828" type="uint8_t" size="1">0x00</setting>
+      <setting name="eepComKeyAddr3_h" address="0x0829" type="uint8_t" size="1">0x00</setting>
+      <setting name="eepSecKeyAddrA" address="0x082A" type="uint8_t" size="32">0x40 0x07 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 </setting>
+      <setting name="eepSecKeyAddrB" address="0x084A" type="uint8_t" size="32">0x20 0x07 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 </setting>
+      <setting name="eepCalibConfPtr_l" address="0x086A" type="uint8_t" size="1">0x04</setting>
+      <setting name="eepCalibConfPtr_h" address="0x086B" type="uint8_t" size="1">0x00</setting>
+      <setting name="eepRfTxSer0Ptr_l" address="0x086C" type="uint8_t" size="1">0x09</setting>
+      <setting name="eepRfTxSer0Ptr_h" address="0x086D" type="uint8_t" size="1">0x00</setting>
+      <setting name="eepRfTxSer1Ptr_l" address="0x086E" type="uint8_t" size="1">0x34</setting>
+      <setting name="eepRfTxSer1Ptr_h" address="0x086F" type="uint8_t" size="1">0x00</setting>
+      <setting name="eepGuiRef" address="0x0870" type="uint8_t" size="8">0x34 0xCE 0x04 0x00 0x9C 0x9A 0x72 0x01</setting>
+      <setting name="eepLFQC1" address="0x0878" type="uint8_t" size="1">0x00</setting>
+      <setting name="eepLFQC2" address="0x0879" type="uint8_t" size="1">0x00</setting>
+      <setting name="eepLFQC3" address="0x087A" type="uint8_t" size="1">0x00</setting>
+      <setting name="eepLFCR3" address="0x087B" type="uint8_t" size="1">0x00</setting>
+      <setting name="eepCustomerSpecific" address="0x087C" type="uint8_t" size="4">
+                0x00 0x00 0x00 0x00
+            </setting>
+    </variable>
+    <variable name="g_sAtmelEEPromSection">
+      <setting name="eepChipId" address="0x0880" type="uint8_t" size="3">
+                0x1E 0x95 0x69
+            </setting>
+      <setting name="eepXROWFUSE" address="0x0883" type="uint8_t" size="1">0x0F</setting>
+      <setting name="eepMRCCAL" address="0x0884" type="uint8_t" size="1">0x80</setting>
+      <setting name="eepFRCCAL" address="0x0885" type="uint8_t" size="1">0x10</setting>
+      <setting name="eepRCTCAL1" address="0x0886" type="uint8_t" size="1">0x01</setting>
+      <setting name="eepSUPCAL" address="0x0887" type="uint8_t" size="10">
+                0xB0 0x05 0x76 0x2D 0x27 0xB9 0x1C 0x1A
+                0x07 0x00
+            </setting>
+      <setting name="eepMEMCAL" address="0x0891" type="uint8_t" size="3">
+                0x09 0x09 0xDB
+            </setting>
+      <setting name="eepDevId1Dw" address="0x0894" type="uint8_t" size="1">0x95</setting>
+      <setting name="eepTPCAL" address="0x0895" type="uint8_t" size="10">
+                0x2A 0x39 0x00 0x0D 0x05 0x02 0x05 0x1E
+                0x26 0x48
+            </setting>
+      <setting name="eepCalRdy" address="0x089F" type="uint8_t" size="1">0x6B</setting>
+      <setting name="eepTraceability" address="0x08A0" type="uint8_t" size="9">
+                0xFF 0xFF 0xFF 0xFF 0xFF 0xFF 0xFF 0xFF
+                0xFF
+            </setting>
+      <setting name="eepDeviceInfo" address="0x08A9" type="uint8_t" size="4">
+                0xFF 0xFF 0xFF 0xFF
+            </setting>
+      <setting name="eepSRCTCAL" address="0x08AE" type="uint8_t" size="1">0x00</setting>
+      <setting name="eepSRCCAL" address="0x08AF" type="uint8_t" size="1">0x64</setting>
+      <setting name="eepUID" address="0x08B0" type="uint8_t" size="4">
+                0xFF 0xFF 0xFF 0xFF
+            </setting>
+      <setting name="eepRssiRangeCorrectionValues" address="0x08B4" type="uint8_t" size="9">0x78 0x78 0x78 0x78 0x78 0x78 0x78 0x78 
+                0x78</setting>
+      <setting name="eepRssiPreDividerSwitchValue" address="0x08BD" type="uint8_t" size="1">0xCF</setting>
+      <setting name="eepRssiNamelessRegister" address="0x08BE" type="uint8_t" size="1">0x01</setting>
+      <setting name="eepLFCALR" address="0x08C0" type="uint8_t" size="53">0x00 0x40 0x00 0x00 0x00 0x03 0x00 0x00
+                0x00 0x00 0x00 0x00 0x0E 0x00 0x00 0x00 
+                0x00 0x00 0x00 0x00 0x00 0x0E 0x00 0x00 
+                0x00 0x00 0x00 0x00 0x00 0x00 0x0E 0x00 
+                0x00 0x00 0x00 0x40 0x02 0x00 0x00 0x00 
+                0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                0x00 0x00 0x00 0x00 0x00</setting>
+      <setting name="eepTPCALR11" address="0x08F5" type="uint8_t" size="1">0x1C</setting>
+      <setting name="eepTPCALR12" address="0x08F6" type="uint8_t" size="1">0x00</setting>
+      <setting name="eepTPCALR13" address="0x08F7" type="uint8_t" size="1">0x77</setting>
+      <setting name="eepLFDSR" address="0x08F8" type="uint8_t" size="11">0x26 0x16 0x2A 0x8C 0x0B 0x09 0xA5 0x3C 
+                0x10 0x54 0x22</setting>
+      <setting name="eepFEBT" address="0x0903" type="uint8_t" size="1">0x0A</setting>
+      <setting name="eepFETN4" address="0x0904" type="uint8_t" size="1">0x77</setting>
+      <setting name="eepFEVCOoffset" address="0x0905" type="uint8_t" size="1">0x00</setting>
+      <setting name="eepLockCrc16" address="0x097E" type="uint8_t" size="2">0x00 0x00</setting>
+    </variable>
+    <key name="Common">
+      <variable name="g_sCommonKey1">
+        <setting name="eepKey" address="0x0500" type="uint8_t" size="16">0x00 0x11 0x22 0x33 0x44 0x55 0x66 0x77 0x88 0x99 0xAA 0xBB 0xCC 0xDD 0xEE 0xFF </setting>
+        <setting name="eepSubKey" address="0x0510" type="uint8_t" size="16">0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 </setting>
+      </variable>
+      <variable name="g_sCommonKey2">
+        <setting name="eepKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+        <setting name="eepSubKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+      </variable>
+      <variable name="g_sCommonKey3">
+        <setting name="eepKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+        <setting name="eepSubKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+      </variable>
+    </key>
+    <key name="Secret">
+      <variable name="g_sSecretKeyA0">
+        <setting name="eepKey" address="0x0740" type="uint8_t" size="16">0x71 0xF9 0xD3 0x61 0xB1 0xD2 0x70 0x8C 0x3A 0x09 0xB6 0x32 0x77 0x39 0xC2 0x70 </setting>
+        <setting name="eepSubKey" address="0x0750" type="uint8_t" size="16">0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 </setting>
+      </variable>
+      <variable name="g_sSecretKeyA1">
+        <setting name="eepKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+        <setting name="eepSubKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+      </variable>
+      <variable name="g_sSecretKeyA2">
+        <setting name="eepKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+        <setting name="eepSubKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+      </variable>
+      <variable name="g_sSecretKeyA3">
+        <setting name="eepKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+        <setting name="eepSubKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+      </variable>
+      <variable name="g_sSecretKeyA4">
+        <setting name="eepKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+        <setting name="eepSubKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+      </variable>
+      <variable name="g_sSecretKeyA5">
+        <setting name="eepKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+        <setting name="eepSubKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+      </variable>
+      <variable name="g_sSecretKeyA6">
+        <setting name="eepKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+        <setting name="eepSubKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+      </variable>
+      <variable name="g_sSecretKeyA7">
+        <setting name="eepKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+        <setting name="eepSubKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+      </variable>
+      <variable name="g_sSecretKeyA8">
+        <setting name="eepKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+        <setting name="eepSubKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+      </variable>
+      <variable name="g_sSecretKeyA9">
+        <setting name="eepKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+        <setting name="eepSubKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+      </variable>
+      <variable name="g_sSecretKeyA10">
+        <setting name="eepKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+        <setting name="eepSubKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+      </variable>
+      <variable name="g_sSecretKeyA11">
+        <setting name="eepKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+        <setting name="eepSubKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+      </variable>
+      <variable name="g_sSecretKeyA12">
+        <setting name="eepKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+        <setting name="eepSubKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+      </variable>
+      <variable name="g_sSecretKeyA13">
+        <setting name="eepKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+        <setting name="eepSubKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+      </variable>
+      <variable name="g_sSecretKeyA14">
+        <setting name="eepKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+        <setting name="eepSubKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+      </variable>
+      <variable name="g_sSecretKeyA15">
+        <setting name="eepKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+        <setting name="eepSubKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+      </variable>
+      <variable name="g_sSecretKeyB0">
+        <setting name="eepKey" address="0x0720" type="uint8_t" size="16">0x88 0xC1 0xE4 0xD1 0x6D 0x9F 0xD3 0xBE 0x13 0xCE 0xDB 0xD5 0x80 0xE8 0x46 0xA3 </setting>
+        <setting name="eepSubKey" address="0x0730" type="uint8_t" size="16">0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 </setting>
+      </variable>
+      <variable name="g_sSecretKeyB1">
+        <setting name="eepKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+        <setting name="eepSubKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+      </variable>
+      <variable name="g_sSecretKeyB2">
+        <setting name="eepKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+        <setting name="eepSubKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+      </variable>
+      <variable name="g_sSecretKeyB3">
+        <setting name="eepKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+        <setting name="eepSubKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+      </variable>
+      <variable name="g_sSecretKeyB4">
+        <setting name="eepKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+        <setting name="eepSubKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+      </variable>
+      <variable name="g_sSecretKeyB5">
+        <setting name="eepKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+        <setting name="eepSubKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+      </variable>
+      <variable name="g_sSecretKeyB6">
+        <setting name="eepKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+        <setting name="eepSubKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+      </variable>
+      <variable name="g_sSecretKeyB7">
+        <setting name="eepKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+        <setting name="eepSubKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+      </variable>
+      <variable name="g_sSecretKeyB8">
+        <setting name="eepKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+        <setting name="eepSubKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+      </variable>
+      <variable name="g_sSecretKeyB9">
+        <setting name="eepKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+        <setting name="eepSubKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+      </variable>
+      <variable name="g_sSecretKeyB10">
+        <setting name="eepKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+        <setting name="eepSubKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+      </variable>
+      <variable name="g_sSecretKeyB11">
+        <setting name="eepKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+        <setting name="eepSubKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+      </variable>
+      <variable name="g_sSecretKeyB12">
+        <setting name="eepKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+        <setting name="eepSubKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+      </variable>
+      <variable name="g_sSecretKeyB13">
+        <setting name="eepKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+        <setting name="eepSubKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+      </variable>
+      <variable name="g_sSecretKeyB14">
+        <setting name="eepKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+        <setting name="eepSubKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+      </variable>
+      <variable name="g_sSecretKeyB15">
+        <setting name="eepKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+        <setting name="eepSubKey" address="0xFFFF" type="uint8_t" size="16">
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                    0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+                </setting>
+      </variable>
+    </key>
+    <rfService name="Service 0" index="0">
+      <variable name="g_sRfTxService0">
+        <setting name="bSSMFBR" address="0x0009" type="uint8_t" size="1">0x14</setting>
+        <setting name="bFEALR_FEANT" address="0x000A" type="uint8_t" size="1">0x00</setting>
+        <setting name="bFEAT" address="0x000B" type="uint8_t" size="1">0x07</setting>
+        <setting name="bFEPAC" address="0x000C" type="uint8_t" size="1">0x23</setting>
+        <setting name="bFEVCO" address="0x000D" type="uint8_t" size="1">0xFD</setting>
+        <setting name="bFEVCT" address="0x000E" type="uint8_t" size="1">0x07</setting>
+        <setting name="bIF" address="0x000F" type="uint8_t" size="2">0xD9 0x0A</setting>
+        <setting name="btxDev" address="0x0011" type="uint8_t" size="2">0xCF 0x00</setting>
+        <setting name="bGACDIV" address="0x0013" type="uint8_t" size="2">0x68 0x00</setting>
+        <setting name="bFSFCR" address="0x0015" type="uint8_t" size="1">0x00</setting>
+        <setting name="bTXDR" address="0x0016" type="uint8_t" size="2">0x3C 0x01</setting>
+        <setting name="bTxSetPath" address="0x0018" type="uint8_t" size="2">0x00 0x80</setting>
+        <setting name="bTxSysEvent" address="0x001A" type="uint8_t" size="1">0x00</setting>
+        <setting name="bTxPreambleSysEvent" address="0x001B" type="uint8_t" size="1">0x00</setting>
+        <setting name="bTMCR2" address="0x001C" type="uint8_t" size="1">0x00</setting>
+        <setting name="bTMSSC" address="0x001D" type="uint8_t" size="1">0x08</setting>
+        <setting name="bTMTL" address="0x001E" type="uint8_t" size="2">0x00 0x00</setting>
+        <setting name="bTMCP" address="0x0020" type="uint8_t" size="2">0x01 0x00</setting>
+        <setting name="bTMCI" address="0x0022" type="uint8_t" size="2">0x00 0x00</setting>
+        <setting name="bTMCSB" address="0x0024" type="uint8_t" size="1">0x00</setting>
+        <channel name="channel0">
+          <setting name="bFFREQ" address="0x0025" type="uint8_t" size="3">0x82 0xCC 0x01</setting>
+          <setting name="bFEMS" address="0x0028" type="uint8_t" size="1">0x62</setting>
+          <setting name="bFECR" address="0x0029" type="uint8_t" size="1">0x21</setting>
+        </channel>
+        <channel name="channel1">
+          <setting name="bFFREQ" address="0x002A" type="uint8_t" size="3">0xEE 0xD4 0x01</setting>
+          <setting name="bFEMS" address="0x002D" type="uint8_t" size="1">0x62</setting>
+          <setting name="bFECR" address="0x002E" type="uint8_t" size="1">0x21</setting>
+        </channel>
+        <channel name="channel2">
+          <setting name="bFFREQ" address="0x002F" type="uint8_t" size="3">0x59 0xDD 0x01</setting>
+          <setting name="bFEMS" address="0x0032" type="uint8_t" size="1">0x62</setting>
+          <setting name="bFECR" address="0x0033" type="uint8_t" size="1">0x29</setting>
+        </channel>
+      </variable>
+    </rfService>
+    <rfService name="Service 1" index="1">
+      <variable name="g_sRfTxService1">
+        <setting name="bSSMFBR" address="0x0034" type="uint8_t" size="1">0x14</setting>
+        <setting name="bFEALR_FEANT" address="0x0035" type="uint8_t" size="1">0x00</setting>
+        <setting name="bFEAT" address="0x0036" type="uint8_t" size="1">0x07</setting>
+        <setting name="bFEPAC" address="0x0037" type="uint8_t" size="1">0x23</setting>
+        <setting name="bFEVCO" address="0x0038" type="uint8_t" size="1">0x10</setting>
+        <setting name="bFEVCT" address="0x0039" type="uint8_t" size="1">0x07</setting>
+        <setting name="bIF" address="0x003A" type="uint8_t" size="2">0x97 0x0A</setting>
+        <setting name="btxDev" address="0x003C" type="uint8_t" size="2">0x00 0x00</setting>
+        <setting name="bGACDIV" address="0x003E" type="uint8_t" size="2">0x68 0x00</setting>
+        <setting name="bFSFCR" address="0x0040" type="uint8_t" size="1">0x00</setting>
+        <setting name="bTXDR" address="0x0041" type="uint8_t" size="2">0x3B 0x01</setting>
+        <setting name="bTxSetPath" address="0x0043" type="uint8_t" size="2">0x00 0x80</setting>
+        <setting name="bTxSysEvent" address="0x0045" type="uint8_t" size="1">0x00</setting>
+        <setting name="bTxPreambleSysEvent" address="0x0046" type="uint8_t" size="1">0x00</setting>
+        <setting name="bTMCR2" address="0x0047" type="uint8_t" size="1">0x02</setting>
+        <setting name="bTMSSC" address="0x0048" type="uint8_t" size="1">0x00</setting>
+        <setting name="bTMTL" address="0x0049" type="uint8_t" size="2">0x00 0x00</setting>
+        <setting name="bTMCP" address="0x004B" type="uint8_t" size="2">0x01 0x00</setting>
+        <setting name="bTMCI" address="0x004D" type="uint8_t" size="2">0x00 0x00</setting>
+        <setting name="bTMCSB" address="0x004F" type="uint8_t" size="1">0x00</setting>
+        <channel name="channel0">
+          <setting name="bFFREQ" address="0x0050" type="uint8_t" size="3">0x03 0x5F 0x02</setting>
+          <setting name="bFEMS" address="0x0053" type="uint8_t" size="1">0x85</setting>
+          <setting name="bFECR" address="0x0054" type="uint8_t" size="1">0x23</setting>
+        </channel>
+        <channel name="channel1">
+          <setting name="bFFREQ" address="0x0055" type="uint8_t" size="3">0x0F 0x4C 0x02</setting>
+          <setting name="bFEMS" address="0x0058" type="uint8_t" size="1">0x85</setting>
+          <setting name="bFECR" address="0x0059" type="uint8_t" size="1">0x2B</setting>
+        </channel>
+        <channel name="channel2">
+          <setting name="bFFREQ" address="0x005A" type="uint8_t" size="3">0x1E 0x71 0x02</setting>
+          <setting name="bFEMS" address="0x005D" type="uint8_t" size="1">0x85</setting>
+          <setting name="bFECR" address="0x005E" type="uint8_t" size="1">0x2B</setting>
+        </channel>
+      </variable>
+    </rfService>
+  </eeprom>
+  <gui>
+    <version>1.0.0.2</version>
+    <revision date="2020/01/28 14:44:59">586453</revision>
+  </gui>
+</config>

@@ -1,0 +1,948 @@
+///////////////////////////////////////////////////////////////////////////////
+//
+// IAR C/C++ Compiler V7.10.1.1197 for Atmel AVR          13/May/2020  17:03:17
+// Copyright 1996-2017 IAR Systems AB.
+// Network license: dvriar01.mchp-main.com (STD)
+//
+//    Source file  =  
+//        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\firmware\spi\src\ata5700_command_set_flash.c
+//    Command line =  
+//        -f C:\Users\C41045\AppData\Local\Temp\EW408.tmp
+//        (C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\firmware\spi\src\ata5700_command_set_flash.c
+//        -v3 --enhanced_core -ms -o
+//        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\Obj
+//        -lCN
+//        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\List
+//        -lA
+//        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\List
+//        --no_cse --no_inline --no_code_motion --no_cross_call --no_clustering
+//        --no_tbaa --debug --64k_flash -DENABLE_BIT_DEFINITIONS -e
+//        --eeprom_size 2304 --clib -Ohz)
+//    Locale       =  English_USA.1252
+//    List file    =  
+//        C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\appl\appFlash\IAR\Debug\List\ata5700_command_set_flash.s90
+//
+///////////////////////////////////////////////////////////////////////////////
+
+        NAME ata5700_command_set_flash
+
+        RTMODEL "__64bit_doubles", "disabled"
+        RTMODEL "__SystemLibrary", "CLib"
+        RTMODEL "__cpu", "3"
+        RTMODEL "__enhanced_core", "enabled"
+        RTMODEL "__has_elpm", "false"
+        RTMODEL "__memory_model", "2"
+        RTMODEL "__rt_version", "3"
+        RTMODEL "__vtable_memory", "__nearflash"
+
+        RSEG CSTACK:DATA:NOROOT(0)
+        RSEG RSTACK:DATA:NOROOT(0)
+
+        PUBLIC ATA_5700CommandRequest_flash_C
+        PUBLIC ATA_5700InitCommandSet_flash_C
+        PUBWEAK __?EEARH
+        PUBWEAK __?EEARL
+        PUBWEAK __?EECR
+        PUBWEAK __?EEDR
+        PUBLIC extReq
+        PUBLIC g_sAta5700_flash
+        PUBLIC g_sRfRemoteKeylessEntryConf
+        PUBLIC patchSpi
+        PUBLIC trxConf
+        
+          CFI Names cfiNames0
+          CFI StackFrame CFA_Y Y DATA
+          CFI StackFrame CFA_SP SP DATA
+          CFI VirtualResource ?RetPad:1, ?RetHigh:8, ?RetLow:8, ?Ret:17
+          CFI Resource R0:8, R1:8, R2:8, R3:8, R4:8, R5:8, R6:8, R7:8, R8:8, R9:8
+          CFI Resource R10:8, R11:8, R12:8, R13:8, R14:8, R15:8, R16:8, R17:8
+          CFI Resource R18:8, R19:8, R20:8, R21:8, R22:8, R23:8, R24:8, R25:8
+          CFI Resource R26:8, R27:8, R28:8, R29:8, R30:8, R31:8
+          CFI Resource ?RetHighByteMask:8, SP:16, SPH:8, SPL:8, Y:16
+          CFI ResourceParts ?Ret ?RetHigh, ?RetLow, ?RetPad
+          CFI ResourceParts SP SPH, SPL
+          CFI ResourceParts Y R29, R28
+          CFI EndNames cfiNames0
+        
+          CFI Common cfiCommon0 Using cfiNames0
+          CFI CodeAlign 1
+          CFI DataAlign 1
+          CFI ReturnAddress ?Ret CODE
+          CFI CFA_Y Y+0
+          CFI CFA_SP SP+2
+          CFI ?RetPad 0
+          CFI ?RetHigh and(load(1, DATA, sub(CFA_SP, 1)), ?RetHighByteMask)
+          CFI ?RetLow Frame(CFA_SP, 0)
+          CFI ?Ret Concat
+          CFI R0 Undefined
+          CFI R1 Undefined
+          CFI R2 Undefined
+          CFI R3 Undefined
+          CFI R4 SameValue
+          CFI R5 SameValue
+          CFI R6 SameValue
+          CFI R7 SameValue
+          CFI R8 SameValue
+          CFI R9 SameValue
+          CFI R10 SameValue
+          CFI R11 SameValue
+          CFI R12 SameValue
+          CFI R13 SameValue
+          CFI R14 SameValue
+          CFI R15 SameValue
+          CFI R16 Undefined
+          CFI R17 Undefined
+          CFI R18 Undefined
+          CFI R19 Undefined
+          CFI R20 Undefined
+          CFI R21 Undefined
+          CFI R22 Undefined
+          CFI R23 Undefined
+          CFI R24 SameValue
+          CFI R25 SameValue
+          CFI R26 SameValue
+          CFI R27 SameValue
+          CFI R28 Undefined
+          CFI R29 Undefined
+          CFI R30 Undefined
+          CFI R31 Undefined
+          CFI ?RetHighByteMask SameValue
+          CFI SPH Undefined
+          CFI SPL Undefined
+          CFI EndCommon cfiCommon0
+        
+        EXTERN ATA_calibInit_C
+        EXTERN ATA_calibStartCalibration_C
+        EXTERN ATA_eepReadBytes_C
+        EXTERN ATA_globalsActivateXTO_C
+        EXTERN ATA_globalsClkSwitchFrc_C
+        EXTERN ATA_globalsClkSwitchXTO_C
+        EXTERN ATA_globalsDeActivateXTO_C
+        EXTERN ATA_rfTxGetIndirectEEPromServiceConfigAddr_flash_C
+        EXTERN ATA_rfTxStartAnt_C
+        EXTERN ATA_rfTxStartTx_C
+        EXTERN ATA_rfTxStartVco_C
+        EXTERN ATA_rfTxStop_C
+        EXTERN ATA_systemSetSystemError_flash_ASM
+        EXTERN g_sCalibConfig
+        EXTERN g_sCustomerEEPromSection
+        EXTERN g_sRfTx
+        EXTERN g_sSramRfTxServiceConfig
+
+// C:\Users\C41045\Documents\CDB\Apps\SW_Lib\Car_Access\CARS_GEN2\ATAB5702A\Branches\P2P22_TXMODE_NXP\firmware\spi\src\ata5700_command_set_flash.c
+//    1 //lint -e9059
+//    2 /******************************************************************************
+//    3   Use of this software is subject to Microchip's Software License Agreement.
+//    4 --------------------------------------------------------------------------------
+//    5   $URL: http://svnservulm.corp.atmel.com/svn/CDB/02_AutoRF/Primus2pSW/Branches/VB_PRIMUS2P_ROM_2.0/firmware/spi/src/ata5700_command_set_flash.c $
+//    6   $LastChangedRevision: 284056 $
+//    7   $LastChangedDate: 2014-10-27 15:33:50 +0100 (Mo, 27 Okt 2014) $
+//    8   $LastChangedBy: florian.schweidler $
+//    9 -------------------------------------------------------------------------------
+//   10   Project:      ATA5700
+//   11   Target MCU:   ATA5700
+//   12   Compiler:     IAR C/C++ Compiler for AVR 6.30.1
+//   13 -------------------------------------------------------------------------------
+//   14 
+//   15 ******************************************************************************
+//   16 * Copyright 2017, Microchip Technology Incorporated and its subsidiaries.     *
+//   17 *                                                                             *
+//   18 * This software is owned by the Microchip Technology Incorporated.            *
+//   19 * Microchip hereby grants to licensee a personal                              *
+//   20 * non-exclusive, non-transferable license to copy, use, modify, create        *
+//   21 * derivative works of, and compile the Microchip Source Code and derivative   *
+//   22 * works for the sole and exclusive purpose of creating custom software in     *
+//   23 * support of licensee product to be used only in conjunction with a Microchip *
+//   24 * integrated circuit as specified in the applicable agreement. Any            *        
+//   25 * reproduction, modification, translation, compilation, or representation of  *
+//   26 * this software except as specified above is prohibited without the express   *
+//   27 * written permission of Microchip.                                            *
+//   28 *                                                                             *
+//   29 * Disclaimer: MICROCHIP MAKES NO WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,    *
+//   30 * WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED    *
+//   31 * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.         *
+//   32 * Microchip reserves the right to make changes without further notice to the  *
+//   33 * materials described herein. Microchip does not assume any liability arising *
+//   34 * out of the application or use of any product or circuit described herein.   *
+//   35 * Microchip does not authorize its products for use as critical components in *
+//   36 * life-support systems where a malfunction or failure may reasonably be       *
+//   37 * expected to result in significant injury to the user. The inclusion of      *
+//   38 * Microchip products in a life-support systems application implies that the   *
+//   39 * manufacturer assumes all risk of such use and in doing so indemnifies       *
+//   40 * Microchip against all charges.                                              *
+//   41 *                                                                             *
+//   42 * Use may be limited by and subject to the applicable Microchip software      *
+//   43 * license agreement.                                                          *
+//   44 ******************************************************************************/
+//   45 /** \file ata5700_command_set.c
+//   46 */
+//   47 
+//   48 //lint -restore
+//   49 
+//   50 /*===========================================================================*/
+//   51 /*  INCLUDES (Flash Application)                                             */
+//   52 /*===========================================================================*/
+//   53 #include "ata5700_command_set_flash.h"
+//   54 #include "../../init/src/init_flash.h"
+//   55 #include "../../lfrx/src/lfrx_flash.h"
+//   56 #include "../../system/src/system_flash.h"
+//   57 #include "../../rftx/src/rftx_flash.h"
+//   58 #include "../../tp/src/tp_flash.h"
+//   59 
+//   60 /*===========================================================================*/
+//   61 /*  INCLUDES (ROM firmware)                                                  */
+//   62 /*===========================================================================*/
+//   63 #include "../../calib/src/calib.h"
+//   64 #include "../../rftx/src/rftx.h"
+//   65 #include "../../rftx/src/rftx_ant.h"
+//   66 #include "../../rftx/src/rftx_vco.h"
+//   67 #include "../../globals/src/globals.h"
+//   68 #include "../../lfrssi/src/lfrssi.h"
+//   69 
+//   70 /*===========================================================================*/
+//   71 /*  INCLUDES (Flash Module Deliverable)                                      */
+//   72 /*===========================================================================*/
+//   73 //#include "../../../appl/appFlash_simTest/src/rfrcc/src/rfrcc_flash.h"
+//   74 #include "../../../appl/appFlash/src/rfrcc_flash.h"
+//   75 
+//   76 /*---------------------------------------------------------------------------*/
+//   77 /*  DEFINES                                                                  */
+//   78 /*---------------------------------------------------------------------------*/
+//   79 
+//   80 /*---------------------------------------------------------------------------*/
+//   81 /*  Modul Globals                                                            */
+//   82 /*---------------------------------------------------------------------------*/
+//   83 
+//   84 /* Must be located at SRAM address 0x100 (global 0x300) */
+//   85 
+//   86 #pragma location = ".sram_FlashApp_Ata5700CommandSet"
+
+        RSEG `.sram_FlashApp_Ata5700CommandSet`:DATA:NOROOT(0)
+//   87 __no_init sAta5700 g_sAta5700_flash;
+g_sAta5700_flash:
+        DS8 14
+//   88 
+//   89 /** \brief <b>patchSpi</b>
+//   90     contains a function pointer for a patched SPI command.
+//   91 */
+//   92 #pragma location = ".sram_FlashApp_Ata5700CommandSet"
+
+        RSEG `.sram_FlashApp_Ata5700CommandSet`:DATA:NOROOT(0)
+//   93 __no_init patchSpiFuncPtr patchSpi;
+patchSpi:
+        DS8 2
+//   94 
+//   95 /** \brief <b>extReq</b>
+//   96     contains information for controlling external commands/requests.
+//   97 */
+//   98 #pragma location = ".sram_FlashApp_Ata5700CommandSet"
+
+        RSEG `.sram_FlashApp_Ata5700CommandSet`:DATA:NOROOT(0)
+//   99 __no_init sExtReq extReq;
+extReq:
+        DS8 8
+//  100 
+//  101 /** \brief <b>trxConf</b>
+//  102     contains the transceiver configuration information/setting.
+//  103 */
+//  104 #pragma location = ".sram_FlashApp_Ata5700CommandSet"
+
+        RSEG `.sram_FlashApp_Ata5700CommandSet`:DATA:NOROOT(0)
+//  105 __no_init sTrxConfig trxConf;
+trxConf:
+        DS8 3
+//  106 
+//  107 /** \brief <b>g_sRfRemoteKeylessEntryConf</b>
+//  108     contains the Remote Keyless Entry configuration
+//  109 */
+//  110 #pragma location = ".sram_FlashApp_Ata5700CommandSet"
+
+        RSEG `.sram_FlashApp_Ata5700CommandSet`:DATA:NOROOT(0)
+//  111 __no_init sRfRemoteKeylessEntryConf g_sRfRemoteKeylessEntryConf;
+g_sRfRemoteKeylessEntryConf:
+        DS8 2
+//  112 
+//  113 
+//  114 static VOIDFUNC  ATA_5700systemModeSwitching_flash_C(void);
+//  115 static VOIDFUNC  ATA_5700rfTxCalibrationRequest_flash_C(void);
+//  116 static UINT8FUNC ATA_5700convertTrxConf2rfTxConfig_flash_C(void);
+//  117 static uint8_t* ATA_5700convertTrxConf2rfTxService_flash_C(void);
+//  118 
+//  119 /**/
+//  120 static VOIDFUNC ATA_triggerFrcCalibration_flash_C(void);
+//  121 static VOIDFUNC ATA_triggerSrcCalibration_flash_C(void);
+//  122 
+//  123 
+//  124 /*---------------------------------------------------------------------------*/
+//  125 /*  IMPLEMENTATION                                                           */
+//  126 /*---------------------------------------------------------------------------*/
+//  127 
+//  128 /*---------------------------------------------------------------------------*/
+//  129 /** \brief <b>ATA_5700InitCommandSet_C</b>
+//  130     does the initialization for ATA5700 SPI
+//  131 
+//  132     \Derived no
+//  133 
+//  134     \Rationale none
+//  135 
+//  136     \Traceability Primus2P-xxx
+//  137 
+//  138     \StackUsage SU_XXX bytes
+//  139 
+//  140     \image html ATA_5700InitCommandSet_C.png
+//  141     \image rtf ATA_5700InitCommandSet_C.png
+//  142     \n
+//  143 */
+//  144 /*---------------------------------------------------------------------------*/
+
+        RSEG CODE:CODE:ROOT(1)
+//  145 VOIDFUNC ATA_5700InitCommandSet_flash_C()
+ATA_5700InitCommandSet_flash_C:
+          CFI Block cfiBlock0 Using cfiCommon0
+          CFI Function ATA_5700InitCommandSet_flash_C
+          CFI NoCalls
+//  146 {
+//  147     patchSpi = (patchSpiFuncPtr)0x0000;
+        LDI     R16, LOW(0)
+        LDI     R30, LOW(patchSpi)
+        LDI     R31, (patchSpi) >> 8
+        ST      Z, R16
+        STD     Z+1, R16
+//  148 
+//  149     g_sAta5700_flash.events_system           = 0x00U;
+        STS     g_sAta5700_flash, R16
+//  150     g_sAta5700_flash.events_wakeup           = 0x00U;
+        STS     (g_sAta5700_flash + 1), R16
+//  151     g_sAta5700_flash.events_rf_flags_0       = 0x00U;
+        STS     (g_sAta5700_flash + 2), R16
+//  152     g_sAta5700_flash.events_rf_flags_1       = 0x00U;
+        STS     (g_sAta5700_flash + 3), R16
+//  153     g_sAta5700_flash.events_ph_flags_0       = 0x00U;
+        STS     (g_sAta5700_flash + 4), R16
+//  154     g_sAta5700_flash.events_ph_flags_1       = 0x00U;
+        STS     (g_sAta5700_flash + 5), R16
+//  155     g_sAta5700_flash.events_lf_flags         = 0x00U;
+        STS     (g_sAta5700_flash + 6), R16
+//  156     g_sAta5700_flash.events_tp_flags         = 0x00U;
+        STS     (g_sAta5700_flash + 7), R16
+//  157     g_sAta5700_flash.events_components       = 0x00U;
+        STS     (g_sAta5700_flash + 8), R16
+//  158     g_sAta5700_flash.events_config           = 0x00U;
+        STS     (g_sAta5700_flash + 9), R16
+//  159     g_sAta5700_flash.events_reset            = 0x00U;
+        STS     (g_sAta5700_flash + 10), R16
+//  160     g_sAta5700_flash.events_pinChangePortB   = 0x00U;
+        STS     (g_sAta5700_flash + 11), R16
+//  161     g_sAta5700_flash.events_pinChangePortD   = 0x00U;
+        STS     (g_sAta5700_flash + 12), R16
+//  162     g_sAta5700_flash.status                  = 0x00U;
+        STS     (g_sAta5700_flash + 13), R16
+//  163 
+//  164     extReq.tuneCheckConfig              = 0U;
+        STS     extReq, R16
+//  165     extReq.systemModeConfig             = 0U;
+        STS     (extReq + 1), R16
+//  166     extReq.serviceChannelConfig         = 0U;
+        STS     (extReq + 2), R16
+//  167     extReq.serviceInitConfig            = 0U;
+        STS     (extReq + 3), R16
+//  168     extReq.miscTrigger                  = 0U;
+        STS     (extReq + 4), R16
+//  169     extReq.lfrxRftxConfig               = 0U;
+        STS     (extReq + 5), R16
+//  170     extReq.tpEmModeConfig               = 0U;
+        STS     (extReq + 6), R16
+//  171     extReq.rfRemoteKeylessEntryConfig   = 0U;
+        STS     (extReq + 7), R16
+//  172 
+//  173     trxConf.systemModeConfig        = 0x00U;
+        STS     (trxConf + 1), R16
+//  174     trxConf.serviceChannelConfig    = 0x00U;
+        STS     (trxConf + 2), R16
+//  175 
+//  176     g_sRfRemoteKeylessEntryConf.bSecretKeyIdx   = 0x00U;
+        STS     g_sRfRemoteKeylessEntryConf, R16
+//  177     g_sRfRemoteKeylessEntryConf.bCmdId          = 0x00U;
+        STS     (g_sRfRemoteKeylessEntryConf + 1), R16
+//  178 }
+        RET
+          CFI EndBlock cfiBlock0
+//  179 
+//  180 /*----------------------------------------------------------------------------- */
+//  181 /**\brief  <b>ATA_5700CommandRequest_C</b>
+//  182  */
+//  183 /*----------------------------------------------------------------------------- */
+//  184 VOIDFUNC ATA_5700CommandRequest_flash_C(void)
+//  185 {
+//  186     // check for command request (internal or external)
+//  187     if(g_sAta5700_flash.status & BM_ATA5700_STATUS_UPDATE_FLAG)
+//  188     {
+//  189         ATA_5700systemModeSwitching_flash_C();
+//  190     }
+//  191 
+//  192     if (extReq.tuneCheckConfig)
+//  193     {
+//  194         ATA_5700rfTxCalibrationRequest_flash_C();
+//  195     }
+//  196 
+//  197     if (extReq.serviceInitConfig) {
+//  198 
+//  199         __disable_interrupt();
+//  200         uint8_t serviceInitConfig = extReq.serviceInitConfig & (~BM_EXT_REQ_SERVICE_INIT_CONFIG_UPDATE_FLAG);
+//  201         extReq.serviceInitConfig = 0;
+//  202         __enable_interrupt();
+//  203 
+//  204         /* Get service 0 by default */
+//  205         uint16_t eepService  = ATA_rfTxGetIndirectEEPromServiceConfigAddr_flash_C((uint16_t)&g_sCustomerEEPromSection.eepRfTxSer0Ptr_l);
+//  206 
+//  207         if (serviceInitConfig >> 1)
+//  208         {
+//  209             eepService  = ATA_rfTxGetIndirectEEPromServiceConfigAddr_flash_C((uint16_t)&g_sCustomerEEPromSection.eepRfTxSer1Ptr_l);
+//  210         }
+//  211 
+//  212         if (ATA_eepReadBytes_C((uint8_t *)&g_sSramRfTxServiceConfig,eepService,sizeof(sRfTxServiceChannelConfig)) != EEC_NO_ERROR) {
+//  213             // --GW-TODO-- g_sDebug.bErrorCode    = DEBUG_ERROR_MODULE_TEST + g_sModuleTest_flash.bId;
+//  214             // --GW-TODO-- g_sDebug.bSsmErrorCode = g_sModuleTest_flash.bSubId;
+//  215             ATA_systemSetSystemError_flash_ASM();
+//  216         }
+//  217 
+//  218     }
+//  219 }
+//  220 
+//  221 /*----------------------------------------------------------------------------- */
+//  222 /**\brief  <b>ATA_5700systemModeSwitching_flash_C</b>
+//  223  */
+//  224 /*----------------------------------------------------------------------------- */
+//  225 VOIDFUNC ATA_5700systemModeSwitching_flash_C(void)
+//  226 {
+//  227     /* Request is being processed, clear status flag */
+//  228     g_sAta5700_flash.status &= (uint8_t)~BM_ATA5700_STATUS_UPDATE_FLAG;
+//  229 
+//  230     __disable_interrupt();
+//  231     trxConf.systemModeConfig     = extReq.systemModeConfig;
+//  232     extReq.systemModeConfig      = 0U;
+//  233     trxConf.serviceChannelConfig = (extReq.serviceChannelConfig & 0x3FU);
+//  234     extReq.serviceChannelConfig  = 0U;
+//  235     __enable_interrupt();
+//  236 
+//  237     uint8_t opm = trxConf.systemModeConfig & BM_SYS_MODE_CONFIG_OPM;
+//  238 
+//  239     if (opm == OPM_IDLE)
+//  240     {
+//  241         /* set module RFTX to IDLEMode */
+//  242         if (g_sRfTx.bStatus & BM_RFTXCONFIG_BSTATUS_ACTIVE) {
+//  243             ATA_rfTxStop_C();
+//  244         }
+//  245 
+//  246         /* Check IdleModeSelector */
+//  247         if ( (trxConf.systemModeConfig & BM_SYS_MODE_CONFIG_IDLE_MODE_SELECTOR) >> 3 )
+//  248         {
+//  249             /* Select XTO/4 as system clock */
+//  250             ATA_globalsActivateXTO_C();
+//  251             ATA_globalsClkSwitchXTO_C(0x07U);
+//  252         }
+//  253         else
+//  254         {
+//  255             /* Clock switch to FRC */
+//  256             ATA_globalsClkSwitchFrc_C();
+//  257             /* disable XTO */
+//  258             ATA_globalsDeActivateXTO_C();
+//  259         }
+//  260     }
+//  261     else {
+//  262 
+//  263         /**/
+//  264         uint8_t config    = ATA_5700convertTrxConf2rfTxConfig_flash_C();
+//  265         uint8_t *pService = ATA_5700convertTrxConf2rfTxService_flash_C();
+//  266 
+//  267         /* set module RFTX to TXMode(buffered/transparent) */
+//  268         ATA_rfTxStartTx_C(config, pService);
+//  269     }
+//  270 }
+//  271 
+//  272 /*----------------------------------------------------------------------------- */
+//  273 /**\brief  <b>ATA_5700rfTxCalibrationRequest_flash_C</b>
+//  274  */
+//  275 /*----------------------------------------------------------------------------- */
+//  276 VOIDFUNC ATA_5700rfTxCalibrationRequest_flash_C(void)
+//  277 {
+//  278     __disable_interrupt();
+//  279     trxConf.tuneCheckConfig = extReq.tuneCheckConfig;
+//  280     extReq.tuneCheckConfig  = 0U;
+//  281     trxConf.serviceChannelConfig = (extReq.serviceChannelConfig & 0x3FU);
+//  282     extReq.serviceChannelConfig  = 0U;
+//  283     __enable_interrupt();
+//  284 
+//  285     trxConf.systemModeConfig = 0U;
+//  286     uint8_t config    = ATA_5700convertTrxConf2rfTxConfig_flash_C();
+//  287     uint8_t *pService = ATA_5700convertTrxConf2rfTxService_flash_C();
+//  288 
+//  289     if( trxConf.tuneCheckConfig & BM_TUNE_CHECK_CONFIG_ANTENNA_TUNING )
+//  290     {
+//  291         // Antenna tuning
+//  292         ATA_rfTxStartAnt_C(config, pService);
+//  293     }
+//  294     else if (trxConf.tuneCheckConfig & BM_TUNE_CHECK_CONFIG_SRC_CALIB)
+//  295     {
+//  296         // SRC calibration
+//  297         ATA_triggerSrcCalibration_flash_C();
+//  298 
+//  299     }
+//  300     else if (trxConf.tuneCheckConfig & BM_TUNE_CHECK_CONFIG_FRC_CALIB)
+//  301     {
+//  302         // FRC calibration
+//  303         ATA_triggerFrcCalibration_flash_C();
+//  304     }
+//  305     else if (trxConf.tuneCheckConfig & BM_TUNE_CHECK_CONFIG_VCO_CALIB)
+//  306     {
+//  307         // VCO tuning
+//  308         ATA_rfTxStartVco_C(config, pService);
+//  309     }
+//  310     else {}
+//  311 }
+//  312 
+//  313 /*----------------------------------------------------------------------------- */
+//  314 /**\brief  <b>ATA_5700rfTxCalibrationRequest_C</b>
+//  315     used for conversion from sigmax syntax to primus2p syntax
+//  316  */
+//  317 /*----------------------------------------------------------------------------- */
+//  318 UINT8FUNC ATA_5700convertTrxConf2rfTxConfig_flash_C(void)
+//  319 {
+//  320     uint8_t config = 0x00;
+//  321 
+//  322     // convert configuration from SIX to P2P
+//  323     if (trxConf.systemModeConfig & BM_SYS_MODE_CONFIG_ANTENNA_TUNING) {
+//  324         config |=  BM_RFTXCONFIG_BCONFIG_ANT_TUNING;
+//  325     }
+//  326 
+//  327     if (trxConf.systemModeConfig & BM_SYS_MODE_CONFIG_VCO_TUNING) {
+//  328         config |= BM_RFTXCONFIG_BCONFIG_VCO_TUNING;
+//  329     }
+//  330 
+//  331     if (trxConf.systemModeConfig & BM_SYS_MODE_CONFIG_TRANSPARENT_MODE) {
+//  332         config |=  BM_RFTXCONFIG_BCONFIG_TRANSPARENT_MODE;
+//  333     }
+//  334 
+//  335     if (trxConf.systemModeConfig & BM_SYS_MODE_CONFIG_IDLE_MODE_SELECTOR) {
+//  336         config |= BM_RFTXCONFIG_BCONFIG_SHUTDOWN_MODE;
+//  337     }
+//  338 
+//  339     config |= ((trxConf.serviceChannelConfig & BM_SVC_CH_CONFIG_CH ) >> 4U);
+//  340 
+//  341     config |= BM_RFTXCONFIG_BCONFIG_SVC_LOCATION;
+//  342 
+//  343     return config;
+//  344 
+//  345 }
+//  346 
+//  347 /*----------------------------------------------------------------------------- */
+//  348 /**\brief  <b>ATA_5700convertTrxConf2rfTxService_C</b>
+//  349     used for conversion from sigmax syntax to primus2p syntax
+//  350  */
+//  351 /*----------------------------------------------------------------------------- */
+//  352 uint8_t* ATA_5700convertTrxConf2rfTxService_flash_C(void)
+//  353 {
+//  354     uint8_t service = trxConf.serviceChannelConfig & BM_SVC_CH_CONFIG_SER;
+//  355     uint16_t wAddress = 0U;
+//  356     
+//  357     if (service == 1)
+//  358     {
+//  359         /* Get indirect address for RF Tx EEPROM configuration Service 1 */
+//  360         wAddress = (uint16_t)&g_sCustomerEEPromSection.eepRfTxSer1Ptr_l;
+//  361     }
+//  362     else
+//  363     {
+//  364         /* Get indirect address for RF Tx EEPROM configuration Service 0 */
+//  365         wAddress = (uint16_t)&g_sCustomerEEPromSection.eepRfTxSer0Ptr_l;
+//  366     }
+//  367     
+//  368     uint8_t *pService = (uint8_t*)ATA_rfTxGetIndirectEEPromServiceConfigAddr_flash_C(wAddress);
+//  369 
+//  370     return pService;
+//  371 }
+//  372 
+//  373 
+//  374 /*----------------------------------------------------------------------------- */
+//  375 /** \brief <b>ATA_triggerFrcCalibration_C</b>
+//  376     triggers FRC calibration feature.
+//  377 
+//  378     \return none
+//  379 
+//  380     \image html ATA_triggerFrcCalibration_C.png
+//  381     \image rtf ATA_triggerFrcCalibration_C.png
+//  382     \n
+//  383 */
+//  384 /*----------------------------------------------------------------------------- */
+
+        RSEG CODE:CODE:ROOT(1)
+//  385 static VOIDFUNC ATA_triggerFrcCalibration_flash_C(void)
+ATA_triggerFrcCalibration_flash_C:
+          CFI Block cfiBlock1 Using cfiCommon0
+          CFI Function ATA_triggerFrcCalibration_flash_C
+//  386 {
+//  387     /* indicates a calibration process is ongoing */
+//  388     g_sAta5700_flash.status |= BM_ATA5700_STATUS_FRC_CALIB_IN_PROGRESS_FLAG;
+        LDI     R30, LOW(g_sAta5700_flash)
+        LDI     R31, (g_sAta5700_flash) >> 8
+        LDD     R16, Z+13
+        ORI     R16, 0x10
+        STD     Z+13, R16
+//  389 
+//  390     /* Do FRC calibration */
+//  391     ATA_calibInit_C();
+          CFI FunCall ATA_calibInit_C
+        CALL    ATA_calibInit_C
+//  392 
+//  393     if ((g_sCalibConfig.bFlags & BM_CALIB_CONFIG_FLAGS_ERROR) == 0x00U)
+        LDS     R16, g_sCalibConfig
+        SBRC    R16, 7
+        RJMP    ??ATA_triggerFrcCalibration_flash_C_0
+//  394     {
+//  395         ATA_calibStartCalibration_C(BM_CALIB_CONFIG_SRC_FRC_CALIBRATION_ENABLE_FRC);
+        LDI     R16, 128
+          CFI FunCall ATA_calibStartCalibration_C
+        CALL    ATA_calibStartCalibration_C
+//  396 
+//  397         /* Shutdown XTO and AVCC and switch to FRC as default clock. */
+//  398         // ATA_shutDownFe_C();
+//  399 
+//  400         trxConf.tuneCheckConfig &= (uint8_t)~BM_TUNE_CHECK_CONFIG_FRC_CALIB;
+        LDI     R30, LOW(trxConf)
+        LDI     R31, (trxConf) >> 8
+        LD      R16, Z
+        ANDI    R16, 0xEF
+        ST      Z, R16
+//  401         g_sAta5700_flash.status &= (uint8_t)~BM_ATA5700_STATUS_FRC_CALIB_IN_PROGRESS_FLAG;
+        LDI     R30, LOW(g_sAta5700_flash)
+        LDI     R31, (g_sAta5700_flash) >> 8
+        LDD     R16, Z+13
+        ANDI    R16, 0xEF
+        STD     Z+13, R16
+//  402 
+//  403         g_sAta5700_flash.events_rf_flags_1 |= BM_ATA5700_EVENTS_RFFLAGS_FRC_CALIB_RDY;
+        LDD     R16, Z+3
+        ORI     R16, 0x20
+        STD     Z+3, R16
+//  404     }
+//  405 }
+??ATA_triggerFrcCalibration_flash_C_0:
+        RET
+          CFI EndBlock cfiBlock1
+
+        RSEG CODE:CODE:ROOT(1)
+ATA_triggerSrcCalibration_flash_C:
+          CFI Block cfiBlock2 Using cfiCommon0
+          CFI Function ATA_triggerSrcCalibration_flash_C
+        LDI     R30, LOW(g_sAta5700_flash)
+        LDI     R31, (g_sAta5700_flash) >> 8
+        LDD     R16, Z+13
+        ORI     R16, 0x08
+        STD     Z+13, R16
+          CFI FunCall ATA_calibInit_C
+        CALL    ATA_calibInit_C
+        LDS     R16, g_sCalibConfig
+        SBRC    R16, 7
+        RJMP    ??ATA_triggerSrcCalibration_flash_C_0
+        LDI     R16, 64
+          CFI FunCall ATA_calibStartCalibration_C
+        CALL    ATA_calibStartCalibration_C
+        LDI     R30, LOW(trxConf)
+        LDI     R31, (trxConf) >> 8
+        LD      R16, Z
+        ANDI    R16, 0xDF
+        ST      Z, R16
+        LDI     R30, LOW(g_sAta5700_flash)
+        LDI     R31, (g_sAta5700_flash) >> 8
+        LDD     R16, Z+13
+        ANDI    R16, 0xF7
+        STD     Z+13, R16
+        LDD     R16, Z+3
+        ORI     R16, 0x10
+        STD     Z+3, R16
+??ATA_triggerSrcCalibration_flash_C_0:
+        RET
+          CFI EndBlock cfiBlock2
+
+        RSEG CODE:CODE:NOROOT(1)
+ATA_5700convertTrxConf2rfTxService_flash_C:
+          CFI Block cfiBlock3 Using cfiCommon0
+          CFI Function ATA_5700convertTrxConf2rfTxService_flash_C
+        LDS     R16, (trxConf + 2)
+        ANDI    R16, 0x07
+        CPI     R16, 1
+        BRNE    ??ATA_5700convertTrxConf2rfTxService_flash_C_0
+        LDI     R16, LOW((g_sCustomerEEPromSection + 110))
+        LDI     R17, HIGH((g_sCustomerEEPromSection + 110))
+        RJMP    ??ATA_5700convertTrxConf2rfTxService_flash_C_1
+??ATA_5700convertTrxConf2rfTxService_flash_C_0:
+        LDI     R16, LOW((g_sCustomerEEPromSection + 108))
+        LDI     R17, HIGH((g_sCustomerEEPromSection + 108))
+??ATA_5700convertTrxConf2rfTxService_flash_C_1:
+          CFI FunCall ATA_rfTxGetIndirectEEPromServiceConfigAddr_flash_C
+        JMP     ATA_rfTxGetIndirectEEPromServiceConfigAddr_flash_C
+          CFI EndBlock cfiBlock3
+
+        RSEG CODE:CODE:ROOT(1)
+ATA_5700convertTrxConf2rfTxConfig_flash_C:
+          CFI Block cfiBlock4 Using cfiCommon0
+          CFI Function ATA_5700convertTrxConf2rfTxConfig_flash_C
+          CFI NoCalls
+        LDI     R16, 0
+        LDS     R17, (trxConf + 1)
+        SBRC    R17, 6
+        LDI     R16, 128
+??ATA_5700convertTrxConf2rfTxConfig_flash_C_0:
+        SBRC    R17, 5
+        ORI     R16, 0x40
+??ATA_5700convertTrxConf2rfTxConfig_flash_C_1:
+        SBRC    R17, 2
+        ORI     R16, 0x20
+??ATA_5700convertTrxConf2rfTxConfig_flash_C_2:
+        SBRC    R17, 4
+        ORI     R16, 0x10
+??ATA_5700convertTrxConf2rfTxConfig_flash_C_3:
+        LDS     R17, (trxConf + 2)
+        SWAP    R17
+        ANDI    R17, 0x03
+        OR      R16, R17
+        ORI     R16, 0x08
+        RET
+          CFI EndBlock cfiBlock4
+
+        RSEG CODE:CODE:ROOT(1)
+ATA_5700rfTxCalibrationRequest_flash_C:
+          CFI Block cfiBlock5 Using cfiCommon0
+          CFI Function ATA_5700rfTxCalibrationRequest_flash_C
+        ST      -Y, R24
+          CFI R24 Frame(CFA_Y, -1)
+          CFI CFA_Y Y+1
+        CLI
+        LDS     R16, extReq
+        STS     trxConf, R16
+        LDI     R16, 0
+        STS     extReq, R16
+        LDS     R16, (extReq + 2)
+        ANDI    R16, 0x3F
+        STS     (trxConf + 2), R16
+        LDI     R16, 0
+        STS     (extReq + 2), R16
+        SEI
+        STS     (trxConf + 1), R16
+          CFI FunCall ATA_5700convertTrxConf2rfTxConfig_flash_C
+        RCALL   ATA_5700convertTrxConf2rfTxConfig_flash_C
+        MOV     R24, R16
+          CFI FunCall ATA_5700convertTrxConf2rfTxService_flash_C
+        RCALL   ATA_5700convertTrxConf2rfTxService_flash_C
+        MOVW    R19:R18, R17:R16
+        LDS     R16, trxConf
+        SBRS    R16, 7
+        RJMP    ??ATA_5700rfTxCalibrationRequest_flash_C_0
+        MOV     R16, R24
+          CFI FunCall ATA_rfTxStartAnt_C
+        CALL    ATA_rfTxStartAnt_C
+        RJMP    ??ATA_5700rfTxCalibrationRequest_flash_C_1
+??ATA_5700rfTxCalibrationRequest_flash_C_0:
+        SBRS    R16, 5
+        RJMP    ??ATA_5700rfTxCalibrationRequest_flash_C_2
+          CFI FunCall ATA_triggerSrcCalibration_flash_C
+        RCALL   ATA_triggerSrcCalibration_flash_C
+        RJMP    ??ATA_5700rfTxCalibrationRequest_flash_C_1
+??ATA_5700rfTxCalibrationRequest_flash_C_2:
+        SBRS    R16, 4
+        RJMP    ??ATA_5700rfTxCalibrationRequest_flash_C_3
+          CFI FunCall ATA_triggerFrcCalibration_flash_C
+        RCALL   ATA_triggerFrcCalibration_flash_C
+        RJMP    ??ATA_5700rfTxCalibrationRequest_flash_C_1
+??ATA_5700rfTxCalibrationRequest_flash_C_3:
+        SBRS    R16, 3
+        RJMP    ??ATA_5700rfTxCalibrationRequest_flash_C_1
+        MOV     R16, R24
+          CFI FunCall ATA_rfTxStartVco_C
+        CALL    ATA_rfTxStartVco_C
+??ATA_5700rfTxCalibrationRequest_flash_C_1:
+          CFI EndBlock cfiBlock5
+        REQUIRE ?Subroutine0
+        ;               // Fall through to label ?Subroutine0
+
+        RSEG CODE:CODE:NOROOT(1)
+?Subroutine0:
+          CFI Block cfiBlock6 Using cfiCommon0
+          CFI NoFunction
+          CFI CFA_Y Y+1
+          CFI R24 Frame(CFA_Y, -1)
+        LD      R24, Y+
+          CFI CFA_Y Y+0
+          CFI R24 SameValue
+        RET
+          CFI EndBlock cfiBlock6
+
+        RSEG CODE:CODE:ROOT(1)
+ATA_5700systemModeSwitching_flash_C:
+          CFI Block cfiBlock7 Using cfiCommon0
+          CFI Function ATA_5700systemModeSwitching_flash_C
+        ST      -Y, R24
+          CFI R24 Frame(CFA_Y, -1)
+          CFI CFA_Y Y+1
+        LDI     R30, LOW(g_sAta5700_flash)
+        LDI     R31, (g_sAta5700_flash) >> 8
+        LDD     R16, Z+13
+        ANDI    R16, 0x7F
+        STD     Z+13, R16
+        CLI
+        LDS     R16, (extReq + 1)
+        STS     (trxConf + 1), R16
+        LDI     R16, 0
+        STS     (extReq + 1), R16
+        LDS     R16, (extReq + 2)
+        ANDI    R16, 0x3F
+        STS     (trxConf + 2), R16
+        LDI     R16, 0
+        STS     (extReq + 2), R16
+        SEI
+        LDS     R16, (trxConf + 1)
+        ANDI    R16, 0x03
+        BRNE    ??ATA_5700systemModeSwitching_flash_C_0
+        LDS     R16, (g_sRfTx + 2)
+        SBRS    R16, 4
+        RJMP    ??ATA_5700systemModeSwitching_flash_C_1
+          CFI FunCall ATA_rfTxStop_C
+        CALL    ATA_rfTxStop_C
+??ATA_5700systemModeSwitching_flash_C_1:
+        LDS     R16, (trxConf + 1)
+        SBRS    R16, 4
+        RJMP    ??ATA_5700systemModeSwitching_flash_C_2
+          CFI FunCall ATA_globalsActivateXTO_C
+        CALL    ATA_globalsActivateXTO_C
+        LDI     R16, 7
+          CFI FunCall ATA_globalsClkSwitchXTO_C
+        CALL    ATA_globalsClkSwitchXTO_C
+        RJMP    ??ATA_5700systemModeSwitching_flash_C_3
+??ATA_5700systemModeSwitching_flash_C_2:
+          CFI FunCall ATA_globalsClkSwitchFrc_C
+        CALL    ATA_globalsClkSwitchFrc_C
+          CFI FunCall ATA_globalsDeActivateXTO_C
+        CALL    ATA_globalsDeActivateXTO_C
+        RJMP    ??ATA_5700systemModeSwitching_flash_C_3
+??ATA_5700systemModeSwitching_flash_C_0:
+          CFI FunCall ATA_5700convertTrxConf2rfTxConfig_flash_C
+        RCALL   ATA_5700convertTrxConf2rfTxConfig_flash_C
+        MOV     R24, R16
+          CFI FunCall ATA_5700convertTrxConf2rfTxService_flash_C
+        RCALL   ATA_5700convertTrxConf2rfTxService_flash_C
+        MOVW    R19:R18, R17:R16
+        MOV     R16, R24
+          CFI FunCall ATA_rfTxStartTx_C
+        CALL    ATA_rfTxStartTx_C
+??ATA_5700systemModeSwitching_flash_C_3:
+        RJMP    ?Subroutine0
+          CFI EndBlock cfiBlock7
+
+        RSEG CODE:CODE:ROOT(1)
+ATA_5700CommandRequest_flash_C:
+          CFI Block cfiBlock8 Using cfiCommon0
+          CFI Function ATA_5700CommandRequest_flash_C
+        ST      -Y, R24
+          CFI R24 Frame(CFA_Y, -1)
+          CFI CFA_Y Y+1
+        LDS     R16, (g_sAta5700_flash + 13)
+        SBRC    R16, 7
+          CFI FunCall ATA_5700systemModeSwitching_flash_C
+        RCALL   ATA_5700systemModeSwitching_flash_C
+??ATA_5700CommandRequest_flash_C_0:
+        LDS     R16, extReq
+        TST     R16
+        BREQ    ??ATA_5700CommandRequest_flash_C_1
+          CFI FunCall ATA_5700rfTxCalibrationRequest_flash_C
+        RCALL   ATA_5700rfTxCalibrationRequest_flash_C
+??ATA_5700CommandRequest_flash_C_1:
+        LDS     R16, (extReq + 3)
+        TST     R16
+        BREQ    ??ATA_5700CommandRequest_flash_C_2
+        CLI
+        LDS     R24, (extReq + 3)
+        ANDI    R24, 0x7F
+        LDI     R16, 0
+        STS     (extReq + 3), R16
+        SEI
+        LDI     R16, LOW((g_sCustomerEEPromSection + 108))
+        LDI     R17, HIGH((g_sCustomerEEPromSection + 108))
+          CFI FunCall ATA_rfTxGetIndirectEEPromServiceConfigAddr_flash_C
+        CALL    ATA_rfTxGetIndirectEEPromServiceConfigAddr_flash_C
+        ANDI    R24, 0xFE
+        BREQ    ??ATA_5700CommandRequest_flash_C_3
+        LDI     R16, LOW((g_sCustomerEEPromSection + 110))
+        LDI     R17, HIGH((g_sCustomerEEPromSection + 110))
+          CFI FunCall ATA_rfTxGetIndirectEEPromServiceConfigAddr_flash_C
+        CALL    ATA_rfTxGetIndirectEEPromServiceConfigAddr_flash_C
+??ATA_5700CommandRequest_flash_C_3:
+        LDI     R20, 43
+        MOVW    R19:R18, R17:R16
+        LDI     R16, LOW(g_sSramRfTxServiceConfig)
+        LDI     R17, (g_sSramRfTxServiceConfig) >> 8
+          CFI FunCall ATA_eepReadBytes_C
+        CALL    ATA_eepReadBytes_C
+        TST     R16
+        BREQ    ??ATA_5700CommandRequest_flash_C_2
+          CFI FunCall ATA_systemSetSystemError_flash_ASM
+        CALL    ATA_systemSetSystemError_flash_ASM
+??ATA_5700CommandRequest_flash_C_2:
+        RJMP    ?Subroutine0
+          CFI EndBlock cfiBlock8
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01cH
+__?EECR:
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01dH
+__?EEDR:
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01eH
+__?EEARL:
+
+        ASEGN ABSOLUTE:DATA:NOROOT,01fH
+__?EEARH:
+
+        END
+//  406 
+//  407 
+//  408 /*----------------------------------------------------------------------------- */
+//  409 /** \brief <b>ATA_triggerSrcCalibration_C</b>
+//  410     triggers SRC calibration feature.
+//  411 
+//  412     \return none
+//  413 
+//  414     \image html ATA_triggerSrcCalibration_C.png
+//  415     \image rtf ATA_triggerSrcCalibration_C.png
+//  416     \n
+//  417 */
+//  418 /*----------------------------------------------------------------------------- */
+//  419 static VOIDFUNC ATA_triggerSrcCalibration_flash_C(void)
+//  420 {
+//  421     /* indicates a calibration process is ongoing */
+//  422     g_sAta5700_flash.status |= BM_ATA5700_STATUS_SRC_CALIB_IN_PROGRESS_FLAG;
+//  423 
+//  424     /* Do SRC calibration */
+//  425     ATA_calibInit_C();
+//  426 
+//  427     if ((g_sCalibConfig.bFlags & BM_CALIB_CONFIG_FLAGS_ERROR) == 0x00U)
+//  428     {
+//  429         ATA_calibStartCalibration_C(BM_CALIB_CONFIG_SRC_FRC_CALIBRATION_ENABLE_SRC);
+//  430 
+//  431         /* Shutdown XTO and AVCC and switch to FRC as default clock. */
+//  432         // ATA_shutDownFe_C();
+//  433 
+//  434         trxConf.tuneCheckConfig &= (uint8_t)~BM_TUNE_CHECK_CONFIG_SRC_CALIB;
+//  435         g_sAta5700_flash.status &= (uint8_t)~BM_ATA5700_STATUS_SRC_CALIB_IN_PROGRESS_FLAG;
+//  436 
+//  437         g_sAta5700_flash.events_rf_flags_1 |= BM_ATA5700_EVENTS_RFFLAGS_SRC_CALIB_RDY;
+//  438     }
+//  439 }
+//  440 
+// 
+//  29 bytes in segment .sram_FlashApp_Ata5700CommandSet
+// 580 bytes in segment CODE
+// 
+// 580 bytes of CODE memory
+//  29 bytes of DATA memory
+//
+//Errors: none
+//Warnings: none

@@ -1,0 +1,55 @@
+/*LNT***************************************************************************
+  Use of this software is subject to Atmel's Software License Agreement.
+--------------------------------------------------------------------------------
+  $URL: http://svnservulm.corp.atmel.com/svn/CDB/Apps/SW_Lib/Car_Access/CARS_GEN2/ATAB5702A/Branches/P2P22_TXMODE_NXP/appl/libFwROM/IAR/Lint/lint_files.lnt $
+  $LastChangedRevision: 328482 $
+  $LastChangedDate: 2015-07-22 13:17:23 -0600 (Wed, 22 Jul 2015) $
+  $LastChangedBy: grueter $
+--------------------------------------------------------------------------------
+  Created by:   gwillbol on: 15.05.2013 15:55
+  Copyright:    Atmel Automotive GmbH, Design Center Ulm
+--------------------------------------------------------------------------------
+  Purpose:
+    Primus2P lint file configuration
+*******************************************************************************/
+
+// sets the include pathes
+-i..\..\firmware\aes\src
+-i..\..\firmware\calib\src
+-i..\..\firmware\compiler\src
+-i..\..\firmware\eep\src
+-i..\..\firmware\globals\src
+-i..\..\firmware\iic\src
+-i..\..\firmware\init\src
+-i..\..\firmware\lfrssi\src
+-i..\..\firmware\lfrx\src
+-i..\..\firmware\rfrcc\src
+-i..\..\firmware\rftx\src
+-i..\..\firmware\signatureTest\src
+-i..\..\firmware\spi\src
+-i..\..\firmware\stdc\src
+-i..\..\firmware\timer1\src
+-i..\..\firmware\timer2\src
+-i..\..\firmware\timer3\src
+-i..\..\firmware\timer4\src
+-i..\..\firmware\timer5\src
+// define all the needed source to build the ROM library
+..\..\firmware\aes\src\aes.c
+..\..\firmware\calib\src\calib.c
+..\..\firmware\eep\src\eep.c
+..\..\firmware\globals\src\globals.c
+..\..\firmware\iic\src\iic.c
+..\..\firmware\init\src\init.c
+..\..\firmware\lfrssi\src\lfrssi.c
+..\..\firmware\lfrx\src\lfrx.c
+..\..\firmware\rfrcc\src\rfrcc.c
+..\..\firmware\rftx\src\rftx.c
+..\..\firmware\rftx\src\rftx_ant.c
+..\..\firmware\rftx\src\rftx_vco.c
+..\..\firmware\spi\src\ata5831_command_set.c
+..\..\firmware\spi\src\spi.c
+..\..\firmware\timer1\src\timer1.c
+..\..\firmware\timer2\src\timer2.c
+..\..\firmware\timer3\src\timer3.c
+..\..\firmware\timer4\src\timer4.c
+..\..\firmware\timer5\src\timer5.c

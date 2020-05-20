@@ -1,0 +1,69 @@
+;----------------------------------------------------------------------------
+;
+;  Library routines for the ATMEL AT90S processors
+;  Global register variable hooks.
+;
+;  Copyright 1999 IAR Systems AB. All rights reserved.
+;
+;  $Revision: 328482 $
+;
+;----------------------------------------------------------------------------
+
+REGVAR  MACRO
+    MODULE  ?REGISTER_REGVAR\1_L10
+    RSEG    CODE:CODE:NOROOT
+    PUBLIC  ?Register_\1_is_global_regvar
+
+?Register_\1_is_global_regvar:
+    RTMODEL "\1", "VAR"
+    ENDMOD
+    ENDM
+
+    REGVAR  R4
+    REGVAR  R5
+    REGVAR  R6
+    REGVAR  R7
+    REGVAR  R8
+    REGVAR  R9
+    REGVAR  R10
+    REGVAR  R11
+    REGVAR  R12
+    REGVAR  R13
+    REGVAR  R14
+    REGVAR  R15
+
+REGREG  MACRO
+    MODULE  ?REGISTER_CGREG\1_L10
+    RSEG    CODE:CODE:NOROOT
+    PUBLIC  ?Register_\1_is_cg_reg
+
+?Register_\1_is_cg_reg:
+    RTMODEL "\1", "REG"
+    ENDMOD
+    ENDM
+
+    REGREG  R4
+    REGREG  R5
+    REGREG  R6
+    REGREG  R7
+    REGREG  R8
+    REGREG  R9
+    REGREG  R10
+    REGREG  R11
+    REGREG  R12
+    REGREG  R13
+    REGREG  R14
+    REGREG  R15
+
+    MODULE  ?REGISTER_ZEROREG_L10
+    PUBLIC  ?Register_R15_is_zero_register
+
+    RSEG    CODE:CODE:NOROOT(0)
+
+?Register_R15_is_zero_register:
+    RTMODEL "R15", "ZERO"
+    
+    END
+
+;----------------------------------------------------------------------------
+;  

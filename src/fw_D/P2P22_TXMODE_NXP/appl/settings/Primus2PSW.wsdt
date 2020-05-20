@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<Workspace>
+  <ConfigDictionary>
+    
+  <CurrentConfigs><Project>libFwROM/Debug</Project><Project>cl3s-ec_mul-sf/Debug</Project><Project>appFLASH/Debug</Project></CurrentConfigs><CurrentProj>appFLASH</CurrentProj><OverviewSelected>1</OverviewSelected></ConfigDictionary>
+  <Desktop>
+    <Static>
+      <Workspace>
+        <ColumnWidths>
+          
+          
+          
+          
+        <Column0>295</Column0><Column1>27</Column1><Column2>27</Column2><Column3>27</Column3></ColumnWidths>
+      </Workspace>
+    <Build><ColumnWidth0>20</ColumnWidth0><ColumnWidth1>1395</ColumnWidth1><ColumnWidth2>372</ColumnWidth2><ColumnWidth3>93</ColumnWidth3></Build><Find-in-Files><ColumnWidth0>992</ColumnWidth0><ColumnWidth1>54</ColumnWidth1><ColumnWidth2>691</ColumnWidth2><ColumnWidth3>216</ColumnWidth3></Find-in-Files><Select-Ambiguous-Definitions><ColumnWidth0>480</ColumnWidth0><ColumnWidth1>68</ColumnWidth1><ColumnWidth2>823</ColumnWidth2></Select-Ambiguous-Definitions><Debug-Log><ColumnWidth0>20</ColumnWidth0><ColumnWidth1>1861</ColumnWidth1></Debug-Log><Find-All-Declarations><ColumnWidth0>664</ColumnWidth0><ColumnWidth1>94</ColumnWidth1><ColumnWidth2>1138</ColumnWidth2></Find-All-Declarations><PROJECT_GUI_CALL_GRAPH><PreferedWindows><Position>3</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows/></PreferedWindows><col-names><item>File</item><item>Function</item><item>Line</item></col-names><col-widths><item>200</item><item>700</item><item>100</item></col-widths></PROJECT_GUI_CALL_GRAPH><Find-All-References><ColumnWidth0>664</ColumnWidth0><ColumnWidth1>94</ColumnWidth1><ColumnWidth2>1138</ColumnWidth2></Find-All-References></Static>
+    <Windows>
+      
+    <Wnd2>
+        <Tabs>
+          <Tab>
+            <Identity>TabID-1709-20019</Identity>
+            <TabName>Workspace</TabName>
+            <Factory>Workspace</Factory>
+            <Session>
+              
+            <NodeDict><ExpandedNode>&lt;ws&gt;</ExpandedNode><ExpandedNode>&lt;ws&gt;/appFLASH</ExpandedNode><ExpandedNode>&lt;ws&gt;/appFLASH/Output</ExpandedNode><ExpandedNode>&lt;ws&gt;/appFLASH/Output/appFLASH.d90</ExpandedNode><ExpandedNode>appFLASH</ExpandedNode><ExpandedNode>appFLASH/Output</ExpandedNode><ExpandedNode>appFLASH/firmware</ExpandedNode><ExpandedNode>cl3s-ec_mul-sf</ExpandedNode><ExpandedNode>libFwROM</ExpandedNode></NodeDict></Session>
+          </Tab>
+        </Tabs>
+        
+      <SelectedTab>0</SelectedTab></Wnd2><Wnd3><Tabs><Tab><Identity>TabID-9172-12276</Identity><TabName>Build</TabName><Factory>Build</Factory><Session/></Tab><Tab><Identity>TabID-21627-10866</Identity><TabName>Find in Files</TabName><Factory>Find-in-Files</Factory><Session/></Tab><Tab><Identity>TabID-22574-20306</Identity><TabName>Ambiguous Definitions</TabName><Factory>Select-Ambiguous-Definitions</Factory><Session/></Tab><Tab><Identity>TabID-7689-25364</Identity><TabName>Debug Log</TabName><Factory>Debug-Log</Factory><Session/></Tab><Tab><Identity>TabID-12457-30802</Identity><TabName>Declarations</TabName><Factory>Find-All-Declarations</Factory><Session/></Tab><Tab><Identity>TabID-15364-30952</Identity><TabName>References</TabName><Factory>Find-All-References</Factory><Session/></Tab></Tabs><SelectedTab>1</SelectedTab></Wnd3></Windows>
+    <Editor>
+      
+      
+      
+      
+    <Pane><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\firmware\eep\src\eep.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>229</YPos2><SelStart2>9878</SelStart2><SelEnd2>9878</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\appFlash\src\FlashApplLF.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>192</YPos2><SelStart2>8476</SelStart2><SelEnd2>8476</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\appFlash\IAR\ATA5700_flash.xcl</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>187</YPos2><SelStart2>7869</SelStart2><SelEnd2>7869</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\appFlash\IAR\Debug\List\appFLASH.map</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>1843</YPos2><SelStart2>0</SelStart2><SelEnd2>0</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\appFlash\IAR\Debug\List\eep_flash.lst</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>309</YPos2><SelStart2>0</SelStart2><SelEnd2>0</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\appFlash\IAR\Debug\List\eep_flash.s90</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>285</YPos2><SelStart2>0</SelStart2><SelEnd2>0</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\firmware\eep\src\eep_flash.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>162</YPos2><SelStart2>7810</SelStart2><SelEnd2>7810</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\firmware\eep\src\eep_flash.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>394</YPos2><SelStart2>13226</SelStart2><SelEnd2>13249</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\appFlash\src\FlashApplMsg.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>368</YPos2><SelStart2>12265</SelStart2><SelEnd2>12265</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\firmware\spi\src\ata5831_command_set.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>2477</YPos2><SelStart2>106789</SelStart2><SelEnd2>106789</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\firmware\globals\src\globals.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>50</YPos2><SelStart2>4317</SelStart2><SelEnd2>4317</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\appFlash\src\FlashAppl.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>110</YPos2><SelStart2>6104</SelStart2><SelEnd2>6104</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\firmware\globals\src\globals.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>89</YPos2><SelStart2>5598</SelStart2><SelEnd2>5598</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\firmware\spi\src\ata5831_command_set.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>267</YPos2><SelStart2>12522</SelStart2><SelEnd2>12522</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\firmware\stdc\src\ioATA5702M322.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>0</YPos2><SelStart2>580</SelStart2><SelEnd2>580</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\firmware\stdc\src\iomacro.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>0</YPos2><SelStart2>562</SelStart2><SelEnd2>562</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\appFlash\src\FlashApplPEPS.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>101</YPos2><SelStart2>5951</SelStart2><SelEnd2>5951</SelEnd2></Tab><ActiveTab>16</ActiveTab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\appFlash\src\FlashApplVars.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>210</YPos2><SelStart2>11377</SelStart2><SelEnd2>11377</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\appFlash\src\FlashApplPEPS.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>83</YPos2><SelStart2>5405</SelStart2><SelEnd2>5405</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\appFlash\src\FlashApplRF.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>55</YPos2><SelStart2>4287</SelStart2><SelEnd2>4287</SelEnd2></Tab></Pane><ActivePane>0</ActivePane><Sizes><Pane><X>1000000</X><Y>1000000</Y></Pane></Sizes><SplitMode>1</SplitMode></Editor>
+    <Positions>
+      
+      
+      
+      
+      
+    <Top><Row0><Sizes><Toolbar-01108FC8><key>iaridepm.enu1</key></Toolbar-01108FC8></Sizes></Row0></Top><Left><Row0><Sizes><Wnd2><Rect><Top>-2</Top><Left>-2</Left><Bottom>575</Bottom><Right>386</Right><x>-2</x><y>-2</y><xscreen>162</xscreen><yscreen>120</yscreen><sizeHorzCX>95070</sizeHorzCX><sizeHorzCY>117417</sizeHorzCY><sizeVertCX>227700</sizeVertCX><sizeVertCY>564579</sizeVertCY></Rect></Wnd2></Sizes></Row0></Left><Right><Row0><Sizes/></Row0></Right><Bottom><Row0><Sizes><Wnd3><Rect><Top>-2</Top><Left>-2</Left><Bottom>402</Bottom><Right>1706</Right><x>-2</x><y>-2</y><xscreen>1708</xscreen><yscreen>404</yscreen><sizeHorzCX>1002347</sizeHorzCX><sizeHorzCY>395303</sizeHorzCY><sizeVertCX>75117</sizeVertCX><sizeVertCY>108611</sizeVertCY></Rect></Wnd3></Sizes></Row0></Bottom><Float><Sizes/></Float></Positions>
+  </Desktop>
+</Workspace>
+
+
